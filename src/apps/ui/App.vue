@@ -8,7 +8,7 @@
       <div id="item">
         <p id="id">{{ item.id }}</p>
         <p id="taskName">{{ item.name }}</p>
-        <p>{{ item.isDone }}</p>
+        <p :class="[`obj-${item.isDone}`]">COMPLETE:{{ item.isDone }}</p>
       </div>
       <div>
         <button @click="completeToDo(item.id)">✅</button>
@@ -57,7 +57,6 @@ export default {
       this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone == true
         ? (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = false)
         : (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = true);
-      console.log(this.todos);
     },
   },
 };
@@ -82,6 +81,13 @@ export default {
 }
 #id {
   margin-right: 10px;
+}
+.obj-false {
+  background-color: red;
+}
+.obj-true {
+  background-color: rgb(35, 216, 29);
+  margin-left: 100px;
 }
 #addToDoBox {
   background-color: lightblue;
