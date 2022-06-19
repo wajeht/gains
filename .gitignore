@@ -103,3 +103,5 @@ dist
 .tern-port
 src/public/assets
 src/public/index.html
+src/public/index.html
+src/public/upload
