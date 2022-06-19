@@ -1,6 +1,6 @@
 # 💪 Gains
 
-The best way to track your workouts
+Da best way to track your workouts
 
 # 📚 Technologies
 
