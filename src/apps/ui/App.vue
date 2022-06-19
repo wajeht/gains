@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     addTodo(todoItem) {
-      lightbluethis.todos.push({
+      this.todos.push({
         id: Math.random(),
         name: todoItem,
         isDone: false,
