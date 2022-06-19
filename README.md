@@ -1,10 +1,10 @@
 # 💪 Gains
 
-Da best way to track your workouts
+The best way to track your workouts
 
 # 📚 Technologies
 
-- **Node** with **Express** for api
+- **Node** with **Express** for API
 - **PostgreSQL** for database
 - **Knex** for database migration
 - **Vue 3** with **Vite** tooling for UI
