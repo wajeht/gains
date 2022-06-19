@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "serve": "vite build && node ./src/apps/app.js",
+    "test": "vitest run --coverage",
     "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen,bgRed\" \"nodemon ./src/apps/app.js\" \"vite build --watch --mode development\"",
     "dev:ui": "vite",
     "dev:api": "nodemon ./src/apps/app.js",
@@ -39,11 +40,12 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.4.0",
     "vite": "^2.9.12"
   },
   "devDependencies": {
+    "c8": "^7.11.3",
     "concurrently": "^7.2.2",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "vitest": "^0.15.1"
   }
 }
