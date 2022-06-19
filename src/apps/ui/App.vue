@@ -54,7 +54,9 @@ export default {
       this.todos = this.todos.filter((item) => item.id != given_id);
     },
     completeToDo(given_id) {
-      this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = true;
+      this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone == true
+        ? (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = false)
+        : (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = true);
       console.log(this.todos);
     },
   },
