@@ -1,7 +1,15 @@
 <template>
+  <div id="new-task">
+    <input id="addToDoBox" type="text" v-model="todoItem" />
+    <button @click="addTodo(todoItem)" id="addToDoButton">ENTER NEW TASK</button>
+  </div>
   <div v-for="item in todos" :key="item.id">
     <div id="todo-item">
-      <p>{{ item.name }}</p>
+      <div id="item">
+        <p id="id">{{ item.id }}</p>
+        <p>{{ item.name }}</p>
+      </div>
+
       <button @click="deleteTodo(item.id)">🗑</button>
     </div>
   </div>
@@ -11,6 +19,7 @@
 export default {
   data() {
     return {
+      todoItem: '',
       todos: [
         {
           id: 1,
@@ -31,7 +40,13 @@ export default {
     };
   },
   methods: {
-    addTodo() {},
+    addTodo(todoItem) {
+      lightbluethis.todos.push({
+        id: Math.random(),
+        name: todoItem,
+        isDone: false,
+      });
+    },
     deleteTodo(given_id) {
       this.todos = this.todos.filter((item) => item.id != given_id);
     },
@@ -49,5 +64,17 @@ export default {
   padding: 10px;
   border-radius: 5px;
   margin-top: 5px;
+}
+#item {
+  display: flex;
+}
+#id {
+  margin-right: 10px;
+}
+#addToDoBox {
+  background-color: lightblue;
+}
+#addToDoButton {
+  background-color: rgb(32, 150, 77);
 }
 </style>
