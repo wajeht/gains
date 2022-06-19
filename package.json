@@ -10,6 +10,7 @@
     "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen,bgRed\" \"nodemon ./src/apps/app.js\" \"vite build --watch --mode development\"",
     "dev:ui": "vite",
     "dev:api": "nodemon ./src/apps/app.js",
+    "build": "npm run build:ui && npm run build:api",
     "build:ui": "vite build",
     "build:api": "echo does not need to build!",
     "rmds": "find . -name '.DS_Store' -delete"

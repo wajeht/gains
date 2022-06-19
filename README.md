@@ -12,7 +12,7 @@ The best way to track your workouts
 - **JWT** for stateless authentication
 - **Bootstrap 5** for basic styling
 - **Vitest** and **Cypress** for testing
-- **Chart.js** for beautiful diaphragms
+- **Chart.js** for beautiful charts
 - **Font-awesome** and **Bootstrap-icon** for icons
 
 # 📐 Structure
