@@ -1,0 +1,15 @@
+{
+	"recommendations": [
+		"aaron-bond.better-comments",
+		"formulahendry.auto-rename-tag",
+		"formulahendry.auto-close-tag",
+		"streetsidesoftware.code-spell-checker",
+		"mikestead.dotenv",
+		"editorconfig.editorconfig",
+		"digitalbrainstem.javascript-ejs-support",
+		"eamodio.gitlens",
+		"xabikos.javascriptsnippets",
+		"christian-kohler.path-intellisense",
+		"octref.vetur"
+	]
+}
