@@ -7,10 +7,13 @@
     <div id="todo-item">
       <div id="item">
         <p id="id">{{ item.id }}</p>
-        <p>{{ item.name }}</p>
+        <p id="taskName">{{ item.name }}</p>
+        <p>{{ item.isDone }}</p>
       </div>
-
-      <button @click="deleteTodo(item.id)">🗑</button>
+      <div>
+        <button @click="completeToDo(item.id)">✅</button>
+        <button @click="deleteTodo(item.id)">🗑</button>
+      </div>
     </div>
   </div>
 </template>
@@ -50,6 +53,10 @@ export default {
     deleteTodo(given_id) {
       this.todos = this.todos.filter((item) => item.id != given_id);
     },
+    completeToDo(given_id) {
+      this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = true;
+      console.log(this.todos);
+    },
   },
 };
 </script>
@@ -67,6 +74,9 @@ export default {
 }
 #item {
   display: flex;
+}
+#taskName {
+  margin-right: 10px;
 }
 #id {
   margin-right: 10px;
