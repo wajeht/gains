@@ -7,6 +7,7 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div id="testDiv">THIS IS A TEST</div>
 </template>
 
 <style>
@@ -17,5 +18,8 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+  #testDiv{
+    background-color: red;
   }
 </style>
