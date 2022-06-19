@@ -1,5 +1,7 @@
 # 💪 Gains
 
+[![Node.js CI](https://github.com/allkindsofgains/gains/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/allkindsofgains/gains/actions/workflows/node.js.yml)
+
 The best way to track your workouts
 
 # 📚 Technologies
