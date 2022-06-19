@@ -40,7 +40,7 @@ Take a look at the following tree structure for better understanding.
 docs/
 logs/
 src/
-├── app/
+├── apps/
 │   ├── api/      # main entry point for api end-points
 │   │   ├── middlewares/
 │   │   └── v1/
