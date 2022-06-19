@@ -7,11 +7,12 @@ The best way to track your workouts
 - **Node** with **Express** for api
 - **PostgreSQL** for database
 - **Knex** for database migration
-- **Vue 3** with **Vite** tooling
+- **Vue 3** with **Vite** tooling for UI
 - **Pinia** for **Vue** state management
-- **JWT** for authentication
+- **JWT** for stateless authentication
 - **Bootstrap 5** for basic styling
 - **Vitest** and **Cypress** for testing
+- **Chart.js** for beautiful diaphragms
 - **Font-awesome** and **Bootstrap-icon** for icons
 
 # 📐 Structure
