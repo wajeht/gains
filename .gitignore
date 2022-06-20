@@ -1,3 +1,7 @@
+./src/public/*
+src/public
+src/public/*
+
 # Logs
 *.log
 npm-debug.log*
