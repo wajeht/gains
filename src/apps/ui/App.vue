@@ -6,30 +6,40 @@
       <input v-model="todoItem" type="text" class="form-control" />
 
       <!-- add -->
-      <button @click="addTodo(todoItem)" class="btn btn-sm btn-primary">➕</button>
+      <button @click="addTodo(todoItem)" class="btn btn-sm btn-primary">
+        <font-awesome-icon icon="plus" />
+        Add
+      </button>
 
       <!-- clear -->
-      <button class="btn btn-sm btn-danger">🗑️</button>
+      <button class="btn btn-sm btn-danger" @click="clearAll()">
+        <font-awesome-icon icon="trash" />
+        Clear
+      </button>
     </div>
 
     <!-- todo array container -->
     <div v-for="item in todos" :key="item.id" class="mb-3">
       <!-- individual todo -->
       <div class="card card-body shadow-sm d-flex flex-row justify-content-between align-items-center">
-        <!-- left side-->
+        <!-- name and id -->
         <div class="d-flex gap-2">
-          <span>{{ item.id }}</span>
-          <span>{{ item.name }}</span>
+          <span id="id">{{ item.id }}</span>
+          <span id="taskName">>{{ item.name }}</span>
           <p :class="[`obj-${item.isDone}`]">COMPLETE:{{ item.isDone }}</p>
         </div>
 
-        <!-- right side-->
-        <div class="d-flex gap-2">
-          <!-- complete -->
-          <button class="btn btn-sm btn-primary" @click="completeToDo(item.id)">✅</button>
-          <!-- delete button -->
-          <button class="btn btn-sm btn-danger" @click="deleteTodo(item.id)">🗑️</button>
-        </div>
+        <!-- mark done button -->
+        <button class="btn btn-sm btn-success" @click="completeToDo(item.id)">
+          <font-awesome-icon icon="bug" />
+          Mark Done
+        </button>
+
+        <!-- delete button -->
+        <button class="btn btn-sm btn-danger" @click="deleteTodo(item.id)">
+          <font-awesome-icon icon="trash" />
+          Delete
+        </button>
       </div>
     </div>
   </div>
@@ -62,7 +72,7 @@
     methods: {
       addTodo(todoItem) {
         this.todos.push({
-          id: Math.random(),
+          id: Math.floor(Math.random() * 999999999999),
           name: todoItem,
           isDone: false,
         });
@@ -75,14 +85,32 @@
           ? (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = false)
           : (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = true);
       },
+      clearAll() {
+        this.todos = [];
+      },
     },
   };
 </script>
 
 <style>
-  #todos {
-    background: #dddddd;
-    height: 100vh;
+  #todo-item {
+    display: flex;
+    justify-content: space-between;
+
+    color: white;
+    background: gray;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  #item {
+    display: flex;
+  }
+  #taskName {
+    margin-right: 10px;
+  }
+  #id {
+    margin-right: 10px;
   }
   .obj-false {
     background-color: red;
@@ -90,5 +118,11 @@
   .obj-true {
     background-color: rgb(35, 216, 29);
     margin-left: 100px;
+  }
+  #addToDoBox {
+    background-color: lightblue;
+  }
+  #addToDoButton {
+    background-color: rgb(32, 150, 77);
   }
 </style>
