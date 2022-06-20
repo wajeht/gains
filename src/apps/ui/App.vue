@@ -12,7 +12,7 @@
       </button>
 
       <!-- clear -->
-      <button class="btn btn-sm btn-danger">
+      <button class="btn btn-sm btn-danger" @click="clearAll()">
         <font-awesome-icon icon="trash" />
         Clear
       </button>
@@ -29,7 +29,12 @@
           <p :class="[`obj-${item.isDone}`]">COMPLETE:{{ item.isDone }}</p>
         </div>
 
-        <button @click="completeToDo(item.id)">✅</button>
+        <!-- mark done button -->
+        <button class="btn btn-sm btn-success" @click="completeToDo(item.id)">
+          <font-awesome-icon icon="bug" />
+          Mark Done
+        </button>
+
         <!-- delete button -->
         <button class="btn btn-sm btn-danger" @click="deleteTodo(item.id)">
           <font-awesome-icon icon="trash" />
@@ -67,7 +72,7 @@ export default {
   methods: {
     addTodo(todoItem) {
       this.todos.push({
-        id: Math.random(),
+        id: Math.floor(Math.random() * 999999999999),
         name: todoItem,
         isDone: false,
       });
@@ -79,6 +84,9 @@ export default {
       this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone == true
         ? (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = false)
         : (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = true);
+    },
+    clearAll() {
+      this.todos = [];
     },
   },
 };
