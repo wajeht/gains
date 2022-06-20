@@ -24,10 +24,12 @@
       <div class="card card-body shadow-sm d-flex flex-row justify-content-between align-items-center">
         <!-- name and id -->
         <div class="d-flex gap-2">
-          <span>{{ item.id }}</span>
-          <span>{{ item.name }}</span>
+          <span id="id">{{ item.id }}</span>
+          <span id="taskName">>{{ item.name }}</span>
+          <p :class="[`obj-${item.isDone}`]">COMPLETE:{{ item.isDone }}</p>
         </div>
 
+        <button @click="completeToDo(item.id)">✅</button>
         <!-- delete button -->
         <button class="btn btn-sm btn-danger" @click="deleteTodo(item.id)">
           <font-awesome-icon icon="trash" />
@@ -39,47 +41,80 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        todoItem: '',
-        todos: [
-          {
-            id: 1,
-            name: 'walk the dog',
-            isDone: false,
-          },
-          {
-            id: 2,
-            name: 'shower',
-            isDone: false,
-          },
-          {
-            id: 4,
-            name: 'eat',
-            isDone: true,
-          },
-        ],
-      };
-    },
-    methods: {
-      addTodo(todoItem) {
-        this.todos.push({
-          id: Math.random(),
-          name: todoItem,
+export default {
+  data() {
+    return {
+      todoItem: '',
+      todos: [
+        {
+          id: 1,
+          name: 'walk the dog',
           isDone: false,
-        });
-      },
-      deleteTodo(given_id) {
-        this.todos = this.todos.filter((item) => item.id != given_id);
-      },
+        },
+        {
+          id: 2,
+          name: 'shower',
+          isDone: false,
+        },
+        {
+          id: 4,
+          name: 'eat',
+          isDone: true,
+        },
+      ],
+    };
+  },
+  methods: {
+    addTodo(todoItem) {
+      this.todos.push({
+        id: Math.random(),
+        name: todoItem,
+        isDone: false,
+      });
     },
-  };
+    deleteTodo(given_id) {
+      this.todos = this.todos.filter((item) => item.id != given_id);
+    },
+    completeToDo(given_id) {
+      this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone == true
+        ? (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = false)
+        : (this.todos[this.todos.findIndex((item) => item.id == given_id)].isDone = true);
+    },
+  },
+};
 </script>
 
 <style>
-  #todos {
-    background-color: #dddddd;
-    height: 100vh;
-  }
+#todo-item {
+  display: flex;
+  justify-content: space-between;
+
+  color: white;
+  background: gray;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+#item {
+  display: flex;
+}
+#taskName {
+  margin-right: 10px;
+}
+#id {
+  margin-right: 10px;
+}
+.obj-false {
+  background-color: red;
+}
+.obj-true {
+  background-color: rgb(35, 216, 29);
+  margin-left: 100px;
+}
+#addToDoBox {
+  background-color: lightblue;
+}
+#addToDoButton {
+  background-color: rgb(32, 150, 77);
+}
 </style>
