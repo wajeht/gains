@@ -1,7 +1,3 @@
-./src/public/*
-src/public
-src/public/*
-
 # Logs
 *.log
 npm-debug.log*
@@ -105,10 +101,7 @@ dist
 
 # TernJS port file
 .tern-port
-src/public/assets
+src/public/assets/*
 src/public/index.html
 src/public/index.html
-src/public/upload
-src/public/index.html
-src/public/
-src/public/*
+src/public/upload/*
