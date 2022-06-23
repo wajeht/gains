@@ -1,5 +1,5 @@
 import pino from 'pino';
-import { root } from './directory.js';
+import { root } from '../utils/directory.js';
 
 const today = new Date().toISOString().split('T')[0];
 
@@ -14,7 +14,7 @@ const levels = {
   debug: 10,
 };
 
-export const logger = pino(
+const logger = pino(
   {
     level: process.env.PINO_LOG_LEVEL || 'info',
     customLevels: levels,
@@ -22,3 +22,5 @@ export const logger = pino(
   },
   pino.destination(`${root}/logs/${today}.log`),
 );
+
+export default logger;
