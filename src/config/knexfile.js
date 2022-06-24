@@ -1,15 +1,23 @@
-import { database } from '../config/env.js';
+import { database, env } from './env.js';
 
-export default {
-  client: database.client,
-  // debug: true,
-  // connection: database.url,
-  connection: {
+let connection = null;
+
+// use connecting string if not user local
+if (!database.host || database.database || !database.user || !database.password) {
+  connection = database.url;
+} else {
+  connection = {
     host: database.host,
     database: database.database,
     user: database.username,
     password: database.password,
-  },
+  };
+}
+
+export default {
+  client: database.client,
+  debug: env === 'developement', // only in dev
+  connection,
   pool: {
     min: 2,
     max: 10,

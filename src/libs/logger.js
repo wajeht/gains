@@ -14,11 +14,21 @@ const levels = {
   debug: 10,
 };
 
+/*eslint-disable*/
 const logger = pino(
   {
-    level: process.env.PINO_LOG_LEVEL || 'info',
+    level: process.env.PINO_LOG_LEVEL || 'debug',
     customLevels: levels,
     useOnlyCustomLevels: true,
+    formatters: {
+      level: (label) => {
+        return { level: label };
+      },
+    },
+    transport: {
+      target: 'pino-pretty',
+      destination: `${root}/logs/${today}.log`,
+    },
   },
   pino.destination(`${root}/logs/${today}.log`),
 );

@@ -1,6 +1,7 @@
 import { validationResult } from 'express-validator';
-import { StatusCodes } from 'http-status-codes';
+import ValidationError from '../errors/validation.error.js';
 
+/* eslint-disable */
 const validate = (schemas) => {
   return async (req, res, next) => {
     try {
@@ -14,19 +15,7 @@ const validate = (schemas) => {
 
       const { errors } = result;
 
-      const e = new Error();
-      e.statusCode = StatusCodes.BAD_REQUEST;
-      e.message = 'Validation errors in your request!';
-      e.errors = errors;
-      next(errors);
-
-      //   // TODO: Fix this
-      //   return res.status(StatusCodes.BAD_REQUEST).json({
-      //     status: "failed",
-      //     request_url: req.originalUrl,
-      //     message: "Validation errors in your request!",
-      //     errors,
-      //   });
+      throw new ValidationError('Validatoin errors within your requests!', errors);
     } catch (err) {
       next(err);
     }

@@ -1,7 +1,7 @@
-import path from 'path';
-import logger from '../libs/logger.js';
 import { StatusCodes } from 'http-status-codes';
+import path from 'path';
 import { env } from '../config/env.js';
+import logger from '../libs/logger.js';
 
 /**
  * It returns a 200 status code with a JSON object containing a message
@@ -22,13 +22,14 @@ export function getHealthCheck(req, res) {
  */
 export function vueHandler(req, res, next) {
   try {
-    res.sendFile(path.resolve(path.join(process.cwd(), "src", "public", "index.html"))); // prettier-ignore
+    res.sendFile(path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'))); // prettier-ignore
   } catch (error) {
     next(error);
   }
 }
 
 /**
+ *
  * If the requested resource does not exist, send a 404 status code and a JSON response with a status
  * of 'fail' and a message of 'The resource does not exist!'
  * @param req - The request object.
@@ -56,8 +57,9 @@ export function errorHandler(err, req, res, next) {
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'fail',
     request_url: req.originalUrl,
+    errors: err?.errors,
     message:
-      env == 'development'
+      env === 'development'
         ? err.stack
         : 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
   });

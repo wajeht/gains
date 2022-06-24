@@ -1,10 +1,10 @@
 import express from 'express';
-const v1 = express.Router();
-
 import CategoriesRouter from './categories/categories.router.js';
 import SessionsRouter from './sessions/sessions.router.js';
 import ExercisesRouter from './exercises/exercises.router.js';
 import UsersRouter from './users/users.router.js';
+
+const v1 = express.Router();
 
 v1.use('/categories', CategoriesRouter);
 v1.use('/sessions', SessionsRouter);

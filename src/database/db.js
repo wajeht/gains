@@ -4,13 +4,15 @@ import logger from '../libs/logger.js';
 import { yellow, red } from '../utils/rainbow-log.js';
 
 Knex(options)
-  .raw(`SELECT 1 + 1`)
+  .raw('SELECT 1 + 1')
   .then((res) => {
-    yellow('Database connection started!');
+    const msg = 'Database connection started!';
+    logger.info(msg);
+    yellow(msg);
   })
   .catch((err) => {
-    logger.error(err);
     red('Database connection failed!');
+    logger.error(err);
     process.exit(1);
   });
 

@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+      "#database/*": [
+        "./src/database/*"
+      ],
+      "#libs/*": [
+        "./src/libs/*"
+      ],
+      "#utils/*": [
+        "./src/utils/*"
+      ],
+      "#services/*": [
+        "./src/services/*"
+      ],
+      "#config/*": [
+        "./src/config/*"
+      ],
+    }
+  },
+}

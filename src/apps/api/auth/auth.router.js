@@ -1,7 +1,7 @@
 import express from 'express';
-const auth = express.Router();
-
 import * as AuthController from './auth.controller.js';
+
+const auth = express.Router();
 
 auth.post('/login', AuthController.postLogin);
 auth.get('/logout', AuthController.getLogout);

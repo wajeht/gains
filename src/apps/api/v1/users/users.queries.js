@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '#database/db.js';
 
 /**
  * Get all users from the database.
@@ -15,7 +15,6 @@ export function getAllUsers() {
  * @returns The user object
  */
 export function createUser(body) {
-  console.log(body);
   return db
     .insert({ ...body })
     .into('users')

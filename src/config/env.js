@@ -23,8 +23,7 @@ export const database = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
-  url: process.env.DATABASE_URL,
-  elephant_sql: process.env.ELEPHANT_SQL,
+  url: process.env.DB_URL,
 };
 
 /* This is the cookie object that will be used to set the cookie. */
@@ -44,12 +43,6 @@ export const jwt_secret = process.env.JWT_SECRET;
 
 /* This is the salt that will be used to hash the password. */
 export const salt = parseInt(process.env.PASSWORD_SALT);
-
-/* This is the object that will be used to make requests to the Travel Bucket API. */
-export const tvl_bucket = {
-  url: process.env.TVL_BUCKET_API_URL,
-  key: process.env.TVL_BUCKET_X_API_KEY,
-};
 
 /* This is the object that will be used to send emails. */
 export const email = {
