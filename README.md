@@ -1,6 +1,7 @@
 # 💪 Gains
 
-[![Node.js CI](https://github.com/allkindsofgains/gains/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/allkindsofgains/gains/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/allkindsofgains/gains/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/allkindsofgains/gains/actions/workflows/node.js.yml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/allkindsofgains/gains)
+
 
 The best way to track your workouts
 
