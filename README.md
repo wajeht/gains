@@ -16,6 +16,7 @@ The best way to track your workouts
 - **Vitest** and **Cypress** for testing
 - **Chart.js** for beautiful charts
 - **Font-awesome** and **Bootstrap-icon** for icons
+- **Command And Conquer (CAC)** for CLI
 
 # 📐 Structure
 

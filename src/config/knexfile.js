@@ -1,12 +1,14 @@
+import { database } from '../config/env.js';
+
 export default {
-  client: 'pg',
-  debug: true,
+  client: database.client,
+  // debug: true,
   // connection: database.url,
   connection: {
-    host: 'localhost',
-    database: 'gains',
-    user: 'node_user',
-    password: 'node_password',
+    host: database.host,
+    database: database.database,
+    user: database.username,
+    password: database.password,
   },
   pool: {
     min: 2,
@@ -15,9 +17,9 @@ export default {
   acquireConnectionTimeout: 3000,
   migrations: {
     tableName: 'knex_migrations',
-    directory: '../db/migrations',
+    directory: '../database/migrations',
   },
   seeds: {
-    directory: '../db/seeds',
+    directory: '../database/seeds',
   },
 };
