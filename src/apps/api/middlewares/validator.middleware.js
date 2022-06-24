@@ -14,6 +14,12 @@ const validate = (schemas) => {
 
       const { errors } = result;
 
+      const e = new Error();
+      e.statusCode = StatusCodes.BAD_REQUEST;
+      e.message = 'Validation errors in your request!';
+      e.errors = errors;
+      next(errors);
+
       //   // TODO: Fix this
       //   return res.status(StatusCodes.BAD_REQUEST).json({
       //     status: "failed",

@@ -15,6 +15,7 @@ export function getAllUsers() {
  * @returns The user object
  */
 export function createUser(body) {
+  console.log(body);
   return db
     .insert({ ...body })
     .into('users')

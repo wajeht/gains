@@ -6,6 +6,7 @@ import * as UsersQueries from './users.queries.js';
  * @param res - The response object.
  */
 export async function postUser(req, res) {
+  console.log('here');
   const user = await UsersQueries.createUser(req.body);
   res.json(user);
 }

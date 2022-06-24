@@ -7,10 +7,11 @@ import catchAsyncErrors from '../../middlewares/catch-async-errors.middleware.js
 
 const users = express.Router();
 
-// prettier-ignore
-users.route('/')
+// prettier-ignore;
+users
+  .route('/')
   .get(catchAsyncErrors(UsersController.getUsers))
-  .post(validator(UsersValidation.postUser), UsersController.postUser);
+  .post(validator(UsersValidation.postUser), catchAsyncErrors(UsersController.postUser));
 
 // prettier-ignore
 users.route('/:id')

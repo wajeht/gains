@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import { jwt_secret } from '../../../config/env.js';
+import { env } from '../../../config/env.js';
 
 /**
  * It checks if the request has an authorization header, and if it does, it checks if it's a valid JWT
@@ -11,6 +12,11 @@ import { jwt_secret } from '../../../config/env.js';
  */
 export default function auth(req, res, next) {
   try {
+    // TODO!: remove this on production
+    if (env === 'development') {
+      return next();
+    }
+
     const x = req.get('authorization');
 
     if (!x) throw new Error('must use bearer token authorization!');
