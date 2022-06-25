@@ -14,7 +14,6 @@ const levels = {
   debug: 10,
 };
 
-/*eslint-disable*/
 const logger = pino(
   {
     level: process.env.PINO_LOG_LEVEL || 'debug',

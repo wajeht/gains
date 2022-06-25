@@ -3,8 +3,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
+library.add(faPencil);
 
 export default FontAwesomeIcon;

@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 
+import routes from './router.vue.js';
+
 // external
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -15,5 +17,7 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.config.performance = true;
 app.config.devtools = true;
+
+app.use(routes);
 
 app.mount('#app');

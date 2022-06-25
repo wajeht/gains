@@ -1,4 +1,4 @@
-import db from '#database/db.js';
+import db from '../../../../database/db.js';
 
 /**
  * Get all users from the database.
