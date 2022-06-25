@@ -1,4 +1,5 @@
 import pino from 'pino';
+import pretty from 'pino-pretty';
 import { root } from '../utils/directory.js';
 
 const today = new Date().toISOString().split('T')[0];
@@ -14,6 +15,16 @@ const levels = {
   debug: 10,
 };
 
+const streams = [
+  { stream: pino.destination(`${root}/logs/${today}.log`) },
+  {
+    stream: pretty({
+      colorize: true,
+      sync: true,
+    }),
+  },
+];
+
 const logger = pino(
   {
     level: process.env.PINO_LOG_LEVEL || 'debug',
@@ -24,12 +35,9 @@ const logger = pino(
         return { level: label };
       },
     },
-    transport: {
-      target: 'pino-pretty',
-      destination: `${root}/logs/${today}.log`,
-    },
+    timestamp: pino.stdTimeFunctions.isoTime,
   },
-  pino.destination(`${root}/logs/${today}.log`),
+  pino.multistream(streams),
 );
 
 export default logger;
