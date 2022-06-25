@@ -2,21 +2,29 @@
   <component :is="layout" />
 </template>
 
-<script setup>
-  import { computed } from 'vue';
-  import { useRouter, useRoute } from 'vue-router';
-
-  import RegularLayout from './layouts/RegularLayout.vue';
+<script >
   import DashboardLayout from './layouts/DashboardLayout.vue';
+  import RegularLayout from './layouts/RegularLayout.vue';
 
-  const router = useRouter();
-  const route = useRoute();
-
-  const layouts = {
-    RegularLayout: RegularLayout,
-    DashboardLayout: DashboardLayout,
+  export default {
+    components: {
+      DashboardLayout,
+      RegularLayout,
+    },
+    data() {
+      return {
+        layout: null,
+      };
+    },
+    watch: {
+      $route(to) {
+        // set layout by route meta
+        if (to.meta.layout !== undefined) {
+          this.layout = to.meta.layout;
+        } else {
+          this.layout = 'dashboard'; // this is default layout if route meta is not set
+        }
+      },
+    },
   };
-
-  const defaultLayout = 'RegularLayout';
-  const layout = computed(() => layouts[route.meta.layout || defaultLayout]);
 </script>
