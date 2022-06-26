@@ -27,6 +27,9 @@ jobs:
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
         PINO_LOG_LEVEL: ${{ secrets.PINO_LOG_LEVEL }}
+        DISCORD_ID: ${{ secrets.DISCORD_ID }}
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        DISCORD_URL: ${{ secrets.DISCORD_URL }}
       run: |
         cat <<EOF > .env
         DB_CLIENT="$DB_CLIENT"
@@ -38,6 +41,9 @@ jobs:
         COOKIE_EXPIRATION="$COOKIE_EXPIRATION"
         JWT_SECRET="$JWT_SECRET"
         PASSWORD_SALT="$PASSWORD_SALT"
+        DISCORD_ID="$DISCORD_ID"
+        DISCORD_TOKEN="$DISCORD_TOKEN"
+        DISCORD_URL="$DISCORD_URL"
         PINO_LOG_LEVEL="$PINO_LOG_LEVEL"
         EOF
         echo "cat .env"
