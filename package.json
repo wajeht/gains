@@ -21,6 +21,9 @@
     "seed:run": "knex seed:run --knexfile=./src/config/knexfile.js",
     "rmds": "find . -name '.DS_Store' -delete"
   },
+  "bin": {
+    "gains": "./src/bin/gains.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/allkindsofgains/gains.git"
@@ -72,6 +75,7 @@
     "pinia": "^2.0.14",
     "pino": "^8.1.0",
     "pino-pretty": "^8.1.0",
+    "shelljs": "^0.8.5",
     "supertest": "^6.2.3",
     "vite": "^2.9.12",
     "vue": "^3.2.37",

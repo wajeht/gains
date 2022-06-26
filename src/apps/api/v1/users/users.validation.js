@@ -109,11 +109,26 @@ export const patchUser = [
     if (!fields) throw new Error('Must include some fields to update!');
     return true;
   }),
-  body('email').optional().isEmail().withMessage('The value must be an email!'),
+  // allow for re-update same value
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('The value must be an email!')
+    .custom(async (email, { req }) => {
+      const exist = await UserQueries.findUserByParam({ email });
+      // if (exist[0]?.id === req.params.id) return true;
+      if (exist.length !== 0) throw new Error('Username or Email already exist!');
+    }),
+  // allow for re-update same value
   body('username')
     .optional()
     .isLength({ min: 6, max: 20 })
-    .withMessage('The value must be at least 8 character long or less than 20 character long'),
+    .withMessage('The value must be at least 8 character long or less than 20 character long')
+    .custom(async (username, { req }) => {
+      const exist = await UserQueries.findUserByParam({ username });
+      // if (exist[0]?.id === req.params.id) return true;
+      if (exist.length !== 0) throw new Error('Username or Email already exist!');
+    }),
   body('password')
     .optional()
     .trim()

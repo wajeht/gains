@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // regular
-import About from './pages/regular/About.vue';
+import Features from './pages/regular/Features.vue';
+import Terms from './pages/regular/Terms.vue';
+import Privacy from './pages/regular/Privacy.vue';
+import Contact from './pages/regular/Contact.vue';
 import Login from './pages/regular/Login.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
@@ -29,9 +32,33 @@ const routes = [
     },
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About,
+    path: '/features',
+    name: 'Features',
+    component: Features,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: Contact,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/privacy',
+    name: 'Privacy',
+    component: Privacy,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/terms',
+    name: 'Terms',
+    component: Terms,
     meta: {
       layout: 'RegularLayout',
     },

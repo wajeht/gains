@@ -12,14 +12,12 @@
         <button type="button" class="btn btn-outline-secondary btn-lg px-4">Learn more</button>
       </div>
     </div>
-    <div class="overflow-hidden" style="max-height: 30vh">
+    <div class="overflow-hidden">
       <div class="container px-5">
         <img
           src="../../assets/images/hero.png"
           class="img-fluid rounded-3 mb-4"
           alt="gains app screenshot"
-          width="700"
-          height="500"
           loading="lazy"
         />
       </div>
