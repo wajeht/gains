@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // regular
 import Features from './pages/regular/Features.vue';
+import ForgetPassword from './pages/regular/ForgetPassword.vue';
 import Terms from './pages/regular/Terms.vue';
+import Signup from './pages/regular/Signup.vue';
 import Privacy from './pages/regular/Privacy.vue';
 import Contact from './pages/regular/Contact.vue';
 import Login from './pages/regular/Login.vue';
@@ -27,6 +29,22 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/forget-password',
+    name: 'Forget Password',
+    component: ForgetPassword,
     meta: {
       layout: 'RegularLayout',
     },
