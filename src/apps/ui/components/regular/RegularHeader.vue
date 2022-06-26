@@ -29,16 +29,17 @@
           >
         </li>
 
+        <!-- about -->
+        <li class="nav-item">
+          <router-link to="/about" class="nav-link" :class="{ active: $route.name === 'About' }"
+            >About</router-link
+          >
+        </li>
+
         <!-- login -->
         <li class="nav-item">
           <router-link to="/login" class="nav-link" :class="{ active: $route.name === 'Login' }"
             >Login</router-link
-          >
-        </li>
-
-        <li class="nav-item">
-          <router-link to="/about" class="nav-link" :class="{ active: $route.name === 'About' }"
-            >About</router-link
           >
         </li>
       </ul>

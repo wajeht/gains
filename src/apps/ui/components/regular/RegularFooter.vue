@@ -7,17 +7,18 @@
         <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
           <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
         </a>
-        <span class="mb-3 mb-md-0 text-muted">© 2022 Company, Inc</span>
+        <span class="mb-3 mb-md-0 text-muted">© 2022 allkindsofgains.app</span>
       </div>
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-        <p>
-          <a href="https://github.com/allkindsofgains"><i class="bi bi-github fs-3"></i></a>
-        </p>
-        <p>
-          <a href="https://discord.com/channels/988167900420534273/989628732895543296"
-            ><i class="bi bi-discord fs-3"></i
-          ></a>
-        </p>
+        <a class="text-black" href="https://github.com/allkindsofgains" target="_blank"
+          ><i class="bi bi-github fs-2"></i
+        ></a>
+        <a
+          class="text-black"
+          href="https://discord.com/channels/988167900420534273/989628732895543296"
+          target="_blank"
+          ><i class="bi bi-discord fs-2"></i
+        ></a>
       </div>
     </footer>
   </div>
