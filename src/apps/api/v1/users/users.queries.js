@@ -1,11 +1,13 @@
 import db from '../../../../database/db.js';
+import logger from '../../../../libs/logger.js';
+import { red } from '../../../../utils/rainbow-log.js';
 
 /**
  * Get all users from the database.
  * @returns An array of objects
  */
 export function getAllUsers() {
-  return db.select('*').from('users');
+  return db.select('*').from('users').leftJoin('user_details', 'users.id', 'user_details.user_id');
 }
 
 /**
@@ -14,11 +16,20 @@ export function getAllUsers() {
  * @param {object} body.any - any
  * @returns The user object
  */
-export function createUser(body) {
+export async function createUser(body) {
   return db
     .insert({ ...body })
     .into('users')
-    .returning('*');
+    .returning('*')
+    .then(async ([user]) => {
+      const { id } = user;
+      const userDetails = await db.insert({ user_id: id }).into('user_details');
+      return db
+        .select()
+        .from('users')
+        .leftJoin('user_details', 'users.id', 'user_details.user_id')
+        .where({ 'users.id': id });
+    });
 }
 
 /**
@@ -27,7 +38,11 @@ export function createUser(body) {
  * @returns {array<{}>} An array of objects
  */
 export function findUserById(id) {
-  return db.select('*').from('users').where({ id });
+  return db
+    .select('*')
+    .from('users')
+    .leftJoin('user_details', 'users.id', 'user_details.user_id')
+    .where({ 'users.id': id });
 }
 
 /**
@@ -36,7 +51,7 @@ export function findUserById(id) {
  * @returns {array<{}>} An array of objects
  */
 export function findUserByParam(param) {
-  return db.select('*').from('users').where({ param });
+  return db.select('*').from('users').where(param);
 }
 
 /**
@@ -46,12 +61,26 @@ export function findUserByParam(param) {
  * @param {object} body.any - any
  * @returns The updated user object
  */
-export function updateUserById(id, body) {
-  return db
-    .update({ ...body })
-    .from('users')
-    .where({ id })
-    .returning('*');
+export async function updateUserById(id, body) {
+  const fields = Object.keys(body).some(
+    (key) => ['username', 'email', 'password'].indexOf(key) >= 0,
+  );
+
+  if (fields) {
+    await db
+      .update({ ...body, updated_at: new Date() })
+      .from('users')
+      .where({ id });
+  }
+
+  if (!fields) {
+    await db
+      .update({ ...body, updated_at: new Date() })
+      .from('user_details')
+      .where({ id });
+  }
+
+  return findUserById(id);
 }
 
 /**
@@ -60,5 +89,6 @@ export function updateUserById(id, body) {
  * @returns The user that was deleted
  */
 export function deleteUser(id) {
-  return db.delete().from('users').where({ id }).returning('*');
+  return db.delete('*').from('users').where({ id }).returning('*');
 }
+/* Validating the user input. */

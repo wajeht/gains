@@ -1,3 +1,4 @@
+import logger from '../../../../libs/logger.js';
 import * as UsersQueries from './users.queries.js';
 
 /**
@@ -8,6 +9,7 @@ import * as UsersQueries from './users.queries.js';
 export async function postUser(req, res) {
   console.log('here');
   const user = await UsersQueries.createUser(req.body);
+  logger.info(`user ${user[0].id} was created!`);
   res.json(user);
 }
 
