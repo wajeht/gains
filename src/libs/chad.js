@@ -6,10 +6,11 @@ import axios from 'axios';
 /* It sends a message to a Discord channel */
 // https://gist.github.com/Birdie0/78ee79402a4301b1faf412ab5f1cdcf9
 export default class Chad {
-  static async notify(msg, object = null) {
+  static async flex(msg, object = null) {
     try {
       let params = null;
 
+      // use different format to send if we have object passed in
       if (object == null) {
         params = { username: 'Chad', content: msg };
       } else {

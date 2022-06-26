@@ -10,7 +10,7 @@ import logger from '../libs/logger.js';
  * @param res - The response object.
  */
 export function getHealthCheck(req, res) {
-  Chad.notify(`someone hit a health check from ${req.ip} `);
+  Chad.flex(`someone hit a health check from ${req.ip}`);
   res.status(200).json({
     msg: 'ok',
   });
@@ -55,7 +55,7 @@ export function notFoundHandler(req, res, next) {
  */
 export function errorHandler(err, req, res, next) {
   logger.error(err);
-  Chad.notify(err.msg, err.stack);
+  Chad.flex(err.msg, err.stack);
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'fail',
     request_url: req.originalUrl,

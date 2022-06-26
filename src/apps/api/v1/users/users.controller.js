@@ -22,7 +22,6 @@ export async function postUser(req, res) {
 export async function getUsers(req, res) {
   const users = await UsersQueries.getAllUsers();
   res.json(users);
-  Chad.notify('getting users');
 }
 
 /**
