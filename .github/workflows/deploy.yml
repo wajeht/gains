@@ -22,6 +22,7 @@ jobs:
         DB_PORT: ${{ secrets.DB_PORT }}
         DB_URL: ${{ secrets.DB_URL }}
         PORT: ${{ secrets.PORT }}
+        ENV: ${{ secrets.ENV }}
         COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
         COOKIE_EXPIRATION: ${{ secrets.COOKIE_EXPIRATION }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
