@@ -8,11 +8,11 @@ Knex(options)
   .then((res) => {
     const msg = 'Database connection started!';
     logger.info(msg);
-    yellow(msg);
+    // yellow(msg);
   })
   .catch((err) => {
-    red('Database connection failed!');
-    logger.error(err);
+    // red('Database connection failed!');
+    logger.error('Database connection failed!');
     process.exit(1);
   });
 

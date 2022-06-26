@@ -52,8 +52,7 @@ export function notFoundHandler(req, res, next) {
  * @param next - This is a function that will be called when the middleware is done.
  */
 export function errorHandler(err, req, res, next) {
-  if (env === 'development') console.error(err);
-  if (env === 'production') logger.error(err);
+  logger.error(err);
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'fail',
     request_url: req.originalUrl,

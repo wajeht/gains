@@ -6,7 +6,9 @@
 		"fontawesome",
 		"fortawesome",
 		"knexfile",
+		"lyler",
 		"middlewares",
+		"Mrorw",
 		"multistream",
 		"Pinia",
 		"pino",
@@ -14,9 +16,11 @@
 		"powerlifting",
 		"registerables",
 		"rmds",
+		"soapwa",
 		"todos",
 		"Vite",
 		"Vuejs",
-		"wajeht"
+		"wajeht",
+		"yanlon"
 	]
 }

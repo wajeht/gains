@@ -16,7 +16,7 @@ if (!database.host || database.database || !database.user || !database.password)
 
 export default {
   client: database.client,
-  debug: env === 'developement', // only in dev
+  // debug: env === 'development', // only in dev
   connection,
   pool: {
     min: 2,
