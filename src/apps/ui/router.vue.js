@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // regular
-import Features from './pages/regular/Features.vue';
+import About from './pages/regular/About.vue';
+import Login from './pages/regular/Login.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
 
@@ -20,9 +21,17 @@ const routes = [
     },
   },
   {
-    path: '/features',
-    name: 'Features',
-    component: Features,
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About,
     meta: {
       layout: 'RegularLayout',
     },
