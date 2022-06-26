@@ -1,4 +1,3 @@
-
 <template>
   <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -30,19 +29,18 @@
           >
         </li>
 
-        <!-- features -->
+        <!-- login -->
         <li class="nav-item">
-          <router-link
-            to="/features"
-            class="nav-link"
-            :class="{ active: $route.name === 'Features' }"
-            >Features</router-link
+          <router-link to="/login" class="nav-link" :class="{ active: $route.name === 'Login' }"
+            >Login</router-link
           >
         </li>
 
-        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+        <li class="nav-item">
+          <router-link to="/about" class="nav-link" :class="{ active: $route.name === 'About' }"
+            >About</router-link
+          >
+        </li>
       </ul>
     </header>
   </div>
