@@ -52,3 +52,10 @@ export const email = {
   auth_user: process.env.EMAIL_AUTH_USER,
   auth_pass: process.env.EMAIL_AUTH_PASS,
 };
+
+/* Exporting the discord id and token from the .env file. */
+export const discord = {
+  id: process.env.DISCORD_ID,
+  token: process.env.DISCORD_TOKEN,
+  url: process.env.DISCORD_URL,
+};

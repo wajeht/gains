@@ -1,5 +1,6 @@
 import logger from '../../../../libs/logger.js';
 import * as UsersQueries from './users.queries.js';
+import Chad from '../../../../libs/chad.js';
 
 /**
  * It creates a user and returns the user
@@ -21,6 +22,7 @@ export async function postUser(req, res) {
 export async function getUsers(req, res) {
   const users = await UsersQueries.getAllUsers();
   res.json(users);
+  Chad.notify('getting users');
 }
 
 /**
