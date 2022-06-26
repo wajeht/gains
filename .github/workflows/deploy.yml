@@ -14,6 +14,36 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create and populate .env file
+      env:
+        DB_CLIENT: ${{ secrets.DB_CLIENT }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_URL: ${{ secrets.DB_URL }}
+        PORT: ${{ secrets.PORT }}
+        COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
+        COOKIE_EXPIRATION: ${{ secrets.COOKIE_EXPIRATION }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        PASSWORD_SALT: ${{ secrets.PASSWORD_SALT }}
+        PINO_LOG_LEVEL: ${{ secrets.PINO_LOG_LEVEL }}
+      run: |
+        cat <<EOF > .env
+        DB_CLIENT="$DB_CLIENT"
+        DB_PORT="$DB_PORT"
+        DB_URL="$DB_URL"
+        PORT="$PORT"
+        ENV="$ENV"
+        COOKIE_SECRET="$COOKIE_SECRET"
+        COOKIE_EXPIRATION="$COOKIE_EXPIRATION"
+        JWT_SECRET="$JWT_SECRET"
+        PASSWORD_SALT="$PASSWORD_SALT"
+        PINO_LOG_LEVEL="$PINO_LOG_LEVEL"
+        EOF
+        echo "cat .env"
+        cat .env
+        echo "ls -a ${{ github.workspace }}"
+        ls -a ${{ github.workspace }}
+      shell: bash
+        
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
