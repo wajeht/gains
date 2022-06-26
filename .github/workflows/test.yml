@@ -1,5 +1,5 @@
 
-name: Node.js Test CI
+name: Test CI
 
 on:
   pull_request:
