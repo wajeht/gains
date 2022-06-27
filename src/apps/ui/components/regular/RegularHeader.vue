@@ -1,48 +1,43 @@
 <template>
-  <div class="container">
-    <header class="d-flex justify-content-between py-3 mb-4 border-bottom">
-      <router-link to="/" class="d-flex link-dark text-decoration-none">
-        <svg
-          class="bi me-2"
-          height="32"
-          viewBox="0 0 125 125"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
+  <header class="d-flex justify-content-between align-items-center py-3 mb-4 border-bottom">
+    <router-link to="/" class="d-flex link-dark text-decoration-none">
+      <svg
+        class="bi me-2"
+        height="32"
+        viewBox="0 0 125 125"
+        width="32"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m125 62.5c-34.5 0-62.5 28-62.5 62.5s28 62.5 62.5 62.5 62.5-28 62.5-62.5-28-62.5-62.5-62.5zm43.6 87.8c-2.3 3.3-5.7 5.9-9.4 7.6-3.6 1.6-7.8 1.8-7.8 1.7-.6-.4-.5 1.1-7.9 7.5-2.7 2.3-5.8 4.2-9.2 5.5-2.4 1-5 1.7-7.6 1.9-6.2.4-16-2.4-19.2-3.3-3.1-.9-6.3-1.9-9.2-3.2-1.2-.5-2.3-1.1-3.4-1.8 0 0-.1 0-.1-.1-.1-.1-.2-.1-.3-.2-.2-.1-.3-.3-.5-.4-.1-.1-.1-.1-.2-.2-.2-.3-.4-.6-.5-.8-2.3-4.3-2.4-9.6-1.9-14.3.6-5.1 2.1-10 3.9-14.7 2-5.3 4.2-10.5 6.6-15.6 2.3-4.9 4.7-9.7 6.8-14.6 1.5-3.6 2.7-7.2 3.6-11 .4-1.8.7-3.6.9-5.5.2-1.7.2-3.5.4-5.2.4-2.8 1.4-5.7 4.1-6.8 6.8-2.6 17.3-.5 18.3.7 1.1 1.4.3 3.6.1 5.2-.1 1.1-.1 2.1.1 3.2.2 1.2 1 2.1 1.4 3.2.7 2.2-2 4.5-3.5 5.7-2.2 1.6-4.8 2.5-7.4 3.4-2 .7-3.7 1.4-4.4 3.7-.2.8-.3 1.7-.4 2.5-.2 1.4-.5 2.8-.8 4.1-.6 2.8-1.1 5.6-1.5 8.4-.4 2.5-.9 5-1.1 7.5-.2 2.1.1 4.2.2 6.2.2 6.1-.5 12.6-4.4 17.6-1.2 1.5-.8 1.4-2.3 2.5-1.4 1 6.2-.9 8.9-11.4.1 0 .1-.1.2-.1 2.9-2.3 4.5-4.4 9.3-6.1 8.2-3 13.7-1.7 12.2-2.6-.9-.6-1.9-.7-2.9-.7 2.5-3.9 5.5-7.5 9.7-9.8 1.8-1 3.9-1.7 5.9-2.2 1.8-.4 3.9-.5 5.6.4 6.7 3.6 9.8 6.4 11.5 10.9 3 7 .7 14.9-3.8 21.2z"
+          transform="translate(-62 -62)"
+        />
+      </svg>
+
+      <span class="fs-4">Gains</span>
+    </router-link>
+
+    <ul class="nav nav-pills">
+      <!-- features -->
+      <li class="nav-item">
+        <router-link to="/features" class="nav-link" :class="{ active: $route.name === 'Features' }"
+          >Features</router-link
         >
-          <path
-            d="m125 62.5c-34.5 0-62.5 28-62.5 62.5s28 62.5 62.5 62.5 62.5-28 62.5-62.5-28-62.5-62.5-62.5zm43.6 87.8c-2.3 3.3-5.7 5.9-9.4 7.6-3.6 1.6-7.8 1.8-7.8 1.7-.6-.4-.5 1.1-7.9 7.5-2.7 2.3-5.8 4.2-9.2 5.5-2.4 1-5 1.7-7.6 1.9-6.2.4-16-2.4-19.2-3.3-3.1-.9-6.3-1.9-9.2-3.2-1.2-.5-2.3-1.1-3.4-1.8 0 0-.1 0-.1-.1-.1-.1-.2-.1-.3-.2-.2-.1-.3-.3-.5-.4-.1-.1-.1-.1-.2-.2-.2-.3-.4-.6-.5-.8-2.3-4.3-2.4-9.6-1.9-14.3.6-5.1 2.1-10 3.9-14.7 2-5.3 4.2-10.5 6.6-15.6 2.3-4.9 4.7-9.7 6.8-14.6 1.5-3.6 2.7-7.2 3.6-11 .4-1.8.7-3.6.9-5.5.2-1.7.2-3.5.4-5.2.4-2.8 1.4-5.7 4.1-6.8 6.8-2.6 17.3-.5 18.3.7 1.1 1.4.3 3.6.1 5.2-.1 1.1-.1 2.1.1 3.2.2 1.2 1 2.1 1.4 3.2.7 2.2-2 4.5-3.5 5.7-2.2 1.6-4.8 2.5-7.4 3.4-2 .7-3.7 1.4-4.4 3.7-.2.8-.3 1.7-.4 2.5-.2 1.4-.5 2.8-.8 4.1-.6 2.8-1.1 5.6-1.5 8.4-.4 2.5-.9 5-1.1 7.5-.2 2.1.1 4.2.2 6.2.2 6.1-.5 12.6-4.4 17.6-1.2 1.5-.8 1.4-2.3 2.5-1.4 1 6.2-.9 8.9-11.4.1 0 .1-.1.2-.1 2.9-2.3 4.5-4.4 9.3-6.1 8.2-3 13.7-1.7 12.2-2.6-.9-.6-1.9-.7-2.9-.7 2.5-3.9 5.5-7.5 9.7-9.8 1.8-1 3.9-1.7 5.9-2.2 1.8-.4 3.9-.5 5.6.4 6.7 3.6 9.8 6.4 11.5 10.9 3 7 .7 14.9-3.8 21.2z"
-            transform="translate(-62 -62)"
-          />
-        </svg>
+      </li>
 
-        <span class="fs-4">Gains</span>
-      </router-link>
+      <!-- contact -->
+      <li class="nav-item">
+        <router-link to="/contact" class="nav-link" :class="{ active: $route.name === 'Contact' }"
+          >Contact</router-link
+        >
+      </li>
 
-      <ul class="nav nav-pills">
-        <!-- features -->
-        <li class="nav-item">
-          <router-link
-            to="/features"
-            class="nav-link"
-            :class="{ active: $route.name === 'Features' }"
-            >Features</router-link
-          >
-        </li>
-
-        <!-- contact -->
-        <li class="nav-item">
-          <router-link to="/contact" class="nav-link" :class="{ active: $route.name === 'Contact' }"
-            >Contact</router-link
-          >
-        </li>
-
-        <!-- login -->
-        <li class="nav-item">
-          <router-link to="/login" class="nav-link" :class="{ active: $route.name === 'Login' }"
-            >Login</router-link
-          >
-        </li>
-      </ul>
-    </header>
-  </div>
+      <!-- login -->
+      <li class="nav-item">
+        <router-link to="/login" class="nav-link" :class="{ active: $route.name === 'Login' }"
+          >Login</router-link
+        >
+      </li>
+    </ul>
+  </header>
 </template>

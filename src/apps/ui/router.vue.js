@@ -14,6 +14,10 @@ import RegularNotFound from './pages/regular/RegularNotFound.vue';
 // dashboard
 import DashboardHome from './pages/dashboard/DashboardHome.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
+import Logs from './pages/dashboard/Logs.vue';
+import Settings from './pages/dashboard/Settings.vue';
+import Reports from './pages/dashboard/Reports.vue';
+import Videos from './pages/dashboard/Videos.vue';
 
 const routes = [
   // regular
@@ -94,6 +98,38 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardHome,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/logs',
+    name: 'Logs',
+    component: Logs,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/reports',
+    name: 'Reports',
+    component: Reports,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/settings',
+    name: 'Settings',
+    component: Settings,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/videos',
+    name: 'Videos',
+    component: Videos,
     meta: {
       layout: 'DashboardLayout',
     },

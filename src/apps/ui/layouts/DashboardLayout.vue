@@ -1,17 +1,21 @@
 <template>
-  <div id="admin">
+  <div id="admin" class="d-flex flex-column min-vh-100 border-2" style="background: #cccccc">
     <DashboardHeader />
-    <div id="admin-router-wrapper" class="container">
+    <main id="admin-router-wrapper" class="container flex-grow-1 bg-white">
       <router-view />
-    </div>
+    </main>
+    <DashboardFooter />
   </div>
 </template>
 
 <script>
   import DashboardHeader from '../components/dashboard/DashboardHeader.vue';
+  import DashboardFooter from '../components/dashboard/DashboardFooter.vue';
+
   export default {
     components: {
       DashboardHeader,
+      DashboardFooter,
     },
   };
 </script>
