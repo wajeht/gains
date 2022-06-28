@@ -1,5 +1,5 @@
 <template>
-  <div id="admin" class="d-flex flex-column min-vh-100 border-2" style="background: #cccccc">
+  <div id="admin" class="d-flex flex-column min-vh-100 border-2 bg-black">
     <DashboardHeader />
     <main id="admin-router-wrapper" class="container flex-grow-1 bg-white">
       <router-view />

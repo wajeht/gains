@@ -1,51 +1,86 @@
 <template>
   <!-- profile -->
-  <ul class="position-sticky bottom-0 container nav nav-pills justify-content-between bg-dark">
-    <li class="nav-item">
-      <router-link
-        :class="{ active: $route.name === 'Dashboard' }"
-        to="/dashboard"
-        class="nav-link d-flex flex-column"
-      >
-        <font-awesome-icon icon="trash" />
-        <span>Profile</span>
-      </router-link>
-    </li>
+  <div
+    class="
+      position-sticky
+      bottom-0
+      container
+      d-flex
+      justify-content-between
+      border-top
+      bg-white
+      text-muted
+    "
+  >
+    <router-link
+      :class="{ active: $route.name === 'Dashboard' }"
+      class="d-flex flex-column py-3"
+      to="/dashboard"
+    >
+      <font-awesome-icon icon="trash" />
+      <span>Profile</span>
+    </router-link>
 
     <!-- log -->
-    <li class="nav-item">
-      <router-link
-        :class="{ active: $route.name === 'Logs' }"
-        to="/dashboard/logs"
-        class="nav-link d-flex flex-column"
-      >
-        <font-awesome-icon icon="pen" />
-        <span>Logs</span>
-      </router-link>
-    </li>
+    <router-link
+      :class="{ active: $route.name === 'Logs' }"
+      to="/dashboard/logs"
+      class="d-flex flex-column py-3"
+    >
+      <font-awesome-icon icon="pen" />
+      <span>Logs</span>
+    </router-link>
 
     <!-- videos -->
-    <li class="nav-item">
-      <router-link
-        :class="{ active: $route.name === 'Videos' }"
-        to="/dashboard/videos"
-        class="nav-link d-flex flex-column"
-      >
-        <font-awesome-icon icon="play" />
-        <span>Videos</span>
-      </router-link>
-    </li>
+    <router-link
+      :class="{ active: $route.name === 'Videos' }"
+      to="/dashboard/videos"
+      class="d-flex flex-column py-3"
+    >
+      <font-awesome-icon icon="play" />
+      <span>Videos</span>
+    </router-link>
 
     <!-- report -->
-    <li class="nav-item">
-      <router-link
-        :class="{ active: $route.name === 'Reports' }"
-        to="/dashboard/reports"
-        class="nav-link d-flex flex-column"
-      >
-        <font-awesome-icon icon="table" />
-        <span>Report</span>
-      </router-link>
-    </li>
-  </ul>
+    <router-link
+      :class="{ active: $route.name === 'Reports' }"
+      to="/dashboard/reports"
+      class="d-flex flex-column py-3"
+    >
+      <font-awesome-icon icon="table" />
+      <span>Report</span>
+    </router-link>
+
+    <!-- settings -->
+    <router-link
+      :class="{ active: $route.name === 'Settings' }"
+      to="/dashboard/settings"
+      class="d-flex flex-column py-3"
+    >
+      <font-awesome-icon icon="gear" />
+      <span>Settings</span>
+    </router-link>
+  </div>
 </template>
+
+<style scoped>
+  .text-muted {
+    color: #8c8c8c;
+  }
+
+  a {
+    text-decoration: none;
+    color: grey;
+  }
+
+  a:hover {
+    color: #191919;
+  }
+
+  .active {
+    text-decoration: none;
+    color: #191919;
+    border-top: 2px solid #191919;
+    margin-top: -2px;
+  }
+</style>
