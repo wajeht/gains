@@ -13,7 +13,7 @@ Knex(options)
   .catch((err) => {
     // red('Database connection failed!');
     logger.error('Database connection failed!');
-    process.exit(1);
+    // process.exit(1);
   });
 
 export default Knex(options);

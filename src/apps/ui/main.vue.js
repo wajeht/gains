@@ -7,6 +7,7 @@ import routes from './router.vue.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap';
+import 'animate.css';
 import FontAwesomeIcon from './font-awesome';
 import { Chart, registerables } from 'chart.js';
 

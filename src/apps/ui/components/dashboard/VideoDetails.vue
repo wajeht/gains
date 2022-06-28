@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container animate__animated animate__faster animate__zoomIn">
     <div class="my-2">
       <div>{{ video }}</div>
       <div class="card text-center">
