@@ -28,7 +28,7 @@
 
     <!-- settings -->
     <div>
-      <router-link to="/dashboard/settings">
+      <router-link :class="{ active: $route.name === 'Settings' }" to="/dashboard/settings">
         <font-awesome-icon class="fs-4" icon="gear" />
       </router-link>
     </div>
@@ -46,6 +46,11 @@
   }
 
   a:hover {
+    color: #191919;
+  }
+
+  .active {
+    text-decoration: none;
     color: #191919;
   }
 </style>
