@@ -15,7 +15,7 @@
     <router-link
       :class="{ active: $route.name === 'Dashboard' }"
       class="d-flex flex-column py-3"
-      to="/dashboard"
+      to="/dashboard/profile"
     >
       <font-awesome-icon icon="trash" />
       <span>Profile</span>

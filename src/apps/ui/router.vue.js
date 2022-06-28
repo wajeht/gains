@@ -18,6 +18,7 @@ import Logs from './pages/dashboard/Logs.vue';
 import Settings from './pages/dashboard/Settings.vue';
 import Reports from './pages/dashboard/Reports.vue';
 import Videos from './pages/dashboard/Videos.vue';
+import VideoDetails from './components/dashboard/VideoDetails.vue';
 
 const routes = [
   // regular
@@ -138,6 +139,15 @@ const routes = [
     path: '/dashboard/videos',
     name: 'Videos',
     component: Videos,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/videos/:video',
+    name: 'VideoDetails',
+    component: VideoDetails,
+    props: true,
     meta: {
       layout: 'DashboardLayout',
     },
