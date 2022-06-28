@@ -48,7 +48,7 @@
       class="d-flex flex-column py-3"
     >
       <font-awesome-icon icon="table" />
-      <span>Report</span>
+      <span>Reports</span>
     </router-link>
 
     <!-- settings -->

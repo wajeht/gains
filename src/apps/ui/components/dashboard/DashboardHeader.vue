@@ -13,7 +13,7 @@
     "
   >
     <!-- profile image -->
-    <div>
+    <router-link :class="{ active: $route.name === 'Profile' }" to="/dashboard/profile">
       <img
         class="rounded"
         width="25"
@@ -21,17 +21,15 @@
         src="../../assets/images/logo.png"
         alt="profile-image"
       />
-    </div>
+    </router-link>
 
     <!-- search -->
     <input type="text" class="form-control form-control-sm" id="search" placeholder="Search.." />
 
     <!-- settings -->
-    <div>
-      <router-link :class="{ active: $route.name === 'Settings' }" to="/dashboard/settings">
-        <font-awesome-icon class="fs-4" icon="gear" />
-      </router-link>
-    </div>
+    <router-link :class="{ active: $route.name === 'Settings' }" to="/dashboard/settings">
+      <font-awesome-icon class="fs-4" icon="gear" />
+    </router-link>
   </div>
 </template>
 

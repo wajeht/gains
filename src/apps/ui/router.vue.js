@@ -103,6 +103,14 @@ const routes = [
     },
   },
   {
+    path: '/dashboard/profile',
+    name: 'Dashboard',
+    component: DashboardHome,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
     path: '/dashboard/logs',
     name: 'Logs',
     component: Logs,
