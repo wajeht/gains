@@ -1,7 +1,7 @@
 <template>
   <div class="my-2 d-flex flex-column gap-2">
     <div v-for="log in logs" class="card">
-      <div class="card-body p-2">
+      <div @click="logDetails(1)" class="card-body p-3">
         <div class="row">
           <div class="col-2">
             <div>
@@ -32,6 +32,15 @@
       return {
         logs: 12,
       };
+    },
+    methods: {
+      logDetails(id) {
+        this.$router.push({
+          // path: `/dashboard/logs/${id}`,
+          name: 'LogDetails',
+          params: { id: id },
+        });
+      },
     },
   };
 </script>

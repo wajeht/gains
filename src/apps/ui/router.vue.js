@@ -16,6 +16,7 @@ import Profile from './pages/dashboard/Profile.vue';
 import DashboardHome from './pages/dashboard/DashboardHome.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Logs from './pages/dashboard/Logs.vue';
+import LogDetails from './components/dashboard/LogDetails.vue';
 import Settings from './pages/dashboard/Settings.vue';
 import Reports from './pages/dashboard/Reports.vue';
 import Videos from './pages/dashboard/Videos.vue';
@@ -145,9 +146,18 @@ const routes = [
     },
   },
   {
-    path: '/dashboard/videos/:video',
+    path: '/dashboard/videos/:id',
     name: 'VideoDetails',
     component: VideoDetails,
+    props: true,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/log/:id',
+    name: 'LogDetails',
+    component: LogDetails,
     props: true,
     meta: {
       layout: 'DashboardLayout',

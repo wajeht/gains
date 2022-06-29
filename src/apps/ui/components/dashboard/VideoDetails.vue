@@ -54,7 +54,7 @@
 
 <script>
   export default {
-    props: ['video'],
+    props: ['id'],
     data() {
       return {
         id: this.$route.params.id,

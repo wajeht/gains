@@ -3,7 +3,7 @@
     <div class="row my-2">
       <div v-for="video in videos" :key="`${video.id}` - key" class="col-3 p-0">
         <div class="d-flex flex-column">
-          <router-link :to="{ name: 'VideoDetails', params: { video: video.id } }">
+          <router-link :to="{ name: 'VideoDetails', params: { id: video.id } }">
             <div class="card border">
               <img class="card-img-top" :src="video.screenshot_url" :alt="video.title" />
             </div>
