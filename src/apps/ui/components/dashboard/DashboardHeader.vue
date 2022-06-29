@@ -8,7 +8,7 @@
       align-items-center
       bg-white
       border-bottom
-      py-2
+      py-3
       gap-3
     "
   >

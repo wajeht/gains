@@ -1,6 +1,6 @@
 <template>
   <div class="my-2 d-flex flex-column gap-2">
-    <div v-for="log in logs" class="card">
+    <div v-for="log in logs" class="card" id="log">
       <div @click="logDetails(1)" class="card-body p-3">
         <div class="row">
           <div class="col-2">
@@ -44,3 +44,10 @@
     },
   };
 </script>
+
+<style>
+  #log:hover {
+    background: green;
+    cursor: pointer;
+  }
+</style>

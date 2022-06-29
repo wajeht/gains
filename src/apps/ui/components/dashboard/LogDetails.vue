@@ -31,27 +31,48 @@
         <div class="row mb-2">
           <label class="col-4 col-form-label">Bodyweight</label>
           <div class="col-8">
-            <input type="number" class="form-control form-control-sm" id="colFormLabelSm" />
+            <input type="number" class="form-control form-control-sm" id="bodyweight-id" />
           </div>
         </div>
 
         <!-- notes -->
         <div class="row mb-2">
-          <label class="col-4 col-form-label col-form-label-sm">Notes</label>
+          <label class="col-4 col-form-label">Notes</label>
           <div class="col-8">
-            <textarea
-              class="form-control form-control-sm"
-              id="exampleFormControlTextarea1"
-              rows="3"
-            ></textarea>
+            <textarea class="form-control form-control-sm" id="notes-id" rows="3"></textarea>
           </div>
         </div>
       </div>
     </form>
 
+    <!-- add a exercise -->
     <div class="card p-0">
       <div class="card-body py-2 px-3">
         <span>Add a exercise</span>
+      </div>
+    </div>
+
+    <!-- single exercise -->
+    <div class="card p-0">
+      <div class="card-body py-2">
+        <p>sumo conventional deadlift</p>
+        <div class="row">
+          <div class="col-2">
+            <input type="number" class="form-control form-control-sm" placeholder="set" />
+          </div>
+          <div class="col-2">
+            <input type="number" class="form-control form-control-sm" placeholder="reps" />
+          </div>
+          <div class="col-2">
+            <input type="number" class="form-control form-control-sm" placeholder="weight" />
+          </div>
+          <div class="col-2">
+            <input type="number" class="form-control form-control-sm" placeholder="rpe" />
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control form-control-sm" placeholder="notes" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
