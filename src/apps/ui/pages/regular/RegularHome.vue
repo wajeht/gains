@@ -3,9 +3,9 @@
     <h1 class="display-4 fw-bold">Let's make all kinds of gains!</h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">
-        Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most
-        popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid
-        system, extensive prebuilt components, and powerful JavaScript plugins.
+        The premier rep tracking and one rep max calculation application. Having trouble with any
+        specific obstacles within your program? Just want to improve an individual lift?
+        allkindsagains will enable you to accurately and easily track your progression.
       </p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
         <router-link to="/signup" class="btn btn-primary btn-lg px-4 me-sm-3">Sign up</router-link>
@@ -34,10 +34,7 @@
           <i class="bi bi-hand-index-thumb" style="font-size: 5em"></i>
         </div>
         <h2 class="text-center">Easy to use</h2>
-        <p>
-          Sign up using your fake information to start uploading videos. No complicated setup
-          required!
-        </p>
+        <p>Sign up with your email. No complicated setup required!</p>
       </div>
 
       <!-- open source -->
@@ -47,8 +44,8 @@
         </div>
         <h2 class="text-center">Open source</h2>
         <p>
-          This full-stack web app is open sourced on Github. You can go check it out via this
-          <a href="https://github.com/allkindsofgains/gains" target="_blank">link!</a>
+          This full-stack web app is open sourced on Github. You can go check it out
+          <a href="https://github.com/allkindsofgains/gains" target="_blank">here!</a>
         </p>
       </div>
 
@@ -57,50 +54,8 @@
         <div class="p-2 d-flex justify-content-center align-items-center">
           <i class="bi bi-shield-check" style="font-size: 5em"></i>
         </div>
-        <h2 class="text-center">Keep your privacy</h2>
-        <p>
-          We do not collect any of your data to do anything else than just logging your videos.
-          Nothing more, nothing less!
-        </p>
-      </div>
-
-      <!-- change this -->
-      <div class="feature col">
-        <div class="p-2 d-flex justify-content-center align-items-center">
-          <i class="bi bi-shield-check" style="font-size: 5em"></i>
-        </div>
-        <h2 class="text-center">change this</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus nesciunt fugit delectus
-          est, velit ipsum eius porro cupiditate earum doloribus odit explicabo eligendi aliquam
-          animi. Neque repellendus tenetur assumenda est!
-        </p>
-      </div>
-
-      <!-- change this -->
-      <div class="feature col">
-        <div class="p-2 d-flex justify-content-center align-items-center">
-          <i class="bi bi-shield-check" style="font-size: 5em"></i>
-        </div>
-        <h2 class="text-center">change this</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptate suscipit numquam
-          eaque sunt blanditiis? A eligendi sapiente sed consectetur. Corrupti eum saepe
-          perspiciatis iure. Esse officia earum fugiat totam.
-        </p>
-      </div>
-
-      <!-- change this -->
-      <div class="feature col">
-        <div class="p-2 d-flex justify-content-center align-items-center">
-          <i class="bi bi-shield-check" style="font-size: 5em"></i>
-        </div>
-        <h2 class="text-center">change this</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptatem quidem iste
-          mollitia autem doloremque ipsum voluptas explicabo odit eius at laudantium expedita dicta
-          nesciunt, temporibus fugit aspernatur veritatis cum.
-        </p>
+        <h2 class="text-center">Private</h2>
+        <p>We collect what you feel like giving us. Nothing more, nothing less!</p>
       </div>
     </div>
   </div>
