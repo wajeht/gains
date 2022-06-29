@@ -13,7 +13,7 @@
     "
   >
     <router-link
-      :class="{ active: $route.name === 'Dashboard' }"
+      :class="{ active: $route.name === 'Profile' }"
       class="d-flex flex-column py-3"
       to="/dashboard/profile"
     >

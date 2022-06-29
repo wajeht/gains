@@ -1,3 +1,3 @@
 <template>
-  <h1>Profile/Dashboard Home</h1>
+  <h1>Dashboard home</h1>
 </template>

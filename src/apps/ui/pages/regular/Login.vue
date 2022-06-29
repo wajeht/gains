@@ -32,7 +32,7 @@
     },
     methods: {
       handleSubmit() {
-        this.$router.push({ path: '/dashboard' });
+        this.$router.push({ path: '/dashboard/profile' });
       },
     },
   };

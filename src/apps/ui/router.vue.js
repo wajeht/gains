@@ -12,6 +12,7 @@ import RegularHome from './pages/regular/RegularHome.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
 
 // dashboard
+import Profile from './pages/dashboard/Profile.vue';
 import DashboardHome from './pages/dashboard/DashboardHome.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Logs from './pages/dashboard/Logs.vue';
@@ -105,8 +106,8 @@ const routes = [
   },
   {
     path: '/dashboard/profile',
-    name: 'Dashboard',
-    component: DashboardHome,
+    name: 'Profile',
+    component: Profile,
     meta: {
       layout: 'DashboardLayout',
     },
