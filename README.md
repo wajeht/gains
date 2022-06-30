@@ -18,6 +18,7 @@ The best way to track your workouts
 - **[Hover.css](https://ianlunn.github.io/Hover/)** for button hover animation
 - **[Type.js](https://github.com/mattboldt/typed.js/)** for text typewriter animation
 - **[AOS.js](https://github.com/michalsnik/aos)** for animate on scroll animation
+- **[AnimXYZ](https://animxyz.com/)** for core animation
 - **Font-awesome** and **Bootstrap-icon** for icons
 - **Command And Conquer (CAC)** for CLI
 

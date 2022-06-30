@@ -14,6 +14,9 @@ import 'aos/dist/aos.css';
 import FontAwesomeIcon from './font-awesome';
 import { Chart, registerables } from 'chart.js';
 
+import VueAnimXyz from '@animxyz/vue3';
+import '@animxyz/core';
+
 AOS.init();
 
 const app = createApp(App);
@@ -24,6 +27,7 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 app.config.performance = true;
 app.config.devtools = true;
 
+app.use(VueAnimXyz);
 app.use(routes);
 
 app.mount('#app');

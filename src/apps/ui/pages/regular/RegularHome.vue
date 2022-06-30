@@ -14,7 +14,10 @@
     </span>
 
     <!-- hero -->
-    <h1 class="display-4 fw-bold">Let's make all kinds of gains!</h1>
+
+    <XyzTransition xyz="fade up big">
+      <h1 class="display-4 fw-bold">Let's make all kinds of gains!</h1>
+    </XyzTransition>
 
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">

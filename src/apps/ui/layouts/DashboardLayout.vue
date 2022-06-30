@@ -2,7 +2,7 @@
   <div id="admin" class="d-flex flex-column min-vh-100 border-2 bg-black">
     <DashboardHeader />
     <main id="admin-router-wrapper" class="container flex-grow-1" style="background-color: #ebeae2">
-      <router-view />
+      <router-view> </router-view>
     </main>
     <DashboardFooter />
   </div>
