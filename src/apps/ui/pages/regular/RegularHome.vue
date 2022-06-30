@@ -1,8 +1,8 @@
 <template>
-  <div class="text-center px-4 pb-5 border-bottom">
+  <div class="text-center px-4 pb-5 border-bottom mx-auto">
     <!-- chip -->
-    <span class="mb-3 badge bg-secondary py-2 px-3 animate__animated animate__fadeInDown">
-      Hi there 👋, we are building Gains live at 8:00 PM (EDT). Join us via
+    <span class="mb-3 badge bg-secondary py-2 mx-auto px-3 animate__animated animate__fadeInDown">
+      We are building Gains live at 8:00 PM (EDT). Join us via
       <a
         class="text-white text-decoration-none"
         href="https://discord.com/channels/988167900420534273/989628732895543296"
@@ -23,8 +23,10 @@
         allkindsagains will enable you to accurately and easily track your progression.
       </p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-        <router-link to="/signup" class="btn btn-dark btn-lg px-4 me-sm-3">Sign up</router-link>
-        <router-link to="/features" class="btn btn-outline-secondary btn-lg px-4"
+        <router-link to="/signup" class="hvr-grow btn btn-dark btn-lg px-4 me-sm-3"
+          >Sign up</router-link
+        >
+        <router-link to="/features" class="hvr-grow btn btn-outline-secondary btn-lg px-4"
           >Learn more</router-link
         >
       </div>
@@ -79,3 +81,15 @@
     </div>
   </div>
 </template>
+
+<script>
+  import Typed from 'typed.js';
+
+  export default {
+    data() {
+      return {
+        title: '',
+      };
+    },
+  };
+</script>

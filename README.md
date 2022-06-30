@@ -2,7 +2,6 @@
 
 [![Node.js CI](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/allkindsofgains/gains)
 
-
 The best way to track your workouts
 
 # 📚 Technologies
@@ -16,6 +15,8 @@ The best way to track your workouts
 - **Bootstrap 5** for basic styling
 - **Vitest** and **Cypress** for testing
 - **Chart.js** for beautiful charts
+- **[Hover.css](https://ianlunn.github.io/Hover/)** for button hover animation
+- **[Type.js](https://github.com/mattboldt/typed.js/)** for text typewriter animation
 - **Font-awesome** and **Bootstrap-icon** for icons
 - **Command And Conquer (CAC)** for CLI
 
