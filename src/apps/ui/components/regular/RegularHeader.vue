@@ -59,4 +59,13 @@
     background: #212529;
     color: white;
   }
+
+  .nav-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px solid #212529;
+  }
+
+  .nav-link.active:hover {
+    text-decoration: none;
+  }
 </style>

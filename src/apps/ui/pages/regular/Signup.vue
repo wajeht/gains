@@ -1,7 +1,12 @@
 <template>
   <form
     @submit.prevent="handleSubmit"
-    class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto animate__animated animate__fadeIn"
+    class="
+      px-4
+      col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4
+      mx-auto
+      animate__animated animate__fadeIn
+    "
   >
     <h1 class="mb-3">Signup</h1>
     <div class="mb-3">
