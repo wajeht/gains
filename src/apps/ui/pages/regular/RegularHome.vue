@@ -1,16 +1,21 @@
 <template>
-  <div class="text-center px-4 py-5 border-bottom">
-    <span class="mb-3 badge bg-secondary">
+  <div class="text-center px-4 pb-5 border-bottom">
+    <!-- chip -->
+    <span class="mb-3 badge bg-secondary py-2 px-3">
       Hi there 👋, we are building Gains live at 8:00 PM (EDT). Join us via
       <a
-        class="text-white"
+        class="text-white text-decoration-none"
         href="https://discord.com/channels/988167900420534273/989628732895543296"
         target="_blank"
       >
         Discord!
+        <i class="bi bi-discord"></i>
       </a>
     </span>
+
+    <!-- hero -->
     <h1 class="display-4 fw-bold">Let's make all kinds of gains!</h1>
+
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">
         The premier rep tracking and one rep max calculation application. Having trouble with any
