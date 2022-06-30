@@ -14,6 +14,7 @@ import RegularNotFound from './pages/regular/RegularNotFound.vue';
 // dashboard
 import Profile from './pages/dashboard/Profile.vue';
 import DashboardHome from './pages/dashboard/DashboardHome.vue';
+import DashboardLogin from './components/dashboard/DashboardLogin.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Logs from './pages/dashboard/Logs.vue';
 import LogDetails from './components/dashboard/LogDetails.vue';
@@ -101,6 +102,14 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardHome,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/login',
+    name: 'DashboardLogin',
+    component: DashboardLogin,
     meta: {
       layout: 'DashboardLayout',
     },
