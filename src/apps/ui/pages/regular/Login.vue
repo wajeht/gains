@@ -13,12 +13,12 @@
       <input type="checkbox" class="form-check-input" id="checkbox" />
       <div class="d-flex justify-content-between">
         <label class="form-check-label" for="checkbox-label">Remember me</label>
-        <router-link class="text-decoration-none" to="/forget-password"
+        <router-link class="text-decoration-none link-dark" to="/forget-password"
           >Forget password?</router-link
         >
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-dark">Submit</button>
   </form>
 </template>
 

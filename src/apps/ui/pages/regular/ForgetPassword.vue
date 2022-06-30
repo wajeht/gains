@@ -5,7 +5,7 @@
       <label for="email" class="form-label">Email</label>
       <input v-model="email" type="email" class="form-control" id="email" required />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-dark">Submit</button>
   </form>
 </template>
 

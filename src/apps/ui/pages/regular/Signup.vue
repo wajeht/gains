@@ -25,11 +25,11 @@
       </div>
       <div id="agree-text" class="form-text">
         Signing up signifies that you have read and agree to the
-        <router-link to="/terms" class="">Terms of Service</router-link> and our
-        <router-link to="/privacy" class="">Privacy Policy</router-link>.
+        <router-link to="/terms" class="link-dark">Terms of Service</router-link> and our
+        <router-link to="/privacy" class="link-dark">Privacy Policy</router-link>.
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-dark">Submit</button>
   </form>
 </template>
 

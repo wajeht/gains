@@ -8,7 +8,7 @@
         allkindsagains will enable you to accurately and easily track your progression.
       </p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-        <router-link to="/signup" class="btn btn-primary btn-lg px-4 me-sm-3">Sign up</router-link>
+        <router-link to="/signup" class="btn btn-dark btn-lg px-4 me-sm-3">Sign up</router-link>
         <router-link to="/features" class="btn btn-outline-secondary btn-lg px-4"
           >Learn more</router-link
         >
@@ -34,7 +34,7 @@
           <i class="bi bi-hand-index-thumb" style="font-size: 5em"></i>
         </div>
         <h2 class="text-center">Easy to use</h2>
-        <p>Sign up with your email. No complicated setup required!</p>
+        <p class="text-center">Sign up with your email. No complicated setup required!</p>
       </div>
 
       <!-- open source -->
@@ -43,9 +43,11 @@
           <i class="bi bi-github" style="font-size: 5em"></i>
         </div>
         <h2 class="text-center">Open source</h2>
-        <p>
+        <p class="text-center">
           This full-stack web app is open sourced on Github. You can go check it out
-          <a href="https://github.com/allkindsofgains/gains" target="_blank">here!</a>
+          <a href="https://github.com/allkindsofgains/gains" class="link-dark" target="_blank"
+            >here!</a
+          >
         </p>
       </div>
 
@@ -55,7 +57,9 @@
           <i class="bi bi-shield-check" style="font-size: 5em"></i>
         </div>
         <h2 class="text-center">Private</h2>
-        <p>We collect what you feel like giving us. Nothing more, nothing less!</p>
+        <p class="text-center">
+          We collect what you feel like giving us. Nothing more, nothing less!
+        </p>
       </div>
     </div>
   </div>

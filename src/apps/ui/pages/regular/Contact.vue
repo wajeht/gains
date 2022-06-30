@@ -13,7 +13,7 @@
       <label for="message" class="form-label">Message</label>
       <textarea class="form-control" id="message" rows="5"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Send</button>
+    <button type="submit" class="btn btn-dark">Send</button>
   </form>
 </template>
 
