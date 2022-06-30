@@ -1,18 +1,19 @@
 <template>
   <div class="text-center px-4 pb-5 border-bottom mx-auto">
     <!-- chip -->
-    <span class="mb-3 badge bg-secondary py-2 mx-auto px-3 animate__animated animate__fadeInDown">
-      We are building Gains live at 8:00 PM (EDT). Join us via
-      <a
-        class="text-white text-decoration-none"
-        href="https://discord.com/channels/988167900420534273/989628732895543296"
-        target="_blank"
-      >
-        Discord!
-        <i class="bi bi-discord"></i>
-      </a>
-    </span>
-
+    <div class="mb-3 py-2 mx-auto px-3 animate__animated animate__fadeInDown">
+      <span class="alert alert-danger">
+        We are building Gains live at 8:00 PM (EDT). Join us via
+        <a
+          class="alert-link text-decoration-none"
+          href="https://discord.com/channels/988167900420534273/989628732895543296"
+          target="_blank"
+        >
+          Discord!
+          <i class="bi bi-discord"></i>
+        </a>
+      </span>
+    </div>
     <!-- hero -->
 
     <XyzTransition xyz="fade up big">
