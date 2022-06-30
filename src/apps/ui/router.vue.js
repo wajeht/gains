@@ -111,7 +111,7 @@ const routes = [
     name: 'DashboardLogin',
     component: DashboardLogin,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'EmptyDashboardLayout',
     },
   },
   {

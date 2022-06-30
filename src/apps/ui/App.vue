@@ -4,12 +4,14 @@
 
 <script >
   import DashboardLayout from './layouts/DashboardLayout.vue';
+  import EmptyDashboardLayout from './layouts/EmptyDashboardLayout.vue';
   import RegularLayout from './layouts/RegularLayout.vue';
 
   export default {
     components: {
       DashboardLayout,
       RegularLayout,
+      EmptyDashboardLayout,
     },
     data() {
       return {
@@ -22,7 +24,7 @@
         if (to.meta.layout !== undefined) {
           this.layout = to.meta.layout;
         } else {
-          this.layout = 'dashboard'; // this is default layout if route meta is not set
+          this.layout = 'DashboardLayout'; // this is default layout if route meta is not set
         }
       },
     },
