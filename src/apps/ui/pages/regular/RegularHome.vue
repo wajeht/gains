@@ -1,7 +1,7 @@
 <template>
   <div class="text-center px-4 pb-5 border-bottom">
     <!-- chip -->
-    <span class="mb-3 badge bg-secondary py-2 px-3">
+    <span class="mb-3 badge bg-secondary py-2 px-3 animate__animated animate__fadeInDown">
       Hi there 👋, we are building Gains live at 8:00 PM (EDT). Join us via
       <a
         class="text-white text-decoration-none"
@@ -29,7 +29,7 @@
         >
       </div>
     </div>
-    <div class="overflow-hidden">
+    <div class="overflow-hidden animate__animated animate__fadeIn">
       <div class="container px-5">
         <img
           src="../../assets/images/hero.png"
