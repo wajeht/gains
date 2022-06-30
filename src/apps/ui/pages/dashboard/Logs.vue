@@ -47,7 +47,8 @@
 
 <style>
   #log:hover {
-    background: green;
+    /* background: green; */
+    background: #f4f4f4;
     cursor: pointer;
   }
 </style>

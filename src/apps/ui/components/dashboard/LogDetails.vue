@@ -27,11 +27,34 @@
           </div>
         </div>
 
-        <!-- bodyweight time -->
+        <!-- bodyweight  -->
         <div class="row mb-2">
           <label class="col-4 col-form-label">Bodyweight</label>
           <div class="col-8">
             <input type="number" class="form-control form-control-sm" id="bodyweight-id" />
+          </div>
+        </div>
+
+        <!-- hours of sleep  -->
+        <div class="row mb-2">
+          <label class="col-4 col-form-label">Hours of sleep</label>
+          <div class="col-8">
+            <input type="number" class="form-control form-control-sm" id="hours-of-sleep-id" />
+          </div>
+        </div>
+
+        <!-- session rpe  -->
+        <div class="row mb-2">
+          <label class="col-4 col-form-label">Session RPE </label>
+          <div class="col-8">
+            <input
+              type="number"
+              step=".5"
+              min="5"
+              max="10"
+              class="form-control form-control-sm"
+              id="session-rpe-id"
+            />
           </div>
         </div>
 
@@ -58,7 +81,8 @@
         <p>sumo conventional deadlift</p>
         <div class="row">
           <div class="col-2">
-            <input type="number" class="form-control form-control-sm" placeholder="set" />
+            <!-- <input type="number" class="form-control form-control-sm" placeholder="set" /> -->
+            <span>1</span>
           </div>
           <div class="col-2">
             <input type="number" class="form-control form-control-sm" placeholder="reps" />
