@@ -9,8 +9,12 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap';
 import 'animate.css';
 import 'hover.css';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import FontAwesomeIcon from './font-awesome';
 import { Chart, registerables } from 'chart.js';
+
+AOS.init();
 
 const app = createApp(App);
 
