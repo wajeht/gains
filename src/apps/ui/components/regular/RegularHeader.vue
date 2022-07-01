@@ -63,8 +63,6 @@
   .nav-link:hover {
     background: #6c757d;
     color: white;
-    /* text-decoration: underline;
-      text-decoration-thickness: 2px solid #212529; */
   }
 
   .nav-link.active:hover {
