@@ -1,36 +1,46 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto">
-    <!-- title -->
-    <h1 class="mb-3">Forget Password</h1>
+  <div
+    class="
+      px-4
+      col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4
+      mx-auto
+      animate__animated animate__fadeIn
+    "
+  >
+    <!-- form -->
+    <form @submit.prevent="handleSubmit">
+      <!-- title -->
+      <h1 class="mb-3">Forget Password</h1>
 
-    <!-- error -->
-    <div v-if="alert.length" class="mb-3 alert alert-success">
-      <span>{{ alert }}</span>
-    </div>
-
-    <!-- email -->
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input
-        v-model="email"
-        type="email"
-        class="form-control"
-        id="email"
-        :disabled="loading"
-        required
-      />
-    </div>
-
-    <!-- button -->
-    <button type="submit" class="btn btn-dark" :disabled="loading">
-      <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
-        <span class="visually-hidden">Loading...</span>
+      <!-- error -->
+      <div v-if="alert.length" class="mb-3 alert alert-success">
+        <span>{{ alert }}</span>
       </div>
 
-      <span v-if="!loading"> Submit </span>
-      <span v-if="loading"> Loading... </span>
-    </button>
-  </form>
+      <!-- email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          v-model="email"
+          type="email"
+          class="form-control"
+          id="email"
+          :disabled="loading"
+          required
+        />
+      </div>
+
+      <!-- button -->
+      <button type="submit" class="btn btn-dark" :disabled="loading">
+        <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+
+        <span v-if="!loading"> Submit </span>
+        <span v-if="loading"> Loading... </span>
+      </button>
+    </form>
+  </div>
 </template>
 
 <script>
