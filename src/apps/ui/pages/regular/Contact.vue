@@ -1,12 +1,7 @@
 <template>
   <form
     @submit.prevent="handleSubmit"
-    class="
-      px-4
-      col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4
-      mx-auto
-      animate__animated animate__fadeIn
-    "
+    class="px-4 col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto animate__animated animate__fadeIn"
   >
     <!-- title -->
     <h1 class="mb-3">Contact</h1>
@@ -45,7 +40,14 @@
     <!-- message -->
     <div class="mb-3">
       <label for="message" class="form-label">Message</label>
-      <textarea class="form-control" id="message" rows="5" :disabled="loading" required></textarea>
+      <textarea
+        v-model="message"
+        class="form-control"
+        id="message"
+        rows="5"
+        :disabled="loading"
+        required
+      ></textarea>
     </div>
 
     <!-- button -->
@@ -61,32 +63,32 @@
 </template>
 
 <script>
-  import { sleep } from '../../../../utils/helpers.js';
+import { sleep } from '../../../../utils/helpers.js';
 
-  export default {
-    data() {
-      return {
-        subject: '',
-        email: '',
-        message: '',
-        alert: '',
-        loading: false,
-      };
+export default {
+  data() {
+    return {
+      subject: '',
+      email: '',
+      message: '',
+      alert: '',
+      loading: false,
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      this.loading = true;
+
+      await sleep(3000);
+
+      this.loading = false;
+
+      this.alert = "We'll get in touch with you soon!";
+
+      this.subject = '';
+      this.email = '';
+      this.message = '';
     },
-    methods: {
-      async handleSubmit() {
-        this.loading = true;
-
-        await sleep(3000);
-
-        this.loading = false;
-
-        this.alert = "We'll get in touch with you soon!";
-
-        this.subject = '';
-        this.email = '';
-        this.message = '';
-      },
-    },
-  };
+  },
+};
 </script>
