@@ -41,14 +41,14 @@
       <span>Videos</span>
     </router-link>
 
-    <!-- resources -->
+    <!-- Tools -->
     <router-link
-      :class="{ active: $route.name === 'Resources' }"
-      to="/dashboard/Resources"
+      :class="{ active: $route.name === 'Tools' }"
+      to="/dashboard/tools"
       class="d-flex flex-column py-3 gap-1"
     >
       <font-awesome-icon icon="screwdriver-wrench" />
-      <span>Resources</span>
+      <span>Tools</span>
     </router-link>
 
     <!-- settings -->
