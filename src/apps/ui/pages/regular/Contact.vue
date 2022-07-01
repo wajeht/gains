@@ -13,7 +13,10 @@
       <h1 class="mb-3">Contact</h1>
 
       <!-- alert -->
-      <div v-if="alert.length" class="mb-3 alert alert-success">
+      <div
+        v-if="alert.length"
+        class="mb-3 alert alert-success animate__animated animate__zoomIn animate__faster"
+      >
         <span>{{ alert }}</span>
       </div>
 
@@ -118,6 +121,10 @@
         this.subject = '';
         this.email = '';
         this.message = '';
+
+        await sleep(5000);
+
+        this.alert = '';
       },
     },
   };

@@ -13,7 +13,10 @@
       <h1 class="mb-3">Forget Password</h1>
 
       <!-- error -->
-      <div v-if="alert.length" class="mb-3 alert alert-success">
+      <div
+        v-if="alert.length"
+        class="mb-3 alert alert-success animate__animated animate__zoomIn animate__faster"
+      >
         <span>{{ alert }}</span>
       </div>
 
@@ -63,7 +66,11 @@
         this.loading = false;
 
         this.email = '';
-        this.alert = "If you have an account with us, we'll send you a reset link!";
+        this.alert = "If you have an account with us, we'll send you a reset link to your inbox!";
+
+        await sleep(5000);
+
+        this.alert = '';
       },
     },
   };
