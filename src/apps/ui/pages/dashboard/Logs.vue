@@ -2,20 +2,18 @@
   <div class="my-2 d-flex flex-column gap-2">
     <div v-for="log in logs" data-aos="fade-up" class="card" id="log">
       <div @click="logDetails(1)" class="card-body p-3">
-        <div class="row">
+        <div class="d-flex justify-content-between gap-5">
           <!-- start -->
-          <div class="col-2">
-            <div>
-              <span>Thu</span>
-              <h5 class="card-title">16</h5>
-            </div>
+          <div>
+            <span>Thu</span>
+            <h5 class="card-title">16</h5>
           </div>
 
           <!-- middle -->
-          <div class="col-8">
-            <h5 class="card-title">upperbody workout session</h5>
+          <div class="flex-grow-1">
+            <h5 class="card-title">upperbody workout session xxxxxxxxxxx</h5>
             <div class="card-text">
-              <ul class="list-unstyled">
+              <ul class="list-unstyled mb-0 pb-0">
                 <li>close grip bench press</li>
                 <li>conventional deadlift</li>
                 <li>high bar squat</li>
@@ -25,9 +23,8 @@
           </div>
 
           <!-- end -->
-          <div class="col-2 d-flex flex-column justify-content-between">
-            <span><i class="bi bi-three-dots-vertical"></i></span>
-            <small class="text-muted d-block text-nowrap">123 min</small>
+          <div>
+            <small class="text-muted d-block text-end">123 min</small>
           </div>
         </div>
       </div>
