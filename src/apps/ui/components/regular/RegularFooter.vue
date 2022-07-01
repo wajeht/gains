@@ -1,5 +1,5 @@
 <template>
-  <footer class="py-3 border-top bg-white">
+  <footer class="py-4 border-top bg-white">
     <div class="container d-flex justify-content-between">
       <!-- copyright -->
       <span class="text-muted">Copyright © 2022 allkindsofgains.app</span>
