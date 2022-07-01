@@ -1,30 +1,7 @@
 <template>
   <div class="px-4 mx-auto animate__animated animate__fadeIn">
-    <!-- github -->
-    <section class="pb-5 text-center">
-      <!-- title -->
-      <h2 class="featurette-heading">
-        Are you a developer? <span class="text-muted">That's cool..!</span>
-      </h2>
-
-      <!-- description -->
-      <p class="lead py-3">
-        Help us bring new ideas to life by contributing to our long term project.
-      </p>
-
-      <!-- button -->
-      <a
-        class="btn btn-success w-50"
-        href="https://github.com/allkindsofgains/gains"
-        target="_blank"
-      >
-        <i class="bi bi-github me-1"></i>
-        Contribute
-      </a>
-    </section>
-
     <!-- feature 1 -->
-    <section class="py-5 border-top">
+    <section class="pb-5">
       <div class="row">
         <div class="col-md-7">
           <h2 class="featurette-heading">
@@ -144,6 +121,40 @@
             <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
           </svg>
         </div>
+      </div>
+    </section>
+
+    <!-- github -->
+    <section class="py-5 border-top text-center">
+      <!-- title -->
+      <h2 class="featurette-heading">
+        Are you a developer? <span class="text-muted">That's cool..!</span>
+      </h2>
+
+      <!-- description -->
+      <p class="lead py-3">
+        Help us bring new ideas to life by contributing to our long term project. Or if you have
+        specific idea that will help many lifters, feel free to get involve with our development
+        process!
+      </p>
+
+      <!-- button -->
+      <div class="d-flex justify-content-center gap-2">
+        <!-- contribute -->
+        <a class="btn btn-success" href="https://github.com/allkindsofgains/gains" target="_blank">
+          <i class="bi bi-github me-1"></i>
+          Contribute
+        </a>
+
+        <!-- request feature -->
+        <a
+          class="btn btn-primary"
+          href="https://github.com/allkindsofgains/gains/issues/new/choose"
+          target="_blank"
+        >
+          <i class="bi bi-plus-circle-fill me-1"></i>
+          Request features
+        </a>
       </div>
     </section>
   </div>
