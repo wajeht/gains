@@ -186,16 +186,25 @@
       </div>
 
       <!-- add a exercise -->
-      <div
-        role="button"
-        data-bs-toggle="modal"
-        data-bs-target="#add-a-lift"
-        class="btn btn-light border"
-      >
-        <span>Add a lift</span>
+      <div class="border">
+        <!-- model button -->
+        <button
+          type="button"
+          class="btn btn-secondary w-100"
+          data-bs-toggle="modal"
+          data-bs-target="#add-a-lift"
+        >
+          Add a lift
+        </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="add-a-lift" tabindex="-1" aria-hidden="true">
+        <!-- modal -->
+        <div
+          class="modal fade"
+          id="add-a-lift"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+        >
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
@@ -207,12 +216,36 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">...</div>
+              <div class="modal-body">
+                <form>
+                  <!-- categories -->
+                  <div class="mb-3">
+                    <label for="categories" class="form-label">Categories</label>
+                    <select id="categories" class="form-select">
+                      <option>squat</option>
+                      <option>bench</option>
+                      <option>deadlift</option>
+                      <option>press</option>
+                    </select>
+                  </div>
+
+                  <!-- lift -->
+                  <div class="mb-3">
+                    <label for="lift" class="form-label">Lift</label>
+                    <select id="lift" class="form-select">
+                      <option>sumo deadlift</option>
+                      <option>romanian deadlift</option>
+                      <option>stiff legged deadlift</option>
+                      <option>conventional deadlift</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  Close
+                  Cancel
                 </button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-dark">Add</button>
               </div>
             </div>
           </div>
