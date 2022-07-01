@@ -1,8 +1,19 @@
 <template>
   <div class="text-center px-4 pb-5 border-bottom mx-auto">
     <!-- chip -->
-    <div class="mb-3 py-2 mx-auto px-3 animate__animated animate__fadeInDown">
-      <span class="alert alert-danger">
+    <div
+      class="
+        alert alert-danger
+        mb-3
+        py-2
+        mx-auto
+        px-3
+        animate__animated animate__fadeInDown
+        d-block
+      "
+      style="width: fit-content"
+    >
+      <small>
         We are building Gains live at 8:00 PM (EDT). Join us via
         <a
           class="alert-link text-decoration-none"
@@ -12,7 +23,7 @@
           Discord!
           <i class="bi bi-discord"></i>
         </a>
-      </span>
+      </small>
     </div>
     <!-- hero -->
 
