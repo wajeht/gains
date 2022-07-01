@@ -84,9 +84,9 @@
           </div>
           <h2 class="text-center">Open source</h2>
           <p class="text-center">
-            This full-stack web app is open sourced on Github. You can go check it out
+            This project is open sourced. You can go check it out via
             <a href="https://github.com/allkindsofgains/gains" class="link-dark" target="_blank"
-              >here!</a
+              >Github!</a
             >
           </p>
         </div>
