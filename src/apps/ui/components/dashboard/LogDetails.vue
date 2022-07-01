@@ -77,33 +77,143 @@
         </div>
       </form>
 
-      <!-- add a exercise -->
-      <div class="card p-0">
-        <div class="card-body py-2 px-3">
-          <span>Add a exercise</span>
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <!-- first -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseOne"
+              aria-expanded="true"
+              aria-controls="panelsStayOpen-collapseOne"
+            >
+              competition deadlift
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseOne"
+            class="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingOne"
+          >
+            <div class="accordion-body table-responsive-sm w-100">
+              <table class="table table-sm table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th class="align-middle text-center" scope="col">Sets</th>
+                    <th class="align-middle text-center" scope="col">Reps</th>
+                    <th class="align-middle text-center" scope="col">Weight</th>
+                    <th class="align-middle text-center" scope="col">RPE</th>
+                    <th class="align-middle" scope="col">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="align-middle text-center" scope="row">3</th>
+                    <td class="align-middle text-center">4</td>
+                    <td class="align-middle text-center">565</td>
+                    <td class="align-middle text-center">@9</td>
+                    <td class="align-middle text-truncate" style="max-width: 111px">
+                      <small> miss-grooved asdfasdfasdf</small>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- second -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseTwo"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseTwo"
+            >
+              Accordion Item #2
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseTwo"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingTwo"
+          >
+            <div class="accordion-body">
+              <strong>This is the second item's accordion body.</strong> It is hidden by default,
+              until the collapse plugin adds the appropriate classes that we use to style each
+              element. These classes control the overall appearance, as well as the showing and
+              hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+              our default variables. It's also worth noting that just about any HTML can go within
+              the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+          </div>
+        </div>
+
+        <!-- third -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseThree"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseThree"
+            >
+              Accordion Item #3
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseThree"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingThree"
+          >
+            <div class="accordion-body">
+              <strong>This is the third item's accordion body.</strong> It is hidden by default,
+              until the collapse plugin adds the appropriate classes that we use to style each
+              element. These classes control the overall appearance, as well as the showing and
+              hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+              our default variables. It's also worth noting that just about any HTML can go within
+              the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- single exercise -->
-      <div class="card p-0">
-        <div class="card-body py-2">
-          <p>sumo conventional deadlift</p>
-          <div class="row">
-            <div class="col-2">
-              <!-- <input type="number" class="form-control form-control-sm" placeholder="set" /> -->
-              <span>1</span>
-            </div>
-            <div class="col-2">
-              <input type="number" class="form-control form-control-sm" placeholder="reps" />
-            </div>
-            <div class="col-2">
-              <input type="number" class="form-control form-control-sm" placeholder="weight" />
-            </div>
-            <div class="col-2">
-              <input type="number" class="form-control form-control-sm" placeholder="rpe" />
-            </div>
-            <div class="col-4">
-              <input type="text" class="form-control form-control-sm" placeholder="notes" />
+      <!-- add a exercise -->
+      <div
+        role="button"
+        data-bs-toggle="modal"
+        data-bs-target="#add-a-lift"
+        class="btn btn-light border"
+      >
+        <span>Add a lift</span>
+
+        <!-- Modal -->
+        <div class="modal fade" id="add-a-lift" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add a lift</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">...</div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
             </div>
           </div>
         </div>
