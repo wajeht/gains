@@ -12,7 +12,7 @@
           </div>
 
           <!-- middle -->
-          <div class="col-9">
+          <div class="col-8">
             <h5 class="card-title">upperbody workout session</h5>
             <div class="card-text">
               <ul class="list-unstyled">
@@ -25,13 +25,9 @@
           </div>
 
           <!-- end -->
-          <div class="col-1">
-            <div class="d-flex flex-column justify-content-between">
-              <span>
-                <i class="bi bi-three-dots-vertical"></i>
-              </span>
-              <small class="text-muted d-block">123 min</small>
-            </div>
+          <div class="col-2 d-flex flex-column justify-content-between">
+            <span><i class="bi bi-three-dots-vertical"></i></span>
+            <small class="text-muted d-block text-nowrap">123 min</small>
           </div>
         </div>
       </div>
