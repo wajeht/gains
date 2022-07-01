@@ -8,35 +8,84 @@
       animate__animated animate__fadeIn
     "
   >
+    <!-- title -->
     <h1 class="mb-3">Contact</h1>
+
+    <!-- alert -->
+    <div v-if="alert.length" class="mb-3 alert alert-success">
+      <span>{{ alert }}</span>
+    </div>
+
+    <!-- subject -->
     <div class="mb-3">
       <label for="subject" class="form-label">Subject</label>
-      <input v-model="subject" type="subject" class="form-control" id="subject" required />
+      <input
+        v-model="subject"
+        type="subject"
+        class="form-control"
+        id="subject"
+        :disabled="loading"
+        required
+      />
     </div>
+
+    <!-- email -->
     <div class="mb-3">
       <label for="Email" class="form-label">Email</label>
-      <input v-model="password" type="Email" class="form-control" id="Email" required />
+      <input
+        v-model="email"
+        type="Email"
+        class="form-control"
+        id="Email"
+        :disabled="loading"
+        required
+      />
     </div>
+
+    <!-- message -->
     <div class="mb-3">
       <label for="message" class="form-label">Message</label>
-      <textarea class="form-control" id="message" rows="5"></textarea>
+      <textarea class="form-control" id="message" rows="5" :disabled="loading" required></textarea>
     </div>
-    <button type="submit" class="btn btn-dark">Send</button>
+
+    <!-- button -->
+    <button type="submit" class="btn btn-dark" :disabled="loading">
+      <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <span v-if="!loading"> Submit </span>
+      <span v-if="loading"> Loading... </span>
+    </button>
   </form>
 </template>
 
 <script>
+  import { sleep } from '../../../../utils/helpers.js';
+
   export default {
     data() {
       return {
         subject: '',
         email: '',
         message: '',
+        alert: '',
+        loading: false,
       };
     },
     methods: {
-      handleSubmit() {
-        this.$router.push({ path: '/dashboard' });
+      async handleSubmit() {
+        this.loading = true;
+
+        await sleep(3000);
+
+        this.loading = false;
+
+        this.alert = "We'll get in touch with you soon!";
+
+        this.subject = '';
+        this.email = '';
+        this.message = '';
       },
     },
   };

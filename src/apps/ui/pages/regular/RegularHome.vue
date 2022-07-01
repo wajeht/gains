@@ -1,9 +1,9 @@
 <template>
   <div class="text-center px-4 pb-5 border-bottom mx-auto">
-    <!-- chip -->
+    <!-- alert -->
     <div
       class="
-        alert alert-danger
+        alert alert-warning
         mb-3
         py-2
         mx-auto
@@ -25,18 +25,21 @@
         </a>
       </small>
     </div>
-    <!-- hero -->
 
+    <!-- title -->
     <XyzTransition xyz="fade up big">
       <h1 class="display-4 fw-bold">Let's make all kinds of gains!</h1>
     </XyzTransition>
 
+    <!-- description -->
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">
         The premier rep tracking and one rep max calculation application. Having trouble with any
         specific obstacles within your program? Just want to improve an individual lift?
         allkindsagains will enable you to accurately and easily track your progression.
       </p>
+
+      <!-- button -->
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
         <router-link to="/signup" class="hvr-grow btn btn-dark btn-lg px-4 me-sm-3"
           >Sign up</router-link
@@ -46,6 +49,8 @@
         >
       </div>
     </div>
+
+    <!-- image -->
     <div class="overflow-hidden animate__animated animate__fadeIn">
       <div class="container px-5">
         <img
@@ -61,7 +66,7 @@
   <div class="px-4 py-5">
     <div class="row g-4 row-cols-1 row-cols-lg-3">
       <!-- easy -->
-      <div class="feature col">
+      <div class="feature col" data-aos="fade-up">
         <div class="p-2 d-flex justify-content-center align-items-center">
           <i class="bi bi-hand-index-thumb" style="font-size: 5em"></i>
         </div>
@@ -70,7 +75,7 @@
       </div>
 
       <!-- open source -->
-      <div class="feature col">
+      <div class="feature col" data-aos="fade-up">
         <div class="p-2 d-flex justify-content-center align-items-center">
           <i class="bi bi-github" style="font-size: 5em"></i>
         </div>
@@ -84,7 +89,7 @@
       </div>
 
       <!-- privacy -->
-      <div class="feature col">
+      <div class="feature col" data-aos="fade-up">
         <div class="p-2 d-flex justify-content-center align-items-center">
           <i class="bi bi-shield-check" style="font-size: 5em"></i>
         </div>

@@ -5,11 +5,20 @@
  */
 export function capitalizeAWord(word) {
   if (typeof word != "string") throw new Error("Value must be string data type!"); // prettier-ignore
-  if (word.length < 1) throw new Error("Value must be more than one character");
+  if (word.length < 1) throw new Error('Value must be more than one character');
 
   const newLowercaseWord = word.toLowerCase();
   const uppercaseFirstCharacter = newLowercaseWord[0].toUpperCase();
   const theRest = newLowercaseWord.slice(1);
 
   return uppercaseFirstCharacter + theRest;
+}
+
+/**
+ * Sleep() returns a promise that resolves after a given number of milliseconds.
+ * @param ms - The number of milliseconds to wait before resolving the promise.
+ * @returns A promise that will resolve after the given number of milliseconds.
+ */
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
