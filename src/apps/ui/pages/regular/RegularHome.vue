@@ -27,12 +27,12 @@
     </div>
 
     <!-- title -->
-    <XyzTransition xyz="fade up big">
-      <h1 class="display-4 fw-bold">Let's make all kinds of gains!</h1>
-    </XyzTransition>
+    <h1 class="display-4 fw-bold animate__animated animate__fadeIn">
+      Let's make all kinds of gains!
+    </h1>
 
     <!-- description -->
-    <div class="col-lg-6 mx-auto">
+    <div class="col-lg-6 mx-auto animate__animated animate__fadeIn">
       <p class="lead mb-4">
         The premier rep tracking and one rep max calculation application. Having trouble with any
         specific obstacles within your program? Just want to improve an individual lift?

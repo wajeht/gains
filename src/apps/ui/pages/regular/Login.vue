@@ -13,7 +13,11 @@
       <h1 class="mb-3">Login</h1>
 
       <!-- error -->
-      <div v-if="error.length" class="mb-3 alert alert-danger">
+      <div
+        v-if="error.length"
+        :class="{ 'animate__animated animate__headShake': error.length }"
+        class="mb-3 alert alert-danger"
+      >
         <span>{{ error }}</span>
       </div>
 
