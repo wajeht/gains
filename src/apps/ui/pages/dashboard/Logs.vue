@@ -3,13 +3,16 @@
     <div v-for="log in logs" data-aos="fade-up" class="card" id="log">
       <div @click="logDetails(1)" class="card-body p-3">
         <div class="row">
+          <!-- start -->
           <div class="col-2">
             <div>
               <span>Thu</span>
               <h5 class="card-title">16</h5>
             </div>
           </div>
-          <div class="col-10">
+
+          <!-- middle -->
+          <div class="col-9">
             <h5 class="card-title">upperbody workout session</h5>
             <div class="card-text">
               <ul class="list-unstyled">
@@ -18,6 +21,16 @@
                 <li>high bar squat</li>
                 <li>overhead shoulder press</li>
               </ul>
+            </div>
+          </div>
+
+          <!-- end -->
+          <div class="col-1">
+            <div class="d-flex flex-column justify-content-between">
+              <span>
+                <i class="bi bi-three-dots-vertical"></i>
+              </span>
+              <small class="text-muted d-block">123 min</small>
             </div>
           </div>
         </div>

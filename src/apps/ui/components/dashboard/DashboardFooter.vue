@@ -14,10 +14,10 @@
   >
     <router-link
       :class="{ active: $route.name === 'Profile' }"
-      class="d-flex flex-column py-3"
+      class="d-flex flex-column py-3 gap-1"
       to="/dashboard/profile"
     >
-      <font-awesome-icon icon="trash" />
+      <font-awesome-icon icon="user" />
       <span>Profile</span>
     </router-link>
 
@@ -25,7 +25,7 @@
     <router-link
       :class="{ active: $route.name === 'Logs' }"
       to="/dashboard/logs"
-      class="d-flex flex-column py-3"
+      class="d-flex flex-column py-3 gap-1"
     >
       <font-awesome-icon icon="pen" />
       <span>Logs</span>
@@ -35,27 +35,27 @@
     <router-link
       :class="{ active: $route.name === 'Videos' }"
       to="/dashboard/videos"
-      class="d-flex flex-column py-3"
+      class="d-flex flex-column py-3 gap-1"
     >
       <font-awesome-icon icon="play" />
       <span>Videos</span>
     </router-link>
 
-    <!-- report -->
+    <!-- resources -->
     <router-link
-      :class="{ active: $route.name === 'Reports' }"
-      to="/dashboard/reports"
-      class="d-flex flex-column py-3"
+      :class="{ active: $route.name === 'Resources' }"
+      to="/dashboard/Resources"
+      class="d-flex flex-column py-3 gap-1"
     >
-      <font-awesome-icon icon="table" />
-      <span>Reports</span>
+      <font-awesome-icon icon="screwdriver-wrench" />
+      <span>Resources</span>
     </router-link>
 
     <!-- settings -->
     <router-link
       :class="{ active: $route.name === 'Settings' }"
       to="/dashboard/settings"
-      class="d-flex flex-column py-3"
+      class="d-flex flex-column py-3 gap-1"
     >
       <font-awesome-icon icon="gear" />
       <span>Settings</span>

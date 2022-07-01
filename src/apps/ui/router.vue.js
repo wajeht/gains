@@ -19,9 +19,12 @@ import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Logs from './pages/dashboard/Logs.vue';
 import LogDetails from './components/dashboard/LogDetails.vue';
 import Settings from './pages/dashboard/Settings.vue';
-import Reports from './pages/dashboard/Reports.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
+
+// resources
+import Resources from './pages/dashboard/Resources.vue';
+import OneRMCalculator from './pages/dashboard/resources/OneRMCalculator.vue';
 
 const routes = [
   // regular
@@ -130,10 +133,19 @@ const routes = [
       layout: 'DashboardLayout',
     },
   },
+  // resources
   {
-    path: '/dashboard/reports',
-    name: 'Reports',
-    component: Reports,
+    path: '/dashboard/resources',
+    name: 'Resources',
+    component: Resources,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/resources/onerm-calculator',
+    name: 'OneRMCalculator',
+    component: OneRMCalculator,
     meta: {
       layout: 'DashboardLayout',
     },
@@ -163,6 +175,7 @@ const routes = [
       layout: 'DashboardLayout',
     },
   },
+
   {
     path: '/dashboard/log/:id',
     name: 'LogDetails',
