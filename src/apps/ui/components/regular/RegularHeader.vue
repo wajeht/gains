@@ -1,7 +1,9 @@
 <template>
   <header class="py-3 mb-4 border-bottom sticky-top" style="backdrop-filter: blur(10px)">
     <div class="container d-flex justify-content-between align-items-center">
+      <!-- branding -->
       <router-link to="/" class="d-flex link-dark text-decoration-none">
+        <!-- logo -->
         <svg
           class="bi me-2"
           height="32"
@@ -15,6 +17,7 @@
           />
         </svg>
 
+        <!-- title -->
         <span class="fs-4">Gains</span>
       </router-link>
 
