@@ -6,7 +6,7 @@
         <div class="card-body p-3">
           <!-- name -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">Name</label>
+            <label class="col-4 col-form-label">Session name</label>
             <div class="col-8">
               <input type="email" class="form-control form-control-sm" id="colFormLabelSm" />
             </div>
@@ -77,50 +77,33 @@
         </div>
       </form>
 
-      <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion">
         <!-- first -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button
-              class="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#panelsStayOpen-collapseOne"
-              aria-expanded="true"
-              aria-controls="panelsStayOpen-collapseOne"
-            >
-              competition deadlift
-            </button>
-          </h2>
-          <div
-            id="panelsStayOpen-collapseOne"
-            class="accordion-collapse collapse show"
-            aria-labelledby="panelsStayOpen-headingOne"
-          >
-            <div class="accordion-body table-responsive-sm w-100">
-              <table class="table table-sm table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th class="align-middle text-center" scope="col">Sets</th>
-                    <th class="align-middle text-center" scope="col">Reps</th>
-                    <th class="align-middle text-center" scope="col">Weight</th>
-                    <th class="align-middle text-center" scope="col">RPE</th>
-                    <th class="align-middle" scope="col">Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th class="align-middle text-center" scope="row">3</th>
-                    <td class="align-middle text-center">4</td>
-                    <td class="align-middle text-center">565</td>
-                    <td class="align-middle text-center">@9</td>
-                    <td class="align-middle text-truncate" style="max-width: 111px">
-                      <small> miss-grooved asdfasdfasdf</small>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              <!-- title -->
+              <span>card title</span>
+
+              <!-- options group -->
+              <div class="d-flex gap-2">
+                <!-- show/hide -->
+                <div
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseOne"
+                  aria-expanded="true"
+                >
+                  <i class="bi bi-caret-down"></i>
+                </div>
+
+                <!-- settings -->
+                <span><i class="bi bi-three-dots-vertical"></i></span>
+              </div>
+            </h5>
+
+            <!-- body -->
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"></div>
           </div>
         </div>
 
@@ -199,13 +182,13 @@
 
         <!-- modal -->
         <div
-          class="modal fade"
+          class="modal fade px-1 pt-5"
           id="add-a-lift"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
           tabindex="-1"
         >
-          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Add a lift</h5>
