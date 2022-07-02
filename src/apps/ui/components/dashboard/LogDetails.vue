@@ -77,175 +77,145 @@
         </div>
       </form>
 
-      <!-- list of lifts accordions -->
-      <div class="accordion">
-        <!-- first -->
-        <div class="card">
-          <div class="card-body">
+      <!-- lifts -->
+      <div class="card">
+        <!-- <img src="" class="card-img-top" alt="..." /> -->
+        <div class="card-body">
+          <!-- header -->
+          <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
             <!-- title -->
-            <h5
-              class="card-title d-flex justify-content-between align-items-center mb-0 align-middle"
-            >
-              <!-- title -->
-              <span>beltless conventional deadlift wth belt no hype</span>
+            <span>beltless conventional deadlift with belt no hype</span>
 
-              <!-- options group -->
-              <div class="d-flex gap-2">
-                <!-- show/hide -->
-                <button
-                  class="accordion-button p-0 m-0"
-                  style="background: none; border: none; box-shadow: none"
+            <!-- options -->
+            <span class="d-flex gap-2">
+              <!-- show/hide button -->
+              <button
+                class="accordion-button collapsed p-0 m-0"
+                style="background: none; border: none; box-shadow: none"
+                role="button"
+                data-bs-toggle="collapse"
+                data-bs-target=".beltless-contentional-deadlift"
+              ></button>
+
+              <!-- lift settings -->
+              <div class="dropdown">
+                <!-- setting icons -->
+                <a
+                  class="link-dark"
                   role="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#panelsStayOpen-collapseOne"
-                ></button>
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  ><i class="bi bi-three-dots-vertical"></i
+                ></a>
 
-                <!-- settings -->
-                <div class="dropdown">
-                  <a
-                    class="link-dark"
-                    role="button"
-                    id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="bi bi-three-dots-vertical"></i
-                  ></a>
-                  <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                    <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
-                    <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
-                    <li><button class="dropdown-item btn-sm" type="button">Share</button></li>
-                  </ul>
-                </div>
+                <!-- setting links -->
+                <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
+                  <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
+                  <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
+                </ul>
               </div>
-            </h5>
+            </span>
+          </h5>
 
-            <!-- body -->
-            <div
-              id="panelsStayOpen-collapseOne"
-              class="accordion-collapse collapse show table-responsive"
-            >
-              <table class="table table-striped table-hover table-sm p-0 m-0">
-                <thead>
-                  <tr>
-                    <th class="text-center" scope="col">Set</th>
-                    <th class="text-center" scope="col"></th>
-                    <th class="text-center" scope="col">Reps</th>
-                    <th class="text-center" scope="col"></th>
-                    <th class="text-center" scope="col">Weight</th>
-                    <th class="text-start" scope="col"></th>
-                    <th class="text-start" scope="col">Rpe</th>
-                    <th class="text-start" scope="col">Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th class="text-center">1</th>
-                    <td class="text-center">x</td>
-                    <td class="text-center">12</td>
-                    <td class="text-center">x</td>
-                    <td class="text-center">225</td>
-                    <td class="text-start">@</td>
-                    <td class="text-start">7</td>
-                    <td class="text-start"></td>
-                  </tr>
-                  <tr>
-                    <th class="text-center">2</th>
-                    <td class="text-center">x</td>
-                    <td class="text-center">11</td>
-                    <td class="text-center">x</td>
-                    <td class="text-center">235</td>
-                    <td class="text-start">@</td>
-                    <td class="text-start">8</td>
-                    <td class="text-start"></td>
-                  </tr>
-                  <tr>
-                    <th class="text-center">3</th>
-                    <td class="text-center">x</td>
-                    <td class="text-center">12</td>
-                    <td class="text-center">x</td>
-                    <td class="text-center">245</td>
-                    <td class="text-start">@</td>
-                    <td class="text-start">8</td>
-                    <td class="text-start text-truncate">
-                      <small class="d-flex justify-content-between">
-                        <!-- notes -->
-                        <!-- <span>
-                          heavy as fuck asdfasdfasdf adfasdfasdfasf fasdf as fas fasdf asda asf das
-                          fasf</span
-                        > -->
+          <!-- notes -->
+          <p class="my-2 accordion-collapse collapse card-text beltless-contentional-deadlift">
+            some notes about what this lift felt like this week. it could be another meaningful as
+            did sleep last night, and etc.
+          </p>
 
-                        <!-- option -->
-                        <span class="d-flex gap-2 ms-2">
-                          <i class="bi bi-pencil"></i>
-                          <i class="bi bi-trash"></i>
-                        </span>
-                      </small>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <!-- sets -->
+          <div class="accordion-collapse collapse beltless-contentional-deadlift table-responsive">
+            <table class="table table-striped table-hover table-sm p-0 m-0">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col">Set</th>
+                  <th class="text-center" scope="col"></th>
+                  <th class="text-center" scope="col">Rep</th>
+                  <th class="text-center" scope="col"></th>
+                  <th class="text-center" scope="col">Weight</th>
+                  <th class="text-start" scope="col"></th>
+                  <th class="text-start" scope="col">Rpe</th>
+                  <th class="text-start" scope="col">Notes</th>
+                  <th class="text-start" scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="text-center">1</th>
+                  <td class="text-center">x</td>
+                  <td class="text-center">12</td>
+                  <td class="text-center">x</td>
+                  <td class="text-center">225</td>
+                  <td class="text-start">@</td>
+                  <td class="text-start">7</td>
+                  <td class="text-start"><small>felt like shit</small></td>
+                  <td class="text-end">
+                    <small class="d-flex justify-content-between gap-2">
+                      <i class="bi bi-pencil"></i>
+                      <i class="bi bi-trash"></i>
+                    </small>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-center">2</th>
+                  <td class="text-center">x</td>
+                  <td class="text-center">11</td>
+                  <td class="text-center">x</td>
+                  <td class="text-center">235</td>
+                  <td class="text-start">@</td>
+                  <td class="text-start">8</td>
+                  <td class="text-start"><small>heavy</small></td>
+                  <td class="text-end">
+                    <small class="d-flex justify-content-between gap-2">
+                      <i class="bi bi-pencil"></i>
+                      <i class="bi bi-trash"></i>
+                    </small>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-center">3</th>
+                  <td class="text-center">x</td>
+                  <td class="text-center">12</td>
+                  <td class="text-center">x</td>
+                  <td class="text-center">245</td>
+                  <td class="text-start">@</td>
+                  <td class="text-start">8</td>
+                  <td class="text-start text-truncate">
+                    <small>
+                      heavy as fuck asdfasdfasdf adfasdfasdfasf fasdf as fas fasdf asda asf das fasf
+                    </small>
+                  </td>
+                  <td class="text-end">
+                    <small class="d-flex justify-content-between gap-2">
+                      <i class="bi bi-pencil"></i>
+                      <i class="bi bi-trash"></i>
+                    </small>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- second -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#panelsStayOpen-collapseTwo"
-              aria-expanded="false"
-              aria-controls="panelsStayOpen-collapseTwo"
-            >
-              Accordion Item #2
+        <!-- footer -->
+        <div class="card-footer accordion-collapse collapse beltless-contentional-deadlift">
+          <span class="d-flex justify-content-between">
+            <!-- left -->
+            <button class="btn btn-sm btn-secondary">
+              <i class="bi bi-plus-circle-fill me-1"></i> Add a set
             </button>
-          </h2>
-          <div
-            id="panelsStayOpen-collapseTwo"
-            class="accordion-collapse collapse"
-            aria-labelledby="panelsStayOpen-headingTwo"
-          >
-            <div class="accordion-body">
-              <strong>This is the second item's accordion body.</strong> It is hidden by default,
-              until the collapse plugin adds the appropriate classes that we use to style each
-              element. These classes control the overall appearance, as well as the showing and
-              hiding via CSS transitions. You can modify any of this with custom CSS or overriding
-              our default variables. It's also worth noting that just about any HTML can go within
-              the <code>.accordion-body</code>, though the transition does limit overflow.
-            </div>
-          </div>
-        </div>
 
-        <!-- third -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#panelsStayOpen-collapseThree"
-              aria-expanded="false"
-              aria-controls="panelsStayOpen-collapseThree"
-            >
-              Accordion Item #3
-            </button>
-          </h2>
-          <div
-            id="panelsStayOpen-collapseThree"
-            class="accordion-collapse collapse"
-            aria-labelledby="panelsStayOpen-headingThree"
-          >
-            <div class="accordion-body">
-              <strong>This is the third item's accordion body.</strong> It is hidden by default,
-              until the collapse plugin adds the appropriate classes that we use to style each
-              element. These classes control the overall appearance, as well as the showing and
-              hiding via CSS transitions. You can modify any of this with custom CSS or overriding
-              our default variables. It's also worth noting that just about any HTML can go within
-              the <code>.accordion-body</code>, though the transition does limit overflow.
-            </div>
-          </div>
+            <!-- right -->
+            <span class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-dark">
+                <i class="bi bi-bar-chart me-1"></i>Graphs
+              </button>
+              <button class="btn btn-sm btn-outline-dark">
+                <i class="bi bi-journal-text me-1"></i>Maxes
+              </button>
+            </span>
+          </span>
         </div>
       </div>
 
