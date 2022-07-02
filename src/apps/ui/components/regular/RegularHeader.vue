@@ -1,7 +1,9 @@
 <template>
   <header class="py-3 mb-4 border-bottom sticky-top" style="backdrop-filter: blur(10px)">
     <div class="container d-flex justify-content-between align-items-center">
+      <!-- branding -->
       <router-link to="/" class="d-flex link-dark text-decoration-none">
+        <!-- logo -->
         <svg
           class="bi me-2"
           height="32"
@@ -15,40 +17,84 @@
           />
         </svg>
 
+        <!-- title -->
         <span class="fs-4">Gains</span>
       </router-link>
 
-      <ul class="nav nav-pills">
-        <!-- features -->
-        <li class="nav-item">
-          <router-link
-            to="/features"
-            class="nav-link link-dark"
-            :class="{ active: $route.name === 'Features' }"
-            >Features</router-link
-          >
-        </li>
+      <!-- nav -->
+      <div id="nav">
+        <!-- links -->
+        <ul id="links" class="nav nav-pills">
+          <!-- features -->
+          <li class="nav-item">
+            <router-link
+              to="/features"
+              class="nav-link link-dark"
+              :class="{ active: $route.name === 'Features' }"
+              >Features</router-link
+            >
+          </li>
 
-        <!-- contact -->
-        <li class="nav-item">
-          <router-link
-            to="/contact"
-            class="nav-link link-dark"
-            :class="{ active: $route.name === 'Contact' }"
-            >Contact</router-link
-          >
-        </li>
+          <!-- contact -->
+          <li class="nav-item">
+            <router-link
+              to="/contact"
+              class="nav-link link-dark"
+              :class="{ active: $route.name === 'Contact' }"
+              >Contact</router-link
+            >
+          </li>
 
-        <!-- login -->
-        <li class="nav-item">
-          <router-link
-            to="/login"
-            class="nav-link link-dark"
-            :class="{ active: $route.name === 'Login' }"
-            >Login</router-link
-          >
-        </li>
-      </ul>
+          <!-- login -->
+          <li class="nav-item">
+            <router-link
+              to="/login"
+              class="nav-link link-dark"
+              :class="{ active: $route.name === 'Login' }"
+              >Login</router-link
+            >
+          </li>
+        </ul>
+
+        <!-- mobile menu -->
+        <!-- TODO! refactor this -->
+        <div id="mobile-menu" class="dropdown">
+          <span role="button" data-bs-toggle="dropdown">
+            <h1 class="cursor-pointer"><i class="bi bi-list"></i></h1>
+          </span>
+          <ul class="dropdown-menu shadow">
+            <!-- features -->
+            <li class="nav-item">
+              <router-link
+                to="/features"
+                class="nav-link link-dark dropdown-item"
+                :class="{ active: $route.name === 'Features' }"
+                >Features</router-link
+              >
+            </li>
+
+            <!-- contact -->
+            <li class="nav-item">
+              <router-link
+                to="/contact"
+                class="nav-link link-dark dropdown-item"
+                :class="{ active: $route.name === 'Contact' }"
+                >Contact</router-link
+              >
+            </li>
+
+            <!-- login -->
+            <li class="nav-item">
+              <router-link
+                to="/login"
+                class="nav-link link-dark dropdown-item"
+                :class="{ active: $route.name === 'Login' }"
+                >Login</router-link
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </header>
 </template>
@@ -61,11 +107,33 @@
   }
 
   .nav-link:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px solid #212529;
+    background: #6c757d;
+    color: white;
   }
 
   .nav-link.active:hover {
     text-decoration: none;
+  }
+
+  #mobile-menu {
+    display: none;
+  }
+
+  @media screen and (max-width: 500px) {
+    #mobile-menu {
+      display: block;
+    }
+
+    #links {
+      display: flex;
+      flex-direction: column;
+      display: none;
+    }
+
+    .dropdown-item.active,
+    .dropdown-item:active {
+      background: #212529;
+      color: white;
+    }
   }
 </style>

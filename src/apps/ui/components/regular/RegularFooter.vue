@@ -1,12 +1,17 @@
 <template>
-  <footer class="py-3 border-top bg-white">
-    <div class="container d-flex flex-shrink-0 justify-content-between align-items-center">
-      <span class="mb-3 mb-md-0 text-muted">Copyright © 2022 allkindsofgains.app</span>
+  <footer class="py-4 border-top bg-white">
+    <div class="container d-flex justify-content-between">
+      <!-- copyright -->
+      <span class="text-muted">Copyright © 2022 allkindsofgains.app</span>
 
-      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <!-- social links -->
+      <div class="d-flex gap-2">
+        <!-- github -->
         <a class="link-secondary" href="https://github.com/allkindsofgains" target="_blank"
           ><i class="bi bi-github"></i
         ></a>
+
+        <!-- discord -->
         <a
           class="link-secondary"
           href="https://discord.com/channels/988167900420534273/989628732895543296"

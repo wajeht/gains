@@ -23,8 +23,8 @@ import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
 
 // resources
-import Resources from './pages/dashboard/Resources.vue';
-import OneRMCalculator from './pages/dashboard/resources/OneRMCalculator.vue';
+import Tools from './pages/dashboard/Tools.vue';
+import OneRMCalculator from './pages/dashboard/tools/OneRMCalculator.vue';
 
 const routes = [
   // regular
@@ -133,17 +133,17 @@ const routes = [
       layout: 'DashboardLayout',
     },
   },
-  // resources
+  // Tools
   {
-    path: '/dashboard/resources',
-    name: 'Resources',
-    component: Resources,
+    path: '/dashboard/tools',
+    name: 'Tools',
+    component: Tools,
     meta: {
       layout: 'DashboardLayout',
     },
   },
   {
-    path: '/dashboard/resources/onerm-calculator',
+    path: '/dashboard/tools/onerm-calculator',
     name: 'OneRMCalculator',
     component: OneRMCalculator,
     meta: {
