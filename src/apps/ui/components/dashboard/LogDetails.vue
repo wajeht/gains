@@ -77,33 +77,114 @@
         </div>
       </form>
 
+      <!-- list of lifts accordions -->
       <div class="accordion">
         <!-- first -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title d-flex justify-content-between align-items-center">
+            <!-- title -->
+            <h5
+              class="card-title d-flex justify-content-between align-items-center mb-0 align-middle"
+            >
               <!-- title -->
-              <span>card title</span>
+              <span>beltless conventional deadlift wth belt no hype</span>
 
               <!-- options group -->
               <div class="d-flex gap-2">
                 <!-- show/hide -->
-                <div
+                <button
+                  class="accordion-button p-0 m-0"
+                  style="background: none; border: none; box-shadow: none"
                   role="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#panelsStayOpen-collapseOne"
-                  aria-expanded="true"
-                >
-                  <i class="bi bi-caret-down"></i>
-                </div>
+                ></button>
 
                 <!-- settings -->
-                <span><i class="bi bi-three-dots-vertical"></i></span>
+                <div class="dropdown">
+                  <a
+                    class="link-dark"
+                    role="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    ><i class="bi bi-three-dots-vertical"></i
+                  ></a>
+                  <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
+                    <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
+                    <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
+                    <li><button class="dropdown-item btn-sm" type="button">Share</button></li>
+                  </ul>
+                </div>
               </div>
             </h5>
 
             <!-- body -->
-            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"></div>
+            <div
+              id="panelsStayOpen-collapseOne"
+              class="accordion-collapse collapse show table-responsive"
+            >
+              <table class="table table-striped table-hover table-sm p-0 m-0">
+                <thead>
+                  <tr>
+                    <th class="text-center" scope="col">Set</th>
+                    <th class="text-center" scope="col"></th>
+                    <th class="text-center" scope="col">Reps</th>
+                    <th class="text-center" scope="col"></th>
+                    <th class="text-center" scope="col">Weight</th>
+                    <th class="text-start" scope="col"></th>
+                    <th class="text-start" scope="col">Rpe</th>
+                    <th class="text-start" scope="col">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="text-center">1</th>
+                    <td class="text-center">x</td>
+                    <td class="text-center">12</td>
+                    <td class="text-center">x</td>
+                    <td class="text-center">225</td>
+                    <td class="text-start">@</td>
+                    <td class="text-start">7</td>
+                    <td class="text-start"></td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">2</th>
+                    <td class="text-center">x</td>
+                    <td class="text-center">11</td>
+                    <td class="text-center">x</td>
+                    <td class="text-center">235</td>
+                    <td class="text-start">@</td>
+                    <td class="text-start">8</td>
+                    <td class="text-start"></td>
+                  </tr>
+                  <tr>
+                    <th class="text-center">3</th>
+                    <td class="text-center">x</td>
+                    <td class="text-center">12</td>
+                    <td class="text-center">x</td>
+                    <td class="text-center">245</td>
+                    <td class="text-start">@</td>
+                    <td class="text-start">8</td>
+                    <td class="text-start text-truncate">
+                      <small class="d-flex justify-content-between">
+                        <!-- notes -->
+                        <!-- <span>
+                          heavy as fuck asdfasdfasdf adfasdfasdfasf fasdf as fas fasdf asda asf das
+                          fasf</span
+                        > -->
+
+                        <!-- option -->
+                        <span class="d-flex gap-2 ms-2">
+                          <i class="bi bi-pencil"></i>
+                          <i class="bi bi-trash"></i>
+                        </span>
+                      </small>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -168,7 +249,7 @@
         </div>
       </div>
 
-      <!-- add a exercise -->
+      <!-- add a lift button -->
       <div class="border">
         <!-- model button -->
         <button
