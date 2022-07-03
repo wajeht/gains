@@ -23,7 +23,7 @@
 
     <!-- log -->
     <router-link
-      :class="{ active: $route.name === 'Logs' }"
+      :class="{ active: $route.name === 'Sessions' }"
       to="/dashboard/sessions"
       class="d-flex flex-column py-3 gap-1"
     >
