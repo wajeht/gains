@@ -83,12 +83,12 @@
       </form>
 
       <!-- lifts -->
-      <div class="card">
+      <div class="card p-0">
         <div class="card-body">
           <!-- header -->
           <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
             <!-- title -->
-            <span>beltless conventional deadlift with belt no hype</span>
+            <span>beltless conventional deadlift</span>
 
             <!-- options -->
             <span class="d-flex gap-2">
@@ -130,7 +130,7 @@
 
           <!-- sets -->
           <div class="accordion-collapse collapse beltless-contentional-deadlift table-responsive">
-            <table class="table table-striped table-hover table-sm p-0 m-0">
+            <table class="table table-sm table-striped table-hover p-0 m-0">
               <thead>
                 <tr>
                   <th class="text-center" scope="col">Set</th>
