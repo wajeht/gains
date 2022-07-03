@@ -67,7 +67,7 @@
   <Or />
 
   <!-- o-auth -->
-  <div class="d-flex flex-column gap-2 mb-2">
+  <div class="d-flex flex-column gap-2 mb-3">
     <!-- discord -->
     <a class="btn w-100 text-light" href="#" style="background: #7289da"
       ><i class="bi bi-discord me-1"></i>Login with Discord</a
