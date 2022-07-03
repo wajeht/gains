@@ -1,14 +1,140 @@
 <template>
-  <h1>Resources</h1>
-  <ul>
-    <li>rep/weight tracker</li>
-    <li>report</li>
-    <li>lift tracker</li>
-    <li>attempt selection calculator</li>
-    <li>barbell plate loader calculator</li>
-    <li>calender</li>
-    <li><router-link to="/dashboard/tools/onerm-calculator">1rm calculator</router-link></li>
-    <li>ranking system?? (openpowerlifting database?)</li>
-    <li>over time tracking 1m 1y 5y</li>
-  </ul>
+  <div class="container">
+    <div class="my-2 d-flex flex-column gap-3">
+      <!-- calculator -->
+      <div>
+        <!-- title -->
+        <h2>Calculators</h2>
+
+        <!-- rpe -->
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">RPE Calculator</h6>
+                <p class="mb-0 opacity-75">Calculate rpe with given inputs</p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+
+          <!-- plate loader -->
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Plate loading Calculator</h6>
+                <p class="mb-0 opacity-75">
+                  Some placeholder content in a paragraph that goes a little longer so it wraps to a
+                  new line.
+                </p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+
+          <!-- 1rm -->
+          <router-link
+            to="/dashboard/tools/onerm-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">
+                  One Rep Max Calculator
+                  <small class="bg-danger text-white px-1 rounded">new</small>
+                </h6>
+                <p class="mb-0 opacity-75">Calculator your one rep max of a lift</p>
+              </div>
+              <small class="opacity-50 text-nowrap">v1</small>
+            </div>
+          </router-link>
+
+          <!-- attempt  -->
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Meet Attempt Selection Calculator</h6>
+                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- reports -->
+      <div>
+        <h2>Reports</h2>
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">List group item heading</h6>
+                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Another title here</h6>
+                <p class="mb-0 opacity-75">
+                  Some placeholder content in a paragraph that goes a little longer so it wraps to a
+                  new line.
+                </p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Third heading</h6>
+                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- others -->
+      <div>
+        <h2>Others</h2>
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">List group item heading</h6>
+                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Another title here</h6>
+                <p class="mb-0 opacity-75">
+                  Some placeholder content in a paragraph that goes a little longer so it wraps to a
+                  new line.
+                </p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Third heading</h6>
+                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
