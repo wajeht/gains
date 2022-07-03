@@ -11,6 +11,7 @@
       bg-white
       text-muted
     "
+    style="z-index: 2"
   >
     <router-link
       :class="{ active: $route.name === 'Profile' }"

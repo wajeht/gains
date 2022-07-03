@@ -19,41 +19,47 @@
 
           <!-- start time -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">Start time</label>
+            <label for="start-time" class="col-4 col-form-label">Start time</label>
             <div class="col-8">
-              <input
-                type="datetime-local"
-                class="form-control form-control-sm"
-                id="colFormLabelSm"
-              />
+              <input type="datetime-local" class="form-control form-control-sm" id="start-time" />
             </div>
           </div>
 
           <!-- end time -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">End time</label>
+            <label for="end-time" class="col-4 col-form-label">End time</label>
             <div class="col-8">
-              <input
-                type="datetime-local"
-                class="form-control form-control-sm"
-                id="colFormLabelSm"
-              />
+              <input type="datetime-local" class="form-control form-control-sm" id="end-time" />
             </div>
           </div>
 
           <!-- bodyweight  -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">Bodyweight</label>
+            <label for="bodyweight" class="col-4 col-form-label">Bodyweight</label>
             <div class="col-8">
-              <input type="number" class="form-control form-control-sm" id="bodyweight-id" />
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                id="bodyweight"
+                min="1"
+                step="1"
+                max="500"
+              />
             </div>
           </div>
 
           <!-- hours of sleep  -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">Hours of sleep</label>
+            <label class="col-4 col-form-label" for="hours-of-sleep">Hours of sleep</label>
             <div class="col-8">
-              <input type="number" class="form-control form-control-sm" id="hours-of-sleep-id" />
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                id="hours-of-sleep"
+                min="1"
+                step="1"
+                max="24"
+              />
             </div>
           </div>
 
@@ -83,12 +89,12 @@
       </form>
 
       <!-- lifts -->
-      <div class="card">
+      <div class="card p-0">
         <div class="card-body">
           <!-- header -->
           <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
             <!-- title -->
-            <span>beltless conventional deadlift with belt no hype</span>
+            <span>beltless conventional deadlift</span>
 
             <!-- options -->
             <span class="d-flex gap-2">
@@ -130,7 +136,7 @@
 
           <!-- sets -->
           <div class="accordion-collapse collapse beltless-contentional-deadlift table-responsive">
-            <table class="table table-striped table-hover table-sm p-0 m-0">
+            <table class="table table-sm table-striped table-hover p-0 m-0">
               <thead>
                 <tr>
                   <th class="text-center" scope="col">Set</th>
@@ -422,6 +428,9 @@
       return {
         id: this.$route.params.id,
       };
+    },
+    mounted() {
+      console.log(this.today);
     },
     methods: {
       handleAddALift() {
