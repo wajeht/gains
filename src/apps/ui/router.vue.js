@@ -126,7 +126,7 @@ const routes = [
     name: 'DashboardContact',
     component: DashboardContact,
     meta: {
-      layout: 'EmptyDashboardLayout',
+      layout: 'DashboardLayout',
     },
   },
   {

@@ -1,13 +1,17 @@
 <template>
-  <!-- go back -->
-  <button @click="$router.back()" class="btn btn-outline-dark mb-3">
-    <i class="bi bi-arrow-left"></i> Back
-  </button>
+  <div class="container">
+    <div class="flex my-3 gap-2">
+      <!-- go back -->
+      <div class="mb-3">
+        <span @click="$router.back()" role="button"><i class="bi bi-arrow-left"></i> Back</span>
+      </div>
 
-  <!-- contact -->
-  <div class="card">
-    <div class="card-body">
-      <Contact />
+      <!-- contact -->
+      <div class="card">
+        <div class="card-body">
+          <Contact />
+        </div>
+      </div>
     </div>
   </div>
 </template>
