@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container px-1">
     <div class="flex flex-column justify-content-between my-3" data-aos="fade-up">
       <!-- setting items -->
-      <div class="d-flex flex-column gap-4">
+      <div class="d-flex flex-column gap-3">
         <!-- account -->
         <div>
           <!-- title -->

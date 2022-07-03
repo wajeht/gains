@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
-    <div class="flex my-3 gap-3">
+  <div class="container px-1">
+    <div class="my-3 d-flex flex-column gap-3">
       <!-- go back -->
-      <div class="mb-3">
-        <span @click="$router.back()" role="button"><i class="bi bi-arrow-left"></i> Back</span>
-      </div>
+      <a class="link-secondary text-decoration-none" @click="$router.back()" role="button"
+        ><i class="bi bi-arrow-left"></i> Back</a
+      >
 
       <!-- contact -->
       <div class="card">
