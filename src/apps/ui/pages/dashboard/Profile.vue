@@ -3,7 +3,7 @@
     <div class="my-2 d-flex flex-column gap-3" data-aos="fade-up">
       <!-- profile -->
       <div>
-        <h3>Profile</h3>
+        <h4><i class="bi bi-person-fill"></i> Profile</h4>
         <div class="card card-body">
           <img
             class="rounded-circle img-fluid"
@@ -37,7 +37,7 @@
 
       <!-- recovery chart -->
       <div>
-        <h3>Recovery</h3>
+        <h4><i class="bi bi-activity"></i> Recovery</h4>
         <div class="card" style="height: 100%">
           <div class="card-body">
             <canvas id="myChart"></canvas>
@@ -47,7 +47,7 @@
 
       <!-- recent prs chart -->
       <div>
-        <h3>Recent PRS</h3>
+        <h4><i class="bi bi-graph-up-arrow"></i> Recent PRS</h4>
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">
@@ -89,7 +89,7 @@
 
       <!-- bodyweight -->
       <div>
-        <h3>Bodyweight</h3>
+        <h4><i class="bi bi-table"></i> Bodyweight</h4>
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">

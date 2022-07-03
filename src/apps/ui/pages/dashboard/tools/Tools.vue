@@ -4,7 +4,10 @@
       <!-- calculator -->
       <div>
         <!-- title -->
-        <h3>Calculators</h3>
+        <h4>
+          <i class="bi bi-calculator"></i>
+          Calculators
+        </h4>
 
         <!-- rpe -->
         <div class="list-group">
@@ -73,7 +76,7 @@
 
       <!-- reports -->
       <div>
-        <h3>Reports</h3>
+        <h4><i class="bi bi-table"></i> Reports</h4>
         <div class="list-group">
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -110,7 +113,7 @@
 
       <!-- others -->
       <div>
-        <h3>Others</h3>
+        <h4><i class="bi bi-wrench"></i> Others</h4>
         <div class="list-group">
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
