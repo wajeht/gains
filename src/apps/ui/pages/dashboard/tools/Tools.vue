@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container px-0">
     <div class="my-2 d-flex flex-column gap-3" data-aos="fade-up">
       <!-- calculator -->
       <div>

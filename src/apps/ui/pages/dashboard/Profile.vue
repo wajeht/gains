@@ -1,24 +1,122 @@
 <template>
-  <!-- <h1>Profile</h1>
-  <router-link to="/dashboard/login"> logout </router-link> -->
+  <div class="container px-0">
+    <div class="my-2 d-flex flex-column gap-3" data-aos="fade-up">
+      <!-- profile -->
+      <div>
+        <h2>Profile</h2>
+        <div class="card card-body">
+          <img
+            class="rounded-circle img-fluid"
+            width="200"
+            height="200"
+            src="https://dummyimage.com/200x200/bdbdbd/000000.jpg"
+          />
 
-  <img
-    class="rounded-circle img-fluid"
-    style="border: 1px solid #808080"
-    width="200"
-    height="200"
-    src="https://dummyimage.com/400x400/bdbdbd/000000.jpg&text=will"
-    alt="will"
-  />
+          <ul>
+            <li>recent time max</li>
+            <li>all time max</li>
+            <li>recovery stuff</li>
+            <li>avg sleep</li>
+            <li>readiness</li>
+            <li>soreness</li>
+            <li>confidence</li>
+            <li>sleep quty</li>
+          </ul>
+        </div>
+      </div>
 
-  <ul>
-    <li>recent time max</li>
-    <li>all time max</li>
-    <li>recovery stuff</li>
-    <li>avg sleep</li>
-    <li>readiness</li>
-    <li>soreness</li>
-    <li>confidence</li>
-    <li>sleep quty</li>
-  </ul>
+      <!-- recovery chart -->
+      <div>
+        <h2>Recovery</h2>
+        <div class="card" style="height: 100%">
+          <div class="card-body">
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- recent prs chart -->
+      <div>
+        <h2>Recent PRS</h2>
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm p-0 m-0">
+                <thead>
+                  <tr>
+                    <th class="text-center" scope="col">Date</th>
+                    <th class="text-center" scope="col">Lift</th>
+                    <th class="text-center" scope="col">Weight</th>
+                    <th class="text-center" scope="col">Gain</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">sumo deadlift</th>
+                    <th class="text-center">234</th>
+                    <th class="text-center">+5</th>
+                  </tr>
+
+                  <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">sumo deadlift</th>
+                    <th class="text-center">234</th>
+                    <th class="text-center">+5</th>
+                  </tr>
+                  <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">sumo deadlift</th>
+                    <th class="text-center">234</th>
+                    <th class="text-center">+5</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
+
+<script>
+  import { Chart } from 'chart.js';
+  export default {
+    data() {
+      return {
+        data: null,
+      };
+    },
+    mounted() {
+      this.data = {
+        type: 'line',
+        data: {
+          labels: ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'],
+          options: {
+            responsive: true,
+          },
+          datasets: [
+            {
+              label: 'Number of Moons',
+              data: [0, 0, 1, 2, 79, 82, 27, 14],
+              backgroundColor: 'rgba(54,73,93,.5)',
+              borderColor: '#36495d',
+              borderWidth: 3,
+            },
+            {
+              label: 'Planetary Mass (relative to the Sun x 10^-6)',
+              data: [0.166, 2.081, 3.003, 0.323, 954.792, 285.886, 43.662, 51.514],
+              backgroundColor: 'rgba(71, 183,132,.5)',
+              borderColor: '#47b784',
+              borderWidth: 3,
+            },
+          ],
+        },
+      };
+      const ctx = document.getElementById('myChart');
+      new Chart(ctx, this.data);
+    },
+  };
+</script>
