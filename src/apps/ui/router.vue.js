@@ -4,16 +4,17 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Features from './pages/regular/Features.vue';
 import ForgetPassword from './pages/regular/ForgetPassword.vue';
 import Terms from './pages/regular/Terms.vue';
-import Signup from './pages/regular/Signup.vue';
 import Privacy from './pages/regular/Privacy.vue';
 import Contact from './pages/regular/Contact.vue';
-import Login from './pages/regular/Login.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
+import RegularLogin from './pages/regular/RegularLogin.vue';
+import RegularSignup from './pages/regular/RegularSignup.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
 
-// tools
+// dashboard
 import Profile from './pages/dashboard/Profile.vue';
-import DashboardLogin from './components/dashboard/DashboardLogin.vue';
+import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
+import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Sessions from './pages/dashboard/Sessions.vue';
 import SessionDetails from './components/dashboard/SessionDetails.vue';
@@ -41,7 +42,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: RegularLogin,
     meta: {
       layout: 'RegularLayout',
     },
@@ -49,7 +50,7 @@ const routes = [
   {
     path: '/signup',
     name: 'Signup',
-    component: Signup,
+    component: RegularSignup,
     meta: {
       layout: 'RegularLayout',
     },
@@ -107,6 +108,14 @@ const routes = [
     path: '/dashboard/login',
     name: 'DashboardLogin',
     component: DashboardLogin,
+    meta: {
+      layout: 'EmptyDashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/signup',
+    name: 'DashboardSignup',
+    component: DashboardSignup,
     meta: {
       layout: 'EmptyDashboardLayout',
     },

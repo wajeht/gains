@@ -1,13 +1,5 @@
 <template>
-  <form
-    @submit.prevent="handleSubmit"
-    class="
-      px-4
-      col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4
-      mx-auto
-      animate__animated animate__fadeIn
-    "
-  >
+  <form @submit.prevent="handleSubmit">
     <!-- title -->
     <h1 class="mb-3">Signup</h1>
 
@@ -81,12 +73,41 @@
       <span v-if="loading"> Loading... </span>
     </button>
   </form>
+
+  <!-- or -->
+  <Or />
+
+  <!-- o-auth -->
+  <div class="d-flex flex-column gap-2 mb-2">
+    <!-- discord -->
+    <a class="btn w-100 text-light" href="#" style="background: #7289da"
+      ><i class="bi bi-discord me-1"></i>Login with Discord</a
+    >
+
+    <!-- github -->
+    <a class="btn btn-success w-100" style="border: 1px solid #ced4da" href="#"
+      ><i class="bi bi-github me-1"></i>Login with Github</a
+    >
+
+    <!-- email -->
+    <router-link
+      to="/dashboard/login"
+      class="btn btn-light w-100"
+      style="border: 1px solid #ced4da"
+      href="#"
+      ><i class="bi bi-envelope me-1"></i>Login with Email</router-link
+    >
+  </div>
 </template>
 
 <script>
   import { sleep } from '../../../../utils/helpers.js';
+  import Or from './Or.vue';
 
   export default {
+    components: {
+      Or,
+    },
     data() {
       return {
         username: '',
