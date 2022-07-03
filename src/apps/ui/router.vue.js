@@ -11,7 +11,7 @@ import Login from './pages/regular/Login.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
 
-// dashboard
+// tools
 import Profile from './pages/dashboard/Profile.vue';
 import DashboardHome from './pages/dashboard/DashboardHome.vue';
 import DashboardLogin from './components/dashboard/DashboardLogin.vue';
@@ -23,8 +23,11 @@ import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
 
 // resources
-import Tools from './pages/dashboard/Tools.vue';
-import OneRMCalculator from './pages/dashboard/tools/OneRMCalculator.vue';
+import Tools from './pages/dashboard/tools/Tools.vue';
+import OneRepMaxCalculator from './pages/dashboard/tools/calculators/OneRepMaxCalculator.vue.vue';
+import AttemptSelectionCalculator from './pages/dashboard/tools/calculators/AttemptSelectionCalculator.vue';
+import RPECalculator from './pages/dashboard/tools/calculators/RPECalculator.vue';
+import PlateCalculator from './pages/dashboard/tools/calculators/PlateCalculator.vue';
 
 const routes = [
   // regular
@@ -142,10 +145,38 @@ const routes = [
       layout: 'DashboardLayout',
     },
   },
+  // 1rm
   {
-    path: '/dashboard/tools/onerm-calculator',
-    name: 'OneRMCalculator',
-    component: OneRMCalculator,
+    path: '/dashboard/tools/calculators/one-rep-max-calculator',
+    name: 'OneRepMaxCalculator',
+    component: OneRepMaxCalculator,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  // rpe
+  {
+    path: '/dashboard/tools/calculators/rpe-calculator',
+    name: 'RPECalculator',
+    component: RPECalculator,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  // plate
+  {
+    path: '/dashboard/tools/calculators/plate-calculator',
+    name: 'PlateCalculator',
+    component: PlateCalculator,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  // attempt
+  {
+    path: '/dashboard/tools/calculators/attempt-selection-calculator',
+    name: 'AttemptSelectionCalculator',
+    component: AttemptSelectionCalculator,
     meta: {
       layout: 'DashboardLayout',
     },

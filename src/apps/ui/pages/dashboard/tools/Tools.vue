@@ -8,7 +8,10 @@
 
         <!-- rpe -->
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/calculators/rpe-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">RPE Calculator</h6>
@@ -16,13 +19,16 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </router-link>
 
           <!-- plate loader -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/calculators/plate-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
-                <h6 class="mb-0">Plate loading Calculator</h6>
+                <h6 class="mb-0">Plate Calculator</h6>
                 <p class="mb-0 opacity-75">
                   Some placeholder content in a paragraph that goes a little longer so it wraps to a
                   new line.
@@ -30,11 +36,11 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </router-link>
 
           <!-- 1rm -->
           <router-link
-            to="/dashboard/tools/onerm-calculator"
+            to="/dashboard/tools/calculators/one-rep-max-calculator"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -50,7 +56,10 @@
           </router-link>
 
           <!-- attempt  -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/calculators/attempt-selection-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Meet Attempt Selection Calculator</h6>
@@ -58,7 +67,7 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
 
