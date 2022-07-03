@@ -370,8 +370,8 @@
               <div class="modal-body">
                 <!-- category -->
                 <div class="mb-3">
-                  <label for="categories" class="form-label">Category</label>
-                  <select id="categories" class="form-select" required>
+                  <label for="category" class="form-label">Category*</label>
+                  <select id="category" class="form-select" required>
                     <option disabled value="" selected>select a category!</option>
                     <option value="squat">squat</option>
                     <option value="bench">bench</option>
@@ -382,7 +382,7 @@
 
                 <!-- lift -->
                 <div class="mb-3">
-                  <label for="lift" class="form-label">Lift</label>
+                  <label for="lift" class="form-label">Lift*</label>
                   <select id="lift" class="form-select" required>
                     <option disabled value="" selected>select a lift!</option>
                     <option value="sumo deadlift">sumo deadlift</option>
