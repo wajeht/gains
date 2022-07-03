@@ -5,7 +5,7 @@ import Features from './pages/regular/Features.vue';
 import ForgetPassword from './pages/regular/ForgetPassword.vue';
 import Terms from './pages/regular/Terms.vue';
 import Privacy from './pages/regular/Privacy.vue';
-import Contact from './pages/regular/Contact.vue';
+import RegularContact from './pages/regular/RegularContact.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
 import RegularLogin from './pages/regular/RegularLogin.vue';
 import RegularSignup from './pages/regular/RegularSignup.vue';
@@ -18,6 +18,7 @@ import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Sessions from './pages/dashboard/Sessions.vue';
 import SessionDetails from './components/dashboard/SessionDetails.vue';
+import DashboardContact from './pages/dashboard/DashboardContact.vue';
 import Settings from './pages/dashboard/Settings.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
@@ -74,7 +75,7 @@ const routes = [
   {
     path: '/contact',
     name: 'Contact',
-    component: Contact,
+    component: RegularContact,
     meta: {
       layout: 'RegularLayout',
     },
@@ -116,6 +117,14 @@ const routes = [
     path: '/dashboard/signup',
     name: 'DashboardSignup',
     component: DashboardSignup,
+    meta: {
+      layout: 'EmptyDashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/contact',
+    name: 'DashboardContact',
+    component: DashboardContact,
     meta: {
       layout: 'EmptyDashboardLayout',
     },
