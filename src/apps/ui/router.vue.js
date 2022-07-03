@@ -16,8 +16,8 @@ import Profile from './pages/dashboard/Profile.vue';
 import DashboardHome from './pages/dashboard/DashboardHome.vue';
 import DashboardLogin from './components/dashboard/DashboardLogin.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
-import Logs from './pages/dashboard/Logs.vue';
-import LogDetails from './components/dashboard/LogDetails.vue';
+import Sessions from './pages/dashboard/Sessions.vue';
+import SessionDetails from './components/dashboard/SessionDetails.vue';
 import Settings from './pages/dashboard/Settings.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
@@ -126,9 +126,9 @@ const routes = [
     },
   },
   {
-    path: '/dashboard/logs',
-    name: 'Logs',
-    component: Logs,
+    path: '/dashboard/sessions',
+    name: 'Sessions',
+    component: Sessions,
     meta: {
       layout: 'DashboardLayout',
     },
@@ -177,9 +177,9 @@ const routes = [
   },
 
   {
-    path: '/dashboard/log/:id',
-    name: 'LogDetails',
-    component: LogDetails,
+    path: '/dashboard/session/:id',
+    name: 'SessionDetails',
+    component: SessionDetails,
     props: true,
     meta: {
       layout: 'DashboardLayout',

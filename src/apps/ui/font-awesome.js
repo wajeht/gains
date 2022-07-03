@@ -10,6 +10,7 @@ import { faTable } from '@fortawesome/free-solid-svg-icons';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -20,5 +21,6 @@ library.add(faTable);
 library.add(faPlay);
 library.add(faScrewdriverWrench);
 library.add(faUser);
+library.add(faCalendarDays);
 
 export default FontAwesomeIcon;

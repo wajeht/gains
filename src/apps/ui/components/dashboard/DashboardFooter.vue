@@ -24,11 +24,11 @@
     <!-- log -->
     <router-link
       :class="{ active: $route.name === 'Logs' }"
-      to="/dashboard/logs"
+      to="/dashboard/sessions"
       class="d-flex flex-column py-3 gap-1"
     >
-      <font-awesome-icon icon="pen" />
-      <span>Logs</span>
+      <font-awesome-icon icon="calendar-days" />
+      <span>Sessions</span>
     </router-link>
 
     <!-- videos -->

@@ -1,7 +1,7 @@
 <template>
   <XyzTransition appear xyz="fade small out-down">
     <div class="my-2 d-flex flex-column gap-2">
-      <!-- session card -->
+      <!-- sessions card -->
       <form class="card p-0">
         <div class="card-body p-3">
           <!-- name -->
@@ -204,107 +204,117 @@
 
         <!-- footer -->
         <div class="card-footer accordion-collapse collapse beltless-contentional-deadlift">
-          <span class="d-flex justify-content-between">
+          <span class="d-flex justify-content-between gap-2">
             <!-- left -->
-            <span>
-              <!-- add a set model button -->
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-dark"
-                data-bs-toggle="modal"
-                data-bs-target="#add-a-set"
-              >
-                <i class="bi bi-plus-circle me-1"></i> Add a set
-              </button>
+            <span class="d-flex justify-content-between gap-2">
+              <!-- add a set group -->
+              <span>
+                <!-- add a set model button -->
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-a-set"
+                >
+                  <i class="bi bi-plus-circle me-1"></i> Add a set
+                </button>
 
-              <!-- add a set modal -->
-              <div
-                class="modal fade px-1 pt-5"
-                id="add-a-set"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false"
-                tabindex="-1"
-              >
-                <div class="modal-dialog modal-dialog-scrollable">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Add a set</h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                        <!-- reps -->
-                        <div class="mb-3">
-                          <label for="rep" class="form-label">Rep</label>
-                          <input
-                            id="rep"
-                            class="form-control form-control-sm"
-                            type="number"
-                            required
-                          />
-                        </div>
+                <!-- add a set modal -->
+                <div
+                  class="modal fade px-1 pt-5"
+                  id="add-a-set"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                >
+                  <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Add a set</h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <form>
+                          <!-- reps -->
+                          <div class="mb-3">
+                            <label for="rep" class="form-label">Rep</label>
+                            <input
+                              id="rep"
+                              class="form-control form-control-sm"
+                              type="number"
+                              required
+                            />
+                          </div>
 
-                        <!-- weight -->
-                        <div class="mb-3">
-                          <label for="weight" class="form-label">Weight</label>
-                          <input
-                            id="weight"
-                            class="form-control form-control-sm"
-                            type="number"
-                            required
-                          />
-                        </div>
+                          <!-- weight -->
+                          <div class="mb-3">
+                            <label for="weight" class="form-label">Weight</label>
+                            <input
+                              id="weight"
+                              class="form-control form-control-sm"
+                              type="number"
+                              required
+                            />
+                          </div>
 
-                        <!-- rpe -->
-                        <div class="mb-3">
-                          <label for="rpe" class="form-label">Rpe</label>
-                          <select id="rpe" class="form-control form-select form-select-sm">
-                            <option selected></option>
-                            <option>5</option>
-                            <option>5.5</option>
-                            <option>6</option>
-                            <option>6.5</option>
-                            <option>7</option>
-                            <option>7.5</option>
-                            <option>8</option>
-                            <option>8.5</option>
-                            <option>9</option>
-                            <option>9.5</option>
-                            <option>10</option>
-                          </select>
-                        </div>
+                          <!-- rpe -->
+                          <div class="mb-3">
+                            <label for="rpe" class="form-label">Rpe</label>
+                            <select id="rpe" class="form-control form-select form-select-sm">
+                              <option selected></option>
+                              <option>5</option>
+                              <option>5.5</option>
+                              <option>6</option>
+                              <option>6.5</option>
+                              <option>7</option>
+                              <option>7.5</option>
+                              <option>8</option>
+                              <option>8.5</option>
+                              <option>9</option>
+                              <option>9.5</option>
+                              <option>10</option>
+                            </select>
+                          </div>
 
-                        <!-- note -->
-                        <div class="mb-3">
-                          <label class="form-label">Notes</label>
-                          <textarea
-                            class="form-control form-control-sm"
-                            id="notes-id"
-                            rows="3"
-                          ></textarea>
-                        </div>
-                      </form>
-                    </div>
+                          <!-- note -->
+                          <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea
+                              class="form-control form-control-sm"
+                              id="notes-id"
+                              rows="3"
+                            ></textarea>
+                          </div>
+                        </form>
+                      </div>
 
-                    <!-- footer -->
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancel
-                      </button>
-                      <button type="button" class="btn btn-dark">Add</button>
+                      <!-- footer -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Cancel
+                        </button>
+                        <button type="button" class="btn btn-dark">Add</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </span>
+
+              <!-- add a video group -->
+              <span>
+                <button type="button" class="btn btn-sm btn-outline-dark">
+                  <i class="bi bi-play-circle me-1"></i> Add a video
+                </button>
+              </span>
             </span>
 
             <!-- right -->
-            <span class="d-flex gap-2">
+            <span class="d-flex justify-content-between gap-2">
               <button class="btn btn-sm btn-outline-dark">
                 <i class="bi bi-bar-chart me-1"></i>Graphs
               </button>

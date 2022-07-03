@@ -1,6 +1,6 @@
 <template>
   <div class="my-2 d-flex flex-column gap-2">
-    <div v-for="log in logs" data-aos="fade-up" class="card" id="log">
+    <div v-for="session in sessions" data-aos="fade-up" class="card" id="log">
       <div @click="logDetails(1)" class="card-body p-3">
         <div class="d-flex justify-content-between gap-5">
           <!-- start -->
@@ -36,14 +36,14 @@
   export default {
     data() {
       return {
-        logs: 12,
+        sessions: 12,
       };
     },
     methods: {
       logDetails(id) {
         this.$router.push({
-          // path: `/dashboard/logs/${id}`,
-          name: 'LogDetails',
+          // path: `/dashboard/session/${id}`,
+          name: 'SessionDetails',
           params: { id: id },
         });
       },
