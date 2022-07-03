@@ -55,30 +55,30 @@
                 <thead>
                   <tr>
                     <th class="text-center" scope="col">Date</th>
-                    <th class="text-center" scope="col">Lift</th>
+                    <th class="text-start" scope="col">Lift</th>
                     <th class="text-center" scope="col">Weight</th>
                     <th class="text-center" scope="col">Gain</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th class="text-center">1</th>
-                    <th class="text-center">sumo deadlift</th>
-                    <th class="text-center">234</th>
-                    <th class="text-center">+5</th>
+                    <td class="text-center">2022/01/23</td>
+                    <td class="text-start">sumo deadlift</td>
+                    <td class="text-center">234</td>
+                    <td class="text-center text-success">+50</td>
                   </tr>
 
                   <tr>
-                    <th class="text-center">1</th>
-                    <th class="text-center">sumo deadlift</th>
-                    <th class="text-center">234</th>
-                    <th class="text-center">+5</th>
+                    <td class="text-center">2022/04/11</td>
+                    <td class="text-start">conventional deadlift</td>
+                    <td class="text-center">234</td>
+                    <td class="text-center text-success">+15</td>
                   </tr>
                   <tr>
-                    <th class="text-center">1</th>
-                    <th class="text-center">sumo deadlift</th>
-                    <th class="text-center">234</th>
-                    <th class="text-center">+5</th>
+                    <td class="text-center">2022/08/01</td>
+                    <td class="text-start">block pull</td>
+                    <td class="text-center">234</td>
+                    <td class="text-center text-success">+44</td>
                   </tr>
                 </tbody>
               </table>
@@ -96,27 +96,27 @@
               <table class="table table-striped table-hover table-sm p-0 m-0">
                 <thead>
                   <tr>
-                    <th class="text-center" scope="col">Date</th>
-                    <th class="text-center" scope="col">Weight</th>
-                    <th class="text-center" scope="col">Trend</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Weight</th>
+                    <th class="text-center">Trend</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th class="text-center">1</th>
-                    <th class="text-center">185</th>
-                    <th class="text-center">+5</th>
+                    <td class="text-center">1</td>
+                    <td class="text-center">185</td>
+                    <td class="text-center text-success">+5</td>
                   </tr>
 
                   <tr>
-                    <th class="text-center">1</th>
-                    <th class="text-center">185</th>
-                    <th class="text-center">-1</th>
+                    <td class="text-center">1</td>
+                    <td class="text-center">185</td>
+                    <td class="text-center text-danger">-1</td>
                   </tr>
                   <tr>
-                    <th class="text-center">1</th>
-                    <th class="text-center">234</th>
-                    <th class="text-center">+2</th>
+                    <td class="text-center">1</td>
+                    <td class="text-center">234</td>
+                    <td class="text-center text-success">+2</td>
                   </tr>
                 </tbody>
               </table>

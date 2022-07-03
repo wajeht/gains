@@ -21,12 +21,7 @@
           <div class="row mb-2">
             <label for="start-time" class="col-4 col-form-label">Start time</label>
             <div class="col-8">
-              <input
-                type="datetime-local"
-                class="form-control form-control-sm"
-                id="start-time"
-                min="new Date()"
-              />
+              <input type="datetime-local" class="form-control form-control-sm" id="start-time" />
             </div>
           </div>
 
@@ -433,6 +428,9 @@
       return {
         id: this.$route.params.id,
       };
+    },
+    mounted() {
+      console.log(this.today);
     },
     methods: {
       handleAddALift() {
