@@ -6,7 +6,7 @@
         <!-- account -->
         <div>
           <!-- title -->
-          <h3><i class="bi bi-person-fill"></i> Account</h3>
+          <h5><i class="bi bi-person-fill"></i> Account</h5>
 
           <div class="list-group">
             <!-- user details -->
@@ -33,7 +33,7 @@
 
         <!-- data -->
         <div>
-          <h4><i class="bi bi-file-earmark-bar-graph"></i> Data</h4>
+          <h5><i class="bi bi-file-earmark-bar-graph"></i> Data</h5>
           <div class="list-group">
             <!-- email -->
             <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
@@ -61,7 +61,7 @@
 
         <!-- others -->
         <div>
-          <h4><i class="bi bi-code-slash"></i> Others</h4>
+          <h5><i class="bi bi-code-slash"></i> Others</h5>
           <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">

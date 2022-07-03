@@ -3,7 +3,7 @@
     <div class="my-3 d-flex flex-column gap-4" data-aos="fade-up">
       <!-- profile -->
       <div>
-        <h4><i class="bi bi-person-fill"></i> Profile</h4>
+        <h5><i class="bi bi-person-fill"></i> Profile</h5>
         <div class="card card-body">
           <img
             class="rounded-circle img-fluid"
@@ -37,7 +37,7 @@
 
       <!-- recovery chart -->
       <div>
-        <h4><i class="bi bi-activity"></i> Recovery</h4>
+        <h5><i class="bi bi-activity"></i> Recovery</h5>
         <div class="card" style="height: 100%">
           <div class="card-body">
             <canvas id="myChart"></canvas>
@@ -47,7 +47,7 @@
 
       <!-- recent prs chart -->
       <div>
-        <h4><i class="bi bi-graph-up-arrow"></i> Recent PRS</h4>
+        <h5><i class="bi bi-graph-up-arrow"></i> Recent PRS</h5>
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">
@@ -89,7 +89,7 @@
 
       <!-- bodyweight -->
       <div>
-        <h4><i class="bi bi-table"></i> Bodyweight</h4>
+        <h5><i class="bi bi-table"></i> Bodyweight</h5>
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">
@@ -103,18 +103,18 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-center">1</td>
+                    <td class="text-center">2021/11/03</td>
                     <td class="text-center">185</td>
                     <td class="text-center text-success">+5</td>
                   </tr>
 
                   <tr>
-                    <td class="text-center">1</td>
+                    <td class="text-center">2021/11/03</td>
                     <td class="text-center">185</td>
                     <td class="text-center text-danger">-1</td>
                   </tr>
                   <tr>
-                    <td class="text-center">1</td>
+                    <td class="text-center">2021/11/03</td>
                     <td class="text-center">234</td>
                     <td class="text-center text-success">+2</td>
                   </tr>
