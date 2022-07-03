@@ -19,41 +19,52 @@
 
           <!-- start time -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">Start time</label>
+            <label for="start-time" class="col-4 col-form-label">Start time</label>
             <div class="col-8">
               <input
                 type="datetime-local"
                 class="form-control form-control-sm"
-                id="colFormLabelSm"
+                id="start-time"
+                min="new Date()"
               />
             </div>
           </div>
 
           <!-- end time -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">End time</label>
+            <label for="end-time" class="col-4 col-form-label">End time</label>
             <div class="col-8">
-              <input
-                type="datetime-local"
-                class="form-control form-control-sm"
-                id="colFormLabelSm"
-              />
+              <input type="datetime-local" class="form-control form-control-sm" id="end-time" />
             </div>
           </div>
 
           <!-- bodyweight  -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">Bodyweight</label>
+            <label for="bodyweight" class="col-4 col-form-label">Bodyweight</label>
             <div class="col-8">
-              <input type="number" class="form-control form-control-sm" id="bodyweight-id" />
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                id="bodyweight"
+                min="1"
+                step="1"
+                max="500"
+              />
             </div>
           </div>
 
           <!-- hours of sleep  -->
           <div class="row mb-2">
-            <label class="col-4 col-form-label">Hours of sleep</label>
+            <label class="col-4 col-form-label" for="hours-of-sleep">Hours of sleep</label>
             <div class="col-8">
-              <input type="number" class="form-control form-control-sm" id="hours-of-sleep-id" />
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                id="hours-of-sleep"
+                min="1"
+                step="1"
+                max="24"
+              />
             </div>
           </div>
 
