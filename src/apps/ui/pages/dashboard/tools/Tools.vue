@@ -4,7 +4,7 @@
       <!-- calculator -->
       <div>
         <!-- title -->
-        <h2>Calculators</h2>
+        <h3>Calculators</h3>
 
         <!-- rpe -->
         <div class="list-group">
@@ -73,7 +73,7 @@
 
       <!-- reports -->
       <div>
-        <h2>Reports</h2>
+        <h3>Reports</h3>
         <div class="list-group">
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -110,7 +110,7 @@
 
       <!-- others -->
       <div>
-        <h2>Others</h2>
+        <h3>Others</h3>
         <div class="list-group">
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
