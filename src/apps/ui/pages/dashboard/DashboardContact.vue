@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="flex my-3 gap-2">
+    <div class="flex my-3 gap-3">
       <!-- go back -->
       <div class="mb-3">
         <span @click="$router.back()" role="button"><i class="bi bi-arrow-left"></i> Back</span>
