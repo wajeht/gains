@@ -86,6 +86,44 @@
           </div>
         </div>
       </div>
+
+      <!-- bodyweight -->
+      <div>
+        <h2>Bodyweight</h2>
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm p-0 m-0">
+                <thead>
+                  <tr>
+                    <th class="text-center" scope="col">Date</th>
+                    <th class="text-center" scope="col">Weight</th>
+                    <th class="text-center" scope="col">Trend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">185</th>
+                    <th class="text-center">+5</th>
+                  </tr>
+
+                  <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">185</th>
+                    <th class="text-center">-1</th>
+                  </tr>
+                  <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">234</th>
+                    <th class="text-center">+2</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
