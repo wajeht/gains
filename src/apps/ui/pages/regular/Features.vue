@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-7">
           <h2 class="featurette-heading">
-            First featurette heading. <span class="text-muted">It’ll blow your mind.</span>
+            Data intensive tracking. <span class="text-muted">It’ll blow your mind.</span>
           </h2>
           <p class="lead">
             Some great placeholder content for the first featurette here. Imagine some exciting
@@ -36,7 +36,7 @@
       <div class="row">
         <div class="col-md-7 order-md-2">
           <h2 class="featurette-heading">
-            Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span>
+            Instagram style video layout. <span class="text-muted">See for yourself.</span>
           </h2>
           <p class="lead">
             Another featurette? Of course. More placeholder content here to give you an idea of how
@@ -67,7 +67,7 @@
       <div class="row">
         <div class="col-md-7">
           <h2 class="featurette-heading">
-            First featurette heading. <span class="text-muted">It’ll blow your mind.</span>
+            A bunch of calculators. <span class="text-muted">It’ll blow your mind.</span>
           </h2>
           <p class="lead">
             Some great placeholder content for the first featurette here. Imagine some exciting
@@ -98,7 +98,7 @@
       <div class="row">
         <div class="col-md-7 order-md-2">
           <h2 class="featurette-heading">
-            Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span>
+            Charts, Graphs, and Reports. <span class="text-muted">See for yourself.</span>
           </h2>
           <p class="lead">
             Another featurette? Of course. More placeholder content here to give you an idea of how
