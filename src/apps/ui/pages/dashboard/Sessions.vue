@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="my-3 d-flex flex-column gap-2">
+  <div class="container px-1">
+    <div class="my-3 d-flex flex-column gap-3">
       <div v-for="session in sessions" data-aos="fade-up" class="card" id="log">
         <div @click="logDetails(1)" class="card-body">
           <div class="d-flex justify-content-between gap-5">
