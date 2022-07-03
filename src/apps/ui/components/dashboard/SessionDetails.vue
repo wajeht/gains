@@ -220,7 +220,8 @@
                 </button>
 
                 <!-- add a set modal -->
-                <div
+                <form
+                  @submit.prevent="handleAddASet()"
                   class="modal fade px-1 pt-5"
                   id="add-a-set"
                   data-bs-backdrop="static"
@@ -239,70 +240,78 @@
                         ></button>
                       </div>
                       <div class="modal-body">
-                        <form>
-                          <!-- reps -->
-                          <div class="mb-3">
-                            <label for="rep" class="form-label">Rep</label>
-                            <input
-                              id="rep"
-                              class="form-control form-control-sm"
-                              type="number"
-                              required
-                            />
-                          </div>
+                        <!-- reps -->
+                        <div class="mb-3">
+                          <label for="rep" class="form-label">Rep*</label>
+                          <input
+                            id="rep"
+                            class="form-control form-control-sm"
+                            type="number"
+                            min="1"
+                            max="20"
+                            step="1"
+                            required
+                          />
+                        </div>
 
-                          <!-- weight -->
-                          <div class="mb-3">
-                            <label for="weight" class="form-label">Weight</label>
-                            <input
-                              id="weight"
-                              class="form-control form-control-sm"
-                              type="number"
-                              required
-                            />
-                          </div>
+                        <!-- weight -->
+                        <div class="mb-3">
+                          <label for="weight" class="form-label">Weight*</label>
+                          <input
+                            id="weight"
+                            class="form-control form-control-sm"
+                            type="number"
+                            min="5"
+                            step="5"
+                            required
+                          />
+                        </div>
 
-                          <!-- rpe -->
-                          <div class="mb-3">
-                            <label for="rpe" class="form-label">Rpe</label>
-                            <select id="rpe" class="form-control form-select form-select-sm">
-                              <option selected></option>
-                              <option>5</option>
-                              <option>5.5</option>
-                              <option>6</option>
-                              <option>6.5</option>
-                              <option>7</option>
-                              <option>7.5</option>
-                              <option>8</option>
-                              <option>8.5</option>
-                              <option>9</option>
-                              <option>9.5</option>
-                              <option>10</option>
-                            </select>
-                          </div>
+                        <!-- rpe -->
+                        <div class="mb-3">
+                          <label for="rpe" class="form-label">Rpe</label>
+                          <select id="rpe" class="form-control form-select form-select-sm">
+                            <option selected value="" disabled>select a rpe!</option>
+                            <option value="5">5</option>
+                            <option value="5.5">5.5</option>
+                            <option value="6">6</option>
+                            <option value="6.5">6.5</option>
+                            <option value="7">7</option>
+                            <option value="7.5">7.5</option>
+                            <option value="8">8</option>
+                            <option value="8.5">8.5</option>
+                            <option value="9">9</option>
+                            <option value="9.5">9.5</option>
+                            <option value="10">10</option>
+                          </select>
+                        </div>
 
-                          <!-- note -->
-                          <div class="mb-3">
-                            <label class="form-label">Notes</label>
-                            <textarea
-                              class="form-control form-control-sm"
-                              id="notes-id"
-                              rows="3"
-                            ></textarea>
-                          </div>
-                        </form>
+                        <!-- note -->
+                        <div class="mb-3">
+                          <label class="form-label">Note</label>
+                          <textarea
+                            class="form-control form-control-sm"
+                            id="notes-id"
+                            rows="3"
+                          ></textarea>
+                        </div>
                       </div>
 
                       <!-- footer -->
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button
+                          ref="addASetDismissButton"
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
                           Cancel
                         </button>
-                        <button type="button" class="btn btn-dark">Add</button>
+                        <button type="submit" class="btn btn-dark">Add</button>
                       </div>
                     </div>
                   </div>
-                </div>
+                </form>
               </span>
 
               <!-- add a video group -->
@@ -339,7 +348,8 @@
         </button>
 
         <!-- modal -->
-        <div
+        <form
+          @submit.prevent="handleAddALift()"
           class="modal fade px-1 pt-5"
           id="add-a-lift"
           data-bs-backdrop="static"
@@ -358,39 +368,49 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form>
-                  <!-- categories -->
-                  <div class="mb-3">
-                    <label for="categories" class="form-label">Categories</label>
-                    <select id="categories" class="form-select">
-                      <option>squat</option>
-                      <option>bench</option>
-                      <option>deadlift</option>
-                      <option>press</option>
-                    </select>
-                  </div>
+                <!-- category -->
+                <div class="mb-3">
+                  <label for="categories" class="form-label">Category</label>
+                  <select id="categories" class="form-select" required>
+                    <option disabled value="" selected>select a category!</option>
+                    <option value="squat">squat</option>
+                    <option value="bench">bench</option>
+                    <option value="deadlift">deadlift</option>
+                    <option value="v-press">press</option>
+                  </select>
+                </div>
 
-                  <!-- lift -->
-                  <div class="mb-3">
-                    <label for="lift" class="form-label">Lift</label>
-                    <select id="lift" class="form-select">
-                      <option>sumo deadlift</option>
-                      <option>romanian deadlift</option>
-                      <option>stiff legged deadlift</option>
-                      <option>conventional deadlift</option>
-                    </select>
-                  </div>
-                </form>
+                <!-- lift -->
+                <div class="mb-3">
+                  <label for="lift" class="form-label">Lift</label>
+                  <select id="lift" class="form-select" required>
+                    <option disabled value="" selected>select a lift!</option>
+                    <option value="sumo deadlift">sumo deadlift</option>
+                    <option value="romanian deadlift">romanian deadlift</option>
+                    <option value="stiff legged deadlift">stiff legged deadlift</option>
+                    <option value="conventional deadlift">conventional deadlift</option>
+                  </select>
+                </div>
               </div>
+
+              <!-- footer -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <!-- cancel -->
+                <button
+                  ref="addALiftDismissButton"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
                   Cancel
                 </button>
-                <button type="button" class="btn btn-dark">Add</button>
+
+                <!-- add -->
+                <button type="submit" class="btn btn-dark">Add</button>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </XyzTransition>
@@ -402,6 +422,14 @@
       return {
         id: this.$route.params.id,
       };
+    },
+    methods: {
+      handleAddALift() {
+        this.$refs.addALiftDismissButton.click();
+      },
+      handleAddASet() {
+        this.$refs.addASetDismissButton.click();
+      },
     },
   };
 </script>
