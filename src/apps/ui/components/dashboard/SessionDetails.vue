@@ -10,15 +10,27 @@
         <!-- sessions card -->
         <form class="card p-0">
           <div class="card-body p-3">
-            <!-- name -->
+
+            <!-- session name -->
             <div class="row mb-2">
-              <label class="col-4 col-form-label">Session name</label>
+              <label for="session-name" class="col-4 col-form-label">Session name</label>
               <div class="col-8">
                 <input
-                  type="email"
+                  type="text"
                   class="form-control form-control-sm"
-                  id="colFormLabelSm"
-                  disabled
+                  id="session-name"
+                />
+              </div>
+            </div>
+
+            <!-- block name -->
+            <div class="row mb-2">
+              <label for="block-name" class="col-4 col-form-label">Block name</label>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="block-name"
                 />
               </div>
             </div>
