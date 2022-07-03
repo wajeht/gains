@@ -11,6 +11,7 @@ export default defineConfig({
   root: './src/apps/ui',
   build: {
     outDir: '../../public',
+    chunkSizeWarningLimit: 1600,
     emptyOutDir: false,
   },
   define: {
