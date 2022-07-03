@@ -1,6 +1,10 @@
 <template>
+  <!-- header -->
+  <DashboardHeader />
+
+  <!-- session details -->
   <XyzTransition appear xyz="fade small out-down">
-    <div class="container px-1">
+    <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
         <!-- go back -->
         <a class="link-secondary text-decoration-none" @click="$router.back()" role="button"
@@ -10,16 +14,11 @@
         <!-- sessions card -->
         <form class="card p-0">
           <div class="card-body p-3">
-
             <!-- session name -->
             <div class="row mb-2">
               <label for="session-name" class="col-4 col-form-label">Session name</label>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="session-name"
-                />
+                <input type="text" class="form-control form-control-sm" id="session-name" />
               </div>
             </div>
 
@@ -27,11 +26,7 @@
             <div class="row mb-2">
               <label for="block-name" class="col-4 col-form-label">Block name</label>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="block-name"
-                />
+                <input type="text" class="form-control form-control-sm" id="block-name" />
               </div>
             </div>
 
@@ -444,7 +439,11 @@
   </XyzTransition>
 </template>
 <script>
+  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
   export default {
+    components: {
+      DashboardHeader,
+    },
     props: ['id'],
     data() {
       return {

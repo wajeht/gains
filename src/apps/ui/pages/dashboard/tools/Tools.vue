@@ -1,5 +1,7 @@
 <template>
-  <div class="container px-1">
+  <DashboardHeader />
+
+  <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3" data-aos="fade-up">
       <!-- calculator -->
       <div>
@@ -150,3 +152,11 @@
     </div>
   </div>
 </template>
+<script>
+  import DashboardHeader from '../../../components/dashboard/DashboardHeader.vue';
+  export default {
+    components: {
+      DashboardHeader,
+    },
+  };
+</script>

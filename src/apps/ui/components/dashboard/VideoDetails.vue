@@ -1,6 +1,11 @@
+
 <template>
+  <!-- header -->
+  <DashboardHeader />
+
+  <!-- video details -->
   <XyzTransition appear xyz="fade small out-down">
-    <div class="container px-1">
+    <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
         <!-- go back -->
         <a class="link-secondary text-decoration-none" @click="$router.back()" role="button"
@@ -63,7 +68,12 @@
 </template>
 
 <script>
+  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+
   export default {
+    components: {
+      DashboardHeader,
+    },
     props: ['id'],
     data() {
       return {

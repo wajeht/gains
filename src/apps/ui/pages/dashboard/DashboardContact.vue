@@ -1,5 +1,9 @@
 <template>
-  <div class="container px-1">
+  <!-- header -->
+  <DashboardHeader />
+
+  <!-- contact -->
+  <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
       <!-- go back -->
       <a class="link-secondary text-decoration-none" @click="$router.back()" role="button"
@@ -18,10 +22,12 @@
 
 <script>
   import Contact from '../../components/shared/Contact.vue';
+  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
 
   export default {
     components: {
       Contact,
+      DashboardHeader,
     },
   };
 </script>
