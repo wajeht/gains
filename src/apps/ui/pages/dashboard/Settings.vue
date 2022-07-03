@@ -68,11 +68,11 @@
                 <h6 class="mb-0">Help and Support</h6>
               </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link to="/dashboard/contact" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Send Feedback</h6>
               </div>
-            </a>
+            </router-link>
             <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Changelogs</h6>
