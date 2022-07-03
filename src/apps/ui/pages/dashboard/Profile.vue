@@ -1,5 +1,7 @@
 <template>
-  <div class="container px-1">
+  <DashboardHeader />
+
+  <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3" data-aos="fade-up">
       <!-- profile -->
       <div>
@@ -133,7 +135,12 @@
   import { Chart } from 'chart.js';
   import { sleep } from '../../../../utils/helpers.js';
 
+  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+
   export default {
+    components: {
+      DashboardHeader,
+    },
     data() {
       return {
         data: null,

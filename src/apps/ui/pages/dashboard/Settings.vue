@@ -1,5 +1,9 @@
 <template>
-  <div class="container px-1">
+  <!-- header -->
+  <DashboardHeader />
+
+  <!-- settings -->
+  <div class="container px-3">
     <div class="flex flex-column justify-content-between my-3" data-aos="fade-up">
       <!-- setting items -->
       <div class="d-flex flex-column gap-3">
@@ -116,3 +120,13 @@
     </div>
   </div>
 </template>
+
+<script>
+  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+
+  export default {
+    components: {
+      DashboardHeader,
+    },
+  };
+</script>

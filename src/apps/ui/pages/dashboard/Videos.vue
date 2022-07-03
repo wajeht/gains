@@ -1,6 +1,7 @@
 <template>
+  <DashboardHeader />
   <div class="container">
-    <div class="row my-3 px-1">
+    <div class="row my-3 px-3">
       <div v-for="video in videos" :key="`${video.id}` - key" class="col-3 p-0">
         <div class="d-flex flex-column">
           <router-link :to="{ name: 'VideoDetails', params: { id: video.id } }">
@@ -15,7 +16,11 @@
 </template>
 
 <script>
+  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
   export default {
+    components: {
+      DashboardHeader,
+    },
     data() {
       return {
         videos: [

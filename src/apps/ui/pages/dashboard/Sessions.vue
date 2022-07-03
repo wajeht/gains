@@ -1,5 +1,7 @@
 <template>
-  <div class="container px-1">
+  <DashboardHeader />
+
+  <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
       <div v-for="session in sessions" data-aos="fade-up" class="card" id="log">
         <div @click="logDetails(1)" class="card-body">
@@ -35,7 +37,11 @@
 </template>
 
 <script>
+  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
   export default {
+    components: {
+      DashboardHeader,
+    },
     data() {
       return {
         sessions: 12,
