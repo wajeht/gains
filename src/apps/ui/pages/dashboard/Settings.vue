@@ -1,8 +1,8 @@
 <template>
-  <div class="container px-0">
-    <div class="flex flex-column justify-content-between my-2" data-aos="fade-up">
+  <div class="container">
+    <div class="flex flex-column justify-content-between my-3" data-aos="fade-up">
       <!-- setting items -->
-      <div class="d-flex flex-column gap-3">
+      <div class="d-flex flex-column gap-4">
         <!-- account -->
         <div>
           <!-- title -->
@@ -68,7 +68,10 @@
                 <h6 class="mb-0">Help and Support</h6>
               </div>
             </a>
-            <router-link to="/dashboard/contact" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/contact"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Send Feedback</h6>
               </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="container px-0">
-    <div class="my-2 d-flex flex-column gap-3" data-aos="fade-up">
+  <div class="container">
+    <div class="my-3 d-flex flex-column gap-4" data-aos="fade-up">
       <!-- calculator -->
       <div>
         <!-- title -->
