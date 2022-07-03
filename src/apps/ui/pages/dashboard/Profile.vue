@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="my-3 d-flex flex-column gap-4" data-aos="fade-up">
+  <div class="container px-1">
+    <div class="my-3 d-flex flex-column gap-3" data-aos="fade-up">
       <!-- profile -->
       <div>
         <h5><i class="bi bi-person-fill"></i> Profile</h5>
