@@ -13,7 +13,6 @@ import RegularNotFound from './pages/regular/RegularNotFound.vue';
 
 // tools
 import Profile from './pages/dashboard/Profile.vue';
-import DashboardHome from './pages/dashboard/DashboardHome.vue';
 import DashboardLogin from './components/dashboard/DashboardLogin.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Sessions from './pages/dashboard/Sessions.vue';
@@ -104,14 +103,6 @@ const routes = [
     },
   },
   // dashboard
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: DashboardHome,
-    meta: {
-      layout: 'DashboardLayout',
-    },
-  },
   {
     path: '/dashboard/login',
     name: 'DashboardLogin',

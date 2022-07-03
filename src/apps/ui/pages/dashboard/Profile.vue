@@ -22,6 +22,16 @@
             <li>confidence</li>
             <li>sleep quty</li>
           </ul>
+
+          <!-- logout -->
+          <button @click="logout()" class="btn btn-danger w-100" :disabled="loading">
+            <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!loading"> Logout </span>
+            <span v-if="loading"> Loading... </span>
+          </button>
         </div>
       </div>
 
@@ -83,10 +93,13 @@
 
 <script>
   import { Chart } from 'chart.js';
+  import { sleep } from '../../../../utils/helpers.js';
+
   export default {
     data() {
       return {
         data: null,
+        loading: false,
       };
     },
     mounted() {
@@ -117,6 +130,15 @@
       };
       const ctx = document.getElementById('myChart');
       new Chart(ctx, this.data);
+    },
+    methods: {
+      async logout() {
+        this.loading = true;
+
+        await sleep(3000);
+
+        this.$router.push({ path: '/dashboard/login' });
+      },
     },
   };
 </script>
