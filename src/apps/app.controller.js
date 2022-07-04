@@ -4,6 +4,7 @@ import { env } from '../config/env.js';
 import Chad from '../libs/chad.js';
 import logger from '../libs/logger.js';
 import { red } from '../utils/rainbow-log.js';
+import requestIp from 'request-ip';
 
 /**
  * It returns a 200 status code with a JSON object containing a message
@@ -55,7 +56,8 @@ export function notFoundHandler(req, res, next) {
  * @param next - This is a function that will be called when the middleware is done.
  */
 export function errorHandler(err, req, res, next) {
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const ip = requestIp.getClientIp(req);
   logger.error(err);
   Chad.flex(`${ip}:${err.msg}`, err.stack);
 
