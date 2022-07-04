@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import ValidationError from '../errors/validation.error.js';
+import CustomError from '../errors/custom-error.error.js';
 
 const validate = (schemas) => {
   return async (req, res, next) => {
@@ -8,7 +8,7 @@ const validate = (schemas) => {
       const result = validationResult(req);
       if (result.isEmpty()) return next();
       const { errors } = result;
-      throw new ValidationError('Validation errors within your requests!', errors);
+      throw new CustomError.ValidationError('Validation errors within your requests!', errors);
     } catch (err) {
       next(err);
     }

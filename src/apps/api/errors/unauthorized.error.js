@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+import { yellow } from '../../../utils/rainbow-log.js';
 import CustomAPIError from './custom-api.error.js';
 
 /* It's a custom error class that extends the CustomAPIError class and sets the status code to 403 */

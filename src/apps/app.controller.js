@@ -3,6 +3,7 @@ import path from 'path';
 import { env } from '../config/env.js';
 import Chad from '../libs/chad.js';
 import logger from '../libs/logger.js';
+import { red } from '../utils/rainbow-log.js';
 
 /**
  * It returns a 200 status code with a JSON object containing a message
@@ -56,6 +57,18 @@ export function notFoundHandler(req, res, next) {
 export function errorHandler(err, req, res, next) {
   logger.error(err);
   Chad.flex(err.msg, err.stack);
+
+  // api errors
+  if (err.name === 'CustomAPIError') {
+    return res.status(err.statusCode).json({
+      status: 'fail',
+      request_url: req.originalUrl,
+      errors: err?.errors,
+      message: env === 'development' ? err.stack : err.message,
+    });
+  }
+
+  // other errors
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'fail',
     request_url: req.originalUrl,

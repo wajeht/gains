@@ -2,6 +2,9 @@ import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import { jwt_secret } from '../../../config/env.js';
 import { env } from '../../../config/env.js';
+import { red } from '../../../utils/rainbow-log.js';
+
+import CustomError from '../errors/custom-error.error.js';
 
 /**
  * It checks if the request has an authorization header, and if it does, it checks if it's a valid JWT
@@ -12,24 +15,26 @@ import { env } from '../../../config/env.js';
  */
 export default function auth(req, res, next) {
   try {
-    // TODO!: remove this on production
-    if (env === 'development') {
-      return next();
-    }
+    // // TODO!: remove this on production
+    // if (env === 'development') {
+    //   red('TODO!: remove auth skipping in production!');
+    //   return next();
+    // }
 
     const x = req.get('authorization');
 
-    if (!x) throw new Error('must use bearer token authorization!');
-    if (x.split(' ').length != 2) throw new Error('must use bearer token authorization!');
-    if (!x.startsWith('Bearer')) throw new Error('must use bearer token authorization!');
+    if (!x) throw new CustomError.UnauthorizedError('Must use bearer token authorization!'); // prettier-ignore
+    if (x.split(' ').length != 2) throw new CustomError.UnauthorizedError('Must use bearer token authorization!'); // prettier-ignore
+    if (!x.startsWith('Bearer')) throw new CustomError.UnauthorizedError('Must use bearer token authorization!'); // prettier-ignore
 
     const token = x.split(' ')[1];
 
     try {
       jwt.verify(token, jwt_secret);
     } catch (error) {
-      throw new Error('Invalid signature!');
+      throw new CustomError.UnauthorizedError('Invalid signature!');
     }
+
     next();
   } catch (error) {
     next(error);
