@@ -16,10 +16,10 @@ import CustomError from '../errors/custom-error.error.js';
 export default function auth(req, res, next) {
   try {
     // // TODO!: remove this on production
-    // if (env === 'development') {
-    //   red('TODO!: remove auth skipping in production!');
-    //   return next();
-    // }
+    if (env === 'development') {
+      red('TODO!: remove auth skipping in production!');
+      return next();
+    }
 
     const x = req.get('authorization');
 

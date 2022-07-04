@@ -1,5 +1,5 @@
 import { check, param, body } from 'express-validator';
-import { custom, red } from '../../../../utils/rainbow-log.js';
+import { custom, red, yellow } from '../../../../utils/rainbow-log.js';
 import * as UserQueries from './users.queries.js';
 import { isEqual } from 'lodash-es';
 
@@ -116,6 +116,9 @@ export const patchUser = [
     .withMessage('The value must be an email!')
     .custom(async (email, { req }) => {
       const exist = await UserQueries.findUserByParam({ email });
+
+      yellow(exist, '################');
+
       // if (exist[0]?.id === req.params.id) return true;
       if (exist.length !== 0) throw new Error('Username or Email already exist!');
     }),
