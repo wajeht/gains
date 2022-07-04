@@ -12,6 +12,7 @@ import 'hover.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import FontAwesomeIcon from './font-awesome';
+import { tooltip } from './tool-tip.js';
 import { Chart, registerables } from 'chart.js';
 
 import VueAnimXyz from '@animxyz/vue3';
@@ -26,6 +27,8 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.config.performance = true;
 app.config.devtools = true;
+
+app.directive('tooltip', tooltip);
 
 app.use(VueAnimXyz);
 app.use(routes);

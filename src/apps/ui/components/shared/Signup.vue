@@ -80,12 +80,22 @@
   <!-- o-auth -->
   <div class="d-flex flex-column gap-2 mb-3">
     <!-- discord -->
-    <a class="btn w-100 text-light" href="#" style="background: #7289da"
+    <a
+      class="btn w-100 text-light"
+      href="#"
+      style="background: #7289da"
+      v-tooltip
+      title="Not supported yet!"
       ><i class="bi bi-discord me-1"></i>Login with Discord</a
     >
 
     <!-- github -->
-    <a class="btn btn-success w-100" style="border: 1px solid #ced4da" href="#"
+    <a
+      class="btn btn-success w-100"
+      style="border: 1px solid #ced4da"
+      href="#"
+      v-tooltip
+      title="Not supported yet!"
       ><i class="bi bi-github me-1"></i>Login with Github</a
     >
 
