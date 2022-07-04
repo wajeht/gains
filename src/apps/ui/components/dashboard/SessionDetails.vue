@@ -367,7 +367,7 @@
           <!-- modal -->
           <form
             @submit.prevent="handleAddALift()"
-            class="modal fade px-1 pt-5"
+            class="modal fade px-2 pt-5"
             id="add-a-lift"
             data-bs-backdrop="static"
             data-bs-keyboard="false"

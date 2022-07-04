@@ -217,7 +217,7 @@ const routes = [
   },
 
   {
-    path: '/dashboard/session/:id',
+    path: '/dashboard/sessions/:id',
     name: 'SessionDetails',
     component: SessionDetails,
     props: true,
