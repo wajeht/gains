@@ -15,8 +15,8 @@ users
 
 // prettier-ignore
 users.route('/:id')
-  .get(validator(UsersValidation.getUser),catchAsyncErrors(UsersController.getUser))
-  .patch(validator(UsersValidation.patchUser),catchAsyncErrors(UsersController.patchUser))
-  .delete(validator(UsersValidation.deleteUser),catchAsyncErrors(UsersController.deleteUser))
+  .get(validator(UsersValidation.getUser), catchAsyncErrors(UsersController.getUser))
+  .patch(validator(UsersValidation.patchUser), catchAsyncErrors(UsersController.patchUser))
+  .delete(validator(UsersValidation.deleteUser), catchAsyncErrors(UsersController.deleteUser))
 
 export default users;
