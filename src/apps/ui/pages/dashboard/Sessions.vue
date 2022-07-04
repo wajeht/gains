@@ -1,5 +1,5 @@
 <template>
-  <DashboardHeader />
+  <SessionsHeader />
 
   <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
@@ -37,10 +37,11 @@
 </template>
 
 <script>
-  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+  import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
+
   export default {
     components: {
-      DashboardHeader,
+      SessionsHeader,
     },
     data() {
       return {
