@@ -12,7 +12,8 @@ import requestIp from 'request-ip';
  * @param res - The response object.
  */
 export function getHealthCheck(req, res) {
-  Chad.flex(`someone hit a health check from ${req.ip}`);
+  const ip = requestIp.getClientIp(req);
+  Chad.flex(`someone hit a health check from ${ip}`);
   res.status(200).json({
     msg: 'ok',
   });
@@ -58,7 +59,11 @@ export function notFoundHandler(req, res, next) {
 export function errorHandler(err, req, res, next) {
   // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const ip = requestIp.getClientIp(req);
-  logger.error(err);
+  const errWithIP = {
+    ...err,
+    ip,
+  };
+  logger.error(errWithIP);
   Chad.flex(`${ip}:${err.msg}`, err.stack);
 
   // api errors
