@@ -55,8 +55,9 @@ export function notFoundHandler(req, res, next) {
  * @param next - This is a function that will be called when the middleware is done.
  */
 export function errorHandler(err, req, res, next) {
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   logger.error(err);
-  Chad.flex(err.msg, err.stack);
+  Chad.flex(`${ip}:${err.msg}`, err.stack);
 
   // api errors
   if (err.name === 'CustomAPIError') {
