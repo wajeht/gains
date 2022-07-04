@@ -122,7 +122,7 @@ const routes = [
     },
   },
   {
-    path: '/dashboard/contact',
+    path: '/dashboard/settings/contact',
     name: 'DashboardContact',
     component: DashboardContact,
     meta: {

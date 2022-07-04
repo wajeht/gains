@@ -1,8 +1,10 @@
 <template>
   <!-- card -->
-  <div class="card">
-    <div class="card-body">
-      <Login />
+  <div class="container px-1">
+    <div class="card">
+      <div class="card-body">
+        <Login />
+      </div>
     </div>
   </div>
 </template>

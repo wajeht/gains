@@ -1,17 +1,12 @@
 
 <template>
   <!-- header -->
-  <DashboardHeader />
+  <Backheader />
 
   <!-- video details -->
   <XyzTransition appear xyz="fade small out-down">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
-        <!-- go back -->
-        <a class="link-secondary text-decoration-none" @click="$router.back()" role="button"
-          ><i class="bi bi-arrow-left"></i> Back</a
-        >
-
         <!-- video -->
         <div class="card shadow-sm border">
           <div class="d-flex justify-content-between card-header">
@@ -68,11 +63,11 @@
 </template>
 
 <script>
-  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+  import Backheader from './headers/Backheader.vue';
 
   export default {
     components: {
-      DashboardHeader,
+      Backheader,
     },
     props: ['id'],
     data() {

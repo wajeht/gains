@@ -73,7 +73,7 @@
               </div>
             </a>
             <router-link
-              to="/dashboard/contact"
+              to="/dashboard/settings/contact"
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
