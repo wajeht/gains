@@ -1,5 +1,5 @@
 import { check, param, body } from 'express-validator';
-import { custom, red, yellow } from '../../../../utils/rainbow-log.js';
+import { blue, custom, green, red, yellow } from '../../../../utils/rainbow-log.js';
 import * as UserQueries from './users.queries.js';
 import { isEqual } from 'lodash-es';
 
@@ -112,25 +112,37 @@ export const patchUser = [
   // allow for re-update same value
   body('email')
     .optional()
+    .trim()
     .isEmail()
     .withMessage('The value must be an email!')
     .custom(async (email, { req }) => {
       const exist = await UserQueries.findUserByParam({ email });
+      let ok = false;
 
-      yellow(exist, '################');
+      if (exist[0]?.id == req.params.id) {
+        ok = true;
+      } else {
+        throw new Error('Username or Email already exist!');
+      }
 
-      // if (exist[0]?.id === req.params.id) return true;
-      if (exist.length !== 0) throw new Error('Username or Email already exist!');
+      return ok;
     }),
   // allow for re-update same value
   body('username')
     .optional()
-    .isLength({ min: 6, max: 20 })
+    .isLength({ min: 8, max: 20 })
     .withMessage('The value must be at least 8 character long or less than 20 character long')
     .custom(async (username, { req }) => {
       const exist = await UserQueries.findUserByParam({ username });
-      // if (exist[0]?.id === req.params.id) return true;
-      if (exist.length !== 0) throw new Error('Username or Email already exist!');
+      let ok = false;
+
+      if (exist[0]?.id == req.params.id) {
+        ok = true;
+      } else {
+        throw new Error('Username or Email already exist!');
+      }
+
+      return ok;
     }),
   body('password')
     .optional()
