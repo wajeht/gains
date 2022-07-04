@@ -129,7 +129,12 @@
   export default {
     data() {
       return {
+        sessionName: '',
+        blockName: '',
         date: null,
+        bodyweight: '',
+        hoursOfSleep: '',
+        notes: '',
       };
     },
     mounted() {
