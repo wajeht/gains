@@ -65,7 +65,7 @@
               <!-- block name -->
               <div class="mb-3">
                 <label for="block-name" class="form-label">Block name</label>
-                <input id="block-name" class="form-control form-control-sm" type="text" required />
+                <input id="block-name" class="form-control form-control-sm" type="text" />
               </div>
 
               <!-- start time -->
@@ -75,8 +75,28 @@
                   id="start-time"
                   class="form-control form-control-sm"
                   type="datetime-local"
+                  :value="date"
                   required
+                  disabled
                 />
+              </div>
+
+              <!-- bodyweight  -->
+              <div class="mb-3">
+                <label for="bodyweight" class="form-label">Bodyweight</label>
+                <input id="bodyweight" class="form-control form-control-sm" min="1" type="number" />
+              </div>
+
+              <!-- hours of sleep  -->
+              <div class="mb-3">
+                <label for="sleep" class="form-label">Hours of sleep</label>
+                <input id="sleep" class="form-control form-control-sm" min="1" type="number" />
+              </div>
+
+              <!-- notes -->
+              <div class="mb-2">
+                <label for="notes" class="form-label">Notes</label>
+                <textarea class="form-control form-control-sm" id="notes" rows="3"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -88,7 +108,7 @@
               >
                 Cancel
               </button>
-              <button type="submit" class="btn btn-primary">Add</button>
+              <button type="submit" class="btn btn-dark">Add</button>
             </div>
           </div>
         </div>
@@ -108,11 +128,18 @@
 <script>
   export default {
     data() {
-      return {};
+      return {
+        date: null,
+      };
     },
     mounted() {
       // back drop problem fixed
       document.body.appendChild(document.getElementById('add-a-session'));
+
+      // init date
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      this.date = now.toISOString().slice(0, 16);
     },
     methods: {
       handleAddASession() {

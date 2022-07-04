@@ -29,7 +29,7 @@
             <div class="row mb-2">
               <label for="start-time" class="col-4 col-form-label">Start time</label>
               <div class="col-8">
-                <input type="datetime-local" class="form-control form-control-sm" id="start-time" />
+                <input type="date" class="form-control form-control-sm" id="start-time" />
               </div>
             </div>
 
