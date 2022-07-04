@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import { salt } from '../config/env.js';
 
 export default class Password {
   /**
@@ -7,7 +8,7 @@ export default class Password {
    * @param salt - A random string that is used to salt the password.
    * @returns A promise.
    */
-  static async hash(password, salt) {
+  static async hash(password) {
     try {
       return bcrypt.hash(password, salt);
     } catch (err) {
