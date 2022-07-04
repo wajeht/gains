@@ -19,7 +19,7 @@
       <!-- add button -->
       <span
         class="link-secondary"
-        type="button"
+        role="button"
         data-bs-toggle="modal"
         data-bs-target="#add-a-session"
       >
