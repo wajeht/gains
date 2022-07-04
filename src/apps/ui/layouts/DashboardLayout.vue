@@ -1,7 +1,11 @@
 <template>
   <div id="admin" class="d-flex flex-column min-vh-100 border-2 bg-black">
     <!-- <DashboardHeader /> -->
-    <main id="admin-router-wrapper" class="flex-grow-1" style="background-color: #ebeae2">
+    <main
+      id="admin-router-wrapper"
+      class="container px-0 flex-grow-1"
+      style="background-color: #ebeae2"
+    >
       <router-view> </router-view>
     </main>
     <DashboardFooter />
