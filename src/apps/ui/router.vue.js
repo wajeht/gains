@@ -10,6 +10,7 @@ import RegularHome from './pages/regular/RegularHome.vue';
 import RegularLogin from './pages/regular/RegularLogin.vue';
 import RegularSignup from './pages/regular/RegularSignup.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
+import VerifyEmail from './pages/regular/VerifyEmail.vue';
 
 // dashboard
 import Profile from './pages/dashboard/Profile.vue';
@@ -60,6 +61,15 @@ const routes = [
     path: '/forget-password',
     name: 'Forget Password',
     component: ForgetPassword,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/verify-email/:uid',
+    name: 'Verify Email',
+    component: VerifyEmail,
+    props: true,
     meta: {
       layout: 'RegularLayout',
     },

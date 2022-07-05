@@ -63,7 +63,7 @@ export async function getVerifyEmail(req, res) {
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
-    message: `User ID: ${uid} was successfully vefified!`,
+    message: `User ID: ${uid} was successfully verified!`,
   });
 }
 

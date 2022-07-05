@@ -81,6 +81,7 @@
   <div class="d-flex flex-column gap-2 mb-3">
     <!-- discord -->
     <a
+      :class="{ disabled: loading === true }"
       class="btn w-100 text-light"
       href="#"
       style="background: #7289da"
@@ -91,6 +92,7 @@
 
     <!-- github -->
     <a
+      :class="{ disabled: loading === true }"
       class="btn btn-success w-100"
       style="border: 1px solid #ced4da"
       href="#"
@@ -101,6 +103,7 @@
 
     <!-- email -->
     <router-link
+      :class="{ disabled: loading === true }"
       to="/dashboard/login"
       class="btn btn-light w-100"
       style="border: 1px solid #ced4da"
