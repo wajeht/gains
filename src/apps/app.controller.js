@@ -57,15 +57,6 @@ export function notFoundHandler(req, res, next) {
  * @param next - This is a function that will be called when the middleware is done.
  */
 export function errorHandler(err, req, res, next) {
-  // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  const ip = requestIp.getClientIp(req);
-  const errWithIP = {
-    ...err,
-    ip,
-  };
-  logger.error(errWithIP);
-  Chad.flex(`${ip}:${err.msg}`, err.stack);
-
   // api errors
   if (err.name === 'CustomAPIError') {
     return res.status(err.statusCode).json({
@@ -75,6 +66,15 @@ export function errorHandler(err, req, res, next) {
       message: env === 'development' ? err.stack : err.message,
     });
   }
+
+  // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const ip = requestIp.getClientIp(req);
+  const errWithIP = {
+    ...err,
+    ip,
+  };
+  logger.error(errWithIP);
+  Chad.flex(`${ip}:${err.msg}`, err.stack);
 
   // other errors
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

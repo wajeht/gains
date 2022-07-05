@@ -17,9 +17,9 @@ export const postLogin = [
   body('email')
     .trim()
     .notEmpty()
-    .withMessage('The value must not be empty!')
+    .withMessage('Email must not be empty!')
     .isEmail()
-    .withMessage('The value must be an email!')
+    .withMessage('Email must be an email!')
     .custom(async (email) => {
       const exist = await UserQueries.findUserByParam({ email });
       if (exist.length === 0) throw new Error('The email or password is wrong!');
@@ -27,7 +27,7 @@ export const postLogin = [
   // check for password
   body('password')
     .notEmpty()
-    .withMessage('The value must not be empty!')
+    .withMessage('Password must not be empty!')
     .trim()
     .custom(async (password, { req }) => {
       const { email } = req.body;
@@ -52,9 +52,9 @@ export const postSignup = [
   body('email')
     .trim()
     .notEmpty()
-    .withMessage('The value must not be empty!')
+    .withMessage('Email must not be empty!')
     .isEmail()
-    .withMessage('The value must be an email!')
+    .withMessage('Email must be an email!')
     .custom(async (email) => {
       const exist = await UserQueries.findUserByParam({ email });
       if (exist.length !== 0) throw new Error('Username or Email already exist!');
@@ -62,9 +62,9 @@ export const postSignup = [
   body('username')
     .trim()
     .notEmpty()
-    .withMessage('The value must not be empty!')
+    .withMessage('Username must not be empty!')
     .isLength({ min: 6, max: 20 })
-    .withMessage('The value must be at least 8 character long or less than 20 character long')
+    .withMessage('Username must be at least 8 character long or less than 20 character long')
     .custom(async (username) => {
       const exist = await UserQueries.findUserByParam({ username });
       if (exist.length !== 0) throw new Error('Username or Email already exist!');
@@ -72,21 +72,21 @@ export const postSignup = [
   body('password')
     .trim()
     .notEmpty()
-    .withMessage('The value must not be empty!')
+    .withMessage('Password must not be empty!')
     .isLength({ min: 10, max: 100 })
-    .withMessage('The value must be at least 8 character long or less than 100 character long')
+    .withMessage('Password must be at least 8 character long or less than 100 character long')
     .custom((value) => {
       if (value.split('').some((i) => i == i.toUpperCase())) return true;
     })
-    .withMessage('The value must include an uppercase character!')
+    .withMessage('Password must include an uppercase character!')
     .custom((value) => {
       if (value.split('').some((i) => i == i.toLocaleLowerCase())) return true;
     })
-    .withMessage('The value must include a lowercase character!')
+    .withMessage('Password must include a lowercase character!')
     .custom((value) => {
       if (/\d/.test(value)) return true;
     })
-    .withMessage('The value must include a number character!'),
+    .withMessage('Password must include a number character!'),
 ];
 
 /* A validation for the user input. */
@@ -94,9 +94,9 @@ export const getVerifyEmail = [
   param('uid')
     .trim()
     .notEmpty()
-    .withMessage('The value must not be empty!')
+    .withMessage('User ID must not be empty!')
     .isInt()
-    .withMessage('The value must be an uid!')
+    .withMessage('User ID must be an integer!')
     // check to see if user exist in database
     .custom(async (uid) => {
       const exist = await UserQueries.findUserByParam({ id: uid });
@@ -113,7 +113,7 @@ export const getVerifyEmail = [
   query('token')
     .trim()
     .notEmpty()
-    .withMessage('The value must not be empty!')
+    .withMessage('Token must not be empty!')
     .custom(async (token, { req }) => {
       const { uid } = req.params;
       const [user] = await UserQueries.findUserById(uid);
