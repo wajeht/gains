@@ -3,6 +3,15 @@
     <!-- title -->
     <h1 class="mb-3">Signup</h1>
 
+    <!-- alert -->
+    <div
+      v-if="alert.type"
+      :class="`alert-${alert.type}`"
+      class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+    >
+      <span>{{ alert.msg }}</span>
+    </div>
+
     <!-- username -->
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
@@ -128,15 +137,54 @@
         password: '',
         checkbox: '',
         loading: false,
+        alert: {
+          type: '',
+          msg: '',
+        },
       };
     },
     methods: {
       async handleSubmit() {
-        this.loading = true;
+        try {
+          this.loading = true;
 
-        await sleep(3000);
+          const res = await fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: this.username,
+              email: this.email,
+              password: this.password,
+            }),
+          });
 
-        this.$router.push({ path: '/login' });
+          const json = await res.json();
+
+          if (!res.ok) {
+            this.loading = false;
+            throw json.errors;
+          }
+
+          this.loading = false;
+
+          this.alert.type = 'success';
+          this.alert.msg = `You're almost there! We sent an email to ${this.email} in Just click on the link in that email to complete your signup. If you don't see it, you may need to check your spam folder.`; // prettier-ignore
+
+          this.username = '';
+          this.email = '';
+          this.password = '';
+
+          // clear alert success after few sec
+          await sleep(20000);
+
+          this.alert.type = '';
+          this.alert.msg = '';
+        } catch (e) {
+          this.alert.type = 'danger';
+          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+        }
       },
     },
   };
