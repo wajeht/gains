@@ -52,7 +52,7 @@
     </div>
 
     <!-- button -->
-    <button type="submit" class="btn btn-dark" :disabled="loading">
+    <button type="submit" class="btn btn-dark w-100" :disabled="loading">
       <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
@@ -69,7 +69,8 @@
   <div class="text-center">
     <!-- button -->
     <a
-      class="btn text-white btn-success"
+      :class="{ disabled: loading === true }"
+      class="btn text-white btn-success w-100"
       href="https://github.com/allkindsofgains/gains/issues"
       target="_blank"
       ><i class="bi bi-github me-1"></i> New issue</a
