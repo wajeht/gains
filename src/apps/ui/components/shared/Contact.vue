@@ -6,10 +6,11 @@
 
     <!-- alert -->
     <div
-      v-if="alert.length"
-      class="mb-3 alert alert-success animate__animated animate__zoomIn animate__faster"
+      v-if="alert.type"
+      :class="`alert-${alert.type}`"
+      class="mb-3 alert animate__animated animate__zoomIn animate__faster"
     >
-      <span>{{ alert }}</span>
+      <span>{{ alert.msg }}</span>
     </div>
 
     <!-- subject -->
@@ -97,27 +98,55 @@
         subject: '',
         email: '',
         message: '',
-        alert: '',
+        alert: {
+          type: '',
+          msg: '',
+        },
         loading: false,
       };
     },
     methods: {
       async handleSubmit() {
-        this.loading = true;
+        try {
+          this.loading = true;
 
-        await sleep(3000);
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: this.email,
+              subject: this.subject,
+              message: this.message,
+            }),
+          });
 
-        this.loading = false;
+          const json = await res.json();
 
-        this.alert = "We'll get in touch with you soon!";
+          if (!res.ok) {
+            this.loading = false;
+            throw json.errors;
+          }
 
-        this.subject = '';
-        this.email = '';
-        this.message = '';
+          this.loading = false;
 
-        await sleep(5000);
+          this.alert.type = 'success';
+          this.alert.msg = "We'll get in touch with you soon!";
 
-        this.alert = '';
+          this.subject = '';
+          this.email = '';
+          this.message = '';
+
+          // clear alert success after few sec
+          await sleep(5000);
+
+          this.alert.type = '';
+          this.alert.msg = '';
+        } catch (e) {
+          this.alert.type = 'danger';
+          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+        }
       },
     },
   };
