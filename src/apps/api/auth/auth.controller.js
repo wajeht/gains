@@ -41,7 +41,7 @@ export async function postSignup(req, res) {
     template: 'verify-email',
     data: {
       username: newUser.username,
-      verificationLink: `http://localhost:8080/verify-email/${user.id}?token${verificationToken}`,
+      verificationLink: `http://localhost:8080/verify-email/${user.id}?token=${verificationToken}`,
     },
   });
   logger.info(`Verification email was sent to uid: ${user.id}`);
