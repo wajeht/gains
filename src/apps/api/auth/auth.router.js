@@ -8,6 +8,12 @@ const auth = express.Router();
 
 auth.get('/logout', AuthController.getLogout);
 
+auth.get(
+  '/verify-email/:uid',
+  validator(AuthValidation.getVerifyEmail),
+  catchAsyncErrors(AuthController.getVerifyEmail),
+);
+
 auth.post(
   '/login',
   validator(AuthValidation.postLogin),

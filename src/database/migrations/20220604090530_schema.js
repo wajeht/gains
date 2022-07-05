@@ -25,7 +25,7 @@ export async function up(knex) {
       weight                INT,
       profile_picture_url   VARCHAR(500),
       is_verified           BOOLEAN DEFAULT FALSE,
-      verification_token    VARCHAR(500),
+      verification_token    VARCHAR(500) NOT NULL,
       verified_at           TIMESTAMP,
       user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at            TIMESTAMP NOT NULL DEFAULT NOW(),

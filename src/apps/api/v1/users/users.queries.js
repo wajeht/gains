@@ -16,14 +16,16 @@ export function getAllUsers() {
  * @param {object} body.any - any
  * @returns The user object
  */
-export async function createUser(body) {
+export async function createUser(body, verificationToken) {
   return db
     .insert({ ...body })
     .into('users')
     .returning('*')
     .then(async ([user]) => {
       const { id } = user;
-      const userDetails = await db.insert({ user_id: id }).into('user_details');
+      const userDetails = await db
+        .insert({ user_id: id, verification_token: verificationToken })
+        .into('user_details');
       return db
         .select()
         .from('users')
