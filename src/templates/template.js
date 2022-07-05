@@ -5,6 +5,23 @@ import ejs from 'ejs';
 export default class Template {
   /* A map of the templates that we have. */
   static _maps = {
+    contact: {
+      path: path.resolve(path.join(process.cwd(), 'src', 'templates', 'contact.html')),
+      data: [
+        {
+          name: 'email',
+          type: 'string',
+        },
+        {
+          name: 'subject',
+          type: 'string',
+        },
+        {
+          name: 'message',
+          type: 'string',
+        },
+      ],
+    },
     'verify-email': {
       path: path.resolve(path.join(process.cwd(), 'src', 'templates', 'verify-email.html')),
       data: [
