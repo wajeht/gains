@@ -3,9 +3,9 @@ import { email } from '../config/env.js';
 import Chad from '../libs/chad.js';
 import logger from '../libs/logger.js';
 import { red } from '../utils/rainbow-log.js';
-import templates from '../templates/templates.js';
-import ejs from 'ejs';
+import Template from '../templates/template.js';
 
+// use https://ethereal.email/ for testing purposes
 const transporter = nodemailer.createTransport({
   host: email.host,
   port: email.port,
@@ -17,17 +17,16 @@ const transporter = nodemailer.createTransport({
 });
 
 export default class EmailService {
+  /**
+   * It sends an email to the user with the given data
+   */
   static async send({ to, subject, template = 'verify-email', data }) {
     try {
-      templates['verify-email']);
-
-      const emailTemplate = ejs.renderFile()
-
       const sent = await transporter.sendMail({
         from: `"Gains" <${email.auth_email}>`,
         to,
         subject,
-        html: template,
+        html: Template.generate(template, data),
       });
 
       if (!sent) throw new Error('Something went wrong while sending email!');
@@ -39,8 +38,13 @@ export default class EmailService {
   }
 }
 
-const a = await EmailService.send({
-  to: 'zombyard@gmail.com',
-  subject: 'testing',
-  data: { id: 1, user: 'jaw' },
-});
+// // for testing
+// await EmailService.send({
+//   to: 'chad@flex.forlife',
+//   subject: 'testing',
+//   template: 'verify-email',
+//   data: {
+//     username: 'chad',
+//     verificationLink: 'https:/localhost:8080/',
+//   },
+// });
