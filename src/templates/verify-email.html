@@ -1,0 +1,18 @@
+<%- include('./partials/header.html') %>
+
+  <!-- username, verificationLink -->
+
+  <div>
+    <p>Hi <%= username %> ,</p>
+    <br>
+    <p>We're happy you signed up for Prime. To start exploring the Prime App, please confirm your email address.</p>
+    <br>
+    <a href="<%= verificationLink  %>" style="background: blue; color: white; display:inline-block; padding:5px;">Verify
+      Now</a>
+    <br>
+    <br>
+    <p>Welcome to Prime!</p>
+    <p>The Prime Team</p>
+  </div>
+
+  <%- include('./partials/footer.html') %>
