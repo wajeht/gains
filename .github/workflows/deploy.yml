@@ -34,7 +34,8 @@ jobs:
         EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
         EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
         EMAIL_AUTH_EMAIL: ${{ secrets.EMAIL_AUTH_EMAIL }}
-        EMAIL_AUTH_PASS: ${{ secrets.EMAIL_AUTH_PASS }}        
+        EMAIL_AUTH_PASS: ${{ secrets.EMAIL_AUTH_PASS }}    
+        DOMAIN: ${{ secrets.DOMAIN }}   
       run: |
         cat <<EOF > .env
         DB_CLIENT="$DB_CLIENT"
@@ -53,7 +54,8 @@ jobs:
         EMAIL_HOST="$EMAIL_HOST"
         EMAIL_PORT="$EMAIL_PORT"
         EMAIL_AUTH_EMAIL="$EMAIL_AUTH_EMAIL"
-        EMAIL_AUTH_PASS="$EMAIL_AUTH_PASS"        
+        EMAIL_AUTH_PASS="$EMAIL_AUTH_PASS"  
+        DOMAIN="$DOMAIN"             
         EOF
         echo "cat .env"
         cat .env
