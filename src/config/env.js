@@ -38,6 +38,9 @@ export const port = process.env.PORT;
 /* Exporting the environment variable `ENV` from the .env file. */
 export const env = process.env.ENV;
 
+/* This is the domain that will be used to set the cookie. */
+export const domain = process.env.DOMAIN;
+
 /* This is the secret that will be used to sign the JWT. */
 export const jwt_secret = process.env.JWT_SECRET;
 

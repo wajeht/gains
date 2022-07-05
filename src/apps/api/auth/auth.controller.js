@@ -8,6 +8,7 @@ import EmailService from '../../../services/email.service.js';
 import crypto from 'crypto';
 import CustomError from '../errors/custom-error.error.js';
 import { red } from '../../../utils/rainbow-log.js';
+import { env, domain } from '../../../config/env.js';
 
 export async function postLogin(req, res) {
   // TODO!: send back a token
@@ -35,11 +36,15 @@ export async function postSignup(req, res) {
   const [user] = await UsersQueries.createUser(newUser, verificationToken);
   logger.info(`User ID: ${user.id} was created!`);
 
-  // const protocol = req.protocol;
-  // const hostname = req.get('host');
+  let origin = '';
 
-  const protocol = req.get('x-forwarded-proto');
-  const hostname = req.get('x-forwarded-host');
+  if (env === 'development') {
+    const protocol = req.protocol;
+    const hostname = req.get('host');
+    origin = `${protocol}://${hostname}`;
+  } else {
+    origin = domain;
+  }
 
   // send verification email
   await EmailService.send({
@@ -48,7 +53,7 @@ export async function postSignup(req, res) {
     template: 'verify-email',
     data: {
       username: newUser.username,
-      verificationLink: `${protocol}://${hostname}/verify-email/${user.id}?token=${verificationToken}`,
+      verificationLink: `${origin}/verify-email/${user.id}?token=${verificationToken}`,
     },
   });
   logger.info(`Verification email was sent to uid: ${user.id}`);
