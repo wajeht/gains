@@ -1,4 +1,4 @@
-import { check, param, body } from 'express-validator';
+import { param, body, query } from 'express-validator';
 import * as UserQueries from '../v1/users/users.queries.js';
 import { isEqual } from 'lodash-es';
 import Password from '../../../libs/password.js';
@@ -87,4 +87,36 @@ export const postSignup = [
       if (/\d/.test(value)) return true;
     })
     .withMessage('The value must include a number character!'),
+];
+
+/* A validation for the user input. */
+export const getVerifyEmail = [
+  param('uid')
+    .trim()
+    .notEmpty()
+    .withMessage('The value must not be empty!')
+    .isInt()
+    .withMessage('The value must be an uid!')
+    // check to see if user exist in database
+    .custom(async (uid) => {
+      const exist = await UserQueries.findUserByParam({ id: uid });
+      // user does not exist
+      // TODO!: we should not return invalid uid for security
+      if (exist.length === 0)
+        throw new Error(`User ID: ${uid} is invalid to verify email process!`);
+    })
+    // check to see if user has already verified email
+    .custom(async (uid) => {
+      const [user] = await UserQueries.findUserById(uid);
+      if (user.is_verified === true) throw new Error('This account have been already verified!');
+    }),
+  query('token')
+    .trim()
+    .notEmpty()
+    .withMessage('The value must not be empty!')
+    .custom(async (token, { req }) => {
+      const { uid } = req.params;
+      const [user] = await UserQueries.findUserById(uid);
+      if (token !== user.verification_token) throw new Error('Invalid verification token. Cannot continue email verifying process!'); // prettier-ignore
+    }),
 ];

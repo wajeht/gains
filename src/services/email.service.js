@@ -30,7 +30,6 @@ export default class EmailService {
       });
 
       if (!sent) throw new Error('Something went wrong while sending email!');
-      logger.info('');
     } catch (e) {
       logger.error(e);
       Chad.flex(e.message, e);
