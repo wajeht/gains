@@ -31,6 +31,10 @@ jobs:
         DISCORD_ID: ${{ secrets.DISCORD_ID }}
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         DISCORD_URL: ${{ secrets.DISCORD_URL }}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+        EMAIL_AUTH_EMAIL: ${{ secrets.EMAIL_AUTH_EMAIL }}
+        EMAIL_AUTH_PASS: ${{ secrets.EMAIL_AUTH_PASS }}        
       run: |
         cat <<EOF > .env
         DB_CLIENT="$DB_CLIENT"
@@ -46,6 +50,10 @@ jobs:
         DISCORD_TOKEN="$DISCORD_TOKEN"
         DISCORD_URL="$DISCORD_URL"
         PINO_LOG_LEVEL="$PINO_LOG_LEVEL"
+        EMAIL_HOST="$EMAIL_HOST"
+        EMAIL_PORT="$EMAIL_PORT"
+        EMAIL_AUTH_EMAIL="$EMAIL_AUTH_EMAIL"
+        EMAIL_AUTH_PASS="$EMAIL_AUTH_PASS"        
         EOF
         echo "cat .env"
         cat .env
