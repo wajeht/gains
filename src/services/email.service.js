@@ -9,7 +9,6 @@ import Template from '../templates/template.js';
 const transporter = nodemailer.createTransport({
   host: email.host,
   port: email.port,
-  // secure: email.secure, // TODO!: enable this for production
   auth: {
     user: email.auth_email,
     pass: email.auth_pass,
