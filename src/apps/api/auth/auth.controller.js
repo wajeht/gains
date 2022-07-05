@@ -35,8 +35,11 @@ export async function postSignup(req, res) {
   const [user] = await UsersQueries.createUser(newUser, verificationToken);
   logger.info(`User ID: ${user.id} was created!`);
 
-  const protocol = req.protocol;
-  const hostname = req.get('host');
+  // const protocol = req.protocol;
+  // const hostname = req.get('host');
+
+  const protocol = req.get('x-forwarded-proto');
+  const hostname = req.get('x-forwarded-host');
 
   // send verification email
   await EmailService.send({
