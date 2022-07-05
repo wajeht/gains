@@ -3,11 +3,13 @@ import { email } from '../config/env.js';
 import Chad from '../libs/chad.js';
 import logger from '../libs/logger.js';
 import { red } from '../utils/rainbow-log.js';
+import templates from '../templates/templates.js';
+import ejs from 'ejs';
 
 const transporter = nodemailer.createTransport({
   host: email.host,
   port: email.port,
-  secure: email.secure,
+  // secure: email.secure, // TODO!: enable this for production
   auth: {
     user: email.auth_email,
     pass: email.auth_pass,
@@ -15,8 +17,12 @@ const transporter = nodemailer.createTransport({
 });
 
 export default class EmailService {
-  static async send({ to, subject, template = 'default', data }) {
+  static async send({ to, subject, template = 'verify-email', data }) {
     try {
+      templates['verify-email']);
+
+      const emailTemplate = ejs.renderFile()
+
       const sent = await transporter.sendMail({
         from: `"Gains" <${email.auth_email}>`,
         to,
@@ -28,7 +34,6 @@ export default class EmailService {
       logger.info('');
     } catch (e) {
       logger.error(e);
-      s;
       Chad.flex(e.message, e);
     }
   }
