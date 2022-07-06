@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <span>
     <h1>Terms of Service</h1>
 
     <h4>OVERVIEW</h4>
@@ -383,5 +383,5 @@
     <h4>SECTION 20 - CONTACT INFORMATION</h4>
 
     <p>Questions about the Terms of Service should be sent to us at zombyard@gmail.com.</p>
-  </div>
+  </span>
 </template>

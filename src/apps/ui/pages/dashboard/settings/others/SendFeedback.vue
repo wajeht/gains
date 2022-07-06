@@ -16,8 +16,8 @@
 </template>
 
 <script>
-  import Contact from '../../components/shared/Contact.vue';
-  import Backheader from '../../components/dashboard/headers/Backheader.vue';
+  import Contact from '../../../../components/shared/Contact.vue';
+  import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 
   export default {
     components: {

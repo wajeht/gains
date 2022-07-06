@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 // -------------------- regular ---------------------------
 import Features from './pages/regular/Features.vue';
 import ForgetPassword from './pages/regular/ForgetPassword.vue';
-import Terms from './pages/regular/Terms.vue';
-import Privacy from './pages/regular/Privacy.vue';
+import RegularTerms from './pages/regular/RegularTerms.vue';
+import RegularPrivacy from './pages/regular/RegularPrivacy.vue';
 import RegularContact from './pages/regular/RegularContact.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
 import RegularLogin from './pages/regular/RegularLogin.vue';
@@ -19,13 +19,19 @@ import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Sessions from './pages/dashboard/Sessions.vue';
 import SessionDetails from './components/dashboard/SessionDetails.vue';
-import DashboardContact from './pages/dashboard/DashboardContact.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
 
-// settings
+// --- settings ---
 import Settings from './pages/dashboard/settings/Settings.vue';
+
+// account
 import UserDetails from './pages/dashboard/settings/account/UserDetails.vue';
+
+// others
+import SendFeedback from './pages/dashboard/settings/others/SendFeedback.vue';
+import DashboardPrivacy from './pages/dashboard/settings/others/DashboardPrivacy.vue';
+import DashboardTerms from './pages/dashboard/settings/others/DashboardTerms.vue';
 
 // resources
 import Tools from './pages/dashboard/tools/Tools.vue';
@@ -95,16 +101,16 @@ const routes = [
   },
   {
     path: '/privacy',
-    name: 'Privacy',
-    component: Privacy,
+    name: 'RegularPrivacy',
+    component: RegularPrivacy,
     meta: {
       layout: 'RegularLayout',
     },
   },
   {
     path: '/terms',
-    name: 'Terms',
-    component: Terms,
+    name: 'RegularTerms',
+    component: RegularTerms,
     meta: {
       layout: 'RegularLayout',
     },
@@ -134,10 +140,27 @@ const routes = [
       layout: 'EmptyDashboardLayout',
     },
   },
+  // settings -> others
   {
-    path: '/dashboard/settings/contact',
-    name: 'DashboardContact',
-    component: DashboardContact,
+    path: '/dashboard/settings/others/send-feedback',
+    name: 'SendFeedback',
+    component: SendFeedback,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/settings/others/privacy',
+    name: 'DashboardPrivacy',
+    component: DashboardPrivacy,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/settings/others/terms',
+    name: 'DashboardTerms',
+    component: DashboardTerms,
     meta: {
       layout: 'DashboardLayout',
     },

@@ -8,7 +8,7 @@
       <!-- contact -->
       <div class="card">
         <div class="card-body">
-          <h5>UserDetails.vue</h5>
+          <Terms />
         </div>
       </div>
     </div>
@@ -16,10 +16,11 @@
 </template>
 
 <script>
+  import Terms from '../../../../components/shared/Terms.vue';
   import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
-
   export default {
     components: {
+      Terms,
       Backheader,
     },
   };

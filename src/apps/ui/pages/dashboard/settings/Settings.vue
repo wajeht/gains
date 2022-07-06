@@ -94,7 +94,7 @@
 
             <!-- send -->
             <router-link
-              to="/dashboard/settings/contact"
+              to="/dashboard/settings/others/send-feedback"
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
@@ -110,18 +110,24 @@
             </a>
 
             <!-- terms -->
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/others/terms"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Terms of Service</h6>
               </div>
-            </a>
+            </router-link>
 
-            <!-- terms -->
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <!-- privacy -->
+            <router-link
+              to="/dashboard/settings/others/privacy"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Privacy Policy</h6>
               </div>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
