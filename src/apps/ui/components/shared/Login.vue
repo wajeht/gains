@@ -4,13 +4,13 @@
     <!-- title -->
     <h1 class="mb-3">Login</h1>
 
-    <!-- error -->
+    <!-- alert -->
     <div
-      v-if="error.length"
-      :class="{ 'animate__animated animate__headShake': error.length }"
-      class="mb-3 alert alert-danger"
+      v-if="alert.type"
+      :class="`alert-${alert.type}`"
+      class="mb-3 alert animate__animated animate__zoomIn animate__faster"
     >
-      <span>{{ error }}</span>
+      <span>{{ alert.msg }}</span>
     </div>
 
     <!-- email -->
@@ -21,7 +21,6 @@
         type="email"
         class="form-control"
         id="email"
-        placeholder="test@test.com"
         required
         :disabled="loading"
       />
@@ -35,7 +34,6 @@
         type="password"
         class="form-control"
         id="password"
-        placeholder="test"
         required
         :disabled="loading"
       />
@@ -43,10 +41,16 @@
 
     <!-- checkbox -->
     <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="checkbox" :disabled="loading" />
+      <input
+        v-model="rememberMe"
+        type="checkbox"
+        class="form-check-input"
+        id="remember-me"
+        :disabled="loading"
+      />
       <div class="d-flex justify-content-between">
         <!-- checkbox -->
-        <label class="form-check-label" for="checkbox-label">Remember me</label>
+        <label class="form-check-label" for="remember-me">Remember me</label>
 
         <!-- forget-password -->
         <a
@@ -119,25 +123,44 @@
     },
     data() {
       return {
-        email: 'test@test.com',
-        password: 'test',
-        error: '',
+        email: '',
+        password: '',
+        rememberMe: '',
         loading: false,
+        alert: {
+          type: '',
+          msg: '',
+        },
       };
     },
     methods: {
       async handleSubmit() {
-        this.loading = true;
+        try {
+          this.loading = true;
 
-        await sleep(3000);
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: this.email,
+              password: this.password,
+            }),
+          });
 
-        if (this.email != 'test@test.com' && this.password != 'test') {
-          this.error = 'Invalid email or password!';
-          this.loading = false;
-          return;
+          const json = await res.json();
+
+          if (!res.ok) {
+            this.loading = false;
+            throw json.errors;
+          }
+
+          this.$router.push({ path: '/dashboard/profile' });
+        } catch (e) {
+          this.alert.type = 'danger';
+          this.alert.msg = e.map((cur) => cur.msg).join(' ');
         }
-
-        this.$router.push({ path: '/dashboard/profile' });
       },
     },
   };
