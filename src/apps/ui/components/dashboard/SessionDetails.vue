@@ -429,6 +429,15 @@
             </div>
           </form>
         </div>
+
+        <!-- complete current session button -->
+        <button
+          @click="$router.push('/dashboard/sessions')"
+          type="button"
+          class="btn btn-dark w-100"
+        >
+          Complete current session
+        </button>
       </div>
     </div>
   </XyzTransition>
