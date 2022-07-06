@@ -21,7 +21,7 @@ export async function up(knex) {
       id                    SERIAL PRIMARY KEY,
       first_name            VARCHAR(250),
       last_name             VARCHAR(250),
-      role                  VARCHAR(250),
+      role                  VARCHAR(250) NOT NULL DEFAULT 'user',
       birth_date            DATE,
       weight                INT,
       profile_picture_url   VARCHAR(500),
