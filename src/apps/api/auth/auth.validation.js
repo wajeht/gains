@@ -20,9 +20,16 @@ export const postLogin = [
     .withMessage('Email must not be empty!')
     .isEmail()
     .withMessage('Email must be an email!')
+    // check to see if exist exist or not
     .custom(async (email) => {
       const exist = await UserQueries.findUserByParam({ email });
       if (exist.length === 0) throw new Error('The email or password is wrong!');
+    })
+    // check to see if acc has been verified
+    .custom(async (email) => {
+      const [{ id }] = await UserQueries.findUserByParam({ email });
+      const [{ is_verified }] = await UserQueries.findUserById(id);
+      if (!is_verified) throw new Error('You must verify your account before logging in. Please verify your account by click a verification link which was sent to your email!'); // prettier-ignore
     }),
   // check for password
   body('password')
