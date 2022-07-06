@@ -27,7 +27,12 @@
             <router-link to="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                  <h6 class="mb-0">Delete your account</h6>
+                  <h6 class="mb-0">
+                    Delete your account
+                    <small class="bg-danger text-white px-1 rounded" style="padding-bottom: 2.5px"
+                      >warning</small
+                    >
+                  </h6>
                   <p class="mb-0 opacity-75">This action cannot be revert back to normal state!</p>
                 </div>
               </div>
@@ -43,8 +48,8 @@
             <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                  <h6 class="mb-0">Export to email</h6>
-                  <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                  <h6 class="mb-0">Delete all data</h6>
+                  <p class="mb-0 opacity-75">One click to wipe your data, but not account!</p>
                 </div>
                 <!-- <small class="opacity-50 text-nowrap">v1</small> -->
               </div>
@@ -54,8 +59,8 @@
             <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                  <h6 class="mb-0">Export to CSV</h6>
-                  <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                  <h6 class="mb-0">Download your data</h6>
+                  <p class="mb-0 opacity-75">Export all of your data via CSV format!</p>
                 </div>
                 <!-- <small class="opacity-50 text-nowrap">v1</small> -->
               </div>
@@ -66,7 +71,7 @@
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">Request API Key</h6>
-                  <p class="mb-0 opacity-75">Want to consume your data api? that's great!</p>
+                  <p class="mb-0 opacity-75">Want to consume your data via api? That's great!</p>
                 </div>
               </div>
             </a>
