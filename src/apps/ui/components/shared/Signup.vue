@@ -163,8 +163,6 @@
         try {
           this.loading = true;
 
-          await sleep(20000000);
-
           const res = await fetch('/api/auth/signup', {
             method: 'POST',
             headers: {
