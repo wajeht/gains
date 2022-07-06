@@ -62,15 +62,9 @@
                 />
               </div>
 
-              <!-- block name -->
-              <div class="mb-3">
-                <label for="block-name" class="form-label">Block name</label>
-                <input id="block-name" class="form-control form-control-sm" type="text" />
-              </div>
-
               <!-- start time -->
               <div class="mb-3">
-                <label for="start-time" class="form-label">Start time</label>
+                <label for="start-time" class="form-label">Start time*</label>
                 <input
                   id="start-time"
                   class="form-control form-control-sm"
@@ -81,23 +75,49 @@
                 />
               </div>
 
-              <!-- bodyweight  -->
-              <div class="mb-3">
-                <label for="bodyweight" class="form-label">Bodyweight</label>
-                <input id="bodyweight" class="form-control form-control-sm" min="1" type="number" />
+              <!-- show/hide button -->
+              <div class="mx-auto" style="max-width: 40%">
+                <button
+                  class="accordion-button collapsed p-0 m-0"
+                  style="background: none; border: none; box-shadow: none"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target=".add-session-other-settings"
+                >
+                  Other fields
+                </button>
               </div>
 
-              <!-- hours of sleep  -->
-              <div class="mb-3">
-                <label for="sleep" class="form-label">Hours of sleep</label>
-                <input id="sleep" class="form-control form-control-sm" min="1" type="number" />
-              </div>
+              <span class="add-session-other-settings accordion-collapse collapse">
+                <!-- block name -->
+                <div class="mb-3">
+                  <label for="block-name" class="form-label">Block name</label>
+                  <input id="block-name" class="form-control form-control-sm" type="text" />
+                </div>
 
-              <!-- notes -->
-              <div class="mb-2">
-                <label for="notes" class="form-label">Notes</label>
-                <textarea class="form-control form-control-sm" id="notes" rows="3"></textarea>
-              </div>
+                <!-- bodyweight  -->
+                <div class="mb-3">
+                  <label for="bodyweight" class="form-label">Bodyweight</label>
+                  <input
+                    id="bodyweight"
+                    class="form-control form-control-sm"
+                    min="1"
+                    type="number"
+                  />
+                </div>
+
+                <!-- hours of sleep  -->
+                <div class="mb-3">
+                  <label for="sleep" class="form-label">Hours of sleep</label>
+                  <input id="sleep" class="form-control form-control-sm" min="1" type="number" />
+                </div>
+
+                <!-- notes -->
+                <div class="mb-2">
+                  <label for="notes" class="form-label">Notes</label>
+                  <textarea class="form-control form-control-sm" id="notes" rows="3"></textarea>
+                </div>
+              </span>
             </div>
             <div class="modal-footer">
               <button
