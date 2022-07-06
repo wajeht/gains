@@ -67,8 +67,23 @@
       <!-- terms and privacy -->
       <div id="agree-text" class="form-text">
         Signing up signifies that you have read and agree to the
-        <router-link to="/terms" class="link-dark">Terms of Service</router-link> and our
-        <router-link to="/privacy" class="link-dark">Privacy Policy</router-link>.
+        <a
+          href="#"
+          class="btn btn-sm p-0 m-0"
+          style="text-decoration: underline"
+          :class="{ disabled: loading === true }"
+          @click="$router.push('/terms')"
+          >Terms of Service</a
+        >
+        and our
+        <a
+          href="#"
+          class="btn btn-sm p-0 m-0"
+          style="text-decoration: underline"
+          :class="{ disabled: loading === true }"
+          @click="$router.push('/privacy')"
+          >Privacy Policy</a
+        >.
       </div>
     </div>
 
@@ -147,6 +162,8 @@
       async handleSubmit() {
         try {
           this.loading = true;
+
+          await sleep(20000000);
 
           const res = await fetch('/api/auth/signup', {
             method: 'POST',
