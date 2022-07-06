@@ -21,12 +21,36 @@ export async function up(knex) {
       id                    SERIAL PRIMARY KEY,
       first_name            VARCHAR(250),
       last_name             VARCHAR(250),
+      role                  VARCHAR(250),
       birth_date            DATE,
       weight                INT,
       profile_picture_url   VARCHAR(500),
       is_verified           BOOLEAN DEFAULT FALSE,
       verification_token    VARCHAR(500) NOT NULL,
       verified_at           TIMESTAMP,
+      user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
+      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
+      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  // api_keys
+  await knex.schema.raw(`
+    CREATE TABLE IF NOT EXISTS api_keys (
+      id                    SERIAL PRIMARY KEY,
+      key                   VARCHAR(500) NOT NULL UNIQUE,
+      hashed_key            VARCHAR(500) NOT NULL UNIQUE,
+      user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
+      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
+      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  // logs
+  await knex.schema.raw(`
+    CREATE TABLE IF NOT EXISTS logs (
+      id                    SERIAL PRIMARY KEY,
+      type                  VARCHAR(250) NOT NULL,
       user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at            TIMESTAMP NOT NULL DEFAULT NOW()

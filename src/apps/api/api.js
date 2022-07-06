@@ -3,12 +3,14 @@ import v1 from './v1/v1.js';
 
 import authRouter from './auth/auth.router.js';
 import contactRouter from './contact/contact.router.js';
+import adminRouter from './admin/admin.router.js';
 
 import auth from '../api/middlewares/auth.middleware.js';
 
 const api = express.Router();
 
 // regular api routes
+api.use('/admin', adminRouter);
 api.use('/contact', contactRouter);
 api.use('/auth', authRouter);
 

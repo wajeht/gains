@@ -15,12 +15,19 @@ import CustomError from '../errors/custom-error.error.js';
  */
 export default function auth(req, res, next) {
   try {
-    // // TODO!: remove this on production
+    // TODO!: remove this on production
+    // ! this code below wil skip any authentication
     if (env === 'development') {
-      red('TODO!: remove auth skipping in production!');
+      red('TODO!: Remove auth skipping in production!');
       return next();
     }
 
+    //! -------------------------------- API TOKEN AUTHORIZATION STARTS --------------------------------
+    if (Object.keys(req.headers).includes('x-api-key')) {
+      red('TODO!: Implement x-api-key authentication');
+    }
+
+    //! -------------------------------- BEARER TOKEN AUTHORIZATION STARTS -----------------------------
     const x = req.get('authorization');
 
     if (!x) throw new CustomError.UnauthorizedError('Must use bearer token authorization!'); // prettier-ignore
