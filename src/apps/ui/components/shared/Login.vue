@@ -45,10 +45,18 @@
     <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" id="checkbox" :disabled="loading" />
       <div class="d-flex justify-content-between">
+        <!-- checkbox -->
         <label class="form-check-label" for="checkbox-label">Remember me</label>
-        <router-link class="text-decoration-none link-dark" to="/forget-password"
-          >Forget password?</router-link
+
+        <!-- forget-password -->
+        <a
+          href="#"
+          :class="{ disabled: loading === true }"
+          class="btn p-0 m-0"
+          @click="$router.push('/forget-password')"
         >
+          Forget password?
+        </a>
       </div>
     </div>
 
@@ -96,7 +104,6 @@
       :class="{ disabled: loading === true }"
       class="btn btn-light w-100"
       style="border: 1px solid #ced4da"
-      href="#"
       ><i class="bi bi-envelope me-1"></i>Signup with Email</router-link
     >
   </div>
