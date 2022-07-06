@@ -20,7 +20,9 @@
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">RPE Calculator</h6>
-                <p class="mb-0 opacity-75">Calculate rpe with given inputs</p>
+                <p class="mb-0 opacity-75">
+                  Your coach give you rpe based training? We'll make it easier for you!
+                </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
@@ -34,10 +36,7 @@
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Plate Calculator</h6>
-                <p class="mb-0 opacity-75">
-                  Some placeholder content in a paragraph that goes a little longer so it wraps to a
-                  new line.
-                </p>
+                <p class="mb-0 opacity-75">You don't know what plates to load up? We got you!</p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
@@ -52,9 +51,13 @@
               <div>
                 <h6 class="mb-0">
                   One Rep Max Calculator
-                  <small class="bg-danger text-white px-1 rounded">new</small>
+                  <small class="bg-success text-white px-1 rounded" style="padding-bottom: 2.5px"
+                    >new</small
+                  >
                 </h6>
-                <p class="mb-0 opacity-75">Calculator your one rep max of a lift</p>
+                <p class="mb-0 opacity-75">
+                  Calculator your one rep max of a lift and tell your friends!
+                </p>
               </div>
               <small class="opacity-50 text-nowrap">v1</small>
             </div>
@@ -68,7 +71,9 @@
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Meet Attempt Selection Calculator</h6>
-                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                <p class="mb-0 opacity-75">
+                  Win against your fellow competitors by making the right decision!
+                </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
@@ -83,19 +88,9 @@
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
-                <h6 class="mb-0">List group item heading</h6>
-                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-              </div>
-              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-            <div class="d-flex gap-2 w-100 justify-content-between">
-              <div>
-                <h6 class="mb-0">Another title here</h6>
+                <h6 class="mb-0">Average Intensity</h6>
                 <p class="mb-0 opacity-75">
-                  Some placeholder content in a paragraph that goes a little longer so it wraps to a
-                  new line.
+                  Lifts with average intensity over a month period of time.
                 </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
@@ -104,8 +99,19 @@
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
-                <h6 class="mb-0">Third heading</h6>
-                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                <h6 class="mb-0">Maxes Over Time</h6>
+                <p class="mb-0 opacity-75">
+                  Show all the lifts that significant improved over a month period of time.
+                </p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Lifts with RPE 8 or Higher</h6>
+                <p class="mb-0 opacity-75">Lifts with rpe 8 or higher that leads into 1RM.</p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
@@ -120,19 +126,9 @@
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
-                <h6 class="mb-0">List group item heading</h6>
-                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-              </div>
-              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
-            </div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-            <div class="d-flex gap-2 w-100 justify-content-between">
-              <div>
-                <h6 class="mb-0">Another title here</h6>
+                <h6 class="mb-0">Bodyweight tacker</h6>
                 <p class="mb-0 opacity-75">
-                  Some placeholder content in a paragraph that goes a little longer so it wraps to a
-                  new line.
+                  Track your bodyweight without logging another session.
                 </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
@@ -141,8 +137,19 @@
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
-                <h6 class="mb-0">Third heading</h6>
-                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                <h6 class="mb-0">Calories Tracker</h6>
+                <p class="mb-0 opacity-75">
+                  Simple calories tracker for lifters who do not like Myfitnesspal.
+                </p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Recovery</h6>
+                <p class="mb-0 opacity-75">Track your sleep, mood, and energy.</p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>

@@ -18,7 +18,7 @@
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">User details</h6>
-                  <p class="mb-0 opacity-75">Change user account details</p>
+                  <p class="mb-0 opacity-75">Change user account details.</p>
                 </div>
               </div>
             </router-link>
