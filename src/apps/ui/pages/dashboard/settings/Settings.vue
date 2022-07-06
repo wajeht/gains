@@ -14,7 +14,10 @@
 
           <div class="list-group">
             <!-- user details -->
-            <router-link to="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/account/user-details"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">User details</h6>
@@ -156,7 +159,7 @@
 </template>
 
 <script>
-  import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+  import DashboardHeader from '../../../components/dashboard/DashboardHeader.vue';
 
   export default {
     components: {

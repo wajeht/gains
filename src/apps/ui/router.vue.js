@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-// regular
+// -------------------- regular ---------------------------
 import Features from './pages/regular/Features.vue';
 import ForgetPassword from './pages/regular/ForgetPassword.vue';
 import Terms from './pages/regular/Terms.vue';
@@ -12,7 +12,7 @@ import RegularSignup from './pages/regular/RegularSignup.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
 import VerifyEmail from './pages/regular/VerifyEmail.vue';
 
-// dashboard
+// -------------------- dashboard ---------------------------
 import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
@@ -20,9 +20,12 @@ import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Sessions from './pages/dashboard/Sessions.vue';
 import SessionDetails from './components/dashboard/SessionDetails.vue';
 import DashboardContact from './pages/dashboard/DashboardContact.vue';
-import Settings from './pages/dashboard/Settings.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
+
+// settings
+import Settings from './pages/dashboard/settings/Settings.vue';
+import UserDetails from './pages/dashboard/settings/account/UserDetails.vue';
 
 // resources
 import Tools from './pages/dashboard/tools/Tools.vue';
@@ -200,10 +203,19 @@ const routes = [
       layout: 'DashboardLayout',
     },
   },
+  // ----- Settings -----
   {
     path: '/dashboard/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      layout: 'DashboardLayout',
+    },
+  },
+  {
+    path: '/dashboard/settings/account/user-details',
+    name: 'UserDetails',
+    component: UserDetails,
     meta: {
       layout: 'DashboardLayout',
     },
