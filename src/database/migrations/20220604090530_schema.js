@@ -51,6 +51,7 @@ export async function up(knex) {
     CREATE TABLE IF NOT EXISTS logs (
       id                    SERIAL PRIMARY KEY,
       type                  VARCHAR(250) NOT NULL,
+      description           VARCHAR(1000) NOT NULL,
       user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
@@ -63,6 +64,8 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
+  await knex.schema.raw(`DROP TABLE IF EXISTS logs;`);
+  await knex.schema.raw(`DROP TABLE IF EXISTS api_keys;`);
   await knex.schema.raw(`DROP TABLE IF EXISTS user_details;`);
   await knex.schema.raw(`DROP TABLE IF EXISTS users;`);
 }
