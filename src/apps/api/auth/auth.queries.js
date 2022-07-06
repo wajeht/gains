@@ -6,6 +6,9 @@ import db from '../../../database/db.js';
  * @param uid - The user id of the user to be verified.
  * @returns A promise
  */
-export async function verifyUser(uid) {
-  return db.update({ is_verified: true }).from('user_details').where({ user_id: uid });
+export async function verifyUser(uid, date) {
+  return db
+    .update({ is_verified: true, verified_at: date })
+    .from('user_details')
+    .where({ user_id: uid });
 }

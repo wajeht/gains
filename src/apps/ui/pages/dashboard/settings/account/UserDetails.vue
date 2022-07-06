@@ -8,7 +8,7 @@
       <!-- contact -->
       <div class="card">
         <div class="card-body">
-          <Contact />
+          <h5>UserDetails.vue</h5>
         </div>
       </div>
     </div>
@@ -16,12 +16,10 @@
 </template>
 
 <script>
-  import Contact from '../../components/shared/Contact.vue';
-  import Backheader from '../../components/dashboard/headers/Backheader.vue';
+  import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 
   export default {
     components: {
-      Contact,
       Backheader,
     },
   };

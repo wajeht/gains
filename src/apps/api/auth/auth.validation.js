@@ -2,6 +2,7 @@ import { param, body, query } from 'express-validator';
 import * as UserQueries from '../v1/users/users.queries.js';
 import { isEqual } from 'lodash-es';
 import Password from '../../../libs/password.js';
+import { red } from '../../../utils/rainbow-log.js';
 
 /* A validation for the user input. */
 export const postLogin = [
@@ -23,13 +24,14 @@ export const postLogin = [
     // check to see if exist exist or not
     .custom(async (email) => {
       const exist = await UserQueries.findUserByParam({ email });
-      if (exist.length === 0) throw new Error('The email or password is wrong!');
+      if (exist?.length === 0) throw new Error('The email or password is wrong!');
     })
     // check to see if acc has been verified
     .custom(async (email) => {
-      const [{ id }] = await UserQueries.findUserByParam({ email });
-      const [{ is_verified }] = await UserQueries.findUserById(id);
-      if (!is_verified) throw new Error('You must verify your account before logging in. Please verify your account by click a verification link which was sent to your email!'); // prettier-ignore
+      const user = await UserQueries.findUserByParam({ email });
+      if (user.length === 0) return false;
+      const is_verified = await UserQueries.findUserById(user[0]?.id);
+      if (!is_verified[0].is_verified) throw new Error('You must verify your account before logging in. Please verify your account by click a verification link which was sent to your email!'); // prettier-ignore
     }),
   // check for password
   body('password')

@@ -68,7 +68,8 @@ export async function postSignup(req, res) {
 
 export async function getVerifyEmail(req, res) {
   const { uid } = req.params;
-  const verified = await AuthQueries.verifyUser(uid);
+  const date = new Date();
+  const verified = await AuthQueries.verifyUser(uid, date);
 
   if (!verified) throw CustomError.BadRequestError('Something went wrong with verifying process!');
 

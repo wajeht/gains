@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <span>
     <h1>Privacy Policy for AllKindsOfGains</h1>
 
     <p>
@@ -189,5 +189,5 @@
       website, we strongly encourage you to contact us immediately and we will do our best efforts
       to promptly remove such information from our records.
     </p>
-  </div>
+  </span>
 </template>
