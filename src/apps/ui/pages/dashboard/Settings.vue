@@ -60,6 +60,16 @@
                 <!-- <small class="opacity-50 text-nowrap">v1</small> -->
               </div>
             </a>
+
+            <!-- api-key -->
+            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">Request API Key</h6>
+                  <p class="mb-0 opacity-75">Want to consume your data api? that's great!</p>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
 
@@ -67,11 +77,14 @@
         <div>
           <h5><i class="bi bi-code-slash"></i> Others</h5>
           <div class="list-group">
+            <!-- help -->
             <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Help and Support</h6>
               </div>
             </a>
+
+            <!-- send -->
             <router-link
               to="/dashboard/settings/contact"
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
@@ -80,9 +93,25 @@
                 <h6 class="mb-0">Send Feedback</h6>
               </div>
             </router-link>
+
+            <!-- changelog -->
             <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Changelogs</h6>
+              </div>
+            </a>
+
+            <!-- terms -->
+            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <h6 class="mb-0">Terms of Service</h6>
+              </div>
+            </a>
+
+            <!-- terms -->
+            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <h6 class="mb-0">Privacy Policy</h6>
               </div>
             </a>
           </div>
