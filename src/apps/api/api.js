@@ -17,4 +17,7 @@ api.use('/auth', authRouter);
 // routes with version
 api.use('/v1', auth, v1);
 
+// for api document as jsdocs comments
+// https://brikev.github.io/express-jsdoc-swagger-docs/#/
+
 export default api;
