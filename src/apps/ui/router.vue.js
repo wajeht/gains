@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 // -------------------- regular ---------------------------
 import Features from './pages/regular/Features.vue';
 import ForgetPassword from './pages/regular/ForgetPassword.vue';
+import ResetPassword from './pages/regular/ResetPassword.vue';
 import RegularTerms from './pages/regular/RegularTerms.vue';
 import RegularPrivacy from './pages/regular/RegularPrivacy.vue';
 import RegularContact from './pages/regular/RegularContact.vue';
@@ -70,6 +71,15 @@ const routes = [
     path: '/forget-password',
     name: 'Forget Password',
     component: ForgetPassword,
+    meta: {
+      layout: 'RegularLayout',
+    },
+  },
+  {
+    path: '/reset-password/:uid',
+    name: 'Reset Password',
+    component: ResetPassword,
+    props: true,
     meta: {
       layout: 'RegularLayout',
     },

@@ -12,3 +12,20 @@ export async function verifyUser(uid, date) {
     .from('user_details')
     .where({ user_id: uid });
 }
+
+/**
+ * Update the password reset token and expiration for the user with the given uid.
+ * @param uid - The user's ID
+ * @param token - The token that will be used to reset the password.
+ * @param expiration - The expiration date of the token.
+ * @returns The user's password reset token and expiration date.
+ */
+export async function generatePasswordResetToken(uid, token, expiration) {
+  return db
+    .update({
+      password_reset_token: token,
+      password_reset_token_expiration: expiration,
+    })
+    .from('user_details')
+    .where({ user_id: uid });
+}

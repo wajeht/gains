@@ -15,20 +15,36 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+/* Verifying the email service. */
+transporter.verify((error, success) => {
+  if (error) {
+    logger.error(error);
+    Chad.flex(e.message, e);
+  } else {
+    logger.info('Email service started!.');
+  }
+});
+
 export default class EmailService {
   /**
    * It sends an email to the user with the given data
    */
   static async send({ to, subject, template = 'verify-email', data }) {
     try {
-      const sent = await transporter.sendMail({
+      // mail options
+      const mail = {
         from: `"Gains" <${email.auth_email}>`,
         to,
         subject,
         html: Template.generate(template, data),
-      });
+      };
+
+      // mail action
+      const sent = await transporter.sendMail(mail);
 
       if (!sent) throw new Error('Something went wrong while sending email!');
+
+      return sent;
     } catch (e) {
       logger.error(e);
       Chad.flex(e.message, e);
@@ -36,7 +52,7 @@ export default class EmailService {
   }
 }
 
-// // for testing
+// // for testing purpose
 // await EmailService.send({
 //   to: 'chad@flex.forlife',
 //   subject: 'testing',

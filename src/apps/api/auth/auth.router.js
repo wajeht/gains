@@ -21,6 +21,18 @@ auth.post(
 );
 
 auth.post(
+  '/forget-password',
+  validator(AuthValidation.postForgetPassword),
+  catchAsyncErrors(AuthController.postForgetPassword),
+);
+
+auth.post(
+  '/reset-password',
+  validator(AuthValidation.postResetPassword),
+  catchAsyncErrors(AuthController.postResetPassword),
+);
+
+auth.post(
   '/signup',
   validator(AuthValidation.postSignup),
   catchAsyncErrors(AuthController.postSignup),

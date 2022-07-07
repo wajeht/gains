@@ -56,7 +56,7 @@
         <a
           href="#"
           :class="{ disabled: loading === true }"
-          class="btn p-0 m-0"
+          class="btn p-0 m-0 text-dark"
           @click="$router.push('/forget-password')"
         >
           Forget password?
