@@ -6,7 +6,7 @@ export default class Template {
   /* A map of the templates that we have. */
   static _maps = {
     contact: {
-      path: path.resolve(path.join(process.cwd(), 'src', 'templates', 'contact.html')),
+      path: path.resolve(path.join(process.cwd(), 'contact.html')),
       data: [
         {
           name: 'email',
@@ -23,7 +23,7 @@ export default class Template {
       ],
     },
     'verify-email': {
-      path: path.resolve(path.join(process.cwd(), 'src', 'templates', 'verify-email.html')),
+      path: path.resolve(path.join(process.cwd(), 'verify-email.html')),
       data: [
         {
           name: 'username',
@@ -36,7 +36,7 @@ export default class Template {
       ],
     },
     'forget-password': {
-      path: path.resolve(path.join(process.cwd(), 'src', 'templates', 'forget-password.html')),
+      path: path.resolve(path.join(process.cwd(), 'forget-password.html')),
       data: [
         {
           name: 'username',
@@ -44,6 +44,15 @@ export default class Template {
         },
         {
           name: 'passwordResetLink',
+          type: 'string',
+        },
+      ],
+    },
+    'happy-birthday': {
+      path: path.resolve(path.join(process.cwd(), 'happy-birthday.html')),
+      data: [
+        {
+          name: 'username',
           type: 'string',
         },
       ],

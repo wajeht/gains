@@ -11,7 +11,6 @@ import { email as envEmail } from '../../../config/env.js';
 export async function postContact(req, res) {
   const { email, subject } = req.body;
   await EmailService.send({
-    // to: email, // TODO!: this should to to your email, instead of them
     to: envEmail.auth_email,
     subject,
     template: 'contact',
