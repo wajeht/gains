@@ -1,6 +1,7 @@
 import db from '../../../../database/db.js';
 import logger from '../../../../libs/logger.js';
 import { red } from '../../../../utils/rainbow-log.js';
+import { pick, omit } from 'lodash-es';
 
 /**
  * Get all users from the database.
@@ -64,23 +65,21 @@ export function findUserByParam(param) {
  * @returns The updated user object
  */
 export async function updateUserById(id, body) {
-  const fields = Object.keys(body).some(
-    (key) => ['username', 'email', 'password'].indexOf(key) >= 0,
-  );
+  const userFields = ['username', 'email', 'password'];
 
-  if (fields) {
-    await db
-      .update({ ...body, updated_at: new Date() })
-      .from('users')
-      .where({ id });
-  }
+  const u = pick(body, ...userFields);
 
-  if (!fields) {
-    await db
-      .update({ ...body, updated_at: new Date() })
-      .from('user_details')
-      .where({ id });
-  }
+  await db
+    .update({ ...u, updated_at: new Date() })
+    .from('users')
+    .where({ id });
+
+  const ud = omit(body, ...userFields);
+
+  await db
+    .update({ ...ud, updated_at: new Date() })
+    .from('user_details')
+    .where({ id });
 
   return findUserById(id);
 }

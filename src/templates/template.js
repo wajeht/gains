@@ -43,7 +43,7 @@ export default class Template {
           type: 'string',
         },
         {
-          name: 'temporaryPassword',
+          name: 'passwordResetLink',
           type: 'string',
         },
       ],
