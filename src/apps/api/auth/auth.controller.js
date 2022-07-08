@@ -132,32 +132,38 @@ export async function getReverify(req, res) {
   logger.info(`Email re-verification request was initiated for ${email}`);
 
   if (!user.length) logger.info(`${email} does not exist in our system.`);
-  if (user.length && user[0]?.is_verified === false) {
+
+  if (user.length) {
+    const [user_details] = await UsersQueries.findUserById(user[0]?.id);
     [user] = user;
 
-    let origin = '';
+    if (true) {
+      user = user_details;
 
-    const verificationToken = user.verification_token;
+      let origin = '';
 
-    if (env === 'development') {
-      const protocol = req.protocol;
-      const hostname = req.get('host');
-      origin = `${protocol}://${hostname}`;
-    } else {
-      origin = domain;
+      const verificationToken = user.verification_token;
+
+      if (env === 'development') {
+        const protocol = req.protocol;
+        const hostname = req.get('host');
+        origin = `${protocol}://${hostname}`;
+      } else {
+        origin = domain;
+      }
+
+      // re send verification email
+      await EmailService.send({
+        to: user.email,
+        subject: 'Verify Email',
+        template: 'verify-email',
+        data: {
+          username: user.username,
+          verificationLink: `${origin}/verify-email/${user.id}?token=${verificationToken}`,
+        },
+      });
+      logger.info(`Re-verification email was sent to uid: ${user.id}`);
     }
-
-    // re send verification email
-    await EmailService.send({
-      to: user.email,
-      subject: 'Verify Email',
-      template: 'verify-email',
-      data: {
-        username: user.username,
-        verificationLink: `${origin}/verify-email/${user.id}?token=${verificationToken}`,
-      },
-    });
-    logger.info(`Re-verification email was sent to uid: ${user.id}`);
   }
 
   // but we send this regardless
