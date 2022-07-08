@@ -12,7 +12,12 @@ import expressJsdocOptions from '../config/express-jsdoc-options.js';
 const app = express();
 
 // TODO!: configure this helmet for production
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+  }),
+);
 app.use(cors());
 app.use(compression());
 app.use(express.json());
