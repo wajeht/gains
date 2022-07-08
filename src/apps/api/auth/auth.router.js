@@ -1,8 +1,7 @@
 import express from 'express';
 import * as AuthController from './auth.controller.js';
 import * as AuthValidation from './auth.validation.js';
-import validator from '../middlewares/validator.middleware.js';
-import catchAsyncErrors from '../middlewares/catch-async-errors.middleware.js';
+import { validator, catchAsyncErrors } from '../api.middlewares.js';
 
 const auth = express.Router();
 
