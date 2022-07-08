@@ -9,13 +9,41 @@ import crypto from 'crypto';
 import CustomError from '../errors/custom-error.error.js';
 import { red } from '../../../utils/rainbow-log.js';
 import { env, domain } from '../../../config/env.js';
-import RandomPasswordGenerator from '../../../libs/random-password-generator.js';
-import { Logger } from 'concurrently';
+import jwt from 'jsonwebtoken';
 
+/**
+ * It takes in a request and a response object, and returns a JSON object with a token
+ * @param req - The request object.
+ * @param res - The response object.
+ */
 export async function postLogin(req, res) {
-  // TODO!: send back a token
-  res.json({
-    msg: 'ok',
+  const { email } = req.body;
+  const [user] = await UsersQueries.findUserByParam({ email });
+
+  const token = jwt.sign(
+    {
+      userId: user.id,
+    },
+    jwt_secret,
+    {
+      expiresIn: '1hr',
+    },
+  );
+
+  logger.info(`UserID: ${user.id} has generated login token!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [
+      {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        token,
+      },
+    ],
   });
 }
 
