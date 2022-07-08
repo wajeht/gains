@@ -38,6 +38,7 @@ export const postLogin = [
     .custom(async (email) => {
       const exist = await UserQueries.findUserByParam({ email });
       if (exist?.length === 0) throw new Error('The email or password is wrong!');
+      return true;
     })
     // check to see if acc has been verified
     .custom(async (email) => {
@@ -82,6 +83,7 @@ export const postSignup = [
     .custom(async (email) => {
       const exist = await UserQueries.findUserByParam({ email });
       if (exist.length !== 0) throw new Error('Username or Email already exist!');
+      return true;
     }),
   body('username')
     .trim()
@@ -92,6 +94,7 @@ export const postSignup = [
     .custom(async (username) => {
       const exist = await UserQueries.findUserByParam({ username });
       if (exist.length !== 0) throw new Error('Username or Email already exist!');
+      return true;
     }),
   body('password')
     .trim()
@@ -100,17 +103,17 @@ export const postSignup = [
     .isLength({ min: 10, max: 100 })
     .withMessage('Password must be at least 8 character long or less than 100 character long')
     .custom((value) => {
-      if (value.split('').some((i) => i == i.toUpperCase())) return true;
+      if (value.split('').some((i) => i == i.toUpperCase())) throw new Error('Password must include an uppercase character!'); // prettier-ignore
+      return true;
     })
-    .withMessage('Password must include an uppercase character!')
     .custom((value) => {
-      if (value.split('').some((i) => i == i.toLocaleLowerCase())) return true;
+      if (value.split('').some((i) => i == i.toLocaleLowerCase())) throw new Error('Password must include a lowercase character!'); // prettier-ignore
+      return true;
     })
-    .withMessage('Password must include a lowercase character!')
     .custom((value) => {
-      if (/\d/.test(value)) return true;
-    })
-    .withMessage('Password must include a number character!'),
+      if (/\d/.test(value)) throw new Error('Password must include a number character!');
+      return true;
+    }),
 ];
 
 /* A validation for the user input. */
@@ -127,13 +130,16 @@ export const getVerifyEmail = [
       // user does not exist
       // TODO!: we should not return invalid uid for security
       red('TODO!: we should not return invalid uid for security');
-      if (exist.length === 0)
+      if (exist.length === 0) {
         throw new Error(`User ID: ${uid} is invalid to verify email process!`);
+      }
+      return true;
     })
     // check to see if user has already verified email
     .custom(async (uid) => {
       const [user] = await UserQueries.findUserById(uid);
       if (user.is_verified === true) throw new Error('This account have been already verified!');
+      return true;
     }),
   query('token')
     .trim()
@@ -143,6 +149,7 @@ export const getVerifyEmail = [
       const { uid } = req.params;
       const [user] = await UserQueries.findUserById(uid);
       if (token !== user.verification_token) throw new Error('Invalid verification token. Cannot continue email verifying process!'); // prettier-ignore
+      return true;
     }),
 ];
 

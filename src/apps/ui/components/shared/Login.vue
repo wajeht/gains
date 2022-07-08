@@ -193,7 +193,7 @@
         } catch (e) {
           this.alert.type = 'danger';
           this.alert.msg = e.map((cur) => cur.msg).join(' ');
-          if (this.alert.msg.search('/verification/')) {
+          if (this.alert.msg.includes('verification')) {
             this.reVerifyMessage = true;
             this.password = '';
           }

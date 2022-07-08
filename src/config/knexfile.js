@@ -9,7 +9,7 @@ if (
   env === 'production'
 ) {
   connection = database.url;
-  logger.info('Using database connection string!');
+  logger.warn('Using database connection string!');
 } else {
   connection = {
     host: database.host,
@@ -17,7 +17,7 @@ if (
     user: database.username,
     password: database.password,
   };
-  logger.info('Not using database connection string!');
+  logger.warn('Not using database connection string!');
 }
 
 export default {
