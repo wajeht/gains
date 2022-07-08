@@ -1,3 +1,4 @@
+import logger from '../libs/logger.js';
 import { database, env } from './env.js';
 
 let connection = null;
@@ -5,6 +6,7 @@ let connection = null;
 // use connecting string if not user local
 if (!database.host && database.database && !database.username && !database.password) {
   connection = database.url;
+  logger.info('Using database connection string!');
 } else {
   connection = {
     host: database.host,
@@ -12,6 +14,7 @@ if (!database.host && database.database && !database.username && !database.passw
     user: database.username,
     password: database.password,
   };
+  logger.info('Not using database connection string!');
 }
 
 export default {
