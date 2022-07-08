@@ -75,4 +75,16 @@ auth.post(
   catchAsyncErrors(AuthController.postSignup),
 );
 
+/**
+ * GET /api/auth/reverify
+ * @tags auth
+ * @summary resend verification link to email
+ * @param {string} email.query.required - verification token
+ */
+auth.get(
+  '/reverify',
+  validator(AuthValidation.getReverify),
+  catchAsyncErrors(AuthController.getReverify),
+);
+
 export default auth;

@@ -121,6 +121,55 @@ export async function getVerifyEmail(req, res) {
 }
 
 /**
+ * It sends a re-verification email to the user
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function getReverify(req, res) {
+  const { email } = req.query;
+  let user = await UsersQueries.findUserByParam({ email });
+
+  logger.info(`Email re-verification request was initiated for ${email}`);
+
+  if (!user.length) logger.info(`${email} does not exist in our system.`);
+  if (user.length && user[0]?.is_verified === false) {
+    [user] = user;
+
+    let origin = '';
+
+    const verificationToken = null;
+
+    if (env === 'development') {
+      const protocol = req.protocol;
+      const hostname = req.get('host');
+      origin = `${protocol}://${hostname}`;
+    } else {
+      origin = domain;
+    }
+
+    // re send verification email
+    await EmailService.send({
+      to: user.email,
+      subject: 'Verify Email',
+      template: 'verify-email',
+      data: {
+        username: user.username,
+        verificationLink: `${origin}/verify-email/${user.id}?token=${verificationToken}`,
+      },
+    });
+    logger.info(`Re-verification email was sent to uid: ${user.id}`);
+  }
+
+  // but we send this regardless
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'If you have an account with us, well will send a re-verification link to your email!',
+    data: [],
+  });
+}
+
+/**
  * We are generating a password reset token, saving it to the database, and sending it to the user's
  * email
  * @param req - The request object.

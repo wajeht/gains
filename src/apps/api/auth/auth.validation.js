@@ -7,6 +7,17 @@ import logger from '../../../libs/logger.js';
 import requestIp from 'request-ip';
 
 /* A validation for the user input. */
+export const getReverify = [
+  // check for email
+  query('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email must not be empty!')
+    .isEmail()
+    .withMessage('Email must be an email!'),
+];
+
+/* A validation for the user input. */
 export const postLogin = [
   // only certain fields are allow
   body().custom((body) => {
