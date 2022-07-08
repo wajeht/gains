@@ -71,4 +71,6 @@ jobs:
     - run: npm i
     - run: npm run build
     - run: npm test
+    - run: npm run migrate:rollback
+    - run: npm run migrate:latest
     - run: pm2 restart gains
