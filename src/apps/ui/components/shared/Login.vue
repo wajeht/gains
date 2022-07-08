@@ -11,6 +11,13 @@
       class="mb-3 alert animate__animated animate__zoomIn animate__faster"
     >
       <span>{{ alert.msg }}</span>
+      <span v-if="reVerifyMessage">
+        If you have lost the reverification email,
+        <a class="link-danger" style="cursor: pointer" @click="reSendVerificationEmail()"
+          >click here</a
+        >
+        to get a new reverification email!
+      </span>
     </div>
 
     <!-- email -->
@@ -127,6 +134,7 @@
         password: '',
         rememberMe: '',
         loading: false,
+        reVerifyMessage: false,
         alert: {
           type: '',
           msg: '',
@@ -134,6 +142,31 @@
       };
     },
     methods: {
+      async reSendVerificationEmail() {
+        try {
+          this.alert.type = '';
+          this.alert.type = '';
+          this.loading = true;
+
+          const res = await fetch(`/api/auth/reverify?email=${this.email}`);
+          const json = await res.json();
+
+          if (!res.ok) {
+            this.loading = false;
+            throw json.errors;
+          }
+
+          this.reVerifyMessage = false;
+          this.loading = false;
+          this.alert.type = 'success';
+          this.alert.msg = 'We have sent a new re-verification link to your email!';
+          this.email = '';
+          this.password = '';
+        } catch (e) {
+          this.alert.type = 'danger';
+          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+        }
+      },
       async handleSubmit() {
         try {
           this.loading = true;
@@ -160,6 +193,10 @@
         } catch (e) {
           this.alert.type = 'danger';
           this.alert.msg = e.map((cur) => cur.msg).join(' ');
+          if (this.alert.msg.search('/verification/')) {
+            this.reVerifyMessage = true;
+            this.password = '';
+          }
         }
       },
     },

@@ -54,7 +54,11 @@ export function findUserById(id) {
  * @returns {array<{}>} An array of objects
  */
 export function findUserByParam(param) {
-  return db.select('*').from('users').where(param);
+  return db
+    .select('*')
+    .from('users')
+    .leftJoin('user_details', 'users.id', 'user_details.user_id')
+    .where(param);
 }
 
 /**
