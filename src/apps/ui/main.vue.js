@@ -11,8 +11,8 @@ import 'animate.css';
 import 'hover.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import FontAwesomeIcon from './font-awesome';
-import { tooltip } from './tool-tip.js';
+import FontAwesomeIcon from './font-awesome.vue.js';
+import tooltip from './tool-tip.vue.js';
 import { Chart, registerables } from 'chart.js';
 
 import VueAnimXyz from '@animxyz/vue3';

@@ -1,9 +1,8 @@
 import express from 'express';
 import * as UsersController from './users.controller.js';
 import * as UsersValidation from './users.validation.js';
-import validator from '../../middlewares/validator.middleware.js';
 
-import catchAsyncErrors from '../../middlewares/catch-async-errors.middleware.js';
+import { validator, catchAsyncErrors } from '../../api.middlewares.js';
 
 const users = express.Router();
 

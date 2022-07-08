@@ -1,5 +1,4 @@
-import catchAsyncError from '../middlewares/catch-async-errors.middleware.js';
-import validator from '../middlewares/validator.middleware.js';
+import { validator, catchAsyncErrors } from '../api.middlewares.js';
 
 import * as ContactController from './contact.controller.js';
 import * as ContactValidation from './contact.validation.js';
@@ -10,7 +9,7 @@ const contact = express.Router();
 contact.post(
   '/',
   validator(ContactValidation.postContact),
-  catchAsyncError(ContactController.postContact),
+  catchAsyncErrors(ContactController.postContact),
 );
 
 export default contact;

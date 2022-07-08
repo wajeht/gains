@@ -5,7 +5,7 @@ import authRouter from './auth/auth.router.js';
 import contactRouter from './contact/contact.router.js';
 import adminRouter from './admin/admin.router.js';
 
-import auth from '../api/middlewares/auth.middleware.js';
+import { auth } from './api.middlewares.js';
 
 const api = express.Router();
 

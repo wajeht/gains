@@ -1,14 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
-import { jwt_secret } from '../../../config/env.js';
 import * as AuthQueries from './auth.queries.js';
 import * as UsersQueries from '../v1/users/users.queries.js';
 import logger from '../../../libs/logger.js';
 import Password from '../../../libs/password.js';
 import EmailService from '../../../services/email.service.js';
 import crypto from 'crypto';
-import CustomError from '../errors/custom-error.error.js';
+import CustomError from '../api.errors.js';
 import { red } from '../../../utils/rainbow-log.js';
-import { env, domain } from '../../../config/env.js';
+import { env, domain, jwt_secret } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 
 /**
