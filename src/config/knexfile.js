@@ -4,7 +4,10 @@ import { database, env } from './env.js';
 let connection = null;
 
 // use connecting string if not user local
-if (!database.host && database.database && !database.username && !database.password) {
+if (
+  (!database.host || !database.database || !database.username || !database.password) &&
+  env === 'production'
+) {
   connection = database.url;
   logger.info('Using database connection string!');
 } else {
