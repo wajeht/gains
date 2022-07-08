@@ -137,7 +137,7 @@ export async function getReverify(req, res) {
 
     let origin = '';
 
-    const verificationToken = null;
+    const verificationToken = user.verification_token;
 
     if (env === 'development') {
       const protocol = req.protocol;
