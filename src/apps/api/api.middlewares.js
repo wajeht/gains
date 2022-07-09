@@ -15,24 +15,29 @@ export function auth(req, res, next) {
   try {
     // TODO!: remove this on production
     // ! this code below wil skip any authentication
-    if (env === 'development') {
-      red('TODO!: Remove auth skipping in production!');
-      return next();
+    // if (env === 'development') {
+    //   red('TODO!: Remove auth skipping in production!');
+    //   return next();
+    // }
+
+    let token = null;
+
+    //! -------------------------------- JWT COOKIE TOKEN AUTHENTICATION STARTS -------------------------
+    if (req.signedCookies['token']) {
+      token = req.signedCookies['token'];
     }
-
-    //! -------------------------------- API TOKEN AUTHORIZATION STARTS --------------------------------
-    if (Object.keys(req.headers).includes('x-api-key')) {
-      red('TODO!: Implement x-api-key authentication');
+    //! -------------------------------- BEARER TOKEN AUTHENTICATION STARTS -----------------------------
+    else if (req.headers.authorization) {
+      if (req.headers.authorization.split(' ').length != 2) throw new CustomError.UnauthorizedError('Must use bearer token authentication!'); // prettier-ignore
+      if (!req.headers.authorization.startsWith('Bearer')) throw new CustomError.UnauthorizedError('Must use bearer token authentication!'); // prettier-ignore
+      token = req.headers.authorization.split(' ')[1];
     }
-
-    //! -------------------------------- BEARER TOKEN AUTHORIZATION STARTS -----------------------------
-    const x = req.get('authorization');
-
-    if (!x) throw new CustomError.UnauthorizedError('Must use bearer token authorization!'); // prettier-ignore
-    if (x.split(' ').length != 2) throw new CustomError.UnauthorizedError('Must use bearer token authorization!'); // prettier-ignore
-    if (!x.startsWith('Bearer')) throw new CustomError.UnauthorizedError('Must use bearer token authorization!'); // prettier-ignore
-
-    const token = x.split(' ')[1];
+    //! -------------------------------- API TOKEN AUTHENTICATION STARTS --------------------------------
+    else if (req.headers['x-api-key']) {
+      token = req.headers['x-api-key'];
+    } else {
+      throw new CustomError.UnauthorizedError('Invalid authentication!');
+    }
 
     try {
       jwt.verify(token, jwt_secret);

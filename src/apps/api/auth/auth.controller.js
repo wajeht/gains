@@ -21,13 +21,21 @@ export async function postLogin(req, res) {
 
   const token = jwt.sign(
     {
-      userId: user.id,
+      user_id: user.id,
     },
     jwt_secret,
     {
+      issuer: 'AllKindsOfGains',
       expiresIn: '1hr',
     },
   );
+
+  res.cookie('token', token, {
+    expiresIn: '1hr',
+    httpOnly: true,
+    secure: env === 'production',
+    signed: true,
+  });
 
   logger.info(`UserID: ${user.id} has generated login token!`);
 
@@ -40,7 +48,7 @@ export async function postLogin(req, res) {
         id: user.id,
         email: user.email,
         username: user.username,
-        token,
+        // token,
       },
     ],
   });
@@ -273,4 +281,21 @@ export async function postResetPassword(req, res) {
   });
 }
 
-export function getLogout(req, res) {}
+/**
+ * It sets the accessToken cookie to expire immediately, and returns a success response
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export function getLogout(req, res) {
+  res.cookie('token', '', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [{}],
+  });
+}

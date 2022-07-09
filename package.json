@@ -65,6 +65,7 @@
     "chalk": "^5.0.1",
     "chart.js": "^3.8.0",
     "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
