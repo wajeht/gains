@@ -6,6 +6,7 @@
   import DashboardLayout from './layouts/DashboardLayout.vue';
   import EmptyDashboardLayout from './layouts/EmptyDashboardLayout.vue';
   import RegularLayout from './layouts/RegularLayout.vue';
+  import authStore from './store/auth.store.js';
 
   export default {
     components: {

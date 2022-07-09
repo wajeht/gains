@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import App from './App.vue';
 
 import routes from './router.vue.js';
@@ -30,6 +31,7 @@ app.config.devtools = true;
 
 app.directive('tooltip', tooltip);
 
+app.use(createPinia());
 app.use(VueAnimXyz);
 app.use(routes);
 
