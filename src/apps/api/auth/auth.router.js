@@ -5,6 +5,11 @@ import { validator, catchAsyncErrors } from '../api.middlewares.js';
 
 const auth = express.Router();
 
+/**
+ * GET /api/auth/logout
+ * @tags auth
+ * @summary log out of an email
+ */
 auth.get('/logout', AuthController.getLogout);
 
 /**
