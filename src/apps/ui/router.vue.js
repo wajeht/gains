@@ -49,6 +49,7 @@ const routes = [
     component: RegularHome,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -57,6 +58,7 @@ const routes = [
     component: RegularLogin,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -65,6 +67,7 @@ const routes = [
     component: RegularSignup,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -73,6 +76,7 @@ const routes = [
     component: ForgetPassword,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -82,6 +86,7 @@ const routes = [
     props: true,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -91,6 +96,7 @@ const routes = [
     props: true,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -99,6 +105,7 @@ const routes = [
     component: Features,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -107,6 +114,7 @@ const routes = [
     component: RegularContact,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -115,6 +123,7 @@ const routes = [
     component: RegularPrivacy,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -123,6 +132,7 @@ const routes = [
     component: RegularTerms,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -131,6 +141,7 @@ const routes = [
     component: RegularNotFound,
     meta: {
       layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
   // dashboard
@@ -140,6 +151,7 @@ const routes = [
     component: DashboardLogin,
     meta: {
       layout: 'EmptyDashboardLayout',
+      requiredAuth: false,
     },
   },
   {
@@ -148,6 +160,7 @@ const routes = [
     component: DashboardSignup,
     meta: {
       layout: 'EmptyDashboardLayout',
+      requiredAuth: false,
     },
   },
   // settings -> others
@@ -157,6 +170,7 @@ const routes = [
     component: SendFeedback,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -165,6 +179,7 @@ const routes = [
     component: DashboardPrivacy,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -173,6 +188,7 @@ const routes = [
     component: DashboardTerms,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -181,6 +197,7 @@ const routes = [
     component: Profile,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -189,6 +206,7 @@ const routes = [
     component: Sessions,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   // Tools
@@ -198,6 +216,7 @@ const routes = [
     component: Tools,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   // 1rm
@@ -207,6 +226,7 @@ const routes = [
     component: OneRepMaxCalculator,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   // rpe
@@ -216,6 +236,7 @@ const routes = [
     component: RPECalculator,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   // plate
@@ -225,6 +246,7 @@ const routes = [
     component: PlateCalculator,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   // attempt
@@ -234,6 +256,7 @@ const routes = [
     component: AttemptSelectionCalculator,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   // ----- Settings -----
@@ -243,6 +266,7 @@ const routes = [
     component: Settings,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -251,6 +275,7 @@ const routes = [
     component: UserDetails,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -259,6 +284,7 @@ const routes = [
     component: Videos,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -268,6 +294,7 @@ const routes = [
     props: true,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
 
@@ -278,6 +305,7 @@ const routes = [
     props: true,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   {
@@ -286,6 +314,7 @@ const routes = [
     component: DashboardNotFound,
     meta: {
       layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
 ];
@@ -295,8 +324,13 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+import authStore from './store/auth.store.js';
+router.beforeEach(async (to, from, next) => {
   document.title = to.name;
+  const auth = authStore();
+  if (to.meta?.requiredAuth && !auth.user) {
+    return next('/login');
+  }
   next();
 });
 
