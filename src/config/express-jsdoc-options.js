@@ -18,4 +18,7 @@ export default {
   filesPattern: ['./**/*.router.js', '*.js'],
   swaggerUIPath: '/docs/api',
   exposeSwaggerUI: true,
+  notRequiredAsNullable: false,
+  swaggerUiOptions: {},
+  multiple: {},
 };
