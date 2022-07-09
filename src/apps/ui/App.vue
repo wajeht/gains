@@ -6,7 +6,7 @@
   import DashboardLayout from './layouts/DashboardLayout.vue';
   import EmptyDashboardLayout from './layouts/EmptyDashboardLayout.vue';
   import RegularLayout from './layouts/RegularLayout.vue';
-  import authStore from './store/auth.store.js';
+  import useUserStore from './store/user.store.js';
 
   export default {
     components: {
@@ -21,6 +21,7 @@
     },
     watch: {
       $route(to) {
+        const userStore = useUserStore();
         // set layout by route meta
         if (to.meta.layout !== undefined) {
           this.layout = to.meta.layout;

@@ -1,15 +1,16 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
-import { red } from '../utils/rainbow-log.js';
 import { root } from '../utils/directory.js';
+import logger from '../libs/logger.js';
 
 /* Checking if the .env file exists. If it doesn't, it will throw an error. */
 fs.access(path.join(root, '.env'), (err) => {
   if (err) {
-    red('No .env file found!');
+    logger.error('No .env file found!');
     process.exit(1);
   }
+  logger.info('Found .env file!');
 });
 
 /* Loading the .env file. */

@@ -103,15 +103,15 @@ export const postSignup = [
     .isLength({ min: 10, max: 100 })
     .withMessage('Password must be at least 8 character long or less than 100 character long')
     .custom((value) => {
-      if (value.split('').some((i) => i == i.toUpperCase())) throw new Error('Password must include an uppercase character!'); // prettier-ignore
+      if (!(value.split('').some((i) => i == i.toUpperCase()))) throw new Error('Password must include an uppercase character!'); // prettier-ignore
       return true;
     })
     .custom((value) => {
-      if (value.split('').some((i) => i == i.toLocaleLowerCase())) throw new Error('Password must include a lowercase character!'); // prettier-ignore
+      if (!(value.split('').some((i) => i == i.toLocaleLowerCase()))) throw new Error('Password must include a lowercase character!'); // prettier-ignore
       return true;
     })
     .custom((value) => {
-      if (/\d/.test(value)) throw new Error('Password must include a number character!');
+      if (!/\d/.test(value)) throw new Error('Password must include a number character!');
       return true;
     }),
 ];

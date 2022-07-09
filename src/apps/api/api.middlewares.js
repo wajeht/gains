@@ -13,8 +13,6 @@ import CustomError from './api.errors.js';
  */
 export function auth(req, res, next) {
   try {
-    // TODO!: remove this on production
-    // ! this code below wil skip any authentication
     // if (env === 'development') {
     //   red('TODO!: Remove auth skipping in production!');
     //   return next();

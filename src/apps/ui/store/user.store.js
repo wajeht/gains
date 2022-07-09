@@ -1,20 +1,27 @@
 import { defineStore } from 'pinia';
 import router from '../router.vue.js';
-import axios from 'axios';
 
-const authStore = defineStore({
-  id: 'auth',
+const useUserStore = defineStore({
+  id: 'user',
   state: () => {
     return {
       user: JSON.parse(localStorage.getItem('user')),
+      userId: '',
+      userName: '',
+      isLoggedIn: false,
     };
   },
+  getters: {},
   actions: {
     async login(email, password) {
       try {
-        const res = await axios.post('/api/auth/login', { email, password });
-        router.push('/dashboard/profile');
-        return res;
+        return await window.fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
       } catch (e) {
         return e;
       }
@@ -33,4 +40,4 @@ const authStore = defineStore({
   },
 });
 
-export default authStore;
+export default useUserStore;

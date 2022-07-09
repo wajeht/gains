@@ -121,8 +121,8 @@
 </template>
 
 <script>
-  import { sleep } from '../../../../utils/helpers.js';
   import Or from './Or.vue';
+  import useUserStore from '../../store/user.store.js';
 
   export default {
     components: {
@@ -168,35 +168,20 @@
         }
       },
       async handleSubmit() {
-        try {
-          this.loading = true;
+        this.loading = true;
+        const userStore = useUserStore();
+        const res = await userStore.login(this.email, this.password);
+        console.log(await res.json());
 
-          const res = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: this.email,
-              password: this.password,
-            }),
-          });
-
-          const json = await res.json();
-
-          if (!res.ok) {
-            this.loading = false;
-            throw json.errors;
-          }
-
-          this.$router.push({ path: '/dashboard/profile' });
-        } catch (e) {
+        if (res.status !== 'success') {
+          this.loading = false;
           this.alert.type = 'danger';
-          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+          this.alert.msg = res.map((cur) => cur.msg).join(' ');
           if (this.alert.msg.includes('verification')) {
             this.reVerifyMessage = true;
             this.password = '';
           }
+          return;
         }
       },
     },

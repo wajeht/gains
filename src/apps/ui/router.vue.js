@@ -324,10 +324,8 @@ const router = createRouter({
   routes,
 });
 
-import authStore from './store/auth.store.js';
 router.beforeEach(async (to, from, next) => {
   document.title = to.name;
-  const auth = authStore();
   if (to.meta?.requiredAuth && !auth.user) {
     return next('/login');
   }
