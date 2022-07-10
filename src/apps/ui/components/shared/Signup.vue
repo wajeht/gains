@@ -128,7 +128,7 @@
     <!-- email -->
     <router-link
       :class="{ disabled: loading === true }"
-      to="/dashboard/login"
+      :to="loginLink"
       class="btn btn-light w-100"
       style="border: 1px solid #ced4da"
       href="#"
@@ -152,11 +152,15 @@
         password: '',
         checkbox: '',
         loading: false,
+        loginLink: '/login',
         alert: {
           type: '',
           msg: '',
         },
       };
+    },
+    mounted() {
+      if (navigator.userAgentData.mobile) this.loginLink = '/dashboard/login';
     },
     methods: {
       async handleSubmit() {

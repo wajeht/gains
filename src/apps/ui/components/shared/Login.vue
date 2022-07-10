@@ -111,7 +111,7 @@
 
     <!-- email -->
     <router-link
-      to="/dashboard/signup"
+      :to="signupLink"
       :class="{ disabled: loading === true }"
       class="btn btn-light w-100"
       style="border: 1px solid #ced4da"
@@ -135,11 +135,15 @@
         rememberMe: '',
         loading: false,
         reVerifyMessage: false,
+        signupLink: '/signup',
         alert: {
           type: '',
           msg: '',
         },
       };
+    },
+    mounted() {
+      if (navigator.userAgentData.mobile) this.signupLink = '/dashboard/signup';
     },
     methods: {
       async reSendVerificationEmail() {
@@ -201,8 +205,7 @@
 
           this.$router.push({ path: '/dashboard/profile' });
         } catch (e) {
-          console.log(e);
-          this.loading = false;
+          his.loading = false;
           this.alert.type = 'danger';
           if (Array.isArray(e)) {
             this.alert.msg = e.map((cur) => cur.msg).join(' ');

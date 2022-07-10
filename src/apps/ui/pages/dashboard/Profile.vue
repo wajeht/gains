@@ -160,6 +160,7 @@
         },
       };
     },
+    mounted() {},
     mounted() {
       this.data = {
         type: 'line',
@@ -211,7 +212,10 @@
           userStore.user.email = null;
           userStore.user.username = null;
 
-          this.$router.push({ path: '/dashboard/login' });
+          const logoutLink = '/login';
+          if (navigator.userAgentData.mobile) logoutLink = '/dashboard/login';
+
+          this.$router.push({ path: logoutLink });
         } catch (e) {
           this.loading = false;
           this.alert.type = 'danger';
