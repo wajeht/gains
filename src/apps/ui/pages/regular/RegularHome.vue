@@ -53,14 +53,12 @@
       </div>
 
       <!-- image -->
-      <div class="animate__animated animate__fadeIn">
-        <div class="px-5">
-          <img
-            src="../../assets/images/hero.png"
-            class="img-fluid rounded-3 mb-4"
-            alt="gains app screenshot"
-          />
-        </div>
+      <div class="px-5">
+        <img
+          src="../../assets/images/hero.png"
+          class="img-fluid rounded-3 mb-4"
+          alt="gains app screenshot"
+        />
       </div>
     </div>
 
