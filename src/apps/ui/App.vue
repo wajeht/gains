@@ -38,5 +38,6 @@ export default {
 body,
 html {
   overscroll-behavior: contain;
+  overscroll-behavior-y: contain;
 }
 </style>
