@@ -207,7 +207,7 @@ export default {
 
         this.$router.push({ path: '/dashboard/profile' });
       } catch (e) {
-        his.loading = false;
+        this.loading = false;
         this.alert.type = 'danger';
         if (Array.isArray(e)) {
           this.alert.msg = e.map((cur) => cur.msg).join(' ');
