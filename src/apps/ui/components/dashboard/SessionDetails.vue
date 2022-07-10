@@ -455,7 +455,7 @@
       };
     },
     mounted() {
-      console.log(this.today);
+      // console.log(this.today);
     },
     methods: {
       handleAddALift() {
