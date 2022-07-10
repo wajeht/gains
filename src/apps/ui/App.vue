@@ -32,12 +32,3 @@ export default {
   },
 };
 </script>
-
-<style>
-*,
-body,
-html {
-  overscroll-behavior: contain;
-  overscroll-behavior-y: contain;
-}
-</style>
