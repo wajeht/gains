@@ -2,7 +2,7 @@
   <DashboardHeader />
   <div class="container">
     <div class="row my-3 px-3">
-      <div v-for="video in videos" :key="`${video.id}` - key" class="col-3 p-0">
+      <div v-for="video in videos" :key="`key-${video.id}`" class="col-3 p-0">
         <div class="d-flex flex-column">
           <router-link :to="{ name: 'VideoDetails', params: { id: video.id } }">
             <div class="card border">
