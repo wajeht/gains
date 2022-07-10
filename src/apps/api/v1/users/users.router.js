@@ -7,6 +7,13 @@ import { validator, catchAsyncErrors } from '../../api.middlewares.js';
 const users = express.Router();
 
 /**
+ * GET /api/v1/users/check-authentication
+ * @tags users
+ * @summary check to see the state of if authentication is still valid
+ */
+users.get('/check-authentication', UsersController.getCheckAuthentication);
+
+/**
  * GET /api/v1/users
  * @tags users
  * @summary get a list of users

@@ -336,7 +336,7 @@ router.beforeEach(async (to, from, next) => {
       // let them go wherever they want
 
       // check to see if token is still valid
-      const res = await window.fetch(`/api/v1/users/${userStore.user.id}`);
+      const res = await window.fetch(`/api/v1/users/check-authentication`);
       if (!res.ok) {
         userStore.isLoggedIn = false;
         userStore.clearUserInfo();

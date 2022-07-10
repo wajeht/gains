@@ -1,6 +1,21 @@
 import logger from '../../../../libs/logger.js';
 import * as UsersQueries from './users.queries.js';
 import Chad from '../../../../libs/chad.js';
+import { StatusCodes } from 'http-status-codes';
+
+/**
+ * check to see if a current users authentication is still valid
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function getCheckAuthentication(req, res) {
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [],
+  });
+}
 
 /**
  * It creates a user and returns the user
