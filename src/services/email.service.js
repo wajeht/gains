@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
 transporter.verify((error, success) => {
   if (error) {
     logger.error(error);
-    Chad.flex(e.message, e);
+    Chad.flex(error.message, error);
   } else {
     logger.info('Email service started!.');
   }
