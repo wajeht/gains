@@ -1,42 +1,37 @@
 import { defineStore } from 'pinia';
-import router from '../router.vue.js';
 
 const useUserStore = defineStore({
   id: 'user',
   state: () => {
     return {
-      user: JSON.parse(localStorage.getItem('user')),
-      userId: '',
-      userName: '',
       isLoggedIn: false,
+      user: {
+        id: null,
+        username: null,
+        email: null,
+      },
     };
   },
   getters: {},
   actions: {
-    async login(email, password) {
-      try {
-        return await window.fetch('/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
-      } catch (e) {
-        return e;
-      }
+    setUserInfo(id, username, email) {
+      this.user.id = id;
+      this.user.username = username;
+      this.user.email = email;
     },
-    async logout() {
-      try {
-        this.user = null;
-        const res = await axios.post('/api/auth/logout');
-        localStorage.removeItem('user');
-        router.push('/dashboard/login');
-        return res;
-      } catch (e) {
-        return e;
-      }
+    clearUserInfo() {
+      this.user.id = null;
+      this.user.username = null;
+      this.user.email = null;
     },
+    setIsLoggedIn(value) {
+      this.isLoggedIn = value;
+    },
+  },
+  persist: {
+    id: 'user',
+    storage: window.localStorage,
+    paths: ['isLoggedIn', 'user'],
   },
 });
 

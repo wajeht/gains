@@ -3,6 +3,14 @@
 
   <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3" data-aos="fade-up">
+      <!-- alert -->
+      <div
+        v-if="alert.type"
+        :class="`alert-${alert.type}`"
+        class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+      >
+        <span>{{ alert.msg }}</span>
+      </div>
       <!-- profile -->
       <div>
         <h5><i class="bi bi-person-fill"></i> Profile</h5>
@@ -22,7 +30,7 @@
             <li>readiness</li>
             <li>soreness</li>
             <li>confidence</li>
-            <li>sleep quty</li>
+            <li>sleep quality</li>
           </ul>
 
           <!-- logout -->
@@ -134,6 +142,7 @@
 <script>
   import { Chart } from 'chart.js';
   import { sleep } from '../../../../utils/helpers.js';
+  import useUserStore from '../../store/user.store.js';
 
   import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
 
@@ -145,6 +154,10 @@
       return {
         data: null,
         loading: false,
+        alert: {
+          type: '',
+          msg: '',
+        },
       };
     },
     mounted() {
@@ -178,11 +191,32 @@
     },
     methods: {
       async logout() {
-        this.loading = true;
+        try {
+          this.loading = true;
 
-        await sleep(3000);
+          const userStore = useUserStore();
 
-        this.$router.push({ path: '/dashboard/login' });
+          await sleep('5000');
+
+          const res = await fetch('/api/auth/logout');
+          const json = await res.json();
+
+          if (!res.ok) {
+            this.loading = false;
+            throw json.errors;
+          }
+
+          userStore.isLoggedIn = false;
+          userStore.user.id = null;
+          userStore.user.email = null;
+          userStore.user.username = null;
+
+          this.$router.push({ path: '/dashboard/login' });
+        } catch (e) {
+          this.loading = false;
+          this.alert.type = 'danger';
+          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+        }
       },
     },
   };

@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
 
 import routes from './router.vue.js';
@@ -22,6 +23,8 @@ import '@animxyz/core';
 AOS.init();
 
 const app = createApp(App);
+const pinia = createPinia(piniaPluginPersistedstate);
+pinia.use(piniaPluginPersistedstate);
 
 Chart.register(...registerables);
 app.component('font-awesome-icon', FontAwesomeIcon);
@@ -31,7 +34,7 @@ app.config.devtools = true;
 
 app.directive('tooltip', tooltip);
 
-app.use(createPinia());
+app.use(pinia);
 app.use(VueAnimXyz);
 app.use(routes);
 

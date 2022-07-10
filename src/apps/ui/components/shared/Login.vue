@@ -168,20 +168,53 @@
         }
       },
       async handleSubmit() {
-        this.loading = true;
-        const userStore = useUserStore();
-        const res = await userStore.login(this.email, this.password);
-        console.log(await res.json());
+        try {
+          this.loading = true;
+          const userStore = useUserStore();
 
-        if (res.status !== 'success') {
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: this.email,
+              password: this.password,
+            }),
+          });
+
+          const json = await res.json();
+
+          if (!res.ok) {
+            this.loading = false;
+            if (json.errors) {
+              throw json.errors;
+            } else {
+              throw json.message;
+            }
+          }
+
+          const [user] = json.data;
+
+          userStore.isLoggedIn = true;
+          userStore.setUserInfo(user.id, user.username, user.email);
+
+          this.$router.push({ path: '/dashboard/profile' });
+        } catch (e) {
+          console.log(e);
           this.loading = false;
           this.alert.type = 'danger';
-          this.alert.msg = res.map((cur) => cur.msg).join(' ');
+          if (Array.isArray(e)) {
+            this.alert.msg = e.map((cur) => cur.msg).join(' ');
+            return;
+          }
+          this.alert.msg = e;
+
+          // resent verification email
           if (this.alert.msg.includes('verification')) {
             this.reVerifyMessage = true;
             this.password = '';
           }
-          return;
         }
       },
     },
