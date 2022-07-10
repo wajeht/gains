@@ -1,38 +1,34 @@
 <script setup>
-  import { onMounted, ref } from 'vue';
-  import useAppStore from '../../store/app.store.js';
-  import { sleep } from '../../../../utils/helpers';
-  import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import useAppStore from '../../store/app.store.js';
+import { sleep } from '../../../../utils/helpers';
+import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
 
-  const sessions = ref(12);
-  const appStore = useAppStore();
+const sessions = ref(12);
+const appStore = useAppStore();
+const router = useRouter();
 
-  onMounted(async () => {
-    appStore.loading = true;
-    await sleep(300);
-    appStore.loading = false;
+onMounted(async () => {
+  appStore.loading = true;
+  await sleep(300);
+  appStore.loading = false;
+});
+
+function logDetails(id) {
+  router.push({
+    // path: `/dashboard/session/${id}`,
+    name: 'SessionDetails',
+    params: { id: id },
   });
-
-  function logDetails(id) {
-    this.$router.push({
-      // path: `/dashboard/session/${id}`,
-      name: 'SessionDetails',
-      params: { id: id },
-    });
-  }
+}
 </script>
 
 <template>
   <SessionsHeader />
   <div v-if="appStore.loading === false" class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
-      <div
-        v-for="session in sessions"
-        :key="`session-${session}`"
-        data-aos="fade-up"
-        class="card"
-        id="log"
-      >
+      <div v-for="session in sessions" :key="`session-${session}`" data-aos="fade-up" class="card" id="log">
         <div @click="logDetails(1)" class="card-body">
           <div class="d-flex justify-content-between gap-5">
             <!-- start -->
@@ -65,11 +61,10 @@
   </div>
 </template>
 
-
 <style>
-  #log:hover {
-    /* background: green; */
-    background: #f4f4f4;
-    cursor: pointer;
-  }
+#log:hover {
+  /* background: green; */
+  background: #f4f4f4;
+  cursor: pointer;
+}
 </style>

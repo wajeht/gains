@@ -10,6 +10,6 @@
     "eamodio.gitlens",
     "xabikos.javascriptsnippets",
     "christian-kohler.path-intellisense",
-    "octref.vetur",
+    "Vue.volar"
   ]
 }

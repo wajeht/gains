@@ -1,6 +1,6 @@
 <template>
   <!-- form -->
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit" autocomplete="on">
     <!-- title -->
     <h1 class="mb-3">Login</h1>
 
@@ -28,6 +28,7 @@
         type="email"
         class="form-control"
         id="email"
+        autocomplete="on"
         required
         :disabled="loading"
       />
@@ -41,6 +42,7 @@
         type="password"
         class="form-control"
         id="password"
+        autocomplete="on"
         required
         :disabled="loading"
       />
@@ -121,105 +123,105 @@
 </template>
 
 <script>
-  import Or from './Or.vue';
-  import useUserStore from '../../store/user.store.js';
+import Or from './Or.vue';
+import useUserStore from '../../store/user.store.js';
 
-  export default {
-    components: {
-      Or,
-    },
-    data() {
-      return {
-        email: '',
-        password: '',
-        rememberMe: '',
-        loading: false,
-        reVerifyMessage: false,
-        signupLink: '/signup',
-        alert: {
-          type: '',
-          msg: '',
-        },
-      };
-    },
-    mounted() {
-      if (navigator.userAgentData.mobile) this.signupLink = '/dashboard/signup';
-    },
-    methods: {
-      async reSendVerificationEmail() {
-        try {
-          this.alert.type = '';
-          this.alert.type = '';
-          this.loading = true;
+export default {
+  components: {
+    Or,
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      rememberMe: '',
+      loading: false,
+      reVerifyMessage: false,
+      signupLink: '/signup',
+      alert: {
+        type: '',
+        msg: '',
+      },
+    };
+  },
+  mounted() {
+    if (navigator.userAgentData.mobile) this.signupLink = '/dashboard/signup';
+  },
+  methods: {
+    async reSendVerificationEmail() {
+      try {
+        this.alert.type = '';
+        this.alert.type = '';
+        this.loading = true;
 
-          const res = await fetch(`/api/auth/reverify?email=${this.email}`);
-          const json = await res.json();
+        const res = await fetch(`/api/auth/reverify?email=${this.email}`);
+        const json = await res.json();
 
-          if (!res.ok) {
-            this.loading = false;
-            throw json.errors;
-          }
-
-          this.reVerifyMessage = false;
+        if (!res.ok) {
           this.loading = false;
-          this.alert.type = 'success';
-          this.alert.msg = 'We have sent a new re-verification link to your email!';
-          this.email = '';
-          this.password = '';
-        } catch (e) {
-          this.alert.type = 'danger';
-          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+          throw json.errors;
         }
-      },
-      async handleSubmit() {
-        try {
-          this.loading = true;
-          const userStore = useUserStore();
 
-          const res = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: this.email,
-              password: this.password,
-            }),
-          });
-
-          const json = await res.json();
-
-          if (!res.ok) {
-            this.loading = false;
-            if (json.errors) {
-              throw json.errors;
-            } else {
-              throw json.message;
-            }
-          }
-
-          const [user] = json.data;
-
-          userStore.isLoggedIn = true;
-          userStore.setUserInfo(user.id, user.username, user.email);
-
-          this.$router.push({ path: '/dashboard/profile' });
-        } catch (e) {
-          his.loading = false;
-          this.alert.type = 'danger';
-          if (Array.isArray(e)) {
-            this.alert.msg = e.map((cur) => cur.msg).join(' ');
-            return;
-          }
-          this.alert.msg = e;
-
-          // resent verification email
-          if (this.alert.msg.includes('verification')) {
-            this.reVerifyMessage = true;
-            this.password = '';
-          }
-        }
-      },
+        this.reVerifyMessage = false;
+        this.loading = false;
+        this.alert.type = 'success';
+        this.alert.msg = 'We have sent a new re-verification link to your email!';
+        this.email = '';
+        this.password = '';
+      } catch (e) {
+        this.alert.type = 'danger';
+        this.alert.msg = e.map((cur) => cur.msg).join(' ');
+      }
     },
-  };
+    async handleSubmit() {
+      try {
+        this.loading = true;
+        const userStore = useUserStore();
+
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password,
+          }),
+        });
+
+        const json = await res.json();
+
+        if (!res.ok) {
+          this.loading = false;
+          if (json.errors) {
+            throw json.errors;
+          } else {
+            throw json.message;
+          }
+        }
+
+        const [user] = json.data;
+
+        userStore.isLoggedIn = true;
+        userStore.setUserInfo(user.id, user.username, user.email);
+
+        this.$router.push({ path: '/dashboard/profile' });
+      } catch (e) {
+        his.loading = false;
+        this.alert.type = 'danger';
+        if (Array.isArray(e)) {
+          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+          return;
+        }
+        this.alert.msg = e;
+
+        // resent verification email
+        if (this.alert.msg.includes('verification')) {
+          this.reVerifyMessage = true;
+          this.password = '';
+        }
+      }
+    },
+  },
+};
 </script>
