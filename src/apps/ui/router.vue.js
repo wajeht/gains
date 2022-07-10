@@ -322,6 +322,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 };
+  },
 });
 
 router.beforeEach(async (to, from, next) => {

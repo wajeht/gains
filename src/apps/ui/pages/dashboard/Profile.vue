@@ -197,7 +197,7 @@
 
           const userStore = useUserStore();
 
-          await sleep('5000');
+          await sleep(800);
 
           const res = await fetch('/api/auth/logout');
           const json = await res.json();
@@ -208,9 +208,7 @@
           }
 
           userStore.isLoggedIn = false;
-          userStore.user.id = null;
-          userStore.user.email = null;
-          userStore.user.username = null;
+          userStore.clearUserInfo();
 
           const logoutLink = '/login';
           if (navigator.userAgentData.mobile) logoutLink = '/dashboard/login';
