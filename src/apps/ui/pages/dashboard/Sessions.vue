@@ -1,8 +1,31 @@
-<template>
-  <Loading v-if="loading" />
-  <SessionsHeader />
+<script setup>
+  import { onMounted, ref } from 'vue';
+  import useAppStore from '../../store/app.store.js';
+  import { sleep } from '../../../../utils/helpers';
+  import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
+  import Loading from '../../components/dashboard/Loading.vue';
 
-  <div v-if="loading === false" class="container px-3">
+  const sessions = ref(12);
+  const appStore = useAppStore();
+
+  onMounted(async () => {
+    appStore.loading = true;
+    await sleep(800);
+    appStore.loading = false;
+  });
+
+  function logDetails(id) {
+    this.$router.push({
+      // path: `/dashboard/session/${id}`,
+      name: 'SessionDetails',
+      params: { id: id },
+    });
+  }
+</script>
+
+<template>
+  <SessionsHeader />
+  <div v-if="appStore.loading === false" class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
       <div
         v-for="session in sessions"
@@ -43,37 +66,6 @@
   </div>
 </template>
 
-<script>
-  import { sleep } from '../../../../utils/helpers';
-  import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
-  import Loading from '../../components/dashboard/Loading.vue';
-
-  export default {
-    components: {
-      SessionsHeader,
-      Loading,
-    },
-    data() {
-      return {
-        loading: true,
-        sessions: 12,
-      };
-    },
-    async mounted() {
-      await sleep(300);
-      this.loading = false;
-    },
-    methods: {
-      logDetails(id) {
-        this.$router.push({
-          // path: `/dashboard/session/${id}`,
-          name: 'SessionDetails',
-          params: { id: id },
-        });
-      },
-    },
-  };
-</script>
 
 <style>
   #log:hover {

@@ -1,7 +1,7 @@
 <template>
   <!-- ---------- loading ---------- -->
   <div
-    class="d-flex justify-content-center align-items-center bg-white"
+    class="d-flex justify-content-center align-items-center container bg-white"
     style="
       width: 100%;
       height: 100%;
