@@ -53,13 +53,12 @@
       </div>
 
       <!-- image -->
-      <div class="overflow-hidden animate__animated animate__fadeIn">
-        <div class="container px-5">
+      <div class="animate__animated animate__fadeIn">
+        <div class="px-5">
           <img
             src="../../assets/images/hero.png"
             class="img-fluid rounded-3 mb-4"
             alt="gains app screenshot"
-            loading="lazy"
           />
         </div>
       </div>
