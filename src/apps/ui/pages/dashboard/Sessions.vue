@@ -1,9 +1,16 @@
 <template>
+  <Loading v-if="loading" />
   <SessionsHeader />
 
-  <div class="container px-3">
+  <div v-if="loading === false" class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
-      <div v-for="session in sessions" data-aos="fade-up" class="card" id="log">
+      <div
+        v-for="session in sessions"
+        :key="`session-${session}`"
+        data-aos="fade-up"
+        class="card"
+        id="log"
+      >
         <div @click="logDetails(1)" class="card-body">
           <div class="d-flex justify-content-between gap-5">
             <!-- start -->
@@ -37,16 +44,24 @@
 </template>
 
 <script>
+  import { sleep } from '../../../../utils/helpers';
   import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
+  import Loading from '../../components/dashboard/Loading.vue';
 
   export default {
     components: {
       SessionsHeader,
+      Loading,
     },
     data() {
       return {
+        loading: true,
         sessions: 12,
       };
+    },
+    async mounted() {
+      await sleep(300);
+      this.loading = false;
     },
     methods: {
       logDetails(id) {

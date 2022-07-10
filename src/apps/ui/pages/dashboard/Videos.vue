@@ -1,7 +1,9 @@
 <template>
+  <Loading v-if="loading" />
   <DashboardHeader />
+
   <div class="container">
-    <div class="row my-3 px-3">
+    <div v-if="loading === false" class="row my-3 px-3">
       <div v-for="video in videos" :key="`key-${video.id}`" class="col-3 p-0">
         <div class="d-flex flex-column">
           <router-link :to="{ name: 'VideoDetails', params: { id: video.id } }">
@@ -17,12 +19,17 @@
 
 <script>
   import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+  import Loading from '../../components/dashboard/Loading.vue';
+  import { sleep } from '../../../../utils/helpers.js';
+
   export default {
     components: {
       DashboardHeader,
+      Loading,
     },
     data() {
       return {
+        loading: true,
         videos: [
           {
             id: 1,
@@ -82,6 +89,10 @@
           },
         ],
       };
+    },
+    async mounted() {
+      await sleep(300);
+      this.loading = false;
     },
   };
 </script>
