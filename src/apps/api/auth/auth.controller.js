@@ -27,14 +27,12 @@ export async function postLogin(req, res) {
     jwt_secret,
     {
       issuer: 'AllKindsOfGains',
-      // expiresIn: '1hr',
-      expiresIn: '5000ms',
+      expiresIn: '1hr',
     },
   );
 
   res.cookie('token', token, {
-    // expiresIn: '1hr',
-    expiresIn: '5000ms',
+    expiresIn: '1hr',
     httpOnly: true,
     secure: env === 'production',
     signed: true,
