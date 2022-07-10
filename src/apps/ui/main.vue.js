@@ -3,39 +3,43 @@ import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
 
+import useUserStore from './store/user.store.js';
 import routes from './router.vue.js';
 
 // external
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap';
 import 'animate.css';
 import 'hover.css';
-import AOS from 'aos';
 import 'aos/dist/aos.css';
-import FontAwesomeIcon from './font-awesome.vue.js';
-import tooltip from './tool-tip.vue.js';
-import { Chart, registerables } from 'chart.js';
-
-import VueAnimXyz from '@animxyz/vue3';
 import '@animxyz/core';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import AOS from 'aos';
+import tooltip from './tool-tip.vue.js';
+import VueAnimXyz from '@animxyz/vue3';
+import FontAwesomeIcon from './font-awesome.vue.js';
+import { Chart, registerables } from 'chart.js';
 
 AOS.init();
 
 const app = createApp(App);
 const pinia = createPinia(piniaPluginPersistedstate);
+app.use(pinia);
 pinia.use(piniaPluginPersistedstate);
 
 Chart.register(...registerables);
-app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.config.performance = true;
 app.config.devtools = true;
 
-app.directive('tooltip', tooltip);
-
-app.use(pinia);
 app.use(VueAnimXyz);
-app.use(routes);
+app.directive('tooltip', tooltip);
+app.component('font-awesome-icon', FontAwesomeIcon);
 
+// --- init auth state on app starts --
+const userStore = useUserStore();
+userStore.checkAuthentication();
+// --- init auth state on app ends --
+
+app.use(routes);
 app.mount('#app');

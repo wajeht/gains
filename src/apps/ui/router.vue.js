@@ -328,24 +328,27 @@ router.beforeEach(async (to, from, next) => {
   document.title = to.name;
   const userStore = useUserStore();
 
-  // TODO!: refactor this code below!
+  // TODO: refactor this code below!
   // if we hit required routes
   if (to.matched.some((record) => record.meta.requiredAuth)) {
     // if user has already logged in
     if (userStore.isLoggedIn) {
       // let them go wherever they want
 
+      //! ALERT: moved this code below to main.vue.js
+      //! we don't check every routes call anymore,
+      //! instead we check on app start
       // check to see if token is still valid
-      const res = await window.fetch(`/api/v1/users/check-authentication`);
-      if (!res.ok) {
-        userStore.isLoggedIn = false;
-        userStore.clearUserInfo();
-      }
+      // const res = await window.fetch(`/api/v1/users/check-authentication`);
+      // if (!res.ok) {
+      //   userStore.isLoggedIn = false;
+      //   userStore.clearUserInfo();
+      // }
 
       next();
     } else {
       // else go back to login page
-      next('/login');
+      next('/dashboard/login');
     }
   } else {
     if (userStore.isLoggedIn) {

@@ -14,6 +14,19 @@ const useUserStore = defineStore({
   },
   getters: {},
   actions: {
+    async checkAuthentication() {
+      try {
+        const res = await window.fetch(`/api/v1/users/check-authentication`);
+        if (!res.ok) {
+          this.isLoggedIn = false;
+          this.clearUserInfo();
+        }
+        return await res.json();
+      } catch (e) {
+        this.isLoggedIn = false;
+        this.clearUserInfo();
+      }
+    },
     setUserInfo(id, username, email) {
       this.user.id = id;
       this.user.username = username;
