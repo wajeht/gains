@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import useUserStore from './store/user.store.js';
 
 // -------------------- regular ---------------------------
 import Features from './pages/regular/Features.vue';
@@ -297,7 +298,6 @@ const routes = [
       requiredAuth: true,
     },
   },
-
   {
     path: '/dashboard/sessions/:id',
     name: 'SessionDetails',
@@ -326,10 +326,43 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   document.title = to.name;
-  if (to.meta?.requiredAuth && !auth.user) {
-    return next('/login');
+  const userStore = useUserStore();
+
+  // TODO!: refactor this code below!
+  // if we hit required routes
+  if (to.matched.some((record) => record.meta.requiredAuth)) {
+    // if user has already logged in
+    if (userStore.isLoggedIn) {
+      // let them go wherever they want
+
+      // check to see if token is still valid
+      const res = await window.fetch(`/api/v1/users/${userStore.user.id}`);
+      if (!res.ok) {
+        userStore.isLoggedIn = false;
+        userStore.clearUserInfo();
+      }
+
+      next();
+    } else {
+      // else go back to login page
+      next('/login');
+    }
+  } else {
+    if (userStore.isLoggedIn) {
+      // check to see if token is still valid
+      const res = await window.fetch(`/api/v1/users/${userStore.user.id}`);
+      if (!res.ok) {
+        userStore.isLoggedIn = false;
+        userStore.clearUserInfo();
+      }
+
+      // if they are already login, redirect to dashboard
+      if (to.path.match(/(login)|(signup)/)?.length) {
+        return next('/dashboard/profile');
+      }
+    }
+    next();
   }
-  next();
 });
 
 export default router;

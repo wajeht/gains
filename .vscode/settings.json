@@ -22,6 +22,7 @@
 		"multistream",
 		"notf",
 		"onerm",
+		"Persistedstate",
 		"Pinia",
 		"pino",
 		"popperjs",
