@@ -3,14 +3,13 @@
   import useAppStore from '../../store/app.store.js';
   import { sleep } from '../../../../utils/helpers';
   import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
-  import Loading from '../../components/dashboard/Loading.vue';
 
   const sessions = ref(12);
   const appStore = useAppStore();
 
   onMounted(async () => {
     appStore.loading = true;
-    await sleep(800);
+    await sleep(300);
     appStore.loading = false;
   });
 
