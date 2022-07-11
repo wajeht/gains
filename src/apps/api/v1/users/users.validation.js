@@ -162,3 +162,40 @@ export const patchUser = [
     })
     .withMessage('The value must include a number character!'),
 ];
+
+/* A validation for the user input. */
+export const patchUpdatePersonalInformation = [
+  param('id')
+    .trim()
+    .notEmpty()
+    .withMessage('The value must not be empty!')
+    .isInt()
+    .withMessage('The value must be an ID!')
+    .custom(async (id) => {
+      const user = await UserQueries.findUserById(id);
+      if (user.length === 0) throw new Error('User does not exist!');
+      return true;
+    }),
+  body().custom((data) => {
+    console.log(data);
+    const availableFields = ['first_name', 'last_name', 'birth_date', 'weight'];
+    const fields = Object.keys(data).some((key) => availableFields.indexOf(key) >= 0);
+    if (!fields)
+      throw new Error(
+        "Must include 'first_name', 'last_name', 'birth_date', or 'weight' to update!",
+      );
+    return true;
+  }),
+  body('first_name')
+    .optional()
+    .trim()
+    .isLength({ min: 1, max: 20 })
+    .withMessage('First name must be at least 1 character long or less than 20 characters long'),
+  body('last_name')
+    .optional()
+    .trim()
+    .isLength({ min: 1, max: 20 })
+    .withMessage('Last name must be at least 1 character long or less than 20 characters long!'),
+  body('weight').optional().trim().isFloat().withMessage('Weight must be an integer format!'),
+  body('birth_date').optional().trim().isDate().withMessage('Birth date must be a date format!'),
+];

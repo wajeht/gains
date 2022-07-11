@@ -60,6 +60,22 @@ users.patch(
 );
 
 /**
+ * PATCH /api/v1/users/{id}/update-personal-information
+ * @tags users
+ * @summary update personal information of a user
+ * @param {number} uid.path.required - the user id
+ * @param {string} first_name.form - the first_name - application/x-www-form-urlencoded
+ * @param {string} last_name.form - the last_name - application/x-www-form-urlencoded
+ * @param {string} birth_date.form - the birth_date - application/x-www-form-urlencoded
+ * @param {number} weight.form - the weight - application/x-www-form-urlencoded
+ */
+users.patch(
+  '/:id/update-personal-information',
+  validator(UsersValidation.patchUpdatePersonalInformation),
+  catchAsyncErrors(UsersController.patchUpdatePersonalInformation),
+);
+
+/**
  * DELETE /api/v1/users/{id}
  * @tags users
  * @summary delete a user from the database

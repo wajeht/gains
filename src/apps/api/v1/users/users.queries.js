@@ -92,4 +92,17 @@ export async function updateUserById(id, body) {
 export function deleteUser(id) {
   return db.delete('*').from('users').where({ id }).returning('*');
 }
-/* Validating the user input. */
+
+/**
+ * Update the user_details table with the body object where the user_id is equal to the uid
+ * @param uid - The user id of the user whose information is being updated.
+ * @param body - {
+ * @returns A promise
+ */
+export function updatePersonalInformation(uid, body) {
+  return db
+    .update({ ...body })
+    .from('user_details')
+    .where({ user_id: uid })
+    .returning('*');
+}

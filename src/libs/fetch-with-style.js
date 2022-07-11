@@ -8,9 +8,9 @@ export default class Api {
    * @param body - The body of the request.
    * @returns an object with the method, headers, and body.
    */
-  static #_buildOptions(method, body) {
+  static #_buildOptions(body, method) {
     const options = {
-      methods: method,
+      method: method,
       headers: {
         'Content-Type': 'application/json',
       },
