@@ -1,18 +1,50 @@
+<script setup>
+import api from '../../../../../libs/fetch-with-style.js';
+import { ref, onMounted } from 'vue';
+
+import useUserStore from '../../../store/user.store.js';
+
+const addASessionDismissButton = ref(null);
+const sessionName = ref('');
+const blockId = ref('');
+const date = ref(null);
+const bodyweight = ref('');
+const hoursOfSleep = ref('');
+const notes = ref('');
+
+async function addASession() {
+  try {
+    const session = {
+      session_name: sessionName.value,
+      black_id: blockId.value,
+      start_date: date.value,
+      body_weight: bodyweight.value,
+      hours_of_sleep: hoursOfSleep.value,
+      notes: notes.value,
+    };
+    const res = await api.post(`/api/v1/sessions`, {});
+    addASessionDismissButton.value.click();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+onMounted(() => {
+  // back drop problem fixed
+  document.body.appendChild(document.getElementById('add-a-session'));
+
+  // init date
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  date.value = now.toISOString().slice(0, 16);
+});
+</script>
+
 <template>
   <div
     id="sessions-header"
     style="height: 64px"
-    class="
-      container
-      sticky-top
-      d-flex
-      justify-content-between
-      align-items-center
-      bg-white
-      border-bottom
-      py-3
-      gap-3
-    "
+    class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3"
   >
     <!-- ---------- add group ---------- -->
     <span>
@@ -91,8 +123,8 @@
               <span class="add-session-other-settings accordion-collapse collapse">
                 <!-- block name -->
                 <div class="mb-3">
-                  <label for="block-name" class="form-label">Block name</label>
-                  <input id="block-name" class="form-control form-control-sm" type="text" />
+                  <label for="block-id" class="form-label">Block ID</label>
+                  <input id="block-id" class="form-control form-control-sm" type="text" />
                 </div>
 
                 <!-- bodyweight  -->
@@ -145,51 +177,22 @@
   </div>
 </template>
 
-<script>
-  export default {
-    data() {
-      return {
-        sessionName: '',
-        blockName: '',
-        date: null,
-        bodyweight: '',
-        hoursOfSleep: '',
-        notes: '',
-      };
-    },
-    mounted() {
-      // back drop problem fixed
-      document.body.appendChild(document.getElementById('add-a-session'));
-
-      // init date
-      const now = new Date();
-      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-      this.date = now.toISOString().slice(0, 16);
-    },
-    methods: {
-      handleAddASession() {
-        this.$refs.addASessionDismissButton.click();
-      },
-    },
-  };
-</script>
-
 <style scoped>
-  .text-muted {
-    color: #8c8c8c;
-  }
+.text-muted {
+  color: #8c8c8c;
+}
 
-  a {
-    text-decoration: none;
-    color: grey;
-  }
+a {
+  text-decoration: none;
+  color: grey;
+}
 
-  a:hover {
-    color: #191919;
-  }
+a:hover {
+  color: #191919;
+}
 
-  .active {
-    text-decoration: none;
-    color: #191919;
-  }
+.active {
+  text-decoration: none;
+  color: #191919;
+}
 </style>

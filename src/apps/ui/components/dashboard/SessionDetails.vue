@@ -1,3 +1,23 @@
+<script setup>
+import SessionDetailsHeader from '../../components/dashboard/headers/SessionDetailsHeader.vue';
+
+import { ref } from 'vue';
+
+const addALiftDismissButton = ref(null);
+const addASetDismissButton = ref(null);
+
+defineProps({
+  sid: Number,
+});
+
+function handleAddALift() {
+  addALiftDismissButton.value.click();
+}
+
+function handleAddASet() {
+  addASetDismissButton.value.click();
+}
+</script>
 <template>
   <!-- header -->
   <SessionDetailsHeader />
@@ -442,28 +462,3 @@
     </div>
   </XyzTransition>
 </template>
-<script>
-  import SessionDetailsHeader from '../../components/dashboard/headers/SessionDetailsHeader.vue';
-  export default {
-    components: {
-      SessionDetailsHeader,
-    },
-    props: ['id'],
-    data() {
-      return {
-        id: this.$route.params.id,
-      };
-    },
-    mounted() {
-      // console.log(this.today);
-    },
-    methods: {
-      handleAddALift() {
-        this.$refs.addALiftDismissButton.click();
-      },
-      handleAddASet() {
-        this.$refs.addASetDismissButton.click();
-      },
-    },
-  };
-</script>
