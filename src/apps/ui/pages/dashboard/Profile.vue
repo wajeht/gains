@@ -5,6 +5,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Chart } from 'chart.js';
 import { sleep } from '../../../../utils/helpers.js';
+import api from '../../../../libs/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 import dayjs from 'dayjs';
 
@@ -55,7 +56,7 @@ async function logout() {
 
     await sleep(800);
 
-    const res = await fetch('/api/auth/logout');
+    const res = await api.get('/api/auth/logout');
     const json = await res.json();
 
     if (!res.ok) {

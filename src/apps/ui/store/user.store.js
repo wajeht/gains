@@ -20,6 +20,9 @@ const useUserStore = defineStore({
         if (!res.ok) {
           this.isLoggedIn = false;
           this.clearUserInfo();
+          let link = '/login';
+          if (navigator.userAgentData.mobile) link = '/dashboard/login';
+          this.router.push({ params: link });
         }
         return await res.json();
       } catch (e) {
