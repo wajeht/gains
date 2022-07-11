@@ -1,26 +1,192 @@
+<script setup>
+import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
+import api from '../../../../../../libs/fetch-with-style.js';
+import { reactive, onMounted, ref } from 'vue';
+import useUserStore from '../../../../store/user.store.js';
+import dayjs from 'dayjs';
+
+const userStore = useUserStore();
+
+const edit_personal_info = ref(true);
+const first_name = ref('');
+const last_name = ref('');
+const birth_date = ref(null);
+const weight = ref(null);
+const alert = reactive({
+  type: '',
+  msg: '',
+});
+
+onMounted(async () => {
+  const res = await api.get(`/api/v1/users/${userStore.user.id}`);
+  const [data] = await res.json();
+  first_name.value = data.first_name;
+  last_name.value = data.last_name;
+  birth_date.value = dayjs(data.birth_date).format('YYYY-MM-DD');
+  weight.value = data.weight;
+});
+
+async function updatePersonalInformation() {
+  try {
+    const user = {
+      first_name: first_name.value,
+      last_name: last_name.value,
+      birth_date: dayjs(birth_date.value).format('YYYY-MM-DD'),
+      weight: weight.value,
+    };
+
+    // prettier-ignore
+    const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-personal-information`, user);
+    const json = await res.json();
+
+    if (!res.ok) {
+      throw json.errors;
+    }
+
+    alert.type = 'success';
+    alert.msg = `Updated!`; // prettier-ignore
+
+    edit_personal_info.value = true;
+  } catch (e) {
+    console.log(e);
+    alert.type = 'danger';
+    alert.msg = e.map((cur) => cur.msg).join(' ');
+  }
+}
+</script>
+
 <template>
   <!-- header -->
   <Backheader />
 
-  <!-- contact -->
   <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
-      <!-- contact -->
-      <div class="card">
-        <div class="card-body">
-          <h5>UserDetails.vue</h5>
-        </div>
+      <!-- alert -->
+      <div
+        v-if="alert.type"
+        :class="`alert-${alert.type}`"
+        class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+      >
+        <span>{{ alert.msg }}</span>
+      </div>
+
+      <!-- personal info -->
+      <div>
+        <h5><i class="bi bi-person-fill"></i> Personal info</h5>
+        <form @submit.prevent="updatePersonalInformation()" class="card">
+          <div class="card-body">
+            <!-- first name -->
+            <div class="row mb-2">
+              <label class="col-4 col-form-label" for="first-name">First name</label>
+              <div class="col-8">
+                <input
+                  :disabled="edit_personal_info"
+                  v-model="first_name"
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="first-name"
+                />
+              </div>
+            </div>
+
+            <!-- last name -->
+            <div class="row mb-2">
+              <label for="last-name" class="col-4 col-form-label">Last name</label>
+              <div class="col-8">
+                <input
+                  :disabled="edit_personal_info"
+                  v-model="last_name"
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="last-name"
+                />
+              </div>
+            </div>
+
+            <!-- birth date -->
+            <div class="row mb-2">
+              <label for="birth-date" class="col-4 col-form-label">Birth date</label>
+              <div class="col-8">
+                <input
+                  :disabled="edit_personal_info"
+                  v-model="birth_date"
+                  type="date"
+                  class="form-control form-control-sm"
+                  id="birth-date"
+                />
+              </div>
+            </div>
+
+            <!-- weight -->
+            <div class="row mb-2">
+              <label for="weight" class="col-4 col-form-label">Weight</label>
+              <div class="col-8">
+                <input
+                  v-model="weight"
+                  :disabled="edit_personal_info"
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="weight"
+                />
+              </div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <!-- edit or cancel -->
+              <button
+                @click="edit_personal_info = !edit_personal_info"
+                class="btn btn-secondary w-50"
+                type="button"
+              >
+                <span v-if="edit_personal_info">Edit</span>
+                <span v-if="!edit_personal_info">Cancel</span>
+              </button>
+              <button class="btn btn-secondary w-50" type="submit" :disabled="edit_personal_info">
+                Update
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- account info -->
+      <div>
+        <h5><i class="bi bi-lock-fill"></i> Account info</h5>
+        <form @submit.prevent="" class="card">
+          <div class="card-body">
+            <!-- email -->
+            <div class="row mb-2">
+              <label class="col-4 col-form-label" for="first-name">Email</label>
+              <div class="col-8">
+                <input type="email" class="form-control form-control-sm" id="email" disabled />
+              </div>
+            </div>
+
+            <!-- username -->
+            <div class="row mb-2">
+              <label for="username" class="col-4 col-form-label">Username</label>
+              <div class="col-8">
+                <input type="text" class="form-control form-control-sm" id="username" disabled />
+              </div>
+            </div>
+
+            <!-- password -->
+            <div class="row mb-2">
+              <label for="birth-date" class="col-4 col-form-label">Password</label>
+              <div class="col-8">
+                <input
+                  type="password"
+                  class="form-control form-control-sm"
+                  id="password"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <button class="btn btn-secondary w-100" type="submit">Update</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-  import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
-
-  export default {
-    components: {
-      Backheader,
-    },
-  };
-</script>

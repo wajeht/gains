@@ -2,6 +2,7 @@ import logger from '../../../../libs/logger.js';
 import * as UsersQueries from './users.queries.js';
 import Chad from '../../../../libs/chad.js';
 import { StatusCodes } from 'http-status-codes';
+import CustomError from '../../api.errors.js';
 
 /**
  * check to see if a current users authentication is still valid
@@ -70,4 +71,30 @@ export async function deleteUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.deleteUser(id);
   res.json(user);
+}
+
+/**
+ * It updates the personal information of a user
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function patchUpdatePersonalInformation(req, res) {
+  const { id } = req.params;
+  const body = req.body;
+  const updated = await UsersQueries.updatePersonalInformation(id, body);
+
+  if (!updated.length) {
+    throw CustomError.BadRequestError(
+      `Something went wrong while updating personal info for  User ID: ${id}!`,
+    );
+  }
+
+  logger.info(`UserID: ${id} has updated fields to ${JSON.stringify(body)}!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: updated,
+  });
 }
