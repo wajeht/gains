@@ -89,7 +89,27 @@ export async function patchUpdatePersonalInformation(req, res) {
     );
   }
 
-  logger.info(`UserID: ${id} has updated fields to ${JSON.stringify(body)}!`);
+  logger.info(`UserID: ${id} has updated personal information to ${JSON.stringify(body)}!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: updated,
+  });
+}
+
+/**
+ * It takes in a user's ID and a body of data, and updates the user's account information
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function patchUpdateAccountInformation(req, res) {
+  const { id } = req.params;
+  const body = req.body;
+  const updated = await UsersQueries.updateAccountInformation(id, body);
+
+  logger.info(`UserID: ${id} has updated account information to ${JSON.stringify(body)}!`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
