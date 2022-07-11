@@ -76,6 +76,21 @@ users.patch(
 );
 
 /**
+ * PATCH /api/v1/users/{id}/update-account-information
+ * @tags users
+ * @summary update account information of a user
+ * @param {number} uid.path.required - the user id
+ * @param {string} email.form - the email - application/x-www-form-urlencoded
+ * @param {string} username.form - the username - application/x-www-form-urlencoded
+ * @param {string} password.form - the password - application/x-www-form-urlencoded
+ */
+users.patch(
+  '/:id/update-account-information',
+  validator(UsersValidation.patchUpdateAccountInformation),
+  catchAsyncErrors(UsersController.patchUpdateAccountInformation),
+);
+
+/**
  * DELETE /api/v1/users/{id}
  * @tags users
  * @summary delete a user from the database

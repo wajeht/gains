@@ -1,15 +1,21 @@
 <script setup>
+import dayjs from 'dayjs';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 import api from '../../../../../../libs/fetch-with-style.js';
 import { reactive, onMounted, ref } from 'vue';
 import useUserStore from '../../../../store/user.store.js';
-import dayjs from 'dayjs';
+import useAppStore from '../../../../store/app.store.js';
 
 const userStore = useUserStore();
+const appStore = useAppStore();
 
 const edit_personal_info = ref(true);
+const edit_account_info = ref(true);
 const first_name = ref('');
 const last_name = ref('');
+const email = ref('');
+const username = ref('');
+const password = ref('');
 const birth_date = ref(null);
 const weight = ref(null);
 const alert = reactive({
@@ -18,12 +24,16 @@ const alert = reactive({
 });
 
 onMounted(async () => {
+  appStore.loading = true;
   const res = await api.get(`/api/v1/users/${userStore.user.id}`);
   const [data] = await res.json();
   first_name.value = data.first_name;
   last_name.value = data.last_name;
   birth_date.value = dayjs(data.birth_date).format('YYYY-MM-DD');
   weight.value = data.weight;
+  email.value = data.email;
+  username.value = data.username;
+  appStore.loading = false;
 });
 
 async function updatePersonalInformation() {
@@ -44,11 +54,40 @@ async function updatePersonalInformation() {
     }
 
     alert.type = 'success';
-    alert.msg = `Updated!`; // prettier-ignore
+    alert.msg = `Updated personal information!`; // prettier-ignore
 
     edit_personal_info.value = true;
   } catch (e) {
-    console.log(e);
+    alert.type = 'danger';
+    alert.msg = e.map((cur) => cur.msg).join(' ');
+  }
+}
+
+async function updateAccountInfo() {
+  try {
+    const account = {
+      email: email.value,
+      username: username.value,
+      password: password.value,
+    };
+
+    if (password.value.length === 0) {
+      delete account.password;
+    }
+
+    // prettier-ignore
+    const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-account-information`, account);
+    const json = await res.json();
+
+    if (!res.ok) {
+      throw json.errors;
+    }
+
+    alert.type = 'success';
+    alert.msg = `Updated account information!`; // prettier-ignore
+
+    edit_account_info.value = true;
+  } catch (e) {
     alert.type = 'danger';
     alert.msg = e.map((cur) => cur.msg).join(' ');
   }
@@ -131,8 +170,8 @@ async function updatePersonalInformation() {
               </div>
             </div>
 
+            <!-- edit or cancel -->
             <div class="d-flex gap-2">
-              <!-- edit or cancel -->
               <button
                 @click="edit_personal_info = !edit_personal_info"
                 class="btn btn-secondary w-50"
@@ -152,13 +191,19 @@ async function updatePersonalInformation() {
       <!-- account info -->
       <div>
         <h5><i class="bi bi-lock-fill"></i> Account info</h5>
-        <form @submit.prevent="" class="card">
+        <form @submit.prevent="updateAccountInfo()" class="card">
           <div class="card-body">
             <!-- email -->
             <div class="row mb-2">
               <label class="col-4 col-form-label" for="first-name">Email</label>
               <div class="col-8">
-                <input type="email" class="form-control form-control-sm" id="email" disabled />
+                <input
+                  v-model="email"
+                  type="email"
+                  class="form-control form-control-sm"
+                  id="email"
+                  :disabled="edit_account_info"
+                />
               </div>
             </div>
 
@@ -166,7 +211,13 @@ async function updatePersonalInformation() {
             <div class="row mb-2">
               <label for="username" class="col-4 col-form-label">Username</label>
               <div class="col-8">
-                <input type="text" class="form-control form-control-sm" id="username" disabled />
+                <input
+                  v-model="username"
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="username"
+                  :disabled="edit_account_info"
+                />
               </div>
             </div>
 
@@ -175,15 +226,29 @@ async function updatePersonalInformation() {
               <label for="birth-date" class="col-4 col-form-label">Password</label>
               <div class="col-8">
                 <input
+                  v-model="password"
                   type="password"
                   class="form-control form-control-sm"
                   id="password"
-                  disabled
+                  :disabled="edit_account_info"
                 />
               </div>
             </div>
 
-            <button class="btn btn-secondary w-100" type="submit">Update</button>
+            <!-- edit or cancel -->
+            <div class="d-flex gap-2">
+              <button
+                @click="edit_account_info = !edit_account_info"
+                class="btn btn-secondary w-50"
+                type="button"
+              >
+                <span v-if="edit_account_info">Edit</span>
+                <span v-if="!edit_account_info">Cancel</span>
+              </button>
+              <button class="btn btn-secondary w-50" type="submit" :disabled="edit_account_info">
+                Update
+              </button>
+            </div>
           </div>
         </form>
       </div>

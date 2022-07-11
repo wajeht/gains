@@ -122,7 +122,7 @@ export const patchUser = [
       if (exist[0]?.id == req.params.id) {
         ok = true;
       } else {
-        throw new Error('Username or Email already exist!');
+        throw new Error('Email already exist!');
       }
 
       return ok;
@@ -139,7 +139,7 @@ export const patchUser = [
       if (exist[0]?.id == req.params.id) {
         ok = true;
       } else {
-        throw new Error('Username or Email already exist!');
+        throw new Error('Username already exist!');
       }
 
       return ok;
@@ -177,7 +177,6 @@ export const patchUpdatePersonalInformation = [
       return true;
     }),
   body().custom((data) => {
-    console.log(data);
     const availableFields = ['first_name', 'last_name', 'birth_date', 'weight'];
     const fields = Object.keys(data).some((key) => availableFields.indexOf(key) >= 0);
     if (!fields)
@@ -198,4 +197,86 @@ export const patchUpdatePersonalInformation = [
     .withMessage('Last name must be at least 1 character long or less than 20 characters long!'),
   body('weight').optional().trim().isFloat().withMessage('Weight must be an integer format!'),
   body('birth_date').optional().trim().isDate().withMessage('Birth date must be a date format!'),
+];
+
+/* A validation for the user input. */
+export const patchUpdateAccountInformation = [
+  param('id')
+    .trim()
+    .notEmpty()
+    .withMessage('The value must not be empty!')
+    .isInt()
+    .withMessage('The value must be an ID!')
+    .custom(async (id) => {
+      const user = await UserQueries.findUserById(id);
+      if (user.length === 0) throw new Error('User does not exist!');
+      return true;
+    }),
+  body().custom((data) => {
+    const availableFields = ['email', 'username', 'password'];
+    const fields = Object.keys(data).some((key) => availableFields.indexOf(key) >= 0);
+    if (!fields) throw new Error("Must include 'email', 'username', or 'password' to update!");
+    return true;
+  }),
+  // allow for re-update same value
+  body('email')
+    .optional()
+    .trim()
+    .isEmail()
+    .withMessage('The email must be an email!')
+    .custom(async (email, { req }) => {
+      const exist = await UserQueries.findUserByParam({ email });
+      let ok = false;
+      if (exist.length === 0) {
+        ok = true;
+      } else if (exist[0]?.id == req.params.id) {
+        ok = true;
+      } else {
+        throw new Error('Email already exist!');
+      }
+      return ok;
+    }),
+  // allow for re-update same value
+  body('username')
+    .optional()
+    .isLength({ min: 8, max: 20 })
+    .withMessage('The username must be at least 8 character long or less than 20 character long')
+    .custom(async (username, { req }) => {
+      const exist = await UserQueries.findUserByParam({ username });
+      let ok = false;
+      if (exist.length === 0) {
+        ok = true;
+      } else if (exist[0]?.id == req.params.id) {
+        ok = true;
+      } else {
+        throw new Error('Username already exist!');
+      }
+
+      return ok;
+    }),
+  body('password')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('The password must not be empty!')
+    .isLength({ min: 10, max: 100 })
+    .withMessage('The password must be at least 8 character long or less than 100 character long')
+    .custom((value) => {
+      if (!value.split('').some((i) => i == i.toUpperCase())) {
+        throw new Error('The password must include an uppercase character!');
+      }
+      return true;
+    })
+    .custom((value) => {
+      if (!value.split('').some((i) => i == i.toLocaleLowerCase())) {
+        throw new Error('The password must include a lowercase character!');
+      }
+      return true;
+    })
+    .custom((value) => {
+      if (!/\d/.test(value)) {
+        throw new Error('The password must include a number character!');
+      }
+      return true;
+    }),
 ];

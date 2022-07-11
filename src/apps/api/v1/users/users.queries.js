@@ -106,3 +106,17 @@ export function updatePersonalInformation(uid, body) {
     .where({ user_id: uid })
     .returning('*');
 }
+
+/**
+ * It updates the user's account information in the database
+ * @param id - the id of the user you want to update
+ * @param body - an object containing the updated information
+ * @returns The updated user information
+ */
+export function updateAccountInformation(id, body) {
+  return db
+    .update({ ...body })
+    .from('users')
+    .where({ id })
+    .returning('*');
+}
