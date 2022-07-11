@@ -1,8 +1,15 @@
 <script setup>
 import api from '../../../../../libs/fetch-with-style.js';
+import { pickBy } from 'lodash-es';
+import dayjs from 'dayjs';
+
 import { ref, onMounted } from 'vue';
 
 import useUserStore from '../../../store/user.store.js';
+import { useRouter } from 'vue-router';
+
+const userStore = useUserStore();
+const router = useRouter();
 
 const addASessionDismissButton = ref(null);
 const sessionName = ref('');
@@ -11,19 +18,29 @@ const date = ref(null);
 const bodyweight = ref('');
 const hoursOfSleep = ref('');
 const notes = ref('');
+const user_id = userStore.user.id;
 
 async function addASession() {
   try {
     const session = {
+      user_id: user_id,
       session_name: sessionName.value,
-      black_id: blockId.value,
-      start_date: date.value,
+      block_id: blockId.value,
+      start_date: dayjs(date.value).format('YYYY-MM-DD'),
       body_weight: bodyweight.value,
       hours_of_sleep: hoursOfSleep.value,
       notes: notes.value,
     };
-    const res = await api.post(`/api/v1/sessions`, {});
+
+    const validSession = pickBy(session, (value, key) => value !== '');
+
+    const res = await api.post(`/api/v1/sessions`, validSession);
+    const json = await res.json();
+
     addASessionDismissButton.value.click();
+    router.push({
+      path: `/dashboard/sessions/${json.data[0].id}`,
+    });
   } catch (e) {
     console.error(e);
   }
@@ -63,7 +80,7 @@ onMounted(() => {
 
       <!-- add modal -->
       <form
-        @submit.prevent="handleAddASession()"
+        @submit.prevent="addASession()"
         class="modal fade px-2 pt-5"
         id="add-a-session"
         data-bs-backdrop="static"
@@ -87,6 +104,7 @@ onMounted(() => {
               <div class="mb-3">
                 <label for="session-name" class="form-label">Session name*</label>
                 <input
+                  v-model="sessionName"
                   id="session-name"
                   class="form-control form-control-sm"
                   type="text"
