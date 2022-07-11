@@ -14,7 +14,7 @@ export async function postCreateSession(req, res) {
   const created = await SessionQueries.createASession(body);
 
   if (!created.length) {
-    throw CustomError.BadRequestError(
+    throw new CustomError.BadRequestError(
       `Something went wrong while creating a session for for  User ID: ${body.user_id}!`,
     );
   }
@@ -39,7 +39,9 @@ export async function getSession(req, res) {
   const session = await SessionQueries.getSessionBySessionId(sid);
 
   if (!session.length) {
-    throw CustomError.BadRequestError(`Something went wrong while fetching a session id ${sid}!`);
+    throw new CustomError.BadRequestError(
+      `Something went wrong while fetching a session id ${sid}!`,
+    );
   }
 
   res.status(StatusCodes.OK).json({
@@ -60,7 +62,7 @@ export async function getUserSessions(req, res) {
   const sessions = await SessionQueries.getSessionsByUserId(user_id);
 
   if (!sessions.length) {
-    throw CustomError.BadRequestError(
+    throw new CustomError.BadRequestError(
       `Something went wrong while fetching sessions for for  User ID: ${user_id}!`,
     );
   }

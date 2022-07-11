@@ -84,7 +84,7 @@ export async function patchUpdatePersonalInformation(req, res) {
   const updated = await UsersQueries.updatePersonalInformation(id, body);
 
   if (!updated.length) {
-    throw CustomError.BadRequestError(
+    throw new CustomError.BadRequestError(
       `Something went wrong while updating personal info for  User ID: ${id}!`,
     );
   }

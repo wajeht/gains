@@ -115,7 +115,7 @@ export async function getVerifyEmail(req, res) {
   const verified = await AuthQueries.verifyUser(uid, date);
 
   if (!verified) {
-    throw CustomError.BadRequestError(`Something went wrong with verifying User ID: ${uid}!`);
+    throw new CustomError.BadRequestError(`Something went wrong with verifying User ID: ${uid}!`);
   }
 
   logger.info(`User ID: ${uid} was successfully verified!`);
@@ -223,7 +223,7 @@ export async function postForgetPassword(req, res) {
     if (!generated) {
       const msg = `Something went wrong with generating password token for User ID: ${uid}!`;
       logger.info(msg);
-      throw CustomError.BadRequestError(msg);
+      throw new CustomError.BadRequestError(msg);
     }
 
     const sent = await EmailService.send({
