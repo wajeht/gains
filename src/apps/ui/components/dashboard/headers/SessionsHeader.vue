@@ -39,6 +39,8 @@ onMounted(() => {
 });
 
 function clearDataAndDismissModal() {
+  alert.type = '';
+  alert.msg = '';
   session_name.value = "";
   start_date.value = dayjs().format("YYYY-MM-DDTHH:mm");
   user_id.value = userStore.user.id;
@@ -88,6 +90,7 @@ async function addASession() {
     });
 
   } catch (e) {
+    loading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -182,7 +185,8 @@ async function addASession() {
                 <!-- notes -->
                 <div class="mb-2">
                   <label for="notes" class="form-label">Notes</label>
-                  <textarea class="form-control form-control-sm" id="notes" rows="3" :disabled="loading"></textarea>
+                  <textarea v-model="notes" class="form-control form-control-sm" id="notes" rows="3"
+                    :disabled="loading"></textarea>
                 </div>
               </span>
             </div>
