@@ -5,6 +5,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Chart } from 'chart.js';
 import { sleep } from '../../../../utils/helpers.js';
+import { isMobile } from '../../../../utils/helpers.js'
 import api from '../../../../libs/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 import dayjs from 'dayjs';
@@ -72,7 +73,7 @@ async function logout() {
     userStore.clearUserInfo();
 
     let logoutLink = '/login';
-    if (navigator.userAgentData.mobile) {
+    if (isMobile) {
       logoutLink = '/dashboard/login';
     }
 
