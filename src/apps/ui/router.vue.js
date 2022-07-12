@@ -302,7 +302,9 @@ const routes = [
     path: '/dashboard/sessions/:sid',
     name: 'SessionDetails',
     component: SessionDetails,
-    props: true,
+    props: (sid) => {
+      return Number(sid);
+    },
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,

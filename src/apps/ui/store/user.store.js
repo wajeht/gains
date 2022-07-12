@@ -17,14 +17,14 @@ const useUserStore = defineStore({
     async checkAuthentication() {
       try {
         const res = await window.fetch(`/api/v1/users/check-authentication`);
-        if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
           this.isLoggedIn = false;
           this.clearUserInfo();
-          let link = '/login';
-          if (navigator.userAgentData.mobile) link = '/dashboard/login';
-          this.router.push({ params: link });
+          let logoutLink = '/login';
+          if (navigator.userAgentData.mobile) logoutLink = '/dashboard/login';
+          this.router.push({ params: logoutLink });
         }
-        return await res.json();
+        return res;
       } catch (e) {
         this.isLoggedIn = false;
         this.clearUserInfo();
@@ -40,8 +40,14 @@ const useUserStore = defineStore({
       this.user.username = null;
       this.user.email = null;
     },
-    setIsLoggedIn(value) {
-      this.isLoggedIn = value;
+    logout() {
+      this.isLoggedIn = false;
+      this.clearUserInfo();
+      let logoutLink = '/login';
+      if (navigator.userAgentData.mobile) {
+        logoutLink = '/dashboard/login';
+      }
+      this.router.push({ params: logoutLink });
     },
   },
   persist: {

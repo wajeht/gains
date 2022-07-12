@@ -1,16 +1,6 @@
 <template>
   <div
-    class="
-      container
-      sticky-top
-      d-flex
-      justify-content-between
-      align-items-center
-      bg-white
-      border-bottom
-      py-3
-      gap-3
-    "
+    class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3"
   >
     <!-- profile image -->
     <router-link :class="{ active: $route.name === 'Profile' }" to="/dashboard/profile">
@@ -34,21 +24,21 @@
 </template>
 
 <style scoped>
-  .text-muted {
-    color: #8c8c8c;
-  }
+.text-muted {
+  color: #8c8c8c;
+}
 
-  a {
-    text-decoration: none;
-    color: grey;
-  }
+a {
+  text-decoration: none;
+  color: grey;
+}
 
-  a:hover {
-    color: #191919;
-  }
+a:hover {
+  color: #191919;
+}
 
-  .active {
-    text-decoration: none;
-    color: #191919;
-  }
+.active {
+  text-decoration: none;
+  color: #191919;
+}
 </style>

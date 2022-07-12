@@ -69,14 +69,15 @@ async function logout() {
 
     let logoutLink = '/login';
     if (navigator.userAgentData.mobile) {
-      logoutLink.value = '/dashboard/login';
+      logoutLink = '/dashboard/login';
     }
 
     router.push({ path: logoutLink });
   } catch (e) {
+    console.log('e', e);
     loading.value = false;
     alert.type = 'danger';
-    alert.msg = e.map((cur) => cur.msg).join(' ');
+    alert.msg = e?.map((cur) => cur.msg).join(' ');
   }
 }
 </script>

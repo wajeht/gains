@@ -1,98 +1,101 @@
 import useUserStore from '../apps/ui/store/user.store.js';
 
-/* It's a class that makes it easy to make API calls */
+// TODO! Refactor this code below
+
 export default class Api {
   /**
-   * It takes a method and a body, and returns an object with the method, a header, and the body
-   * @param method - The HTTP method to use.
+   * It takes a body and a method, and returns an object with the method and headers set
    * @param body - The body of the request.
-   * @returns an object with the method, headers, and body.
+   * @param method - The HTTP method to use.
+   * @returns A function that takes two arguments, body and method.
    */
-  static #_buildOptions(body, method) {
-    const options = {
+  static #buildOptions(body, method) {
+    return {
       method: method,
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
     };
-    return options;
   }
 
   /**
-   * If the user is not authenticated, log them out
+   * It sets the `isLoggedIn` property of the `userStore` to `false` and then calls the `clearUserInfo`
+   * method of the `userStore`
    */
-  static async #_logOutIfNotAuthenticated() {
+  static #logout() {
     const userStore = useUserStore();
-    const res = await userStore.checkAuthentication();
-    if (res.status === 'success') {
-      return true;
-    } else {
-      return false;
-    }
+    userStore.isLoggedIn = false;
+    userStore.clearUserInfo();
+    userStore.logout();
   }
 
   /**
-   * It sends a POST request to the server, and returns the response as a JSON object
+   * It sends a POST request to the server, and if the server responds with a 403 or 401 status code, it
+   * logs the user out
    * @param url - The url to make the request to.
    * @param body - The body of the request.
-   * @returns The response from the server.
+   * @returns The response from the fetch call.
    */
   static async post(url, body) {
-    const isStillLoggedIn = await this.#_logOutIfNotAuthenticated();
-    let res;
-    if (isStillLoggedIn) {
-      const data = this.#_buildOptions(body, 'POST');
-      res = await window.fetch(url, data);
+    const options = this.#buildOptions(body, 'POST');
+    const res = await window.fetch(url, options);
+    if (res.status === 403 || res.status === 401) {
+      this.#logout();
+      return res;
     }
     return res;
   }
 
   /**
-   * If the user is not authenticated, log them out. If they are authenticated, make a request to the
-   * given url and return the response as JSON
-   * @param url - The url to fetch from.
-   * @returns The response from the server.
+   * It makes a GET request to the given url, and if the response is a 403 or 401, it logs the user out
+   * @param url - The url to send the request to.
+   * @returns The response from the fetch request.
    */
   static async get(url) {
-    const isStillLoggedIn = await this.#_logOutIfNotAuthenticated();
-    let res;
-    if (isStillLoggedIn) {
-      res = await window.fetch(url);
+    const res = await window.fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status === 403 || res.status === 401) {
+      this.#logout();
+      return res;
     }
     return res;
   }
 
   /**
-   * It takes a URL and a body, builds an options object, and then makes a PATCH request to the URL with
-   * the options object
+   * It sends a PATCH request to the server, and if the server responds with a 403 or 401 status code, it
+   * logs the user out
    * @param url - The url to make the request to.
    * @param body - The body of the request.
    * @returns The response from the server.
    */
   static async patch(url, body) {
-    const isStillLoggedIn = await this.#_logOutIfNotAuthenticated();
-    let res;
-    if (isStillLoggedIn) {
-      const data = this.#_buildOptions(body, 'PATCH');
-      res = await window.fetch(url, data);
+    const options = this.#buildOptions(body, 'PATCH');
+    const res = await window.fetch(url, options);
+    if (res.status === 403 || res.status === 401) {
+      this.#logout();
+      return res;
     }
     return res;
   }
 
   /**
-   * It logs out the user if they're not authenticated, builds the options for the request, makes the
-   * request, and returns the response
+   * It takes a URL and a body, builds an options object, and then makes a DELETE request to the URL with
+   * the options
    * @param url - The url to make the request to.
    * @param body - The body of the request.
-   * @returns The response from the server.
+   * @returns The response from the fetch call.
    */
   static async delete(url, body) {
-    const isStillLoggedIn = await this.#_logOutIfNotAuthenticated();
-    let res;
-    if (isStillLoggedIn) {
-      const data = this.#_buildOptions(body, 'DELETE');
-      res = await window.fetch(url, data);
+    const options = this.#buildOptions(body, 'DELETE');
+    const res = await window.fetch(url, options);
+    if (res.status === 403 || res.status === 401) {
+      this.#logout();
+      return res;
     }
     return res;
   }

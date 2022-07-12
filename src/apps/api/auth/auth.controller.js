@@ -37,7 +37,7 @@ export async function postLogin(req, res) {
     signed: true,
   });
 
-  logger.info(`UserID: ${user.id} has generated login token!`);
+  logger.info(`UserID: ${user.id} has logged-in!`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',

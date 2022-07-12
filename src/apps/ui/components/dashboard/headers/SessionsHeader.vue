@@ -3,7 +3,7 @@ import api from '../../../../../libs/fetch-with-style.js';
 import { pickBy } from 'lodash-es';
 import dayjs from 'dayjs';
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 
 import useUserStore from '../../../store/user.store.js';
 import { useRouter } from 'vue-router';
@@ -12,48 +12,58 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const addASessionDismissButton = ref(null);
-const sessionName = ref('');
-const blockId = ref('');
-const date = ref(null);
-const bodyweight = ref('');
-const hoursOfSleep = ref('');
-const notes = ref('');
-const user_id = userStore.user.id;
+const session = reactive({
+  session_name: '',
+  block_id: null,
+  start_date: dayjs().format('YYYY-MM-DDTHH:mm'),
+  body_weight: null,
+  hours_of_sleep: null,
+  notes: null,
+  user_id: userStore.user.id,
+});
+
+const alert = reactive({
+  type: '',
+  msg: '',
+});
 
 async function addASession() {
   try {
-    const session = {
-      user_id: user_id,
-      session_name: sessionName.value,
-      block_id: blockId.value,
-      start_date: dayjs(date.value).format('YYYY-MM-DD'),
-      body_weight: bodyweight.value,
-      hours_of_sleep: hoursOfSleep.value,
-      notes: notes.value,
-    };
+    console.log(session);
+    // const session = {
+    //   user_id: user_id,
+    //   session_name: sessionName.value,
+    //   block_id: blockId.value,
+    //   start_date: dayjs(date.value).format('YYYY-MM-DD'),
+    //   body_weight: bodyweight.value,
+    //   hours_of_sleep: hoursOfSleep.value,
+    //   notes: notes.value,
+    // };
 
-    const validSession = pickBy(session, (value, key) => value !== '');
+    // const validSession = pickBy(session, (value, key) => value !== '');
 
-    const res = await api.post(`/api/v1/sessions`, validSession);
-    const json = await res.json();
+    // const res = await api.post(`/api/v1/sessions`, validSession);
+    // const json = await res.json();
 
-    addASessionDismissButton.value.click();
-    router.push({
-      path: `/dashboard/sessions/${json.data[0].id}`,
-    });
+    throw [{ msg: 'hi' }, { msg: 's' }];
+
+    if (!res.ok) {
+      throw json.errors;
+    }
+
+    // addASessionDismissButton.value.click();
+    // router.push({
+    //   path: `/dashboard/sessions/${json.data[0].id}`,
+    // });
   } catch (e) {
-    console.error(e);
+    alert.type = 'danger';
+    alert.msg = e.map((cur) => cur.msg).join(' ');
   }
 }
 
 onMounted(() => {
   // back drop problem fixed
   document.body.appendChild(document.getElementById('add-a-session'));
-
-  // init date
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  date.value = now.toISOString().slice(0, 16);
 });
 </script>
 
@@ -99,12 +109,23 @@ onMounted(() => {
                 aria-label="Close"
               ></button>
             </div>
+
+            <!-- modal body -->
             <div class="modal-body">
+              <!-- alert -->
+              <div
+                v-if="alert.type"
+                :class="`alert-${alert.type}`"
+                class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+              >
+                <span>{{ alert.msg }}</span>
+              </div>
+
               <!-- session name -->
               <div class="mb-3">
                 <label for="session-name" class="form-label">Session name*</label>
                 <input
-                  v-model="sessionName"
+                  v-model="session.session_name"
                   id="session-name"
                   class="form-control form-control-sm"
                   type="text"
@@ -116,10 +137,10 @@ onMounted(() => {
               <div class="mb-3">
                 <label for="start-time" class="form-label">Start time*</label>
                 <input
+                  v-model="session.start_date"
                   id="start-time"
                   class="form-control form-control-sm"
                   type="datetime-local"
-                  :value="date"
                   required
                   disabled
                 />
@@ -142,13 +163,19 @@ onMounted(() => {
                 <!-- block name -->
                 <div class="mb-3">
                   <label for="block-id" class="form-label">Block ID</label>
-                  <input id="block-id" class="form-control form-control-sm" type="text" />
+                  <input
+                    v-model="session.block_id"
+                    id="block-id"
+                    class="form-control form-control-sm"
+                    type="text"
+                  />
                 </div>
 
                 <!-- bodyweight  -->
                 <div class="mb-3">
                   <label for="bodyweight" class="form-label">Bodyweight</label>
                   <input
+                    v-model="session.body_weight"
                     id="bodyweight"
                     class="form-control form-control-sm"
                     min="1"
@@ -159,7 +186,13 @@ onMounted(() => {
                 <!-- hours of sleep  -->
                 <div class="mb-3">
                   <label for="sleep" class="form-label">Hours of sleep</label>
-                  <input id="sleep" class="form-control form-control-sm" min="1" type="number" />
+                  <input
+                    v-model="session.hours_of_sleep"
+                    id="sleep"
+                    class="form-control form-control-sm"
+                    min="1"
+                    type="number"
+                  />
                 </div>
 
                 <!-- notes -->

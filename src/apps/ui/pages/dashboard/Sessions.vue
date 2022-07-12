@@ -38,7 +38,7 @@ function logDetails(sid) {
   router.push({
     // path: `/dashboard/session/${id}`,
     name: 'SessionDetails',
-    params: { sid: sid },
+    params: { sid: Number(sid) },
   });
 }
 </script>

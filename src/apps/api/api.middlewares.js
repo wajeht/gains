@@ -40,7 +40,7 @@ export function auth(req, res, next) {
     try {
       jwt.verify(token, jwt_secret);
     } catch (error) {
-      throw new CustomError.UnauthorizedError('Invalid signature!');
+      throw new CustomError.UnauthenticatedError('Invalid signature!');
     }
 
     next();
