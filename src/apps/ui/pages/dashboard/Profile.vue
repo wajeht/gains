@@ -61,7 +61,11 @@ async function logout() {
 
     if (!res.ok) {
       loading.value = false;
-      throw json.errors;
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
     }
 
     userStore.isLoggedIn = false;
@@ -74,10 +78,14 @@ async function logout() {
 
     router.push({ path: logoutLink });
   } catch (e) {
-    console.log('e', e);
     loading.value = false;
     alert.type = 'danger';
-    alert.msg = e?.map((cur) => cur.msg).join(' ');
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
   }
 }
 </script>
@@ -87,11 +95,8 @@ async function logout() {
   <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3" data-aos="fade-up">
       <!-- alert -->
-      <div
-        v-if="alert.type"
-        :class="`alert-${alert.type}`"
-        class="mb-3 alert animate__animated animate__zoomIn animate__faster"
-      >
+      <div v-if="alert.type" :class="`alert-${alert.type}`"
+        class="mb-3 alert animate__animated animate__zoomIn animate__faster">
         <span>{{ alert.msg }}</span>
       </div>
 
@@ -102,11 +107,8 @@ async function logout() {
           <div class="card-body">
             <div class="row g-3">
               <div class="col-4 d-flex flex-column justify-content-center align-items-center">
-                <img
-                  src="https://dummyimage.com/200x200/bdbdbd/000000.jpg"
-                  class="img-fluid rounded-circle"
-                  alt="..."
-                />
+                <img src="https://dummyimage.com/200x200/bdbdbd/000000.jpg" class="img-fluid rounded-circle"
+                  alt="..." />
               </div>
               <div class="col-8">
                 <h5 class="card-title">{{ userStore.user.username }}</h5>
