@@ -213,9 +213,25 @@ async function addASession() {
     <!-- <input type="text" class="form-control form-control-sm" id="search" placeholder="Search.." /> -->
 
     <!-- settings -->
-    <router-link :class="{ active: $route.name === 'Settings' }" to="/dashboard/settings">
-      <font-awesome-icon class="fs-4" icon="gear" />
-    </router-link>
+    <div class="dropdown">
+      <!-- setting icons -->
+      <a class="link-dark" role="button" :id="`sessions-header-settings-${random_uuid}`" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
+          <i class="bi bi-three-dots-vertical"> </i>
+        </h5>
+      </a>
+
+      <!-- setting links -->
+      <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="min-width: fit-content">
+        <li><button class="dropdown-item btn-sm" type="button">Lifts</button></li>
+        <li><button class="dropdown-item btn-sm" type="button">Categories</button></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><button class="dropdown-item btn-sm" type="button">Blocks</button></li>
+      </ul>
+    </div>
   </div>
 </template>
 
