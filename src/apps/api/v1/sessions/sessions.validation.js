@@ -1,4 +1,5 @@
 import * as UserQueries from '../users/users.queries.js';
+import * as SessionsQueries from '../sessions/sessions.queries.js';
 
 import { check, param, body, query } from 'express-validator';
 import { isEqual } from 'lodash-es';
@@ -93,9 +94,9 @@ export const getSession = [
     .withMessage('The value must not be empty!')
     .isInt()
     .withMessage('The value must be an ID!')
-    .custom(async (value) => {
-      const user = await UserQueries.findUserById(value);
-      if (user.length === 0) throw new Error('User does not exist!');
+    .custom(async (sid) => {
+      const session = await SessionsQueries.getSessionBySessionId(sid);
+      if (session.length === 0) throw new Error(`SessionID: ${sid} does not exist!`);
       return true;
     }),
 ];
