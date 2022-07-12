@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 /**
  * If the word is a string and has more than one character, return the word with the first character capitalized.
  * @param {string} word - The word that you want to capitalize.
@@ -31,6 +32,16 @@ export function gainsCurrentDateTime() {
   const now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
   return now.toISOString().slice(0, 16);
+}
+
+/**
+ * It takes a date in the format of `YYYY-MM-DDTHH:mm:ss.SSSZ` and returns a date in the format of
+ * `YYYY-MM-DDTHH:mm`
+ * @param date - The date you want to format.
+ * @returns A string
+ */
+export function formatToGainsDateLocal(date) {
+  return dayjs(date).format('YYYY-MM-DDTHH:mm');
 }
 
 /**
