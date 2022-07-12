@@ -1,5 +1,6 @@
 <script setup>
 import api from '../../../../../libs/fetch-with-style.js';
+import { sleep } from '../../../../../utils/helpers.js'
 
 import { nextTick, ref, onMounted, reactive, onUpdated } from 'vue';
 import { pickBy } from 'lodash-es';
@@ -24,6 +25,7 @@ const body_weight = ref('');
 const hours_of_sleep = ref('');
 const notes = ref('');
 const random_uuid = ref(uuidv4());
+const loading = ref(false);
 
 const alert = reactive({
   type: '',
@@ -64,6 +66,8 @@ async function addASession() {
     // only grab values which are not empty
     const validSession = pickBy(session, (value, key) => value !== '');
 
+    loading.value = true;
+
     const res = await api.post(`/api/v1/sessions`, validSession);
     const json = await res.json();
 
@@ -77,9 +81,12 @@ async function addASession() {
 
     clearDataAndDismissModal()
 
+    loading.value = false;
+
     router.push({
       path: `/dashboard/sessions/${json.data[0].id}`,
     });
+
   } catch (e) {
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -129,7 +136,7 @@ async function addASession() {
               <div class="mb-3">
                 <label for="session-name" class="form-label">Session name*</label>
                 <input v-model="session_name" id="session-name" class="form-control form-control-sm" type="text"
-                  required />
+                  required :disabled="loading" />
               </div>
 
               <!-- start time -->
@@ -142,7 +149,7 @@ async function addASession() {
               <!-- show/hide button -->
               <div class="form-check form-switch mb-3">
                 <input v-model="showHideOtherFields" class="form-check-input" type="checkbox" role="switch"
-                  id="show-hide-button">
+                  id="show-hide-button" :disabled="loading">
                 <label class="form-check-label" for="show-hide-button">
                   <span v-if="!showHideOtherFields">Show</span>
                   <span v-if="showHideOtherFields">Hide</span>
@@ -154,35 +161,44 @@ async function addASession() {
                 <!-- block name -->
                 <div class="mb-3">
                   <label for="block-id" class="form-label">Block ID</label>
-                  <input v-model="block_id" id="block-id" class="form-control form-control-sm" type="text" />
+                  <input v-model="block_id" id="block-id" class="form-control form-control-sm" type="text"
+                    :disabled="loading" />
                 </div>
 
                 <!-- bodyweight  -->
                 <div class="mb-3">
                   <label for="bodyweight" class="form-label">Bodyweight</label>
                   <input v-model="body_weight" id="bodyweight" class="form-control form-control-sm" min="1"
-                    type="number" />
+                    type="number" :disabled="loading" />
                 </div>
 
                 <!-- hours of sleep  -->
                 <div class="mb-3">
                   <label for="sleep" class="form-label">Hours of sleep</label>
-                  <input v-model="hours_of_sleep" id="sleep" class="form-control form-control-sm" min="1"
-                    type="number" />
+                  <input v-model="hours_of_sleep" id="sleep" class="form-control form-control-sm" min="1" type="number"
+                    :disabled="loading" />
                 </div>
 
                 <!-- notes -->
                 <div class="mb-2">
                   <label for="notes" class="form-label">Notes</label>
-                  <textarea class="form-control form-control-sm" id="notes" rows="3"></textarea>
+                  <textarea class="form-control form-control-sm" id="notes" rows="3" :disabled="loading"></textarea>
                 </div>
               </span>
             </div>
             <div class="modal-footer">
-              <button ref="addASessionDismissButton" type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
+              <button v-if="!loading" ref="addASessionDismissButton" type="reset" class="btn btn-secondary"
+                data-bs-dismiss="modal">
                 Cancel
               </button>
-              <button type="submit" class="btn btn-dark">Add</button>
+              <button type="submit" class="btn btn-dark " :disabled="loading">
+                <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+
+                <span v-if="!loading"> Submit </span>
+                <span v-if="loading"> Loading... </span>
+              </button>
             </div>
           </div>
         </div>
