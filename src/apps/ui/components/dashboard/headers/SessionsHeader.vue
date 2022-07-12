@@ -1,9 +1,11 @@
 <script setup>
 import api from '../../../../../libs/fetch-with-style.js';
-import { pickBy } from 'lodash-es';
-import dayjs from 'dayjs';
 
-import { ref, onMounted, reactive } from 'vue';
+import { nextTick, ref, onMounted, reactive, onUpdated } from 'vue';
+import { pickBy } from 'lodash-es';
+import { v4 as uuidv4 } from 'uuid';
+
+import dayjs from 'dayjs';
 
 import useUserStore from '../../../store/user.store.js';
 import { useRouter } from 'vue-router';
@@ -12,76 +14,93 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const addASessionDismissButton = ref(null);
-const session = reactive({
-  session_name: '',
-  block_id: null,
-  start_date: dayjs().format('YYYY-MM-DDTHH:mm'),
-  body_weight: null,
-  hours_of_sleep: null,
-  notes: null,
-  user_id: userStore.user.id,
-});
+const showHideOtherFields = ref(false);
+
+const session_name = ref('');
+const start_date = ref(dayjs().format("YYYY-MM-DDTHH:mm"));
+const user_id = ref(userStore.user.id);
+const block_id = ref('');
+const body_weight = ref('');
+const hours_of_sleep = ref('');
+const notes = ref('');
+const random_uuid = ref(uuidv4());
 
 const alert = reactive({
   type: '',
   msg: '',
 });
 
-async function addASession() {
-  try {
-    console.log(session);
-    // const session = {
-    //   user_id: user_id,
-    //   session_name: sessionName.value,
-    //   block_id: blockId.value,
-    //   start_date: dayjs(date.value).format('YYYY-MM-DD'),
-    //   body_weight: bodyweight.value,
-    //   hours_of_sleep: hoursOfSleep.value,
-    //   notes: notes.value,
-    // };
-
-    // const validSession = pickBy(session, (value, key) => value !== '');
-
-    // const res = await api.post(`/api/v1/sessions`, validSession);
-    // const json = await res.json();
-
-    throw [{ msg: 'hi' }, { msg: 's' }];
-
-    if (!res.ok) {
-      throw json.errors;
-    }
-
-    // addASessionDismissButton.value.click();
-    // router.push({
-    //   path: `/dashboard/sessions/${json.data[0].id}`,
-    // });
-  } catch (e) {
-    alert.type = 'danger';
-    alert.msg = e.map((cur) => cur.msg).join(' ');
-  }
-}
 
 onMounted(() => {
   // back drop problem fixed
-  document.body.appendChild(document.getElementById('add-a-session'));
+  document.body.appendChild(document.getElementById(`add-a-session-${random_uuid.value}`));
 });
+
+function clearDataAndDismissModal() {
+  session_name.value = "";
+  start_date.value = dayjs().format("YYYY-MM-DDTHH:mm");
+  user_id.value = userStore.user.id;
+  block_id.value = "";
+  body_weight.value = "";
+  hours_of_sleep.value = "";
+  notes.value = "";
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-session-${random_uuid.value}`));
+  modal.hide();
+}
+
+async function addASession() {
+  try {
+
+    const session = {
+      session_name: session_name.value,
+      start_date: dayjs().format("YYYY-MM-DDTHH:mm"),
+      user_id: user_id.value = userStore.user.id,
+      block_id: block_id.value,
+      body_weight: body_weight.value,
+      hours_of_sleep: hours_of_sleep.value,
+      notes: notes.value,
+    }
+
+    // only grab values which are not empty
+    const validSession = pickBy(session, (value, key) => value !== '');
+
+    const res = await api.post(`/api/v1/sessions`, validSession);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    clearDataAndDismissModal()
+
+    router.push({
+      path: `/dashboard/sessions/${json.data[0].id}`,
+    });
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
 </script>
 
 <template>
-  <div
-    id="sessions-header"
-    style="height: 64px"
-    class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3"
-  >
+  <div id="sessions-header" style="height: 64px"
+    class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3">
     <!-- ---------- add group ---------- -->
     <span>
       <!-- add button -->
-      <span
-        class="link-secondary"
-        role="button"
-        data-bs-toggle="modal"
-        data-bs-target="#add-a-session"
-      >
+      <span @click="clearDataAndDismissModal()" class="link-secondary" role="button" data-bs-toggle="modal"
+        :data-bs-target="`#add-a-session-${random_uuid}`">
         <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
           <font-awesome-icon icon="plus" class="p-0 m-0" />
           <span>Add</span>
@@ -89,110 +108,67 @@ onMounted(() => {
       </span>
 
       <!-- add modal -->
-      <form
-        @submit.prevent="addASession()"
-        class="modal fade px-2 pt-5"
-        id="add-a-session"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-hidden="true"
-      >
+      <form @submit.prevent="addASession()" class="modal fade px-2 pt-5" :id="`add-a-session-${random_uuid}`"
+        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Add a session</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- modal body -->
             <div class="modal-body">
               <!-- alert -->
-              <div
-                v-if="alert.type"
-                :class="`alert-${alert.type}`"
-                class="mb-3 alert animate__animated animate__zoomIn animate__faster"
-              >
+              <div v-if="alert.type" :class="`alert-${alert.type}`"
+                class="mb-3 alert animate__animated animate__zoomIn animate__faster">
                 <span>{{ alert.msg }}</span>
               </div>
 
               <!-- session name -->
               <div class="mb-3">
                 <label for="session-name" class="form-label">Session name*</label>
-                <input
-                  v-model="session.session_name"
-                  id="session-name"
-                  class="form-control form-control-sm"
-                  type="text"
-                  required
-                />
+                <input v-model="session_name" id="session-name" class="form-control form-control-sm" type="text"
+                  required />
               </div>
 
               <!-- start time -->
               <div class="mb-3">
                 <label for="start-time" class="form-label">Start time*</label>
-                <input
-                  v-model="session.start_date"
-                  id="start-time"
-                  class="form-control form-control-sm"
-                  type="datetime-local"
-                  required
-                  disabled
-                />
+                <input v-model="start_date" id="start-time" class="form-control form-control-sm" type="datetime-local"
+                  required disabled />
               </div>
 
               <!-- show/hide button -->
-              <div class="mx-auto" style="max-width: 40%">
-                <button
-                  class="accordion-button collapsed p-0 m-0"
-                  style="background: none; border: none; box-shadow: none"
-                  role="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target=".add-session-other-settings"
-                >
-                  Other fields
-                </button>
+              <div class="form-check form-switch mb-3">
+                <input v-model="showHideOtherFields" class="form-check-input" type="checkbox" role="switch"
+                  id="show-hide-button">
+                <label class="form-check-label" for="show-hide-button">
+                  <span v-if="!showHideOtherFields">Show</span>
+                  <span v-if="showHideOtherFields">Hide</span>
+                  <span> other fields</span>
+                </label>
               </div>
 
-              <span class="add-session-other-settings accordion-collapse collapse">
+              <span v-if="showHideOtherFields">
                 <!-- block name -->
                 <div class="mb-3">
                   <label for="block-id" class="form-label">Block ID</label>
-                  <input
-                    v-model="session.block_id"
-                    id="block-id"
-                    class="form-control form-control-sm"
-                    type="text"
-                  />
+                  <input v-model="block_id" id="block-id" class="form-control form-control-sm" type="text" />
                 </div>
 
                 <!-- bodyweight  -->
                 <div class="mb-3">
                   <label for="bodyweight" class="form-label">Bodyweight</label>
-                  <input
-                    v-model="session.body_weight"
-                    id="bodyweight"
-                    class="form-control form-control-sm"
-                    min="1"
-                    type="number"
-                  />
+                  <input v-model="body_weight" id="bodyweight" class="form-control form-control-sm" min="1"
+                    type="number" />
                 </div>
 
                 <!-- hours of sleep  -->
                 <div class="mb-3">
                   <label for="sleep" class="form-label">Hours of sleep</label>
-                  <input
-                    v-model="session.hours_of_sleep"
-                    id="sleep"
-                    class="form-control form-control-sm"
-                    min="1"
-                    type="number"
-                  />
+                  <input v-model="hours_of_sleep" id="sleep" class="form-control form-control-sm" min="1"
+                    type="number" />
                 </div>
 
                 <!-- notes -->
@@ -203,12 +179,7 @@ onMounted(() => {
               </span>
             </div>
             <div class="modal-footer">
-              <button
-                ref="addASessionDismissButton"
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button ref="addASessionDismissButton" type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
                 Cancel
               </button>
               <button type="submit" class="btn btn-dark">Add</button>
