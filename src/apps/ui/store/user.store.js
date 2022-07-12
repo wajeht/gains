@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { isMobile } from '../../../utils/helpers.js';
 
 const useUserStore = defineStore({
   id: 'user',
@@ -21,7 +22,7 @@ const useUserStore = defineStore({
           this.isLoggedIn = false;
           this.clearUserInfo();
           let logoutLink = '/login';
-          if (navigator.userAgentData.mobile) logoutLink = '/dashboard/login';
+          if (isMobile) logoutLink = '/dashboard/login';
           this.router.push({ params: logoutLink });
         }
         return res;
@@ -44,7 +45,7 @@ const useUserStore = defineStore({
       this.isLoggedIn = false;
       this.clearUserInfo();
       let logoutLink = '/login';
-      if (navigator.userAgentData.mobile) {
+      if (isMobile) {
         logoutLink = '/dashboard/login';
       }
       this.router.push({ params: logoutLink });

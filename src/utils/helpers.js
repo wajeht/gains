@@ -32,3 +32,12 @@ export function gainsCurrentDateTime() {
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
   return now.toISOString().slice(0, 16);
 }
+
+/**
+ * If the window's width is less than or equal to 800 pixels and the window's height is less than or
+ * equal to 600 pixels, then return true, otherwise return false.
+ * @returns A boolean value.
+ */
+export function isMobile() {
+  return window.innerWidth <= 800 && window.innerHeight <= 600;
+}
