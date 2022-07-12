@@ -18,7 +18,7 @@ export function createASession(body) {
  * @returns An array of objects
  */
 export function getSessionsByUserId(user_id) {
-  return db.select('*').from('sessions').where({ user_id });
+  return db.select('*').from('sessions').where({ user_id }).orderBy('id', 'desc');
 }
 
 /**

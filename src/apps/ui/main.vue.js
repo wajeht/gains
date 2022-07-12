@@ -7,7 +7,8 @@ import useUserStore from './store/user.store.js';
 import routes from './router.vue.js';
 
 // external
-import 'bootstrap';
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
 import 'animate.css';
 import 'hover.css';
 import 'aos/dist/aos.css';

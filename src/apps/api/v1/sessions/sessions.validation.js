@@ -35,17 +35,20 @@ export const postCreateSession = [
     }),
   body('session_name').trim().notEmpty().withMessage('Session name must not be empty!'),
   body('start_date')
+    .optional()
     .trim()
     .notEmpty()
     .withMessage('Start date must not be empty!')
-    .isDate()
+    .isISO8601()
+    .toDate()
     .withMessage('Start date must be in date format'),
   body('end_date')
     .optional()
     .trim()
     .notEmpty()
     .withMessage('End date must not be empty!')
-    .isDate()
+    .isISO8601()
+    .toDate()
     .withMessage('End date must be in date format'),
   body('body_weight')
     .optional()

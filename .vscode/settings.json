@@ -8,6 +8,7 @@
 		"Backheader",
 		"borderless",
 		"chadsostrong",
+		"DDTHH",
 		"deadlift",
 		"emerg",
 		"fontawesome",
@@ -36,9 +37,11 @@
 		"Tuchscherer’s",
 		"unstyled",
 		"upperbody",
+		"uuidv",
 		"Vite",
 		"Vuejs",
 		"wajeht",
 		"yanlon"
-	]
+	],
+	"vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }
