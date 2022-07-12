@@ -22,3 +22,13 @@ export function capitalizeAWord(word) {
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+/**
+ * It returns the current date and time in the format YYYY-MM-DDTHH:MM
+ * @returns A string with the current date and time in ISO format.
+ */
+export function gainsCurrentDateTime() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 16);
+}
