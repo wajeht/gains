@@ -19,7 +19,7 @@ import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
-import Sessions from './pages/dashboard/Sessions.vue';
+import Sessions from './pages/dashboard/sessions/Sessions.vue';
 import SessionDetails from './components/dashboard/SessionDetails.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';

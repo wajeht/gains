@@ -36,7 +36,6 @@ export const postCreateSession = [
     }),
   body('session_name').trim().notEmpty().withMessage('Session name must not be empty!'),
   body('start_date')
-    .optional()
     .trim()
     .notEmpty()
     .withMessage('Start date must not be empty!')
@@ -51,6 +50,7 @@ export const postCreateSession = [
     .isISO8601()
     .toDate()
     .withMessage('End date must be in date format'),
+  body('block_id').optional().trim().isFloat().withMessage('Block ID must be an integer format!'),
   body('body_weight')
     .optional()
     .trim()
