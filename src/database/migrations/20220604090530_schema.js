@@ -98,7 +98,7 @@ export async function up(knex) {
       id                        SERIAL PRIMARY KEY,
       name                      VARCHAR(250) NOT NULL,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
-      is_deleted                BOOLEAN DEFAULT FALSE,
+      deleted                   BOOLEAN DEFAULT FALSE,
       created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at                TIMESTAMP NOT NULL DEFAULT NOW()
     );
@@ -109,7 +109,7 @@ export async function up(knex) {
     CREATE TABLE IF NOT EXISTS exercises (
       id                        SERIAL PRIMARY KEY,
       name                      VARCHAR(250) NOT NULL UNIQUE,
-      is_deleted                BOOLEAN DEFAULT FALSE,
+      deleted                   BOOLEAN DEFAULT FALSE,
       exercise_category_id      INT REFERENCES exercise_categories on DELETE CASCADE NOT NULL,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
