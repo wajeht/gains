@@ -35,6 +35,15 @@ export function gainsCurrentDateTime() {
 }
 
 /**
+ * It takes a date and returns a string in the format of YYYY/MM/DD
+ * @param date - The date to be formatted.
+ * @returns A string of the date in the format YYYY/MM/DD
+ */
+export function gainsDateDisplay(date) {
+  return dayjs(date).format('YYYY/MM/DD');
+}
+
+/**
  * It takes a date in the format of `YYYY-MM-DDTHH:mm:ss.SSSZ` and returns a date in the format of
  * `YYYY-MM-DDTHH:mm`
  * @param date - The date you want to format.

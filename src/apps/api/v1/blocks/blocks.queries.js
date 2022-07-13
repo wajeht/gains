@@ -24,7 +24,7 @@ export function getBlockByBlockId(bid) {
  * @returns An array of objects
  */
 export function getBlocksByUserId(uid) {
-  return db.select('*').from('blocks').where({ user_id: uid });
+  return db.select('*').from('blocks').where({ user_id: uid }).orderBy('id', 'desc');
 }
 
 /**
