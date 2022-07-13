@@ -282,12 +282,18 @@ function clearDataAndDismissModal() {
         <!-- setting links -->
         <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="min-width: fit-content">
           <li>
-            <router-link class="nav-link dropdown-item" to="/dashboard/sessions/exercises"
+            <router-link
+              class="nav-link link-dark dropdown-item"
+              to="/dashboard/sessions/exercises"
+              :class="{ active: $route.name === 'Exercises' }"
               >Exercises
             </router-link>
           </li>
           <li>
-            <router-link class="nav-link dropdown-item" to="/dashboard/sessions/categories"
+            <router-link
+              class="nav-link link-dark dropdown-item"
+              to="/dashboard/sessions/categories"
+              :class="{ active: $route.name === 'Categories' }"
               >Categories
             </router-link>
           </li>
@@ -295,7 +301,10 @@ function clearDataAndDismissModal() {
             <hr class="dropdown-divider" />
           </li>
           <li>
-            <router-link class="nav-link dropdown-item" to="/dashboard/sessions/blocks"
+            <router-link
+              class="nav-link link-dark dropdown-item"
+              to="/dashboard/sessions/blocks"
+              :class="{ active: $route.name === 'Blocks' }"
               >Blocks</router-link
             >
           </li>
@@ -348,6 +357,12 @@ function clearDataAndDismissModal() {
 </template>
 
 <style scoped>
+.dropdown-item.active,
+.dropdown-item:active {
+  background: #212529;
+  color: white;
+}
+
 .nav-link {
   color: #212529;
 }

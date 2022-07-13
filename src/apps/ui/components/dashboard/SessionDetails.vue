@@ -1,8 +1,8 @@
 <script setup>
 import SessionDetailsHeader from '../../components/dashboard/headers/SessionDetailsHeader.vue';
 
-import api from '../../../../libs/fetch-with-style.js'
-import { formatToGainsDateLocal } from '../../../../utils/helpers.js'
+import api from '../../../../libs/fetch-with-style.js';
+import { formatToGainsDateLocal } from '../../../../utils/helpers.js';
 
 import { ref, reactive, onMounted } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,7 +19,7 @@ const addASetDismissButton = ref(null);
 const random_uuid = ref(uuidv4());
 
 const sid = ref(null);
-const currentSessionDetails = reactive({})
+const currentSessionDetails = reactive({});
 
 const alert = reactive({
   type: '',
@@ -33,10 +33,8 @@ onMounted(async () => {
   currentSessionDetails.start_date = formatToGainsDateLocal(currentSessionDetails.start_date);
 });
 
-
 async function getCurrentSessionDetails() {
   try {
-
     const res = await api.get(`/api/v1/sessions/${sid.value}`);
     const json = await res.json();
 
@@ -51,7 +49,6 @@ async function getCurrentSessionDetails() {
     const [result] = json.data;
 
     return result;
-
   } catch (e) {
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -61,7 +58,6 @@ async function getCurrentSessionDetails() {
       alert.msg = e;
     }
   }
-
 }
 
 function handleAddALift() {
@@ -80,10 +76,12 @@ function handleAddASet() {
   <XyzTransition appear xyz="fade small out-down">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
-
         <!-- alert -->
-        <div v-if="alert.type" :class="`alert-${alert.type}`"
-          class="mb-0 alert animate__animated animate__zoomIn animate__faster">
+        <div
+          v-if="alert.type"
+          :class="`alert-${alert.type}`"
+          class="mb-0 alert animate__animated animate__zoomIn animate__faster"
+        >
           <span>{{ alert.msg }}</span>
         </div>
 
@@ -92,73 +90,128 @@ function handleAddASet() {
           <div class="card-body p-3">
             <!-- session name -->
             <div class="row mb-2">
-              <label for="session-name" class="col-4 col-form-label">Session name</label>
+              <label for="session-details-session-name" class="col-4 col-form-label"
+                >Session name</label
+              >
               <div class="col-8">
-                <input v-model="currentSessionDetails.session_name" type="text" class="form-control form-control-sm"
-                  id="session-name" />
+                <input
+                  id="session-details-session-name"
+                  v-model="currentSessionDetails.session_name"
+                  type="text"
+                  class="form-control form-control-sm"
+                />
               </div>
             </div>
 
             <!-- block name -->
             <div class="row mb-2">
-              <label for="block-name" class="col-4 col-form-label">Block name</label>
+              <label for="session-details-block-name" class="col-4 col-form-label"
+                >Block name</label
+              >
               <div class="col-8">
-                <input v-model="currentSessionDetails.block_id" type="text" class="form-control form-control-sm"
-                  id="block-name" />
+                <input
+                  id="session-details-block-name"
+                  v-model="currentSessionDetails.block_id"
+                  type="text"
+                  class="form-control form-control-sm"
+                />
               </div>
             </div>
 
             <!-- start time -->
             <div class="row mb-2">
-              <label for="start-time" class="col-4 col-form-label">Start time</label>
+              <label for="session-details-start-time" class="col-4 col-form-label"
+                >Start time</label
+              >
               <div class="col-8">
-                <input v-model="currentSessionDetails.start_date" type="datetime-local"
-                  class="form-control form-control-sm" id="start-time" disabled />
+                <input
+                  v-model="currentSessionDetails.start_date"
+                  type="datetime-local"
+                  class="form-control form-control-sm"
+                  id="session-details-start-time"
+                  disabled
+                />
               </div>
             </div>
 
             <!-- end time -->
             <div class="row mb-2">
-              <label for="end-time" class="col-4 col-form-label">End time</label>
+              <label for="session-details-end-time" class="col-4 col-form-label">End time</label>
               <div class="col-8">
-                <input v-model="currentSessionDetails.end_date" type="datetime-local"
-                  class="form-control form-control-sm" id="end-time" />
+                <input
+                  id="session-details-end-time"
+                  v-model="currentSessionDetails.end_date"
+                  type="datetime-local"
+                  class="form-control form-control-sm"
+                />
               </div>
             </div>
 
             <!-- bodyweight  -->
             <div class="row mb-2">
-              <label for="bodyweight" class="col-4 col-form-label">Bodyweight</label>
+              <label for="session-details-bodyweight" class="col-4 col-form-label"
+                >Bodyweight</label
+              >
               <div class="col-8">
-                <input v-model="currentSessionDetails.body_weight" type="number" class="form-control form-control-sm"
-                  id="bodyweight" min="1" step="1" max="500" />
+                <input
+                  v-model="currentSessionDetails.body_weight"
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="session-details-bodyweight"
+                  min="1"
+                  step="1"
+                  max="500"
+                />
               </div>
             </div>
 
             <!-- hours of sleep  -->
             <div class="row mb-2">
-              <label class="col-4 col-form-label" for="hours-of-sleep">Hours of sleep</label>
+              <label class="col-4 col-form-label" for="session-details-hours-of-sleep"
+                >Hours of sleep</label
+              >
               <div class="col-8">
-                <input v-model="currentSessionDetails.hours_of_sleep" type="number" class="form-control form-control-sm"
-                  id="hours-of-sleep" min="1" step="1" max="24" />
+                <input
+                  v-model="currentSessionDetails.hours_of_sleep"
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="session-details-hours-of-sleep"
+                  min="1"
+                  step="1"
+                  max="24"
+                />
               </div>
             </div>
 
             <!-- session rpe  -->
             <div class="row mb-2">
-              <label class="col-4 col-form-label">Session RPE </label>
+              <label for="session-details-session-rpe" class="col-4 col-form-label"
+                >Session RPE
+              </label>
               <div class="col-8">
-                <input v-model="currentSessionDetails.session_rpe" type="number" step=".5" min="5" max="10"
-                  class="form-control form-control-sm" id="session-rpe-id" />
+                <input
+                  v-model="currentSessionDetails.session_rpe"
+                  type="number"
+                  step=".5"
+                  min="5"
+                  max="10"
+                  class="form-control form-control-sm"
+                  id="session-details-session-rpe"
+                />
               </div>
             </div>
 
             <!-- notes -->
             <div class="row mb-2">
-              <label class="col-4 col-form-label">Notes</label>
+              <label for="session-details-notes" class="col-4 col-form-label">Notes</label>
               <div class="col-8">
-                <textarea v-model="currentSessionDetails.notes" class="form-control form-control-sm" id="notes-id"
-                  rows="3">{{ currentSessionDetails.notes }}</textarea>
+                <textarea
+                  v-model="currentSessionDetails.notes"
+                  class="form-control form-control-sm"
+                  id="session-details-notes"
+                  rows="3"
+                  >{{ currentSessionDetails.notes }}</textarea
+                >
               </div>
             </div>
           </div>
@@ -175,15 +228,25 @@ function handleAddASet() {
               <!-- options -->
               <span class="d-flex gap-2">
                 <!-- show/hide button -->
-                <button class="accordion-button collapsed p-0 m-0"
-                  style="background: none; border: none; box-shadow: none" role="button" data-bs-toggle="collapse"
-                  data-bs-target=".beltless-contentional-deadlift"></button>
+                <button
+                  class="accordion-button collapsed p-0 m-0"
+                  style="background: none; border: none; box-shadow: none"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target=".beltless-contentional-deadlift"
+                ></button>
 
                 <!-- lift settings -->
                 <div class="dropdown">
                   <!-- setting icons -->
-                  <a class="link-dark" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></a>
+                  <a
+                    class="link-dark"
+                    role="button"
+                    id="session-details-setting-button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    ><i class="bi bi-three-dots-vertical"></i
+                  ></a>
 
                   <!-- setting links -->
                   <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
@@ -201,7 +264,9 @@ function handleAddASet() {
             </p>
 
             <!-- sets -->
-            <div class="accordion-collapse collapse beltless-contentional-deadlift table-responsive">
+            <div
+              class="accordion-collapse collapse beltless-contentional-deadlift table-responsive"
+            >
               <table class="table table-sm table-striped table-hover p-0 m-0">
                 <thead>
                   <tr>
@@ -283,33 +348,61 @@ function handleAddASet() {
                 <!-- add a set group -->
                 <span>
                   <!-- add a set model button -->
-                  <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
-                    data-bs-target="#add-a-set">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-dark"
+                    data-bs-toggle="modal"
+                    data-bs-target="#add-a-set"
+                  >
                     <i class="bi bi-plus-circle me-1"></i> Add a set
                   </button>
 
                   <!-- add a set modal -->
-                  <form @submit.prevent="handleAddASet()" class="modal fade px-1 pt-5" id="add-a-set"
-                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                  <form
+                    @submit.prevent="handleAddASet()"
+                    class="modal fade px-1 pt-5"
+                    id="add-a-set"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                    tabindex="-1"
+                  >
                     <div class="modal-dialog modal-dialog-scrollable">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title">Add a set</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
                         </div>
                         <div class="modal-body">
                           <!-- reps -->
                           <div class="mb-3">
                             <label for="rep" class="form-label">Rep*</label>
-                            <input id="rep" class="form-control form-control-sm" type="number" min="1" max="20" step="1"
-                              required />
+                            <input
+                              id="rep"
+                              class="form-control form-control-sm"
+                              type="number"
+                              min="1"
+                              max="20"
+                              step="1"
+                              required
+                            />
                           </div>
 
                           <!-- weight -->
                           <div class="mb-3">
                             <label for="weight" class="form-label">Weight*</label>
-                            <input id="weight" class="form-control form-control-sm" type="number" min="5" step="5"
-                              required />
+                            <input
+                              id="weight"
+                              class="form-control form-control-sm"
+                              type="number"
+                              min="5"
+                              step="5"
+                              required
+                            />
                           </div>
 
                           <!-- rpe -->
@@ -334,14 +427,22 @@ function handleAddASet() {
                           <!-- note -->
                           <div class="mb-3">
                             <label class="form-label">Note</label>
-                            <textarea class="form-control form-control-sm" id="notes-id" rows="3"></textarea>
+                            <textarea
+                              class="form-control form-control-sm"
+                              id="notes-id"
+                              rows="3"
+                            ></textarea>
                           </div>
                         </div>
 
                         <!-- footer -->
                         <div class="modal-footer">
-                          <button ref="addASetDismissButton" type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">
+                          <button
+                            ref="addASetDismissButton"
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
                             Cancel
                           </button>
                           <button type="submit" class="btn btn-dark">Add</button>
@@ -375,18 +476,34 @@ function handleAddASet() {
         <!-- add a lift button -->
         <div class="border">
           <!-- model button -->
-          <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#add-a-lift">
+          <button
+            type="button"
+            class="btn btn-secondary w-100"
+            data-bs-toggle="modal"
+            data-bs-target="#add-a-lift"
+          >
             Add a lift
           </button>
 
           <!-- modal -->
-          <form @submit.prevent="handleAddALift()" class="modal fade px-2 pt-5" id="add-a-lift"
-            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+          <form
+            @submit.prevent="handleAddALift()"
+            class="modal fade px-2 pt-5"
+            id="add-a-lift"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+          >
             <div class="modal-dialog modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Add a lift</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
                 </div>
                 <div class="modal-body">
                   <!-- category -->
@@ -417,7 +534,12 @@ function handleAddASet() {
                 <!-- footer -->
                 <div class="modal-footer">
                   <!-- cancel -->
-                  <button ref="addALiftDismissButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  <button
+                    ref="addALiftDismissButton"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
                     Cancel
                   </button>
 
@@ -430,7 +552,11 @@ function handleAddASet() {
         </div>
 
         <!-- complete current session button -->
-        <button @click="$router.push('/dashboard/sessions')" type="button" class="btn btn-dark w-100">
+        <button
+          @click="$router.push('/dashboard/sessions')"
+          type="button"
+          class="btn btn-dark w-100"
+        >
           Complete current session
         </button>
       </div>
