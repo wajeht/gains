@@ -3,6 +3,16 @@ import { StatusCodes } from 'http-status-codes';
 import * as BlocksQueries from './blocks.queries.js';
 import logger from '../../../../libs/logger.js';
 
+/**
+ * It fetches all blocks or blocks for a specific user
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns a JSON object with the following properties:
+ *   - status: 'success'
+ *   - request_url: the url that was requested
+ *   - message: 'The resource was returned successfully!'
+ *   - data: the data that was requested
+ */
 export async function getBlocks(req, res) {
   const uid = req.query.user_id;
 
