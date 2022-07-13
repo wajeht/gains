@@ -1,16 +1,18 @@
-import { check, param, body } from 'express-validator';
+import { check, query, param, body } from 'express-validator';
 import * as UserQueries from '../users/users.queries.js';
 import * as ExerciseCategoriesQueries from './exercise-categories.queries.js';
+import { isNumber } from 'lodash-es';
 
 /* Checking the user_id to make sure it is an integer and that it exists. */
 export const getExerciseCategories = [
-  check('user_id')
+  query('user_id')
     .optional()
     .trim()
     .notEmpty()
     .withMessage('User id must not be empty!')
-    .isInt()
+    .isNumeric()
     .withMessage('User id must be a number!')
+    .bail()
     .custom(async (user_id) => {
       if (typeof parseInt(user_id) !== 'number') throw new Error('user_id must be a number');
       const user = await UserQueries.findUserById(user_id);
@@ -31,8 +33,9 @@ export const postExerciseCategory = [
     .trim()
     .notEmpty()
     .withMessage('User id must not be empty!')
-    .isInt()
-    .withMessage('User id must be an ID!')
+    .isNumeric()
+    .withMessage('User id must be a number!')
+    .bail()
     .custom(async (user_id) => {
       if (typeof parseInt(user_id) !== 'number') throw new Error('User id must be a number');
       const user = await UserQueries.findUserById(user_id);
@@ -43,6 +46,7 @@ export const postExerciseCategory = [
     .trim()
     .notEmpty()
     .withMessage('Name must not be empty!')
+    .bail()
     .custom(async (name, { req }) => {
       const uid = req.body.user_id;
       const result = await ExerciseCategoriesQueries.searchExerciseCategoryName(name, uid); // prettier-ignore

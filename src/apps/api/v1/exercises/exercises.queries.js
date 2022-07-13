@@ -35,16 +35,8 @@ export function getExerciseByUserId(uid) {
  * @param uid - the user id
  * @returns An array of objects
  */
-export async function searchExerciseName(name, uid) {
-  try {
-    return await db
-      .select('*')
-      .from('exercises')
-      .where({ user_id: uid })
-      .andWhereLike('name', `%${name}%`);
-  } catch (e) {
-    return e;
-  }
+export function searchExerciseName(name, uid) {
+  return db.select('*').from('exercises').where({ user_id: uid }).andWhereLike('name', `%${name}%`);
 }
 
 /**
