@@ -96,7 +96,8 @@ export async function up(knex) {
   await knex.schema.raw(`
     CREATE TABLE IF NOT EXISTS exercise_categories (
       id                        SERIAL PRIMARY KEY,
-      name                      VARCHAR(250) NOT NULL UNIQUE,
+      name                      VARCHAR(250) NOT NULL,
+      user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
       is_deleted                BOOLEAN DEFAULT FALSE,
       created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at                TIMESTAMP NOT NULL DEFAULT NOW()
@@ -105,12 +106,12 @@ export async function up(knex) {
 
   // exercise
   await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS exercise (
+    CREATE TABLE IF NOT EXISTS exercises (
       id                        SERIAL PRIMARY KEY,
       name                      VARCHAR(250) NOT NULL UNIQUE,
       is_deleted                BOOLEAN DEFAULT FALSE,
       exercise_category_id      INT REFERENCES exercise_categories on DELETE CASCADE NOT NULL,
-      user_id                   INT REFERENCES users on DELETE CASCADE,
+      user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at                TIMESTAMP NOT NULL DEFAULT NOW()
     );
@@ -122,6 +123,8 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
+  await knex.schema.raw(`DROP TABLE IF EXISTS exercises;`);
+  await knex.schema.raw(`DROP TABLE IF EXISTS exercise_categories;`);
   await knex.schema.raw(`DROP TABLE IF EXISTS sessions;`);
   await knex.schema.raw(`DROP TABLE IF EXISTS blocks;`);
   await knex.schema.raw(`DROP TABLE IF EXISTS logs;`);
