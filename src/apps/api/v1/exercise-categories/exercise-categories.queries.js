@@ -18,6 +18,19 @@ export function getExerciseCategoriesByUserId(uid) {
 }
 
 /**
+ * This function returns all exercise categories that have not been deleted.
+ * @param ecid - The id of the exercise category you want to get.
+ * @returns An array of objects
+ */
+export function getExerciseCategoriesById(ecid) {
+  return db
+    .select('*')
+    .from('exercise_categories')
+    .where({ id: ecid })
+    .andWhere({ deleted: false });
+}
+
+/**
  * Search for an exercise category name in the database.
  * @param name - the name of the exercise category
  * @param uid - the user id of the user who created the exercise category

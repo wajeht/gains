@@ -12,7 +12,7 @@ export const getExerciseCategories = [
     .isInt()
     .withMessage('User id must be a number!')
     .custom(async (user_id) => {
-      if (typeof user_id != 'number') throw new Error('User id must be a number');
+      if (typeof parseInt(user_id) !== 'number') throw new Error('user_id must be a number');
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
@@ -27,6 +27,18 @@ export const postExerciseCategory = [
     if (!equal) throw new Error(`Must include ${requiredFields.join(', ')} to update!`);
     return true;
   }),
+  body('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('User id must not be empty!')
+    .isInt()
+    .withMessage('User id must be an ID!')
+    .custom(async (user_id) => {
+      if (typeof parseInt(user_id) !== 'number') throw new Error('User id must be a number');
+      const user = await UserQueries.findUserById(user_id);
+      if (user.length === 0) throw new Error('User does not exist!');
+      return true;
+    }),
   body('name')
     .trim()
     .notEmpty()
@@ -35,18 +47,6 @@ export const postExerciseCategory = [
       const uid = req.body.user_id;
       const result = await ExerciseCategoriesQueries.searchExerciseCategoryName(name, uid); // prettier-ignore
       if (result.length) throw new Error('Exercise category name already exist!');
-      return true;
-    }),
-  body('user_id')
-    .trim()
-    .notEmpty()
-    .withMessage('User id must not be empty!')
-    .isInt()
-    .withMessage('User id must be an ID!')
-    .custom(async (user_id) => {
-      if (typeof user_id != 'number') throw new Error('User id must be a number');
-      const user = await UserQueries.findUserById(user_id);
-      if (user.length === 0) throw new Error('User does not exist!');
       return true;
     }),
 ];

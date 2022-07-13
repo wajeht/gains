@@ -10,6 +10,13 @@ const exercises = express.Router();
  * @tags exercises
  * @summary get a list of all the exercises
  */
+
+/**
+ * GET /api/v1/exercises?user_id={uid}
+ * @tags exercises
+ * @summary get a list of all the exercises of a user
+ * @param {string} uid.path.required - the user_id - application/x-www-form-urlencoded
+ */
 exercises.get(
   '/',
   validator(ExercisesValidation.getExercises),
