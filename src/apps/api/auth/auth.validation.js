@@ -44,8 +44,8 @@ export const postLogin = [
     .custom(async (email) => {
       const user = await UserQueries.findUserByParam({ email });
       if (user.length === 0) return false;
-      const is_verified = await UserQueries.findUserById(user[0]?.id);
-      if (!is_verified[0].is_verified) throw new Error('You must verify your account before logging in. Please verify your account by click a verification link which was sent to your email!'); // prettier-ignore
+      const verified = await UserQueries.findUserById(user[0]?.id);
+      if (!verified[0].verified) throw new Error('You must verify your account before logging in. Please verify your account by click a verification link which was sent to your email!'); // prettier-ignore
       return true;
     }),
   // check for password
@@ -138,7 +138,7 @@ export const getVerifyEmail = [
     // check to see if user has already verified email
     .custom(async (uid) => {
       const [user] = await UserQueries.findUserById(uid);
-      if (user.is_verified === true) throw new Error('This account have been already verified!');
+      if (user.verified === true) throw new Error('This account have been already verified!');
       return true;
     }),
   query('token')
@@ -166,8 +166,8 @@ export const postForgetPassword = [
     .custom(async (email) => {
       const user = await UserQueries.findUserByParam({ email });
       if (user.length === 0) return false;
-      const is_verified = await UserQueries.findUserById(user[0]?.id);
-      if (!is_verified[0].is_verified) {
+      const verified = await UserQueries.findUserById(user[0]?.id);
+      if (!verified[0].verified) {
         logger.info(`UserID: ${user.id} attempt to login without verifying email!`);
         throw new Error('You must verify your account before logging in. Please verify your account by click a verification link which was sent to your email!'); // prettier-ignore
       }

@@ -10,6 +10,7 @@ export async function up(knex) {
       email                 VARCHAR(250) NOT NULL UNIQUE,
       username              VARCHAR(250) NOT NULL UNIQUE,
       password              VARCHAR(500) NOT NULL,
+      deleted               BOOLEAN DEFAULT FALSE,
       created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
     );
@@ -25,12 +26,13 @@ export async function up(knex) {
       birth_date                        DATE,
       weight                            INT,
       profile_picture_url               VARCHAR(500),
-      is_verified                       BOOLEAN DEFAULT FALSE,
+      verified                          BOOLEAN DEFAULT FALSE,
       verification_token                VARCHAR(500) NOT NULL,
       verified_at                       TIMESTAMP DEFAULT NULL,
       password_reset_token              VARCHAR(500) DEFAULT NULL,
       password_reset_token_expiration   TIMESTAMP DEFAULT NULL,
       user_id                           INT REFERENCES users on DELETE CASCADE NOT NULL,
+      deleted                           BOOLEAN DEFAULT FALSE,
       created_at                        TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at                        TIMESTAMP NOT NULL DEFAULT NOW()
     );
@@ -42,6 +44,7 @@ export async function up(knex) {
       id                    SERIAL PRIMARY KEY,
       key                   VARCHAR(500) NOT NULL UNIQUE,
       hashed_key            VARCHAR(500) NOT NULL UNIQUE,
+      deleted               BOOLEAN DEFAULT FALSE,
       user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
@@ -55,6 +58,7 @@ export async function up(knex) {
       type                  VARCHAR(250) NOT NULL,
       description           VARCHAR(1000) NOT NULL,
       user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
+      deleted               BOOLEAN DEFAULT FALSE,
       created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
     );
@@ -68,6 +72,7 @@ export async function up(knex) {
       description           VARCHAR(1000) DEFAULT NULL,
       start_date            TIMESTAMP NOT NULL DEFAULT NOW(),
       end_date              TIMESTAMP NOT NULL DEFAULT NULL,
+      deleted               BOOLEAN DEFAULT FALSE,
       user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
@@ -85,6 +90,7 @@ export async function up(knex) {
       body_weight               INT DEFAULT NULL,
       hours_of_sleep            INT DEFAULT NULL,
       session_rpe               INT DEFAULT NULL,
+      deleted                   BOOLEAN DEFAULT FALSE,
       notes                     VARCHAR(1000) DEFAULT NULL,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
       created_at                TIMESTAMP NOT NULL DEFAULT NOW(),

@@ -1,14 +1,14 @@
 import db from '../../../database/db.js';
 
 /**
- * It updates the is_verified column of the user_details table to true where the user_id is equal to
+ * It updates the verified column of the user_details table to true where the user_id is equal to
  * the uid passed in as a parameter
  * @param uid - The user id of the user to be verified.
  * @returns A promise
  */
 export async function verifyUser(uid, date) {
   return db
-    .update({ is_verified: true, verified_at: date })
+    .update({ verified: true, verified_at: date })
     .from('user_details')
     .where({ user_id: uid });
 }
