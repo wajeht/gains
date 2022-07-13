@@ -19,10 +19,15 @@ import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
-import Sessions from './pages/dashboard/sessions/Sessions.vue';
-import SessionDetails from './components/dashboard/SessionDetails.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
+
+// --- sessions ---
+import Sessions from './pages/dashboard/sessions/Sessions.vue';
+import SessionDetails from './components/dashboard/SessionDetails.vue';
+import Blocks from './pages/dashboard/sessions/Blocks.vue';
+import Categories from './pages/dashboard/sessions/Categories.vue';
+import Exercises from './pages/dashboard/sessions/Exercises.vue';
 
 // --- settings ---
 import Settings from './pages/dashboard/settings/Settings.vue';
@@ -201,15 +206,6 @@ const routes = [
       requiredAuth: true,
     },
   },
-  {
-    path: '/dashboard/sessions',
-    name: 'Sessions',
-    component: Sessions,
-    meta: {
-      layout: 'DashboardLayout',
-      requiredAuth: true,
-    },
-  },
   // Tools
   {
     path: '/dashboard/tools',
@@ -293,6 +289,43 @@ const routes = [
     name: 'VideoDetails',
     component: VideoDetails,
     props: true,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  // ----- sessions -----
+  {
+    path: '/dashboard/sessions',
+    name: 'Sessions',
+    component: Sessions,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/sessions/blocks',
+    name: 'Blocks',
+    component: Blocks,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/sessions/categories',
+    name: 'Categories',
+    component: Categories,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/sessions/exercises',
+    name: 'Exercises',
+    component: Exercises,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,

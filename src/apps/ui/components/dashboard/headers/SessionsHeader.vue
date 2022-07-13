@@ -224,12 +224,20 @@ async function addASession() {
 
       <!-- setting links -->
       <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="min-width: fit-content">
-        <li><button class="dropdown-item btn-sm" type="button">Lifts</button></li>
-        <li><button class="dropdown-item btn-sm" type="button">Categories</button></li>
+        <li>
+          <router-link class="nav-link link-dark dropdown-item" to="/dashboard/sessions/exercises">Exercises
+          </router-link>
+        </li>
+        <li>
+          <router-link class="nav-link link-dark dropdown-item" to="/dashboard/sessions/categories">Categories
+          </router-link>
+        </li>
         <li>
           <hr class="dropdown-divider">
         </li>
-        <li><button class="dropdown-item btn-sm" type="button">Blocks</button></li>
+        <li>
+          <router-link class="nav-link link-dark dropdown-item" to="/dashboard/sessions/blocks">Blocks</router-link>
+        </li>
       </ul>
     </div>
   </div>
@@ -252,5 +260,20 @@ a:hover {
 .active {
   text-decoration: none;
   color: #191919;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+  background: #212529;
+  color: white;
+}
+
+.nav-link:hover {
+  background: #6c757d;
+  color: white;
+}
+
+.nav-link.active:hover {
+  text-decoration: none;
 }
 </style>
