@@ -7,13 +7,17 @@ import {
 } from '../../../../../utils/helpers.js';
 import api from '../../../../../libs/fetch-with-style.js';
 
+import dayjs from 'dayjs';
+
 import { v4 as uuidv4 } from 'uuid';
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 import useUserStore from '../../../store/user.store.js';
+import useAppStore from '../../../store/app.store.js';
 
 const userStore = useUserStore();
+const appStore = useAppStore();
 const route = useRoute();
 
 const random_uuid = ref(uuidv4());
@@ -36,7 +40,9 @@ const alert = reactive({
 });
 
 onMounted(async () => {
+  appStore.loading = true;
   blocks.items = await getUserBlocks();
+  appStore.loading = false;
 });
 
 onMounted(() => {
@@ -329,10 +335,9 @@ function clearDataAndDismissModal() {
                   <p class="mb-0 opacity-75">{{ block.description }}</p>
                 </div>
               </div>
-              <small class="opacity-50 text-nowrap d-flex gap-2">
-                <span>{{ gainsDateDisplay(block.start_date) }}</span>
-                <span>-</span>
-                <span>{{ gainsDateDisplay(block.end_date) }}</span>
+              <small class="opacity-50 d-flex flex-column gap-2">
+                <span>{{ dayjs(block.start_date).format('YY/MM/DD') }}</span>
+                <span>{{ dayjs(block.end_date).format('YY/MM/DD') }}</span>
               </small>
             </router-link>
           </div>
