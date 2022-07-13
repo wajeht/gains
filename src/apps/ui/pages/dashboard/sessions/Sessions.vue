@@ -1,15 +1,15 @@
 <script setup>
-import SessionsHeader from '../../components/dashboard/headers/SessionsHeader.vue';
+import SessionsHeader from '../../../components/dashboard/headers/SessionsHeader.vue';
 
 import dayjs from 'dayjs';
 import { onMounted, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { sleep } from '../../../../utils/helpers';
-import api from '../../../../libs/fetch-with-style.js';
+import { sleep } from '../../../../../utils/helpers.js';
+import api from '../../../../../libs/fetch-with-style.js';
 
-import useAppStore from '../../store/app.store.js';
-import useUserStore from '../../store/user.store.js';
+import useAppStore from '../../../store/app.store.js';
+import useUserStore from '../../../store/user.store.js';
 
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -47,13 +47,7 @@ function logDetails(sid) {
   <SessionsHeader />
   <div v-if="appStore.loading === false" class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
-      <div
-        v-for="session in sessions"
-        :key="`session-${session}`"
-        data-aos="fade-up"
-        class="card"
-        id="log"
-      >
+      <div v-for="session in sessions" :key="`session-${session}`" data-aos="fade-up" class="card" id="log">
         <div @click="logDetails(session.id)" class="card-body">
           <div class="d-flex justify-content-between gap-5">
             <!-- start -->
