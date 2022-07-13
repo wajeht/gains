@@ -10,8 +10,9 @@ export const getExerciseCategories = [
     .notEmpty()
     .withMessage('User id must not be empty!')
     .isInt()
-    .withMessage('User id must be an ID!')
+    .withMessage('User id must be a number!')
     .custom(async (user_id) => {
+      if (typeof user_id != 'number') throw new Error('User id must be a number');
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
@@ -43,6 +44,7 @@ export const postExerciseCategory = [
     .isInt()
     .withMessage('User id must be an ID!')
     .custom(async (user_id) => {
+      if (typeof user_id != 'number') throw new Error('User id must be a number');
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
