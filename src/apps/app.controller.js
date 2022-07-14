@@ -64,6 +64,7 @@ export function errorHandler(err, req, res, next) {
       request_url: req.originalUrl,
       errors: err?.errors,
       message: env === 'development' ? err.stack : err.message,
+      data: [],
     });
   }
 
@@ -81,6 +82,7 @@ export function errorHandler(err, req, res, next) {
     status: 'fail',
     request_url: req.originalUrl,
     errors: err?.errors,
+    data: [],
     message:
       env === 'development'
         ? err.stack

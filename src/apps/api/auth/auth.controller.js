@@ -37,7 +37,7 @@ export async function postLogin(req, res) {
     signed: true,
   });
 
-  logger.info(`UserID: ${user.id} has logged-in!`);
+  logger.info(`User id ${user.id} has logged-in!`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -93,6 +93,7 @@ export async function postSignup(req, res) {
       verificationLink: `${origin}/verify-email/${user.id}?token=${verificationToken}`,
     },
   });
+
   logger.info(`Verification email was sent to uid: ${user.id}`);
 
   res.status(StatusCodes.CREATED).json({
@@ -114,11 +115,9 @@ export async function getVerifyEmail(req, res) {
   const date = new Date();
   const verified = await AuthQueries.verifyUser(uid, date);
 
-  if (!verified) {
-    throw new CustomError.BadRequestError(`Something went wrong with verifying User ID: ${uid}!`);
-  }
+  if (!verified) throw new CustomError.BadRequestError(`Something went wrong with verifying user id ${uid}!`); // prettier-ignore
 
-  logger.info(`User ID: ${uid} was successfully verified!`);
+  logger.info(`User id ${uid} was successfully verified!`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -169,6 +168,7 @@ export async function getReverify(req, res) {
           verificationLink: `${origin}/verify-email/${user.id}?token=${verificationToken}`,
         },
       });
+
       logger.info(`Re-verification email was sent to uid: ${user.id}`);
     }
   }

@@ -20,11 +20,7 @@ export async function getBlocks(req, res) {
   if (uid) {
     const usersBlocks = await BlocksQueries.getBlocksByUserId(uid);
 
-    if (!usersBlocks.length) {
-      throw new CustomError.BadRequestError(
-        `Something went wrong while fetching blocks for user id ${uid}!`,
-      );
-    }
+    if (!usersBlocks.length) throw new CustomError.BadRequestError(`There are no blocks available for user id ${uid}!`); // prettier-ignore
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -37,7 +33,7 @@ export async function getBlocks(req, res) {
   // when called via /api/v1/blocks
   const blocks = await BlocksQueries.getAllBlocks();
 
-  if (!blocks.length) throw new CustomError.BadRequestError(`Something went wrong while fetching blocks!`); // prettier-ignore
+  if (!blocks.length) throw new CustomError.BadRequestError(`There are no blocks available currently!`); // prettier-ignore
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
@@ -56,9 +52,7 @@ export async function getBlock(req, res) {
   const bid = req.params.bid;
   const block = await BlocksQueries.getBlockByBlockId(bid);
 
-  if (!block.length) {
-    throw new CustomError.BadRequestError(`Something went wrong while fetching a block id ${bid}!`);
-  }
+  if (!block.length) throw new CustomError.BadRequestError(`There is no block available for block id ${bid}!`); // prettier-ignore
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -77,11 +71,7 @@ export async function postBlock(req, res) {
   const body = req.body;
   const block = await BlocksQueries.createBlock(body);
 
-  if (!block.length) {
-    throw new CustomError.BadRequestError(
-      `Something went wrong while creating a block for for  User ID: ${body.user_id}!`,
-    );
-  }
+  if (!block.length) throw new CustomError.BadRequestError(`Something went wrong while creating a block for for  User ID: ${body.user_id}!`); // prettier-ignore
 
   logger.info(`UserID: ${body.user_id} has created a BlockID: ${block[0].id}`);
 
