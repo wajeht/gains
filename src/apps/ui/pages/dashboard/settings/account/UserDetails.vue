@@ -5,6 +5,7 @@ import api from '../../../../../../libs/fetch-with-style.js';
 import { reactive, onMounted, ref } from 'vue';
 import useUserStore from '../../../../store/user.store.js';
 import useAppStore from '../../../../store/app.store.js';
+import { pickBy } from 'lodash-es';
 
 const userStore = useUserStore();
 const appStore = useAppStore();
@@ -26,7 +27,8 @@ const alert = reactive({
 onMounted(async () => {
   appStore.loading = true;
   const res = await api.get(`/api/v1/users/${userStore.user.id}`);
-  const [data] = await res.json();
+  const json = await res.json();
+  const [data] = json.data;
   first_name.value = data.first_name;
   last_name.value = data.last_name;
   birth_date.value = dayjs(data.birth_date).format('YYYY-MM-DD');
@@ -45,12 +47,18 @@ async function updatePersonalInformation() {
       weight: weight.value,
     };
 
+    const validUser = pickBy(user, (value, key) => value !== '');
+
     // prettier-ignore
-    const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-personal-information`, user);
+    const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-personal-information`, validUser);
     const json = await res.json();
 
     if (!res.ok) {
-      throw json.errors;
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
     }
 
     alert.type = 'success';
@@ -59,7 +67,12 @@ async function updatePersonalInformation() {
     edit_personal_info.value = true;
   } catch (e) {
     alert.type = 'danger';
-    alert.msg = e.map((cur) => cur.msg).join(' ');
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
   }
 }
 
@@ -80,7 +93,11 @@ async function updateAccountInfo() {
     const json = await res.json();
 
     if (!res.ok) {
-      throw json.errors;
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
     }
 
     alert.type = 'success';
@@ -89,7 +106,12 @@ async function updateAccountInfo() {
     edit_account_info.value = true;
   } catch (e) {
     alert.type = 'danger';
-    alert.msg = e.map((cur) => cur.msg).join(' ');
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
   }
 }
 </script>
@@ -104,7 +126,7 @@ async function updateAccountInfo() {
       <div
         v-if="alert.type"
         :class="`alert-${alert.type}`"
-        class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+        class="mb-0 alert animate__animated animate__zoomIn animate__faster"
       >
         <span>{{ alert.msg }}</span>
       </div>
@@ -116,56 +138,62 @@ async function updateAccountInfo() {
           <div class="card-body">
             <!-- first name -->
             <div class="row mb-2">
-              <label class="col-4 col-form-label" for="first-name">First name</label>
+              <label class="col-4 col-form-label" for="personal-information-first-name"
+                >First name</label
+              >
               <div class="col-8">
                 <input
                   :disabled="edit_personal_info"
                   v-model="first_name"
                   type="text"
                   class="form-control form-control-sm"
-                  id="first-name"
+                  id="personal-information-first-name"
                 />
               </div>
             </div>
 
             <!-- last name -->
             <div class="row mb-2">
-              <label for="last-name" class="col-4 col-form-label">Last name</label>
+              <label for="personal-information-last-name" class="col-4 col-form-label"
+                >Last name</label
+              >
               <div class="col-8">
                 <input
                   :disabled="edit_personal_info"
                   v-model="last_name"
                   type="text"
                   class="form-control form-control-sm"
-                  id="last-name"
+                  id="personal-information-last-name"
                 />
               </div>
             </div>
 
             <!-- birth date -->
             <div class="row mb-2">
-              <label for="birth-date" class="col-4 col-form-label">Birth date</label>
+              <label for="personal-information-birth-date" class="col-4 col-form-label"
+                >Birth date</label
+              >
               <div class="col-8">
                 <input
                   :disabled="edit_personal_info"
                   v-model="birth_date"
                   type="date"
                   class="form-control form-control-sm"
-                  id="birth-date"
+                  id="personal-information-birth-date"
                 />
               </div>
             </div>
 
             <!-- weight -->
             <div class="row mb-2">
-              <label for="weight" class="col-4 col-form-label">Weight</label>
+              <label for="personal-information-weight" class="col-4 col-form-label">Weight</label>
               <div class="col-8">
                 <input
                   v-model="weight"
                   :disabled="edit_personal_info"
                   type="number"
                   class="form-control form-control-sm"
-                  id="weight"
+                  id="personal-information-weight"
                 />
               </div>
             </div>
@@ -195,13 +223,13 @@ async function updateAccountInfo() {
           <div class="card-body">
             <!-- email -->
             <div class="row mb-2">
-              <label class="col-4 col-form-label" for="first-name">Email</label>
+              <label class="col-4 col-form-label" for="account-information-email">Email</label>
               <div class="col-8">
                 <input
                   v-model="email"
                   type="email"
                   class="form-control form-control-sm"
-                  id="email"
+                  id="account-information-email"
                   :disabled="edit_account_info"
                 />
               </div>
@@ -209,13 +237,15 @@ async function updateAccountInfo() {
 
             <!-- username -->
             <div class="row mb-2">
-              <label for="username" class="col-4 col-form-label">Username</label>
+              <label for="account-information-username" class="col-4 col-form-label"
+                >Username</label
+              >
               <div class="col-8">
                 <input
                   v-model="username"
                   type="text"
                   class="form-control form-control-sm"
-                  id="username"
+                  id="account-information-username"
                   :disabled="edit_account_info"
                 />
               </div>
@@ -223,14 +253,17 @@ async function updateAccountInfo() {
 
             <!-- password -->
             <div class="row mb-2">
-              <label for="birth-date" class="col-4 col-form-label">Password</label>
+              <label for="account-information-password" class="col-4 col-form-label"
+                >Password</label
+              >
               <div class="col-8">
                 <input
                   v-model="password"
                   type="password"
                   class="form-control form-control-sm"
-                  id="password"
+                  id="account-information-password"
                   :disabled="edit_account_info"
+                  autocomplete="false"
                 />
               </div>
             </div>
