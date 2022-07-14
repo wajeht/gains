@@ -17,7 +17,7 @@ export async function postContact(req, res) {
     data: req.body,
   });
 
-  logger.info(`Contact was recieved from ${email}`);
+  logger.info(`Contact submission was recieved from ${email}`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',

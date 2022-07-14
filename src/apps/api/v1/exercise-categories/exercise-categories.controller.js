@@ -13,15 +13,9 @@ export async function getExerciseCategories(req, res) {
 
   // when called via /api/v1/exercise-categories?user_id=1
   if (uid) {
-    const userExerciseCategories = await ExerciseCategoriesQueries.getExerciseCategoriesByUserId(
-      uid,
-    );
+    const userExerciseCategories = await ExerciseCategoriesQueries.getExerciseCategoriesByUserId(uid); // prettier-ignore
 
-    if (!userExerciseCategories.length) {
-      throw new CustomError.BadRequestError(
-        `Something went wrong while fetching userExerciseCategories for user id ${uid}!`,
-      );
-    }
+    if (!userExerciseCategories.length) throw new CustomError.BadRequestError(`There are no exercise categories for user id ${uid}!`); // prettier-ignore
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -34,7 +28,7 @@ export async function getExerciseCategories(req, res) {
   // when called via /api/v1/exercise-categories
   const exerciseCategories = await ExerciseCategoriesQueries.getAllExerciseCategories();
 
-  if (!exerciseCategories.length) throw new CustomError.BadRequestError(`Something went wrong while fetching exercise categories!`); // prettier-ignore
+  if (!exerciseCategories.length) throw new CustomError.BadRequestError(`There are no exercise categories available currently!`); // prettier-ignore
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
@@ -53,11 +47,7 @@ export async function postExerciseCategory(req, res) {
   const body = req.body;
   const created = await ExerciseCategoriesQueries.createExerciseCategory(body);
 
-  if (!created.length) {
-    throw new CustomError.BadRequestError(
-      `Something went wrong while creating a exercise categories for  User ID: ${body.user_id}!`,
-    );
-  }
+  if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a exercise categories for  User ID: ${body.user_id}!`); // prettier-ignore
 
   logger.info(`user id: ${body.user_id} has created a exercise category id: ${created[0].id}`);
 

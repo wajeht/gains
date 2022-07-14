@@ -25,8 +25,15 @@ export async function getCheckAuthentication(req, res) {
  */
 export async function postUser(req, res) {
   const user = await UsersQueries.createUser(req.body);
-  logger.info(`user ${user[0].id} was created!`);
-  res.json(user);
+
+  logger.info(`User ${user[0].id} was created!`);
+
+  res.status(StatusCodes.CREATED).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was created successfully!',
+    data: user,
+  });
 }
 
 /**
@@ -36,7 +43,13 @@ export async function postUser(req, res) {
  */
 export async function getUsers(req, res) {
   const users = await UsersQueries.getAllUsers();
-  res.json(users);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: users,
+  });
 }
 
 /**
@@ -47,7 +60,13 @@ export async function getUsers(req, res) {
 export async function getUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.findUserById(id);
-  res.json(user);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: user,
+  });
 }
 
 /**
@@ -58,7 +77,15 @@ export async function getUser(req, res) {
 export async function patchUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.updateUserById(id, req.body);
-  res.json(user);
+
+  logger.info(`User id ${id} has updated user details to ${JSON.stringify(req.body)}!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: user,
+  });
 }
 
 /**
@@ -70,7 +97,15 @@ export async function patchUser(req, res) {
 export async function deleteUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.deleteUser(id);
-  res.json(user);
+
+  logger.info(`UserID: ${id} has disabled their account!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was deleted successfully!',
+    data: user,
+  });
 }
 
 /**
@@ -83,13 +118,9 @@ export async function patchUpdatePersonalInformation(req, res) {
   const body = req.body;
   const updated = await UsersQueries.updatePersonalInformation(id, body);
 
-  if (!updated.length) {
-    throw new CustomError.BadRequestError(
-      `Something went wrong while updating personal info for  User ID: ${id}!`,
-    );
-  }
+  if (!updated.length) throw new CustomError.BadRequestError(`Something went wrong while updating personal info for  User ID: ${id}!`); // prettier-ignore
 
-  logger.info(`UserID: ${id} has updated personal information to ${JSON.stringify(body)}!`);
+  logger.info(`User id ${id} has updated personal information to ${JSON.stringify(body)}!`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -109,7 +140,7 @@ export async function patchUpdateAccountInformation(req, res) {
   const body = req.body;
   const updated = await UsersQueries.updateAccountInformation(id, body);
 
-  logger.info(`UserID: ${id} has updated account information to ${JSON.stringify(body)}!`);
+  logger.info(`User id ${id} has updated account information to ${JSON.stringify(body)}!`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
