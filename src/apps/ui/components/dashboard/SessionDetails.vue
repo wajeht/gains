@@ -96,7 +96,7 @@ function handleAddASet() {
               <div class="col-8">
                 <input
                   id="session-details-session-name"
-                  v-model="currentSessionDetails.session_name"
+                  v-model="currentSessionDetails.name"
                   type="text"
                   class="form-control form-control-sm"
                 />
@@ -111,7 +111,7 @@ function handleAddASet() {
               <div class="col-8">
                 <input
                   id="session-details-block-name"
-                  v-model="currentSessionDetails.block_id"
+                  v-model="currentSessionDetails.block_name"
                   type="text"
                   class="form-control form-control-sm"
                 />
@@ -179,6 +179,24 @@ function handleAddASet() {
                   min="1"
                   step="1"
                   max="24"
+                />
+              </div>
+            </div>
+
+            <!-- caffeine intake  -->
+            <div class="row mb-2">
+              <label for="session-details-caffeine-intake" class="col-4 col-form-label"
+                >Caffeine intake
+              </label>
+              <div class="col-8">
+                <input
+                  v-model="currentSessionDetails.caffeine_intake"
+                  type="number"
+                  step=".5"
+                  min="5"
+                  max="10"
+                  class="form-control form-control-sm"
+                  id="session-details-caffeine-intake"
                 />
               </div>
             </div>
