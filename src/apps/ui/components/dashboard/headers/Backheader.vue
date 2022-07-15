@@ -22,10 +22,17 @@ export default {
       previousPageName: '',
     };
   },
-  mounted() {
-    let back = this.$router.options.history.state.back.split('/');
-    back = back[back.length - 1];
-    this.previousPageName = capitalizeAWord(back);
+  created() {
+    let back = this.$router.options.history.state.back;
+    if (back == null) {
+      back = this.$router.currentRoute._value.fullPath.split('/');
+      back = back[back.length - 2]; // this should be -1 // fix our folder structure
+      this.previousPageName = capitalizeAWord(back);
+    } else {
+      back = back.split('/');
+      back = back[back.length - 1];
+      this.previousPageName = capitalizeAWord(back);
+    }
   },
 };
 </script>
