@@ -114,7 +114,7 @@ export async function up(knex) {
   await knex.schema.raw(`
     CREATE TABLE IF NOT EXISTS exercises (
       id                        SERIAL PRIMARY KEY,
-      name                      VARCHAR(250) NOT NULL UNIQUE,
+      name                      VARCHAR(250) NOT NULL,
       deleted                   BOOLEAN DEFAULT FALSE,
       exercise_category_id      INT REFERENCES exercise_categories on DELETE CASCADE NOT NULL,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,

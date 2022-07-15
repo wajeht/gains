@@ -62,7 +62,8 @@ export const postExercise = [
     .withMessage('Name must not be empty!')
     .custom(async (name, { req }) => {
       const uid = req.body.user_id;
-      const result = await ExercisesQueries.searchExerciseName(name, uid); // prettier-ignore
+      const ecid = req.body.exercise_category_id;
+      const result = await ExercisesQueries.searchExerciseName(name, uid, ecid); // prettier-ignore
       if (result.length) throw new Error('Exercise name already exist!');
       return true;
     }),

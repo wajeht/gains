@@ -12,7 +12,7 @@
     "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"nodemon ./src/bin/server.js\" \"vite build --watch --mode development\"",
     "dev:ui": "vite",
     "dev:api": "nodemon ./src/bin/server.js",
-    "dev:hmr": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"nodemon ./src/bin/server.js\" \"open-cli http://localhost:8081/ && vite\"",
+    "dev:hmr": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"HMR='true' nodemon ./src/bin/server.js\" \"open-cli http://localhost:8081/ && vite\"",
     "build": "npm run build:ui && npm run build:api",
     "build:ui": "vite build",
     "build:api": "echo does not need to build!",

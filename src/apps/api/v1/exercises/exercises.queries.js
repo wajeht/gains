@@ -30,13 +30,28 @@ export function getExerciseByUserId(uid) {
 }
 
 /**
- * Search for an exercise name in the database and return the results.
+ * "Search for an exercise name in the database, given a user id, exercise category id, and exercise
+ * name."
+ *
+ * The function takes in three parameters:
+ *
+ * name: the name of the exercise
+ * uid: the user id of the user
+ * ecid: the exercise category id of the exercise category
+ * The function returns a promise that resolves to an array of objects. Each object represents an
+ * exercise
  * @param name - the name of the exercise
- * @param uid - the user id
+ * @param uid - user id
+ * @param ecid - exercise category id
  * @returns An array of objects
  */
-export function searchExerciseName(name, uid) {
-  return db.select('*').from('exercises').where({ user_id: uid }).andWhereLike('name', `%${name}%`);
+export function searchExerciseName(name, uid, ecid) {
+  return db
+    .select('*')
+    .from('exercises')
+    .where({ user_id: uid })
+    .andWhere({ exercise_category_id: ecid })
+    .andWhereLike('name', name);
 }
 
 /**
