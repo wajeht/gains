@@ -22,14 +22,9 @@ const route = useRoute();
 
 const random_uuid = ref(uuidv4());
 
-const blocks = reactive({
-  items: [],
-});
+const categories = ref([]);
 
 const name = ref('');
-const description = ref('');
-const start_date = ref('');
-const end_date = ref('');
 const user_id = ref(userStore.user.id);
 
 const previousPageName = ref('');
@@ -41,12 +36,13 @@ const alert = reactive({
 
 onMounted(async () => {
   appStore.loading = true;
-  blocks.items = await getUserBlocks();
+  const data = await getUserExerciseCategories();
+  categories.value = data;
   appStore.loading = false;
 });
 
 onMounted(() => {
-  document.body.appendChild(document.getElementById(`add-a-block-${random_uuid.value}`));
+  document.body.appendChild(document.getElementById(`add-a-category-${random_uuid.value}`));
 });
 
 onMounted(() => {
@@ -55,9 +51,9 @@ onMounted(() => {
   previousPageName.value = capitalizeAWord(back);
 });
 
-async function getUserBlocks() {
+async function getUserExerciseCategories() {
   try {
-    const res = await api.get(`/api/v1/blocks?user_id=${userStore.user.id}`);
+    const res = await api.get(`/api/v1/exercise-categories?user_id=${userStore.user.id}`);
     const json = await res.json();
 
     if (!res.ok) {
@@ -81,22 +77,21 @@ async function getUserBlocks() {
   }
 }
 
-async function addABlock() {
+async function addAExerciseCategory() {
   try {
-    const block = {
+    const category = {
       name: name.value,
-      description: description.value,
-      start_date: start_date.value,
-      end_date: end_date.value,
       user_id: user_id.value,
     };
 
     loading.value = true;
 
-    const res = await api.post(`/api/v1/blocks`, block);
+    const res = await api.post(`/api/v1/exercise-categories`, category);
     const json = await res.json();
 
     if (!res.ok) {
+      loading.value = false;
+      clearDataAndDismissModal();
       if (json.errors) {
         throw json.errors;
       } else {
@@ -104,7 +99,7 @@ async function addABlock() {
       }
     }
 
-    blocks.items.unshift(block);
+    categories.value.unshift(category);
 
     clearDataAndDismissModal();
 
@@ -126,13 +121,10 @@ function clearDataAndDismissModal() {
   alert.msg = '';
 
   name.value = '';
-  description.value = '';
-  start_date.value = '';
-  end_date.value = '';
   user_id.value = userStore.user.id;
 
   const modal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById(`add-a-block-${random_uuid.value}`),
+    document.getElementById(`add-a-category-${random_uuid.value}`),
   );
   modal.hide();
 }
@@ -159,7 +151,7 @@ function clearDataAndDismissModal() {
         class="link-secondary"
         role="button"
         data-bs-toggle="modal"
-        :data-bs-target="`#add-a-block-${random_uuid}`"
+        :data-bs-target="`#add-a-category-${random_uuid}`"
       >
         <!-- add btn -->
         <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
@@ -168,9 +160,9 @@ function clearDataAndDismissModal() {
 
         <!-- modal -->
         <form
-          @submit.prevent="addABlock()"
+          @submit.prevent="addAExerciseCategory()"
           class="modal fade px-2 pt-5"
-          :id="`add-a-block-${random_uuid}`"
+          :id="`add-a-category-${random_uuid}`"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
           tabindex="-1"
@@ -178,7 +170,7 @@ function clearDataAndDismissModal() {
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Add a block</h5>
+                <h5 class="modal-title">Add a exercise category</h5>
                 <button
                   @click="clearDataAndDismissModal()"
                   type="button"
@@ -188,52 +180,16 @@ function clearDataAndDismissModal() {
                 ></button>
               </div>
               <div class="modal-body">
-                <!-- block name -->
+                <!-- exercise category name -->
                 <div class="mb-3">
-                  <label for="block-name" class="form-label">Block name*</label>
+                  <label for="exercise-category-name" class="form-label"
+                    >Exercise category name*</label
+                  >
                   <input
                     v-model="name"
-                    id="block-name"
+                    id="exercise-category-name"
                     class="form-control form-control-sm"
                     type="text"
-                    required
-                    :disabled="loading"
-                  />
-                </div>
-
-                <!-- block description -->
-                <div class="mb-2">
-                  <label for="block-description" class="form-label">Block description</label>
-                  <textarea
-                    v-model="description"
-                    class="form-control form-control-sm"
-                    id="block-description"
-                    rows="3"
-                    :disabled="loading"
-                  ></textarea>
-                </div>
-
-                <!-- block start date -->
-                <div class="mb-3">
-                  <label for="block-start-date" class="form-label">Start date*</label>
-                  <input
-                    v-model="start_date"
-                    id="block-start-date"
-                    class="form-control form-control-sm"
-                    type="datetime-local"
-                    required
-                    :disabled="loading"
-                  />
-                </div>
-
-                <!-- block end date -->
-                <div class="mb-3">
-                  <label for="block-start-date" class="form-label">End date*</label>
-                  <input
-                    v-model="end_date"
-                    id="block-end-date"
-                    class="form-control form-control-sm"
-                    type="datetime-local"
                     required
                     :disabled="loading"
                   />
@@ -270,7 +226,7 @@ function clearDataAndDismissModal() {
         <a
           class="link-dark"
           role="button"
-          :id="`block-header-dropdown-${random_uuid}`"
+          :id="`category-header-dropdown-${random_uuid}`"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
@@ -334,19 +290,19 @@ function clearDataAndDismissModal() {
           <!-- individual blocks -->
           <div class="list-group">
             <router-link
-              v-for="block in blocks.items"
+              v-for="category in categories"
               to=""
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                  <h6 class="mb-0">{{ block.name }}</h6>
-                  <p class="mb-0 opacity-75">{{ block.description }}</p>
+                  <h6 class="mb-0">{{ category.name }}</h6>
+                  <!-- <p class="mb-0 opacity-75">{{ block.description }}</p> -->
                 </div>
               </div>
               <small class="opacity-50 d-flex flex-column gap-2">
-                <span>{{ dayjs(block.start_date).format('YY/MM/DD') }}</span>
-                <span>{{ dayjs(block.end_date).format('YY/MM/DD') }}</span>
+                <!-- <span>{{ dayjs(block.start_date).format('YY/MM/DD') }}</span> -->
+                <!-- <span>{{ dayjs(block.end_date).format('YY/MM/DD') }}</span> -->
               </small>
             </router-link>
           </div>
