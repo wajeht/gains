@@ -1,6 +1,7 @@
 import * as ExercisesQueries from './exercises.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../libs/logger.js';
+import CustomError from '../../api.errors.js';
 
 export async function getExercises(req, res) {
   const uid = req.query.user_id;

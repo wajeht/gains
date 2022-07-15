@@ -1,6 +1,7 @@
 import * as ExerciseCategoriesQueries from './exercise-categories.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../libs/logger.js';
+import CustomError from '../../api.errors.js';
 
 /**
  * It fetches all exercise categories from the database and returns them to the client
