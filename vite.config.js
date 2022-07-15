@@ -1,13 +1,15 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { vue_port, port } from './src/config/env.js';
+import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 export default defineConfig({
   server: {
-    port: vue_port,
+    port: process.env.VUE_PORT,
     proxy: {
       '/api': {
-        target: `http://localhost:${port}`,
+        target: `http://localhost:${process.env.PORT}`,
         changeOrigin: false,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
