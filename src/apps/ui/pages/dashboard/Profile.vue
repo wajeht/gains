@@ -94,7 +94,7 @@ async function logout() {
 <template>
   <DashboardHeader />
   <div class="container px-3">
-    <div class="my-3 d-flex flex-column gap-3" data-aos="fade-up">
+    <div class="my-3 d-flex flex-column gap-3">
       <!-- alert -->
       <div
         v-if="alert.type"

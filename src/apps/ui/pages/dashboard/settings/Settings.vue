@@ -4,7 +4,7 @@
 
   <!-- settings -->
   <div class="container px-3">
-    <div class="flex flex-column justify-content-between my-3" data-aos="fade-up">
+    <div class="flex flex-column justify-content-between my-3">
       <!-- setting items -->
       <div class="d-flex flex-column gap-3">
         <!-- account -->
@@ -14,8 +14,10 @@
 
           <div class="list-group">
             <!-- user details -->
-            <router-link to="/dashboard/settings/account/user-details"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/account/user-details"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">User details</h6>
@@ -30,7 +32,9 @@
                 <div>
                   <h6 class="mb-0">
                     Delete your account
-                    <small class="bg-danger text-white px-1 rounded" style="padding-bottom: 2.5px">warning</small>
+                    <small class="bg-danger text-white px-1 rounded" style="padding-bottom: 2.5px"
+                      >warning</small
+                    >
                   </h6>
                   <p class="mb-0 opacity-75">This action cannot be revert back to normal state!</p>
                 </div>
@@ -89,8 +93,10 @@
             </a>
 
             <!-- send -->
-            <router-link to="/dashboard/settings/others/send-feedback"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/others/send-feedback"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Send Feedback</h6>
               </div>
@@ -104,16 +110,20 @@
             </a>
 
             <!-- terms -->
-            <router-link to="/dashboard/settings/others/terms"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/others/terms"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Terms of Service</h6>
               </div>
             </router-link>
 
             <!-- privacy -->
-            <router-link to="/dashboard/settings/others/privacy"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/others/privacy"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Privacy Policy</h6>
               </div>
@@ -134,11 +144,19 @@
           <!-- copyright -->
           <small>
             Made with ❤️ by
-            <a href="https://www.github.com/wajeht" class="link-secondary text-decoration-none"
-              target="_blank">@wajeht</a>
+            <a
+              href="https://www.github.com/wajeht"
+              class="link-secondary text-decoration-none"
+              target="_blank"
+              >@wajeht</a
+            >
             and other
-            <a href="https://www.github.com/allkindsofgains" class="link-secondary text-decoration-none"
-              target="_blank">contributors</a>
+            <a
+              href="https://www.github.com/allkindsofgains"
+              class="link-secondary text-decoration-none"
+              target="_blank"
+              >contributors</a
+            >
           </small>
         </span>
       </div>

@@ -2,7 +2,7 @@
   <DashboardHeader />
 
   <div class="container px-3">
-    <div class="my-3 d-flex flex-column gap-3" data-aos="fade-up">
+    <div class="my-3 d-flex flex-column gap-3">
       <!-- calculator -->
       <div>
         <!-- title -->
@@ -13,8 +13,10 @@
 
         <!-- rpe -->
         <div class="list-group">
-          <router-link to="/dashboard/tools/calculators/rpe-calculator"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/calculators/rpe-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">RPE Calculator</h6>
@@ -27,8 +29,10 @@
           </router-link>
 
           <!-- plate loader -->
-          <router-link to="/dashboard/tools/calculators/plate-calculator"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/calculators/plate-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Plate Calculator</h6>
@@ -39,13 +43,17 @@
           </router-link>
 
           <!-- 1rm -->
-          <router-link to="/dashboard/tools/calculators/one-rep-max-calculator"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/calculators/one-rep-max-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">
                   One Rep Max Calculator
-                  <small class="bg-success text-white px-1 rounded" style="padding-bottom: 2.5px">new</small>
+                  <small class="bg-success text-white px-1 rounded" style="padding-bottom: 2.5px"
+                    >new</small
+                  >
                 </h6>
                 <p class="mb-0 opacity-75">
                   Calculator your one rep max of a lift and tell your friends!
@@ -56,8 +64,10 @@
           </router-link>
 
           <!-- attempt  -->
-          <router-link to="/dashboard/tools/calculators/attempt-selection-calculator"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/calculators/attempt-selection-calculator"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Meet Attempt Selection Calculator</h6>

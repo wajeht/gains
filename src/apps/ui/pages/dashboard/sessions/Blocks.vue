@@ -323,7 +323,7 @@ function clearDataAndDismissModal() {
 
   <!-- content -->
   <div class="container px-3">
-    <div class="flex flex-column justify-content-between my-3" data-aos="fade-up">
+    <div class="flex flex-column justify-content-between my-3">
       <div class="d-flex flex-column gap-3">
         <!-- alert -->
         <div
