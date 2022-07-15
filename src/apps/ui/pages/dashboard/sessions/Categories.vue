@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 
 import { v4 as uuidv4 } from 'uuid';
 import { ref, reactive, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import useUserStore from '../../../store/user.store.js';
 import useAppStore from '../../../store/app.store.js';
@@ -19,6 +19,7 @@ import useAppStore from '../../../store/app.store.js';
 const userStore = useUserStore();
 const appStore = useAppStore();
 const route = useRoute();
+const router = useRouter();
 
 const random_uuid = ref(uuidv4());
 
@@ -46,8 +47,8 @@ onMounted(() => {
 });
 
 onMounted(() => {
-  let back = route.fullPath.split('/');
-  back = back[back.length - 2];
+  let back = router.options.history.state.back.split('/');
+  back = back[back.length - 1];
   previousPageName.value = capitalizeAWord(back);
 });
 
