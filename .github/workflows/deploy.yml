@@ -22,6 +22,7 @@ jobs:
         DB_PORT: ${{ secrets.DB_PORT }}
         DB_URL: ${{ secrets.DB_URL }}
         PORT: ${{ secrets.PORT }}
+        VUE_PORT: ${{ secrets.VUE_PORT }}
         ENV: ${{ secrets.ENV }}
         COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
         COOKIE_EXPIRATION: ${{ secrets.COOKIE_EXPIRATION }}
@@ -42,6 +43,7 @@ jobs:
         DB_PORT="$DB_PORT"
         DB_URL="$DB_URL"
         PORT="$PORT"
+        VUE_PORT="$VUE_PORT"
         ENV="$ENV"
         COOKIE_SECRET="$COOKIE_SECRET"
         COOKIE_EXPIRATION="$COOKIE_EXPIRATION"
