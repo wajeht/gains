@@ -215,12 +215,28 @@ function clearDataAndDismissModal() {
               </div>
               <div class="modal-body">
                 <!-- exercise category name -->
+                <div v-if="!categories.length" class="mb-3">
+                  <div class="alert alert-warning p-2">
+                    <small
+                      >Exercise categories must be defined before being able to add new exercises.
+                      <router-link
+                        @click="clearDataAndDismissModal()"
+                        class="alert-link"
+                        to="/dashboard/sessions/categories?model=true"
+                        >Click here!</router-link
+                      >
+                      to add exercise categories!</small
+                    >
+                  </div>
+                </div>
+
+                <!-- exercise category name -->
                 <div class="mb-3">
                   <span class="d-flex gap-1">
                     <label for="exercise-category-name" class="form-label"
                       >Exercise category name*</label
                     >
-                    <span v-tooltip title="Add via Blocks page!"
+                    <span v-tooltip title="Add via categories page!"
                       ><i class="bi bi-question-circle"></i
                     ></span>
                   </span>
@@ -228,7 +244,7 @@ function clearDataAndDismissModal() {
                     id="exercise-category-name"
                     class="form-control form-select form-select-sm"
                     v-model="exercise_category_id"
-                    :disabled="loading"
+                    :disabled="loading || categories.length === 0"
                     required
                   >
                     <option selected value="" disabled>Select a exercise category!</option>
