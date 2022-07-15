@@ -36,6 +36,9 @@ export const cookie = {
 /* Exporting the port number from the .env file. */
 export const port = process.env.PORT;
 
+/* This is the port that the Vue.js application will be running on. */
+export const vue_port = process.env.VUE_PORT;
+
 /* Exporting the environment variable `ENV` from the .env file. */
 export const env = process.env.ENV;
 
