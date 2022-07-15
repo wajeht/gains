@@ -216,9 +216,14 @@ function clearDataAndDismissModal() {
               <div class="modal-body">
                 <!-- exercise category name -->
                 <div class="mb-3">
-                  <label for="exercise-category-name" class="form-label"
-                    >Exercise category name*</label
-                  >
+                  <span class="d-flex gap-1">
+                    <label for="exercise-category-name" class="form-label"
+                      >Exercise category name*</label
+                    >
+                    <span v-tooltip title="Add via Blocks page!"
+                      ><i class="bi bi-question-circle"></i
+                    ></span>
+                  </span>
                   <select
                     id="exercise-category-name"
                     class="form-control form-select form-select-sm"
@@ -336,7 +341,35 @@ function clearDataAndDismissModal() {
         <!-- blocks -->
         <div>
           <!-- title -->
-          <h5><i class="bi bi-person-fill"></i> Exercises</h5>
+          <ul class="nav nav-tabs border-0">
+            <li class="nav-item">
+              <router-link
+                class="nav-link"
+                :class="{ active: $route.name === 'Exercises' }"
+                to="/dashboard/sessions/exercises"
+              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5></router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
+                class="nav-link"
+                :class="{ active: $route.name === 'Categories' }"
+                to="/dashboard/sessions/categories"
+              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5></router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
+                class="nav-link"
+                :class="{ active: $route.name === 'Blocks' }"
+                to="/dashboard/sessions/blocks"
+              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5></router-link
+              >
+            </li>
+          </ul>
 
           <!-- individual blocks -->
           <div class="list-group">

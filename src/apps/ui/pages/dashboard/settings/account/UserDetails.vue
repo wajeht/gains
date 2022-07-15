@@ -12,13 +12,16 @@ const appStore = useAppStore();
 
 const edit_personal_info = ref(true);
 const edit_account_info = ref(true);
+
 const first_name = ref('');
 const last_name = ref('');
+const birth_date = ref('');
+const weight = ref('');
+
 const email = ref('');
 const username = ref('');
 const password = ref('');
-const birth_date = ref(null);
-const weight = ref(null);
+
 const alert = reactive({
   type: '',
   msg: '',
@@ -47,6 +50,7 @@ async function updatePersonalInformation() {
       weight: weight.value,
     };
 
+    // only grab values which are not empty
     const validUser = pickBy(user, (value, key) => value !== '');
 
     // prettier-ignore
