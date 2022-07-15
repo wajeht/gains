@@ -8,12 +8,13 @@ export const postCreateSession = [
   body().custom((data) => {
     const availableFields = [
       'user_id',
-      'session_name',
+      'name',
       'block_id',
       'start_date',
       'end_date',
       'body_weight',
       'hours_of_sleep',
+      'caffeine_intake',
       'session_rpe',
       'notes',
     ];
@@ -34,7 +35,7 @@ export const postCreateSession = [
       }
       return true;
     }),
-  body('session_name').trim().notEmpty().withMessage('Session name must not be empty!'),
+  body('name').trim().notEmpty().withMessage('Session name must not be empty!'),
   body('start_date')
     .trim()
     .notEmpty()
@@ -66,6 +67,11 @@ export const postCreateSession = [
     .trim()
     .isFloat()
     .withMessage('Session RPE must be an integer format!'),
+  body('caffeine_intake')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('caffeine_intake must be an integer format!'),
   body('notes')
     .optional()
     .trim()
@@ -93,10 +99,5 @@ export const getSession = [
     .notEmpty()
     .withMessage('The value must not be empty!')
     .isInt()
-    .withMessage('The value must be an ID!')
-    .custom(async (sid) => {
-      const session = await SessionsQueries.getSessionBySessionId(sid);
-      if (session.length === 0) throw new Error(`SessionID: ${sid} does not exist!`);
-      return true;
-    }),
+    .withMessage('The value must be an ID!'),
 ];
