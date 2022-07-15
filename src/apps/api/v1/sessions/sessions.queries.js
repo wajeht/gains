@@ -22,10 +22,20 @@ export function getSessionsByUserId(user_id) {
 }
 
 /**
- * Get the session from the database by the session id.
- * @param sid - The session ID.
+ * It gets a session by its session id
+ * @param sid - The session id
  * @returns An array of objects
  */
-export function getSessionBySessionId(sid) {
-  return db.select('*').from('sessions').where({ id: sid });
+export async function getSessionBySessionId(sid) {
+  const joined = await db
+    .select('*', 'sessions.name as name', 'blocks.name as block_name')
+    .from('sessions')
+    .innerJoin('blocks', { 'blocks.id': 'sessions.block_id' })
+    .where({ 'sessions.id': sid });
+
+  if (!joined.length) {
+    return db.select('*').from('sessions').where({ id: sid });
+  }
+
+  return joined;
 }
