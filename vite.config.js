@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { vue_port } from './src/config/env.js';
+import { vue_port, port } from './src/config/env.js';
 
 export default defineConfig({
   server: {
     port: vue_port,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: `http://localhost:${port}`,
         changeOrigin: false,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
