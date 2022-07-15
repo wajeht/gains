@@ -4,15 +4,7 @@
     <div class="text-center px-4 pb-5 border-bottom mx-auto">
       <!-- alert -->
       <div
-        class="
-          alert alert-warning
-          mb-3
-          py-2
-          mx-auto
-          px-3
-          animate__animated animate__fadeInDown
-          d-block
-        "
+        class="alert alert-warning mb-3 py-2 mx-auto px-3 animate__animated animate__fadeInDown d-block"
         style="width: fit-content"
       >
         <small>
@@ -105,13 +97,13 @@
 </template>
 
 <script>
-  import Typed from 'typed.js';
+import Typed from 'typed.js';
 
-  export default {
-    data() {
-      return {
-        title: '',
-      };
-    },
-  };
+export default {
+  data() {
+    return {
+      title: '',
+    };
+  },
+};
 </script>

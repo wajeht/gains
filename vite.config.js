@@ -1,7 +1,18 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import { vue_port, port } from './src/config/env.js';
 
 export default defineConfig({
+  server: {
+    port: vue_port,
+    proxy: {
+      '/api': {
+        target: `http://localhost:${port}`,
+        changeOrigin: false,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
+  },
   plugins: [
     vue({
       // reactivityTransform: true, // to use .value on reactive values
