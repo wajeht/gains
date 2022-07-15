@@ -26,7 +26,7 @@ onMounted(async () => {
     const res = await api.get(`/api/v1/sessions?user_id=${userStore.user.id}`);
     const json = await res.json();
 
-    sessions.value = json.data;
+    sessions.value = json.data || [];
 
     appStore.loading = false;
   } catch (e) {

@@ -37,7 +37,7 @@ const alert = reactive({
 onMounted(async () => {
   appStore.loading = true;
   const data = await getUserExerciseCategories();
-  categories.value = data;
+  categories.value = data || [];
   appStore.loading = false;
 });
 
@@ -57,6 +57,7 @@ async function getUserExerciseCategories() {
     const json = await res.json();
 
     if (!res.ok) {
+      loading.value = false;
       if (json.errors) {
         throw json.errors;
       } else {
@@ -145,7 +146,7 @@ function clearDataAndDismissModal() {
     </span>
 
     <!-- settings group -->
-    <span class="d-flex gap-2">
+    <span class="d-flex justify-content-center align-items-center gap-2">
       <!-- add group -->
       <span
         class="link-secondary"
@@ -202,12 +203,12 @@ function clearDataAndDismissModal() {
                   @click="clearDataAndDismissModal()"
                   v-if="!loading"
                   type="reset"
-                  class="btn btn-secondary"
+                  class="btn btn-outline-danger"
                   data-bs-dismiss="modal"
                 >
                   Cancel
                 </button>
-                <button type="submit" class="btn btn-dark" :disabled="loading">
+                <button type="submit" class="btn btn-dark" :disabled="loading || name.length === 0">
                   <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>

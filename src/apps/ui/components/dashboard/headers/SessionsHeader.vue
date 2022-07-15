@@ -227,8 +227,8 @@ async function addASession() {
                   :disabled="loading"
                 />
                 <label class="form-check-label" for="show-hide-button">
-                  <span v-if="!showHideOtherFields">Show</span>
-                  <span v-if="showHideOtherFields">Hide</span>
+                  <span v-if="!showHideOtherFields">Enable</span>
+                  <span v-if="showHideOtherFields">Disable</span>
                   <span> other fields</span>
                 </label>
               </div>
@@ -294,7 +294,7 @@ async function addASession() {
                 v-if="!loading"
                 ref="addASessionDismissButton"
                 type="reset"
-                class="btn btn-secondary"
+                class="btn btn-outline-danger"
                 data-bs-dismiss="modal"
               >
                 Cancel

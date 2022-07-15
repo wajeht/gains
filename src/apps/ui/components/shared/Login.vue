@@ -125,6 +125,7 @@
 <script>
 import Or from './Or.vue';
 import useUserStore from '../../store/user.store.js';
+import { isMobile } from '../../../../utils/helpers.js';
 
 export default {
   components: {
@@ -145,7 +146,7 @@ export default {
     };
   },
   mounted() {
-    if (navigator.userAgentData.mobile) this.signupLink = '/dashboard/signup';
+    if (isMobile) this.signupLink = '/dashboard/signup';
   },
   methods: {
     async reSendVerificationEmail() {
