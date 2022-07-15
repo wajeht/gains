@@ -2,7 +2,7 @@
 import SessionsHeader from '../../../components/dashboard/headers/SessionsHeader.vue';
 
 import dayjs from 'dayjs';
-import { onMounted, ref, reactive } from 'vue';
+import { onMounted, ref, reactive, onUpdated } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { sleep } from '../../../../../utils/helpers.js';
@@ -50,7 +50,8 @@ function logDetails(sid) {
       <div
         v-for="session in sessions"
         :key="`session-${session}`"
-        data-aos="fade-up"
+        data-aos="fadeUp"
+        data-aos-anchor-placement="top"
         class="card"
         id="log"
       >
