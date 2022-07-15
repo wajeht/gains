@@ -8,8 +8,9 @@
             Data intensive tracking. <span class="text-muted">It’ll blow your mind.</span>
           </h2>
           <p class="lead">
-            Some great placeholder content for the first featurette here. Imagine some exciting
-            prose here.
+            We take every piece of data that you give and formulate insightful and accurate
+            graphics. Consider your sleep, diet, workouts and progress at a glance with our
+            aggregation algorithm.
           </p>
         </div>
         <div class="col-md-5">
@@ -70,8 +71,7 @@
             A bunch of calculators. <span class="text-muted">It’ll blow your mind.</span>
           </h2>
           <p class="lead">
-            Some great placeholder content for the first featurette here. Imagine some exciting
-            prose here.
+            Anxious to know where you're at? Find one of our many calculators and give it a whirl.
           </p>
         </div>
         <div class="col-md-5">
