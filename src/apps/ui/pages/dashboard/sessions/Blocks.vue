@@ -41,7 +41,8 @@ const alert = reactive({
 
 onMounted(async () => {
   appStore.loading = true;
-  blocks.items = await getUserBlocks();
+  const data = await getUserBlocks();
+  blocks.items = data || [];
   appStore.loading = false;
 });
 
@@ -97,6 +98,8 @@ async function addABlock() {
     const json = await res.json();
 
     if (!res.ok) {
+      loading.value = false;
+      clearDataAndDismissModal();
       if (json.errors) {
         throw json.errors;
       } else {
@@ -153,7 +156,7 @@ function clearDataAndDismissModal() {
     </span>
 
     <!-- settings group -->
-    <span class="d-flex gap-2">
+    <span class="d-flex justify-content-center align-items-center gap-2">
       <!-- add group -->
       <span
         class="link-secondary"
@@ -209,7 +212,7 @@ function clearDataAndDismissModal() {
                     class="form-control form-control-sm"
                     id="block-description"
                     rows="3"
-                    :disabled="loading"
+                    :disabled="loading || name.length === 0"
                   ></textarea>
                 </div>
 
@@ -222,7 +225,7 @@ function clearDataAndDismissModal() {
                     class="form-control form-control-sm"
                     type="datetime-local"
                     required
-                    :disabled="loading"
+                    :disabled="loading || description.length === 0"
                   />
                 </div>
 
@@ -235,7 +238,7 @@ function clearDataAndDismissModal() {
                     class="form-control form-control-sm"
                     type="datetime-local"
                     required
-                    :disabled="loading"
+                    :disabled="loading || start_date.length === 0"
                   />
                 </div>
               </div>
@@ -246,12 +249,16 @@ function clearDataAndDismissModal() {
                   @click="clearDataAndDismissModal()"
                   v-if="!loading"
                   type="reset"
-                  class="btn btn-secondary"
+                  class="btn btn-outline-danger"
                   data-bs-dismiss="modal"
                 >
                   Cancel
                 </button>
-                <button type="submit" class="btn btn-dark" :disabled="loading">
+                <button
+                  type="submit"
+                  class="btn btn-dark"
+                  :disabled="loading || end_date.length === 0"
+                >
                   <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>

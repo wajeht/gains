@@ -39,10 +39,10 @@ const alert = reactive({
 onMounted(async () => {
   appStore.loading = true;
   const data = await getUserExercise();
-  exercises.value = data;
+  exercises.value = data || [];
 
   const c = await getUserExerciseCategories();
-  categories.value = c;
+  categories.value = c || [];
   appStore.loading = false;
 });
 
@@ -118,8 +118,6 @@ async function addAExercise() {
 
     loading.value = true;
 
-    console.log(exercise);
-
     const res = await api.post(`/api/v1/exercises`, exercise);
     const json = await res.json();
 
@@ -133,7 +131,7 @@ async function addAExercise() {
       }
     }
 
-    exercises.value.unshift(category);
+    exercises.value.unshift(exercise);
 
     clearDataAndDismissModal();
 
@@ -180,7 +178,7 @@ function clearDataAndDismissModal() {
     </span>
 
     <!-- settings group -->
-    <span class="d-flex gap-2">
+    <span class="d-flex justify-content-center align-items-center gap-2">
       <!-- add group -->
       <span
         class="link-secondary"
@@ -243,7 +241,7 @@ function clearDataAndDismissModal() {
                     class="form-control form-control-sm"
                     type="text"
                     required
-                    :disabled="loading"
+                    :disabled="loading || exercise_category_id.length === 0"
                   />
                 </div>
               </div>
@@ -254,12 +252,12 @@ function clearDataAndDismissModal() {
                   @click="clearDataAndDismissModal()"
                   v-if="!loading"
                   type="reset"
-                  class="btn btn-secondary"
+                  class="btn btn-outline-danger"
                   data-bs-dismiss="modal"
                 >
                   Cancel
                 </button>
-                <button type="submit" class="btn btn-dark" :disabled="loading">
+                <button type="submit" class="btn btn-dark" :disabled="loading || name.length === 0">
                   <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
