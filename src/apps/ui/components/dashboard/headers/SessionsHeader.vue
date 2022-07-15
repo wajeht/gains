@@ -21,9 +21,10 @@ const blocks = reactive({
   items: [],
 });
 
-const session_name = ref('');
+const name = ref('');
 const start_date = ref(dayjs().format('YYYY-MM-DDTHH:mm'));
 const user_id = ref(userStore.user.id);
+const caffeine_intake = ref('');
 const block_id = ref('');
 const body_weight = ref('');
 const hours_of_sleep = ref('');
@@ -37,7 +38,8 @@ const alert = reactive({
 });
 
 onMounted(async () => {
-  blocks.items = await getUserBlocks();
+  const data = await getUserBlocks();
+  blocks.items = data || [];
 });
 
 onMounted(() => {
@@ -74,12 +76,13 @@ async function getUserBlocks() {
 function clearDataAndDismissModal() {
   alert.type = '';
   alert.msg = '';
-  session_name.value = '';
+  name.value = '';
   start_date.value = dayjs().format('YYYY-MM-DDTHH:mm');
   user_id.value = userStore.user.id;
   block_id.value = '';
   body_weight.value = '';
   hours_of_sleep.value = '';
+  caffeine_intake.value = '';
   notes.value = '';
   const modal = bootstrap.Modal.getOrCreateInstance(
     document.getElementById(`add-a-session-${random_uuid.value}`),
@@ -90,11 +93,12 @@ function clearDataAndDismissModal() {
 async function addASession() {
   try {
     const session = {
-      session_name: session_name.value,
+      name: name.value,
       start_date: dayjs().format('YYYY-MM-DDTHH:mm'),
       user_id: (user_id.value = userStore.user.id),
       block_id: block_id.value,
       body_weight: body_weight.value,
+      caffeine_intake: caffeine_intake.value,
       hours_of_sleep: hours_of_sleep.value,
       notes: notes.value,
     };
@@ -192,10 +196,10 @@ async function addASession() {
 
               <!-- session name -->
               <div class="mb-3">
-                <label for="session-name" class="form-label">Session name*</label>
+                <label for="session-header-session-name" class="form-label">Session name*</label>
                 <input
-                  v-model="session_name"
-                  id="session-name"
+                  v-model="name"
+                  id="session-header-session-name"
                   class="form-control form-control-sm"
                   type="text"
                   required
@@ -205,10 +209,10 @@ async function addASession() {
 
               <!-- start time -->
               <div class="mb-3">
-                <label for="start-time" class="form-label">Start time*</label>
+                <label for="session-header-start-time" class="form-label">Start time*</label>
                 <input
                   v-model="start_date"
-                  id="start-time"
+                  id="session-header-start-time"
                   class="form-control form-control-sm"
                   type="datetime-local"
                   required
@@ -223,10 +227,10 @@ async function addASession() {
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
-                  id="show-hide-button"
+                  id="session-header-show-hide-button"
                   :disabled="loading"
                 />
-                <label class="form-check-label" for="show-hide-button">
+                <label class="form-check-label" for="session-header-show-hide-button">
                   <span v-if="!showHideOtherFields">Enable</span>
                   <span v-if="showHideOtherFields">Disable</span>
                   <span> other fields</span>
@@ -236,12 +240,12 @@ async function addASession() {
               <span v-if="showHideOtherFields">
                 <!-- block name -->
                 <div class="mb-3">
-                  <label for="block_id" class="form-label">Block name</label>
+                  <label for="session-header-block_id" class="form-label">Block name</label>
                   <select
-                    id="block_id"
+                    id="session-header-block_id"
                     class="form-control form-select form-select-sm"
                     v-model="block_id"
-                    :disabled="loading"
+                    :disabled="loading || blocks.items.length === 0"
                   >
                     <option selected value="" disabled>Select a block!</option>
                     <option v-for="block in blocks.items" :value="block.id">
@@ -252,10 +256,10 @@ async function addASession() {
 
                 <!-- bodyweight  -->
                 <div class="mb-3">
-                  <label for="bodyweight" class="form-label">Bodyweight</label>
+                  <label for="session-header-bodyweight" class="form-label">Bodyweight</label>
                   <input
                     v-model="body_weight"
-                    id="bodyweight"
+                    id="session-header-bodyweight"
                     class="form-control form-control-sm"
                     min="1"
                     type="number"
@@ -265,10 +269,25 @@ async function addASession() {
 
                 <!-- hours of sleep  -->
                 <div class="mb-3">
-                  <label for="sleep" class="form-label">Hours of sleep</label>
+                  <label for="session-header-sleep" class="form-label">Hours of sleep</label>
                   <input
                     v-model="hours_of_sleep"
-                    id="sleep"
+                    id="session-header-sleep"
+                    class="form-control form-control-sm"
+                    min="1"
+                    type="number"
+                    :disabled="loading"
+                  />
+                </div>
+
+                <!-- caffeine intake -->
+                <div class="mb-3">
+                  <label for="session-header-caffeine-intake" class="form-label"
+                    >Caffeine intake</label
+                  >
+                  <input
+                    v-model="caffeine_intake"
+                    id="session-header-caffeine-intake"
                     class="form-control form-control-sm"
                     min="1"
                     type="number"

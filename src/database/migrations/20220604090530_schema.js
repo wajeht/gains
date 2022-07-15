@@ -83,12 +83,13 @@ export async function up(knex) {
   await knex.schema.raw(`
     CREATE TABLE IF NOT EXISTS sessions (
       id                        SERIAL PRIMARY KEY,
-      session_name              VARCHAR(500) NOT NULL,
+      name                      VARCHAR(500) NOT NULL,
       block_id                  INT REFERENCES blocks on DELETE CASCADE,
       start_date                TIMESTAMP NOT NULL DEFAULT NOW(),
       end_date                  TIMESTAMP DEFAULT NULL,
       body_weight               INT DEFAULT NULL,
       hours_of_sleep            INT DEFAULT NULL,
+      caffeine_intake           INT DEFAULT NULL,
       session_rpe               INT DEFAULT NULL,
       deleted                   BOOLEAN DEFAULT FALSE,
       notes                     VARCHAR(1000) DEFAULT NULL,
