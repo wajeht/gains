@@ -50,8 +50,7 @@ function logDetails(sid) {
       <div
         v-for="session in sessions"
         :key="`session-${session}`"
-        data-aos="fadeUp"
-        data-aos-anchor-placement="top"
+        data-aos="fade-up"
         class="card"
         id="log"
       >
