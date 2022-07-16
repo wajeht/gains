@@ -28,13 +28,18 @@ export function getSessionsByUserId(user_id) {
  */
 export async function getSessionBySessionId(sid) {
   const joined = await db
-    .select('*', 'sessions.name as name', 'blocks.name as block_name')
+    .select(
+      '*',
+      'sessions.name as name',
+      'blocks.name as block_name',
+      'sessions.end_date as end_date',
+    )
     .from('sessions')
     .innerJoin('blocks', { 'blocks.id': 'sessions.block_id' })
     .where({ 'sessions.id': sid });
 
   if (!joined.length) {
-    return db.select('*').from('sessions').where({ id: sid });
+    return db.select('*', 'sessions.end_date as end_date').from('sessions').where({ id: sid });
   }
 
   return joined;

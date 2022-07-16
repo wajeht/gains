@@ -15,6 +15,8 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { faWeightScale } from '@fortawesome/free-solid-svg-icons';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { faMugHot } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -30,5 +32,7 @@ library.add(faAngleLeft);
 library.add(faWeightScale);
 library.add(faMoon);
 library.add(faMugHot);
+library.add(faClock);
+library.add(faCalendar);
 
 export default FontAwesomeIcon;

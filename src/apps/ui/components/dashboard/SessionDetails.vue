@@ -4,7 +4,12 @@ import SessionDetailsHeader from '../../components/dashboard/headers/SessionDeta
 
 // helpers
 import api from '../../../../libs/fetch-with-style.js';
-import { formatToGainsDateLocal, gainsCurrentDateTime, sleep } from '../../../../utils/helpers.js';
+import {
+  formatToGainsDateLocal,
+  gainsDateDisplay,
+  gainsCurrentDateTime,
+  sleep,
+} from '../../../../utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';
@@ -253,66 +258,76 @@ async function handleCompleteCurrentSession() {
                 </p>
 
                 <!-- icons group -->
-                <small class="card-text d-flex flex-column">
+                <small class="card-text card-text d-flex flex-column">
                   <!-- sleep -->
-                  <span>
+                  <span v-if="currentSessionDetails.hours_of_sleep">
                     <font-awesome-icon icon="fa-moon " class="me-1" />Sleep:
                     <span class="fw-light">{{ currentSessionDetails.hours_of_sleep }} hrs</span>
                   </span>
 
                   <!-- weight -->
-                  <span>
+                  <span v-if="currentSessionDetails.body_weight">
                     <font-awesome-icon icon="fa-weight-scale " class="me-1" />Weight:
                     <span class="fw-light">{{ currentSessionDetails.body_weight }} lbs</span>
                   </span>
 
                   <!-- caffeine -->
-                  <span>
+                  <span v-if="currentSessionDetails.caffeine_intake">
                     <font-awesome-icon icon="fa-mug-hot " class="me-1" />Caffeine:
                     <span class="fw-light">{{ currentSessionDetails.caffeine_intake }} mg</span>
                   </span>
 
                   <!-- block -->
-                  <span>
+                  <span v-if="currentSessionDetails.block_name">
                     <i class="bi bi-clipboard2-data-fill me-1"></i>Block:
                     <span class="fw-light">{{ currentSessionDetails.block_name }}</span>
+                  </span>
+
+                  <!-- start time -->
+                  <span v-if="currentSessionDetails.start_date">
+                    <font-awesome-icon icon="fa-clock" class="me-1" />Start:
+                    <span class="fw-light">{{
+                      dayjs(currentSessionDetails.start_date).format('h:mm A')
+                    }}</span>
+                  </span>
+
+                  <!-- end time -->
+                  <span v-if="currentSessionDetails.end_time">
+                    <font-awesome-icon icon="fa-clock" class="me-1" />End:
+                    <span class="fw-light">{{
+                      dayjs(currentSessionDetails.end_time).format('h:mm A')
+                    }}</span>
+                  </span>
+
+                  <!-- total -->
+                  <span v-if="total">
+                    <font-awesome-icon icon="fa-plus" class="me-1" />Total:
+                    <span class="fw-light">{{ total }} min</span>
                   </span>
                 </small>
               </div>
             </div>
           </div>
-          <div class="card-footer d-flex justify-content-between">
-            <!-- start time -->
-            <div class="d-flex flex-column align-items-center">
-              <small>{{ dayjs(currentSessionDetails.start_date).format('YY/MM/DD') }}</small>
-              <small>{{ dayjs(currentSessionDetails.start_date).format('h:mm A') }}</small>
-              <small class="text-muted">Start time</small>
-            </div>
 
-            <!-- end time -->
-            <div class="d-flex flex-column align-items-center">
-              <small>{{ dayjs(currentSessionDetails.end_date).format('YY/MM/DD') }}</small>
-              <small style="font-size: 0.7rem">{{
-                dayjs(currentSessionDetails.end_date).format('h:mm A')
-              }}</small>
-              <small class="text-muted">End time</small>
-            </div>
-
-            <!-- block -->
-            <div class="d-flex flex-column align-items-center">
-              <small>{{ total }} minutes</small>
-              <small class="text-muted">Total</small>
-            </div>
-          </div>
+          <small class="card-footer text-muted d-flex justify-content-between">
+            <span>
+              <font-awesome-icon icon="fa-calendar " class="me-1" />Date:
+              <span class="fw-light">{{ gainsDateDisplay(currentSessionDetails.created_at) }}</span>
+            </span>
+            <span class="text-warning fst-italic">
+              <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i>
+              <span>in progress.. </span>
+            </span>
+          </small>
         </div>
 
         <!-- lifts -->
         <div class="card p-0">
           <div class="card-body">
             <!-- header -->
-            <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
+            <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
               <!-- title -->
-              <span>beltless conventional deadlift</span>
+              <span>1. beltless conventional deadlift</span>
 
               <!-- options -->
               <span class="d-flex gap-2">
@@ -344,7 +359,7 @@ async function handleCompleteCurrentSession() {
                   </ul>
                 </div>
               </span>
-            </h5>
+            </h6>
 
             <!-- notes -->
             <p class="my-2 accordion-collapse collapse card-text beltless-contentional-deadlift">
@@ -353,80 +368,82 @@ async function handleCompleteCurrentSession() {
             </p>
 
             <!-- sets -->
-            <div
-              class="accordion-collapse collapse beltless-contentional-deadlift table-responsive"
-            >
-              <table class="table table-sm table-striped table-hover p-0 m-0">
-                <thead>
-                  <tr>
-                    <th class="text-center" scope="col">Set</th>
-                    <th class="text-center" scope="col"></th>
-                    <th class="text-center" scope="col">Rep</th>
-                    <th class="text-center" scope="col"></th>
-                    <th class="text-center" scope="col">Weight</th>
-                    <th class="text-start" scope="col"></th>
-                    <th class="text-start" scope="col">Rpe</th>
-                    <th class="text-start" scope="col">Notes</th>
-                    <th class="text-start" scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th class="text-center">1</th>
-                    <td class="text-center">x</td>
-                    <td class="text-center">12</td>
-                    <td class="text-center">x</td>
-                    <td class="text-center">225</td>
-                    <td class="text-start">@</td>
-                    <td class="text-start">7</td>
-                    <td class="text-start"><small>felt like shit</small></td>
-                    <td class="text-end">
-                      <small class="d-flex justify-content-between gap-2">
-                        <i class="bi bi-pencil"></i>
-                        <i class="bi bi-trash"></i>
-                      </small>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-center">2</th>
-                    <td class="text-center">x</td>
-                    <td class="text-center">11</td>
-                    <td class="text-center">x</td>
-                    <td class="text-center">235</td>
-                    <td class="text-start">@</td>
-                    <td class="text-start">8</td>
-                    <td class="text-start"><small>heavy</small></td>
-                    <td class="text-end">
-                      <small class="d-flex justify-content-between gap-2">
-                        <i class="bi bi-pencil"></i>
-                        <i class="bi bi-trash"></i>
-                      </small>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-center">3</th>
-                    <td class="text-center">x</td>
-                    <td class="text-center">12</td>
-                    <td class="text-center">x</td>
-                    <td class="text-center">245</td>
-                    <td class="text-start">@</td>
-                    <td class="text-start">8</td>
-                    <td class="text-start text-truncate">
-                      <small>
-                        heavy as fuck asdfasdfasdf adfasdfasdfasf fasdf as fas fasdf asda asf das
-                        fasf
-                      </small>
-                    </td>
-                    <td class="text-end">
-                      <small class="d-flex justify-content-between gap-2">
-                        <i class="bi bi-pencil"></i>
-                        <i class="bi bi-trash"></i>
-                      </small>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <small>
+              <div
+                class="accordion-collapse collapse beltless-contentional-deadlift table-responsive"
+              >
+                <table class="table table-sm table-striped table-hover p-0 m-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center" scope="col">Set</th>
+                      <th class="text-center" scope="col"></th>
+                      <th class="text-center" scope="col">Rep</th>
+                      <th class="text-center" scope="col"></th>
+                      <th class="text-center" scope="col">Weight</th>
+                      <th class="text-start" scope="col"></th>
+                      <th class="text-start" scope="col">Rpe</th>
+                      <th class="text-start" scope="col">Notes</th>
+                      <th class="text-start" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="text-center">1</th>
+                      <td class="text-center">x</td>
+                      <td class="text-center">12</td>
+                      <td class="text-center">x</td>
+                      <td class="text-center">225</td>
+                      <td class="text-start">@</td>
+                      <td class="text-start">7</td>
+                      <td class="text-start"><small>felt like shit</small></td>
+                      <td class="text-end">
+                        <small class="d-flex justify-content-between gap-2">
+                          <i class="bi bi-pencil"></i>
+                          <i class="bi bi-trash"></i>
+                        </small>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">2</th>
+                      <td class="text-center">x</td>
+                      <td class="text-center">11</td>
+                      <td class="text-center">x</td>
+                      <td class="text-center">235</td>
+                      <td class="text-start">@</td>
+                      <td class="text-start">8</td>
+                      <td class="text-start"><small>heavy</small></td>
+                      <td class="text-end">
+                        <small class="d-flex justify-content-between gap-2">
+                          <i class="bi bi-pencil"></i>
+                          <i class="bi bi-trash"></i>
+                        </small>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="text-center">3</th>
+                      <td class="text-center">x</td>
+                      <td class="text-center">12</td>
+                      <td class="text-center">x</td>
+                      <td class="text-center">245</td>
+                      <td class="text-start">@</td>
+                      <td class="text-start">8</td>
+                      <td class="text-start text-truncate">
+                        <small>
+                          heavy as fuck asdfasdfasdf adfasdfasdfasf fasdf as fas fasdf asda asf das
+                          fasf
+                        </small>
+                      </td>
+                      <td class="text-end">
+                        <small class="d-flex justify-content-between gap-2">
+                          <i class="bi bi-pencil"></i>
+                          <i class="bi bi-trash"></i>
+                        </small>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </small>
           </div>
 
           <!-- footer -->
