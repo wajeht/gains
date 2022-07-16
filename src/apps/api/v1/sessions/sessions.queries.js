@@ -39,3 +39,19 @@ export async function getSessionBySessionId(sid) {
 
   return joined;
 }
+
+/**
+ * Update a session in the database
+ * @param sid - session id
+ * @param uid - user id
+ * @param body - {
+ * @returns The updated session
+ */
+export async function updateSession(sid, uid, body) {
+  return db
+    .update(body)
+    .from('sessions')
+    .where({ id: sid })
+    .andWhere({ user_id: uid })
+    .returning('*');
+}

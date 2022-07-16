@@ -26,6 +26,30 @@ export async function postCreateSession(req, res) {
 }
 
 /**
+ * It updates a session with the given session id
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function patchSession(req, res) {
+  const body = req.body;
+  const sid = req.params.sid;
+
+  const fields = ['id', 'user_id'];
+  const b = omit(body, ...fields);
+
+  const updated = await SessionQueries.updateSession(sid, req.body.user_id, b);
+
+  logger.info(`User id ${req.body.user_id} has updated session details to ${JSON.stringify(b)}!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: updated,
+  });
+}
+
+/**
  * It fetches a session by its session id
  * @param req - The request object.
  * @param res - The response object.

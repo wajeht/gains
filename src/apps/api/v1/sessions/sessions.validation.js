@@ -101,3 +101,78 @@ export const getSession = [
     .isInt()
     .withMessage('The value must be an ID!'),
 ];
+
+export const patchSession = [
+  body().custom((data) => {
+    const availableFields = [
+      'name',
+      'block_id',
+      'start_date',
+      'end_date',
+      'body_weight',
+      'hours_of_sleep',
+      'caffeine_intake',
+      'session_rpe',
+      'notes',
+    ];
+    const fields = Object.keys(data).some((key) => availableFields.indexOf(key) >= 0);
+    if (!fields) throw new Error(`Must include ${availableFields.join(', ')} to update!`);
+    return true;
+  }),
+  body('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('User id must not be empty!')
+    .isInt()
+    .withMessage('User id must be an number!')
+    .custom(async (user_id) => {
+      if (user_id) {
+        const user = await UserQueries.findUserById(user_id);
+        if (user.length === 0) throw new Error('User does not exist!');
+      }
+      return true;
+    }),
+  body('name').optional().trim().notEmpty().withMessage('Session name must not be empty!'),
+  body('start_date')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Start date must not be empty!')
+    .isISO8601()
+    .toDate()
+    .withMessage('Start date must be in date format'),
+  body('end_date')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('End date must not be empty!')
+    .isISO8601()
+    .toDate()
+    .withMessage('End date must be in date format'),
+  body('block_id').optional().trim().isFloat().withMessage('Block ID must be an integer format!'),
+  body('body_weight')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('Body weight must be an integer format!'),
+  body('hours_of_sleep')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('Hours of sleep must be an integer format!'),
+  body('session_rpe')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('Session RPE must be an integer format!'),
+  body('caffeine_intake')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('caffeine_intake must be an integer format!'),
+  body('notes')
+    .optional()
+    .trim()
+    .isLength({ min: 1, max: 250 })
+    .withMessage('Notes must be at least 1 character long or less than 250 characters long'),
+];
