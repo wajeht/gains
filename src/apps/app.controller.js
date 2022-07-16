@@ -46,6 +46,7 @@ export function notFoundHandler(req, res, next) {
     status: 'fail',
     request_url: req.originalUrl,
     message: 'The resource does not exist!',
+    data: [],
   });
 }
 
@@ -82,10 +83,10 @@ export function errorHandler(err, req, res, next) {
     status: 'fail',
     request_url: req.originalUrl,
     errors: err?.errors,
-    data: [],
     message:
       env === 'development'
         ? err.stack
         : 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
+    data: [],
   });
 }

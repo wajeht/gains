@@ -2,11 +2,28 @@ import * as ExercisesQueries from './exercises.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../libs/logger.js';
 import CustomError from '../../api.errors.js';
+import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
 
 export async function getExercises(req, res) {
   const uid = req.query.user_id;
+  const ecid = req.query.exercise_category_id;
 
-  // when called via /api/v1/exercise-categories?user_id=1
+  // when called via /api/v1/exercises?exercise_category_id=1
+  if (ecid) {
+    const userExercisesByCategory =
+      await ExerciseCategoriesQueries.getExercisesByExerciseCategoryId(ecid);
+
+    if (!userExercisesByCategory.length) throw new CustomError.BadRequestError(`There are no exercises available for category id ${ecid}!`); // prettier-ignore
+
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      data: userExercisesByCategory,
+    });
+  }
+
+  // when called via /api/v1/exercises?user_id=1
   if (uid) {
     const userExercises = await ExercisesQueries.getExerciseByUserId(uid);
 

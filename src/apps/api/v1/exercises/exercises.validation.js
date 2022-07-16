@@ -19,6 +19,20 @@ export const getExercises = [
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
     }),
+  check('category_id')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('category_id must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('category_id must be an ID!')
+    .toInt()
+    .custom(async (ecid) => {
+      const user = await ExerciseCategoriesQueries.getExerciseCategoriesById(ecid);
+      if (user.length === 0) throw new Error('category_id does not exist!');
+      return true;
+    }),
 ];
 
 export const postExercise = [
