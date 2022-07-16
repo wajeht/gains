@@ -4,7 +4,7 @@ import SessionDetailsHeader from '../../components/dashboard/headers/SessionDeta
 
 // helpers
 import api from '../../../../libs/fetch-with-style.js';
-import { formatToGainsDateLocal } from '../../../../utils/helpers.js';
+import { formatToGainsDateLocal, gainsCurrentDateTime } from '../../../../utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';
@@ -12,13 +12,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 // vue
 import { ref, reactive, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 // stores
 import useUserStore from '../../store/user.store.js';
 
 // vue use
 const route = useRoute();
+const router = useRouter();
 const userStore = useUserStore();
 
 // props
@@ -176,7 +177,11 @@ function handleAddASet() {
 
 async function handleCompleteCurrentSession() {
   try {
-    const res = await api.get(`/api/v1/exercises?exercise_category_id=${ecid}`);
+    const body = {
+      end_date: gainsCurrentDateTime(),
+      user_id: userStore.user.id,
+    };
+    const res = await api.patch(`/api/v1/sessions/${sid.value}`, body);
     const json = await res.json();
 
     if (!res.ok) {
@@ -187,7 +192,7 @@ async function handleCompleteCurrentSession() {
       }
     }
 
-    return json.data;
+    router.push('/dashboard/sessions');
   } catch (e) {
     loading.value = false;
     alert.type = 'danger';
@@ -648,11 +653,7 @@ async function handleCompleteCurrentSession() {
         </div>
 
         <!-- complete current session button -->
-        <button
-          @click="$router.push('/dashboard/sessions')"
-          type="button"
-          class="btn btn-success w-100"
-        >
+        <button @click="handleCompleteCurrentSession()" type="button" class="btn btn-success w-100">
           <i class="bi bi-check-circle-fill"></i>
           Complete current session
         </button>

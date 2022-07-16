@@ -39,6 +39,28 @@ sessions.get(
 );
 
 /**
+ * PATCH /api/v1/sessions/{sid}
+ * @tags sessions
+ * @summary update session info
+ * @param {number} sid.path.required - the session id  - application/x-www-form-urlencoded
+ * @param {number} user_id.form - the user_id - application/x-www-form-urlencoded
+ * @param {string} name.form - the session name - application/x-www-form-urlencoded
+ * @param {number} block_id.form - the block_id - application/x-www-form-urlencoded
+ * @param {date} start_date.form - the start_date - application/x-www-form-urlencoded
+ * @param {date} end_date.form - the end_date - application/x-www-form-urlencoded
+ * @param {string} body_weight.form - the body_weight - application/x-www-form-urlencoded
+ * @param {number} hours_of_sleep.form - the hours_of_sleep - application/x-www-form-urlencoded
+ * @param {number} caffeine_intake.form - the caffeine_intake - application/x-www-form-urlencoded
+ * @param {number} session_rpe.form - the session_rpe - application/x-www-form-urlencoded
+ * @param {string} notes.form - the notes - application/x-www-form-urlencoded
+ */
+sessions.patch(
+  '/:sid',
+  validator(SessionsValidation.patchSession),
+  catchAsyncErrors(SessionsController.patchSession),
+);
+
+/**
  * GET /api/v1/sessions?user_id={uid}
  * @tags sessions
  * @summary get all sessions of a user
