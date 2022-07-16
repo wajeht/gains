@@ -4,7 +4,7 @@ import SessionDetailsHeader from '../../components/dashboard/headers/SessionDeta
 
 // helpers
 import api from '../../../../libs/fetch-with-style.js';
-import { formatToGainsDateLocal, gainsCurrentDateTime } from '../../../../utils/helpers.js';
+import { formatToGainsDateLocal, gainsCurrentDateTime, sleep } from '../../../../utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';
@@ -181,6 +181,9 @@ async function handleCompleteCurrentSession() {
       end_date: gainsCurrentDateTime(),
       user_id: userStore.user.id,
     };
+
+    loading.value = true;
+
     const res = await api.patch(`/api/v1/sessions/${sid.value}`, body);
     const json = await res.json();
 
@@ -191,6 +194,10 @@ async function handleCompleteCurrentSession() {
         throw json.message;
       }
     }
+
+    await sleep(1000);
+
+    loading.value = false;
 
     router.push('/dashboard/sessions');
   } catch (e) {
@@ -563,6 +570,7 @@ async function handleCompleteCurrentSession() {
             class="btn btn-outline-dark w-100"
             data-bs-toggle="modal"
             data-bs-target="#add-a-lift"
+            :disabled="loading"
           >
             Add a exercise
           </button>
@@ -653,9 +661,20 @@ async function handleCompleteCurrentSession() {
         </div>
 
         <!-- complete current session button -->
-        <button @click="handleCompleteCurrentSession()" type="button" class="btn btn-success w-100">
-          <i class="bi bi-check-circle-fill"></i>
-          Complete current session
+        <button
+          @click="handleCompleteCurrentSession()"
+          type="button"
+          class="btn btn-success w-100"
+          :disabled="loading"
+        >
+          <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+
+          <span v-if="!loading">
+            <i class="bi bi-check-circle-fill"></i> Complete current session
+          </span>
+          <span v-if="loading"> Loading... </span>
         </button>
       </div>
     </div>
