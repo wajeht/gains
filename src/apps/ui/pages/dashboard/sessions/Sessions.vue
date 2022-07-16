@@ -84,6 +84,9 @@ function logDetails(sid) {
         data-aos="fade-up"
         data-aos-anchor-placement="top"
         class="card"
+        :style="{
+          'border-left': session.end_date === null ? '5px solid var(--bs-danger)' : '',
+        }"
         id="log"
       >
         <div @click="logDetails(session.id)" class="card-body">
@@ -108,8 +111,15 @@ function logDetails(sid) {
             </div>
 
             <!-- end -->
-            <div>
+            <div class="d-flex flex-column justify-content-between">
               <small class="text-muted d-block text-end">123 min</small>
+              <small
+                class="text-muted d-block text-end d-flex gap-1 fst-italic"
+                style="font-size: 0.7rem"
+              >
+                <span class="text-danger">Incomplete!</span>
+                <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+              </small>
             </div>
           </div>
         </div>
