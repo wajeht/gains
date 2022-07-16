@@ -173,6 +173,32 @@ function handleAddALift() {
 function handleAddASet() {
   addASetDismissButton.value.click();
 }
+
+async function handleCompleteCurrentSession() {
+  try {
+    const res = await api.get(`/api/v1/exercises?exercise_category_id=${ecid}`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    loading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 </script>
 <template>
   <!-- header -->
@@ -205,7 +231,10 @@ function handleAddASet() {
                 <h5 class="card-title">{{ currentSessionDetails.name }}</h5>
 
                 <!-- notes -->
-                <p class="card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded mb-2">
+                <p
+                  v-if="currentSessionDetails.notes"
+                  class="card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded mb-2"
+                >
                   <small class="fst-italic fw-light">
                     {{ currentSessionDetails.notes }}
                   </small>
@@ -624,6 +653,7 @@ function handleAddASet() {
           type="button"
           class="btn btn-success w-100"
         >
+          <i class="bi bi-check-circle-fill"></i>
           Complete current session
         </button>
       </div>

@@ -55,6 +55,13 @@ onMounted(async () => {
   }
 });
 
+function calculateTotal(start, end) {
+  if (!start || !end) return 0;
+  const start_date = dayjs(start);
+  const end_date = dayjs(end);
+  return end_date.diff(start_date, 'minute');
+}
+
 function logDetails(sid) {
   router.push({
     // path: `/dashboard/session/${id}`,
@@ -92,9 +99,19 @@ function logDetails(sid) {
         <div @click="logDetails(session.id)" class="card-body">
           <div class="d-flex justify-content-between gap-5">
             <!-- start -->
-            <div>
-              <span>{{ dayjs(session.created_at).format('MMM') }}</span>
-              <h5 class="card-title">{{ dayjs(session.created).format('DD') }}</h5>
+            <div class="d-flex flex-column justify-content-between align-items-center">
+              <!-- date -->
+              <div>
+                <span>{{ dayjs(session.created_at).format('MMM') }}</span>
+                <h5 class="card-title">{{ dayjs(session.created).format('DD') }}</h5>
+              </div>
+
+              <!-- incomplete -->
+              <div v-if="session.end_date === null">
+                <small style="font-size: 0.7rem">
+                  <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                </small>
+              </div>
             </div>
 
             <!-- middle -->
@@ -112,14 +129,9 @@ function logDetails(sid) {
 
             <!-- end -->
             <div class="d-flex flex-column justify-content-between">
-              <small class="text-muted d-block text-end">123 min</small>
-              <small
-                class="text-muted d-block text-end d-flex gap-1 fst-italic"
-                style="font-size: 0.7rem"
+              <small class="text-muted d-block text-end"
+                >{{ calculateTotal(session.start_date, session.end_date) }} min</small
               >
-                <span class="text-danger">Incomplete!</span>
-                <i class="bi bi-exclamation-triangle-fill text-danger"></i>
-              </small>
             </div>
           </div>
         </div>
