@@ -318,13 +318,16 @@ async function handleCompleteCurrentSession() {
           </div>
 
           <small class="card-footer text-muted d-flex justify-content-between">
+            <!-- date -->
             <span>
               <font-awesome-icon icon="fa-calendar " class="me-1" />Date:
               <span class="fw-light">{{ gainsDateDisplay(currentSessionDetails.created_at) }}</span>
             </span>
-            <span class="text-warning fst-italic">
-              <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i>
-              <span>in progress.. </span>
+
+            <!-- in progress -->
+            <span v-if="currentSessionDetails.end_date === null" class="text-danger fst-italic">
+              <i class="bi bi-exclamation-triangle-fill text-danger me-1"></i>
+              <span>session in progress.. </span>
             </span>
           </small>
         </div>
@@ -592,7 +595,7 @@ async function handleCompleteCurrentSession() {
           <!-- model button -->
           <button
             type="button"
-            class="btn btn-outline-dark w-100"
+            class="btn btn-secondary w-100"
             data-bs-toggle="modal"
             data-bs-target="#add-a-lift"
             :disabled="loading"
