@@ -8,6 +8,8 @@ import { ref, reactive, onMounted } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import { useRoute } from 'vue-router';
 
+import dayjs from 'dayjs';
+
 const route = useRoute();
 
 const props = defineProps({
@@ -20,6 +22,7 @@ const random_uuid = ref(uuidv4());
 
 const sid = ref(null);
 const currentSessionDetails = reactive({});
+const total = ref('');
 
 const alert = reactive({
   type: '',
@@ -31,6 +34,10 @@ onMounted(async () => {
   const s = await getCurrentSessionDetails();
   Object.assign(currentSessionDetails, s);
   currentSessionDetails.start_date = formatToGainsDateLocal(currentSessionDetails.start_date);
+
+  const start_date = dayjs(currentSessionDetails.start_date);
+  const end_date = dayjs(currentSessionDetails.end_date);
+  total.value = end_date.diff(start_date, 'minute');
 });
 
 async function getCurrentSessionDetails() {
@@ -91,24 +98,40 @@ function handleAddASet() {
             <div class="row px-3">
               <div class="col-4 bg-success rounded"></div>
               <div class="col-8">
+                <!-- title -->
                 <h5 class="card-title">{{ currentSessionDetails.name }}</h5>
+
+                <!-- notes -->
                 <p class="card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded mb-2">
                   <small class="fst-italic fw-light">
                     {{ currentSessionDetails.notes }}
                   </small>
                 </p>
+
+                <!-- icons group -->
                 <small class="card-text d-flex flex-column">
-                  <span>
-                    <font-awesome-icon icon="fa-mug-hot " class="me-1" />Caffeine:
-                    <span class="fw-light">{{ currentSessionDetails.caffeine_intake }} mg</span>
-                  </span>
+                  <!-- sleep -->
                   <span>
                     <font-awesome-icon icon="fa-moon " class="me-1" />Sleep:
                     <span class="fw-light">{{ currentSessionDetails.hours_of_sleep }} hrs</span>
                   </span>
+
+                  <!-- weight -->
                   <span>
                     <font-awesome-icon icon="fa-weight-scale " class="me-1" />Weight:
                     <span class="fw-light">{{ currentSessionDetails.body_weight }} lbs</span>
+                  </span>
+
+                  <!-- caffeine -->
+                  <span>
+                    <font-awesome-icon icon="fa-mug-hot " class="me-1" />Caffeine:
+                    <span class="fw-light">{{ currentSessionDetails.caffeine_intake }} mg</span>
+                  </span>
+
+                  <!-- block -->
+                  <span>
+                    <i class="bi bi-clipboard2-data-fill me-1"></i>Block:
+                    <span class="fw-light">{{ currentSessionDetails.block_name }}</span>
                   </span>
                 </small>
               </div>
@@ -117,20 +140,20 @@ function handleAddASet() {
           <div class="card-footer d-flex justify-content-between">
             <!-- start time -->
             <div class="d-flex flex-column align-items-center">
-              <small>{{ currentSessionDetails.start_date }}</small>
+              <small>{{ dayjs(currentSessionDetails.start_date).format('h:mm A') }}</small>
               <small class="text-muted">Start time</small>
             </div>
 
             <!-- end time -->
             <div class="d-flex flex-column align-items-center">
-              <small>{{ currentSessionDetails.end_date }}</small>
+              <small>{{ dayjs(currentSessionDetails.end_date).format('h:mm A') }}</small>
               <small class="text-muted">End time</small>
             </div>
 
             <!-- block -->
             <div class="d-flex flex-column align-items-center">
-              <small>{{ currentSessionDetails.block_name }}</small>
-              <small class="text-muted">Block</small>
+              <small>{{ total }} minutes</small>
+              <small class="text-muted">Total</small>
             </div>
           </div>
         </div>
