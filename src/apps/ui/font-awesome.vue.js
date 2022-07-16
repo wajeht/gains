@@ -12,6 +12,9 @@ import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faWeightScale } from '@fortawesome/free-solid-svg-icons';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faMugHot } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -24,5 +27,8 @@ library.add(faScrewdriverWrench);
 library.add(faUser);
 library.add(faCalendarDays);
 library.add(faAngleLeft);
+library.add(faWeightScale);
+library.add(faMoon);
+library.add(faMugHot);
 
 export default FontAwesomeIcon;
