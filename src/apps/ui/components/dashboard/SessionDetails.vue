@@ -92,36 +92,45 @@ function handleAddASet() {
               <div class="col-4 bg-success rounded"></div>
               <div class="col-8">
                 <h5 class="card-title">{{ currentSessionDetails.name }}</h5>
-                <p class="card-text bg-secondary bg-opacity-10 p-2 border-1 rounded mb-2">
-                  <small>
+                <p class="card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded mb-2">
+                  <small class="fst-italic fw-light">
                     {{ currentSessionDetails.notes }}
                   </small>
                 </p>
                 <small class="card-text d-flex flex-column">
-                  <span><font-awesome-icon icon="fa-mug-hot " class="me-1" />Caffeine</span>
-                  <span><font-awesome-icon icon="fa-moon " class="me-1" />Sleep</span>
-                  <span><font-awesome-icon icon="fa-weight-scale " class="me-1" />Weight</span>
+                  <span>
+                    <font-awesome-icon icon="fa-mug-hot " class="me-1" />Caffeine:
+                    <span class="fw-light">{{ currentSessionDetails.caffeine_intake }} mg</span>
+                  </span>
+                  <span>
+                    <font-awesome-icon icon="fa-moon " class="me-1" />Sleep:
+                    <span class="fw-light">{{ currentSessionDetails.hours_of_sleep }} hrs</span>
+                  </span>
+                  <span>
+                    <font-awesome-icon icon="fa-weight-scale " class="me-1" />Weight:
+                    <span class="fw-light">{{ currentSessionDetails.body_weight }} lbs</span>
+                  </span>
                 </small>
               </div>
             </div>
           </div>
           <div class="card-footer d-flex justify-content-between">
-            <!-- bodyweight -->
+            <!-- start time -->
             <div class="d-flex flex-column align-items-center">
-              <small>185.5 Lbs.</small>
-              <small class="text-muted">Bodyweight</small>
+              <small>{{ currentSessionDetails.start_date }}</small>
+              <small class="text-muted">Start time</small>
             </div>
 
-            <!-- sleep -->
+            <!-- end time -->
             <div class="d-flex flex-column align-items-center">
-              <small> ~ 7 hrs</small>
-              <small class="text-muted">Bodyweight</small>
+              <small>{{ currentSessionDetails.end_date }}</small>
+              <small class="text-muted">End time</small>
             </div>
 
-            <!-- rpe -->
+            <!-- block -->
             <div class="d-flex flex-column align-items-center">
-              <small>~ 7 RPE</small>
-              <small class="text-muted">Recovery</small>
+              <small>{{ currentSessionDetails.block_name }}</small>
+              <small class="text-muted">Block</small>
             </div>
           </div>
         </div>
