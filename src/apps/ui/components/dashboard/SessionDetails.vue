@@ -1,45 +1,92 @@
 <script setup>
+// components
 import SessionDetailsHeader from '../../components/dashboard/headers/SessionDetailsHeader.vue';
 
+// helpers
 import api from '../../../../libs/fetch-with-style.js';
 import { formatToGainsDateLocal } from '../../../../utils/helpers.js';
 
-import { ref, reactive, onMounted } from 'vue';
+// nodejs
+import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
+
+// vue
+import { ref, reactive, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import dayjs from 'dayjs';
+// stores
+import useUserStore from '../../store/user.store.js';
 
+// vue use
 const route = useRoute();
+const userStore = useUserStore();
 
+// props
 const props = defineProps({
   sid: Number,
 });
 
-const addALiftDismissButton = ref(null);
-const addASetDismissButton = ref(null);
-const random_uuid = ref(uuidv4());
-
-const sid = ref(null);
-const currentSessionDetails = reactive({});
-const total = ref('');
-
+// data
+const loading = ref(false);
 const alert = reactive({
   type: '',
   msg: '',
 });
 
+const addALiftDismissButton = ref(null);
+const addASetDismissButton = ref(null);
+
+const random_uuid = ref(uuidv4());
+
+const exercises = ref([]);
+const categories = ref([]);
+
+const exercise = reactive({
+  id: null,
+  set: null,
+  reps: null,
+  weight: null,
+  rpe: null,
+  notes: null,
+});
+
+const exercise_category_id = ref(null);
+const exercise_id = ref(null);
+
+const sid = ref(null);
+const currentSessionDetails = reactive({});
+const total = ref('');
+
+// watches
+//  update exercise db as changes in categories
+watch(exercise_category_id, async (currentValue, oldValue) => {
+  // console.log(currentValue, 'cur');
+  // console.log(oldValue, 'old');
+  const uec = await getUserExerciseByCategoryId(currentValue);
+  exercises.value = uec || [];
+});
+
+// mounts
 onMounted(async () => {
+  // initialized current session details on load
   sid.value = route.params.sid;
   const s = await getCurrentSessionDetails();
   Object.assign(currentSessionDetails, s);
   currentSessionDetails.start_date = formatToGainsDateLocal(currentSessionDetails.start_date);
 
+  // calculate total date format on load
   const start_date = dayjs(currentSessionDetails.start_date);
   const end_date = dayjs(currentSessionDetails.end_date);
   total.value = end_date.diff(start_date, 'minute');
 });
 
+onMounted(async () => {
+  // initialized categories on load
+  const uec = await getUserExerciseCategories();
+  categories.value = uec || [];
+});
+
+// functions
 async function getCurrentSessionDetails() {
   try {
     const res = await api.get(`/api/v1/sessions/${sid.value}`);
@@ -57,6 +104,58 @@ async function getCurrentSessionDetails() {
 
     return result;
   } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+async function getUserExerciseCategories() {
+  try {
+    const res = await api.get(`/api/v1/exercise-categories?user_id=${userStore.user.id}`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    loading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+async function getUserExerciseByCategoryId(ecid) {
+  try {
+    const res = await api.get(`/api/v1/exercises?exercise_category_id=${ecid}`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    loading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -96,7 +195,11 @@ function handleAddASet() {
         <div class="card p-0">
           <div class="card-body">
             <div class="row px-3">
-              <div class="col-4 bg-success rounded"></div>
+              <div
+                class="col-4 bg-success rounded d-flex justify-content-center align-items-center"
+              >
+                <span>{{ currentSessionDetails.session_rpe }}</span>
+              </div>
               <div class="col-8">
                 <!-- title -->
                 <h5 class="card-title">{{ currentSessionDetails.name }}</h5>
@@ -140,13 +243,17 @@ function handleAddASet() {
           <div class="card-footer d-flex justify-content-between">
             <!-- start time -->
             <div class="d-flex flex-column align-items-center">
+              <small>{{ dayjs(currentSessionDetails.start_date).format('YY/MM/DD') }}</small>
               <small>{{ dayjs(currentSessionDetails.start_date).format('h:mm A') }}</small>
               <small class="text-muted">Start time</small>
             </div>
 
             <!-- end time -->
             <div class="d-flex flex-column align-items-center">
-              <small>{{ dayjs(currentSessionDetails.end_date).format('h:mm A') }}</small>
+              <small>{{ dayjs(currentSessionDetails.end_date).format('YY/MM/DD') }}</small>
+              <small style="font-size: 0.7rem">{{
+                dayjs(currentSessionDetails.end_date).format('h:mm A')
+              }}</small>
               <small class="text-muted">End time</small>
             </div>
 
@@ -381,7 +488,7 @@ function handleAddASet() {
                           <button
                             ref="addASetDismissButton"
                             type="button"
-                            class="btn btn-secondary"
+                            class="btn btn-outline=danger"
                             data-bs-dismiss="modal"
                           >
                             Cancel
@@ -419,11 +526,11 @@ function handleAddASet() {
           <!-- model button -->
           <button
             type="button"
-            class="btn btn-secondary w-100"
+            class="btn btn-outline-dark w-100"
             data-bs-toggle="modal"
             data-bs-target="#add-a-lift"
           >
-            Add a lift
+            Add a exercise
           </button>
 
           <!-- modal -->
@@ -438,7 +545,7 @@ function handleAddASet() {
             <div class="modal-dialog modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Add a lift</h5>
+                  <h5 class="modal-title">Add a exercise</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -447,27 +554,46 @@ function handleAddASet() {
                   ></button>
                 </div>
                 <div class="modal-body">
-                  <!-- category -->
+                  <!-- exercise category name -->
                   <div class="mb-3">
-                    <label for="category" class="form-label">Category*</label>
-                    <select id="category" class="form-select" required>
-                      <option disabled value="" selected>select a category!</option>
-                      <option value="squat">squat</option>
-                      <option value="bench">bench</option>
-                      <option value="deadlift">deadlift</option>
-                      <option value="v-press">press</option>
+                    <span class="d-flex gap-1">
+                      <label for="session-details-exercise-category-name" class="form-label"
+                        >Exercise category name*</label
+                      >
+                      <span v-tooltip title="Add via categories page!"
+                        ><i class="bi bi-question-circle"></i
+                      ></span>
+                    </span>
+                    <select
+                      id="session-details-exercise-category-name"
+                      class="form-control form-select form-select-sm"
+                      v-model="exercise_category_id"
+                      :disabled="loading || categories.length === 0"
+                      required
+                    >
+                      <option value="" selected disabled>Select a exercise category!</option>
+                      <option v-for="category in categories" :value="category.id">
+                        {{ category.name }}
+                      </option>
                     </select>
                   </div>
 
                   <!-- lift -->
                   <div class="mb-3">
-                    <label for="lift" class="form-label">Lift*</label>
-                    <select id="lift" class="form-select" required>
-                      <option disabled value="" selected>select a lift!</option>
-                      <option value="sumo deadlift">sumo deadlift</option>
-                      <option value="romanian deadlift">romanian deadlift</option>
-                      <option value="stiff legged deadlift">stiff legged deadlift</option>
-                      <option value="conventional deadlift">conventional deadlift</option>
+                    <label for="session-details-select-exercise" class="form-label"
+                      >Exercise*</label
+                    >
+                    <select
+                      id="session-details-select-exercise"
+                      class="form-control form-select form-select-sm"
+                      v-model="exercise_id"
+                      :disabled="!exercise_category_id || exercises.length === 0"
+                      required
+                    >
+                      <option value="" selected disabled>select a exercise!</option>
+                      <option v-for="exercise in exercises" :value="exercise.id">
+                        {{ exercise.name }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -478,14 +604,14 @@ function handleAddASet() {
                   <button
                     ref="addALiftDismissButton"
                     type="button"
-                    class="btn btn-secondary"
+                    class="btn btn-outline-danger"
                     data-bs-dismiss="modal"
                   >
                     Cancel
                   </button>
 
                   <!-- add -->
-                  <button type="submit" class="btn btn-dark">Add</button>
+                  <button type="submit" class="btn btn-dark" :disabled="!exercise_id">Add</button>
                 </div>
               </div>
             </div>
@@ -496,7 +622,7 @@ function handleAddASet() {
         <button
           @click="$router.push('/dashboard/sessions')"
           type="button"
-          class="btn btn-dark w-100"
+          class="btn btn-success w-100"
         >
           Complete current session
         </button>

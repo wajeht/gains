@@ -31,6 +31,19 @@ export function getExerciseCategoriesById(ecid) {
 }
 
 /**
+ * Get all exercises that belong to a specific exercise category.
+ * @param ecid - exercise category id
+ * @returns An array of objects containing the exercises and exercise categories.
+ */
+export function getExercisesByExerciseCategoryId(ecid) {
+  return db
+    .select('*', 'exercises.name as name')
+    .from('exercises')
+    .innerJoin('exercise_categories', 'exercises.exercise_category_id', 'exercise_categories.id')
+    .where({ 'exercise_categories.id': ecid });
+}
+
+/**
  * Search for an exercise category name in the database.
  * @param name - the name of the exercise category
  * @param uid - the user id of the user who created the exercise category

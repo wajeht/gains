@@ -85,6 +85,7 @@
       <div>
         <h5><i class="bi bi-table"></i> Reports</h5>
         <div class="list-group">
+          <!-- avg -->
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -96,6 +97,8 @@
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
           </a>
+
+          <!-- maxes -->
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -107,6 +110,8 @@
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
           </a>
+
+          <!-- rpe -->
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -123,6 +128,7 @@
       <div>
         <h5><i class="bi bi-wrench"></i> Others</h5>
         <div class="list-group">
+          <!-- bodyweight -->
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -134,6 +140,8 @@
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
           </a>
+
+          <!-- calories -->
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -145,11 +153,24 @@
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
           </a>
+
+          <!-- recovery -->
           <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Recovery</h6>
                 <p class="mb-0 opacity-75">Track your sleep, mood, and energy.</p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </a>
+
+          <!-- qr codes -->
+          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Access Codes</h6>
+                <p class="mb-0 opacity-75">A place to store your access codes</p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
