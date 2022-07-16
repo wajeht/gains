@@ -1,6 +1,7 @@
 <script setup>
 // components
 import SessionDetailsHeader from '../../components/dashboard/headers/SessionDetailsHeader.vue';
+import Loading from '../../components/dashboard/Loading.vue';
 
 // helpers
 import api from '../../../../libs/fetch-with-style.js';
@@ -21,11 +22,13 @@ import { useRoute, useRouter } from 'vue-router';
 
 // stores
 import useUserStore from '../../store/user.store.js';
+import useAppStore from '../../store/app.store.js';
 
 // vue use
 const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore();
+const appStore = useUserStore();
 
 // props
 const props = defineProps({
@@ -74,6 +77,8 @@ watch(exercise_category_id, async (currentValue, oldValue) => {
 
 // mounts
 onMounted(async () => {
+  appStore.loading = true;
+
   // initialized current session details on load
   sid.value = route.params.sid;
   const s = await getCurrentSessionDetails();
@@ -84,12 +89,12 @@ onMounted(async () => {
   const start_date = dayjs(currentSessionDetails.start_date);
   const end_date = dayjs(currentSessionDetails.end_date);
   total.value = end_date.diff(start_date, 'minute');
-});
 
-onMounted(async () => {
   // initialized categories on load
   const uec = await getUserExerciseCategories();
   categories.value = uec || [];
+
+  appStore.loading = false;
 });
 
 // functions
@@ -218,11 +223,14 @@ async function handleCompleteCurrentSession() {
 }
 </script>
 <template>
+  <!-- loading -->
+  <Loading v-if="appStore.loading" />
+
   <!-- header -->
   <SessionDetailsHeader />
 
   <!-- session details -->
-  <XyzTransition appear xyz="fade small out-down">
+  <XyzTransition v-if="!appStore.loading" appear xyz="fade small out-down">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
         <!-- alert -->
