@@ -86,154 +86,45 @@ function handleAddASet() {
         </div>
 
         <!-- sessions card -->
-        <form class="card p-0">
-          <div class="card-body p-3">
-            <!-- session name -->
-            <div class="row mb-2">
-              <label for="session-details-session-name" class="col-4 col-form-label"
-                >Session name</label
-              >
+        <div class="card p-0">
+          <div class="card-body">
+            <div class="row px-3">
+              <div class="col-4 bg-success rounded"></div>
               <div class="col-8">
-                <input
-                  id="session-details-session-name"
-                  v-model="currentSessionDetails.name"
-                  type="text"
-                  class="form-control form-control-sm"
-                />
-              </div>
-            </div>
-
-            <!-- block name -->
-            <div class="row mb-2">
-              <label for="session-details-block-name" class="col-4 col-form-label"
-                >Block name</label
-              >
-              <div class="col-8">
-                <input
-                  id="session-details-block-name"
-                  v-model="currentSessionDetails.block_name"
-                  type="text"
-                  class="form-control form-control-sm"
-                />
-              </div>
-            </div>
-
-            <!-- start time -->
-            <div class="row mb-2">
-              <label for="session-details-start-time" class="col-4 col-form-label"
-                >Start time</label
-              >
-              <div class="col-8">
-                <input
-                  v-model="currentSessionDetails.start_date"
-                  type="datetime-local"
-                  class="form-control form-control-sm"
-                  id="session-details-start-time"
-                  disabled
-                />
-              </div>
-            </div>
-
-            <!-- end time -->
-            <div class="row mb-2">
-              <label for="session-details-end-time" class="col-4 col-form-label">End time</label>
-              <div class="col-8">
-                <input
-                  id="session-details-end-time"
-                  v-model="currentSessionDetails.end_date"
-                  type="datetime-local"
-                  class="form-control form-control-sm"
-                />
-              </div>
-            </div>
-
-            <!-- bodyweight  -->
-            <div class="row mb-2">
-              <label for="session-details-bodyweight" class="col-4 col-form-label"
-                >Bodyweight</label
-              >
-              <div class="col-8">
-                <input
-                  v-model="currentSessionDetails.body_weight"
-                  type="number"
-                  class="form-control form-control-sm"
-                  id="session-details-bodyweight"
-                  min="1"
-                  step="1"
-                  max="500"
-                />
-              </div>
-            </div>
-
-            <!-- hours of sleep  -->
-            <div class="row mb-2">
-              <label class="col-4 col-form-label" for="session-details-hours-of-sleep"
-                >Hours of sleep</label
-              >
-              <div class="col-8">
-                <input
-                  v-model="currentSessionDetails.hours_of_sleep"
-                  type="number"
-                  class="form-control form-control-sm"
-                  id="session-details-hours-of-sleep"
-                  min="1"
-                  step="1"
-                  max="24"
-                />
-              </div>
-            </div>
-
-            <!-- caffeine intake  -->
-            <div class="row mb-2">
-              <label for="session-details-caffeine-intake" class="col-4 col-form-label"
-                >Caffeine intake
-              </label>
-              <div class="col-8">
-                <input
-                  v-model="currentSessionDetails.caffeine_intake"
-                  type="number"
-                  step=".5"
-                  min="5"
-                  max="10"
-                  class="form-control form-control-sm"
-                  id="session-details-caffeine-intake"
-                />
-              </div>
-            </div>
-
-            <!-- session rpe  -->
-            <div class="row mb-2">
-              <label for="session-details-session-rpe" class="col-4 col-form-label"
-                >Session RPE
-              </label>
-              <div class="col-8">
-                <input
-                  v-model="currentSessionDetails.session_rpe"
-                  type="number"
-                  step=".5"
-                  min="5"
-                  max="10"
-                  class="form-control form-control-sm"
-                  id="session-details-session-rpe"
-                />
-              </div>
-            </div>
-
-            <!-- notes -->
-            <div class="row mb-2">
-              <label for="session-details-notes" class="col-4 col-form-label">Notes</label>
-              <div class="col-8">
-                <textarea
-                  v-model="currentSessionDetails.notes"
-                  class="form-control form-control-sm"
-                  id="session-details-notes"
-                  rows="3"
-                  >{{ currentSessionDetails.notes }}</textarea
-                >
+                <h5 class="card-title">{{ currentSessionDetails.name }}</h5>
+                <p class="card-text bg-secondary bg-opacity-10 p-2 border-1 rounded mb-2">
+                  <small>
+                    {{ currentSessionDetails.notes }}
+                  </small>
+                </p>
+                <small class="card-text d-flex flex-column">
+                  <span><font-awesome-icon icon="fa-mug-hot " class="me-1" />Caffeine</span>
+                  <span><font-awesome-icon icon="fa-moon " class="me-1" />Sleep</span>
+                  <span><font-awesome-icon icon="fa-weight-scale " class="me-1" />Weight</span>
+                </small>
               </div>
             </div>
           </div>
-        </form>
+          <div class="card-footer d-flex justify-content-between">
+            <!-- bodyweight -->
+            <div class="d-flex flex-column align-items-center">
+              <small>185.5 Lbs.</small>
+              <small class="text-muted">Bodyweight</small>
+            </div>
+
+            <!-- sleep -->
+            <div class="d-flex flex-column align-items-center">
+              <small> ~ 7 hrs</small>
+              <small class="text-muted">Bodyweight</small>
+            </div>
+
+            <!-- rpe -->
+            <div class="d-flex flex-column align-items-center">
+              <small>~ 7 RPE</small>
+              <small class="text-muted">Recovery</small>
+            </div>
+          </div>
+        </div>
 
         <!-- lifts -->
         <div class="card p-0">
