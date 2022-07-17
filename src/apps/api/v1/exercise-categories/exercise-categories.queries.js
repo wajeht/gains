@@ -13,8 +13,27 @@ export function getAllExerciseCategories() {
  * @param uid - the user id
  * @returns An array of objects.
  */
-export function getExerciseCategoriesByUserId(uid) {
-  return db.select('*').from('exercise_categories').where({ user_id: uid }).orderBy('id', 'desc');
+export async function getExerciseCategoriesByUserId(uid) {
+  // return db.select('*').from('exercise_categories').where({ user_id: uid }).orderBy('id', 'desc');
+  // only return categories which have exercises, an hide the rest
+  const { rows } = await db.raw(
+    `
+    SELECT
+	    ec.*
+    FROM
+	    exercise_categories ec
+	  INNER JOIN exercises e
+      ON e.exercise_category_id = ec.id
+    WHERE (
+      ec.user_id = ?
+    )
+    GROUP BY ec.id
+    ORDER BY ec.id DESC
+  `,
+    [uid],
+  );
+
+  return rows;
 }
 
 /**
@@ -37,7 +56,7 @@ export function getExerciseCategoriesById(ecid) {
  */
 export function getExercisesByExerciseCategoryId(ecid) {
   return db
-    .select('*', 'exercises.name as name')
+    .select('*', 'exercises.name as name', 'exercises.id as id')
     .from('exercises')
     .innerJoin('exercise_categories', 'exercises.exercise_category_id', 'exercise_categories.id')
     .where({ 'exercise_categories.id': ecid });
