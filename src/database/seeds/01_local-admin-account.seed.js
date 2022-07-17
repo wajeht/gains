@@ -13,6 +13,7 @@ import * as AuthQueries from '../../apps/api/auth/auth.queries.js';
 export async function seed(knex) {
   try {
     await knex('users').del();
+    // await knex.raw('TRUNCATE TABLE users RESTART IDENTITY CASCADE'); // reset sql id auto increment to 1
 
     const randomPasswordOrPredefinedAdminPassword = admin.password ?? new RandomPasswordGenerator().getPassword(); // prettier-ignore
     const verificationToken = crypto.randomBytes(64).toString('hex');
