@@ -65,6 +65,12 @@ async function getUserExerciseCategories() {
     const res = await api.get(`/api/v1/exercise-categories?user_id=${userStore.user.id}`);
     const json = await res.json();
 
+    if (json.data.length === 0) {
+      alert.type = 'warning';
+      alert.msg = json.message + 'Please add a category via click the plus icon!';
+      return;
+    }
+
     if (!res.ok) {
       loading.value = false;
       if (json.errors) {
