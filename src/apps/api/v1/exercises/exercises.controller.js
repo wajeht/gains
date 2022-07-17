@@ -1,9 +1,37 @@
-import * as ExercisesQueries from './exercises.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../libs/logger.js';
 import CustomError from '../../api.errors.js';
+
+import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
 
+/**
+ * It gets an exercise by its id
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The exercise with the given id.
+ */
+export async function getExercise(req, res) {
+  const eid = req.params.eid;
+
+  const exercise = await ExercisesQueries.getExerciseById(eid);
+
+  if (!exercise.length) throw new CustomError.BadRequestError(`There are no exercise available for exercise id ${eid}!`); // prettier-ignore
+
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: exercise,
+  });
+}
+
+/**
+ * It returns all exercises, exercises by user id, or exercises by exercise category id
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns the exercises for a specific user or exercise category.
+ */
 export async function getExercises(req, res) {
   const uid = req.query.user_id;
   const ecid = req.query.exercise_category_id;

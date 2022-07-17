@@ -62,6 +62,12 @@ async function getUserBlocks() {
     const res = await api.get(`/api/v1/blocks?user_id=${userStore.user.id}`);
     const json = await res.json();
 
+    if (json.data.length == 0) {
+      alert.type = 'warning';
+      alert.msg = json.message + 'Please add a block via click the plus icon!';
+      return;
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

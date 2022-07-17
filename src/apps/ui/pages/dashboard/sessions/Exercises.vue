@@ -62,6 +62,12 @@ async function getUserExercise() {
     const res = await api.get(`/api/v1/exercises?user_id=${userStore.user.id}`);
     const json = await res.json();
 
+    if (json.data.length == 0) {
+      alert.type = 'warning';
+      alert.msg = json.message + 'Please add a exercise via click the plus icon!';
+      return;
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -87,6 +93,12 @@ async function getUserExerciseCategories() {
   try {
     const res = await api.get(`/api/v1/exercise-categories?user_id=${userStore.user.id}`);
     const json = await res.json();
+
+    if (json.data.length == 0) {
+      alert.type = 'warning';
+      alert.msg = json.message;
+      return;
+    }
 
     if (!res.ok) {
       if (json.errors) {

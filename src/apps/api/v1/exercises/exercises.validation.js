@@ -4,6 +4,18 @@ import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
 import { isEqual } from 'lodash-es';
 
+export const getExercise = [
+  param('eid')
+    .trim()
+    .notEmpty()
+    .withMessage('exercise id must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('exercise id must be an number!')
+    .bail()
+    .toInt(),
+];
+
 export const getExercises = [
   check('user_id')
     .optional()

@@ -31,6 +31,18 @@ exercises.get(
 );
 
 /**
+ * GET /api/v1/exercises/{eid}
+ * @tags exercises
+ * @summary get details of a exercise
+ * @param {number} eid.path.required - the exercise id - application/x-www-form-urlencoded
+ */
+exercises.get(
+  '/:eid',
+  validator(ExercisesValidation.getExercise),
+  catchAsyncErrors(ExercisesController.getExercise),
+);
+
+/**
  * POST /api/v1/exercises
  * @tags exercises
  * @summary create an exercise
