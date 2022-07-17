@@ -44,23 +44,22 @@ const alert = reactive({
 
 const addALiftDismissButton = ref(null);
 const addASetDismissButton = ref(null);
-
 const random_uuid = ref(uuidv4());
 
-const exercises = ref([]);
-const categories = ref([]);
-
-const exercise = reactive({
-  id: null,
-  set: null,
+const logs = ref([]);
+const set = reactive({
+  exercise_id: null,
   reps: null,
-  weight: null,
   rpe: null,
+  weight: null,
+  user_id: null,
   notes: null,
 });
 
-const exercise_category_id = ref(null);
-const exercise_id = ref(null);
+const chooseExercises = ref([]);
+const chooseCategories = ref([]);
+const chooseExerciseCategoryId = ref(null);
+const chooseExerciseId = ref(null);
 
 const sid = ref(null);
 const currentSessionDetails = reactive({});
@@ -68,11 +67,11 @@ const total = ref('');
 
 // watches
 //  update exercise db as changes in categories
-watch(exercise_category_id, async (currentValue, oldValue) => {
+watch(chooseExerciseCategoryId, async (currentValue, oldValue) => {
   // console.log(currentValue, 'cur');
   // console.log(oldValue, 'old');
   const uec = await getUserExerciseByCategoryId(currentValue);
-  exercises.value = uec || [];
+  chooseExercises.value = uec || [];
 });
 
 // mounts
@@ -92,7 +91,7 @@ onMounted(async () => {
 
   // initialized categories on load
   const uec = await getUserExerciseCategories();
-  categories.value = uec || [];
+  chooseCategories.value = uec || [];
 
   appStore.loading = false;
 });
@@ -177,7 +176,37 @@ async function getUserExerciseByCategoryId(ecid) {
   }
 }
 
-function handleAddALift() {
+async function getUserExerciseDetails(eid) {
+  try {
+    const res = await api.get(`/api/v1/exercises/${eid}`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    loading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+async function addAExercise() {
+  const [exercise] = await getUserExerciseDetails(chooseExerciseId.value);
+
+  logs.value.push(exercise);
+
   addALiftDismissButton.value.click();
 }
 
@@ -220,6 +249,10 @@ async function handleCompleteCurrentSession() {
       alert.msg = e;
     }
   }
+}
+
+function buildClassName(name, index) {
+  return name.split(' ').join('-') + `-${index}`;
 }
 </script>
 <template>
@@ -332,13 +365,13 @@ async function handleCompleteCurrentSession() {
           </small>
         </div>
 
-        <!-- lifts -->
-        <div class="card p-0">
+        <!-- logs -->
+        <div v-for="(log, index) in logs" class="card p-0">
           <div class="card-body">
             <!-- header -->
             <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
               <!-- title -->
-              <span>1. beltless conventional deadlift</span>
+              <span>{{ index + 1 }}. {{ log.name }}</span>
 
               <!-- options -->
               <span class="d-flex gap-2">
@@ -348,7 +381,7 @@ async function handleCompleteCurrentSession() {
                   style="background: none; border: none; box-shadow: none"
                   role="button"
                   data-bs-toggle="collapse"
-                  data-bs-target=".beltless-contentional-deadlift"
+                  :data-bs-target="`.${buildClassName(log.name, index)}`"
                 ></button>
 
                 <!-- lift settings -->
@@ -373,7 +406,10 @@ async function handleCompleteCurrentSession() {
             </h6>
 
             <!-- notes -->
-            <p class="my-2 accordion-collapse collapse card-text beltless-contentional-deadlift">
+            <p
+              :class="buildClassName(log.name, index)"
+              class="my-2 accordion-collapse collapse card-text"
+            >
               some notes about what this lift felt like this week. it could be another meaningful as
               did sleep last night, and etc.
             </p>
@@ -381,7 +417,8 @@ async function handleCompleteCurrentSession() {
             <!-- sets -->
             <small>
               <div
-                class="accordion-collapse collapse beltless-contentional-deadlift table-responsive"
+                :class="buildClassName(log.name, index)"
+                class="accordion-collapse collapse table-responsive"
               >
                 <table class="table table-sm table-striped table-hover p-0 m-0">
                   <thead>
@@ -458,7 +495,10 @@ async function handleCompleteCurrentSession() {
           </div>
 
           <!-- footer -->
-          <div class="card-footer accordion-collapse collapse beltless-contentional-deadlift">
+          <div
+            :class="buildClassName(log.name, index)"
+            class="card-footer accordion-collapse collapse"
+          >
             <span class="d-flex justify-content-between gap-2">
               <!-- left -->
               <span class="d-flex justify-content-between gap-2">
@@ -557,7 +597,7 @@ async function handleCompleteCurrentSession() {
                           <button
                             ref="addASetDismissButton"
                             type="button"
-                            class="btn btn-outline=danger"
+                            class="btn btn-outline-danger"
                             data-bs-dismiss="modal"
                           >
                             Cancel
@@ -605,7 +645,7 @@ async function handleCompleteCurrentSession() {
 
           <!-- modal -->
           <form
-            @submit.prevent="handleAddALift()"
+            @submit.prevent="addAExercise()"
             class="modal fade px-2 pt-5"
             id="add-a-lift"
             data-bs-backdrop="static"
@@ -637,12 +677,12 @@ async function handleCompleteCurrentSession() {
                     <select
                       id="session-details-exercise-category-name"
                       class="form-control form-select form-select-sm"
-                      v-model="exercise_category_id"
-                      :disabled="loading || categories.length === 0"
+                      v-model="chooseExerciseCategoryId"
+                      :disabled="loading || chooseCategories.length === 0"
                       required
                     >
                       <option value="" selected disabled>Select a exercise category!</option>
-                      <option v-for="category in categories" :value="category.id">
+                      <option v-for="category in chooseCategories" :value="category.id">
                         {{ category.name }}
                       </option>
                     </select>
@@ -656,12 +696,12 @@ async function handleCompleteCurrentSession() {
                     <select
                       id="session-details-select-exercise"
                       class="form-control form-select form-select-sm"
-                      v-model="exercise_id"
-                      :disabled="!exercise_category_id || exercises.length === 0"
+                      v-model="chooseExerciseId"
+                      :disabled="!chooseExerciseCategoryId || chooseExercises.length === 0"
                       required
                     >
                       <option value="" selected disabled>select a exercise!</option>
-                      <option v-for="exercise in exercises" :value="exercise.id">
+                      <option v-for="exercise in chooseExercises" :value="exercise.id">
                         {{ exercise.name }}
                       </option>
                     </select>
@@ -681,7 +721,9 @@ async function handleCompleteCurrentSession() {
                   </button>
 
                   <!-- add -->
-                  <button type="submit" class="btn btn-dark" :disabled="!exercise_id">Add</button>
+                  <button type="submit" class="btn btn-dark" :disabled="!chooseExerciseId">
+                    Add
+                  </button>
                 </div>
               </div>
             </div>
