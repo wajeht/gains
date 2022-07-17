@@ -66,3 +66,10 @@ export const discord = {
   token: process.env.DISCORD_TOKEN,
   url: process.env.DISCORD_URL,
 };
+
+/* This is the admin object that will be used to create the admin user. */
+export const admin = {
+  email: process.env.ADMIN_EMAIL,
+  username: process.env.ADMIN_USERNAME,
+  password: process.env.ADMIN_PASSWORD,
+};
