@@ -59,6 +59,23 @@ export default class Template {
         },
       ],
     },
+    'admin-account': {
+      path: path.resolve(path.join('src', 'services', 'templates', 'admin-account.html')),
+      data: [
+        {
+          name: 'username',
+          type: 'string',
+        },
+        {
+          name: 'email',
+          type: 'string',
+        },
+        {
+          name: 'password',
+          type: 'string',
+        },
+      ],
+    },
   };
 
   /**
