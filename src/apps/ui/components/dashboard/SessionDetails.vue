@@ -37,6 +37,7 @@ const props = defineProps({
 
 // data
 const loading = ref(false);
+const addAExerciseLoading = ref(false);
 const alert = reactive({
   type: '',
   msg: '',
@@ -44,7 +45,6 @@ const alert = reactive({
 
 const today = dayjs().format('YYYY/MM/DD');
 
-const addALiftDismissButton = ref(null);
 const addASetDismissButton = ref(null);
 const random_uuid = ref(uuidv4());
 
@@ -205,11 +205,20 @@ async function getUserExerciseDetails(eid) {
 }
 
 async function addAExercise() {
+  addAExerciseLoading.value = true;
+
   const [exercise] = await getUserExerciseDetails(chooseExerciseId.value);
 
   logs.value.push(exercise);
 
-  addALiftDismissButton.value.click();
+  addAExerciseLoading.value = false;
+
+  clearDataAndDismissAddAExerciseModal();
+}
+
+function clearDataAndDismissAddAExerciseModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-exercise`));
+  modal.hide();
 }
 
 function handleAddASet() {
@@ -652,14 +661,14 @@ function buildClassName(name, index) {
           </div>
         </div>
 
-        <!-- add a lift button -->
+        <!-- add a exercise button -->
         <div class="border">
           <!-- model button -->
           <button
             type="button"
             class="btn btn-secondary w-100"
             data-bs-toggle="modal"
-            data-bs-target="#add-a-lift"
+            data-bs-target="#add-a-exercise"
             :disabled="loading"
           >
             Add a exercise
@@ -669,7 +678,7 @@ function buildClassName(name, index) {
           <form
             @submit.prevent="addAExercise()"
             class="modal fade px-2 py-5"
-            id="add-a-lift"
+            id="add-a-exercise"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
             tabindex="-1"
@@ -679,7 +688,8 @@ function buildClassName(name, index) {
                 <div class="modal-header">
                   <h5 class="modal-title">Add a exercise</h5>
                   <button
-                    type="button"
+                    @click="clearDataAndDismissAddAExerciseModal()"
+                    type="reset"
                     class="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
@@ -734,8 +744,9 @@ function buildClassName(name, index) {
                 <div class="modal-footer">
                   <!-- cancel -->
                   <button
-                    ref="addALiftDismissButton"
-                    type="button"
+                    @click="clearDataAndDismissAddAExerciseModal()"
+                    v-if="!addAExerciseLoading"
+                    type="reset"
                     class="btn btn-outline-danger"
                     data-bs-dismiss="modal"
                   >
@@ -743,8 +754,20 @@ function buildClassName(name, index) {
                   </button>
 
                   <!-- add -->
-                  <button type="submit" class="btn btn-dark" :disabled="!chooseExerciseId">
-                    Add
+                  <button
+                    type="submit"
+                    class="btn btn-dark"
+                    :disabled="addAExerciseLoading || !chooseExerciseId"
+                  >
+                    <div
+                      v-if="addAExerciseLoading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span v-if="!addAExerciseLoading"> Submit </span>
+                    <span v-if="addAExerciseLoading"> Loading... </span>
                   </button>
                 </div>
               </div>
