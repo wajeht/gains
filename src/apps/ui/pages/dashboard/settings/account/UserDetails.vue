@@ -34,8 +34,10 @@ onMounted(async () => {
   const [data] = json.data;
   first_name.value = data.first_name;
   last_name.value = data.last_name;
-  birth_date.value = dayjs(data.birth_date).format('YYYY-MM-DD');
-  weight.value = data.weight;
+  birth_date: dayjs(birth_date.value).format('YYYY-MM-DD') === 'Invalid Date'
+    ? null
+    : dayjs(birth_date.value).format('YYYY-MM-DD'),
+    (weight.value = data.weight);
   email.value = data.email;
   username.value = data.username;
   appStore.loading = false;
@@ -46,16 +48,24 @@ async function updatePersonalInformation() {
     const user = {
       first_name: first_name.value,
       last_name: last_name.value,
-      birth_date: dayjs(birth_date.value).format('YYYY-MM-DD'),
+      birth_date:
+        dayjs(birth_date.value).format('YYYY-MM-DD') === 'Invalid Date'
+          ? null
+          : dayjs(birth_date.value).format('YYYY-MM-DD'),
       weight: weight.value,
     };
 
     // only grab values which are not empty
-    const validUser = pickBy(user, (value, key) => value !== '');
+    const validUser = pickBy(user, (value, key) => value !== null);
 
     // prettier-ignore
     const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-personal-information`, validUser);
     const json = await res.json();
+
+    // update user info in user store
+    for (const u in validUser) {
+      userStore.user[u] = validUser[u];
+    }
 
     if (!res.ok) {
       if (json.errors) {

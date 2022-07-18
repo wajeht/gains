@@ -204,7 +204,14 @@ export default {
         const [user] = json.data;
 
         userStore.isLoggedIn = true;
-        userStore.setUserInfo(user.id, user.username, user.email);
+        userStore.setUserInfo(
+          user.id,
+          user.username,
+          user.email,
+          user.first_name,
+          user.last_name,
+          user.weight,
+        );
 
         this.$router.push({ path: '/dashboard/profile' });
       } catch (e) {

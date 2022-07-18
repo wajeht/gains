@@ -20,6 +20,7 @@ const alert = reactive({
 });
 
 onMounted(() => {
+  // ----------- chart starts
   today.value = dayjs().format('MMMM DD, YYYY');
   const data = {
     type: 'line',
@@ -49,6 +50,16 @@ onMounted(() => {
 
   const ctx = document.getElementById('myChart');
   new Chart(ctx, data);
+  // ----------- chart ends
+
+  // warn user if they have not update user details
+  const { user } = userStore;
+  for (const u in user) {
+    if (user[u] === null) {
+      alert.type = 'warning';
+      alert.msg = `Some of user data are not defined. Please update them via Settings > User details`;
+    }
+  }
 });
 
 async function logout() {
@@ -99,7 +110,7 @@ async function logout() {
       <div
         v-if="alert.type"
         :class="`alert-${alert.type}`"
-        class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+        class="mb-0 alert animate__animated animate__zoomIn animate__faster"
       >
         <span>{{ alert.msg }}</span>
       </div>
@@ -118,7 +129,10 @@ async function logout() {
                 />
               </div>
               <div class="col-8">
-                <h5 class="card-title">{{ userStore.user.username }}</h5>
+                <h5 class="card-title">
+                  {{ userStore.user.first_name }} {{ userStore.user.last_name }}
+                </h5>
+                <h6 class="card-subtitle mb-0 text-muted">@{{ userStore.user.username }}</h6>
                 <p class="card-text">{{ today }}</p>
                 <!-- logout -->
                 <button @click="logout()" class="btn btn-sm btn-danger" :disabled="loading">
@@ -136,14 +150,16 @@ async function logout() {
           <div class="card-footer d-flex justify-content-between">
             <!-- bodyweight -->
             <div class="d-flex flex-column align-items-center">
-              <small>185.5 Lbs.</small>
+              <small>{{
+                userStore.user.weight === null ? '?' : userStore.user.weight + ' lbs.'
+              }}</small>
               <small class="text-muted">Bodyweight</small>
             </div>
 
             <!-- sleep -->
             <div class="d-flex flex-column align-items-center">
               <small> ~ 7 hrs</small>
-              <small class="text-muted">Bodyweight</small>
+              <small class="text-muted">Sleep</small>
             </div>
 
             <!-- rpe -->

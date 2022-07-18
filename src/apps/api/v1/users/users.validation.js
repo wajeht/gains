@@ -188,15 +188,31 @@ export const patchUpdatePersonalInformation = [
   body('first_name')
     .optional()
     .trim()
+    .notEmpty()
+    .withMessage('First name must be be empty')
     .isLength({ min: 1, max: 20 })
     .withMessage('First name must be at least 1 character long or less than 20 characters long'),
   body('last_name')
     .optional()
     .trim()
+    .notEmpty()
+    .withMessage('last name must not be empty')
     .isLength({ min: 1, max: 20 })
     .withMessage('Last name must be at least 1 character long or less than 20 characters long!'),
-  body('weight').optional().trim().isFloat().withMessage('Weight must be an integer format!'),
-  body('birth_date').optional().trim().isDate().withMessage('Birth date must be a date format!'),
+  body('weight')
+    .optional()
+    .notEmpty()
+    .withMessage('weight must not be empty')
+    .trim()
+    .isFloat()
+    .withMessage('Weight must be an integer format!'),
+  body('birth_date')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('birth_date must not be empty')
+    .isDate()
+    .withMessage('Birth date must be a date format!'),
 ];
 
 /* A validation for the user input. */

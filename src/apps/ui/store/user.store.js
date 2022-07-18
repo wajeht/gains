@@ -34,15 +34,21 @@ const useUserStore = defineStore({
         this.clearUserInfo();
       }
     },
-    setUserInfo(id, username, email) {
+    setUserInfo(id, username, email, first_name, last_name, weight) {
       this.user.id = id;
       this.user.username = username;
       this.user.email = email;
+      this.user.first_name = first_name;
+      this.user.last_name = last_name;
+      this.user.weight = weight;
     },
     clearUserInfo() {
       this.user.id = null;
       this.user.username = null;
       this.user.email = null;
+      this.user.first_name = null;
+      this.user.last_name = null;
+      this.user.weight = null;
     },
     logout() {
       this.isLoggedIn = false;
