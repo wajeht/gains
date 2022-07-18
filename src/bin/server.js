@@ -6,6 +6,7 @@ import { green, red } from '../utils/rainbow-log.js';
 import logger from '../libs/logger.js';
 import path from 'path';
 import db from '../database/db.js';
+import Chad from '../libs/chad.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);
@@ -37,5 +38,6 @@ app.listen(port, () => {
     }
   } catch (e) {
     logger.error(e);
+    Chad.flex(e.message, e.stack);
   }
 })();
