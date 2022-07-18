@@ -17,7 +17,8 @@ import jwt from 'jsonwebtoken';
  */
 export async function postLogin(req, res) {
   const { email } = req.body;
-  const [user] = await UsersQueries.findUserByParam({ email });
+  let [user] = await UsersQueries.findUserByParam({ email });
+  [user] = await UsersQueries.findUserById(user.id);
 
   const token = jwt.sign(
     {
@@ -48,6 +49,9 @@ export async function postLogin(req, res) {
         id: user.id,
         email: user.email,
         username: user.username,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        weight: user.weight,
         // token,
       },
     ],
