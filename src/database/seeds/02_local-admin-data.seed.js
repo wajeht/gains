@@ -1,7 +1,12 @@
 import logger from '../../libs/logger.js';
 import * as UsersQueries from '../../apps/api/v1/users/users.queries.js';
-import { admin } from '../../config/env.js';
+import { admin, env } from '../../config/env.js';
 import dayjs from 'dayjs';
+
+if (env === 'production') {
+  logger.warn('Skipping local admin data seed for production!');
+  process.exit(1);
+}
 
 export async function seed(knex) {
   try {

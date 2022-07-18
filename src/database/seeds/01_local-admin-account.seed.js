@@ -4,16 +4,21 @@ import EmailService from '../../services/email.service.js';
 import RandomPasswordGenerator from '../../libs/random-password-generator.js';
 import Password from '../../libs/password.js';
 import logger from '../../libs/logger.js';
-import { admin } from '../../config/env.js';
+import { admin, env } from '../../config/env.js';
 import { red } from '../../utils/rainbow-log.js';
 
 import * as UsersQueries from '../../apps/api/v1/users/users.queries.js';
 import * as AuthQueries from '../../apps/api/auth/auth.queries.js';
 
+if (env === 'production') {
+  logger.warn('Skipping local admin account creation for production!');
+  process.exit(1);
+}
+
 export async function seed(knex) {
   try {
     await knex('users').del();
-    // await knex.raw('TRUNCATE TABLE users RESTART IDENTITY CASCADE'); // reset sql id auto increment to 1
+    await knex.raw('TRUNCATE TABLE users RESTART IDENTITY CASCADE'); // reset sql id auto increment to 1
 
     const randomPasswordOrPredefinedAdminPassword = admin.password ?? new RandomPasswordGenerator().getPassword(); // prettier-ignore
     const verificationToken = crypto.randomBytes(64).toString('hex');
