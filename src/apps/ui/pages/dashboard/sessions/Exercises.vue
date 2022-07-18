@@ -207,7 +207,7 @@ function clearDataAndDismissModal() {
         <!-- modal -->
         <form
           @submit.prevent="addAExercise()"
-          class="modal fade px-2 pt-5"
+          class="modal fade px-2 py-5"
           :id="`add-a-exercise-${random_uuid}`"
           data-bs-backdrop="static"
           data-bs-keyboard="false"

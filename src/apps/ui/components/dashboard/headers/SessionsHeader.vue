@@ -164,7 +164,7 @@ async function addASession() {
       <!-- add modal -->
       <form
         @submit.prevent="addASession()"
-        class="modal fade px-2 pt-5"
+        class="modal fade px-2 py-5"
         :id="`add-a-session-${random_uuid}`"
         data-bs-backdrop="static"
         data-bs-keyboard="false"

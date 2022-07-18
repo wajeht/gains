@@ -280,7 +280,7 @@ function buildClassName(name, index) {
         <!-- sessions card -->
         <div class="card p-0">
           <div class="card-body">
-            <div class="row px-3">
+            <div class="row mx-0">
               <div
                 :class="{
                   'bg-gray': currentSessionDetails.session_rpe === null,
@@ -668,7 +668,7 @@ function buildClassName(name, index) {
           <!-- modal -->
           <form
             @submit.prevent="addAExercise()"
-            class="modal fade px-2 pt-5"
+            class="modal fade px-2 py-5"
             id="add-a-lift"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
