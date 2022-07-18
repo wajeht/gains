@@ -129,11 +129,20 @@ async function logout() {
                 />
               </div>
               <div class="col-8">
+                <!-- name -->
                 <h5 class="card-title">
                   {{ userStore.user.first_name }} {{ userStore.user.last_name }}
                 </h5>
-                <h6 class="card-subtitle mb-0 text-muted">@{{ userStore.user.username }}</h6>
-                <p class="card-text">{{ today }}</p>
+
+                <!-- username and birth date -->
+                <small class="card-subtitle mb-0 text-muted d-flex gap-2">
+                  <span> @{{ userStore.user.username }} </span>
+                  <span>{{ userStore.user.birth_date }}</span>
+                </small>
+
+                <!-- description -->
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
                 <!-- logout -->
                 <button @click="logout()" class="btn btn-sm btn-danger" :disabled="loading">
                   <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
