@@ -124,7 +124,7 @@ async function updateAccountInfo() {
   <!-- header -->
   <Backheader />
 
-  <div class="container px-3">
+  <div v-if="!appStore.loading" class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
       <!-- alert -->
       <div
