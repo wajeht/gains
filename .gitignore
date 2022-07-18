@@ -101,8 +101,8 @@ dist
 
 # TernJS port file
 .tern-port
-src/public/assets/*
-src/public/index.html
-src/public/index.html
-src/public/upload/*
-src/templates/tempCodeRunnerFile.js
+# src/public/assets/*
+# src/public/index.html
+# src/public/index.html
+# src/public/upload/*
+# src/templates/tempCodeRunnerFile.js
