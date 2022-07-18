@@ -52,6 +52,7 @@ onMounted(() => {
   new Chart(ctx, data);
   // ----------- chart ends
 
+  // warn user if they have not update user details
   const { user } = userStore;
   for (const u in user) {
     if (user[u] === null) {
