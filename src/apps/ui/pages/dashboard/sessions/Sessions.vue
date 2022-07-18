@@ -17,6 +17,8 @@ const router = useRouter();
 
 const sessions = ref([]);
 
+const today = dayjs().format('YYYY/MM/DD');
+
 const alert = reactive({
   type: '',
   msg: '',
@@ -99,7 +101,14 @@ function logDetails(sid) {
         data-aos-anchor-placement="top"
         class="card"
         :style="{
-          'border-left': session.end_date === null ? '5px solid var(--bs-danger)' : '',
+          // today
+          'border-left':
+            session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today
+              ? '5px solid var(--bs-warning)'
+              : // yesterday
+              session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today
+              ? '5px solid var(--bs-danger)'
+              : '',
         }"
         id="log"
       >
@@ -113,12 +122,20 @@ function logDetails(sid) {
                 <h5 class="card-title">{{ dayjs(session.created).format('DD') }}</h5>
               </div>
 
-              <!-- incomplete -->
-              <div v-if="session.end_date === null">
-                <small style="font-size: 0.7rem">
-                  <i class="bi bi-exclamation-triangle-fill text-danger"></i>
-                </small>
-              </div>
+              <!-- incomplete or progress -->
+              <small style="font-size: 0.7rem">
+                <!-- danger -->
+                <!-- prettier-ignore -->
+                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today" class="text-warning">
+                    <font-awesome-icon icon="fa-refresh" />
+                  </span>
+
+                <!-- danger -->
+                <!-- prettier-ignore -->
+                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today" class="text-danger">
+                    <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                  </span>
+              </small>
             </div>
 
             <!-- middle -->

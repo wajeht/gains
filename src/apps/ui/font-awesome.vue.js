@@ -17,6 +17,7 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons';
 import { faMugHot } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -34,5 +35,6 @@ library.add(faMoon);
 library.add(faMugHot);
 library.add(faClock);
 library.add(faCalendar);
+library.add(faRefresh);
 
 export default FontAwesomeIcon;

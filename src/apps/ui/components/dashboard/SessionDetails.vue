@@ -42,6 +42,8 @@ const alert = reactive({
   msg: '',
 });
 
+const today = dayjs().format('YYYY/MM/DD');
+
 const addALiftDismissButton = ref(null);
 const addASetDismissButton = ref(null);
 const random_uuid = ref(uuidv4());
@@ -368,11 +370,20 @@ function buildClassName(name, index) {
               <span class="fw-light">{{ gainsDateDisplay(currentSessionDetails.created_at) }}</span>
             </span>
 
-            <!-- in progress -->
-            <span v-if="currentSessionDetails.end_date === null" class="text-danger fst-italic">
-              <i class="bi bi-exclamation-triangle-fill text-danger me-1"></i>
-              <span>session in progress.. </span>
-            </span>
+            <!-- incomplete or progress -->
+            <small class="fst-italic" style="font-size: 0.7rem">
+              <!-- danger -->
+              <!-- prettier-ignore -->
+              <span v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today" class="text-warning">
+                <font-awesome-icon icon="fa-refresh" class="me-1" /> session in progress
+              </span>
+
+              <!-- danger -->
+              <!-- prettier-ignore -->
+              <span v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today" class="text-danger">
+                  <i class="bi bi-exclamation-triangle-fill text-danger"></i> session incomplete
+              </span>
+            </small>
           </small>
         </div>
 
