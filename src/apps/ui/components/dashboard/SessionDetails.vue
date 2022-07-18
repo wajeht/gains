@@ -363,15 +363,15 @@ function buildClassName(name, index) {
             </div>
           </div>
 
-          <small class="card-footer text-muted d-flex justify-content-between">
+          <small class="card-footer text-muted d-flex justify-content-between align-items-center">
             <!-- date -->
-            <span>
+            <small>
               <font-awesome-icon icon="fa-calendar " class="me-1" />Date:
               <span class="fw-light">{{ gainsDateDisplay(currentSessionDetails.created_at) }}</span>
-            </span>
+            </small>
 
             <!-- incomplete or progress -->
-            <small class="fst-italic" style="font-size: 0.7rem">
+            <small class="fst-italic d-flex align-items-center">
               <!-- danger -->
               <!-- prettier-ignore -->
               <span v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today" class="text-warning">
