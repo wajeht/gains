@@ -280,9 +280,20 @@ function buildClassName(name, index) {
           <div class="card-body">
             <div class="row px-3">
               <div
-                class="col-4 bg-success rounded d-flex justify-content-center align-items-center"
+                :class="{
+                  'bg-gray': currentSessionDetails.session_rpe === null,
+
+                  'bg-success':
+                    currentSessionDetails.session_rpe >= 1 &&
+                    currentSessionDetails.session_rpe <= 7.5,
+
+                  'bg-danger':
+                    currentSessionDetails.session_rpe >= 8 &&
+                    currentSessionDetails.session_rpe <= 10,
+                }"
+                class="col-4 text-white rounded d-flex justify-content-center align-items-center border border-1 rounded"
               >
-                <span>{{ currentSessionDetails.session_rpe }}</span>
+                <span>{{ currentSessionDetails.session_rpe ?? '?' }}</span>
               </div>
               <div class="col-8">
                 <!-- title -->
@@ -750,3 +761,10 @@ function buildClassName(name, index) {
     </div>
   </XyzTransition>
 </template>
+
+<style scoped>
+.bg-gray {
+  background: #f0f1f2;
+  color: black !important;
+}
+</style>
