@@ -11,8 +11,8 @@ import * as UsersQueries from '../../apps/api/v1/users/users.queries.js';
 import * as AuthQueries from '../../apps/api/auth/auth.queries.js';
 
 if (env === 'production') {
-  logger.warn('Skipping local admin account creation for production!');
-  process.exit(1);
+  logger.warn('Skipping local admin account creation for production environment!');
+  process.exit(0);
 }
 
 export async function seed(knex) {

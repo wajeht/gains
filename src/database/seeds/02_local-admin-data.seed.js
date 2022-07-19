@@ -4,8 +4,8 @@ import { admin, env } from '../../config/env.js';
 import dayjs from 'dayjs';
 
 if (env === 'production') {
-  logger.warn('Skipping local admin data seed for production!');
-  process.exit(1);
+  logger.warn('Skipping local admin data seed for production environment!');
+  process.exit(0);
 }
 
 export async function seed(knex) {
