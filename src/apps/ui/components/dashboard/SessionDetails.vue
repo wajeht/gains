@@ -401,7 +401,7 @@ function buildClassName(name, index) {
         <div v-for="(log, index) in currentSessionDetails.logs" class="card p-0">
           <div class="card-body">
             <!-- header -->
-            <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
+            <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
               <!-- title -->
               <span>{{ index + 1 }}. {{ log.name }}</span>
 
@@ -435,15 +435,17 @@ function buildClassName(name, index) {
                   </ul>
                 </div>
               </span>
-            </h6>
+            </h5>
 
             <!-- notes -->
             <p
               :class="buildClassName(log.name, index)"
-              class="my-2 accordion-collapse collapse card-text"
+              class="my-2 accordion-collapse collapse card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
             >
-              some notes about what this lift felt like this week. it could be another meaningful as
-              did sleep last night, and etc.
+              <small class="fst-italic fw-light">
+                some notes about what this lift felt like this week. it could be another meaningful
+                as did sleep last night, and etc.
+              </small>
             </p>
 
             <!-- sets -->
@@ -467,51 +469,16 @@ function buildClassName(name, index) {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th class="text-center">1</th>
+                    <tr v-for="(s, idx) in log.sets">
+                      <th class="text-center">{{ idx + 1 }}</th>
                       <td class="text-center">x</td>
-                      <td class="text-center">12</td>
+                      <td class="text-center">{{ s.reps }}</td>
                       <td class="text-center">x</td>
-                      <td class="text-center">225</td>
+                      <td class="text-center">{{ s.weight }}</td>
                       <td class="text-start">@</td>
-                      <td class="text-start">7</td>
-                      <td class="text-start"><small>felt like shit</small></td>
-                      <td class="text-end">
-                        <small class="d-flex justify-content-between gap-2">
-                          <i class="bi bi-pencil"></i>
-                          <i class="bi bi-trash"></i>
-                        </small>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">2</th>
-                      <td class="text-center">x</td>
-                      <td class="text-center">11</td>
-                      <td class="text-center">x</td>
-                      <td class="text-center">235</td>
-                      <td class="text-start">@</td>
-                      <td class="text-start">8</td>
-                      <td class="text-start"><small>heavy</small></td>
-                      <td class="text-end">
-                        <small class="d-flex justify-content-between gap-2">
-                          <i class="bi bi-pencil"></i>
-                          <i class="bi bi-trash"></i>
-                        </small>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">3</th>
-                      <td class="text-center">x</td>
-                      <td class="text-center">12</td>
-                      <td class="text-center">x</td>
-                      <td class="text-center">245</td>
-                      <td class="text-start">@</td>
-                      <td class="text-start">8</td>
+                      <td class="text-start">{{ s.rpe }}</td>
                       <td class="text-start text-truncate">
-                        <small>
-                          heavy as fuck asdfasdfasdf adfasdfasdfasf fasdf as fas fasdf asda asf das
-                          fasf
-                        </small>
+                        <small>{{ s.notes }}</small>
                       </td>
                       <td class="text-end">
                         <small class="d-flex justify-content-between gap-2">
@@ -543,7 +510,7 @@ function buildClassName(name, index) {
                     data-bs-toggle="modal"
                     data-bs-target="#add-a-set"
                   >
-                    <i class="bi bi-plus-circle me-1"></i> Add a set
+                    <i class="bi bi-plus-circle"></i>
                   </button>
 
                   <!-- add a set modal -->
@@ -644,7 +611,7 @@ function buildClassName(name, index) {
                 <!-- add a video group -->
                 <span>
                   <button type="button" class="btn btn-sm btn-outline-dark">
-                    <i class="bi bi-play-circle me-1"></i> Add a video
+                    <i class="bi bi-play-circle"></i>
                   </button>
                 </span>
               </span>
@@ -652,10 +619,10 @@ function buildClassName(name, index) {
               <!-- right -->
               <span class="d-flex justify-content-between gap-2">
                 <button class="btn btn-sm btn-outline-dark">
-                  <i class="bi bi-bar-chart me-1"></i>Graphs
+                  <i class="bi bi-bar-chart"></i>
                 </button>
                 <button class="btn btn-sm btn-outline-dark">
-                  <i class="bi bi-journal-text me-1"></i>Maxes
+                  <i class="bi bi-journal-text"></i>
                 </button>
               </span>
             </span>
