@@ -48,7 +48,6 @@ const today = dayjs().format('YYYY/MM/DD');
 const addASetDismissButton = ref(null);
 const random_uuid = ref(uuidv4());
 
-const logs = ref([]);
 const set = reactive({
   exercise_id: null,
   reps: null,
@@ -65,6 +64,7 @@ const chooseExerciseId = ref(null);
 
 const sid = ref(null);
 const currentSessionDetails = reactive({});
+
 const total = ref('');
 
 // watches
@@ -209,7 +209,7 @@ async function addAExercise() {
 
   const [exercise] = await getUserExerciseDetails(chooseExerciseId.value);
 
-  logs.value.push(exercise);
+  currentSessionDetails.logs.push(exercise);
 
   addAExerciseLoading.value = false;
 
@@ -266,6 +266,7 @@ function buildClassName(name, index) {
   return name.split(' ').join('-') + `-${index}`;
 }
 </script>
+
 <template>
   <!-- loading -->
   <Loading v-if="appStore.loading" />
@@ -397,7 +398,7 @@ function buildClassName(name, index) {
         </div>
 
         <!-- logs -->
-        <div v-for="(log, index) in logs" class="card p-0">
+        <div v-for="(log, index) in currentSessionDetails.logs" class="card p-0">
           <div class="card-body">
             <!-- header -->
             <h6 class="card-title d-flex justify-content-between align-items-center mb-0">

@@ -15,7 +15,6 @@ export async function up(knex) {
       hours_of_sleep            INT DEFAULT NULL,
       caffeine_intake           INT DEFAULT NULL,
       session_rpe               INT DEFAULT NULL,
-      logs                      jsonb,
       deleted                   BOOLEAN DEFAULT FALSE,
       notes                     VARCHAR(1000) DEFAULT NULL,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
