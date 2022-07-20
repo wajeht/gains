@@ -22,11 +22,34 @@ export function getSessionsByUserId(user_id) {
 }
 
 /**
+ * ! TODO: instead of multiple db calls, use postgres json_agg func
  * It gets a session by its session id
  * @param sid - The session id
  * @returns An array of objects
  */
 export async function getSessionBySessionId(sid) {
+  let result = null;
+
+  // session sets info
+  const { rows: sets } = await db.raw(
+    `
+    select
+	    e.name as name,
+	    json_agg(s.*) as sets
+    from
+	    sets s
+	  inner join exercises e
+      on e.id = s.exercise_id
+    where (
+      s.session_id = ?
+    )
+    group by
+	  s.session_id, e.id
+  `,
+    [sid],
+  );
+
+  // session with block info
   const joined = await db
     .select(
       '*',
@@ -38,11 +61,29 @@ export async function getSessionBySessionId(sid) {
     .innerJoin('blocks', { 'blocks.id': 'sessions.block_id' })
     .where({ 'sessions.id': sid });
 
+  // session without block info
+  const notJoined = await db
+    .select('*', 'sessions.end_date as end_date')
+    .from('sessions')
+    .where({ id: sid });
+
   if (!joined.length) {
-    return db.select('*', 'sessions.end_date as end_date').from('sessions').where({ id: sid });
+    result = [
+      {
+        ...notJoined[0],
+        logs: sets,
+      },
+    ];
+  } else {
+    result = [
+      {
+        ...joined[0],
+        logs: sets,
+      },
+    ];
   }
 
-  return joined;
+  return result;
 }
 
 /**
