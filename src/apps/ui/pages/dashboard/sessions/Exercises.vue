@@ -91,7 +91,7 @@ async function getUserExercise() {
 
 async function getUserExerciseCategories() {
   try {
-    const res = await api.get(`/api/v1/exercise-categories?user_id=${userStore.user.id}`);
+    const res = await api.get(`/api/v1/exercise-categories?user_id=${userStore.user.id}&all=true`);
     const json = await res.json();
 
     if (json.data.length == 0) {

@@ -37,6 +37,31 @@ export async function getExerciseCategoriesByUserId(uid) {
 }
 
 /**
+ * Get all exercise categories for a user.
+ * @param uid - the user id
+ * @returns An array of objects.
+ */
+export async function getAllExerciseCategoriesByUserId(uid) {
+  // return db.select('*').from('exercise_categories').where({ user_id: uid }).orderBy('id', 'desc');
+  // only return categories which have exercises, an hide the rest
+  const { rows } = await db.raw(
+    `
+    SELECT
+	    *
+    FROM
+	    exercise_categories ec
+    WHERE (
+      ec.user_id = ?
+    )
+    ORDER BY ec.id DESC
+  `,
+    [uid],
+  );
+
+  return rows;
+}
+
+/**
  * This function returns all exercise categories that have not been deleted.
  * @param ecid - The id of the exercise category you want to get.
  * @returns An array of objects

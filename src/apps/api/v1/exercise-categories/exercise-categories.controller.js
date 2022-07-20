@@ -11,31 +11,38 @@ import CustomError from '../../api.errors.js';
  */
 export async function getExerciseCategories(req, res) {
   const uid = req.query.user_id;
+  const all = req.query.all;
+  let result = null;
 
-  // when called via /api/v1/exercise-categories?user_id=1
-  if (uid) {
-    const userExerciseCategories = await ExerciseCategoriesQueries.getExerciseCategoriesByUserId(uid); // prettier-ignore
+  const is = (key) => {
+    return Object.hasOwn(req.query, key);
+  };
 
-    if (!userExerciseCategories.length) throw new CustomError.BadRequestError(`There are no exercise categories for user id ${uid}!`); // prettier-ignore
+  switch (true) {
+    // when called via /api/v1/exercise-categories?user_id=1&all=true
+    case is('user_id') && is('all'):
+      result = await ExerciseCategoriesQueries.getAllExerciseCategoriesByUserId(uid); // prettier-ignore
+      if (!result.length) throw new CustomError.BadRequestError(`There are no all exercise categories for user id ${uid}!`); // prettier-ignore
+      break;
 
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      data: userExerciseCategories,
-    });
+    // when called via /api/v1/exercise-categories?user_id=1
+    case is('user_id'):
+      result = await ExerciseCategoriesQueries.getExerciseCategoriesByUserId(uid); // prettier-ignore
+      if (!result.length) throw new CustomError.BadRequestError(`There are no exercise categories for user id ${uid}!`); // prettier-ignore
+      break;
+
+    // when called via /api/v1/exercise-categories
+    default:
+      result = await ExerciseCategoriesQueries.getAllExerciseCategories();
+      if (!result.length) throw new CustomError.BadRequestError(`There are no exercise categories available currently!`); // prettier-ignore
+      break;
   }
-
-  // when called via /api/v1/exercise-categories
-  const exerciseCategories = await ExerciseCategoriesQueries.getAllExerciseCategories();
-
-  if (!exerciseCategories.length) throw new CustomError.BadRequestError(`There are no exercise categories available currently!`); // prettier-ignore
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: exerciseCategories,
+    data: result,
   });
 }
 

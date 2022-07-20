@@ -14,8 +14,16 @@ const exerciseCategory = express.Router();
 /**
  * GET /api/v1/exercise-categories?user_id={uid}
  * @tags exercise-categories
+ * @summary get a list of all the exercise categories of a user that have exercises linked together
+ * @param {string} uid.path.required - the user id - application/x-www-form-urlencoded
+ */
+
+/**
+ * GET /api/v1/exercise-categories?user_id={uid}&all=true
+ * @tags exercise-categories
  * @summary get a list of all the exercise categories of a user
  * @param {string} uid.path.required - the user id - application/x-www-form-urlencoded
+ * @param {string} all.path.required - all - application/x-www-form-urlencoded
  */
 exerciseCategory.get(
   '/',
