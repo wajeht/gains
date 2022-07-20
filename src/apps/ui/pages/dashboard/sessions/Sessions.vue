@@ -118,8 +118,8 @@ function logDetails(sid) {
             <div class="d-flex flex-column justify-content-between align-items-center">
               <!-- date -->
               <div>
-                <span>{{ dayjs(session.created_at).format('MMM') }}</span>
-                <h5 class="card-title">{{ dayjs(session.created).format('DD') }}</h5>
+                <span>{{ dayjs(session.start_date).format('MMM') }}</span>
+                <h5 class="card-title">{{ dayjs(session.start_date).format('DD') }}</h5>
               </div>
 
               <!-- incomplete or progress -->
