@@ -31,41 +31,43 @@ export async function seed(knex) {
 
     // exercises
     await knex('exercises').del();
-    const e = await knex('exercises').insert([
-      // squat
-      {
-        name: 'high bar squat',
-        exercise_category_id: ec[0].id, // squat
-        user_id: user.id,
-      },
-      {
-        name: 'low bar squat',
-        exercise_category_id: ec[0].id, // squat
-        user_id: user.id,
-      },
-      // bench
-      {
-        name: 'close grip bench',
-        exercise_category_id: ec[1].id, // bench
-        user_id: user.id,
-      },
-      {
-        name: 'larsen bench press',
-        exercise_category_id: ec[1].id, // bench
-        user_id: user.id,
-      },
-      // deadlift
-      {
-        name: 'sumo deadlift',
-        exercise_category_id: ec[2].id, // deadlift
-        user_id: user.id,
-      },
-      {
-        name: 'conventional deadlift',
-        exercise_category_id: ec[2].id, // deadlift
-        user_id: user.id,
-      },
-    ]);
+    const e = await knex('exercises')
+      .insert([
+        // squat
+        {
+          name: 'high bar squat',
+          exercise_category_id: ec[0].id, // squat
+          user_id: user.id,
+        },
+        {
+          name: 'low bar squat',
+          exercise_category_id: ec[0].id, // squat
+          user_id: user.id,
+        },
+        // bench
+        {
+          name: 'close grip bench',
+          exercise_category_id: ec[1].id, // bench
+          user_id: user.id,
+        },
+        {
+          name: 'larsen bench press',
+          exercise_category_id: ec[1].id, // bench
+          user_id: user.id,
+        },
+        // deadlift
+        {
+          name: 'sumo deadlift',
+          exercise_category_id: ec[2].id, // deadlift
+          user_id: user.id,
+        },
+        {
+          name: 'conventional deadlift',
+          exercise_category_id: ec[2].id, // deadlift
+          user_id: user.id,
+        },
+      ])
+      .returning('*');
 
     // blocks
     await knex('blocks').del();
@@ -83,27 +85,72 @@ export async function seed(knex) {
 
     // sessions
     await knex('sessions').del();
-    const s = await knex('sessions').insert([
+    const s = await knex('sessions')
+      .insert([
+        {
+          name: 'upperbody workout',
+          block_id: b[0].id, // block 1
+          start_date: new Date(),
+          end_date: dayjs(new Date()).add(1, 'hour'),
+          body_weight: 185,
+          caffeine_intake: 300,
+          session_rpe: 7,
+          notes: 'this session was super light',
+          user_id: user.id,
+        },
+        {
+          name: 'lower body workout',
+          block_id: b[0].id, // block 1
+          start_date: new Date(),
+          body_weight: 135,
+          caffeine_intake: 130,
+          session_rpe: 3,
+          notes: 'this session was super heavy',
+          user_id: user.id,
+        },
+      ])
+      .returning('*');
+
+    //   sets
+    await knex('sets').del();
+    const st = await knex('sets').insert([
+      // first session
       {
-        name: 'upperbody workout',
-        block_id: b[0].id, // block 1
-        start_date: new Date(),
-        end_date: dayjs(new Date()).add(1, 'hour'),
-        body_weight: 185,
-        caffeine_intake: 300,
-        session_rpe: 7,
-        notes: 'this session was super light',
         user_id: user.id,
+        exercise_id: e[0].id,
+        session_id: s[0].id,
+        reps: 12,
+        weight: 225,
+        rpe: 7,
+        notes: 'this was heavy',
       },
       {
-        name: 'lower body workout',
-        block_id: b[0].id, // block 1
-        start_date: new Date(),
-        body_weight: 135,
-        caffeine_intake: 130,
-        session_rpe: 3,
-        notes: 'this session was super heavy',
         user_id: user.id,
+        exercise_id: e[0].id,
+        session_id: s[0].id,
+        reps: 11,
+        weight: 235,
+        rpe: 8,
+        notes: 'this was super heavy',
+      },
+      {
+        user_id: user.id,
+        exercise_id: e[2].id,
+        session_id: s[0].id,
+        reps: 5,
+        weight: 405,
+        rpe: 8,
+        notes: 'misgrooved',
+      },
+      // second session
+      {
+        user_id: user.id,
+        exercise_id: e[1].id,
+        session_id: s[1].id,
+        reps: 11,
+        weight: 235,
+        rpe: 8,
+        notes: 'this was easy',
       },
     ]);
   } catch (e) {
