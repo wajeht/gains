@@ -113,44 +113,81 @@ export async function seed(knex) {
 
     //   sets
     await knex('sets').del();
-    const st = await knex('sets').insert([
-      // first session
+    const st = await knex('sets')
+      .insert([
+        // first session
+        {
+          user_id: user.id,
+          exercise_id: e[0].id,
+          session_id: s[0].id,
+          reps: 12,
+          weight: 225,
+          rpe: 7,
+          notes: 'this was heavy',
+        },
+        {
+          user_id: user.id,
+          exercise_id: e[0].id,
+          session_id: s[0].id,
+          reps: 11,
+          weight: 235,
+          rpe: 8,
+          notes: 'this was super heavy',
+        },
+        {
+          user_id: user.id,
+          exercise_id: e[2].id,
+          session_id: s[0].id,
+          reps: 5,
+          weight: 405,
+          rpe: 8,
+          notes: 'misgrooved',
+        },
+        // second session
+        {
+          user_id: user.id,
+          exercise_id: e[1].id,
+          session_id: s[1].id,
+          reps: 11,
+          weight: 235,
+          rpe: 8,
+          notes: 'this was easy',
+        },
+      ])
+      .returning('*');
+
+    //   gains-meta
+    await knex('gains_meta').del();
+    const gm = await knex('gains_meta').insert([
       {
         user_id: user.id,
-        exercise_id: e[0].id,
-        session_id: s[0].id,
-        reps: 12,
-        weight: 225,
-        rpe: 7,
-        notes: 'this was heavy',
+        object: 'exercises',
+        object_id: e[0].id,
+        json: JSON.stringify({
+          collapsed: true,
+          exercise_id: e[0].id,
+          notes: 'this lift moved well today',
+        }),
       },
       {
         user_id: user.id,
-        exercise_id: e[0].id,
-        session_id: s[0].id,
-        reps: 11,
-        weight: 235,
-        rpe: 8,
-        notes: 'this was super heavy',
+        object: 'exercises',
+        object_id: e[1].id,
+        json: JSON.stringify({
+          collapsed: true,
+          exercise_id: e[1].id,
+          notes: 'this lift moved not today',
+        }),
       },
       {
         user_id: user.id,
-        exercise_id: e[2].id,
-        session_id: s[0].id,
-        reps: 5,
-        weight: 405,
-        rpe: 8,
-        notes: 'misgrooved',
-      },
-      // second session
-      {
-        user_id: user.id,
-        exercise_id: e[1].id,
-        session_id: s[1].id,
-        reps: 11,
-        weight: 235,
-        rpe: 8,
-        notes: 'this was easy',
+        object: 'exercises',
+        object_id: e[2].id,
+        json: JSON.stringify({
+          collapsed: true,
+          exercise_id: e[2].id,
+          notes: 'this lift moved not today',
+        }),
       },
     ]);
   } catch (e) {
