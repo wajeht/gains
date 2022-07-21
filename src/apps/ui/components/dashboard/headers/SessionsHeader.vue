@@ -22,7 +22,7 @@ const blocks = reactive({
 });
 
 const name = ref('');
-const start_date = ref(dayjs().format('YYYY-MM-DDTHH:mm'));
+const start_date = ref('');
 const user_id = ref(userStore.user.id);
 const caffeine_intake = ref('');
 const block_id = ref('');
@@ -95,7 +95,7 @@ async function addASession() {
     const session = {
       name: name.value,
       start_date: dayjs().format('YYYY-MM-DDTHH:mm'),
-      user_id: (user_id.value = userStore.user.id),
+      user_id: userStore.user.id,
       block_id: block_id.value,
       body_weight: body_weight.value,
       caffeine_intake: caffeine_intake.value,

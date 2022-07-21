@@ -84,7 +84,6 @@ onMounted(async () => {
   sid.value = route.params.sid;
   const s = await getCurrentSessionDetails();
   Object.assign(currentSessionDetails, s);
-  currentSessionDetails.start_date = formatToGainsDateLocal(currentSessionDetails.start_date);
 
   // calculate total date format on load
   const start_date = dayjs(currentSessionDetails.start_date);
