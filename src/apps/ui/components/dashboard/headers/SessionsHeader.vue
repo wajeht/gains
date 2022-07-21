@@ -83,6 +83,7 @@ function clearDataAndDismissModal() {
   block_id.value = '';
   body_weight.value = '';
   hours_of_sleep.value = '';
+  calories_prior_session.value = '';
   caffeine_intake.value = '';
   notes.value = '';
   const modal = bootstrap.Modal.getOrCreateInstance(
@@ -100,6 +101,7 @@ async function addASession() {
       block_id: block_id.value,
       body_weight: body_weight.value,
       caffeine_intake: caffeine_intake.value,
+      calories_prior_session: calories_prior_session.value,
       hours_of_sleep: hours_of_sleep.value,
       notes: notes.value,
     };
@@ -301,9 +303,7 @@ async function addASession() {
 
                   <!-- caffeine intake -->
                   <div class="col-6">
-                    <label for="session-header-caffeine-intake" class="form-label"
-                      >Caffeine intake</label
-                    >
+                    <label for="session-header-caffeine-intake" class="form-label">Caffeine</label>
                     <input
                       v-model="caffeine_intake"
                       id="session-header-caffeine-intake"

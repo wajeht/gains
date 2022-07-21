@@ -16,6 +16,7 @@ const sessions = express.Router();
  * @param {date} end_date.form - the end_date - application/x-www-form-urlencoded
  * @param {string} body_weight.form - the body_weight - application/x-www-form-urlencoded
  * @param {number} hours_of_sleep.form - the hours_of_sleep - application/x-www-form-urlencoded
+ * @param {number} calories_prior_session.form - the calories_prior_session - application/x-www-form-urlencoded
  * @param {number} caffeine_intake.form - the caffeine_intake - application/x-www-form-urlencoded
  * @param {number} session_rpe.form - the session_rpe - application/x-www-form-urlencoded
  * @param {string} notes.form - the notes - application/x-www-form-urlencoded

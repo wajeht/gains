@@ -15,6 +15,7 @@ export const postCreateSession = [
       'body_weight',
       'hours_of_sleep',
       'caffeine_intake',
+      'calories_prior_session',
       'session_rpe',
       'notes',
     ];
@@ -67,6 +68,11 @@ export const postCreateSession = [
     .trim()
     .isFloat()
     .withMessage('Session RPE must be an integer format!'),
+  body('calories_prior_session')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('calories_prior_session must be an integer format!'),
   body('caffeine_intake')
     .optional()
     .trim()
