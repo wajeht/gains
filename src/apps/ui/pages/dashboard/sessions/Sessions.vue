@@ -36,7 +36,7 @@ onMounted(async () => {
     if (json.data.length === 0) {
       appStore.loading = false;
       alert.type = 'warning';
-      alert.msg = json.message + 'Please add a session via click the plus icon!';
+      alert.msg = json.message + ' Please add a session via click the plus icon!';
       return;
     }
 
