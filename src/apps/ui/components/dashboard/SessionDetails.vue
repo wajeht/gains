@@ -439,6 +439,7 @@ function buildClassName(name, index) {
 
             <!-- notes -->
             <p
+              v-if="log.notes"
               :class="buildClassName(log.name, index)"
               class="my-2 accordion-collapse collapse card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
             >
@@ -448,7 +449,7 @@ function buildClassName(name, index) {
             </p>
 
             <!-- sets -->
-            <small>
+            <small v-if="log.sets">
               <div
                 :class="buildClassName(log.name, index)"
                 class="accordion-collapse collapse table-responsive"

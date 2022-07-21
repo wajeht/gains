@@ -10,7 +10,7 @@ import api from '../../../../../libs/fetch-with-style.js';
 import dayjs from 'dayjs';
 
 import { v4 as uuidv4 } from 'uuid';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import useUserStore from '../../../store/user.store.js';
@@ -31,6 +31,8 @@ const name = ref('');
 const description = ref('');
 const start_date = ref('');
 const end_date = ref('');
+const total_weeks_and_days = ref('');
+const total_weeks_and_days_label = ref('');
 const user_id = ref(userStore.user.id);
 
 const previousPageName = ref('');
@@ -56,6 +58,21 @@ onMounted(() => {
   back = back[back.length - 1];
   previousPageName.value = capitalizeAWord(back);
 });
+
+watch(
+  [start_date, end_date],
+  ([current_start_date, current_end_date], [previous_start_date, previous_end_date]) => {
+    const start = dayjs(current_start_date);
+    const end = dayjs(current_end_date);
+    total_weeks_and_days.value = end.diff(start, 'day');
+
+    if (total_weeks_and_days.value < 7) {
+      total_weeks_and_days_label.value = `${total_weeks_and_days.value} days`;
+    } else {
+      total_weeks_and_days_label.value = `${end.diff(start, 'week')} weeks`;
+    }
+  },
+);
 
 async function getUserBlocks() {
   try {
@@ -223,30 +240,37 @@ function clearDataAndDismissModal() {
                   ></textarea>
                 </div>
 
-                <!-- block start date -->
-                <div class="mb-3">
-                  <label for="block-start-date" class="form-label">Start date*</label>
-                  <input
-                    v-model="start_date"
-                    id="block-start-date"
-                    class="form-control form-control-sm"
-                    type="datetime-local"
-                    required
-                    :disabled="loading || description.length === 0"
-                  />
+                <!-- dates -->
+                <div class="row mt-1 mb-3">
+                  <!-- block start date -->
+                  <div class="col-6">
+                    <label for="block-start-date" class="form-label">Start date*</label>
+                    <input
+                      v-model="start_date"
+                      id="block-start-date"
+                      class="form-control form-control-sm"
+                      type="datetime-local"
+                      required
+                      :disabled="loading || description.length === 0"
+                    />
+                  </div>
+                  <!-- block end date -->
+                  <div class="col-6">
+                    <label for="block-start-date" class="form-label">End date*</label>
+                    <input
+                      v-model="end_date"
+                      id="block-end-date"
+                      class="form-control form-control-sm"
+                      type="datetime-local"
+                      required
+                      :disabled="loading || start_date.length === 0"
+                    />
+                  </div>
                 </div>
 
-                <!-- block end date -->
-                <div class="mb-3">
-                  <label for="block-start-date" class="form-label">End date*</label>
-                  <input
-                    v-model="end_date"
-                    id="block-end-date"
-                    class="form-control form-control-sm"
-                    type="datetime-local"
-                    required
-                    :disabled="loading || start_date.length === 0"
-                  />
+                <!-- duration -->
+                <div v-if="total_weeks_and_days_label" class="mb-2">
+                  <span>{{ total_weeks_and_days_label }}</span>
                 </div>
               </div>
 
