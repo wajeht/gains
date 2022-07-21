@@ -16,6 +16,7 @@ export async function up(knex) {
       caffeine_intake           INT DEFAULT NULL,
       calories_prior_session    INT DEFAULT NULL,
       session_rpe               INT DEFAULT NULL,
+      json                      jsonb,
       deleted                   BOOLEAN DEFAULT FALSE,
       notes                     VARCHAR(1000) DEFAULT NULL,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
