@@ -69,7 +69,9 @@ watch(
     if (total_weeks_and_days.value < 7) {
       total_weeks_and_days_label.value = `${total_weeks_and_days.value} days`;
     } else {
-      total_weeks_and_days_label.value = `${end.diff(start, 'week')} weeks`;
+      let days = end.diff(start, 'day') % 7;
+      days = days != 0 ? `${days} days` : '';
+      total_weeks_and_days_label.value = `${end.diff(start, 'week')} weeks ${days}`;
     }
   },
 );
