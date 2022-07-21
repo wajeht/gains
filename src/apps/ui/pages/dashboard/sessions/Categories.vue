@@ -67,7 +67,7 @@ async function getUserExerciseCategories() {
 
     if (json.data.length === 0) {
       alert.type = 'warning';
-      alert.msg = json.message + 'Please add a category via click the plus icon!';
+      alert.msg = json.message + ' Please add a category via click the plus icon!';
       return;
     }
 
