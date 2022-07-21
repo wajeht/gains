@@ -443,8 +443,7 @@ function buildClassName(name, index) {
               class="my-2 accordion-collapse collapse card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
             >
               <small class="fst-italic fw-light">
-                some notes about what this lift felt like this week. it could be another meaningful
-                as did sleep last night, and etc.
+                {{ log.notes }}
               </small>
             </p>
 
