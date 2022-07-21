@@ -84,7 +84,7 @@ async function logout() {
     userStore.clearUserInfo();
 
     let logoutLink = '/login';
-    if (isMobile) {
+    if (isMobile()) {
       logoutLink = '/dashboard/login';
     }
 

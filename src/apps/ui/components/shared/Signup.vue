@@ -160,7 +160,7 @@ export default {
     };
   },
   mounted() {
-    if (isMobile) this.loginLink = '/dashboard/login';
+    if (isMobile()) this.loginLink = '/dashboard/login';
   },
   methods: {
     async handleSubmit() {

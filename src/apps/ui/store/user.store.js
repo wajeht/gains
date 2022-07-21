@@ -25,7 +25,7 @@ const useUserStore = defineStore({
           this.isLoggedIn = false;
           this.clearUserInfo();
           let logoutLink = '/login';
-          if (isMobile) logoutLink = '/dashboard/login';
+          if (isMobile()) logoutLink = '/dashboard/login';
           this.router.push({ params: logoutLink });
         }
         return res;
@@ -54,7 +54,7 @@ const useUserStore = defineStore({
       this.isLoggedIn = false;
       this.clearUserInfo();
       let logoutLink = '/login';
-      if (isMobile) {
+      if (isMobile()) {
         logoutLink = '/dashboard/login';
       }
       this.router.push({ params: logoutLink });

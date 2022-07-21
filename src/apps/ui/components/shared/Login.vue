@@ -146,7 +146,7 @@ export default {
     };
   },
   mounted() {
-    if (isMobile) this.signupLink = '/dashboard/signup';
+    if (isMobile()) this.signupLink = '/dashboard/signup';
   },
   methods: {
     async reSendVerificationEmail() {
