@@ -35,16 +35,17 @@ export async function getSessionBySessionId(sid) {
     `
     select
 	    e.name as name,
+	    gm.json->'notes' as "notes",
 	    json_agg(s.*) as sets
     from
 	    sets s
-	  inner join exercises e
-      on e.id = s.exercise_id
-    where (
-      s.session_id = ?
-    )
+	    inner join exercises e on e.id = s.exercise_id
+	    inner join gains_meta gm on (gm.json->'exercise_id')::int = e.id
+    where (s.session_id = ?)
     group by
-	  s.session_id, e.id
+	    s.session_id,
+	    e.id,
+	    gm.id
   `,
     [sid],
   );
