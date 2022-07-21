@@ -107,11 +107,7 @@ async function logout() {
   <div class="container px-3">
     <div class="my-3 d-flex flex-column gap-3">
       <!-- alert -->
-      <div
-        v-if="alert.type"
-        :class="`alert-${alert.type}`"
-        class="mb-0 alert animate__animated animate__zoomIn animate__faster"
-      >
+      <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
         <span>{{ alert.msg }}</span>
       </div>
 
