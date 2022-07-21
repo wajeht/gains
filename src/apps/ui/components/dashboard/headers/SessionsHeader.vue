@@ -94,7 +94,7 @@ async function addASession() {
   try {
     const session = {
       name: name.value,
-      start_date: dayjs().format('YYYY-MM-DDTHH:mm'),
+      start_date: new Date(),
       user_id: userStore.user.id,
       block_id: block_id.value,
       body_weight: body_weight.value,

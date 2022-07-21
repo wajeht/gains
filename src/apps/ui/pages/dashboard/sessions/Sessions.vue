@@ -154,7 +154,12 @@ function logDetails(sid) {
             <!-- end -->
             <div class="d-flex flex-column justify-content-between">
               <small class="text-muted d-block text-end"
-                >{{ calculateTotal(session.start_date, session.end_date) }} min</small
+                >{{
+                  calculateTotal(session.start_date, session.end_date) === 0
+                    ? '?'
+                    : calculateTotal(session.start_date, session.end_date)
+                }}
+                min</small
               >
             </div>
           </div>
