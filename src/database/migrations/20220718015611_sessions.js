@@ -14,6 +14,7 @@ export async function up(knex) {
       body_weight               INT DEFAULT NULL,
       hours_of_sleep            INT DEFAULT NULL,
       caffeine_intake           INT DEFAULT NULL,
+      calories_prior_session    INT DEFAULT NULL,
       session_rpe               INT DEFAULT NULL,
       deleted                   BOOLEAN DEFAULT FALSE,
       notes                     VARCHAR(1000) DEFAULT NULL,

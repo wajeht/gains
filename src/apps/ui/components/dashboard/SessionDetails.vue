@@ -340,10 +340,12 @@ function buildClassName(name, index) {
                     <span class="fw-light">{{ currentSessionDetails.caffeine_intake }} mg</span>
                   </span>
 
-                  <!-- block -->
-                  <span v-if="currentSessionDetails.block_name">
-                    <i class="bi bi-clipboard2-data-fill me-1"></i>Block:
-                    <span class="fw-light">{{ currentSessionDetails.block_name }}</span>
+                  <!-- calories_prior_session -->
+                  <span v-if="currentSessionDetails.calories_prior_session">
+                    <i class="bi bi-fire me-1"></i>Calories:
+                    <span class="fw-light"
+                      >{{ currentSessionDetails.calories_prior_session }} kcal
+                    </span>
                   </span>
 
                   <!-- start time -->
@@ -367,6 +369,12 @@ function buildClassName(name, index) {
                     <font-awesome-icon icon="fa-plus" class="me-1" />Total:
                     <span class="fw-light">{{ total }} min</span>
                   </span>
+
+                  <!-- block -->
+                  <span v-if="currentSessionDetails.block_name">
+                    <i class="bi bi-clipboard2-data-fill me-1"></i>Block:
+                    <span class="fw-light">{{ currentSessionDetails.block_name }}</span>
+                  </span>
                 </small>
               </div>
             </div>
@@ -380,7 +388,10 @@ function buildClassName(name, index) {
             </small>
 
             <!-- incomplete or progress -->
-            <small class="fst-italic d-flex align-items-center">
+            <small
+              v-if="!currentSessionDetails.end_date"
+              class="fst-italic d-flex align-items-center"
+            >
               <!-- danger -->
               <!-- prettier-ignore -->
               <span v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today" class="text-warning">
