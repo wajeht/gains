@@ -25,6 +25,7 @@ const name = ref('');
 const start_date = ref('');
 const user_id = ref(userStore.user.id);
 const caffeine_intake = ref('');
+const calories_prior_session = ref('');
 const block_id = ref('');
 const body_weight = ref('');
 const hours_of_sleep = ref('');
@@ -254,45 +255,64 @@ async function addASession() {
                   </select>
                 </div>
 
-                <!-- bodyweight  -->
-                <div class="mb-3">
-                  <label for="session-header-bodyweight" class="form-label">Bodyweight</label>
-                  <input
-                    v-model="body_weight"
-                    id="session-header-bodyweight"
-                    class="form-control form-control-sm"
-                    min="1"
-                    type="number"
-                    :disabled="loading"
-                  />
+                <div class="row mb-3">
+                  <!-- bodyweight  -->
+                  <div class="col-6">
+                    <label for="session-header-bodyweight" class="form-label">Bodyweight</label>
+                    <input
+                      v-model="body_weight"
+                      id="session-header-bodyweight"
+                      class="form-control form-control-sm"
+                      min="1"
+                      type="number"
+                      :disabled="loading"
+                    />
+                  </div>
+
+                  <!-- hours of sleep  -->
+                  <div class="col-6">
+                    <label for="session-header-sleep" class="form-label">Hours of sleep</label>
+                    <input
+                      v-model="hours_of_sleep"
+                      id="session-header-sleep"
+                      class="form-control form-control-sm"
+                      min="1"
+                      type="number"
+                      :disabled="loading"
+                    />
+                  </div>
                 </div>
 
-                <!-- hours of sleep  -->
-                <div class="mb-3">
-                  <label for="session-header-sleep" class="form-label">Hours of sleep</label>
-                  <input
-                    v-model="hours_of_sleep"
-                    id="session-header-sleep"
-                    class="form-control form-control-sm"
-                    min="1"
-                    type="number"
-                    :disabled="loading"
-                  />
-                </div>
+                <div class="row mb-3">
+                  <!-- calories prior -->
+                  <div class="col-6">
+                    <label for="session-header-calories_prior_session" class="form-label"
+                      >Calories
+                    </label>
+                    <input
+                      v-model="calories_prior_session"
+                      id="session-header-calories_prior_session"
+                      class="form-control form-control-sm"
+                      min="1"
+                      type="number"
+                      :disabled="loading"
+                    />
+                  </div>
 
-                <!-- caffeine intake -->
-                <div class="mb-3">
-                  <label for="session-header-caffeine-intake" class="form-label"
-                    >Caffeine intake</label
-                  >
-                  <input
-                    v-model="caffeine_intake"
-                    id="session-header-caffeine-intake"
-                    class="form-control form-control-sm"
-                    min="1"
-                    type="number"
-                    :disabled="loading"
-                  />
+                  <!-- caffeine intake -->
+                  <div class="col-6">
+                    <label for="session-header-caffeine-intake" class="form-label"
+                      >Caffeine intake</label
+                    >
+                    <input
+                      v-model="caffeine_intake"
+                      id="session-header-caffeine-intake"
+                      class="form-control form-control-sm"
+                      min="1"
+                      type="number"
+                      :disabled="loading"
+                    />
+                  </div>
                 </div>
 
                 <!-- notes -->
