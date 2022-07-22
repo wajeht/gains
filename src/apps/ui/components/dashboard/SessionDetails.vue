@@ -245,6 +245,20 @@ async function addAExercise() {
       sets: [],
     });
 
+    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.id}`, {
+      user_id: userStore.user.id,
+      json: JSON.stringify(currentSessionDetails.logs),
+    });
+    const jsons = await ress.json();
+
+    if (!ress.ok) {
+      if (jsons.errors) {
+        throw jsons.errors;
+      } else {
+        throw jsons.message;
+      }
+    }
+
     addAExerciseLoading.value = false;
 
     clearDataAndDismissAddAExerciseModal();
@@ -330,7 +344,7 @@ async function handleCompleteCurrentSession() {
     const body = {
       end_date: gainsCurrentDateTime(),
       user_id: userStore.user.id,
-      json: JSON.stringify(currentSessionDetails.logs),
+      // json: JSON.stringify(currentSessionDetails.logs),
     };
 
     loading.value = true;

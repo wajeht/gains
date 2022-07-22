@@ -137,6 +137,7 @@ export const patchSession = [
       'body_weight',
       'hours_of_sleep',
       'caffeine_intake',
+      'json',
       'session_rpe',
       'notes',
     ];
