@@ -35,7 +35,9 @@ export async function getSessionBySessionId(sid) {
     `
     select
 	    e.name as name,
-      e.id as "exercise_id",
+	    gm.json->'session_id' as "session_id",
+	    gm.json->'exercise_id' as "exercise_id",
+	    gm.json->'collapsed' as "collapsed",
 	    gm.json->'notes' as "notes",
 	    (select json_agg(s.* order by s.id)) as sets
     from

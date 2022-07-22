@@ -499,8 +499,9 @@ function buildClassName(name, index) {
           </small>
         </div>
 
-        <!-- logs -->
+        <!-- exercise logs -->
         <div v-for="(log, index) in currentSessionDetails.logs" class="card p-0">
+          <!-- individual exercises log -->
           <div class="card-body">
             <!-- header -->
             <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
@@ -511,12 +512,14 @@ function buildClassName(name, index) {
               <span class="d-flex gap-2">
                 <!-- show/hide button -->
                 <button
-                  class="accordion-button collapsed p-0 m-0"
+                  @click="log.collapsed = !log.collapsed"
+                  class="p-0 m-0"
                   style="background: none; border: none; box-shadow: none"
                   role="button"
-                  data-bs-toggle="collapse"
-                  :data-bs-target="`.${buildClassName(log.name, index)}`"
-                ></button>
+                >
+                  <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
+                  <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
+                </button>
 
                 <!-- lift settings -->
                 <div class="dropdown">
@@ -541,9 +544,8 @@ function buildClassName(name, index) {
 
             <!-- notes -->
             <p
-              v-if="log.notes"
-              :class="buildClassName(log.name, index)"
-              class="my-2 accordion-collapse collapse card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
+              v-if="log.notes && log.collapsed"
+              class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
             >
               <small class="fst-italic fw-light">
                 {{ log.notes }}
@@ -551,11 +553,8 @@ function buildClassName(name, index) {
             </p>
 
             <!-- sets -->
-            <small v-if="log.sets.length != 0">
-              <div
-                :class="buildClassName(log.name, index)"
-                class="accordion-collapse collapse table-responsive"
-              >
+            <small v-if="log.sets.length != 0 && log.collapsed">
+              <div class="table-responsive">
                 <table class="table table-sm table-striped table-hover p-0 m-0">
                   <thead>
                     <tr>
@@ -595,13 +594,8 @@ function buildClassName(name, index) {
             </small>
           </div>
 
-          <!-- <pre class="alert alert-danger">{{ log }}</pre> -->
-
           <!-- footer -->
-          <div
-            :class="buildClassName(log.name, index)"
-            class="card-footer accordion-collapse collapse"
-          >
+          <div v-if="log.collapsed" class="card-footer">
             <span class="d-flex justify-content-between gap-2">
               <!-- left -->
               <span class="d-flex justify-content-between gap-2">
