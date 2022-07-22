@@ -124,14 +124,7 @@ export async function updateSession(sid, uid, body) {
  * @returns The updated session
  */
 export async function softDeleteSession(sid, uid) {
-  return db
-    .update({ deleted: true })
-    .from('sessions')
-    .where({
-      id: sid,
-    })
-    .andWhere({
-      user_id: uid,
-    })
-    .returning('*');
+  await db.update({ deleted: true }).from('sets').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
+  await db.update({ deleted: true }).from('gains_meta').where({ user_id: uid }).andWhereRaw(`(json->'session_id')::int = ?`, [sid]); // prettier-ignore
+  return db.update({ deleted: true }).from('sessions').where({ id: sid }).andWhere({ user_id: uid }).returning('*'); // prettier-ignore
 }
