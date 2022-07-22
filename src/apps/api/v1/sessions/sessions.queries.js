@@ -58,6 +58,7 @@ export async function getSessionBySessionId(sid) {
 	    s.session_id,
 	    e.id,
 	    gm.id
+    order by e.id desc
   `,
     [sid, sid],
   );

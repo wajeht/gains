@@ -195,6 +195,17 @@ export const patchSession = [
     .trim()
     .isFloat()
     .withMessage('caffeine_intake must be an integer format!'),
+  body('json')
+    .optional()
+    .trim()
+    .custom((json) => {
+      try {
+        JSON.stringify(json);
+        return true;
+      } catch (e) {
+        throw new Error('json must be json format');
+      }
+    }),
   body('notes')
     .optional()
     .trim()

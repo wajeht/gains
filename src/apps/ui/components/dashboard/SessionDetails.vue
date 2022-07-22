@@ -294,7 +294,13 @@ async function handleAddASet() {
       }
     }
 
-    currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(setData);
+    // if .logs not available, we push to .json
+    if (currentSessionDetails.logs?.length === 0) {
+      currentSessionDetails.json[addASetExerciseIndex.value].sets.push(setData);
+    } else {
+      currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(setData);
+    }
+
     addASetLoading.value = false;
 
     clearDataAndDismissAddASetModal();
@@ -324,6 +330,7 @@ async function handleCompleteCurrentSession() {
     const body = {
       end_date: gainsCurrentDateTime(),
       user_id: userStore.user.id,
+      json: JSON.stringify(currentSessionDetails.logs),
     };
 
     loading.value = true;
@@ -542,7 +549,12 @@ async function handleDeleteSession() {
         </div>
 
         <!-- exercise logs -->
-        <div v-for="(log, index) in currentSessionDetails.logs" class="card p-0">
+        <div
+          v-for="(log, index) in currentSessionDetails.logs?.length != 0
+            ? currentSessionDetails.logs
+            : currentSessionDetails.json"
+          class="card p-0"
+        >
           <!-- individual exercises log -->
           <div class="card-body">
             <!-- header -->
@@ -613,7 +625,7 @@ async function handleDeleteSession() {
                   </thead>
                   <tbody>
                     <tr v-for="(s, idx) in log.sets">
-                      <th class="text-center">{{ idx + 1 }}</th>
+                      <td class="text-center">{{ idx + 1 }}</td>
                       <td class="text-center">x</td>
                       <td class="text-center">{{ s.reps }}</td>
                       <td class="text-center">x</td>
@@ -642,6 +654,7 @@ async function handleDeleteSession() {
               <!-- left -->
               <span class="d-flex justify-content-between gap-2">
                 <!-- add a set model button -->
+
                 <span>
                   <button
                     @click="(addASetExerciseId = log.exercise_id), (addASetExerciseIndex = index)"
@@ -809,7 +822,9 @@ async function handleDeleteSession() {
             @click="handleCompleteCurrentSession()"
             type="button"
             class="btn btn-success"
-            :disabled="loading || !currentSessionDetails.logs?.length"
+            :disabled="
+              loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
+            "
           >
             <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
