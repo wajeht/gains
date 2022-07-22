@@ -168,7 +168,19 @@ export async function seed(knex) {
         json: JSON.stringify({
           collapsed: true,
           exercise_id: e[0].id,
+          session_id: s[0].id,
           notes: 'this lift moved well today',
+        }),
+      },
+      {
+        user_id: user.id,
+        object: 'exercises',
+        object_id: e[0].id,
+        json: JSON.stringify({
+          collapsed: true,
+          exercise_id: e[0].id,
+          session_id: s[0].id,
+          notes: 'this lift moved not today',
         }),
       },
       {
@@ -178,16 +190,7 @@ export async function seed(knex) {
         json: JSON.stringify({
           collapsed: true,
           exercise_id: e[1].id,
-          notes: 'this lift moved not today',
-        }),
-      },
-      {
-        user_id: user.id,
-        object: 'exercises',
-        object_id: e[2].id,
-        json: JSON.stringify({
-          collapsed: true,
-          exercise_id: e[2].id,
+          session_id: s[1].id,
           notes: 'this lift moved not today',
         }),
       },

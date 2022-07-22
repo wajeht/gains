@@ -35,19 +35,23 @@ export async function getSessionBySessionId(sid) {
     `
     select
 	    e.name as name,
+      e.id as "exercise_id",
 	    gm.json->'notes' as "notes",
 	    (select json_agg(s.* order by s.id)) as sets
     from
 	    sets s
 	    inner join exercises e on e.id = s.exercise_id
 	    inner join gains_meta gm on (gm.json->'exercise_id')::int = e.id
-    where (s.session_id = ?)
+    where (
+        s.session_id = ?
+        and (gm.json->'session_id')::int = ?
+      )
     group by
 	    s.session_id,
 	    e.id,
 	    gm.id
   `,
-    [sid],
+    [sid, sid],
   );
 
   // session with block info
