@@ -36,7 +36,7 @@ export async function getSessionBySessionId(sid) {
     select
 	    e.name as name,
 	    gm.json->'notes' as "notes",
-	    json_agg(s.*) as sets
+	    (select json_agg(s.* order by s.id)) as sets
     from
 	    sets s
 	    inner join exercises e on e.id = s.exercise_id

@@ -9,9 +9,16 @@ import * as ExercisesQueries from '../exercises/exercises.queries.js';
 /* A validation for the user input. */
 export const postSet = [
   body().custom((body) => {
-    const requiredFields = ['exercise_id', 'reps', 'weight', 'user_id', 'rpe', 'notes'];
-    const bodyFields = Object.keys(body);
-    const equal = isEqual(requiredFields.sort(), bodyFields.sort());
+    const requiredFields = [
+      'exercise_id',
+      'session_id',
+      'user_id',
+      'reps',
+      'weight',
+      'rpe',
+      'notes',
+    ];
+    const equal = Object.keys(body).some((key) => requiredFields.indexOf(key) >= 0);
     if (!equal) throw new Error(`Fields must be in  ${requiredFields.join(', ')} format!`);
     return true;
   }),
@@ -43,6 +50,13 @@ export const postSet = [
       if (user.length === 0) throw new Error('exercise_id does not exist!');
       return true;
     }),
+  body('session_id')
+    .trim()
+    .notEmpty()
+    .withMessage('session_id must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('session_id must be an number!'),
   body('reps')
     .trim()
     .notEmpty()
