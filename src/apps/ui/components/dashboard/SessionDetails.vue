@@ -15,6 +15,7 @@ import {
 // nodejs
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
+import { pickBy } from 'lodash-es';
 
 // vue
 import { ref, reactive, onMounted, watch } from 'vue';
@@ -38,6 +39,7 @@ const props = defineProps({
 // data
 const loading = ref(false);
 const addAExerciseLoading = ref(false);
+const addASetLoading = ref(false);
 const alert = reactive({
   type: '',
   msg: '',
@@ -49,11 +51,9 @@ const addASetDismissButton = ref(null);
 const random_uuid = ref(uuidv4());
 
 const set = reactive({
-  exercise_id: null,
   reps: null,
   rpe: null,
   weight: null,
-  user_id: null,
   notes: null,
 });
 
@@ -204,15 +204,50 @@ async function getUserExerciseDetails(eid) {
 }
 
 async function addAExercise() {
-  addAExerciseLoading.value = true;
+  try {
+    addAExerciseLoading.value = true;
 
-  const [exercise] = await getUserExerciseDetails(chooseExerciseId.value);
+    const [exercise] = await getUserExerciseDetails(chooseExerciseId.value);
 
-  currentSessionDetails.logs.push(exercise);
+    const meta = {
+      user_id: userStore.user.id,
+      object: 'exercises',
+      object_id: exercise.id,
+      json: JSON.stringify({
+        exercise_id: exercise.id,
+        session_id: currentSessionDetails.id,
+        collapsed: false,
+        notes: '',
+      }),
+    };
 
-  addAExerciseLoading.value = false;
+    const res = await api.post(`/api/v1/gains-meta`, meta);
+    const json = await res.json();
 
-  clearDataAndDismissAddAExerciseModal();
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    currentSessionDetails.logs.push(exercise);
+    addAExerciseLoading.value = false;
+
+    clearDataAndDismissAddAExerciseModal();
+  } catch (e) {
+    loading.value = false;
+    addAExerciseLoading.value = false;
+    clearDataAndDismissAddAExerciseModal();
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 
 function clearDataAndDismissAddAExerciseModal() {
@@ -220,8 +255,54 @@ function clearDataAndDismissAddAExerciseModal() {
   modal.hide();
 }
 
-function handleAddASet() {
-  addASetDismissButton.value.click();
+async function handleAddASet(eid, sid, eidx) {
+  try {
+    addASetLoading.value = true;
+
+    const setData = {
+      user_id: userStore.user.id,
+      exercise_id: eid,
+      session_id: sid,
+      reps: set.reps,
+      weight: set.weight,
+      rpe: set.rpe,
+      notes: set.notes,
+    };
+
+    const validSetData = pickBy(setData, (value, key) => value !== null);
+
+    const res = await api.post(`/api/v1/sets`, validSetData);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    currentSessionDetails.logs[eidx].sets.push(setData);
+    addASetLoading.value = false;
+
+    clearDataAndDismissAddASetModal();
+  } catch (e) {
+    loading.value = false;
+    addASetLoading.value = false;
+    clearDataAndDismissAddASetModal();
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+function clearDataAndDismissAddASetModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-set`));
+  modal.hide();
 }
 
 async function handleCompleteCurrentSession() {
@@ -243,8 +324,6 @@ async function handleCompleteCurrentSession() {
         throw json.message;
       }
     }
-
-    await sleep(1000);
 
     loading.value = false;
 
@@ -525,7 +604,9 @@ function buildClassName(name, index) {
 
                   <!-- add a set modal -->
                   <form
-                    @submit.prevent="handleAddASet()"
+                    @submit.prevent="
+                      handleAddASet(log.sets[index].exercise_id, log.sets[index].session_id, index)
+                    "
                     class="modal fade px-1 pt-5"
                     id="add-a-set"
                     data-bs-backdrop="static"
@@ -544,78 +625,102 @@ function buildClassName(name, index) {
                           ></button>
                         </div>
                         <div class="modal-body">
-                          <!-- reps -->
-                          <div class="mb-3">
-                            <label for="rep" class="form-label">Rep*</label>
-                            <input
-                              id="rep"
-                              class="form-control form-control-sm"
-                              type="number"
-                              min="1"
-                              max="20"
-                              step="1"
-                              required
-                            />
-                          </div>
+                          <div class="row mb-3">
+                            <!-- reps -->
+                            <div class="col-4">
+                              <label for="rep" class="form-label">Rep*</label>
+                              <input
+                                v-model.number="set.reps"
+                                id="rep"
+                                class="form-control form-control-sm"
+                                type="number"
+                                min="1"
+                                max="30"
+                                step="1"
+                                required
+                                :disabled="addASetLoading"
+                              />
+                            </div>
 
-                          <!-- weight -->
-                          <div class="mb-3">
-                            <label for="weight" class="form-label">Weight*</label>
-                            <input
-                              id="weight"
-                              class="form-control form-control-sm"
-                              type="number"
-                              min="5"
-                              step="5"
-                              required
-                            />
-                          </div>
+                            <!-- weight -->
+                            <div class="col-4">
+                              <label for="weight" class="form-label">Weight*</label>
+                              <input
+                                v-model.number="set.weight"
+                                id="weight"
+                                class="form-control form-control-sm"
+                                type="number"
+                                min="1"
+                                required
+                                :disabled="addASetLoading"
+                              />
+                            </div>
 
-                          <!-- rpe -->
-                          <div class="mb-3">
-                            <label for="rpe" class="form-label">Rpe</label>
-                            <select id="rpe" class="form-control form-select form-select-sm">
-                              <option selected value="" disabled>select a rpe!</option>
-                              <option value="5">5</option>
-                              <option value="5.5">5.5</option>
-                              <option value="6">6</option>
-                              <option value="6.5">6.5</option>
-                              <option value="7">7</option>
-                              <option value="7.5">7.5</option>
-                              <option value="8">8</option>
-                              <option value="8.5">8.5</option>
-                              <option value="9">9</option>
-                              <option value="9.5">9.5</option>
-                              <option value="10">10</option>
-                            </select>
+                            <!-- rpe -->
+                            <div class="col-4">
+                              <label for="rpe" class="form-label">Rpe</label>
+                              <input
+                                v-model.number="set.rpe"
+                                id="rpe"
+                                class="form-control form-control-sm"
+                                type="number"
+                                min="1"
+                                step=".5"
+                                max="10"
+                                :disabled="addASetLoading"
+                              />
+                            </div>
                           </div>
 
                           <!-- note -->
                           <div class="mb-3">
                             <label class="form-label">Note</label>
                             <textarea
+                              v-model.trim="set.notes"
                               class="form-control form-control-sm"
                               id="notes-id"
                               rows="3"
+                              :disabled="addASetLoading"
                             ></textarea>
                           </div>
                         </div>
 
                         <!-- footer -->
                         <div class="modal-footer">
+                          <!-- cancel -->
                           <button
-                            ref="addASetDismissButton"
-                            type="button"
+                            @click="clearDataAndDismissAddASetModal()"
+                            v-if="!addASetLoading"
+                            type="reset"
                             class="btn btn-outline-danger"
                             data-bs-dismiss="modal"
                           >
                             Cancel
                           </button>
-                          <button type="submit" class="btn btn-dark">Add</button>
+
+                          <!-- add -->
+                          <button type="submit" class="btn btn-dark" :disabled="addASetLoading">
+                            <div
+                              v-if="addASetLoading"
+                              class="spinner-border spinner-border-sm"
+                              role="status"
+                            >
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span v-if="!addASetLoading"> Submit </span>
+                            <span v-if="addASetLoading"> Loading... </span>
+                          </button>
                         </div>
                       </div>
                     </div>
                   </form>
+                </span>
+
+                <!-- add exercise notes -->
+                <span>
+                  <button type="button" class="btn btn-sm btn-outline-dark">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
                 </span>
 
                 <!-- add a video group -->
