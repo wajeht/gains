@@ -86,3 +86,23 @@ export async function getUserSessions(req, res) {
     data: sessions,
   });
 }
+
+/**
+ * It deletes a session by soft deleting it from the database
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function deleteSession(req, res) {
+  const sid = req.params.sid;
+  const uid = req.body.user_id;
+  const session = await SessionQueries.softDeleteSession(sid, uid);
+
+  if (!session.length) throw new CustomError.BadRequestError(`Something went wrong while deleting session id ${sid}!`); // prettier-ignore
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was deleted successfully!',
+    data: session,
+  });
+}

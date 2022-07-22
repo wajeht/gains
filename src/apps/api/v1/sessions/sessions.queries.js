@@ -18,7 +18,12 @@ export function createASession(body) {
  * @returns An array of objects
  */
 export function getSessionsByUserId(user_id) {
-  return db.select('*').from('sessions').where({ user_id }).orderBy('id', 'desc');
+  return db
+    .select('*')
+    .from('sessions')
+    .where({ user_id })
+    .andWhere({ deleted: false })
+    .orderBy('id', 'desc');
 }
 
 /**
@@ -44,9 +49,10 @@ export async function getSessionBySessionId(sid) {
 	    sets s
 	    inner join exercises e on e.id = s.exercise_id
 	    inner join gains_meta gm on (gm.json->'exercise_id')::int = e.id
+      inner join sessions ss on ss.id = s.session_id
     where (
-        s.session_id = ?
-        and (gm.json->'session_id')::int = ?
+        ss.deleted = false
+        and (s.session_id = ? and (gm.json->'session_id')::int = ?)
       )
     group by
 	    s.session_id,
@@ -66,13 +72,15 @@ export async function getSessionBySessionId(sid) {
     )
     .from('sessions')
     .innerJoin('blocks', { 'blocks.id': 'sessions.block_id' })
-    .where({ 'sessions.id': sid });
+    .where({ 'sessions.id': sid })
+    .andWhere({ 'sessions.deleted': false });
 
   // session without block info
   const notJoined = await db
     .select('*', 'sessions.end_date as end_date')
     .from('sessions')
-    .where({ id: sid });
+    .where({ id: sid })
+    .andWhere({ deleted: false });
 
   if (!joined.length) {
     result = [
@@ -106,5 +114,24 @@ export async function updateSession(sid, uid, body) {
     .from('sessions')
     .where({ id: sid })
     .andWhere({ user_id: uid })
+    .returning('*');
+}
+
+/**
+ * Update the session with the given sid and uid to be deleted.
+ * @param sid - The session ID
+ * @param uid - user id
+ * @returns The updated session
+ */
+export async function softDeleteSession(sid, uid) {
+  return db
+    .update({ deleted: true })
+    .from('sessions')
+    .where({
+      id: sid,
+    })
+    .andWhere({
+      user_id: uid,
+    })
     .returning('*');
 }

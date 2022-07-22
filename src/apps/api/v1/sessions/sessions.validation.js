@@ -105,7 +105,26 @@ export const getSession = [
     .notEmpty()
     .withMessage('The value must not be empty!')
     .isInt()
-    .withMessage('The value must be an ID!'),
+    .withMessage('The value must be an ID!')
+    .custom(async (sid) => {
+      const user = await SessionsQueries.getSessionBySessionId(sid);
+      if (user.length === 0) throw new Error('session id does not exist!');
+      return true;
+    }),
+];
+
+export const deleteSession = [
+  param('sid')
+    .trim()
+    .notEmpty()
+    .withMessage('The session id must not be empty!')
+    .isInt()
+    .withMessage('The session id must be an integer!')
+    .custom(async (sid) => {
+      const user = await SessionsQueries.getSessionBySessionId(sid);
+      if (user.length === 0) throw new Error('session id does not exist!');
+      return true;
+    }),
 ];
 
 export const patchSession = [
