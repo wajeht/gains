@@ -73,4 +73,17 @@ sessions.get(
   catchAsyncErrors(SessionsController.getUserSessions),
 );
 
+/**
+ * DELETE /api/v1/sessions/{sid}
+ * @tags sessions
+ * @summary delete a session
+ * @param {number} sid.path.required - the session id  - application/x-www-form-urlencoded
+ * @param {number} user_id.form.required - the user id  - application/x-www-form-urlencoded
+ */
+sessions.delete(
+  '/:sid',
+  validator(SessionsValidation.deleteSession),
+  catchAsyncErrors(SessionsController.deleteSession),
+);
+
 export default sessions;

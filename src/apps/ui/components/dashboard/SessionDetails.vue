@@ -40,6 +40,7 @@ const props = defineProps({
 const loading = ref(false);
 const addAExerciseLoading = ref(false);
 const addASetLoading = ref(false);
+const addAExerciseNoteLoading = ref(false);
 const alert = reactive({
   type: '',
   msg: '',
@@ -353,8 +354,49 @@ async function handleCompleteCurrentSession() {
   }
 }
 
+async function handleAddAExerciseNote() {}
+
+function clearDataAndDismissAddAExerciseNoteModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(
+    document.getElementById(`add-a-note-${random_uuid.value}`),
+  );
+  modal.hide();
+}
+
 function buildClassName(name, index) {
   return name.split(' ').join('-') + `-${index}`;
+}
+
+async function handleDeleteSession() {
+  try {
+    appStore.loading = true;
+
+    const res = await api.delete(`/api/v1/sessions/${currentSessionDetails.id}`, {
+      user_id: userStore.user.id,
+    });
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    appStore.loading = false;
+
+    router.push('/dashboard/sessions');
+  } catch (e) {
+    loading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 </script>
 
@@ -614,14 +656,19 @@ function buildClassName(name, index) {
 
                 <!-- add exercise notes -->
                 <span>
-                  <button type="button" class="btn btn-sm btn-outline-dark">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-dark"
+                    data-bs-toggle="modal"
+                    :data-bs-target="`#add-a-note-${random_uuid}`"
+                  >
                     <i class="bi bi-pencil-square"></i>
                   </button>
                 </span>
 
                 <!-- add a video group -->
                 <span>
-                  <button type="button" class="btn btn-sm btn-outline-dark">
+                  <button type="button" class="btn btn-sm btn-outline-dark" disabled>
                     <i class="bi bi-play-circle"></i>
                   </button>
                 </span>
@@ -629,10 +676,10 @@ function buildClassName(name, index) {
 
               <!-- right -->
               <span class="d-flex justify-content-between gap-2">
-                <button class="btn btn-sm btn-outline-dark">
+                <button class="btn btn-sm btn-outline-dark" disabled>
                   <i class="bi bi-bar-chart"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-dark">
+                <button class="btn btn-sm btn-outline-dark" disabled>
                   <i class="bi bi-journal-text"></i>
                 </button>
               </span>
@@ -773,7 +820,12 @@ function buildClassName(name, index) {
           </button>
 
           <!-- delete current session -->
-          <button :disabled="loading" type="button" class="btn btn-danger">
+          <button
+            @click="handleDeleteSession()"
+            :disabled="loading"
+            type="button"
+            class="btn btn-danger"
+          >
             <span v-if="currentSessionDetails.end_date">
               <i class="bi bi-trash"></i>
               Delete
@@ -784,6 +836,70 @@ function buildClassName(name, index) {
             </span>
           </button>
         </div>
+
+        <!-- add a exercise note -->
+        <form
+          @submit.prevent="handleAddAExerciseNote()"
+          class="modal fade px-1 pt-5"
+          :id="`add-a-note-${random_uuid}`"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add a note</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <!-- note -->
+                <div class="mb-3">
+                  <label class="form-label">Note</label>
+                  <textarea
+                    v-model.trim="set.notes"
+                    class="form-control form-control-sm"
+                    id="notes-id"
+                    rows="3"
+                    :disabled="addAExerciseNoteLoading"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- footer -->
+              <div class="modal-footer">
+                <!-- cancel -->
+                <button
+                  @click="clearDataAndDismissAddAExerciseNoteModal()"
+                  v-if="!addAExerciseNoteLoading"
+                  type="reset"
+                  class="btn btn-outline-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+
+                <!-- add -->
+                <button type="submit" class="btn btn-dark" :disabled="addAExerciseNoteLoading">
+                  <div
+                    v-if="addAExerciseNoteLoading"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span v-if="!addAExerciseNoteLoading"> Submit </span>
+                  <span v-if="addAExerciseNoteLoading"> Loading... </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
 
         <!-- add a set modal -->
         <form
