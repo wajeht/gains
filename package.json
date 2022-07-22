@@ -21,6 +21,7 @@
     "migrate:rollback": "knex migrate:rollback --knexfile=./src/config/knexfile.js",
     "seed:make": "knex seed:make --knexfile=./src/config/knexfile.js",
     "seed:run": "knex seed:run --knexfile=./src/config/knexfile.js",
+    "reset:db": "npm run migrate:rollback && npm run migrate:latest && npm run seed:run",
     "rmds": "find . -name '.DS_Store' -delete"
   },
   "bin": {
