@@ -33,11 +33,12 @@ export async function postCreateSession(req, res) {
 export async function patchSession(req, res) {
   const body = req.body;
   const sid = req.params.sid;
+  const uid = req.body.user_id;
 
   const fields = ['id', 'user_id'];
   const b = omit(body, ...fields);
 
-  const updated = await SessionQueries.updateSession(sid, req.body.user_id, b);
+  const updated = await SessionQueries.updateSession(sid, uid, b);
 
   logger.info(`User id ${req.body.user_id} has updated session details to ${JSON.stringify(b)}!`);
 

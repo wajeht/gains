@@ -141,13 +141,13 @@ function logDetails(sid) {
             <!-- middle -->
             <div class="flex-grow-1">
               <h5 class="card-title">{{ session.name }}</h5>
+
               <div class="card-text">
-                <ul class="list-unstyled mb-0 pb-0">
-                  <li>close grip bench press</li>
-                  <li>conventional deadlift</li>
-                  <li>high bar squat</li>
-                  <li>overhead shoulder press</li>
-                </ul>
+                <small>
+                  <ul class="list-unstyled mb-0 pb-0 list-group-numbered">
+                    <li v-for="log in session.json">{{ log.name }}</li>
+                  </ul>
+                </small>
               </div>
             </div>
 
