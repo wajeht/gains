@@ -33,7 +33,7 @@ onMounted(async () => {
     const res = await api.get(`/api/v1/sessions?user_id=${userStore.user.id}`);
     const json = await res.json();
 
-    if (json.data.length === 0) {
+    if (json.data?.length === 0) {
       appStore.loading = false;
       alert.type = 'warning';
       alert.msg = json.message + ' Please add a session via click the plus icon!';
