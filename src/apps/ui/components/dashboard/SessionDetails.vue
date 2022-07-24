@@ -322,16 +322,16 @@ async function handleAddASet() {
       }
     }
 
+    addASetLoading.value = false;
+
+    clearDataAndDismissAddASetModal();
+
     // if .logs not available, we push to .json
     if (currentSessionDetails.logs?.length === 0) {
       currentSessionDetails.json.logs[addASetExerciseIndex.value].sets.push(setData);
     } else {
       currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(setData);
     }
-
-    addASetLoading.value = false;
-
-    clearDataAndDismissAddASetModal();
   } catch (e) {
     loading.value = false;
     addASetLoading.value = false;
