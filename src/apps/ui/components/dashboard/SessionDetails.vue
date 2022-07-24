@@ -15,7 +15,7 @@ import {
 // nodejs
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
-import { pickBy } from 'lodash-es';
+import { pickBy, pick } from 'lodash-es';
 
 // vue
 import { ref, reactive, onMounted, watch } from 'vue';
@@ -67,6 +67,9 @@ const addASetExerciseId = ref(null);
 const addASetExerciseIndex = ref(null);
 const addASetDismissButton = ref(null);
 const addASetEnableDisableOtherFields = ref(false);
+
+const completeCurrentSessionShowHideOtherFields = ref(false);
+const completeCurrentSessionLoading = ref(false);
 
 // watches
 //  update exercise db as changes in categories
@@ -354,17 +357,39 @@ function clearDataAndDismissAddASetModal() {
   modal.hide();
 }
 
+function clearDataAndDismissCompleteCurrentSessionModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(
+    document.getElementById(`complete-current-session-${random_uuid.value}`),
+  );
+  modal.hide();
+}
+
 async function handleCompleteCurrentSession() {
   try {
-    const body = {
-      end_date: gainsCurrentDateTime(),
-      user_id: userStore.user.id,
-      // json: JSON.stringify(currentSessionDetails.logs),
-    };
+    // set end time and user id
+    currentSessionDetails.end_date = currentSessionDetails.end_date || gainsCurrentDateTime();
+    currentSessionDetails.user_id = userStore.user.id;
+    completeCurrentSessionLoading.value = true;
 
-    loading.value = true;
+    // filter valid data
+    const validData = pick(currentSessionDetails, [
+      'user_id',
+      'name',
+      'block_id',
+      'start_date',
+      'end_date',
+      'body_weight',
+      'hours_of_sleep',
+      'caffeine_intake',
+      'calories_prior_session',
+      'session_rpe',
+      'notes',
+    ]);
 
-    const res = await api.patch(`/api/v1/sessions/${sid.value}`, body);
+    // only sent back non empty data
+    const nonEmpty = pickBy(validData, (value, key) => value !== null);
+
+    const res = await api.patch(`/api/v1/sessions/${sid.value}`, nonEmpty);
     const json = await res.json();
 
     if (!res.ok) {
@@ -375,11 +400,13 @@ async function handleCompleteCurrentSession() {
       }
     }
 
-    loading.value = false;
+    completeCurrentSessionLoading.value = false;
+    clearDataAndDismissCompleteCurrentSessionModal();
 
     router.push('/dashboard/sessions');
   } catch (e) {
-    loading.value = false;
+    completeCurrentSessionLoading.value = false;
+    clearDataAndDismissCompleteCurrentSessionModal();
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -815,7 +842,7 @@ async function handleDeleteSession() {
         </TransitionGroup>
 
         <!-- add a exercise button -->
-        <div class="border">
+        <div v-if="!currentSessionDetails.end_date" class="border">
           <!-- model button -->
           <button
             type="button"
@@ -951,20 +978,222 @@ async function handleDeleteSession() {
           <!-- complete current session button -->
           <button
             v-if="!currentSessionDetails.end_date"
-            @click="handleCompleteCurrentSession()"
+            data-bs-toggle="modal"
+            :data-bs-target="`#complete-current-session-${random_uuid}`"
             type="button"
             class="btn btn-success"
             :disabled="
               loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
             "
           >
-            <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-
             <span v-if="!loading"> <i class="bi bi-check-circle-fill"></i> Complete </span>
-            <span v-if="loading"> Loading... </span>
           </button>
+
+          <!-- complete current session modal -->
+          <form
+            @submit.prevent="handleCompleteCurrentSession()"
+            class="modal fade px-2 py-5"
+            :id="`complete-current-session-${random_uuid}`"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+          >
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    <span> Complete </span>
+                    <span class="fw-light"> {{ currentSessionDetails.name }}</span>
+                  </h5>
+                  <button
+                    @click="clearDataAndDismissCompleteCurrentSessionModal()"
+                    type="reset"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <!-- session rpe -->
+                  <div class="mb-3">
+                    <label for="complete-current-session-session-rpe" class="form-label"
+                      >Session rpe*</label
+                    >
+                    <input
+                      v-model="currentSessionDetails.session_rpe"
+                      id="complete-current-session-session-rpe"
+                      class="form-control form-control-sm"
+                      type="number"
+                      min="1"
+                      max="10"
+                      step=".5"
+                      inputmode="numeric"
+                      pattern="[1-10]*"
+                      required
+                      :disabled="completeCurrentSessionLoading"
+                    />
+                  </div>
+
+                  <!-- show/hide button -->
+                  <div class="form-check form-switch mb-3">
+                    <input
+                      @click="currentSessionDetails.end_date = gainsCurrentDateTime()"
+                      class="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      id="complete-current-session-show-hide-button"
+                      v-model="completeCurrentSessionShowHideOtherFields"
+                      :disabled="completeCurrentSessionLoading"
+                    />
+                    <label class="form-check-label" for="complete-current-session-show-hide-button">
+                      <span v-if="completeCurrentSessionShowHideOtherFields">Hide</span>
+                      <span v-else>Show</span>
+                      <span> other fields</span>
+                    </label>
+                  </div>
+
+                  <span v-if="completeCurrentSessionShowHideOtherFields">
+                    <!-- End time -->
+                    <div v-if="completeCurrentSessionShowHideOtherFields" class="mb-3">
+                      <label for="complete-current-session-end-date" class="form-label"
+                        >End time*</label
+                      >
+                      <input
+                        v-model="currentSessionDetails.end_date"
+                        id="complete-current-session-end-date"
+                        class="form-control form-control-sm"
+                        type="datetime-local"
+                        required
+                        :disabled="completeCurrentSessionLoading"
+                      />
+                    </div>
+
+                    <div class="row mb-3">
+                      <!-- bodyweight  -->
+                      <div class="col-6">
+                        <label for="complete-current-session-bodyweight" class="form-label"
+                          >Bodyweight</label
+                        >
+                        <input
+                          v-model="currentSessionDetails.body_weight"
+                          id="complete-current-session-bodyweight"
+                          class="form-control form-control-sm"
+                          min="1"
+                          inputmode="numeric"
+                          pattern="[1-10]*"
+                          type="number"
+                          :disabled="completeCurrentSessionLoading"
+                        />
+                      </div>
+
+                      <!-- hours of sleep  -->
+                      <div class="col-6">
+                        <label for="complete-current-session-sleep" class="form-label"
+                          >Hours of sleep</label
+                        >
+                        <input
+                          v-model="currentSessionDetails.hours_of_sleep"
+                          id="complete-current-session-sleep"
+                          class="form-control form-control-sm"
+                          min="1"
+                          type="number"
+                          inputmode="numeric"
+                          pattern="[0-24]*"
+                          :disabled="completeCurrentSessionLoading"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <!-- calories prior -->
+                      <div class="col-6">
+                        <label
+                          for="complete-current-session-calories_prior_session"
+                          class="form-label"
+                          >Calories
+                        </label>
+                        <input
+                          v-model="currentSessionDetails.calories_prior_session"
+                          id="complete-current-session-calories_prior_session"
+                          class="form-control form-control-sm"
+                          min="1"
+                          type="number"
+                          inputmode="numeric"
+                          pattern="[1-10000]*"
+                          :disabled="completeCurrentSessionLoading"
+                        />
+                      </div>
+
+                      <!-- caffeine intake -->
+                      <div class="col-6">
+                        <label for="complete-current-session-caffeine-intake" class="form-label"
+                          >Caffeine</label
+                        >
+                        <input
+                          v-model="currentSessionDetails.caffeine_intake"
+                          id="complete-current-session-caffeine-intake"
+                          class="form-control form-control-sm"
+                          min="1"
+                          type="number"
+                          inputmode="numeric"
+                          pattern="[1-10000]*"
+                          :disabled="completeCurrentSessionLoading"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- notes -->
+                    <div v-if="completeCurrentSessionShowHideOtherFields" class="mb-2">
+                      <label for="complete-current-session-notes" class="form-label">Notes</label>
+                      <textarea
+                        v-model="currentSessionDetails.notes"
+                        class="form-control form-control-sm"
+                        id="complete-current-session-notes"
+                        rows="3"
+                        :disabled="completeCurrentSessionLoading"
+                      ></textarea>
+                    </div>
+                  </span>
+                </div>
+
+                <!-- footer -->
+                <div class="modal-footer">
+                  <!-- cancel -->
+                  <button
+                    @click="clearDataAndDismissCompleteCurrentSessionModal()"
+                    v-if="!completeCurrentSessionLoading"
+                    type="reset"
+                    class="btn btn-outline-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+
+                  <!-- submit -->
+                  <button
+                    type="submit"
+                    class="btn btn-dark"
+                    :disabled="
+                      completeCurrentSessionLoading ||
+                      currentSessionDetails.session_rpe === null ||
+                      currentSessionDetails.end_date?.length === 0
+                    "
+                  >
+                    <div
+                      v-if="completeCurrentSessionLoading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+
+                    <span v-if="!completeCurrentSessionLoading">Submit </span>
+                    <span v-if="completeCurrentSessionLoading"> Loading... </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
 
           <!-- delete current session -->
           <button
@@ -972,6 +1201,7 @@ async function handleDeleteSession() {
             :disabled="loading"
             type="button"
             class="btn btn-danger"
+            :class="{ rounded: currentSessionDetails.end_date != null }"
           >
             <span v-if="currentSessionDetails.end_date">
               <i class="bi bi-trash"></i>
