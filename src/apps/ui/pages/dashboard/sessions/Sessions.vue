@@ -145,7 +145,7 @@ function logDetails(sid) {
               <div class="card-text">
                 <small>
                   <ul class="list-unstyled mb-0 pb-0 list-group-numbered">
-                    <li v-for="log in session.json.logs">{{ log.name }}</li>
+                    <li v-for="log in session.json?.logs">{{ log.name }}</li>
                   </ul>
                 </small>
               </div>
