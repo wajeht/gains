@@ -260,9 +260,17 @@ async function addASession() {
                 <div class="mb-3">
                   <span class="d-flex gap-1">
                     <label for="session-header-block_id" class="form-label">Block name</label>
-                    <span v-tooltip title="Add via blocks page!"
-                      ><i class="bi bi-question-circle"></i
-                    ></span>
+                    <router-link
+                      @click="clearDataAndDismissModal()"
+                      class="alert-link link-secondary"
+                      to="/dashboard/sessions/blocks?model=true"
+                    >
+                      <span
+                        class="fw-light fst-italic text-decoration-underline"
+                        style="font-size: 0.8rem !important"
+                        >Add more</span
+                      >
+                    </router-link>
                   </span>
                   <select
                     id="session-header-block_id"
