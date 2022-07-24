@@ -672,8 +672,12 @@ async function handleDeleteSession() {
 
                     <!-- setting links -->
                     <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                      <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
-                      <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
+                      <li>
+                        <button class="dropdown-item btn-sm" type="button">Edit</button>
+                      </li>
+                      <li>
+                        <button class="dropdown-item btn-sm" type="button">Delete</button>
+                      </li>
                     </ul>
                   </div>
                 </span>
@@ -836,6 +840,21 @@ async function handleDeleteSession() {
                   ></button>
                 </div>
                 <div class="modal-body">
+                  <div v-if="!chooseCategories.length" class="mb-3">
+                    <div class="alert alert-warning p-2">
+                      <small
+                        >Exercise categories must be defined before being able to add new exercises.
+                        <router-link
+                          @click="clearDataAndDismissAddAExerciseModal()"
+                          class="alert-link"
+                          to="/dashboard/sessions/categories?model=true"
+                          >Click here!</router-link
+                        >
+                        to add exercise categories!</small
+                      >
+                    </div>
+                  </div>
+
                   <!-- exercise category name -->
                   <div class="mb-3">
                     <span class="d-flex gap-1">

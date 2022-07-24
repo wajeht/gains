@@ -241,6 +241,21 @@ async function addASession() {
               </div>
 
               <span v-if="showHideOtherFields">
+                <div v-if="!blocks.items.length.length" class="mb-3">
+                  <div class="alert alert-warning p-2">
+                    <small
+                      >There are not blocks available currently.
+                      <router-link
+                        @click="clearDataAndDismissModal()"
+                        class="alert-link"
+                        to="/dashboard/sessions/blocks?model=true"
+                        >Click here!</router-link
+                      >
+                      to add start adding blocks!</small
+                    >
+                  </div>
+                </div>
+
                 <!-- block name -->
                 <div class="mb-3">
                   <label for="session-header-block_id" class="form-label">Block name</label>
