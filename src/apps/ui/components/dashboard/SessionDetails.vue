@@ -797,6 +797,7 @@ async function handleDeleteSession() {
                       class="btn btn-sm btn-outline-dark"
                       data-bs-toggle="modal"
                       :data-bs-target="`#add-a-set-${random_uuid}`"
+                      :disabled="currentSessionDetails.end_date"
                     >
                       <i class="bi bi-plus-circle"></i>
                     </button>
@@ -814,6 +815,7 @@ async function handleDeleteSession() {
                       class="btn btn-sm btn-outline-dark"
                       data-bs-toggle="modal"
                       :data-bs-target="`#add-a-note-${random_uuid}`"
+                      :disabled="currentSessionDetails.end_date"
                     >
                       <i class="bi bi-pencil-square"></i>
                     </button>
