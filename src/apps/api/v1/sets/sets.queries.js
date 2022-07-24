@@ -5,9 +5,8 @@ import db from '../../../../database/db.js';
  * @param [body] - an object with the following keys:
  * @returns The entire row of the set that was just created.
  */
-export function createSet(
-  body = { user_id, exercise_id, session_id, description, notes, reps, rpe },
-) {
+// prettier-ignore
+export function createSet(body = { user_id, exercise_id, session_id, description, notes, reps, rpe }) {
   // prettier-ignore
   return db.insert(body).into('sets').returning('*');
 }

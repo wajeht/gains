@@ -4,6 +4,7 @@ import CustomError from '../../api.errors.js';
 
 import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
+import { omit } from 'lodash-es';
 
 /**
  * It gets an exercise by its id
@@ -96,5 +97,28 @@ export async function postExercise(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was created successfully!',
     data: created,
+  });
+}
+
+/**
+ * It updates a note for a specific exercise.
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The updated note.
+ */
+export async function patchExerciseNote(req, res) {
+  const body = req.body;
+  const note = await ExercisesQueries.updateExerciseNote(body);
+
+  if (!note.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while updating a note for gmid: ${body.gains_meta_id}!`,
+    );
+
+  return res.status(StatusCodes.CREATED).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: note,
   });
 }

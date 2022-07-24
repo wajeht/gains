@@ -2,6 +2,7 @@ import { body, check, param, query } from 'express-validator';
 import * as UsersQueries from '../users/users.queries.js';
 import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
+import * as SessionsQueries from '../sessions/sessions.queries.js';
 import { isEqual } from 'lodash-es';
 
 export const getExercise = [
@@ -91,6 +92,50 @@ export const postExercise = [
       const ecid = req.body.exercise_category_id;
       const result = await ExercisesQueries.searchExerciseName(name, uid, ecid); // prettier-ignore
       if (result.length) throw new Error('Exercise name already exist!');
+      return true;
+    }),
+];
+
+export const patchExerciseNote = [
+  body('notes')
+    .trim()
+    .isLength({ min: 0, max: 250 })
+    .withMessage('Notes must be at least 0 character long or less than 250 characters long'),
+  param('gmid')
+    .trim()
+    .notEmpty()
+    .withMessage('gmid must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('gmid must be an ID!')
+    .bail()
+    .toInt(),
+  param('sid')
+    .trim()
+    .notEmpty()
+    .withMessage('sid must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('sid must be an ID!')
+    .bail()
+    .toInt()
+    .custom(async (sid) => {
+      const user = await SessionsQueries.getSessionBySessionId(sid);
+      if (user.length === 0) throw new Error('session id does not exist!');
+      return true;
+    }),
+  param('eid')
+    .trim()
+    .notEmpty()
+    .withMessage('eid must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('eid must be an ID!')
+    .bail()
+    .toInt()
+    .custom(async (eid) => {
+      const exercise = await ExercisesQueries.getExerciseById(eid);
+      if (exercise.length === 0) throw new Error('exercise id does not exist!');
       return true;
     }),
 ];

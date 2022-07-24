@@ -37,45 +37,40 @@ const props = defineProps({
 });
 
 // data
-const loading = ref(false);
-const addAExerciseLoading = ref(false);
-const addASetLoading = ref(false);
-const addAExerciseNoteLoading = ref(false);
 const alert = reactive({
   type: '',
   msg: '',
 });
-
+const loading = ref(false);
 const today = dayjs().format('YYYY/MM/DD');
-
-const addASetDismissButton = ref(null);
 const random_uuid = ref(uuidv4());
-
-const set = reactive({
-  reps: null,
-  rpe: null,
-  weight: null,
-  notes: null,
-});
+const total = ref('');
+const sid = ref(null);
+const currentSessionDetails = reactive({});
 
 const chooseExercises = ref([]);
 const chooseCategories = ref([]);
 const chooseExerciseCategoryId = ref(null);
 const chooseExerciseId = ref(null);
+const addAExerciseLoading = ref(false);
+const addAExerciseNoteLoading = ref(false);
 
+const set = reactive({
+  exercise_name: null,
+  reps: null,
+  rpe: null,
+  weight: null,
+  notes: null,
+});
+const addASetLoading = ref(false);
 const addASetExerciseId = ref(null);
 const addASetExerciseIndex = ref(null);
-
-const sid = ref(null);
-const currentSessionDetails = reactive({});
-
-const total = ref('');
+const addASetDismissButton = ref(null);
+const addASetEnableDisableOtherFields = ref(false);
 
 // watches
 //  update exercise db as changes in categories
 watch(chooseExerciseCategoryId, async (currentValue, oldValue) => {
-  // console.log(currentValue, 'cur');
-  // console.log(oldValue, 'old');
   const uec = await getUserExerciseByCategoryId(currentValue);
   chooseExercises.value = uec || [];
 });
@@ -212,6 +207,22 @@ async function addAExercise() {
   try {
     addAExerciseLoading.value = true;
 
+    if (currentSessionDetails.logs) {
+      for (const e of currentSessionDetails.logs) {
+        if (e.exercise_id === chooseExerciseId.value) {
+          throw new Error('Exercise already exist within current session!');
+        }
+      }
+    }
+
+    if (currentSessionDetails.json) {
+      for (const e of currentSessionDetails.json) {
+        if (e.exercise_id === chooseExerciseId.value) {
+          throw new Error('Exercise already exist within current session!');
+        }
+      }
+    }
+
     const [exercise] = await getUserExerciseDetails(chooseExerciseId.value);
 
     const meta = {
@@ -221,8 +232,9 @@ async function addAExercise() {
       json: JSON.stringify({
         exercise_id: exercise.id,
         session_id: currentSessionDetails.id,
-        collapsed: false,
+        collapsed: true,
         notes: '',
+        sets: [],
       }),
     };
 
@@ -241,6 +253,8 @@ async function addAExercise() {
       name: exercise.name,
       exercise_id: exercise.id,
       session_id: currentSessionDetails.id,
+      gains_meta_id: json.data[0].id,
+      collapsed: true,
       notes: '',
       sets: [],
     });
@@ -375,7 +389,58 @@ async function handleCompleteCurrentSession() {
   }
 }
 
-async function handleAddAExerciseNote() {}
+async function handleAddAExerciseNote() {
+  try {
+    addAExerciseNoteLoading.value = true;
+
+    let gains_meta_id = null;
+    if (currentSessionDetails.logs?.length === 0) {
+      gains_meta_id = currentSessionDetails.json[addASetExerciseIndex.value].gains_meta_id;
+    } else {
+      gains_meta_id = currentSessionDetails.json[addASetExerciseIndex.value].gains_meta_id;
+    }
+
+    const data = {
+      user_id: userStore.user.id,
+      exercise_id: addASetExerciseId.value,
+      session_id: currentSessionDetails.id,
+      gains_meta_id: gains_meta_id,
+      notes: set.notes,
+    };
+
+    const res = await api.patch(
+      `/api/v1/exercises/${data.exercise_id}/sessions/${data.session_id}/update-exercise-note/${data.gains_meta_id}`,
+      data,
+    );
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    addAExerciseNoteLoading.value = false;
+    if (currentSessionDetails.logs?.length === 0) {
+      currentSessionDetails.json[addASetExerciseIndex.value].notes = json.data[0].json.notes;
+    } else {
+      currentSessionDetails.logs[addASetExerciseIndex.value].notes = json.data[0].json.notes;
+    }
+    clearDataAndDismissAddAExerciseNoteModal();
+  } catch (e) {
+    addAExerciseNoteLoading.value = false;
+    clearDataAndDismissAddAExerciseNoteModal();
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 
 function clearDataAndDismissAddAExerciseNoteModal() {
   const modal = bootstrap.Modal.getOrCreateInstance(
@@ -563,168 +628,183 @@ async function handleDeleteSession() {
         </div>
 
         <!-- exercise logs -->
-        <div
-          v-for="(log, index) in currentSessionDetails.logs?.length != 0
-            ? currentSessionDetails.logs
-            : currentSessionDetails.json"
-          class="card p-0"
+        <TransitionGroup
+          enter-active-class="animate__animated animate__faster animate__fadeInDown"
+          leave-active-class="animate__animated animate__faster animate__fadeInUp"
         >
-          <!-- individual exercises log -->
-          <div class="card-body">
-            <!-- header -->
-            <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
-              <!-- title -->
-              <span>{{ index + 1 }}. {{ log.name }}</span>
+          <div
+            v-for="(log, index) in currentSessionDetails.logs?.length != 0
+              ? currentSessionDetails.logs
+              : currentSessionDetails.json"
+            :key="`key-${log.index}`"
+            class="card p-0"
+          >
+            <!-- individual exercises log -->
+            <div class="card-body">
+              <!-- header -->
+              <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
+                <!-- title -->
+                <span>{{ index + 1 }}. {{ log.name }}</span>
 
-              <!-- options -->
-              <span class="d-flex gap-2">
-                <!-- show/hide button -->
-                <button
-                  @click="log.collapsed = !log.collapsed"
-                  class="p-0 m-0"
-                  style="background: none; border: none; box-shadow: none"
-                  role="button"
-                >
-                  <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
-                  <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
-                </button>
-
-                <!-- lift settings -->
-                <div class="dropdown">
-                  <!-- setting icons -->
-                  <a
-                    class="link-dark"
+                <!-- options -->
+                <span class="d-flex gap-2">
+                  <!-- show/hide button -->
+                  <button
+                    @click="log.collapsed = !log.collapsed"
+                    class="p-0 m-0"
+                    style="background: none; border: none; box-shadow: none"
                     role="button"
-                    id="session-details-setting-button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="bi bi-three-dots-vertical"></i
-                  ></a>
+                  >
+                    <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
+                    <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
+                  </button>
 
-                  <!-- setting links -->
-                  <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                    <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
-                    <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
-                  </ul>
-                </div>
-              </span>
-            </h5>
+                  <!-- lift settings -->
+                  <div class="dropdown">
+                    <!-- setting icons -->
+                    <a
+                      class="link-dark"
+                      role="button"
+                      id="session-details-setting-button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      ><i class="bi bi-three-dots-vertical"></i
+                    ></a>
 
-            <!-- notes -->
-            <p
-              v-if="log.notes && log.collapsed"
-              class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
-            >
-              <small class="fst-italic fw-light">
-                {{ log.notes }}
-              </small>
-            </p>
+                    <!-- setting links -->
+                    <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
+                      <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
+                      <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
+                    </ul>
+                  </div>
+                </span>
+              </h5>
 
-            <!-- sets -->
-            <small v-if="log.sets.length != 0 && log.collapsed">
-              <div class="table-responsive">
-                <table class="table table-sm table-striped table-hover p-0 m-0">
-                  <thead>
-                    <tr>
-                      <th class="text-center" scope="col">Set</th>
-                      <th class="text-center" scope="col"></th>
-                      <th class="text-center" scope="col">Rep</th>
-                      <th class="text-center" scope="col"></th>
-                      <th class="text-center" scope="col">Weight</th>
-                      <th class="text-start" scope="col"></th>
-                      <th class="text-start" scope="col">Rpe</th>
-                      <th class="text-start" scope="col">Notes</th>
-                      <th class="text-start" scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <TransitionGroup
-                      enter-active-class="animate__animated animate__faster animate__fadeInUp"
-                      leave-active-class="animate__animated animate__faster animate__fadeOutDown"
-                    >
-                      <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
-                        <td class="text-center">{{ idx + 1 }}</td>
-                        <td class="text-center">x</td>
-                        <td class="text-center">{{ s.reps }}</td>
-                        <td class="text-center">x</td>
-                        <td class="text-center">{{ s.weight }}</td>
-                        <td class="text-start">@</td>
-                        <td class="text-start">{{ s.rpe }}</td>
-                        <td class="text-start text-truncate">
-                          <small>{{ s.notes }}</small>
-                        </td>
-                        <td class="text-end">
-                          <small class="d-flex justify-content-between gap-2">
-                            <i class="bi bi-pencil"></i>
-                            <i class="bi bi-trash"></i>
-                          </small>
-                        </td>
+              <!-- notes -->
+              <p
+                v-if="log.notes && log.collapsed"
+                class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
+              >
+                <small class="fst-italic fw-light">
+                  {{ log.notes }}
+                </small>
+              </p>
+
+              <!-- sets -->
+              <small v-if="log.sets.length != 0 && log.collapsed">
+                <div :class="{ 'pt-2': log.notes.length === 0 }"></div>
+                <!-- spacer if there is no notes-->
+                <div class="table-responsive">
+                  <table class="table table-sm table-striped table-hover p-0 m-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center" scope="col">Set</th>
+                        <th class="text-center" scope="col"></th>
+                        <th class="text-center" scope="col">Rep</th>
+                        <th class="text-center" scope="col"></th>
+                        <th class="text-center" scope="col">Weight</th>
+                        <th class="text-start" scope="col">Rpe</th>
+                        <th class="text-start" scope="col">Notes</th>
+                        <th class="text-start" scope="col"></th>
                       </tr>
-                    </TransitionGroup>
-                  </tbody>
-                </table>
-              </div>
-            </small>
-          </div>
+                    </thead>
+                    <tbody>
+                      <TransitionGroup
+                        enter-active-class="animate__animated animate__faster animate__fadeInDown"
+                        leave-active-class="animate__animated animate__faster animate__fadeInUp"
+                      >
+                        <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
+                          <td class="text-center">{{ idx + 1 }}</td>
+                          <td class="text-center text-muted">x</td>
+                          <td class="text-center">{{ s.reps }}</td>
+                          <td class="text-center text-muted">x</td>
+                          <td class="text-center">{{ s.weight }}</td>
+                          <td class="text-start"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
+                          <td class="text-start text-truncate text-muted fst-italic">
+                            <small>{{ s.notes }}</small>
+                          </td>
+                          <td class="text-end">
+                            <small class="d-flex justify-content-between gap-2">
+                              <i class="bi bi-pencil"></i>
+                              <i class="bi bi-trash text-danger"></i>
+                            </small>
+                          </td>
+                        </tr>
+                      </TransitionGroup>
+                    </tbody>
+                  </table>
+                </div>
+              </small>
+            </div>
 
-          <!-- footer -->
-          <div v-if="log.collapsed" class="card-footer">
-            <span class="d-flex justify-content-between gap-2">
-              <!-- left -->
+            <!-- footer -->
+            <div v-if="log.collapsed" class="card-footer">
               <span class="d-flex justify-content-between gap-2">
-                <!-- add a set model button -->
+                <!-- left -->
+                <span class="d-flex justify-content-between gap-2">
+                  <!-- add a set model button -->
 
-                <span>
-                  <button
-                    @click="(addASetExerciseId = log.exercise_id), (addASetExerciseIndex = index)"
-                    type="button"
-                    class="btn btn-sm btn-outline-dark"
-                    data-bs-toggle="modal"
-                    :data-bs-target="`#add-a-set-${random_uuid}`"
-                  >
-                    <i class="bi bi-plus-circle"></i>
-                  </button>
+                  <span>
+                    <button
+                      @click="
+                        (addASetExerciseId = log.exercise_id),
+                          (addASetExerciseIndex = index),
+                          (set.exercise_name = log.name)
+                      "
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      :data-bs-target="`#add-a-set-${random_uuid}`"
+                    >
+                      <i class="bi bi-plus-circle"></i>
+                    </button>
+                  </span>
+
+                  <!-- add exercise notes -->
+                  <span>
+                    <button
+                      @click="
+                        (addASetExerciseId = log.exercise_id),
+                          (addASetExerciseIndex = index),
+                          (set.exercise_name = log.name)
+                      "
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      :data-bs-target="`#add-a-note-${random_uuid}`"
+                    >
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                  </span>
+
+                  <!-- add a video group -->
+                  <span>
+                    <button type="button" class="btn btn-sm btn-outline-dark" disabled>
+                      <i class="bi bi-play-circle"></i>
+                    </button>
+                  </span>
                 </span>
 
-                <!-- add exercise notes -->
-                <span>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-dark"
-                    data-bs-toggle="modal"
-                    :data-bs-target="`#add-a-note-${random_uuid}`"
-                  >
-                    <i class="bi bi-pencil-square"></i>
+                <!-- right -->
+                <span class="d-flex justify-content-between gap-2">
+                  <button class="btn btn-sm btn-outline-dark" disabled>
+                    <i class="bi bi-bar-chart"></i>
                   </button>
-                </span>
-
-                <!-- add a video group -->
-                <span>
-                  <button type="button" class="btn btn-sm btn-outline-dark" disabled>
-                    <i class="bi bi-play-circle"></i>
+                  <button class="btn btn-sm btn-outline-dark" disabled>
+                    <i class="bi bi-journal-text"></i>
                   </button>
                 </span>
               </span>
-
-              <!-- right -->
-              <span class="d-flex justify-content-between gap-2">
-                <button class="btn btn-sm btn-outline-dark" disabled>
-                  <i class="bi bi-bar-chart"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-dark" disabled>
-                  <i class="bi bi-journal-text"></i>
-                </button>
-              </span>
-            </span>
+            </div>
           </div>
-        </div>
+        </TransitionGroup>
 
         <!-- add a exercise button -->
         <div class="border">
           <!-- model button -->
           <button
             type="button"
-            class="btn btn-secondary w-100"
+            class="btn btn-dark w-100"
             data-bs-toggle="modal"
             data-bs-target="#add-a-exercise"
             :disabled="loading || currentSessionDetails.end_date"
@@ -883,7 +963,10 @@ async function handleDeleteSession() {
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Add a note</h5>
+                <h5 class="modal-title">
+                  <span>Add a note for </span>
+                  <span class="fw-light"> {{ set.exercise_name }}</span>
+                </h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -947,7 +1030,10 @@ async function handleDeleteSession() {
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Add a set</h5>
+                <h5 class="modal-title">
+                  <span> Add a set for </span>
+                  <span class="fw-light">{{ set.exercise_name }}</span>
+                </h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -1003,9 +1089,25 @@ async function handleDeleteSession() {
                   </div>
                 </div>
 
+                <!-- show/hide button for note -->
+                <div class="form-check form-switch mb-3">
+                  <input
+                    v-model="addASetEnableDisableOtherFields"
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="add-a-set-enable-disable-note-button"
+                  />
+                  <label class="form-check-label" for="add-a-set-enable-disable-note-button">
+                    <span v-if="!addASetEnableDisableOtherFields">Enable</span>
+                    <span v-if="addASetEnableDisableOtherFields">Disable</span>
+                    <span> other fields</span>
+                  </label>
+                </div>
+
                 <!-- note -->
-                <div class="mb-3">
-                  <label class="form-label">Note</label>
+                <div v-if="addASetEnableDisableOtherFields" class="mb-3">
+                  <label class="form-label">Set note</label>
                   <textarea
                     v-model.trim="set.notes"
                     class="form-control form-control-sm"
