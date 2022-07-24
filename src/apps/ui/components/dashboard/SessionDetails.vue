@@ -1053,11 +1053,13 @@ async function handleDeleteSession() {
                       v-model.number="set.reps"
                       id="rep"
                       class="form-control form-control-sm"
-                      type="tel"
-                      pattern="[1-30]"
                       min="1"
                       max="30"
                       step="1"
+                      type="number"
+                      inputmode="numeric"
+                      pattern="[1-9]*"
+                      title="Non-negative integral number"
                       required
                       :disabled="addASetLoading"
                     />
