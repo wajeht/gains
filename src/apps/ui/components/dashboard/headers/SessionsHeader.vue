@@ -266,6 +266,8 @@ async function addASession() {
                       id="session-header-bodyweight"
                       class="form-control form-control-sm"
                       min="1"
+                      inputmode="numeric"
+                      pattern="[1-10]*"
                       type="number"
                       :disabled="loading"
                     />
@@ -280,6 +282,8 @@ async function addASession() {
                       class="form-control form-control-sm"
                       min="1"
                       type="number"
+                      inputmode="numeric"
+                      pattern="[0-24]*"
                       :disabled="loading"
                     />
                   </div>
@@ -297,6 +301,8 @@ async function addASession() {
                       class="form-control form-control-sm"
                       min="1"
                       type="number"
+                      inputmode="numeric"
+                      pattern="[1-10000]*"
                       :disabled="loading"
                     />
                   </div>
@@ -310,6 +316,8 @@ async function addASession() {
                       class="form-control form-control-sm"
                       min="1"
                       type="number"
+                      inputmode="numeric"
+                      pattern="[1-10000]*"
                       :disabled="loading"
                     />
                   </div>

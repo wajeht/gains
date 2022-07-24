@@ -1059,7 +1059,6 @@ async function handleDeleteSession() {
                       type="number"
                       inputmode="numeric"
                       pattern="[1-9]*"
-                      title="Non-negative integral number"
                       required
                       :disabled="addASetLoading"
                     />
@@ -1073,6 +1072,8 @@ async function handleDeleteSession() {
                       id="weight"
                       class="form-control form-control-sm"
                       type="number"
+                      inputmode="numeric"
+                      pattern="[1-9]*"
                       min="1"
                       required
                       :disabled="addASetLoading"
@@ -1086,10 +1087,12 @@ async function handleDeleteSession() {
                       v-model.number="set.rpe"
                       id="rpe"
                       class="form-control form-control-sm"
-                      type="number"
                       min="1"
                       step=".5"
                       max="10"
+                      inputmode="numeric"
+                      pattern="[1-10]*"
+                      type="number"
                       :disabled="addASetLoading"
                     />
                   </div>
