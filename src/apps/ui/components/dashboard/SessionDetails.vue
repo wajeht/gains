@@ -638,24 +638,29 @@ async function handleDeleteSession() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(s, idx) in log.sets">
-                      <td class="text-center">{{ idx + 1 }}</td>
-                      <td class="text-center">x</td>
-                      <td class="text-center">{{ s.reps }}</td>
-                      <td class="text-center">x</td>
-                      <td class="text-center">{{ s.weight }}</td>
-                      <td class="text-start">@</td>
-                      <td class="text-start">{{ s.rpe }}</td>
-                      <td class="text-start text-truncate">
-                        <small>{{ s.notes }}</small>
-                      </td>
-                      <td class="text-end">
-                        <small class="d-flex justify-content-between gap-2">
-                          <i class="bi bi-pencil"></i>
-                          <i class="bi bi-trash"></i>
-                        </small>
-                      </td>
-                    </tr>
+                    <TransitionGroup
+                      enter-active-class="animate__animated animate__faster animate__fadeInUp"
+                      leave-active-class="animate__animated animate__faster animate__fadeOutDown"
+                    >
+                      <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
+                        <td class="text-center">{{ idx + 1 }}</td>
+                        <td class="text-center">x</td>
+                        <td class="text-center">{{ s.reps }}</td>
+                        <td class="text-center">x</td>
+                        <td class="text-center">{{ s.weight }}</td>
+                        <td class="text-start">@</td>
+                        <td class="text-start">{{ s.rpe }}</td>
+                        <td class="text-start text-truncate">
+                          <small>{{ s.notes }}</small>
+                        </td>
+                        <td class="text-end">
+                          <small class="d-flex justify-content-between gap-2">
+                            <i class="bi bi-pencil"></i>
+                            <i class="bi bi-trash"></i>
+                          </small>
+                        </td>
+                      </tr>
+                    </TransitionGroup>
                   </tbody>
                 </table>
               </div>
