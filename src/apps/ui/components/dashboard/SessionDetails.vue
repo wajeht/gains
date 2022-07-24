@@ -234,6 +234,7 @@ async function addAExercise() {
         session_id: currentSessionDetails.id,
         collapsed: true,
         notes: '',
+        sets_notes_visibility: false,
         sets: [],
       }),
     };
@@ -259,6 +260,7 @@ async function addAExercise() {
       gains_meta_id: json.data[0].id,
       collapsed: true,
       notes: '',
+      sets_notes_visibility: false,
       sets: [],
     });
 
@@ -707,8 +709,14 @@ async function handleDeleteSession() {
                         <th class="text-center" scope="col"></th>
                         <th class="text-center" scope="col">Weight</th>
                         <th class="text-start" scope="col">Rpe</th>
-                        <th class="text-start" scope="col">Notes</th>
-                        <th class="text-start" scope="col"></th>
+                        <th v-if="!log.sets_notes_visibility" class="text-center" scope="col"></th>
+                        <th class="text-start" scope="col">
+                          <span @click="log.sets_notes_visibility = !log.sets_notes_visibility">
+                            <span>Notes </span>
+                            <i v-if="!log.sets_notes_visibility" class="bi bi-chevron-down"></i>
+                            <i v-if="log.sets_notes_visibility" class="bi bi-chevron-up"></i>
+                          </span>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -723,11 +731,15 @@ async function handleDeleteSession() {
                           <td class="text-center text-muted">x</td>
                           <td class="text-center">{{ s.weight }}</td>
                           <td class="text-start"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
-                          <td class="text-start text-truncate text-muted fst-italic">
+                          <td v-if="!log.sets_notes_visibility" class="text-center"></td>
+                          <td
+                            v-if="log.sets_notes_visibility"
+                            class="text-start text-truncate text-muted fst-italic"
+                          >
                             <small>{{ s.notes }}</small>
                           </td>
-                          <td class="text-end">
-                            <small class="d-flex justify-content-between gap-2">
+                          <td class="text-center">
+                            <small class="d-flex gap-2">
                               <i class="bi bi-pencil"></i>
                               <i class="bi bi-trash text-danger"></i>
                             </small>

@@ -241,7 +241,7 @@ async function addASession() {
               </div>
 
               <span v-if="showHideOtherFields">
-                <div v-if="!blocks.items.length.length" class="mb-3">
+                <div v-if="!blocks.items.length" class="mb-3">
                   <div class="alert alert-warning p-2">
                     <small
                       >There are not blocks available currently.
@@ -258,7 +258,12 @@ async function addASession() {
 
                 <!-- block name -->
                 <div class="mb-3">
-                  <label for="session-header-block_id" class="form-label">Block name</label>
+                  <span class="d-flex gap-1">
+                    <label for="session-header-block_id" class="form-label">Block name</label>
+                    <span v-tooltip title="Add via blocks page!"
+                      ><i class="bi bi-question-circle"></i
+                    ></span>
+                  </span>
                   <select
                     id="session-header-block_id"
                     class="form-control form-select form-select-sm"

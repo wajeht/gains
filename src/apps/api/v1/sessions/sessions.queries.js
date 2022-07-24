@@ -41,6 +41,7 @@ export async function getSessionBySessionId(sid) {
     select
 	    e.name as name,
       gm.id as "gains_meta_id",
+	    gm.json->'sets_notes_visibility' as "sets_notes_visibility",
 	    gm.json->'session_id' as "session_id",
 	    gm.json->'exercise_id' as "exercise_id",
 	    gm.json->'collapsed' as "collapsed",
