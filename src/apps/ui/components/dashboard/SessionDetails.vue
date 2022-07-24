@@ -670,7 +670,7 @@ async function handleDeleteSession() {
             <!-- individual exercises log -->
             <div class="card-body">
               <!-- header -->
-              <h5 class="card-title d-flex justify-content-between align-items-center mb-0">
+              <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
                 <!-- title -->
                 <span>{{ index + 1 }}. {{ log.name }}</span>
 
@@ -710,7 +710,7 @@ async function handleDeleteSession() {
                     </ul>
                   </div>
                 </span>
-              </h5>
+              </h6>
 
               <!-- notes -->
               <p
