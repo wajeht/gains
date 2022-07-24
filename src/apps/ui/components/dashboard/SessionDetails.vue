@@ -909,9 +909,15 @@ async function handleDeleteSession() {
                       <label for="session-details-exercise-category-name" class="form-label"
                         >Exercise category name*</label
                       >
-                      <span v-tooltip title="Add via categories page!"
-                        ><i class="bi bi-question-circle"></i
-                      ></span>
+                      <router-link
+                        @click="clearDataAndDismissAddAExerciseModal()"
+                        class="alert-link link-secondary"
+                        to="/dashboard/sessions/categories?model=true"
+                      >
+                        <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                          >Add more</span
+                        >
+                      </router-link>
                     </span>
                     <select
                       id="session-details-exercise-category-name"
@@ -929,9 +935,20 @@ async function handleDeleteSession() {
 
                   <!-- lift -->
                   <div class="mb-3">
-                    <label for="session-details-select-exercise" class="form-label"
-                      >Exercise*</label
-                    >
+                    <span class="d-flex gap-1">
+                      <label for="session-details-select-exercise" class="form-label"
+                        >Exercise name*</label
+                      >
+                      <router-link
+                        @click="clearDataAndDismissAddAExerciseModal()"
+                        class="alert-link link-secondary"
+                        to="/dashboard/sessions/exercises?model=true"
+                      >
+                        <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                          >Add more</span
+                        >
+                      </router-link>
+                    </span>
                     <select
                       id="session-details-select-exercise"
                       class="form-control form-select form-select-sm"

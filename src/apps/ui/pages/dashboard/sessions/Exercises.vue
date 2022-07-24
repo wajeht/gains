@@ -37,6 +37,14 @@ const alert = reactive({
   msg: '',
 });
 
+onMounted(() => {
+  const model = route.query.model;
+  if (model === 'true') {
+    const x = document.getElementById(`add-a-exercise-${random_uuid.value}`);
+    x.click();
+  }
+});
+
 onMounted(async () => {
   appStore.loading = true;
   const data = await getUserExercise();
@@ -248,9 +256,15 @@ function clearDataAndDismissModal() {
                     <label for="exercise-category-name" class="form-label"
                       >Exercise category name*</label
                     >
-                    <span v-tooltip title="Add via categories page!"
-                      ><i class="bi bi-question-circle"></i
-                    ></span>
+                    <router-link
+                      @click="clearDataAndDismissModal()"
+                      class="alert-link link-secondary"
+                      to="/dashboard/sessions/categories?model=true"
+                    >
+                      <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                        >Add more</span
+                      >
+                    </router-link>
                   </span>
                   <select
                     id="exercise-category-name"
