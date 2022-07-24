@@ -824,7 +824,10 @@ async function handleDeleteSession() {
             <div class="modal-dialog modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Add a exercise</h5>
+                  <h5 class="modal-title">
+                    <span> Add a exercise for </span>
+                    <span class="fw-light"> {{ currentSessionDetails.name }}</span>
+                  </h5>
                   <button
                     @click="clearDataAndDismissAddAExerciseModal()"
                     type="reset"
@@ -1051,6 +1054,7 @@ async function handleDeleteSession() {
                       id="rep"
                       class="form-control form-control-sm"
                       type="number"
+                      pattern="[1-30]"
                       min="1"
                       max="30"
                       step="1"
