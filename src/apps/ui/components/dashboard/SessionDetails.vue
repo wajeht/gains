@@ -249,6 +249,9 @@ async function addAExercise() {
       }
     }
 
+    addAExerciseLoading.value = false;
+    clearDataAndDismissAddAExerciseModal();
+
     currentSessionDetails.logs.push({
       name: exercise.name,
       exercise_id: exercise.id,
@@ -272,10 +275,6 @@ async function addAExercise() {
         throw jsons.message;
       }
     }
-
-    addAExerciseLoading.value = false;
-
-    clearDataAndDismissAddAExerciseModal();
   } catch (e) {
     loading.value = false;
     addAExerciseLoading.value = false;
