@@ -207,7 +207,7 @@ async function addAExercise() {
   try {
     addAExerciseLoading.value = true;
 
-    if (currentSessionDetails.logs) {
+    if (currentSessionDetails?.logs) {
       for (const e of currentSessionDetails.logs) {
         if (e.exercise_id === chooseExerciseId.value) {
           throw new Error('Exercise already exist within current session!');
@@ -215,8 +215,8 @@ async function addAExercise() {
       }
     }
 
-    if (currentSessionDetails.json) {
-      for (const e of currentSessionDetails.json) {
+    if (currentSessionDetails?.json?.logs) {
+      for (const e of currentSessionDetails.json.logs) {
         if (e.exercise_id === chooseExerciseId.value) {
           throw new Error('Exercise already exist within current session!');
         }
@@ -261,7 +261,7 @@ async function addAExercise() {
 
     const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.id}`, {
       user_id: userStore.user.id,
-      json: JSON.stringify(currentSessionDetails.logs),
+      json: JSON.stringify({ logs: currentSessionDetails.logs }),
     });
     const jsons = await ress.json();
 
@@ -324,7 +324,7 @@ async function handleAddASet() {
 
     // if .logs not available, we push to .json
     if (currentSessionDetails.logs?.length === 0) {
-      currentSessionDetails.json[addASetExerciseIndex.value].sets.push(setData);
+      currentSessionDetails.json.logs[addASetExerciseIndex.value].sets.push(setData);
     } else {
       currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(setData);
     }
@@ -395,9 +395,9 @@ async function handleAddAExerciseNote() {
 
     let gains_meta_id = null;
     if (currentSessionDetails.logs?.length === 0) {
-      gains_meta_id = currentSessionDetails.json[addASetExerciseIndex.value].gains_meta_id;
+      gains_meta_id = currentSessionDetails.json.logs[addASetExerciseIndex.value].gains_meta_id;
     } else {
-      gains_meta_id = currentSessionDetails.json[addASetExerciseIndex.value].gains_meta_id;
+      gains_meta_id = currentSessionDetails.logs[addASetExerciseIndex.value].gains_meta_id;
     }
 
     const data = {
@@ -424,7 +424,7 @@ async function handleAddAExerciseNote() {
 
     addAExerciseNoteLoading.value = false;
     if (currentSessionDetails.logs?.length === 0) {
-      currentSessionDetails.json[addASetExerciseIndex.value].notes = json.data[0].json.notes;
+      currentSessionDetails.json.logs[addASetExerciseIndex.value].notes = json.data[0].json.notes;
     } else {
       currentSessionDetails.logs[addASetExerciseIndex.value].notes = json.data[0].json.notes;
     }
@@ -635,7 +635,7 @@ async function handleDeleteSession() {
           <div
             v-for="(log, index) in currentSessionDetails.logs?.length != 0
               ? currentSessionDetails.logs
-              : currentSessionDetails.json"
+              : currentSessionDetails.json?.logs"
             :key="`key-${log.index}`"
             class="card p-0"
           >
