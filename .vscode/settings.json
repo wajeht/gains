@@ -16,7 +16,9 @@
 		"emerg",
 		"fontawesome",
 		"fortawesome",
+		"gmid",
 		"jsdocs",
+		"jsons",
 		"kindszzzz",
 		"knexfile",
 		"luxon",
@@ -34,6 +36,7 @@
 		"powerlifting",
 		"recieved",
 		"registerables",
+		"ress",
 		"rmds",
 		"rpes",
 		"sleepms",
@@ -48,6 +51,4 @@
 		"wajeht",
 		"yanlon"
 	],
-	"vue3snippets.enable-compile-vue-file-on-did-save-code": false,
-	"typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -63,3 +63,32 @@ export function searchExerciseName(name, uid, ecid) {
 export function createExercise(body = { name, exercise_category_id, user_id }) {
   return db.insert(body).into('exercises').returning('*');
 }
+
+/**
+ * It updates the notes field of a gains_meta record
+ * @returns The updated gains_meta row.
+ */
+export async function updateExerciseNote({
+  notes,
+  gains_meta_id,
+  user_id,
+  session_id,
+  exercise_id,
+}) {
+  const { rows } = await db.raw(
+    `
+    update gains_meta gm
+    set json = jsonb_set(json, '{notes}', '??')
+    where (
+      gm.id = ?
+      and gm.user_id = ?
+      and (gm.json->'session_id')::int = ?
+      and (gm.json->'exercise_id')::int = ?
+    )
+    returning *
+  `,
+    [notes, gains_meta_id, user_id, session_id, exercise_id],
+  );
+
+  return rows;
+}

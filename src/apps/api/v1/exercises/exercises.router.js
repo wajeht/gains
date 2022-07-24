@@ -56,4 +56,19 @@ exercises.post(
   catchAsyncErrors(ExercisesController.postExercise),
 );
 
+/**
+ * PATCH /api/v1/exercises/{eid}/sessions/{sid}/update-exercise-note/{gmid}
+ * @tags exercises
+ * @summary update exercise set notes
+ * @param {number} eid.form.required - the exercise id - application/x-www-form-urlencoded
+ * @param {number} sid.form.required - the session id - application/x-www-form-urlencoded
+ * @param {number} gmid.form.required - the gains meta id - application/x-www-form-urlencoded
+ * @param {json} json.form.required - the json - application/x-www-form-urlencoded
+ */
+exercises.patch(
+  '/:eid/sessions/:sid/update-exercise-note/:gmid',
+  validator(ExercisesValidation.patchExerciseNote),
+  catchAsyncErrors(ExercisesController.patchExerciseNote),
+);
+
 export default exercises;
