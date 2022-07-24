@@ -556,7 +556,14 @@ async function handleDeleteSession() {
               </div>
               <div class="col-8">
                 <!-- title -->
-                <h5 class="card-title">{{ currentSessionDetails.name }}</h5>
+                <h5 class="card-title">
+                  <span>
+                    {{ currentSessionDetails.name }}
+                  </span>
+                  <span class="text-muted fw-light fs-6">
+                    (sid: {{ currentSessionDetails.id }})</span
+                  >
+                </h5>
 
                 <!-- notes -->
                 <p
