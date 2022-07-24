@@ -42,6 +42,14 @@ const alert = reactive({
   msg: '',
 });
 
+onMounted(() => {
+  const model = route.query.model;
+  if (model === 'true') {
+    const x = document.getElementById(`add-a-block-${random_uuid.value}`);
+    x.click();
+  }
+});
+
 onMounted(async () => {
   appStore.loading = true;
   const data = await getUserBlocks();
