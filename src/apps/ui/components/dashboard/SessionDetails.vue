@@ -1053,7 +1053,7 @@ async function handleDeleteSession() {
                       v-model.number="set.reps"
                       id="rep"
                       class="form-control form-control-sm"
-                      type="number"
+                      type="tel"
                       pattern="[1-30]"
                       min="1"
                       max="30"
