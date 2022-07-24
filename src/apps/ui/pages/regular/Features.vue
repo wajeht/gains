@@ -40,8 +40,8 @@
             Instagram style video layout. <span class="text-muted">See for yourself.</span>
           </h2>
           <p class="lead">
-            Another featurette? Of course. More placeholder content here to give you an idea of how
-            this layout would work with some actual real-world content in place.
+            Browse other users' content, view popular content, like photos, and follow other users
+            to add their content to a personal feed.
           </p>
         </div>
         <div class="col-md-5 order-md-1">
@@ -101,8 +101,8 @@
             Charts, Graphs, and Reports. <span class="text-muted">See for yourself.</span>
           </h2>
           <p class="lead">
-            Another featurette? Of course. More placeholder content here to give you an idea of how
-            this layout would work with some actual real-world content in place.
+            Chart tools are powerful, simple to use, and free. Try out our rich gallery of
+            interactive charts and data tools.
           </p>
         </div>
         <div class="col-md-5 order-md-1">
