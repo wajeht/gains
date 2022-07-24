@@ -115,6 +115,8 @@ export async function patchExerciseNote(req, res) {
       `Something went wrong while updating a note for gmid: ${body.gains_meta_id}!`,
     );
 
+  logger.info(`User id: ${body.user_id} has updated gains meta to ${JSON.stringify(body)}!`);
+
   return res.status(StatusCodes.CREATED).json({
     status: 'success',
     request_url: req.originalUrl,
