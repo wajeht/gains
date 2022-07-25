@@ -55,6 +55,7 @@ export async function getSessionBySessionId(sid) {
     where (
         ss.deleted = false
         and (s.session_id = ? and (gm.json->'session_id')::int = ?)
+        and s.deleted = false
       )
     group by
 	    s.session_id,
