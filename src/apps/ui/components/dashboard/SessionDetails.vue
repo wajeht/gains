@@ -857,10 +857,15 @@ async function handleDeleteSession() {
                         <th class="text-center" scope="col"></th>
                         <th class="text-center" scope="col">Weight</th>
                         <th class="text-center" scope="col">Rpe</th>
+
+                        <th v-if="log.sets_notes_visibility" class="text-center" scope="col">
+                          Notes
+                        </th>
+
                         <th class="text-center" scope="col">
                           <span @click="log.sets_notes_visibility = !log.sets_notes_visibility">
-                            <i v-if="!log.sets_notes_visibility" class="bi bi-chevron-down"></i>
-                            <i v-if="log.sets_notes_visibility" class="bi bi-chevron-up"></i>
+                            <i v-if="!log.sets_notes_visibility" class="bi bi bi-toggle-off"></i>
+                            <i v-if="log.sets_notes_visibility" class="bi bi bi-toggle-on"></i>
                           </span>
                         </th>
                       </tr>
@@ -876,13 +881,15 @@ async function handleDeleteSession() {
                           <td class="text-center">{{ s.reps }}</td>
                           <td class="text-center text-muted">x</td>
                           <td class="text-center">{{ s.weight }}</td>
-                          <td class="text-start"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
+                          <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
+
                           <td
                             v-if="log.sets_notes_visibility"
                             class="text-start text-truncate text-muted fst-italic"
                           >
                             <small>{{ s.notes }}</small>
                           </td>
+
                           <td class="text-center">
                             <!-- modify a set button -->
                             <button
