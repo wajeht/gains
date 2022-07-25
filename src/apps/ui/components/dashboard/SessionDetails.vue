@@ -56,6 +56,12 @@ const addAExerciseLoading = ref(false);
 const addAExerciseNoteLoading = ref(false);
 
 const set = reactive({
+  id: null,
+  set_index: null,
+  log_index: null,
+  exercise_id: null,
+  user_id: null,
+  session_id: null,
   exercise_name: null,
   reps: null,
   rpe: null,
@@ -67,6 +73,11 @@ const addASetExerciseId = ref(null);
 const addASetExerciseIndex = ref(null);
 const addASetDismissButton = ref(null);
 const addASetEnableDisableOtherFields = ref(false);
+
+const modifyASetEnableDisableOtherFields = ref(false);
+const modifyASetLoading = ref(false);
+
+const deleteASetLoading = ref(false);
 
 const completeCurrentSessionShowHideOtherFields = ref(false);
 const completeCurrentSessionLoading = ref(false);
@@ -332,9 +343,9 @@ async function handleAddASet() {
 
     // if .logs not available, we push to .json
     if (currentSessionDetails.logs?.length === 0) {
-      currentSessionDetails.json.logs[addASetExerciseIndex.value].sets.push(setData);
+      currentSessionDetails.json.logs[addASetExerciseIndex.value].sets.push(json.data[0]);
     } else {
-      currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(setData);
+      currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(json.data[0]);
     }
   } catch (e) {
     loading.value = false;
@@ -355,6 +366,109 @@ function clearDataAndDismissAddASetModal() {
     document.getElementById(`add-a-set-${random_uuid.value}`),
   );
   modal.hide();
+}
+
+function clearDataAndDismissModifyASetModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(
+    document.getElementById(`modify-a-set-${random_uuid.value}`),
+  );
+  modal.hide();
+}
+
+async function modifyASet() {
+  try {
+    modifyASetLoading.value = true;
+
+    const modifyData = {
+      id: set.id,
+      user_id: set.user_id,
+      exercise_id: set.exercise_id,
+      session_id: set.session_id,
+      reps: set.reps,
+      weight: set.weight,
+      rpe: set.rpe,
+      notes: set.notes,
+    };
+
+    const validModifyData = pickBy(modifyData, (value, key) => value !== null);
+
+    const res = await api.patch(`/api/v1/sets/${modifyData.id}`, validModifyData);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    const current = currentSessionDetails.logs[set.log_index].sets[set.set_index];
+
+    clearDataAndDismissModifyASetModal();
+    modifyASetLoading.value = false;
+
+    // update realtime sets
+    for (let i in current) {
+      current[i] = validModifyData[i];
+    }
+  } catch (e) {
+    loading.value = false;
+    modifyASetLoading.value = false;
+    clearDataAndDismissModifyASetModal();
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+async function deleteASet() {
+  try {
+    deleteASetLoading.value = true;
+
+    const setData = {
+      id: set.id,
+      user_id: set.user_id,
+      session_id: set.session_id,
+    };
+
+    const validSetData = pickBy(setData, (value, key) => !value.id);
+
+    const res = await api.delete(`/api/v1/sets/${setData.id}`, validSetData);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    deleteASetLoading.value = false;
+
+    // remove from dom
+    currentSessionDetails.logs[set.log_index].sets = currentSessionDetails.logs[
+      set.log_index
+    ].sets.filter((s, i) => i != set.set_index);
+
+    clearDataAndDismissModifyASetModal();
+  } catch (e) {
+    loading.value = false;
+    deleteASetLoading.value = false;
+    clearDataAndDismissModifyASetModal();
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 
 function clearDataAndDismissCompleteCurrentSessionModal() {
@@ -773,7 +887,28 @@ async function handleDeleteSession() {
                             <small>{{ s.notes }}</small>
                           </td>
                           <td class="text-start">
-                            <i class="bi bi-pencil-square"></i>
+                            <!-- modify a set button -->
+                            <button
+                              @click="
+                                (set.id = s.id),
+                                  (set.set_index = idx),
+                                  (set.log_index = index),
+                                  (set.exercise_id = s.exercise_id),
+                                  (set.user_id = s.user_id),
+                                  (set.session_id = s.session_id),
+                                  (set.reps = s.reps),
+                                  (set.weight = s.weight),
+                                  (set.rpe = s.rpe),
+                                  (set.notes = s.notes),
+                                  (set.exercise_name = log.name)
+                              "
+                              type="button"
+                              class="btn btn-sm p-0 m-0"
+                              data-bs-toggle="modal"
+                              :data-bs-target="`#modify-a-set-${random_uuid}`"
+                            >
+                              <i class="bi bi-pencil-square"></i>
+                            </button>
                           </td>
                         </tr>
                       </TransitionGroup>
@@ -789,7 +924,6 @@ async function handleDeleteSession() {
                 <!-- left -->
                 <span class="d-flex justify-content-between gap-2">
                   <!-- add a set model button -->
-
                   <span>
                     <button
                       @click="
@@ -1448,6 +1582,181 @@ async function handleDeleteSession() {
                     </div>
                     <span v-if="!addASetLoading"> Submit </span>
                     <span v-if="addASetLoading"> Loading... </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- modify a set modal -->
+        <form
+          @submit.prevent="modifyASet()"
+          class="modal fade px-1 pt-5"
+          :id="`modify-a-set-${random_uuid}`"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  <span> Modify set id {{ set.id }} for </span>
+                  <span class="fw-light">{{ set.exercise_name }}</span>
+                </h5>
+                <button
+                  @click="clearDataAndDismissModifyASetModal()"
+                  type="reset"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row mb-3">
+                  <!-- reps -->
+                  <div class="col-4">
+                    <label for="modify-rep" class="form-label">Rep*</label>
+                    <input
+                      v-model.number="set.reps"
+                      id="modify-rep"
+                      class="form-control form-control-sm"
+                      min="1"
+                      max="30"
+                      step="1"
+                      type="number"
+                      inputmode="numeric"
+                      pattern="[1-9]*"
+                      required
+                      :disabled="addASetLoading"
+                    />
+                  </div>
+
+                  <!-- weight -->
+                  <div class="col-4">
+                    <label for="modify-weight" class="form-label">Weight*</label>
+                    <input
+                      v-model.number="set.weight"
+                      id="modify-weight"
+                      class="form-control form-control-sm"
+                      type="number"
+                      inputmode="numeric"
+                      pattern="[1-9]*"
+                      min="1"
+                      required
+                      :disabled="addASetLoading"
+                    />
+                  </div>
+
+                  <!-- rpe -->
+                  <div class="col-4">
+                    <label for="modify-rpe" class="form-label">Rpe</label>
+                    <input
+                      v-model.number="set.rpe"
+                      id="modify-rpe"
+                      class="form-control form-control-sm"
+                      min="1"
+                      step=".5"
+                      max="10"
+                      inputmode="numeric"
+                      pattern="[1-10]*"
+                      type="number"
+                      :disabled="addASetLoading"
+                    />
+                  </div>
+                </div>
+
+                <!-- show/hide button for note -->
+                <div class="form-check form-switch mb-3">
+                  <input
+                    v-model="modifyASetEnableDisableOtherFields"
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="modify-a-set-enable-disable-note-button"
+                  />
+                  <label class="form-check-label" for="add-a-set-enable-disable-note-button">
+                    <span v-if="!modifyASetEnableDisableOtherFields">Enable</span>
+                    <span v-if="modifyASetEnableDisableOtherFields">Disable</span>
+                    <span> other fields</span>
+                  </label>
+                </div>
+
+                <!-- note -->
+                <div v-if="modifyASetEnableDisableOtherFields" class="mb-3">
+                  <label for="modify-notes-id" class="form-label">Set note</label>
+                  <textarea
+                    v-model.trim="set.notes"
+                    class="form-control form-control-sm"
+                    id="modify-notes-id"
+                    rows="3"
+                    :disabled="modifyASetLoading"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- footer -->
+              <div class="modal-footer">
+                <div class="btn-group" role="group">
+                  <!-- clear -->
+                  <button
+                    v-if="!modifyASetLoading && !deleteASetLoading"
+                    type="reset"
+                    class="btn btn-outline-danger"
+                  >
+                    Clear
+                  </button>
+
+                  <!-- cancel -->
+                  <button
+                    v-if="!modifyASetLoading && !deleteASetLoading"
+                    @click="clearDataAndDismissModifyASetModal()"
+                    type="reset"
+                    class="btn btn-outline-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+
+                <!-- btn -->
+                <div class="btn-group" role="group">
+                  <!-- delete -->
+                  <button
+                    v-if="!modifyASetLoading"
+                    @click="deleteASet()"
+                    type="button"
+                    class="btn btn-danger"
+                    :disabled="deleteASetLoading"
+                  >
+                    <div
+                      v-if="deleteASetLoading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Deleting...</span>
+                    </div>
+                    <span v-if="!deleteASetLoading"> <i class="bi bi-trash"></i> Delete </span>
+                    <span v-if="deleteASetLoading"> Deleting... </span>
+                  </button>
+
+                  <!-- modify -->
+                  <button
+                    v-if="!deleteASetLoading"
+                    type="submit"
+                    class="btn btn-dark"
+                    :disabled="modifyASetLoading"
+                  >
+                    <div
+                      v-if="modifyASetLoading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden"> Updating...</span>
+                    </div>
+                    <span v-if="!modifyASetLoading"> Update </span>
+                    <span v-if="modifyASetLoading"> Updating... </span>
                   </button>
                 </div>
               </div>
