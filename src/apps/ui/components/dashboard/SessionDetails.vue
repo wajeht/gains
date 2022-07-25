@@ -746,7 +746,7 @@ async function handleDeleteSession() {
                         <th v-if="!log.sets_notes_visibility" class="text-center" scope="col"></th>
                         <th class="text-start" scope="col">
                           <span @click="log.sets_notes_visibility = !log.sets_notes_visibility">
-                            <span>Notes </span>
+                            <span>Others </span>
                             <i v-if="!log.sets_notes_visibility" class="bi bi-chevron-down"></i>
                             <i v-if="log.sets_notes_visibility" class="bi bi-chevron-up"></i>
                           </span>
@@ -772,11 +772,8 @@ async function handleDeleteSession() {
                           >
                             <small>{{ s.notes }}</small>
                           </td>
-                          <td class="text-center">
-                            <small class="d-flex gap-2">
-                              <i class="bi bi-pencil"></i>
-                              <i class="bi bi-trash text-danger"></i>
-                            </small>
+                          <td class="text-start">
+                            <i class="bi bi-pencil-square"></i>
                           </td>
                         </tr>
                       </TransitionGroup>
@@ -1279,29 +1276,36 @@ async function handleDeleteSession() {
 
               <!-- footer -->
               <div class="modal-footer">
-                <!-- cancel -->
-                <button
-                  @click="clearDataAndDismissAddAExerciseNoteModal()"
-                  v-if="!addAExerciseNoteLoading"
-                  type="reset"
-                  class="btn btn-outline-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Cancel
+                <!-- clear -->
+                <button v-if="!addASetLoading" type="reset" class="btn btn-outline-danger">
+                  Clear
                 </button>
 
-                <!-- add -->
-                <button type="submit" class="btn btn-dark" :disabled="addAExerciseNoteLoading">
-                  <div
-                    v-if="addAExerciseNoteLoading"
-                    class="spinner-border spinner-border-sm"
-                    role="status"
+                <div class="btn-group" role="group">
+                  <!-- cancel -->
+                  <button
+                    @click="clearDataAndDismissAddAExerciseNoteModal()"
+                    v-if="!addAExerciseNoteLoading"
+                    type="reset"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
                   >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <span v-if="!addAExerciseNoteLoading"> Submit </span>
-                  <span v-if="addAExerciseNoteLoading"> Loading... </span>
-                </button>
+                    Cancel
+                  </button>
+
+                  <!-- add -->
+                  <button type="submit" class="btn btn-dark" :disabled="addAExerciseNoteLoading">
+                    <div
+                      v-if="addAExerciseNoteLoading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span v-if="!addAExerciseNoteLoading"> Submit </span>
+                    <span v-if="addAExerciseNoteLoading"> Loading... </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1415,25 +1419,37 @@ async function handleDeleteSession() {
 
               <!-- footer -->
               <div class="modal-footer">
-                <!-- cancel -->
-                <button
-                  @click="clearDataAndDismissAddASetModal()"
-                  v-if="!addASetLoading"
-                  type="reset"
-                  class="btn btn-outline-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Cancel
+                <!-- clear -->
+                <button v-if="!addASetLoading" type="reset" class="btn btn-outline-danger">
+                  Clear
                 </button>
 
-                <!-- add -->
-                <button type="submit" class="btn btn-dark" :disabled="addASetLoading">
-                  <div v-if="addASetLoading" class="spinner-border spinner-border-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <span v-if="!addASetLoading"> Submit </span>
-                  <span v-if="addASetLoading"> Loading... </span>
-                </button>
+                <!-- btn -->
+                <div class="btn-group" role="group">
+                  <!-- cancel -->
+                  <button
+                    @click="clearDataAndDismissAddASetModal()"
+                    v-if="!addASetLoading"
+                    type="reset"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+
+                  <!-- add -->
+                  <button type="submit" class="btn btn-dark" :disabled="addASetLoading">
+                    <div
+                      v-if="addASetLoading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <span v-if="!addASetLoading"> Submit </span>
+                    <span v-if="addASetLoading"> Loading... </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
