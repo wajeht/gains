@@ -40,7 +40,7 @@ const alert = reactive({
 onMounted(() => {
   const model = route.query.model;
   if (model === 'true') {
-    const x = document.getElementById(`add-a-exercise-${random_uuid.value}`);
+    const x = document.getElementById(`add-a-exercise`);
     x.click();
   }
 });
@@ -56,7 +56,7 @@ onMounted(async () => {
 });
 
 onMounted(() => {
-  document.body.appendChild(document.getElementById(`add-a-exercise-${random_uuid.value}`));
+  document.body.appendChild(document.getElementById(`add-a-exercise`));
 });
 
 onMounted(() => {
@@ -177,9 +177,7 @@ function clearDataAndDismissModal() {
   exercise_category_id.value = '';
   user_id.value = userStore.user.id;
 
-  const modal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById(`add-a-exercise-${random_uuid.value}`),
-  );
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-exercise`));
   modal.hide();
 }
 </script>
@@ -205,7 +203,7 @@ function clearDataAndDismissModal() {
         class="link-secondary"
         role="button"
         data-bs-toggle="modal"
-        :data-bs-target="`#add-a-exercise-${random_uuid}`"
+        data-bs-target="#add-a-exercise"
       >
         <!-- add btn -->
         <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
@@ -216,7 +214,7 @@ function clearDataAndDismissModal() {
         <form
           @submit.prevent="addAExercise()"
           class="modal fade px-2 py-5"
-          :id="`add-a-exercise-${random_uuid}`"
+          id="add-a-exercise"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
           tabindex="-1"
@@ -324,7 +322,7 @@ function clearDataAndDismissModal() {
         <a
           class="link-dark"
           role="button"
-          :id="`category-header-dropdown-${random_uuid}`"
+          id="category-header-dropdown"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >

@@ -362,16 +362,12 @@ async function handleAddASet() {
 }
 
 function clearDataAndDismissAddASetModal() {
-  const modal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById(`add-a-set-${random_uuid.value}`),
-  );
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-set`));
   modal.hide();
 }
 
 function clearDataAndDismissModifyASetModal() {
-  const modal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById(`modify-a-set-${random_uuid.value}`),
-  );
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`modify-a-set`));
   modal.hide();
 }
 
@@ -473,7 +469,7 @@ async function deleteASet() {
 
 function clearDataAndDismissCompleteCurrentSessionModal() {
   const modal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById(`complete-current-session-${random_uuid.value}`),
+    document.getElementById(`complete-current-session`),
   );
   modal.hide();
 }
@@ -585,9 +581,7 @@ async function handleAddAExerciseNote() {
 }
 
 function clearDataAndDismissAddAExerciseNoteModal() {
-  const modal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById(`add-a-note-${random_uuid.value}`),
-  );
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-note`));
   modal.hide();
 }
 
@@ -917,7 +911,7 @@ async function handleDeleteSession() {
                               type="button"
                               class="btn btn-sm p-0 m-0"
                               data-bs-toggle="modal"
-                              :data-bs-target="`#modify-a-set-${random_uuid}`"
+                              data-bs-target="#modify-a-set"
                             >
                               <i class="bi bi-pencil-square"></i>
                             </button>
@@ -946,7 +940,7 @@ async function handleDeleteSession() {
                       type="button"
                       class="btn btn-sm btn-outline-dark"
                       data-bs-toggle="modal"
-                      :data-bs-target="`#add-a-set-${random_uuid}`"
+                      data-bs-target="#add-a-set"
                       :disabled="currentSessionDetails.end_date"
                     >
                       <i class="bi bi-plus-circle"></i>
@@ -964,7 +958,7 @@ async function handleDeleteSession() {
                       type="button"
                       class="btn btn-sm btn-outline-dark"
                       data-bs-toggle="modal"
-                      :data-bs-target="`#add-a-note-${random_uuid}`"
+                      data-bs-target="#add-a-note"
                       :disabled="currentSessionDetails.end_date"
                     >
                       <i class="bi bi-pencil-square"></i>
@@ -1152,7 +1146,7 @@ async function handleDeleteSession() {
           <button
             v-if="!currentSessionDetails.end_date"
             data-bs-toggle="modal"
-            :data-bs-target="`#complete-current-session-${random_uuid}`"
+            data-bs-target="#complete-current-session"
             type="button"
             class="btn btn-success"
             :disabled="
@@ -1166,7 +1160,7 @@ async function handleDeleteSession() {
           <form
             @submit.prevent="handleCompleteCurrentSession()"
             class="modal fade px-2 py-5"
-            :id="`complete-current-session-${random_uuid}`"
+            id="complete-current-session"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
             tabindex="-1"
@@ -1391,7 +1385,7 @@ async function handleDeleteSession() {
         <form
           @submit.prevent="handleAddAExerciseNote()"
           class="modal fade px-1 pt-5"
-          :id="`add-a-note-${random_uuid}`"
+          id="add-a-note"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
           tabindex="-1"
@@ -1469,7 +1463,7 @@ async function handleDeleteSession() {
         <form
           @submit.prevent="handleAddASet()"
           class="modal fade px-1 pt-5"
-          :id="`add-a-set-${random_uuid}`"
+          id="add-a-set"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
           tabindex="-1"
@@ -1621,7 +1615,7 @@ async function handleDeleteSession() {
         <form
           @submit.prevent="modifyASet()"
           class="modal fade px-1 pt-5"
-          :id="`modify-a-set-${random_uuid}`"
+          id="modify-a-set"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
           tabindex="-1"
@@ -1744,7 +1738,7 @@ async function handleDeleteSession() {
                     class="btn btn-outline-danger"
                     data-bs-dismiss="modal"
                   >
-                    <i class="bi bi-x-circle-fill"></i>
+                    <i class="bi bi-x-circle"></i>
                     Cancel
                   </button>
                 </div>
