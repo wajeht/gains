@@ -1,8 +1,10 @@
 <script setup>
 // import DashboardHeader from '../components/dashboard/DashboardHeader.vue';
 import DashboardFooter from '../components/dashboard/DashboardFooter.vue';
+import Toast from '../components/dashboard/Toast.vue';
 import Loading from '../components/dashboard/Loading.vue';
 import useAppStore from '../store/app.store.js';
+
 const appStore = useAppStore();
 </script>
 
