@@ -29,7 +29,7 @@ import useAppStore from '../../store/app.store.js';
 const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore();
-const appStore = useUserStore();
+const appStore = useAppStore();
 
 // props
 const props = defineProps({
@@ -611,6 +611,7 @@ async function handleDeleteSession() {
 
     appStore.loading = false;
 
+    appStore.showToast(`SessionID: ${json.data[0].id} has been deleted!`);
     router.push('/dashboard/sessions');
   } catch (e) {
     loading.value = false;
