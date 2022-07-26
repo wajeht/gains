@@ -69,8 +69,6 @@ async function getUserSessions() {
       });
       loading.value = false;
     }
-
-    console.log(pagination.details);
   } catch (e) {
     appStore.loading = false;
     alert.type = 'danger';
