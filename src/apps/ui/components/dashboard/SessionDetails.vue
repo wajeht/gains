@@ -668,12 +668,7 @@ async function handleDeleteSession() {
               <div class="col-8">
                 <!-- title -->
                 <h5 class="card-title">
-                  <span>
-                    {{ currentSessionDetails.name }}
-                  </span>
-                  <span class="text-muted fw-light fs-6">
-                    (sid: {{ currentSessionDetails.session_id }})</span
-                  >
+                  {{ currentSessionDetails.name }}
                 </h5>
 
                 <!-- notes -->
@@ -688,6 +683,12 @@ async function handleDeleteSession() {
 
                 <!-- icons group -->
                 <small class="card-text card-text d-flex flex-column">
+                  <!-- id -->
+                  <span>
+                    <font-awesome-icon icon="address-card" class="me-1" />Session ID:
+                    <span class="fw-light">{{ currentSessionDetails.session_id }}</span>
+                  </span>
+
                   <!-- sleep -->
                   <span v-if="currentSessionDetails.hours_of_sleep">
                     <font-awesome-icon icon="fa-moon " class="me-1" />Sleep:
