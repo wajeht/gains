@@ -16,6 +16,7 @@ export async function up(knex) {
       hours_of_sleep            INT DEFAULT NULL,
       stress_level              INT DEFAULT NULL,
       json                      JSONB DEFAULT NULL,
+      session_id                INT REFERENCES sessions on DELETE CASCADE,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
       deleted                   BOOLEAN DEFAULT FALSE,
       created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
