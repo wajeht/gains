@@ -245,7 +245,7 @@ async function addAExercise() {
       object_id: exercise.id,
       json: JSON.stringify({
         exercise_id: exercise.id,
-        session_id: currentSessionDetails.id,
+        session_id: currentSessionDetails.session_id,
         collapsed: true,
         notes: '',
         sets_notes_visibility: false,
@@ -270,7 +270,7 @@ async function addAExercise() {
     currentSessionDetails.logs.push({
       name: exercise.name,
       exercise_id: exercise.id,
-      session_id: currentSessionDetails.id,
+      session_id: currentSessionDetails.session_id,
       gains_meta_id: json.data[0].id,
       collapsed: true,
       notes: '',
@@ -278,7 +278,7 @@ async function addAExercise() {
       sets: [],
     });
 
-    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.id}`, {
+    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
       user_id: userStore.user.id,
       json: JSON.stringify({ logs: currentSessionDetails.logs }),
     });
@@ -317,7 +317,7 @@ async function handleAddASet() {
     const setData = {
       user_id: userStore.user.id,
       exercise_id: addASetExerciseId.value,
-      session_id: currentSessionDetails.id,
+      session_id: currentSessionDetails.session_id,
       reps: set.reps,
       weight: set.weight,
       rpe: set.rpe,
@@ -544,7 +544,7 @@ async function handleAddAExerciseNote() {
     const data = {
       user_id: userStore.user.id,
       exercise_id: addASetExerciseId.value,
-      session_id: currentSessionDetails.id,
+      session_id: currentSessionDetails.session_id,
       gains_meta_id: gains_meta_id,
       notes: set.notes,
     };
@@ -596,7 +596,7 @@ async function handleDeleteSession() {
   try {
     appStore.loading = true;
 
-    const res = await api.delete(`/api/v1/sessions/${currentSessionDetails.id}`, {
+    const res = await api.delete(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
       user_id: userStore.user.id,
     });
     const json = await res.json();
@@ -672,7 +672,7 @@ async function handleDeleteSession() {
                     {{ currentSessionDetails.name }}
                   </span>
                   <span class="text-muted fw-light fs-6">
-                    (sid: {{ currentSessionDetails.id }})</span
+                    (sid: {{ currentSessionDetails.session_id }})</span
                   >
                 </h5>
 
