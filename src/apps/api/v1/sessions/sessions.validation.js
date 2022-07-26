@@ -86,6 +86,26 @@ export const postCreateSession = [
 ];
 
 export const getUserSessions = [
+  query('perPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('perPage must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('perPage must be an ID!')
+    .bail()
+    .toInt(),
+  query('currentPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('current-page must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('current-page must be an ID!')
+    .bail()
+    .toInt(),
   query('user_id')
     .trim()
     .notEmpty()
@@ -96,7 +116,8 @@ export const getUserSessions = [
       const user = await UserQueries.findUserById(value);
       if (user.length === 0) throw new Error('user_id does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
 ];
 
 export const getSession = [

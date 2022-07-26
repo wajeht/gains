@@ -65,7 +65,16 @@ sessions.patch(
  * GET /api/v1/sessions?user_id={uid}
  * @tags sessions
  * @summary get all sessions of a user
- * @param {number} uid.path.required - the user id  - application/x-www-form-urlencoded
+ * @param {number} uid.query.required - the user id  - application/x-www-form-urlencoded
+ */
+
+/**
+ * GET /api/v1/sessions?user_id={sid}&perPage={perPage}&currentPage={perPage}
+ * @tags sessions
+ * @summary get a sessions details with pagination info
+ * @param {number} sid.path.required - the session id  - application/x-www-form-urlencoded
+ * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
+ * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
  */
 sessions.get(
   '/',

@@ -82,6 +82,7 @@
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.1.0",
+    "knex-paginate": "^3.0.1",
     "lodash-es": "^4.17.21",
     "node-cron": "^3.0.1",
     "nodemailer": "^6.7.6",
