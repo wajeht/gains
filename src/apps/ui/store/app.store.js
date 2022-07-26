@@ -5,10 +5,23 @@ const useAppStore = defineStore({
   state: () => {
     return {
       loading: false,
+      toast: {
+        toggle: false,
+        message: '',
+      },
     };
   },
   getters: {},
-  actions: {},
+  actions: {
+    clearToast() {
+      this.toast.toggle = false;
+      this.toast.message = '';
+    },
+    showToast(message) {
+      this.toast.toggle = true;
+      this.toast.message = message;
+    },
+  },
 });
 
 export default useAppStore;
