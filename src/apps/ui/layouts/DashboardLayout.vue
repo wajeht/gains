@@ -15,6 +15,10 @@ const appStore = useAppStore();
       style="background-color: #ebeae2"
     >
       <Loading v-if="appStore.loading" />
+
+      <!-- toast -->
+      <Toast v-if="appStore.toast.toggle && !appStore.loading" :message="appStore.toast.message" />
+
       <router-view> </router-view>
     </main>
     <DashboardFooter />

@@ -877,12 +877,7 @@ async function handleDeleteSession() {
                         leave-active-class="animate__animated animate__faster animate__fadeOutUp"
                       >
                         <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
-                          <Transition
-                            enter-active-class="animate__animated animate__faster animate__fadeInDown"
-                            leave-active-class="animate__animated animate__faster animate__fadeInUp"
-                          >
-                            <td class="text-center">{{ idx + 1 }}</td>
-                          </Transition>
+                          <td class="text-center">{{ idx + 1 }}</td>
                           <td class="text-center text-muted">x</td>
                           <td class="text-center">{{ s.reps }}</td>
                           <td class="text-center text-muted">x</td>
