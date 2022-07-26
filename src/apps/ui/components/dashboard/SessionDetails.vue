@@ -337,8 +337,11 @@ async function handleAddASet() {
       }
     }
 
+    set.reps = null;
+    set.rpe = null;
+    set.notes = null;
+    set.weight = null;
     addASetLoading.value = false;
-
     clearDataAndDismissAddASetModal();
 
     // if .logs not available, we push to .json
@@ -953,7 +956,8 @@ async function handleDeleteSession() {
                       @click="
                         (addASetExerciseId = log.exercise_id),
                           (addASetExerciseIndex = index),
-                          (set.exercise_name = log.name)
+                          (set.exercise_name = log.name),
+                          (set.notes = log.notes)
                       "
                       type="button"
                       class="btn btn-sm btn-outline-dark"
