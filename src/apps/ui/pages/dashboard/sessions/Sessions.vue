@@ -69,6 +69,8 @@ async function getUserSessions() {
       });
       loading.value = false;
     }
+
+    console.log(pagination.details);
   } catch (e) {
     appStore.loading = false;
     alert.type = 'danger';
@@ -185,15 +187,11 @@ function logDetails(sid) {
 
       <!-- load more -->
       <button
-        v-if="pagination.details?.total != 1"
+        v-if="pagination.details?.total > pagination.details?.perPage"
         @click="getUserSessions()"
         type="button"
         class="btn btn-success"
-        :disabled="
-          loading ||
-          !pagination.details?.lastPage ||
-          pagination.details.currentPage == pagination.details.lastPage
-        "
+        :disabled="loading || !pagination.details?.lastPage"
       >
         <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
           <span class="visually-hidden">Loading...</span>
