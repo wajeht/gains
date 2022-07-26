@@ -2,7 +2,7 @@
 import api from '../../../../../libs/fetch-with-style.js';
 import { sleep } from '../../../../../utils/helpers.js';
 
-import { nextTick, ref, onMounted, reactive, onUpdated } from 'vue';
+import { nextTick, ref, onMounted, reactive, onUpdated, onUnmounted } from 'vue';
 import { pickBy } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -43,10 +43,10 @@ onMounted(async () => {
   blocks.items = data || [];
 });
 
-onMounted(() => {
-  // back drop problem fixed
-  document.body.appendChild(document.getElementById(`add-a-session-${random_uuid.value}`));
-});
+// this code below required for back drop problem fixed when adding a new session header model
+onMounted(() => document.body.appendChild(document.getElementById(`add-a-session`)));
+onUnmounted(() => document.body.removeChild(document.getElementById(`add-a-session`)));
+// this code above required for back drop problem fixed when adding a new session header model
 
 async function getUserBlocks() {
   try {
@@ -86,9 +86,7 @@ function clearDataAndDismissModal() {
   calories_prior_session.value = '';
   caffeine_intake.value = '';
   notes.value = '';
-  const modal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById(`add-a-session-${random_uuid.value}`),
-  );
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-session`));
   modal.hide();
 }
 
@@ -156,7 +154,7 @@ async function addASession() {
         class="link-secondary"
         role="button"
         data-bs-toggle="modal"
-        :data-bs-target="`#add-a-session-${random_uuid}`"
+        data-bs-target="#add-a-session"
       >
         <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
           <font-awesome-icon icon="plus" class="p-0 m-0" />
@@ -168,7 +166,7 @@ async function addASession() {
       <form
         @submit.prevent="addASession()"
         class="modal fade px-2 py-5"
-        :id="`add-a-session-${random_uuid}`"
+        id="add-a-session"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabindex="-1"
@@ -230,13 +228,10 @@ async function addASession() {
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
-                  :id="`session-header-show-hide-button-${random_uuid}`"
+                  id="session-header-show-hide-button"
                   :disabled="loading"
                 />
-                <label
-                  class="form-check-label"
-                  :for="`session-header-show-hide-button-${random_uuid}`"
-                >
+                <label class="form-check-label" for="session-header-show-hide-button">
                   <span v-if="!showHideOtherFields">Enable</span>
                   <span v-if="showHideOtherFields">Disable</span>
                   <span> other fields</span>
@@ -400,7 +395,7 @@ async function addASession() {
       <a
         class="link-dark"
         role="button"
-        :id="`sessions-header-settings-${random_uuid}`"
+        id="sessions-header-settings"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
