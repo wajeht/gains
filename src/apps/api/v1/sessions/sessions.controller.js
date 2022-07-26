@@ -76,15 +76,23 @@ export async function getSession(req, res) {
  */
 export async function getUserSessions(req, res) {
   const user_id = req.query.user_id;
-  const sessions = await SessionQueries.getSessionsByUserId(user_id);
+  const { perPage, currentPage } = req.query;
 
-  if (!sessions.length) throw new CustomError.BadRequestError(`There are no sessions available for user id ${user_id}!`); // prettier-ignore
+  const pagination = {
+    perPage,
+    currentPage,
+  };
+
+  const sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);
+
+  if (!sessions.data.length) throw new CustomError.BadRequestError(`There are no sessions available for user id ${user_id}!`); // prettier-ignore
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: sessions,
+    data: sessions.data,
+    pagination: sessions.pagination,
   });
 }
 

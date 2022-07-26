@@ -14,8 +14,14 @@ import useUserStore from '../../../store/user.store.js';
 const appStore = useAppStore();
 const userStore = useUserStore();
 const router = useRouter();
+const loading = ref(false);
 
 const sessions = ref([]);
+const pagination = reactive({
+  perPage: 20,
+  currentPage: 0,
+  details: null,
+});
 
 const today = dayjs().format('YYYY/MM/DD');
 
@@ -25,12 +31,16 @@ const alert = reactive({
 });
 
 onMounted(async () => {
+  appStore.loading = true;
+  await getUserSessions();
+  appStore.loading = false;
+});
+
+async function getUserSessions() {
   try {
-    appStore.loading = true;
+    pagination.currentPage++;
 
-    // await sleep(300);
-
-    const res = await api.get(`/api/v1/sessions?user_id=${userStore.user.id}`);
+    const res = await api.get(`/api/v1/sessions?user_id=${userStore.user.id}&perPage=${pagination.perPage}&currentPage=${pagination.currentPage}`); // prettier-ignore
     const json = await res.json();
 
     if (json.data?.length === 0) {
@@ -48,10 +58,19 @@ onMounted(async () => {
         throw json.message;
       }
     }
+    pagination.details = json.pagination;
 
-    sessions.value = json.data || [];
+    if (sessions.value.length === 0) {
+      sessions.value = json.data || [];
+    } else {
+      loading.value = true; // loading more btun
+      json.data.forEach((element) => {
+        sessions.value.push(element);
+      });
+      loading.value = false;
+    }
 
-    appStore.loading = false;
+    console.log(pagination.details);
   } catch (e) {
     appStore.loading = false;
     alert.type = 'danger';
@@ -62,7 +81,7 @@ onMounted(async () => {
       alert.msg = e;
     }
   }
-});
+}
 
 function calculateTotal(start, end) {
   if (!start || !end) return 0;
@@ -165,6 +184,26 @@ function logDetails(sid) {
           </div>
         </div>
       </div>
+
+      <!-- load more -->
+      <button
+        v-if="pagination.details?.total != 1"
+        @click="getUserSessions()"
+        type="button"
+        class="btn btn-success"
+        :disabled="
+          loading ||
+          !pagination.details?.lastPage ||
+          pagination.details.currentPage == pagination.details.lastPage
+        "
+      >
+        <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+
+        <span v-if="!loading"> Load more </span>
+        <span v-if="loading"> Loading... </span>
+      </button>
     </div>
   </div>
 </template>

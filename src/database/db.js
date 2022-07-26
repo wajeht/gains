@@ -2,6 +2,7 @@ import Knex from 'knex';
 import options from '../config/knexfile.js';
 import logger from '../libs/logger.js';
 import { yellow, red } from '../utils/rainbow-log.js';
+import { attachPaginate } from 'knex-paginate';
 
 Knex(options)
   .raw('SELECT 1 + 1')
@@ -14,4 +15,7 @@ Knex(options)
     process.exit(1);
   });
 
-export default Knex(options);
+const db = Knex(options);
+attachPaginate();
+
+export default db;

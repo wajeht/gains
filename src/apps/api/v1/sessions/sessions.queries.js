@@ -17,13 +17,16 @@ export function createASession(body) {
  * @param user_id - The user_id of the user whose sessions you want to retrieve.
  * @returns An array of objects
  */
-export function getSessionsByUserId(user_id) {
+export function getSessionsByUserId(user_id, pagination = { perPage: null, currentPage: null }) {
   return db
     .select('*')
     .from('sessions')
     .where({ user_id })
     .andWhere({ deleted: false })
-    .orderBy('id', 'desc');
+    .orderBy('id', 'desc')
+    .paginate({
+      ...pagination,
+    });
 }
 
 /**
