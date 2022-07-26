@@ -18,7 +18,7 @@ const loading = ref(false);
 
 const sessions = ref([]);
 const pagination = reactive({
-  perPage: 10,
+  perPage: 20,
   currentPage: 0,
   details: null,
   lastPage: null,
