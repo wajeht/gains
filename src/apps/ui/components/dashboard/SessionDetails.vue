@@ -858,14 +858,17 @@ async function handleDeleteSession() {
                         <th class="text-center" scope="col">Weight</th>
                         <th class="text-center" scope="col">Rpe</th>
 
-                        <th v-if="log.sets_notes_visibility" class="text-center" scope="col">
+                        <th v-if="log.sets_notes_visibility" class="text-start" scope="col">
                           Notes
                         </th>
 
                         <th class="text-center" scope="col">
                           <span @click="log.sets_notes_visibility = !log.sets_notes_visibility">
                             <i v-if="!log.sets_notes_visibility" class="bi bi bi-toggle-off"></i>
-                            <i v-if="log.sets_notes_visibility" class="bi bi bi-toggle-on"></i>
+                            <i
+                              v-if="log.sets_notes_visibility"
+                              class="bi bi bi-toggle-on text-success"
+                            ></i>
                           </span>
                         </th>
                       </tr>
@@ -873,10 +876,15 @@ async function handleDeleteSession() {
                     <tbody>
                       <TransitionGroup
                         enter-active-class="animate__animated animate__faster animate__fadeInDown"
-                        leave-active-class="animate__animated animate__faster animate__fadeInUp"
+                        leave-active-class="animate__animated animate__faster animate__fadeOutUp"
                       >
                         <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
-                          <td class="text-center">{{ idx + 1 }}</td>
+                          <Transition
+                            enter-active-class="animate__animated animate__faster animate__fadeInDown"
+                            leave-active-class="animate__animated animate__faster animate__fadeInUp"
+                          >
+                            <td class="text-center">{{ idx + 1 }}</td>
+                          </Transition>
                           <td class="text-center text-muted">x</td>
                           <td class="text-center">{{ s.reps }}</td>
                           <td class="text-center text-muted">x</td>
@@ -1109,6 +1117,7 @@ async function handleDeleteSession() {
                     class="btn btn-outline-danger"
                     data-bs-dismiss="modal"
                   >
+                    <i class="bi bi-x-circle"></i>
                     Cancel
                   </button>
 
@@ -1125,7 +1134,10 @@ async function handleDeleteSession() {
                     >
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                    <span v-if="!addAExerciseLoading"> Submit </span>
+                    <span v-if="!addAExerciseLoading">
+                      <i class="bi bi-check-circle-fill"></i>
+                      Submit
+                    </span>
                     <span v-if="addAExerciseLoading"> Loading... </span>
                   </button>
                 </div>
@@ -1428,6 +1440,7 @@ async function handleDeleteSession() {
                     class="btn btn-danger"
                     data-bs-dismiss="modal"
                   >
+                    <i class="bi bi-x-circle"></i>
                     Cancel
                   </button>
 
@@ -1440,7 +1453,10 @@ async function handleDeleteSession() {
                     >
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                    <span v-if="!addAExerciseNoteLoading"> Submit </span>
+                    <span v-if="!addAExerciseNoteLoading">
+                      <i class="bi bi-check-circle-fill"></i>
+                      Submit
+                    </span>
                     <span v-if="addAExerciseNoteLoading"> Loading... </span>
                   </button>
                 </div>
@@ -1504,7 +1520,7 @@ async function handleDeleteSession() {
                       pattern="[1-9]*"
                       min="1"
                       required
-                      :disabled="addASetLoading"
+                      :disabled="addASetLoading || !set.reps"
                     />
                   </div>
 
@@ -1521,7 +1537,7 @@ async function handleDeleteSession() {
                       inputmode="numeric"
                       pattern="[1-10]*"
                       type="number"
-                      :disabled="addASetLoading"
+                      :disabled="addASetLoading || !set.weight"
                     />
                   </div>
                 </div>
@@ -1534,6 +1550,7 @@ async function handleDeleteSession() {
                     type="checkbox"
                     role="switch"
                     id="add-a-set-enable-disable-note-button"
+                    :disabled="addASetLoading || !set.reps || !set.weight"
                   />
                   <label class="form-check-label" for="add-a-set-enable-disable-note-button">
                     <span v-if="!addASetEnableDisableOtherFields">Enable</span>
@@ -1572,11 +1589,16 @@ async function handleDeleteSession() {
                     class="btn btn-danger"
                     data-bs-dismiss="modal"
                   >
+                    <i class="bi bi-x-circle-fill"></i>
                     Cancel
                   </button>
 
                   <!-- add -->
-                  <button type="submit" class="btn btn-dark" :disabled="addASetLoading">
+                  <button
+                    type="submit"
+                    class="btn btn-dark"
+                    :disabled="addASetLoading || !set.reps || !set.weight"
+                  >
                     <div
                       v-if="addASetLoading"
                       class="spinner-border spinner-border-sm"
@@ -1584,7 +1606,9 @@ async function handleDeleteSession() {
                     >
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                    <span v-if="!addASetLoading"> Submit </span>
+                    <span v-if="!addASetLoading">
+                      <i class="bi bi-check-circle-fill"></i> Submit
+                    </span>
                     <span v-if="addASetLoading"> Loading... </span>
                   </button>
                 </div>
@@ -1720,6 +1744,7 @@ async function handleDeleteSession() {
                     class="btn btn-outline-danger"
                     data-bs-dismiss="modal"
                   >
+                    <i class="bi bi-x-circle-fill"></i>
                     Cancel
                   </button>
                 </div>

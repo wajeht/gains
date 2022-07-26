@@ -230,10 +230,13 @@ async function addASession() {
                   class="form-check-input"
                   type="checkbox"
                   role="switch"
-                  id="session-header-show-hide-button"
+                  :id="`session-header-show-hide-button-${random_uuid}`"
                   :disabled="loading"
                 />
-                <label class="form-check-label" for="session-header-show-hide-button">
+                <label
+                  class="form-check-label"
+                  :for="`session-header-show-hide-button-${random_uuid}`"
+                >
                   <span v-if="!showHideOtherFields">Enable</span>
                   <span v-if="showHideOtherFields">Disable</span>
                   <span> other fields</span>

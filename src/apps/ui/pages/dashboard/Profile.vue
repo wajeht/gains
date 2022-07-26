@@ -144,7 +144,10 @@ async function logout() {
                   <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
-                  <span v-if="!loading"> Logout </span>
+                  <span v-if="!loading">
+                    <font-awesome-icon icon="right-from-bracket" />
+                    Logout
+                  </span>
                   <span v-if="loading"> Loading... </span>
                 </button>
 
