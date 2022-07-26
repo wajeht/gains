@@ -18,9 +18,10 @@ const loading = ref(false);
 
 const sessions = ref([]);
 const pagination = reactive({
-  perPage: 20,
+  perPage: 10,
   currentPage: 0,
   details: null,
+  lastPage: null,
 });
 
 const today = dayjs().format('YYYY/MM/DD');
@@ -33,12 +34,14 @@ const alert = reactive({
 onMounted(async () => {
   appStore.loading = true;
   await getUserSessions();
+  pagination.lastPage = pagination.details.lastPage;
   appStore.loading = false;
 });
 
 async function getUserSessions() {
   try {
     pagination.currentPage++;
+    loading.value = true; // loading more button
 
     const res = await api.get(`/api/v1/sessions?user_id=${userStore.user.id}&perPage=${pagination.perPage}&currentPage=${pagination.currentPage}`); // prettier-ignore
     const json = await res.json();
@@ -63,14 +66,17 @@ async function getUserSessions() {
     if (sessions.value.length === 0) {
       sessions.value = json.data || [];
     } else {
-      loading.value = true; // loading more btun
+      loading.value = true; // loading more button
       json.data.forEach((element) => {
         sessions.value.push(element);
       });
       loading.value = false;
     }
+
+    loading.value = false; // loading more button
   } catch (e) {
     appStore.loading = false;
+    loading.value = false; // loading more button
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -185,11 +191,11 @@ function logDetails(sid) {
 
       <!-- load more -->
       <button
-        v-if="pagination.details?.total > pagination.details?.perPage"
+        v-if="pagination.details?.currentPage !== pagination.lastPage"
         @click="getUserSessions()"
         type="button"
         class="btn btn-success"
-        :disabled="loading || !pagination.details?.lastPage"
+        :disabled="loading"
       >
         <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
           <span class="visually-hidden">Loading...</span>
