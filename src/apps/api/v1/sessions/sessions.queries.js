@@ -73,6 +73,7 @@ export async function getSessionBySessionId(sid) {
   const joined = await db
     .select(
       '*',
+      'sessions.id as session_id',
       'sessions.name as name',
       'blocks.name as block_name',
       'sessions.end_date as end_date',
@@ -84,7 +85,7 @@ export async function getSessionBySessionId(sid) {
 
   // session without block info
   const notJoined = await db
-    .select('*', 'sessions.end_date as end_date')
+    .select('*', 'sessions.end_date as end_date', 'sessions.id as session_id')
     .from('sessions')
     .where({ id: sid })
     .andWhere({ deleted: false });
