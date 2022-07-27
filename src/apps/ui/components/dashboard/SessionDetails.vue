@@ -282,7 +282,7 @@ async function addAExercise() {
       user_id: userStore.user.id,
       json: JSON.stringify({ logs: currentSessionDetails.logs }),
     });
-    const jsonn = await res.json();
+    const jsonn = await ress.json();
 
     if (!ress.ok) {
       if (jsonn.errors) {
@@ -351,7 +351,8 @@ async function handleAddASet() {
         user_id: userStore.user.id,
         json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
       });
-      const jsonn = await res.json();
+      const jsonn = await ress.json();
+
       if (!ress.ok) {
         if (jsonn.errors) {
           throw jsonn.errors;
@@ -365,7 +366,8 @@ async function handleAddASet() {
         user_id: userStore.user.id,
         json: JSON.stringify({ logs: currentSessionDetails.logs }),
       });
-      const jsonn = await res.json();
+      const jsonn = await ress.json();
+
       if (!ress.ok) {
         if (jsonn.errors) {
           throw jsonn.errors;
@@ -422,7 +424,7 @@ async function modifyASet() {
       user_id: userStore.user.id,
       json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
     });
-    const jsonn = await res.json();
+    const jsonn = await ress.json();
 
     if (!ress.ok) {
       if (jsonn.errors) {
