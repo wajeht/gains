@@ -35,7 +35,8 @@ export const postCreateSession = [
         if (user.length === 0) throw new Error('User does not exist!');
       }
       return true;
-    }),
+    })
+    .toInt(),
   body('name').trim().notEmpty().withMessage('Session name must not be empty!'),
   body('start_date')
     .trim()
@@ -52,32 +53,42 @@ export const postCreateSession = [
     .isISO8601()
     .toDate()
     .withMessage('End date must be in date format'),
-  body('block_id').optional().trim().isFloat().withMessage('Block ID must be an integer format!'),
+  body('block_id')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('Block ID must be an integer format!')
+    .toFloat(),
   body('body_weight')
     .optional()
     .trim()
     .isFloat()
-    .withMessage('Body weight must be an integer format!'),
+    .withMessage('Body weight must be an integer format!')
+    .toFloat(),
   body('hours_of_sleep')
     .optional()
     .trim()
     .isFloat()
-    .withMessage('Hours of sleep must be an integer format!'),
+    .withMessage('Hours of sleep must be an integer format!')
+    .toFloat(),
   body('session_rpe')
     .optional()
     .trim()
     .isFloat()
-    .withMessage('Session RPE must be an integer format!'),
+    .withMessage('Session RPE must be an integer format!')
+    .toFloat(),
   body('calories_prior_session')
     .optional()
     .trim()
     .isFloat()
-    .withMessage('calories_prior_session must be an integer format!'),
+    .withMessage('calories_prior_session must be an integer format!')
+    .toFloat(),
   body('caffeine_intake')
     .optional()
     .trim()
     .isFloat()
-    .withMessage('caffeine_intake must be an integer format!'),
+    .withMessage('caffeine_intake must be an integer format!')
+    .toFloat(),
   body('notes')
     .optional()
     .trim()
@@ -131,7 +142,8 @@ export const getSession = [
       const user = await SessionsQueries.getSessionBySessionId(sid);
       if (user.length === 0) throw new Error('session id does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
 ];
 
 export const deleteSession = [
@@ -145,7 +157,8 @@ export const deleteSession = [
       const user = await SessionsQueries.getSessionBySessionId(sid);
       if (user.length === 0) throw new Error('session id does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
 ];
 
 export const patchSession = [
@@ -196,17 +209,24 @@ export const patchSession = [
     .isISO8601()
     .toDate()
     .withMessage('End date must be in date format'),
-  body('block_id').optional().trim().isFloat().withMessage('Block ID must be an integer format!'),
+  body('block_id')
+    .optional()
+    .trim()
+    .isFloat()
+    .withMessage('Block ID must be an integer format!')
+    .toFloat(),
   body('body_weight')
     .optional()
     .trim()
     .isFloat()
-    .withMessage('Body weight must be an integer format!'),
+    .withMessage('Body weight must be an integer format!')
+    .toFloat(),
   body('hours_of_sleep')
     .optional()
     .trim()
     .isFloat()
-    .withMessage('Hours of sleep must be an integer format!'),
+    .withMessage('Hours of sleep must be an integer format!')
+    .toFloat(),
   body('session_rpe')
     .optional()
     .trim()

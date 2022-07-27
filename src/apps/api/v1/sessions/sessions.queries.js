@@ -7,8 +7,21 @@ import { omit, pick, update } from 'lodash-es';
  * @returns The session that was created
  */
 export async function createASession(body) {
+  console.log(body);
+  const wout = [
+    'body_weight',
+    'caffeine_intake',
+    'calories_prior_session',
+    'total_calories',
+    'water_prior_session',
+    'total_water',
+    'hours_of_sleep',
+    'stress_level',
+  ];
+
+  const cleanSession = omit(body, ...wout);
   const [insertedSession] = await db
-    .insert({ ...body })
+    .insert({ ...cleanSession })
     .into('sessions')
     .returning('*');
 
@@ -24,7 +37,7 @@ export async function createASession(body) {
     'block_id',
     'deleted',
   ];
-  const cleanVariables = omit(insertedSession, ...without);
+  const cleanVariables = omit({ ...insertedSession, ...body }, ...without);
   cleanVariables.session_id = cleanVariables.id;
   delete cleanVariables.id;
 
@@ -35,7 +48,8 @@ export async function createASession(body) {
 
   return [
     {
-      id: insertedSession.id,
+      ...insertedSession,
+      ...body,
     },
   ];
 }
@@ -179,8 +193,21 @@ export async function updateSession(sid, uid, body) {
       .returning('*');
   }
 
+  console.log(body);
+  const onlySessionColumn = [
+    'name',
+    'block_id',
+    'start_date',
+    'end_date',
+    'session_rpe',
+    'json',
+    'deleted',
+    'user_id',
+  ];
+
+  const validOnlySessionColumn = pick(body, onlySessionColumn);
   const [updatedSession] = await db
-    .update({ end_date: body.end_date, json: body.json })
+    .update(validOnlySessionColumn)
     .from('sessions')
     .where({ id: sid })
     .andWhere({ user_id: uid })
