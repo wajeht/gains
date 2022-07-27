@@ -19,7 +19,7 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { faIdBadge } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -39,6 +39,6 @@ library.add(faClock);
 library.add(faCalendar);
 library.add(faRefresh);
 library.add(faRightFromBracket);
-library.add(faAddressCard);
+library.add(faIdBadge);
 
 export default FontAwesomeIcon;
