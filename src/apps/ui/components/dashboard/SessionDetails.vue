@@ -347,8 +347,31 @@ async function handleAddASet() {
     // if .logs not available, we push to .json
     if (currentSessionDetails.logs?.length === 0) {
       currentSessionDetails.json.logs[addASetExerciseIndex.value].sets.push(json.data[0]);
+      const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
+        user_id: userStore.user.id,
+        json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
+      });
+
+      if (!ress.ok) {
+        if (json.errors) {
+          throw json.errors;
+        } else {
+          throw json.message;
+        }
+      }
     } else {
       currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(json.data[0]);
+      const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
+        user_id: userStore.user.id,
+        json: JSON.stringify({ logs: currentSessionDetails.logs }),
+      });
+      if (!ress.ok) {
+        if (json.errors) {
+          throw json.errors;
+        } else {
+          throw json.message;
+        }
+      }
     }
   } catch (e) {
     loading.value = false;
@@ -393,6 +416,19 @@ async function modifyASet() {
 
     const res = await api.patch(`/api/v1/sets/${modifyData.id}`, validModifyData);
     const json = await res.json();
+
+    const resss = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
+      user_id: userStore.user.id,
+      json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
+    });
+
+    if (!ress.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
 
     if (!res.ok) {
       if (json.errors) {
@@ -569,6 +605,20 @@ async function handleAddAExerciseNote() {
     } else {
       currentSessionDetails.logs[addASetExerciseIndex.value].notes = json.data[0].json.notes;
     }
+
+    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
+      user_id: userStore.user.id,
+      json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
+    });
+
+    if (!ress.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
     clearDataAndDismissAddAExerciseNoteModal();
   } catch (e) {
     addAExerciseNoteLoading.value = false;
@@ -686,7 +736,7 @@ async function handleDeleteSession() {
                 <small class="card-text card-text d-flex flex-column">
                   <!-- id -->
                   <span>
-                    <font-awesome-icon icon="address-card" class="me-1" />Session ID:
+                    <font-awesome-icon icon="id-badge" class="me-1" />Session ID:
                     <span class="fw-light">{{ currentSessionDetails.session_id }}</span>
                   </span>
 
@@ -780,10 +830,12 @@ async function handleDeleteSession() {
           enter-active-class="animate__animated animate__faster animate__fadeInDown"
           leave-active-class="animate__animated animate__faster animate__fadeInUp"
         >
+          <!-- v-for="(log, index) in currentSessionDetails.logs?.length != 0 ? currentSessionDetails.logs : currentSessionDetails.json?.logs" -->
           <div
-            v-for="(log, index) in currentSessionDetails.logs?.length != 0
-              ? currentSessionDetails.logs
-              : currentSessionDetails.json?.logs"
+            v-for="(log, index) in currentSessionDetails.json?.logs?.length >
+            currentSessionDetails.logs?.length
+              ? currentSessionDetails.json?.logs
+              : currentSessionDetails.logs"
             :key="`key-${log.index}`"
             class="card p-0"
           >
