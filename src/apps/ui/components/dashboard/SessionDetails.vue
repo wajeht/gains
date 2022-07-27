@@ -282,13 +282,13 @@ async function addAExercise() {
       user_id: userStore.user.id,
       json: JSON.stringify({ logs: currentSessionDetails.logs }),
     });
-    const jsons = await ress.json();
+    const jsonn = await res.json();
 
     if (!ress.ok) {
-      if (jsons.errors) {
-        throw jsons.errors;
+      if (jsonn.errors) {
+        throw jsonn.errors;
       } else {
-        throw jsons.message;
+        throw jsonn.message;
       }
     }
   } catch (e) {
@@ -351,12 +351,12 @@ async function handleAddASet() {
         user_id: userStore.user.id,
         json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
       });
-
+      const jsonn = await res.json();
       if (!ress.ok) {
-        if (json.errors) {
-          throw json.errors;
+        if (jsonn.errors) {
+          throw jsonn.errors;
         } else {
-          throw json.message;
+          throw jsonn.message;
         }
       }
     } else {
@@ -365,11 +365,12 @@ async function handleAddASet() {
         user_id: userStore.user.id,
         json: JSON.stringify({ logs: currentSessionDetails.logs }),
       });
+      const jsonn = await res.json();
       if (!ress.ok) {
-        if (json.errors) {
-          throw json.errors;
+        if (jsonn.errors) {
+          throw jsonn.errors;
         } else {
-          throw json.message;
+          throw jsonn.message;
         }
       }
     }
@@ -417,16 +418,17 @@ async function modifyASet() {
     const res = await api.patch(`/api/v1/sets/${modifyData.id}`, validModifyData);
     const json = await res.json();
 
-    const resss = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
+    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
       user_id: userStore.user.id,
       json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
     });
+    const jsonn = await res.json();
 
     if (!ress.ok) {
-      if (json.errors) {
-        throw json.errors;
+      if (jsonn.errors) {
+        throw jsonn.errors;
       } else {
-        throw json.message;
+        throw jsonn.message;
       }
     }
 
