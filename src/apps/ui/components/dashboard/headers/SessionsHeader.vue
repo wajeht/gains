@@ -185,13 +185,9 @@ async function addASession() {
             </div>
 
             <!-- modal body -->
-            <div class="modal-body">
+            <div class="modal-body" v-auto-animate>
               <!-- alert -->
-              <div
-                v-if="alert.type"
-                :class="`alert-${alert.type}`"
-                class="mb-3 alert animate__animated animate__zoomIn animate__faster"
-              >
+              <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-3 alert">
                 <span>{{ alert.msg }}</span>
               </div>
 

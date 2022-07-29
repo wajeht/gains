@@ -429,6 +429,7 @@ async function deleteASet() {
 }
 
 function clearDataAndDismissCompleteCurrentSessionModal() {
+  currentSessionDetails.end_date = null;
   const modal = bootstrap.Modal.getOrCreateInstance(
     document.getElementById(`complete-current-session`),
   );
@@ -1106,6 +1107,7 @@ async function handleDeleteSession() {
           <!-- complete current session button -->
           <button
             v-if="!currentSessionDetails.end_date"
+            @click="currentSessionDetails.end_date = gainsCurrentDateTime()"
             data-bs-toggle="modal"
             data-bs-target="#complete-current-session"
             type="button"
@@ -1141,7 +1143,7 @@ async function handleDeleteSession() {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" v-auto-animate>
                   <!-- session rpe -->
                   <div class="mb-3">
                     <label for="complete-current-session-session-rpe" class="form-label"
@@ -1162,10 +1164,24 @@ async function handleDeleteSession() {
                     />
                   </div>
 
+                  <!-- End time -->
+                  <div class="mb-3">
+                    <label for="complete-current-session-end-date" class="form-label"
+                      >End time*</label
+                    >
+                    <input
+                      v-model="currentSessionDetails.end_date"
+                      id="complete-current-session-end-date"
+                      class="form-control form-control-sm"
+                      type="datetime-local"
+                      required
+                      :disabled="completeCurrentSessionLoading"
+                    />
+                  </div>
+
                   <!-- show/hide button -->
                   <div class="form-check form-switch mb-3">
                     <input
-                      @click="currentSessionDetails.end_date = gainsCurrentDateTime()"
                       class="form-check-input"
                       type="checkbox"
                       role="switch"
@@ -1181,21 +1197,6 @@ async function handleDeleteSession() {
                   </div>
 
                   <span v-if="completeCurrentSessionShowHideOtherFields">
-                    <!-- End time -->
-                    <div v-if="completeCurrentSessionShowHideOtherFields" class="mb-3">
-                      <label for="complete-current-session-end-date" class="form-label"
-                        >End time*</label
-                      >
-                      <input
-                        v-model="currentSessionDetails.end_date"
-                        id="complete-current-session-end-date"
-                        class="form-control form-control-sm"
-                        type="datetime-local"
-                        required
-                        :disabled="completeCurrentSessionLoading"
-                      />
-                    </div>
-
                     <div class="row mb-3">
                       <!-- bodyweight  -->
                       <div class="col-6">
@@ -1425,7 +1426,7 @@ async function handleDeleteSession() {
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" v-auto-animate>
                 <div class="row mb-3">
                   <!-- reps -->
                   <div class="col-4">
