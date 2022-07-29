@@ -49,3 +49,33 @@ export async function getWeeklyWeightIn(req, res) {
     data: mapped,
   });
 }
+
+/**
+ * It returns the most recent pull requests for a given user
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The recent pull requests for a user.
+ */
+export async function getRecentPrs(req, res) {
+  const { user_id } = req.params;
+  const result = await VariablesQueries.recentPrsByUserId(user_id);
+
+  const calculateE1RM = (weight, rpe, reps) => Math.round(weight * (10 - rpe + reps) * 0.03 + weight, 1); // prettier-ignore
+
+  const mapped = [];
+
+  for (let i = 0; i < result.length; i++) {
+    const current = result[i];
+    mapped.push({
+      ...current,
+      e1rm: calculateE1RM(current.weight, current.rpe, current.reps),
+    });
+  }
+
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: mapped,
+  });
+}
