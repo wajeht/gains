@@ -584,13 +584,9 @@ async function handleDeleteSession() {
   <!-- session details -->
   <XyzTransition v-if="!appStore.loading" appear xyz="fade small out-down">
     <div class="container px-3">
-      <div class="my-3 d-flex flex-column gap-3">
+      <div class="my-3 d-flex flex-column gap-3" v-auto-animate>
         <!-- alert -->
-        <div
-          v-if="alert.type"
-          :class="`alert-${alert.type}`"
-          class="mb-0 alert animate__animated animate__zoomIn animate__faster"
-        >
+        <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
           <span>{{ alert.msg }}</span>
         </div>
 
@@ -644,12 +640,6 @@ async function handleDeleteSession() {
                     <span class="fw-light">{{ currentSessionDetails.hours_of_sleep }} hrs</span>
                   </span>
 
-                  <!-- weight -->
-                  <span v-if="currentSessionDetails.body_weight">
-                    <font-awesome-icon icon="fa-weight-scale " class="me-1" />Weight:
-                    <span class="fw-light">{{ currentSessionDetails.body_weight }} lbs</span>
-                  </span>
-
                   <!-- caffeine -->
                   <span v-if="currentSessionDetails.caffeine_intake">
                     <font-awesome-icon icon="fa-mug-hot " class="me-1" />Caffeine:
@@ -684,6 +674,12 @@ async function handleDeleteSession() {
                   <span v-if="total">
                     <font-awesome-icon icon="fa-plus" class="me-1" />Total:
                     <span class="fw-light">{{ total }} min</span>
+                  </span>
+
+                  <!-- weight -->
+                  <span v-if="currentSessionDetails.body_weight">
+                    <font-awesome-icon icon="fa-weight-scale " class="me-1" />Body weight:
+                    <span class="fw-light">{{ currentSessionDetails.body_weight }} lbs</span>
                   </span>
 
                   <!-- block -->
@@ -724,17 +720,10 @@ async function handleDeleteSession() {
         </div>
 
         <!-- exercise logs -->
-        <TransitionGroup
-          enter-active-class="animate__animated animate__faster animate__fadeInDown"
-          leave-active-class="animate__animated animate__faster animate__fadeInUp"
-        >
-          <div
-            v-for="(log, index) in currentSessionDetails.logs"
-            :key="`key-${log.index}`"
-            class="card p-0"
-          >
+        <span v-for="(log, index) in currentSessionDetails.logs" :key="`key-${log.index}`">
+          <div class="card p-0" v-auto-animate>
             <!-- individual exercises log -->
-            <div class="card-body">
+            <div class="card-body" v-auto-animate>
               <!-- header -->
               <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
                 <!-- title -->
@@ -748,6 +737,7 @@ async function handleDeleteSession() {
                     class="p-0 m-0"
                     style="background: none; border: none; box-shadow: none"
                     role="button"
+                    v-auto-animate
                   >
                     <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
                     <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
@@ -820,51 +810,46 @@ async function handleDeleteSession() {
                       </tr>
                     </thead>
                     <tbody>
-                      <TransitionGroup
-                        enter-active-class="animate__animated animate__faster animate__fadeInDown"
-                        leave-active-class="animate__animated animate__faster animate__fadeOutUp"
-                      >
-                        <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
-                          <td class="text-center">{{ idx + 1 }}</td>
-                          <td class="text-center text-muted">x</td>
-                          <td class="text-center">{{ s.reps }}</td>
-                          <td class="text-center text-muted">x</td>
-                          <td class="text-center">{{ s.weight }}</td>
-                          <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
+                      <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
+                        <td class="text-center">{{ idx + 1 }}</td>
+                        <td class="text-center text-muted">x</td>
+                        <td class="text-center">{{ s.reps }}</td>
+                        <td class="text-center text-muted">x</td>
+                        <td class="text-center">{{ s.weight }}</td>
+                        <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
 
-                          <td
-                            v-if="log.sets_notes_visibility"
-                            class="text-start text-truncate text-muted fst-italic"
+                        <td
+                          v-if="log.sets_notes_visibility"
+                          class="text-start text-truncate text-muted fst-italic"
+                        >
+                          <small>{{ s.notes }}</small>
+                        </td>
+
+                        <td class="text-center">
+                          <!-- modify a set button -->
+                          <button
+                            @click="
+                              (set.id = s.id),
+                                (set.set_index = idx),
+                                (set.log_index = index),
+                                (set.exercise_id = s.exercise_id),
+                                (set.user_id = s.user_id),
+                                (set.session_id = s.session_id),
+                                (set.reps = s.reps),
+                                (set.weight = s.weight),
+                                (set.rpe = s.rpe),
+                                (set.notes = s.notes),
+                                (set.exercise_name = log.name)
+                            "
+                            type="button"
+                            class="btn btn-sm p-0 m-0"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modify-a-set"
                           >
-                            <small>{{ s.notes }}</small>
-                          </td>
-
-                          <td class="text-center">
-                            <!-- modify a set button -->
-                            <button
-                              @click="
-                                (set.id = s.id),
-                                  (set.set_index = idx),
-                                  (set.log_index = index),
-                                  (set.exercise_id = s.exercise_id),
-                                  (set.user_id = s.user_id),
-                                  (set.session_id = s.session_id),
-                                  (set.reps = s.reps),
-                                  (set.weight = s.weight),
-                                  (set.rpe = s.rpe),
-                                  (set.notes = s.notes),
-                                  (set.exercise_name = log.name)
-                              "
-                              type="button"
-                              class="btn btn-sm p-0 m-0"
-                              data-bs-toggle="modal"
-                              data-bs-target="#modify-a-set"
-                            >
-                              <i class="bi bi-pencil-square"></i>
-                            </button>
-                          </td>
-                        </tr>
-                      </TransitionGroup>
+                            <i class="bi bi-pencil-square"></i>
+                          </button>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -935,7 +920,7 @@ async function handleDeleteSession() {
               </span>
             </div>
           </div>
-        </TransitionGroup>
+        </span>
 
         <!-- add a exercise button -->
         <div v-if="!currentSessionDetails.end_date" class="border">
@@ -1100,6 +1085,24 @@ async function handleDeleteSession() {
 
         <!-- cancel or compte session -->
         <div class="btn-group" role="group">
+          <!-- delete current session -->
+          <button
+            @click="handleDeleteSession()"
+            :disabled="loading"
+            type="button"
+            class="btn btn-danger"
+            :class="{ rounded: currentSessionDetails.end_date != null }"
+          >
+            <span v-if="currentSessionDetails.end_date">
+              <i class="bi bi-trash"></i>
+              Delete
+            </span>
+            <span v-if="!currentSessionDetails.end_date">
+              <i class="bi bi-x-circle-fill"></i>
+              Cancel
+            </span>
+          </button>
+
           <!-- complete current session button -->
           <button
             v-if="!currentSessionDetails.end_date"
@@ -1319,24 +1322,6 @@ async function handleDeleteSession() {
               </div>
             </div>
           </form>
-
-          <!-- delete current session -->
-          <button
-            @click="handleDeleteSession()"
-            :disabled="loading"
-            type="button"
-            class="btn btn-danger"
-            :class="{ rounded: currentSessionDetails.end_date != null }"
-          >
-            <span v-if="currentSessionDetails.end_date">
-              <i class="bi bi-trash"></i>
-              Delete
-            </span>
-            <span v-if="!currentSessionDetails.end_date">
-              <i class="bi bi-x-circle-fill"></i>
-              Cancel
-            </span>
-          </button>
         </div>
 
         <!-- add a exercise note -->

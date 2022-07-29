@@ -50,6 +50,7 @@
   "homepage": "https://github.com/allkindsofgains/gains#readme",
   "dependencies": {
     "@animxyz/vue3": "^0.6.6",
+    "@formkit/auto-animate": "^1.0.0-beta.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
