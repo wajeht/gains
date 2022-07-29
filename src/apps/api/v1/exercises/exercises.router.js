@@ -57,16 +57,16 @@ exercises.post(
 );
 
 /**
- * PATCH /api/v1/exercises/{eid}/sessions/{sid}/update-exercise-note/{gmid}
+ * PATCH /api/v1/exercises/{eid}/sessions/{sid}/update-exercise-note/{lid}
  * @tags exercises
  * @summary update exercise set notes
  * @param {number} eid.form.required - the exercise id - application/x-www-form-urlencoded
  * @param {number} sid.form.required - the session id - application/x-www-form-urlencoded
- * @param {number} gmid.form.required - the gains meta id - application/x-www-form-urlencoded
+ * @param {number} lid.form.required - the log id meta id - application/x-www-form-urlencoded
  * @param {json} json.form.required - the json - application/x-www-form-urlencoded
  */
 exercises.patch(
-  '/:eid/sessions/:sid/update-exercise-note/:gmid',
+  '/:eid/sessions/:sid/update-exercise-note/:lid',
   validator(ExercisesValidation.patchExerciseNote),
   catchAsyncErrors(ExercisesController.patchExerciseNote),
 );

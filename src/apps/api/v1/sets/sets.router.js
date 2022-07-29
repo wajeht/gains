@@ -21,7 +21,7 @@ const sets = express.Router();
 sets.post('/', validator(SetsValidation.postSet), catchAsyncErrors(SetsController.postSet));
 
 /**
- * PATCH /api/v1/sets/${id}
+ * PATCH /api/v1/sets/{id}
  * @tags sets
  * @summary modify a set
  * @param {number} id.path.required - the path - application/x-www-form-urlencoded
@@ -36,7 +36,7 @@ sets.post('/', validator(SetsValidation.postSet), catchAsyncErrors(SetsControlle
 sets.patch('/:id', validator(SetsValidation.patchSet), catchAsyncErrors(SetsController.patchSet));
 
 /**
- * DELETE /api/v1/sets/${id}
+ * DELETE /api/v1/sets/{id}
  * @tags sets
  * @summary delete a set
  * @param {number} id.path.required - the path - application/x-www-form-urlencoded

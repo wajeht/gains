@@ -13,6 +13,7 @@ export async function up(knex) {
       weight                    INT DEFAULT NULL,
       user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
       session_id                INT REFERENCES sessions on DELETE CASCADE NOT NULL,
+      log_id                    INT REFERENCES logs on DELETE CASCADE NOT NULL,
       notes                     VARCHAR(1000) DEFAULT NULL,
       deleted                   BOOLEAN DEFAULT FALSE,
       created_at                TIMESTAMP NOT NULL DEFAULT NOW(),

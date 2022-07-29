@@ -3,7 +3,7 @@ import rateLimit from 'express-rate-limit';
 /* Limiting the number of requests that can be made to the API. */
 export const regularLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 60, // Limit each IP to 100 requests per `window` (here, per 1 minute)
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 1 minute)
   statusCode: 429,
   message: {
     status: 'fail',
@@ -17,7 +17,7 @@ export const regularLimiter = rateLimit({
 /* Limiting the number of requests that can be made to the API. */
 export const apiLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 60, // Limit each IP to 60 requests per `window` (here, per 1 minute)
+  max: 100, // Limit each IP to 60 requests per `window` (here, per 1 minute)
   statusCode: 429,
   message: {
     status: 'fail',

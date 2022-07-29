@@ -14,7 +14,6 @@ import {
 
 // nodejs
 import dayjs from 'dayjs';
-import { v4 as uuidv4 } from 'uuid';
 import { pickBy, pick } from 'lodash-es';
 
 // vue
@@ -43,7 +42,6 @@ const alert = reactive({
 });
 const loading = ref(false);
 const today = dayjs().format('YYYY/MM/DD');
-const random_uuid = ref(uuidv4());
 const total = ref('');
 const sid = ref(null);
 const currentSessionDetails = reactive({});
@@ -54,6 +52,7 @@ const chooseExerciseCategoryId = ref(null);
 const chooseExerciseId = ref(null);
 const addAExerciseLoading = ref(false);
 const addAExerciseNoteLoading = ref(false);
+const addAExerciseNoteLogId = ref(false);
 
 const set = reactive({
   id: null,
@@ -71,6 +70,7 @@ const set = reactive({
 const addASetLoading = ref(false);
 const addASetExerciseId = ref(null);
 const addASetExerciseIndex = ref(null);
+const addASetLogId = ref(null);
 const addASetDismissButton = ref(null);
 const addASetEnableDisableOtherFields = ref(false);
 
@@ -217,10 +217,13 @@ async function getUserExerciseDetails(eid) {
   }
 }
 
+// -------------- CRUD ---------------
+
 async function addAExercise() {
   try {
     addAExerciseLoading.value = true;
 
+    // check if exercise exist already
     if (currentSessionDetails?.logs) {
       for (const e of currentSessionDetails.logs) {
         if (e.exercise_id === chooseExerciseId.value) {
@@ -229,68 +232,24 @@ async function addAExercise() {
       }
     }
 
-    if (currentSessionDetails?.json?.logs) {
-      for (const e of currentSessionDetails.json.logs) {
-        if (e.exercise_id === chooseExerciseId.value) {
-          throw new Error('Exercise already exist within current session!');
-        }
-      }
-    }
-
     const [exercise] = await getUserExerciseDetails(chooseExerciseId.value);
 
-    const meta = {
+    const logBody = {
       user_id: userStore.user.id,
-      object: 'exercises',
-      object_id: exercise.id,
-      json: JSON.stringify({
-        exercise_id: exercise.id,
-        session_id: currentSessionDetails.session_id,
-        collapsed: true,
-        notes: '',
-        sets_notes_visibility: false,
-        sets: [],
-      }),
+      session_id: currentSessionDetails.session_id,
+      name: exercise.name,
+      collapsed: true,
+      exercise_id: exercise.id,
+      sets_notes_visibility: true,
     };
 
-    const res = await api.post(`/api/v1/gains-meta`, meta);
+    const res = await api.post(`/api/v1/logs`, logBody);
     const json = await res.json();
-
-    if (!res.ok) {
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
-    }
 
     addAExerciseLoading.value = false;
     clearDataAndDismissAddAExerciseModal();
 
-    currentSessionDetails.logs.push({
-      name: exercise.name,
-      exercise_id: exercise.id,
-      session_id: currentSessionDetails.session_id,
-      gains_meta_id: json.data[0].id,
-      collapsed: true,
-      notes: '',
-      sets_notes_visibility: false,
-      sets: [],
-    });
-
-    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
-      user_id: userStore.user.id,
-      json: JSON.stringify({ logs: currentSessionDetails.logs }),
-    });
-    const jsonn = await ress.json();
-
-    if (!ress.ok) {
-      if (jsonn.errors) {
-        throw jsonn.errors;
-      } else {
-        throw jsonn.message;
-      }
-    }
+    currentSessionDetails.logs.push(json.data[0]);
   } catch (e) {
     loading.value = false;
     addAExerciseLoading.value = false;
@@ -318,6 +277,7 @@ async function handleAddASet() {
       user_id: userStore.user.id,
       exercise_id: addASetExerciseId.value,
       session_id: currentSessionDetails.session_id,
+      log_id: addASetLogId.value,
       reps: set.reps,
       weight: set.weight,
       rpe: set.rpe,
@@ -341,41 +301,11 @@ async function handleAddASet() {
     set.rpe = null;
     set.notes = null;
     set.weight = null;
+    addASetLogId.value = null;
     addASetLoading.value = false;
     clearDataAndDismissAddASetModal();
 
-    // if .logs not available, we push to .json
-    if (currentSessionDetails.logs?.length === 0) {
-      currentSessionDetails.json.logs[addASetExerciseIndex.value].sets.push(json.data[0]);
-      const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
-        user_id: userStore.user.id,
-        json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
-      });
-      const jsonn = await ress.json();
-
-      if (!ress.ok) {
-        if (jsonn.errors) {
-          throw jsonn.errors;
-        } else {
-          throw jsonn.message;
-        }
-      }
-    } else {
-      currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(json.data[0]);
-      const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
-        user_id: userStore.user.id,
-        json: JSON.stringify({ logs: currentSessionDetails.logs }),
-      });
-      const jsonn = await ress.json();
-
-      if (!ress.ok) {
-        if (jsonn.errors) {
-          throw jsonn.errors;
-        } else {
-          throw jsonn.message;
-        }
-      }
-    }
+    currentSessionDetails.logs[addASetExerciseIndex.value].sets.push(json.data[0]);
   } catch (e) {
     loading.value = false;
     addASetLoading.value = false;
@@ -420,20 +350,6 @@ async function modifyASet() {
     const res = await api.patch(`/api/v1/sets/${modifyData.id}`, validModifyData);
     const json = await res.json();
 
-    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
-      user_id: userStore.user.id,
-      json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
-    });
-    const jsonn = await ress.json();
-
-    if (!ress.ok) {
-      if (jsonn.errors) {
-        throw jsonn.errors;
-      } else {
-        throw jsonn.message;
-      }
-    }
-
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -442,10 +358,9 @@ async function modifyASet() {
       }
     }
 
-    const current = currentSessionDetails.logs[set.log_index].sets[set.set_index];
-
     clearDataAndDismissModifyASetModal();
     modifyASetLoading.value = false;
+    const current = currentSessionDetails.logs[set.log_index].sets[set.set_index];
 
     // update realtime sets
     for (let i in current) {
@@ -574,23 +489,16 @@ async function handleAddAExerciseNote() {
   try {
     addAExerciseNoteLoading.value = true;
 
-    let gains_meta_id = null;
-    if (currentSessionDetails.logs?.length === 0) {
-      gains_meta_id = currentSessionDetails.json.logs[addASetExerciseIndex.value].gains_meta_id;
-    } else {
-      gains_meta_id = currentSessionDetails.logs[addASetExerciseIndex.value].gains_meta_id;
-    }
-
     const data = {
       user_id: userStore.user.id,
       exercise_id: addASetExerciseId.value,
       session_id: currentSessionDetails.session_id,
-      gains_meta_id: gains_meta_id,
+      lid: addAExerciseNoteLogId.value,
       notes: set.notes,
     };
 
     const res = await api.patch(
-      `/api/v1/exercises/${data.exercise_id}/sessions/${data.session_id}/update-exercise-note/${data.gains_meta_id}`,
+      `/api/v1/exercises/${data.exercise_id}/sessions/${data.session_id}/update-exercise-note/${data.lid}`,
       data,
     );
     const json = await res.json();
@@ -603,27 +511,10 @@ async function handleAddAExerciseNote() {
       }
     }
 
-    addAExerciseNoteLoading.value = false;
-    if (currentSessionDetails.logs?.length === 0) {
-      currentSessionDetails.json.logs[addASetExerciseIndex.value].notes = json.data[0].json.notes;
-    } else {
-      currentSessionDetails.logs[addASetExerciseIndex.value].notes = json.data[0].json.notes;
-    }
-
-    const ress = await api.patch(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
-      user_id: userStore.user.id,
-      json: JSON.stringify({ logs: currentSessionDetails.json.logs }),
-    });
-
-    if (!ress.ok) {
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
-    }
-
     clearDataAndDismissAddAExerciseNoteModal();
+    addAExerciseNoteLoading.value = false;
+
+    currentSessionDetails.logs[addASetExerciseIndex.value].notes = json.data[0].notes;
   } catch (e) {
     addAExerciseNoteLoading.value = false;
     clearDataAndDismissAddAExerciseNoteModal();
@@ -834,12 +725,8 @@ async function handleDeleteSession() {
           enter-active-class="animate__animated animate__faster animate__fadeInDown"
           leave-active-class="animate__animated animate__faster animate__fadeInUp"
         >
-          <!-- v-for="(log, index) in currentSessionDetails.logs?.length != 0 ? currentSessionDetails.logs : currentSessionDetails.json?.logs" -->
           <div
-            v-for="(log, index) in currentSessionDetails.json?.logs?.length >
-            currentSessionDetails.logs?.length
-              ? currentSessionDetails.json?.logs
-              : currentSessionDetails.logs"
+            v-for="(log, index) in currentSessionDetails.logs"
             :key="`key-${log.index}`"
             class="card p-0"
           >
@@ -899,8 +786,8 @@ async function handleDeleteSession() {
               </p>
 
               <!-- sets -->
-              <small v-if="log.sets.length != 0 && log.collapsed">
-                <div :class="{ 'pt-2': log.notes.length === 0 }"></div>
+              <small v-if="log.sets?.length != 0 && log.collapsed">
+                <div :class="{ 'pt-2': log.notes?.length === 0 }"></div>
                 <!-- spacer if there is no notes-->
                 <div class="table-responsive">
                   <table class="table table-sm table-striped table-hover p-0 m-0">
@@ -981,7 +868,7 @@ async function handleDeleteSession() {
             </div>
 
             <!-- footer -->
-            <div v-if="log.collapsed" class="card-footer">
+            <div v-if="log?.collapsed" class="card-footer">
               <span class="d-flex justify-content-between gap-2">
                 <!-- left -->
                 <span class="d-flex justify-content-between gap-2">
@@ -991,6 +878,7 @@ async function handleDeleteSession() {
                       @click="
                         (addASetExerciseId = log.exercise_id),
                           (addASetExerciseIndex = index),
+                          (addASetLogId = log.id),
                           (set.exercise_name = log.name)
                       "
                       type="button"
@@ -1009,6 +897,7 @@ async function handleDeleteSession() {
                       @click="
                         (addASetExerciseId = log.exercise_id),
                           (addASetExerciseIndex = index),
+                          (addAExerciseNoteLogId = log.id),
                           (set.exercise_name = log.name),
                           (set.notes = log.notes)
                       "

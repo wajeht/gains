@@ -68,27 +68,28 @@ export function createExercise(body = { name, exercise_category_id, user_id }) {
  * It updates the notes field of a gains_meta record
  * @returns The updated gains_meta row.
  */
-export async function updateExerciseNote({
-  notes,
-  gains_meta_id,
-  user_id,
-  session_id,
-  exercise_id,
-}) {
-  const { rows } = await db.raw(
-    `
-    update gains_meta gm
-    set json = jsonb_set(json, '{notes}', '??')
-    where (
-      gm.id = ?
-      and gm.user_id = ?
-      and (gm.json->'session_id')::int = ?
-      and (gm.json->'exercise_id')::int = ?
-    )
-    returning *
-  `,
-    [notes, gains_meta_id, user_id, session_id, exercise_id],
-  );
+export async function updateExerciseNote({ notes, lid, user_id, session_id, exercise_id }) {
+  // const { rows } = await db.raw(
+  //   `
+  //   update gains_meta gm
+  //   set json = jsonb_set(json, '{notes}', '??')
+  //   where (
+  //     gm.id = ?
+  //     and gm.user_id = ?
+  //     and (gm.json->'session_id')::int = ?
+  //     and (gm.json->'exercise_id')::int = ?
+  //   )
+  //   returning *
+  // `,
+  //   [notes, gains_meta_id, user_id, session_id, exercise_id],
+  // );
+  // return rows;
 
-  return rows;
+  return db
+    .update({ notes: notes })
+    .from('logs')
+    .where({ id: lid })
+    .andWhere({ session_id })
+    .andWhere({ user_id })
+    .returning('*');
 }

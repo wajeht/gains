@@ -5,6 +5,7 @@ import { isEqual } from 'lodash-es';
 import * as SetsQueries from './sets.queries.js';
 import * as UsersQueries from '../users/users.queries.js';
 import * as ExercisesQueries from '../exercises/exercises.queries.js';
+import * as LogsQueries from '../logs/logs.queries.js';
 
 /* A validation for the user input. */
 export const postSet = [
@@ -12,6 +13,7 @@ export const postSet = [
     const requiredFields = [
       'exercise_id',
       'session_id',
+      'log_id',
       'user_id',
       'reps',
       'weight',
@@ -22,6 +24,21 @@ export const postSet = [
     if (!equal) throw new Error(`Fields must be in  ${requiredFields.join(', ')} format!`);
     return true;
   }),
+  body('log_id')
+    .trim()
+    .notEmpty()
+    .withMessage('log id must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('log id must be an ID!')
+    .bail()
+    .toInt()
+    .custom(async (log_id) => {
+      const log = await LogsQueries.getLogById(log_id);
+      if (log.length === 0) throw new Error('Log does not exist!');
+      return true;
+    })
+    .toInt(),
   body('user_id')
     .trim()
     .notEmpty()
@@ -35,7 +52,8 @@ export const postSet = [
       const user = await UsersQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
   body('exercise_id')
     .trim()
     .notEmpty()
@@ -49,34 +67,38 @@ export const postSet = [
       const user = await ExercisesQueries.getExerciseById(exercise_id);
       if (user.length === 0) throw new Error('exercise_id does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
   body('session_id')
     .trim()
     .notEmpty()
     .withMessage('session_id must not be empty!')
     .bail()
     .isNumeric()
-    .withMessage('session_id must be an number!'),
+    .withMessage('session_id must be an number!')
+    .toInt(),
   body('reps')
     .trim()
     .notEmpty()
     .withMessage('reps must not be empty!')
     .bail()
     .isNumeric()
-    .withMessage('reps must be an number!'),
+    .withMessage('reps must be an number!')
+    .toInt(),
   body('weight')
     .trim()
     .notEmpty()
     .withMessage('weight must not be empty!')
     .bail()
     .isNumeric()
-    .withMessage('weight must be an number!'),
-  body('rpe').optional().trim().isFloat().withMessage('rpe must be an integer format!'),
+    .withMessage('weight must be an number!')
+    .toInt(),
+  body('rpe').optional().trim().isFloat().withMessage('rpe must be an integer format!').toInt(),
   body('notes')
     .optional()
     .trim()
-    .isLength({ min: 1, max: 250 })
-    .withMessage('Notes must be at least 1 character long or less than 250 characters long'),
+    .isLength({ min: 0, max: 250 })
+    .withMessage('Notes must be at least 0 character long or less than 250 characters long'),
 ];
 
 export const patchSet = [
@@ -168,7 +190,7 @@ export const patchSet = [
   body('notes')
     .optional()
     .trim()
-    .isLength({ min: 1, max: 250 })
+    .isLength({ min: 0, max: 250 })
     .withMessage('Notes must be at least 1 character long or less than 250 characters long'),
 ];
 

@@ -7,7 +7,6 @@ import { omit, pick, update } from 'lodash-es';
  * @returns The session that was created
  */
 export async function createASession(body) {
-  console.log(body);
   const wout = [
     'body_weight',
     'caffeine_intake',
@@ -60,12 +59,32 @@ export async function createASession(body) {
  * @returns An array of objects
  */
 export function getSessionsByUserId(user_id, pagination = { perPage: null, currentPage: null }) {
+  // const result = db.raw(
+  //   `
+  //   select
+  //     ss.*,
+  //     (select json_agg(l.*)) as "json"
+  //   from
+  //     sessions ss
+  //     full join logs l on l.session_id = ss.id
+  //   group by
+  //     ss.id
+  // `,
+  // );
+
   return db
-    .select('*')
+    .select(
+      'sessions.*',
+      db.raw(
+        `  (select coalesce(jsonb_agg(logs.* order by logs.id) filter (where logs.id is not null), '[]') ) as json`,
+      ),
+    )
     .from('sessions')
-    .where({ user_id })
-    .andWhere({ deleted: false })
-    .orderBy('id', 'desc')
+    .fullOuterJoin('logs', { 'logs.session_id': 'sessions.id' })
+    .where({ 'sessions.user_id': user_id })
+    .andWhere({ 'sessions.deleted': false })
+    .orderBy('sessions.id', 'desc')
+    .groupBy('sessions.id')
     .paginate({
       ...pagination,
     });
@@ -80,35 +99,58 @@ export function getSessionsByUserId(user_id, pagination = { perPage: null, curre
 export async function getSessionBySessionId(sid) {
   let result = null;
 
+  // // session sets info
+  // const { rows: sets } = await db.raw(
+  //   `
+  //   select
+  //     e.name as name,
+  //     gm.id as "gains_meta_id",
+  //     gm.json->'sets_notes_visibility' as "sets_notes_visibility",
+  //     gm.json->'session_id' as "session_id",
+  //     gm.json->'exercise_id' as "exercise_id",
+  //     gm.json->'collapsed' as "collapsed",
+  //     gm.json->'notes' as "notes",
+  //     (select json_agg(s.* order by s.id)) as sets
+  //   from
+  //     sets s
+  //     inner join exercises e on e.id = s.exercise_id
+  //     inner join gains_meta gm on (gm.json->'exercise_id')::int = e.id
+  //     inner join sessions ss on ss.id = s.session_id
+  //   where (
+  //       ss.deleted = false
+  //       and (s.session_id = ? and (gm.json->'session_id')::int = ?)
+  //       and s.deleted = false
+  //     )
+  //   group by
+  //     s.session_id,
+  //     e.id,
+  //     gm.id
+  //   order by e.id desc
+  // `,
+  //   [sid, sid],
+  // );
+
   // session sets info
   const { rows: sets } = await db.raw(
     `
     select
-	    e.name as name,
-      gm.id as "gains_meta_id",
-	    gm.json->'sets_notes_visibility' as "sets_notes_visibility",
-	    gm.json->'session_id' as "session_id",
-	    gm.json->'exercise_id' as "exercise_id",
-	    gm.json->'collapsed' as "collapsed",
-	    gm.json->'notes' as "notes",
-	    (select json_agg(s.* order by s.id)) as sets
+      l.*,
+      (select coalesce(jsonb_agg(s.* order by s.id) filter (where s.id is not null), '[]') ) as sets
     from
-	    sets s
-	    inner join exercises e on e.id = s.exercise_id
-	    inner join gains_meta gm on (gm.json->'exercise_id')::int = e.id
-      inner join sessions ss on ss.id = s.session_id
+      sets s
+      full join logs l on l.id = s.log_id
+      full join sessions ss on ss.id = s.session_id
     where (
-        ss.deleted = false
-        and (s.session_id = ? and (gm.json->'session_id')::int = ?)
-        and s.deleted = false
-      )
+      l.session_id = ?
+      -- and ss.deleted = false
+      -- and s.deleted = false
+    )
     group by
-	    s.session_id,
-	    e.id,
-	    gm.id
-    order by e.id desc
-  `,
-    [sid, sid],
+      l.id
+    order by
+      l.id desc
+    `,
+    [sid],
   );
 
   // session with block info
@@ -193,7 +235,6 @@ export async function updateSession(sid, uid, body) {
       .returning('*');
   }
 
-  console.log(body);
   const onlySessionColumn = [
     'name',
     'block_id',
