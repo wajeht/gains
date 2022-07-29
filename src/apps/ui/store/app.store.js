@@ -9,10 +9,21 @@ const useAppStore = defineStore({
         toggle: false,
         message: '',
       },
+      unit: {
+        toggle: true,
+        label: 'lbs',
+      },
     };
   },
-  getters: {},
+  getters: {
+    unitLabel() {
+      return this.unit.toggle === true ? 'lbs.' : 'kg.';
+    },
+  },
   actions: {
+    changeUnit() {
+      this.unit.toggle = !this.unit.toggle;
+    },
     clearToast() {
       this.toast.toggle = false;
       this.toast.message = '';

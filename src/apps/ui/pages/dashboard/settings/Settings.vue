@@ -1,3 +1,7 @@
+<script setup>
+import useAppStore from '../../../store/app.store.js';
+const appStore = useAppStore();
+</script>
 <template>
   <!-- header -->
   <DashboardHeader />
@@ -7,10 +11,10 @@
     <div class="flex flex-column justify-content-between my-3">
       <!-- setting items -->
       <div class="d-flex flex-column gap-3">
-        <!-- account -->
+        <!-- User -->
         <div>
           <!-- title -->
-          <h5><i class="bi bi-person-fill"></i> Account</h5>
+          <h5><i class="bi bi-person-fill"></i> User</h5>
 
           <div class="list-group">
             <!-- user details -->
@@ -25,6 +29,31 @@
                 </div>
               </div>
             </router-link>
+
+            <!-- change unit -->
+            <div
+              @click="appStore.changeUnit()"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+              role="button"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">Change unit</h6>
+                  <p class="mb-0 opacity-75">Change unit to kg. or lbs.</p>
+                </div>
+                <div class="form-check form-switch form-check-reverse">
+                  <input
+                    v-model="appStore.unit.toggle"
+                    class="form-check-input"
+                    type="checkbox"
+                    id="settings-toggle-unit"
+                  />
+                  <label class="form-check-label" for="settings-toggle-unit">{{
+                    appStore.unitLabel
+                  }}</label>
+                </div>
+              </div>
+            </div>
 
             <!-- delete  -->
             <router-link to="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">

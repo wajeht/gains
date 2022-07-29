@@ -10,6 +10,9 @@ import api from '../../../../libs/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 import dayjs from 'dayjs';
 
+import useAppStore from '../../store/app.store.js';
+const appStore = useAppStore();
+
 const userStore = useUserStore();
 const router = useRouter();
 const today = ref(null);
@@ -269,7 +272,7 @@ async function logout() {
         <div class="card">
           <div class="card-body">
             <small class="p-0 m-0">
-              <div v-if="weeklyWeightIn.length" class="table-responsive">
+              <div v-if="Object.keys(weeklyWeightIn).length > 0" class="table-responsive">
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
                     <tr>
@@ -289,7 +292,8 @@ async function logout() {
                           'text-danger': log.trend.toString().startsWith('-'),
                         }"
                       >
-                        {{ log.trend > 0 ? '+' : '' }}{{ log.trend === 0 ? '' : log.trend }}
+                        {{ log.trend > 0 ? '+' : ''
+                        }}{{ log.trend === 0 ? '' : log.trend + ' ' + appStore.unitLabel }}
                       </td>
                     </tr>
                   </tbody>
