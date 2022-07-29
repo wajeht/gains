@@ -240,7 +240,7 @@ async function addAExercise() {
       name: exercise.name,
       collapsed: true,
       exercise_id: exercise.id,
-      sets_notes_visibility: true,
+      sets_notes_visibility: false,
     };
 
     const res = await api.post(`/api/v1/logs`, logBody);
