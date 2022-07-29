@@ -23,6 +23,7 @@ const alert = reactive({
 });
 
 const weeklyWeightIn = reactive({});
+const recentPrs = reactive({});
 
 onMounted(async () => {
   // ----------- chart starts
@@ -68,7 +69,35 @@ onMounted(async () => {
 
   const wwi = await getWeeklyWeightIn();
   Object.assign(weeklyWeightIn, wwi);
+
+  const rpr = await getRecentPrs();
+  Object.assign(recentPrs, rpr);
 });
+
+async function getRecentPrs() {
+  try {
+    const res = await api.get(`/api/v1/variables/recent-prs/${userStore.user.id}`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 
 async function getWeeklyWeightIn() {
   try {
@@ -222,9 +251,9 @@ async function logout() {
         </div>
       </div>
 
-      <!-- recent prs chart -->
+      <!-- recent eprs chart -->
       <div>
-        <h5><i class="bi bi-graph-up-arrow"></i> Recent PRS</h5>
+        <h5><i class="bi bi-graph-up-arrow"></i> Recent ePRS</h5>
         <div class="card">
           <div class="card-body">
             <small class="p-0 m-0">
@@ -232,31 +261,22 @@ async function logout() {
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
                     <tr>
-                      <th class="text-center" scope="col">Date</th>
+                      <th class="text-start" scope="col">Date</th>
                       <th class="text-start" scope="col">Lift</th>
-                      <th class="text-center" scope="col">Weight</th>
-                      <th class="text-center" scope="col">Gain</th>
+                      <th class="text-start" scope="col">
+                        Log <small class="text-muted fst-italic fw-light">(reps x weight)</small>
+                      </th>
+                      <th class="text-center" scope="col">e1RM</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-center">2022/01/23</td>
-                      <td class="text-start">sumo deadlift</td>
-                      <td class="text-center">234</td>
-                      <td class="text-center text-success">+50</td>
-                    </tr>
-
-                    <tr>
-                      <td class="text-center">2022/04/11</td>
-                      <td class="text-start">conventional deadlift</td>
-                      <td class="text-center">234</td>
-                      <td class="text-center text-success">+15</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">2022/08/01</td>
-                      <td class="text-start">block pull</td>
-                      <td class="text-center">234</td>
-                      <td class="text-center text-success">+44</td>
+                    <tr v-for="pr in recentPrs" :key="`recent-prs-id-${pr.id}`">
+                      <td class="text-start">{{ dayjs(pr.date).format('MM/DD') }}</td>
+                      <td class="text-start">{{ pr.name }}</td>
+                      <td class="text-start">
+                        {{ pr.reps }} x {{ pr.weight + ' ' + appStore.unitLabel }} @{{ pr.rpe }}
+                      </td>
+                      <td class="text-center">{{ pr.e1rm + ' ' + appStore.unitLabel }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -283,8 +303,8 @@ async function logout() {
                   </thead>
                   <tbody>
                     <tr v-for="log in weeklyWeightIn" :key="`key-${log.id}`">
-                      <td class="text-start">{{ dayjs(log.date).format('YYYY/MM/DD') }}</td>
-                      <td class="text-center">{{ log.body_weight }}</td>
+                      <td class="text-start">{{ dayjs(log.date).format('MM/DD') }}</td>
+                      <td class="text-center">{{ log.body_weight + ' ' + appStore.unitLabel }}</td>
                       <td
                         class="text-center"
                         :class="{

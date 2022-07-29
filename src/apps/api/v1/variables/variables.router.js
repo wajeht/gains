@@ -18,4 +18,16 @@ variables.get(
   catchAsyncErrors(VariablesController.getWeeklyWeightIn),
 );
 
+/**
+ * GET /api/v1/variables/recent-prs/{user_id}
+ * @tags variables
+ * @summary get recent prs of lifts
+ * @param {number} user_id.path.required - the user_id - application/x-www-form-urlencoded
+ */
+variables.get(
+  '/recent-prs/:user_id',
+  validator(VariablesValidation.getRecentPrs),
+  catchAsyncErrors(VariablesController.getRecentPrs),
+);
+
 export default variables;
