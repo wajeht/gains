@@ -257,7 +257,7 @@ async function logout() {
         <div class="card">
           <div class="card-body">
             <small class="p-0 m-0">
-              <div class="table-responsive">
+              <div v-if="Object.keys(recentPrs).length" class="table-responsive">
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
                     <tr>
@@ -280,6 +280,9 @@ async function logout() {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div v-else class="text-muted text-center fw-light">
+                No relevant data available yet!
               </div>
             </small>
           </div>
@@ -319,7 +322,9 @@ async function logout() {
                   </tbody>
                 </table>
               </div>
-              <div v-else class="text-muted text-center fw-light">No data available yet!</div>
+              <div v-else class="text-muted text-center fw-light">
+                No relevant data available yet!
+              </div>
             </small>
           </div>
         </div>
