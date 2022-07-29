@@ -370,11 +370,7 @@ function clearDataAndDismissModal() {
     <div class="flex flex-column justify-content-between my-3">
       <div class="d-flex flex-column gap-3">
         <!-- alert -->
-        <div
-          v-if="alert.type"
-          :class="`alert-${alert.type}`"
-          class="mb-0 alert animate__animated animate__zoomIn animate__faster"
-        >
+        <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert" v-auto-animate>
           <span>{{ alert.msg }}</span>
         </div>
 
@@ -412,9 +408,10 @@ function clearDataAndDismissModal() {
           </ul>
 
           <!-- individual blocks -->
-          <div class="list-group">
+          <div class="list-group" v-auto-animate>
             <router-link
               v-for="exercise in exercises"
+              :key="`key-${exercise.id}`"
               to=""
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
