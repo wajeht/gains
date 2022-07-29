@@ -856,6 +856,7 @@ function clearDataAndDismissDeleteSessionModal() {
                               class="btn btn-sm p-0 m-0"
                               data-bs-toggle="modal"
                               data-bs-target="#modify-a-set"
+                              :disabled="currentSessionDetails.end_date"
                             >
                               <i class="bi bi-pencil-square"></i>
                             </button>
@@ -1200,6 +1201,7 @@ function clearDataAndDismissDeleteSessionModal() {
             data-bs-target="#complete-current-session"
             type="button"
             class="btn btn-success"
+            :class="{ rounded: currentSessionDetails.end_date === null }"
             :disabled="
               loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
             "
@@ -1669,7 +1671,7 @@ function clearDataAndDismissDeleteSessionModal() {
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" v-auto-animate>
                 <div class="row mb-3">
                   <!-- reps -->
                   <div class="col-4">
@@ -1753,8 +1755,28 @@ function clearDataAndDismissDeleteSessionModal() {
               </div>
 
               <!-- footer -->
-              <div class="modal-footer">
-                <div class="btn-group" role="group">
+              <div class="modal-footer d-flex justify-content-between">
+                <!-- delete -->
+                <button
+                  v-if="!modifyASetLoading"
+                  @click="deleteASet()"
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  :disabled="deleteASetLoading"
+                >
+                  <div
+                    v-if="deleteASetLoading"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Deleting...</span>
+                  </div>
+                  <span v-if="!deleteASetLoading"> <i class="bi bi-trash"></i> Delete </span>
+                  <span v-if="deleteASetLoading"> Deleting... </span>
+                </button>
+
+                <!-- btn -->
+                <div class="btn-group btn-group-sm" role="group">
                   <!-- clear -->
                   <button
                     v-if="!modifyASetLoading && !deleteASetLoading"
@@ -1770,33 +1792,11 @@ function clearDataAndDismissDeleteSessionModal() {
                     v-if="!modifyASetLoading && !deleteASetLoading"
                     @click="clearDataAndDismissModifyASetModal()"
                     type="reset"
-                    class="btn btn-outline-danger"
+                    class="btn btn-danger"
                     data-bs-dismiss="modal"
                   >
                     <i class="bi bi-x-circle"></i>
                     Cancel
-                  </button>
-                </div>
-
-                <!-- btn -->
-                <div class="btn-group" role="group">
-                  <!-- delete -->
-                  <button
-                    v-if="!modifyASetLoading"
-                    @click="deleteASet()"
-                    type="button"
-                    class="btn btn-danger"
-                    :disabled="deleteASetLoading"
-                  >
-                    <div
-                      v-if="deleteASetLoading"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Deleting...</span>
-                    </div>
-                    <span v-if="!deleteASetLoading"> <i class="bi bi-trash"></i> Delete </span>
-                    <span v-if="deleteASetLoading"> Deleting... </span>
                   </button>
 
                   <!-- modify -->
@@ -1813,7 +1813,9 @@ function clearDataAndDismissDeleteSessionModal() {
                     >
                       <span class="visually-hidden"> Updating...</span>
                     </div>
-                    <span v-if="!modifyASetLoading"> Update </span>
+                    <span v-if="!modifyASetLoading">
+                      <i class="bi bi-check-circle-fill"></i> Update
+                    </span>
                     <span v-if="modifyASetLoading"> Updating... </span>
                   </button>
                 </div>
