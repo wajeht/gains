@@ -152,54 +152,82 @@ export async function getSessionBySessionId(sid) {
     [sid],
   );
 
-  // session with block info
-  const joined = await db
-    .select(
-      '*',
-      'sessions.id as session_id',
-      'sessions.name as name',
-      'blocks.name as block_name',
-      'sessions.end_date as end_date',
-      'sessions.json as json',
-    )
-    .from('sessions')
-    .innerJoin('blocks', { 'blocks.id': 'sessions.block_id' })
-    .innerJoin('variables', { 'variables.session_id': 'sessions.id' })
-    .where({ 'sessions.id': sid })
-    .andWhere({ 'sessions.deleted': false });
+  // // session with block info
+  // const joined = await db
+  //   .select(
+  //     '*',
+  //     'sessions.id as session_id',
+  //     'sessions.name as name',
+  //     'blocks.name as block_name',
+  //     'sessions.end_date as end_date',
+  //     'sessions.json as json',
+  //   )
+  //   .from('sessions')
+  //   .innerJoin('blocks', { 'blocks.id': 'sessions.block_id' })
+  //   .innerJoin('variables', { 'variables.session_id': 'sessions.id' })
+  //   .where({ 'sessions.id': sid })
+  //   .andWhere({ 'sessions.deleted': false });
 
-  // session without block info
-  const { rows: notJoined } = await db.raw(
+  // // session without block info
+  // const { rows: notJoined } = await db.raw(
+  //   `
+  //   select *,
+  //         ss.end_date as end_date,
+  //         ss.id as session_id,
+  //         ss.json as json
+  //   from sessions ss
+  //   inner join variables v on v.session_id = ss.id
+  //   where (
+  //     ss.id = ?
+  //     and ss.deleted = false
+  //   );
+  // `,
+  //   [sid],
+  // );
+
+  // if (!joined.length) {
+  //   result = [
+  //     {
+  //       ...notJoined[0],
+  //       logs: sets,
+  //     },
+  //   ];
+  // } else {
+  //   result = [
+  //     {
+  //       ...joined[0],
+  //       logs: sets,
+  //     },
+  //   ];
+  // }
+
+  const { rows: both } = await db.raw(
     `
-    select *,
-          ss.end_date as end_date,
-          ss.id as session_id,
-          ss.json as json
-    from sessions ss
-    inner join variables v on v.session_id = ss.id
-    where (
-      ss.id = ?
-      and ss.deleted = false
-    );
+      select
+	      *,
+	      ss.id as "session_id",
+	      ss.name as "name",
+	      b.name as "block_name",
+	      ss.end_date as "end_date",
+	      ss.json as "json"
+      from
+	      sessions ss
+	      full join blocks b on b.id = ss.block_id
+	      inner join variables v on v.session_id = ss.id
+      where (
+        ss.deleted = false
+        and ss.id = ?
+      )
   `,
     [sid],
   );
 
-  if (!joined.length) {
-    result = [
-      {
-        ...notJoined[0],
-        logs: sets,
-      },
-    ];
-  } else {
-    result = [
-      {
-        ...joined[0],
-        logs: sets,
-      },
-    ];
-  }
+  result = [
+    {
+      ...both[0],
+      logs: sets,
+    },
+  ];
 
   return result;
 }
