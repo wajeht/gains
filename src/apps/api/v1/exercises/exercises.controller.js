@@ -112,7 +112,7 @@ export async function patchExerciseNote(req, res) {
 
   if (!note.length)
     throw new CustomError.BadRequestError(
-      `Something went wrong while updating a note for gmid: ${body.gains_meta_id}!`,
+      `Something went wrong while updating a note for gmid: ${body.lid}!`,
     );
 
   logger.info(`User id: ${body.user_id} has updated gains meta to ${JSON.stringify(body)}!`);

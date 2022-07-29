@@ -1,6 +1,7 @@
 import { body, check, param, query } from 'express-validator';
 import * as UsersQueries from '../users/users.queries.js';
 import * as ExercisesQueries from './exercises.queries.js';
+import * as LogsQueries from '../logs/logs.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
 import * as SessionsQueries from '../sessions/sessions.queries.js';
 import { isEqual } from 'lodash-es';
@@ -101,14 +102,20 @@ export const patchExerciseNote = [
     .trim()
     .isLength({ min: 0, max: 250 })
     .withMessage('Notes must be at least 0 character long or less than 250 characters long'),
-  param('gmid')
+  param('lid')
     .trim()
     .notEmpty()
-    .withMessage('gmid must not be empty!')
+    .withMessage('lid must not be empty!')
     .bail()
     .isNumeric()
-    .withMessage('gmid must be an ID!')
+    .withMessage('lid must be an ID!')
     .bail()
+    .toInt()
+    .custom(async (lid) => {
+      const log = await LogsQueries.getLogById(lid);
+      if (log.length === 0) throw new Error('Log does not exist!');
+      return true;
+    })
     .toInt(),
   param('sid')
     .trim()

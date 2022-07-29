@@ -54,6 +54,7 @@ sessions.get(
  * @param {number} caffeine_intake.form - the caffeine_intake - application/x-www-form-urlencoded
  * @param {number} session_rpe.form - the session_rpe - application/x-www-form-urlencoded
  * @param {string} notes.form - the notes - application/x-www-form-urlencoded
+ * @param {json} json.form - the json - application/x-www-form-urlencoded
  */
 sessions.patch(
   '/:sid',

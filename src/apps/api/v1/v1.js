@@ -5,6 +5,7 @@ import ExercisesRouter from './exercises/exercises.router.js';
 import BlocksRouter from './blocks/blocks.router.js';
 import UsersRouter from './users/users.router.js';
 import SetsRouter from './sets/sets.router.js';
+import LogsRouter from './logs/logs.router.js';
 
 import express from 'express';
 const v1 = express.Router();
@@ -16,5 +17,6 @@ v1.use('/exercises', ExercisesRouter);
 v1.use('/blocks', BlocksRouter);
 v1.use('/users', UsersRouter);
 v1.use('/sets', SetsRouter);
+v1.use('/logs', LogsRouter);
 
 export default v1;

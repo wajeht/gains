@@ -18,7 +18,7 @@ const loading = ref(false);
 
 const sessions = ref([]);
 const pagination = reactive({
-  perPage: 20,
+  perPage: 10,
   currentPage: 0,
   details: null,
   lastPage: null,
@@ -168,7 +168,7 @@ function logDetails(sid) {
               <div class="card-text">
                 <small>
                   <ul class="list-unstyled mb-0 pb-0 list-group-numbered">
-                    <li v-for="log in session.json?.logs">{{ log.name }}</li>
+                    <li v-for="log in session.json" :key="`key-${log.id}`">{{ log.name }}</li>
                   </ul>
                 </small>
               </div>
@@ -191,7 +191,7 @@ function logDetails(sid) {
 
       <!-- load more -->
       <button
-        v-if="pagination.details?.currentPage !== pagination.lastPage"
+        v-if="pagination.details?.currentPage !== pagination.lastPage && sessions.length"
         @click="getUserSessions()"
         type="button"
         class="btn btn-success"
