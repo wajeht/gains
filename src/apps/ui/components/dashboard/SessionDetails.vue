@@ -724,137 +724,139 @@ async function handleDeleteSession() {
         <span v-for="(log, index) in currentSessionDetails.logs" :key="`key-${log.index}`">
           <div class="card p-0" v-auto-animate>
             <!-- individual exercises log -->
-            <div class="card-body" v-auto-animate>
-              <!-- header -->
-              <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
-                <!-- title -->
-                <span>{{ index + 1 }}. {{ log.name }}</span>
+            <div class="card-body">
+              <span class="m-0 p-0" v-auto-animate>
+                <!-- header -->
+                <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
+                  <!-- title -->
+                  <span>{{ index + 1 }}. {{ log.name }}</span>
 
-                <!-- options -->
-                <span class="d-flex gap-2">
-                  <!-- show/hide button -->
-                  <button
-                    @click="log.collapsed = !log.collapsed"
-                    class="p-0 m-0"
-                    style="background: none; border: none; box-shadow: none"
-                    role="button"
-                    v-auto-animate
-                  >
-                    <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
-                    <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
-                  </button>
-
-                  <!-- lift settings -->
-                  <div class="dropdown">
-                    <!-- setting icons -->
-                    <a
-                      class="link-dark"
+                  <!-- options -->
+                  <span class="d-flex gap-2">
+                    <!-- show/hide button -->
+                    <button
+                      @click="log.collapsed = !log.collapsed"
+                      class="p-0 m-0"
+                      style="background: none; border: none; box-shadow: none"
                       role="button"
-                      id="session-details-setting-button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      ><i class="bi bi-three-dots-vertical"></i
-                    ></a>
+                      v-auto-animate
+                    >
+                      <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
+                      <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
+                    </button>
 
-                    <!-- setting links -->
-                    <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                      <li>
-                        <button class="dropdown-item btn-sm" type="button">Edit</button>
-                      </li>
-                      <li>
-                        <button class="dropdown-item btn-sm" type="button">Delete</button>
-                      </li>
-                    </ul>
-                  </div>
-                </span>
-              </h6>
+                    <!-- lift settings -->
+                    <div class="dropdown">
+                      <!-- setting icons -->
+                      <a
+                        class="link-dark"
+                        role="button"
+                        id="session-details-setting-button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><i class="bi bi-three-dots-vertical"></i
+                      ></a>
 
-              <!-- notes -->
-              <p
-                v-if="log.notes && log.collapsed"
-                class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
-                :class="{ 'mb-0': log?.sets?.length === 0, 'pb-0': log?.sets?.length === 0 }"
-              >
-                <small class="fst-italic fw-light">
-                  {{ log.notes }}
-                </small>
-              </p>
+                      <!-- setting links -->
+                      <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
+                        <li>
+                          <button class="dropdown-item btn-sm" type="button">Edit</button>
+                        </li>
+                        <li>
+                          <button class="dropdown-item btn-sm" type="button">Delete</button>
+                        </li>
+                      </ul>
+                    </div>
+                  </span>
+                </h6>
 
-              <!-- sets -->
-              <small v-if="log.sets?.length != 0 && log.collapsed">
-                <div :class="{ 'pt-2': log.notes?.length === 0 }"></div>
-                <!-- spacer if there is no notes-->
-                <div class="table-responsive">
-                  <table class="table table-sm table-striped table-hover p-0 m-0">
-                    <thead>
-                      <tr>
-                        <th class="text-center" scope="col">Set</th>
-                        <th class="text-center" scope="col"></th>
-                        <th class="text-center" scope="col">Rep</th>
-                        <th class="text-center" scope="col"></th>
-                        <th class="text-center" scope="col">Weight</th>
-                        <th class="text-center" scope="col">Rpe</th>
+                <!-- notes -->
+                <p
+                  v-if="log.notes && log.collapsed"
+                  class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
+                  :class="{ 'mb-0': log?.sets?.length === 0, 'pb-0': log?.sets?.length === 0 }"
+                >
+                  <small class="fst-italic fw-light">
+                    {{ log.notes }}
+                  </small>
+                </p>
 
-                        <th v-if="log.sets_notes_visibility" class="text-start" scope="col">
-                          Notes
-                        </th>
+                <!-- sets -->
+                <small v-if="log.sets?.length != 0 && log.collapsed">
+                  <div :class="{ 'pt-2': log.notes?.length === 0 }"></div>
+                  <!-- spacer if there is no notes-->
+                  <div class="table-responsive">
+                    <table class="table table-sm table-striped table-hover p-0 m-0">
+                      <thead>
+                        <tr>
+                          <th class="text-center" scope="col">Set</th>
+                          <th class="text-center" scope="col"></th>
+                          <th class="text-center" scope="col">Rep</th>
+                          <th class="text-center" scope="col"></th>
+                          <th class="text-center" scope="col">Weight</th>
+                          <th class="text-center" scope="col">Rpe</th>
 
-                        <th class="text-center" scope="col">
-                          <span @click="log.sets_notes_visibility = !log.sets_notes_visibility">
-                            <i v-if="!log.sets_notes_visibility" class="bi bi bi-toggle-off"></i>
-                            <i
-                              v-if="log.sets_notes_visibility"
-                              class="bi bi bi-toggle-on text-success"
-                            ></i>
-                          </span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
-                        <td class="text-center">{{ idx + 1 }}</td>
-                        <td class="text-center text-muted">x</td>
-                        <td class="text-center">{{ s.reps }}</td>
-                        <td class="text-center text-muted">x</td>
-                        <td class="text-center">{{ s.weight }}</td>
-                        <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
+                          <th v-if="log.sets_notes_visibility" class="text-start" scope="col">
+                            Notes
+                          </th>
 
-                        <td
-                          v-if="log.sets_notes_visibility"
-                          class="text-start text-truncate text-muted fst-italic"
-                        >
-                          <small>{{ s.notes }}</small>
-                        </td>
+                          <th class="text-center" scope="col">
+                            <span @click="log.sets_notes_visibility = !log.sets_notes_visibility">
+                              <i v-if="!log.sets_notes_visibility" class="bi bi bi-toggle-off"></i>
+                              <i
+                                v-if="log.sets_notes_visibility"
+                                class="bi bi bi-toggle-on text-success"
+                              ></i>
+                            </span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
+                          <td class="text-center">{{ idx + 1 }}</td>
+                          <td class="text-center text-muted">x</td>
+                          <td class="text-center">{{ s.reps }}</td>
+                          <td class="text-center text-muted">x</td>
+                          <td class="text-center">{{ s.weight }}</td>
+                          <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
 
-                        <td class="text-center">
-                          <!-- modify a set button -->
-                          <button
-                            @click="
-                              (set.id = s.id),
-                                (set.set_index = idx),
-                                (set.log_index = index),
-                                (set.exercise_id = s.exercise_id),
-                                (set.user_id = s.user_id),
-                                (set.session_id = s.session_id),
-                                (set.reps = s.reps),
-                                (set.weight = s.weight),
-                                (set.rpe = s.rpe),
-                                (set.notes = s.notes),
-                                (set.exercise_name = log.name)
-                            "
-                            type="button"
-                            class="btn btn-sm p-0 m-0"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modify-a-set"
+                          <td
+                            v-if="log.sets_notes_visibility"
+                            class="text-start text-truncate text-muted fst-italic"
                           >
-                            <i class="bi bi-pencil-square"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </small>
+                            <small>{{ s.notes }}</small>
+                          </td>
+
+                          <td class="text-center">
+                            <!-- modify a set button -->
+                            <button
+                              @click="
+                                (set.id = s.id),
+                                  (set.set_index = idx),
+                                  (set.log_index = index),
+                                  (set.exercise_id = s.exercise_id),
+                                  (set.user_id = s.user_id),
+                                  (set.session_id = s.session_id),
+                                  (set.reps = s.reps),
+                                  (set.weight = s.weight),
+                                  (set.rpe = s.rpe),
+                                  (set.notes = s.notes),
+                                  (set.exercise_name = log.name)
+                              "
+                              type="button"
+                              class="btn btn-sm p-0 m-0"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modify-a-set"
+                            >
+                              <i class="bi bi-pencil-square"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </small>
+              </span>
             </div>
 
             <!-- footer -->
