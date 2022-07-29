@@ -782,6 +782,7 @@ async function handleDeleteSession() {
               <p
                 v-if="log.notes && log.collapsed"
                 class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
+                :class="{ 'mb-0': log?.sets?.length === 0, 'pb-0': log?.sets?.length === 0 }"
               >
                 <small class="fst-italic fw-light">
                   {{ log.notes }}
@@ -1013,7 +1014,11 @@ async function handleDeleteSession() {
                       required
                     >
                       <option value="" selected disabled>Select a exercise category!</option>
-                      <option v-for="category in chooseCategories" :value="category.id">
+                      <option
+                        v-for="category in chooseCategories"
+                        :value="category.id"
+                        :key="`key-${category.id}`"
+                      >
                         {{ category.name }}
                       </option>
                     </select>
@@ -1043,7 +1048,11 @@ async function handleDeleteSession() {
                       required
                     >
                       <option value="" selected disabled>select a exercise!</option>
-                      <option v-for="exercise in chooseExercises" :value="exercise.id">
+                      <option
+                        v-for="exercise in chooseExercises"
+                        :value="exercise.id"
+                        :key="`key-${exercise.id}`"
+                      >
                         {{ exercise.name }}
                       </option>
                     </select>
