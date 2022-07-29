@@ -135,15 +135,14 @@ export async function getSessionBySessionId(sid) {
     `
     select
       l.*,
-      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null), '[]') ) as sets
+      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]') ) as sets
     from
       sets s
       full join logs l on l.id = s.log_id
       full join sessions ss on ss.id = s.session_id
     where (
-      l.session_id = ?
-      -- and ss.deleted = false
-      -- and s.deleted = false
+      l.deleted = false
+      and l.session_id = ?
     )
     group by
       l.id

@@ -20,6 +20,7 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faIdBadge } from '@fortawesome/free-solid-svg-icons';
+import { faBroom } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -40,5 +41,6 @@ library.add(faCalendar);
 library.add(faRefresh);
 library.add(faRightFromBracket);
 library.add(faIdBadge);
+library.add(faBroom);
 
 export default FontAwesomeIcon;

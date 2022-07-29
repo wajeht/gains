@@ -295,7 +295,7 @@ function clearDataAndDismissModal() {
                 </button>
                 <button
                   type="submit"
-                  class="btn btn-dark"
+                  class="btn btn-success"
                   :disabled="loading || end_date.length === 0"
                 >
                   <div v-if="loading" class="spinner-border spinner-border-sm" role="status">

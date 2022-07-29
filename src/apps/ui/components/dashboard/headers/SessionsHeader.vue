@@ -368,7 +368,7 @@ async function addASession() {
               >
                 Cancel
               </button>
-              <button type="submit" class="btn btn-dark" :disabled="loading">
+              <button type="submit" class="btn btn-success" :disabled="loading">
                 <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
@@ -383,7 +383,7 @@ async function addASession() {
     </span>
 
     <!-- middle -->
-    <!-- <input type="text" class="form-control form-control-sm" id="search" placeholder="Search.." /> -->
+    <h5 class="mb-0 pb-0 text-muted">{{ dayjs().format('YYYY MMMM DD') }}</h5>
 
     <!-- settings -->
     <div class="dropdown">

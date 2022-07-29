@@ -81,6 +81,7 @@ const deleteASetLoading = ref(false);
 
 const completeCurrentSessionShowHideOtherFields = ref(false);
 const completeCurrentSessionLoading = ref(false);
+const deleteCurrentSessionLoading = ref(false);
 
 // watches
 //  update exercise db as changes in categories
@@ -543,7 +544,7 @@ function buildClassName(name, index) {
 
 async function handleDeleteSession() {
   try {
-    appStore.loading = true;
+    deleteCurrentSessionLoading.value = true;
 
     const res = await api.delete(`/api/v1/sessions/${currentSessionDetails.session_id}`, {
       user_id: userStore.user.id,
@@ -558,10 +559,11 @@ async function handleDeleteSession() {
       }
     }
 
-    appStore.loading = false;
+    clearDataAndDismissDeleteSessionModal();
+    deleteCurrentSessionLoading.value = false;
 
-    appStore.showToast(`SessionID: ${json.data[0].id} has been deleted!`);
     router.push('/dashboard/sessions');
+    appStore.showToast(`SessionID: ${json.data[0].id} has been deleted!`);
   } catch (e) {
     loading.value = false;
     alert.type = 'danger';
@@ -572,6 +574,13 @@ async function handleDeleteSession() {
       alert.msg = e;
     }
   }
+}
+
+function clearDataAndDismissDeleteSessionModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(
+    document.getElementById('delete-current-session'),
+  );
+  modal.hide();
 }
 </script>
 
@@ -774,7 +783,7 @@ async function handleDeleteSession() {
                 <p
                   v-if="log.notes && log.collapsed"
                   class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
-                  :class="{ 'mb-0': log?.sets?.length === 0, 'pb-0': log?.sets?.length === 0 }"
+                  :class="{ 'mb-0': log?.sets?.length === 0 }"
                 >
                   <small class="fst-italic fw-light">
                     {{ log.notes }}
@@ -783,7 +792,7 @@ async function handleDeleteSession() {
 
                 <!-- sets -->
                 <small v-if="log.sets?.length != 0 && log.collapsed">
-                  <div :class="{ 'pt-2': log.notes?.length === 0 }"></div>
+                  <div :class="{ 'pt-2': log.notes?.length === 0 || log?.notes === null }"></div>
                   <!-- spacer if there is no notes-->
                   <div class="table-responsive">
                     <table class="table table-sm table-striped table-hover p-0 m-0">
@@ -935,6 +944,7 @@ async function handleDeleteSession() {
             data-bs-target="#add-a-exercise"
             :disabled="loading || currentSessionDetails.end_date"
           >
+            <i class="bi bi-plus-circle-fill"></i>
             Add a exercise
           </button>
 
@@ -1064,7 +1074,7 @@ async function handleDeleteSession() {
                   <!-- add -->
                   <button
                     type="submit"
-                    class="btn btn-dark"
+                    class="btn btn-success"
                     :disabled="addAExerciseLoading || !chooseExerciseId"
                   >
                     <div
@@ -1090,10 +1100,11 @@ async function handleDeleteSession() {
         <div class="btn-group" role="group">
           <!-- delete current session -->
           <button
-            @click="handleDeleteSession()"
             :disabled="loading"
             type="button"
             class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#delete-current-session"
             :class="{ rounded: currentSessionDetails.end_date != null }"
           >
             <span v-if="currentSessionDetails.end_date">
@@ -1105,6 +1116,81 @@ async function handleDeleteSession() {
               Cancel
             </span>
           </button>
+
+          <!-- delete current session modal -->
+          <form
+            @submit.prevent="handleDeleteSession()"
+            class="modal fade px-2 py-5"
+            id="delete-current-session"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+          >
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    <span v-if="!currentSessionDetails.end_date"> Cancel </span>
+                    <span v-if="currentSessionDetails.end_date"> Delete </span>
+                    <span class="fw-light"> session id: {{ currentSessionDetails.id }}</span>
+                  </h5>
+                  <button
+                    @click="clearDataAndDismissDeleteSessionModal()"
+                    type="reset"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p class="mb-0 pb-0 text-center">
+                    Are you sure you want to
+                    <span v-if="!currentSessionDetails.end_date"> cancel </span>
+                    <span v-if="currentSessionDetails.end_date"> delete </span>
+                    <span class="badge bg-secondary text-white">{{
+                      currentSessionDetails.name
+                    }}</span>
+                    ?
+                  </p>
+                </div>
+
+                <!-- footer -->
+                <div class="modal-footer">
+                  <!-- cancel -->
+                  <button
+                    @click="clearDataAndDismissDeleteSessionModal()"
+                    v-if="!deleteCurrentSessionLoading"
+                    type="reset"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    <i class="bi bi-x-circle-fill"></i>
+                    Cancel
+                  </button>
+
+                  <!-- confirm -->
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    :disabled="deleteCurrentSessionLoading"
+                  >
+                    <div
+                      v-if="deleteCurrentSessionLoading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+
+                    <span v-if="!deleteCurrentSessionLoading"
+                      ><i class="bi bi-check-circle-fill"></i> Confirm
+                    </span>
+                    <span v-if="deleteCurrentSessionLoading"> Loading... </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
 
           <!-- complete current session button -->
           <button
@@ -1303,7 +1389,7 @@ async function handleDeleteSession() {
                   <!-- submit -->
                   <button
                     type="submit"
-                    class="btn btn-dark"
+                    class="btn btn-success"
                     :disabled="
                       completeCurrentSessionLoading ||
                       currentSessionDetails.session_rpe === null ||
@@ -1367,7 +1453,8 @@ async function handleDeleteSession() {
               <!-- footer -->
               <div class="modal-footer">
                 <!-- clear -->
-                <button v-if="!addASetLoading" type="reset" class="btn btn-outline-danger">
+                <button v-if="!addAExerciseNoteLoading" type="reset" class="btn btn-outline-danger">
+                  <font-awesome-icon icon="broom" />
                   Clear
                 </button>
 
@@ -1385,7 +1472,7 @@ async function handleDeleteSession() {
                   </button>
 
                   <!-- add -->
-                  <button type="submit" class="btn btn-dark" :disabled="addAExerciseNoteLoading">
+                  <button type="submit" class="btn btn-success" :disabled="addAExerciseNoteLoading">
                     <div
                       v-if="addAExerciseNoteLoading"
                       class="spinner-border spinner-border-sm"
@@ -1516,6 +1603,7 @@ async function handleDeleteSession() {
               <div class="modal-footer">
                 <!-- clear -->
                 <button v-if="!addASetLoading" type="reset" class="btn btn-outline-danger">
+                  <font-awesome-icon icon="broom" />
                   Clear
                 </button>
 
@@ -1536,7 +1624,7 @@ async function handleDeleteSession() {
                   <!-- add -->
                   <button
                     type="submit"
-                    class="btn btn-dark"
+                    class="btn btn-success"
                     :disabled="addASetLoading || !set.reps || !set.weight"
                   >
                     <div
@@ -1673,6 +1761,7 @@ async function handleDeleteSession() {
                     type="reset"
                     class="btn btn-outline-danger"
                   >
+                    <font-awesome-icon icon="broom" />
                     Clear
                   </button>
 
@@ -1714,7 +1803,7 @@ async function handleDeleteSession() {
                   <button
                     v-if="!deleteASetLoading"
                     type="submit"
-                    class="btn btn-dark"
+                    class="btn btn-success"
                     :disabled="modifyASetLoading"
                   >
                     <div

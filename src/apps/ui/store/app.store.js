@@ -20,6 +20,11 @@ const useAppStore = defineStore({
     showToast(message) {
       this.toast.toggle = true;
       this.toast.message = message;
+
+      // clear after 5 sec
+      setTimeout(() => {
+        this.clearToast();
+      }, 5000);
     },
   },
 });
