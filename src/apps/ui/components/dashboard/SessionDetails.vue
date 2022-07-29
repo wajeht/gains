@@ -249,7 +249,10 @@ async function addAExercise() {
     addAExerciseLoading.value = false;
     clearDataAndDismissAddAExerciseModal();
 
-    currentSessionDetails.logs.push(json.data[0]);
+    const temp = json.data[0];
+    temp.sets = [];
+
+    currentSessionDetails.logs.push(temp);
   } catch (e) {
     loading.value = false;
     addAExerciseLoading.value = false;
