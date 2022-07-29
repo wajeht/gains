@@ -19,7 +19,9 @@ const alert = reactive({
   msg: '',
 });
 
-onMounted(() => {
+const weeklyWeightIn = reactive({});
+
+onMounted(async () => {
   // ----------- chart starts
   today.value = dayjs().format('MMMM DD, YYYY');
   const data = {
@@ -60,7 +62,35 @@ onMounted(() => {
       alert.msg = `Some of user data are not defined. Please update them via Settings > User details`;
     }
   }
+
+  const wwi = await getWeeklyWeightIn();
+  Object.assign(weeklyWeightIn, wwi);
 });
+
+async function getWeeklyWeightIn() {
+  try {
+    const res = await api.get(`/api/v1/variables/weekly-weight-in/${userStore.user.id}`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 
 async function logout() {
   try {
@@ -243,27 +273,24 @@ async function logout() {
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
                     <tr>
-                      <th class="text-center">Date</th>
+                      <th class="text-start">Date</th>
                       <th class="text-center">Weight</th>
                       <th class="text-center">Trend</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-center">2021/11/03</td>
-                      <td class="text-center">185</td>
-                      <td class="text-center text-success">+5</td>
-                    </tr>
-
-                    <tr>
-                      <td class="text-center">2021/11/03</td>
-                      <td class="text-center">185</td>
-                      <td class="text-center text-danger">-1</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">2021/11/03</td>
-                      <td class="text-center">234</td>
-                      <td class="text-center text-success">+2</td>
+                    <tr v-for="log in weeklyWeightIn" :key="`key-${log.id}`">
+                      <td class="text-start">{{ dayjs(log.date).format('YYYY/MM/DD') }}</td>
+                      <td class="text-center">{{ log.body_weight }}</td>
+                      <td
+                        class="text-center"
+                        :class="{
+                          'text-success': !log.trend.toString().startsWith('-'),
+                          'text-danger': log.trend.toString().startsWith('-'),
+                        }"
+                      >
+                        {{ log.trend > 0 ? '+' : '' }}{{ log.trend === 0 ? '' : log.trend }}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

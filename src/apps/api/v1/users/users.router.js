@@ -1,9 +1,9 @@
-import express from 'express';
+import { validator, catchAsyncErrors } from '../../api.middlewares.js';
+
 import * as UsersController from './users.controller.js';
 import * as UsersValidation from './users.validation.js';
 
-import { validator, catchAsyncErrors } from '../../api.middlewares.js';
-
+import express from 'express';
 const users = express.Router();
 
 /**
