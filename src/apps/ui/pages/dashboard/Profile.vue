@@ -261,11 +261,11 @@ async function logout() {
           <div class="card-body">
             <small class="p-0 m-0">
               <div v-if="Object.keys(recentPrs).length" class="table-responsive">
-                <table class="table table-striped table-hover table-sm p-0 m-0">
+                <table class="table table-striped table-hover table-responsive table-sm p-0 m-0">
                   <thead>
                     <tr>
                       <th class="text-start" scope="col">Lift</th>
-                      <th class="text-start d-flex gap-1">
+                      <th class="text-start">
                         Log <small class="text-muted fst-italic fw-light">(reps x weight)</small>
                       </th>
                       <th class="text-end" scope="col">e1RM</th>
@@ -276,6 +276,7 @@ async function logout() {
                       <tr
                         @click="pr.showRecentPrDetails = !pr.showRecentPrDetails"
                         style="cursor: pointer"
+                        class="text-truncate"
                       >
                         <td class="text-start text-truncate">
                           <small class="p-0 m-0">
