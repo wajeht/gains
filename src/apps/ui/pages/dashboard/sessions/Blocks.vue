@@ -288,7 +288,7 @@ function clearDataAndDismissModal() {
                   @click="clearDataAndDismissModal()"
                   v-if="!loading"
                   type="reset"
-                  class="btn btn-outline-danger"
+                  class="btn btn-danger"
                   data-bs-dismiss="modal"
                 >
                   Cancel

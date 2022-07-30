@@ -1065,10 +1065,10 @@ function clearDataAndDismissDeleteSessionModal() {
                     @click="clearDataAndDismissAddAExerciseModal()"
                     v-if="!addAExerciseLoading"
                     type="reset"
-                    class="btn btn-outline-danger"
+                    class="btn btn-danger"
                     data-bs-dismiss="modal"
                   >
-                    <i class="bi bi-x-circle"></i>
+                    <i class="bi bi-x-circle-fill"></i>
                     Cancel
                   </button>
 
@@ -1382,7 +1382,7 @@ function clearDataAndDismissDeleteSessionModal() {
                     @click="clearDataAndDismissCompleteCurrentSessionModal()"
                     v-if="!completeCurrentSessionLoading"
                     type="reset"
-                    class="btn btn-outline-danger"
+                    class="btn btn-danger"
                     data-bs-dismiss="modal"
                   >
                     Cancel

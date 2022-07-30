@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../libs/logger.js';
 import { omit } from 'lodash-es';
 import CustomError from '../../api.errors.js';
+import db from '../../../../database/db.js';
 
 /**
  * It creates a session for a user
@@ -41,6 +42,13 @@ export async function patchSession(req, res) {
   const updated = await SessionQueries.updateSession(sid, uid, b);
 
   logger.info(`User id ${req.body.user_id} has updated session details to ${JSON.stringify(b)}!`);
+
+  // TODO! move this to a query
+  await db
+    .update({ collapsed: false })
+    .from('logs')
+    .where({ session_id: sid })
+    .andWhere({ user_id: uid });
 
   res.status(StatusCodes.OK).json({
     status: 'success',

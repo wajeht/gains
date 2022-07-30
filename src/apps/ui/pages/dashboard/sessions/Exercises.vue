@@ -272,7 +272,7 @@ function clearDataAndDismissModal() {
                     required
                   >
                     <option selected value="" disabled>Select a exercise category!</option>
-                    <option v-for="category in categories" :value="category.id">
+                    <option v-for="category in categories" :value="category.id" :key="`category-id-${category.id}`">
                       {{ category.name }}
                     </option>
                   </select>
@@ -298,7 +298,7 @@ function clearDataAndDismissModal() {
                   @click="clearDataAndDismissModal()"
                   v-if="!loading"
                   type="reset"
-                  class="btn btn-outline-danger"
+                  class="btn btn-danger"
                   data-bs-dismiss="modal"
                 >
                   Cancel
