@@ -9,6 +9,7 @@ import { isMobile } from '../../../../utils/helpers.js';
 import api from '../../../../libs/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 import dayjs from 'dayjs';
+import { omit } from 'lodash-es';
 
 import useAppStore from '../../store/app.store.js';
 const appStore = useAppStore();
@@ -169,7 +170,7 @@ async function logout() {
 <template>
   <DashboardHeader />
   <div class="container px-3">
-    <div class="my-3 d-flex flex-column gap-3">
+    <div class="my-3 d-flex flex-column gap-3" v-auto-animate>
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
         <span>{{ alert.msg }}</span>
@@ -258,13 +259,13 @@ async function logout() {
         <h5><i class="bi bi-graph-up-arrow"></i> Recent ePRS</h5>
         <div class="card">
           <div class="card-body">
-            <small class="p-0 m-0" v-auto-animate>
+            <small class="p-0 m-0">
               <div v-if="Object.keys(recentPrs).length" class="table-responsive">
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
                     <tr>
                       <th class="text-start" scope="col">Lift</th>
-                      <th class="text-start" scope="col">
+                      <th class="text-start d-flex gap-1">
                         Log <small class="text-muted fst-italic fw-light">(reps x weight)</small>
                       </th>
                       <th class="text-end" scope="col">e1RM</th>
@@ -276,7 +277,7 @@ async function logout() {
                         @click="pr.showRecentPrDetails = !pr.showRecentPrDetails"
                         style="cursor: pointer"
                       >
-                        <td class="text-start">
+                        <td class="text-start text-truncate">
                           <small class="p-0 m-0">
                             <i v-if="!pr.showRecentPrDetails" class="bi bi-chevron-down"></i>
                             <i v-if="pr.showRecentPrDetails" class="bi bi-chevron-up"></i>
@@ -291,7 +292,7 @@ async function logout() {
                       <tr v-if="pr.showRecentPrDetails" class="fst-italic">
                         <td colspan="3" class="table-active" style="padding-left: 20px">
                           <small class="p-0 m-0">
-                            <pre class="p-0 m-0">{{ pr }}</pre>
+                            <pre class="p-0 m-0">{{ omit(pr, 'showRecentPrDetails') }}</pre>
                           </small>
                         </td>
                       </tr>
