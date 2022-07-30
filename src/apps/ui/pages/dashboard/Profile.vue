@@ -23,6 +23,7 @@ const alert = reactive({
 });
 
 const weeklyWeightIn = reactive({});
+
 const recentPrs = reactive({});
 
 onMounted(async () => {
@@ -70,7 +71,8 @@ onMounted(async () => {
   const wwi = await getWeeklyWeightIn();
   Object.assign(weeklyWeightIn, wwi);
 
-  const rpr = await getRecentPrs();
+  let rpr = await getRecentPrs();
+  rpr.map((cur) => (cur.showRecentPrDetails = false));
   Object.assign(recentPrs, rpr);
 });
 
@@ -256,28 +258,44 @@ async function logout() {
         <h5><i class="bi bi-graph-up-arrow"></i> Recent ePRS</h5>
         <div class="card">
           <div class="card-body">
-            <small class="p-0 m-0">
+            <small class="p-0 m-0" v-auto-animate>
               <div v-if="Object.keys(recentPrs).length" class="table-responsive">
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
                     <tr>
-                      <th class="text-start" scope="col">Date</th>
                       <th class="text-start" scope="col">Lift</th>
                       <th class="text-start" scope="col">
                         Log <small class="text-muted fst-italic fw-light">(reps x weight)</small>
                       </th>
-                      <th class="text-center" scope="col">e1RM</th>
+                      <th class="text-end" scope="col">e1RM</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr v-for="pr in recentPrs" :key="`recent-prs-id-${pr.id}`">
-                      <td class="text-start">{{ dayjs(pr.date).format('MM/DD') }}</td>
-                      <td class="text-start">{{ pr.name }}</td>
-                      <td class="text-start">
-                        {{ pr.reps }} x {{ pr.weight + ' ' + appStore.unitLabel }} @{{ pr.rpe }}
-                      </td>
-                      <td class="text-center">{{ pr.e1rm + ' ' + appStore.unitLabel }}</td>
-                    </tr>
+                  <tbody v-auto-animate>
+                    <template v-for="pr in recentPrs" :key="`recent-prs-id-${pr.id}`">
+                      <tr
+                        @click="pr.showRecentPrDetails = !pr.showRecentPrDetails"
+                        style="cursor: pointer"
+                      >
+                        <td class="text-start">
+                          <small class="p-0 m-0">
+                            <i v-if="!pr.showRecentPrDetails" class="bi bi-chevron-down"></i>
+                            <i v-if="pr.showRecentPrDetails" class="bi bi-chevron-up"></i>
+                          </small>
+                          {{ pr.name }}
+                        </td>
+                        <td class="text-start">
+                          {{ pr.reps }} x {{ pr.weight + ' ' + appStore.unitLabel }} @{{ pr.rpe }}
+                        </td>
+                        <td class="text-end">{{ pr.e1rm + ' ' + appStore.unitLabel }}</td>
+                      </tr>
+                      <tr v-if="pr.showRecentPrDetails" class="fst-italic">
+                        <td colspan="3" class="table-active" style="padding-left: 20px">
+                          <small class="p-0 m-0">
+                            <pre class="p-0 m-0">{{ pr }}</pre>
+                          </small>
+                        </td>
+                      </tr>
+                    </template>
                   </tbody>
                 </table>
               </div>
@@ -294,7 +312,7 @@ async function logout() {
         <h5><i class="bi bi-table"></i> Bodyweight</h5>
         <div class="card">
           <div class="card-body">
-            <small class="p-0 m-0">
+            <small class="p-0 m-0" v-auto-animate>
               <div v-if="Object.keys(weeklyWeightIn).length > 0" class="table-responsive">
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
