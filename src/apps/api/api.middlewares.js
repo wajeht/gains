@@ -3,6 +3,9 @@ import { jwt_secret, env } from '../../config/env.js';
 import { red } from '../../utils/rainbow-log.js';
 import { validationResult } from 'express-validator';
 import CustomError from './api.errors.js';
+import multer from 'multer';
+
+import path from 'path';
 
 /**
  * It checks if the request has an authorization header, and if it does, it checks if it's a valid JWT
@@ -106,3 +109,10 @@ export const validator = (schemas) => {
     }
   };
 };
+
+/* It's creating a multer object that will be used to upload files to the server. */
+// TODO! update this to validate file size and extension
+export const upload = multer({
+  storage: multer.memoryStorage(),
+  dest: path.resolve(path.join(process.cwd(), 'src', 'public', 'uploads')),
+});

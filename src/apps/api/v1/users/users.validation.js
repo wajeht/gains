@@ -1,4 +1,4 @@
-import { check, param, body } from 'express-validator';
+import { check, checkSchema, param, body } from 'express-validator';
 import { blue, custom, green, red, yellow } from '../../../../utils/rainbow-log.js';
 import * as UserQueries from './users.queries.js';
 import { isEqual } from 'lodash-es';
@@ -221,13 +221,16 @@ export const patchUpdateAccountInformation = [
     .trim()
     .notEmpty()
     .withMessage('The value must not be empty!')
+    .bail()
     .isInt()
     .withMessage('The value must be an ID!')
+    .bail()
     .custom(async (id) => {
       const user = await UserQueries.findUserById(id);
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
   body().custom((data) => {
     const availableFields = ['email', 'username', 'password'];
     const fields = Object.keys(data).some((key) => availableFields.indexOf(key) >= 0);
@@ -295,4 +298,26 @@ export const patchUpdateAccountInformation = [
       }
       return true;
     }),
+];
+
+/* Validating the user input. */
+export const postUpdateProfilePicture = [
+  param('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('user_id must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('user_id must be an ID!')
+    .bail()
+    .custom(async (id) => {
+      const user = await UserQueries.findUserById(id);
+      if (user.length === 0) throw new Error('User does not exist!');
+      return true;
+    })
+    .toInt(),
+  check('profilePicture').custom((value, { req }) => {
+    console.log(value);
+    console.log(req.file);
+  }),
 ];

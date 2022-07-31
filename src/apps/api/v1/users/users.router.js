@@ -1,4 +1,4 @@
-import { validator, catchAsyncErrors } from '../../api.middlewares.js';
+import { upload, validator, catchAsyncErrors } from '../../api.middlewares.js';
 
 import * as UsersController from './users.controller.js';
 import * as UsersValidation from './users.validation.js';
@@ -100,6 +100,20 @@ users.delete(
   '/:id',
   validator(UsersValidation.deleteUser),
   catchAsyncErrors(UsersController.deleteUser),
+);
+
+/**
+ * POST /api/v1/users/update-profile-picture/{user_id}
+ * @tags users
+ * @summary update user profile picture
+ * @param {number} user_id.form.required - the user_id - application/x-www-form-urlencoded
+ * @param {file} profilePicture.form.required - the profilePicture - application/x-www-form-urlencoded
+ */
+users.post(
+  '/update-profile-picture/:user_id',
+  upload.single('profilePicture'),
+  validator(UsersValidation.postUpdateProfilePicture),
+  catchAsyncErrors(UsersController.postUpdateProfilePicture),
 );
 
 export default users;

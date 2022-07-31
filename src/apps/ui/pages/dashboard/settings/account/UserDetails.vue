@@ -21,6 +21,7 @@ const weight = ref('');
 const email = ref('');
 const username = ref('');
 const password = ref('');
+const profilePicture = ref(null);
 
 const alert = reactive({
   type: '',
@@ -28,7 +29,7 @@ const alert = reactive({
 });
 
 onMounted(async () => {
-  appStore.loading = true;
+  // appStore.loading = true;
   const res = await api.get(`/api/v1/users/${userStore.user.id}`);
   const json = await res.json();
   const [data] = json.data;
@@ -41,8 +42,38 @@ onMounted(async () => {
   weight.value = data.weight;
   email.value = data.email;
   username.value = data.username;
-  appStore.loading = false;
+  // appStore.loading = false;
 });
+
+async function updateProfilePicture() {
+  try {
+    const file = profilePicture.value.files[0];
+    let formData = new FormData();
+    formData.append('profilePicture', file);
+    formData.append('user_id', userStore.user.id);
+
+    const res = await api.post(`/api/v1/users/update-profile-picture/${userStore.user.id}`, formData); // prettier-ignore
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    console.log(json);
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 
 async function updatePersonalInformation() {
   try {
@@ -133,14 +164,39 @@ async function updateAccountInfo() {
   <Backheader />
 
   <div v-if="!appStore.loading" class="container px-3">
-    <div class="my-3 d-flex flex-column gap-3">
+    <div class="my-3 d-flex flex-column gap-3" v-auto-animate>
       <!-- alert -->
-      <div
-        v-if="alert.type"
-        :class="`alert-${alert.type}`"
-        class="mb-0 alert animate__animated animate__zoomIn animate__faster"
-      >
+      <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
         <span>{{ alert.msg }}</span>
+      </div>
+
+      <!-- profile picture -->
+      <div>
+        <h5><i class="bi bi-person-fill"></i> Profile picture</h5>
+        <div class="card">
+          <div class="card-body">
+            <!-- img -->
+            <div class="mb-3 text-center">
+              <img
+                src="https://dummyimage.com/200x200/bdbdbd/000000.jpg"
+                class="img-fluid rounded-circle"
+                alt="..."
+              />
+            </div>
+            <!-- input -->
+            <div>
+              <label for="profilePicture" class="form-label">Update profile picture</label>
+              <input
+                @change="updateProfilePicture()"
+                ref="profilePicture"
+                class="form-control"
+                id="profilePicture"
+                type="file"
+                accept="image/*"
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- personal info -->

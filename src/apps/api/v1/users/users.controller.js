@@ -149,3 +149,9 @@ export async function patchUpdateAccountInformation(req, res) {
     data: updated,
   });
 }
+
+export async function postUpdateProfilePicture(req, res) {
+  res.json({
+    msg: 'ok',
+  });
+}
