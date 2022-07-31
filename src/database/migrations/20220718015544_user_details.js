@@ -12,7 +12,7 @@ export async function up(knex) {
       role                              VARCHAR(250) NOT NULL DEFAULT 'user',
       birth_date                        DATE,
       weight                            INT,
-      profile_picture_url               VARCHAR(500),
+      profile_picture_url               VARCHAR(1000),
       profile_picture_path              VARCHAR(1000),
       verified                          BOOLEAN DEFAULT FALSE,
       verification_token                VARCHAR(500) NOT NULL,

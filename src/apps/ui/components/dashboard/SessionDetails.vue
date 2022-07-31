@@ -83,6 +83,9 @@ const completeCurrentSessionShowHideOtherFields = ref(false);
 const completeCurrentSessionLoading = ref(false);
 const deleteCurrentSessionLoading = ref(false);
 
+const uploadAVideoLoading = ref(false);
+const video = ref(null);
+
 // watches
 //  update exercise db as changes in categories
 watch(chooseExerciseCategoryId, async (currentValue, oldValue) => {
@@ -582,6 +585,58 @@ function clearDataAndDismissDeleteSessionModal() {
   );
   modal.hide();
 }
+
+async function uploadAVideo() {
+  try {
+    uploadAVideoLoading.value = true;
+    const file = video.value.files[0];
+
+    let formData = new FormData();
+    formData.append('video', file);
+    formData.append('user_id', userStore.user.id);
+    formData.append('session_id', currentSessionDetails.id);
+
+    const data = {
+      method: 'POST',
+      body: formData,
+    };
+
+    const res = await window.fetch(`/api/v1/logs/${addASetLogId.value}/upload-a-video`, data); // prettier-ignore
+    const json = await res.json();
+
+    if (res.status === 403 || res.status === 401) {
+      userStore.logOut();
+      return;
+    }
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    uploadAVideoLoading.value = false;
+    clearDataAndDismissUploadAVideoModal();
+
+    alert.type = 'success';
+    alert.msg = 'A video has been uploaded!';
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+function clearDataAndDismissUploadAVideoModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('upload-a-video'));
+  modal.hide();
+}
 </script>
 
 <template>
@@ -779,6 +834,16 @@ function clearDataAndDismissDeleteSessionModal() {
                   </span>
                 </h6>
 
+                <!-- video -->
+                <div
+                  v-if="log.videos?.length && log.collapsed"
+                  class="card card-body p-0 m-0 pt-2 pb-1 border-0"
+                >
+                  <video v-for="v in log.videos" controls preload="none" poster="">
+                    <source :src="v.video_url" type="video/mp4" />
+                  </video>
+                </div>
+
                 <!-- notes -->
                 <p
                   v-if="log.notes && log.collapsed"
@@ -915,7 +980,14 @@ function clearDataAndDismissDeleteSessionModal() {
 
                   <!-- add a video group -->
                   <span>
-                    <button type="button" class="btn btn-sm btn-outline-dark" disabled>
+                    <button
+                      @click="(addASetLogId = log.id), (set.exercise_name = log.name)"
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#upload-a-video"
+                      :disabled="log.videos?.length || currentSessionDetails.end_date"
+                    >
                       <i class="bi bi-play-circle"></i>
                     </button>
                   </span>
@@ -1819,6 +1891,89 @@ function clearDataAndDismissDeleteSessionModal() {
                     <span v-if="modifyASetLoading"> Updating... </span>
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- upload a video modal -->
+        <form
+          @submit.prevent="uploadAVideo()"
+          class="modal fade px-2 py-5"
+          id="upload-a-video"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <!-- header -->
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  <span> Upload a video for </span>
+                  <span class="fw-light">{{ set.exercise_name }}</span>
+                </h5>
+                <button
+                  @click="clearDataAndDismissUploadAVideoModal()"
+                  type="reset"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <!-- body -->
+              <div class="modal-body text-center">
+                <div>
+                  <input
+                    ref="video"
+                    class="form-control"
+                    id="video"
+                    type="file"
+                    accept="video/*"
+                    hidden
+                  />
+
+                  <div
+                    @click="$refs.video.click()"
+                    class="alert alert-primary d-flex flex-column gap-1 m-0 p-0 py-3 my-1"
+                    role="button"
+                  >
+                    <i class="bi bi-cloud-arrow-up-fill"></i>
+                    <span> Click here to choose video! </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- footer -->
+              <div class="modal-footer">
+                <!-- cancel -->
+                <button
+                  @click="clearDataAndDismissUploadAVideoModal()"
+                  v-if="!uploadAVideoLoading"
+                  type="reset"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  <i class="bi bi-x-circle-fill"></i>
+                  Cancel
+                </button>
+
+                <!-- confirm -->
+                <button type="submit" class="btn btn-success" :disabled="uploadAVideoLoading">
+                  <div
+                    v-if="uploadAVideoLoading"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+
+                  <span v-if="!uploadAVideoLoading"
+                    ><i class="bi bi-check-circle-fill"></i> Confirm
+                  </span>
+                  <span v-if="uploadAVideoLoading"> Loading... </span>
+                </button>
               </div>
             </div>
           </div>

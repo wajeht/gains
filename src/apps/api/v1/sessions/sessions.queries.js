@@ -135,7 +135,7 @@ export async function getSessionBySessionId(sid) {
     `
     select
       l.*,
-      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]') ) as sets
+      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets
     from
       sets s
       full join logs l on l.id = s.log_id
@@ -151,6 +151,24 @@ export async function getSessionBySessionId(sid) {
     `,
     [sid],
   );
+
+  const { rows: videos } = await db.raw(
+    `
+    select
+	    (select coalesce(jsonb_agg(v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
+    from
+	    videos v
+	    inner join logs l on l.id = v.log_id
+    where
+	    v.session_id = ?
+  `,
+    [sid],
+  );
+
+  sets.forEach((set, idx) => {
+    set.videos = videos[idx]?.videos;
+    // console.log(videos.videos[idx]);
+  });
 
   // // session with block info
   // const joined = await db
@@ -224,6 +242,8 @@ export async function getSessionBySessionId(sid) {
   `,
     [sid],
   );
+
+  sets.videos = videos;
 
   result = [
     {
