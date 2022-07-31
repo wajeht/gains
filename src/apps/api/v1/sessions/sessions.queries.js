@@ -165,10 +165,8 @@ export async function getSessionBySessionId(sid) {
     [sid],
   );
 
-  sets.forEach((set, idx) => {
-    set.videos = videos[idx]?.videos;
-    // console.log(videos.videos[idx]);
-  });
+  // TODO: this is not good for performance
+  sets.forEach((set, idx) => (set.videos = videos[idx]?.videos));
 
   // // session with block info
   // const joined = await db
@@ -242,8 +240,6 @@ export async function getSessionBySessionId(sid) {
   `,
     [sid],
   );
-
-  sets.videos = videos;
 
   result = [
     {
