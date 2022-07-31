@@ -13,6 +13,7 @@ export async function up(knex) {
       birth_date                        DATE,
       weight                            INT,
       profile_picture_url               VARCHAR(500),
+      profile_picture_path              VARCHAR(1000),
       verified                          BOOLEAN DEFAULT FALSE,
       verification_token                VARCHAR(500) NOT NULL,
       verified_at                       TIMESTAMP DEFAULT NULL,

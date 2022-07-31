@@ -211,6 +211,7 @@ export default {
           user.first_name,
           user.last_name,
           user.weight,
+          user.profile_picture_url,
         );
 
         this.$router.push({ path: '/dashboard/profile' });

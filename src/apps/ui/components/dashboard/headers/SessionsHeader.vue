@@ -1,5 +1,5 @@
 <script setup>
-import api from '../../../../../libs/fetch-with-style.js';
+import api from '../../../../../utils/fetch-with-style.js';
 import { sleep } from '../../../../../utils/helpers.js';
 
 import { nextTick, ref, onMounted, reactive, onUpdated, onUnmounted } from 'vue';

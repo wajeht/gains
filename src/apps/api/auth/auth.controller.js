@@ -1,8 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 import * as AuthQueries from './auth.queries.js';
 import * as UsersQueries from '../v1/users/users.queries.js';
-import logger from '../../../libs/logger.js';
-import Password from '../../../libs/password.js';
+import logger from '../../../utils/logger.js';
+import Password from '../../../utils/password.js';
 import EmailService from '../../../services/email.service.js';
 import crypto from 'crypto';
 import CustomError from '../api.errors.js';

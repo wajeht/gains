@@ -5,7 +5,7 @@ import {
   sleep,
   gainsDateDisplay,
 } from '../../../../../utils/helpers.js';
-import api from '../../../../../libs/fetch-with-style.js';
+import api from '../../../../../utils/fetch-with-style.js';
 
 import dayjs from 'dayjs';
 
@@ -272,7 +272,11 @@ function clearDataAndDismissModal() {
                     required
                   >
                     <option selected value="" disabled>Select a exercise category!</option>
-                    <option v-for="category in categories" :value="category.id" :key="`category-id-${category.id}`">
+                    <option
+                      v-for="category in categories"
+                      :value="category.id"
+                      :key="`category-id-${category.id}`"
+                    >
                       {{ category.name }}
                     </option>
                   </select>

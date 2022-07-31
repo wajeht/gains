@@ -1,5 +1,5 @@
 import * as SetsQueries from './sets.queries.js';
-import logger from '../../../../libs/logger.js';
+import logger from '../../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
 
 /**

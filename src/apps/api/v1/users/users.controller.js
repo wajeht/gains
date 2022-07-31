@@ -1,6 +1,5 @@
-import logger from '../../../../libs/logger.js';
+import logger from '../../../../utils/logger.js';
 import * as UsersQueries from './users.queries.js';
-import Chad from '../../../../libs/chad.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 
@@ -141,6 +140,27 @@ export async function patchUpdateAccountInformation(req, res) {
   const updated = await UsersQueries.updateAccountInformation(id, body);
 
   logger.info(`User id ${id} has updated account information to ${JSON.stringify(body)}!`);
+
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: updated,
+  });
+}
+
+export async function postUpdateProfilePicture(req, res, next) {
+  const { path: profile_picture_path } = req.file;
+  const profile_picture_url = req.file.path.split('public')[1];
+  const { user_id } = req.body;
+
+  const updated = await UsersQueries.updateProfilePicture({
+    profile_picture_path,
+    profile_picture_url,
+    user_id,
+  });
+
+  logger.info(`User id ${user_id} was updated profile picture !`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',

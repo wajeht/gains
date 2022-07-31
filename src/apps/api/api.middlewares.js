@@ -3,6 +3,9 @@ import { jwt_secret, env } from '../../config/env.js';
 import { red } from '../../utils/rainbow-log.js';
 import { validationResult } from 'express-validator';
 import CustomError from './api.errors.js';
+import multer from 'multer';
+
+import path from 'path';
 
 /**
  * It checks if the request has an authorization header, and if it does, it checks if it's a valid JWT
@@ -33,6 +36,7 @@ export function auth(req, res, next) {
     //! -------------------------------- API TOKEN AUTHENTICATION STARTS --------------------------------
     else if (req.headers['x-api-key']) {
       token = req.headers['x-api-key'];
+      // TODO: implement api key auth here
     } else {
       throw new CustomError.UnauthorizedError('Invalid authentication!');
     }

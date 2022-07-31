@@ -204,9 +204,12 @@ export async function getSessionBySessionId(sid) {
   const { rows: both } = await db.raw(
     `
       select
-	      *,
+        ss.*,
+        b.*,
+        v.*,
 	      ss.id as "session_id",
 	      ss.name as "name",
+	      ss.start_date as "start_date",
 	      b.name as "block_name",
 	      ss.end_date as "end_date",
 	      ss.json as "json"

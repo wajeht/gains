@@ -1,5 +1,5 @@
 import EmailService from '../../../services/email.service.js';
-import logger from '../../../libs/logger.js';
+import logger from '../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
 import { email as envEmail } from '../../../config/env.js';
 

@@ -3,10 +3,10 @@
 import app from '../apps/app.js';
 import { port, env, vue_port } from '../config/env.js';
 import { green, red } from '../utils/rainbow-log.js';
-import logger from '../libs/logger.js';
+import logger from '../utils/logger.js';
 import path from 'path';
 import db from '../database/db.js';
-import Chad from '../libs/chad.js';
+import Chad from '../utils/chad.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);

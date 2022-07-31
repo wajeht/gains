@@ -1,5 +1,5 @@
 import db from '../../../../database/db.js';
-import logger from '../../../../libs/logger.js';
+import logger from '../../../../utils/logger.js';
 import { red } from '../../../../utils/rainbow-log.js';
 import { pick, omit } from 'lodash-es';
 
@@ -118,5 +118,13 @@ export function updateAccountInformation(id, body) {
     .update({ ...body })
     .from('users')
     .where({ id })
+    .returning('*');
+}
+
+export function updateProfilePicture({ profile_picture_url, profile_picture_path, user_id }) {
+  return db
+    .update({ profile_picture_path, profile_picture_url })
+    .from('user_details')
+    .where({ user_id })
     .returning('*');
 }

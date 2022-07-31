@@ -5,7 +5,7 @@ import {
   sleep,
   gainsDateDisplay,
 } from '../../../../../utils/helpers.js';
-import api from '../../../../../libs/fetch-with-style.js';
+import api from '../../../../../utils/fetch-with-style.js';
 
 import dayjs from 'dayjs';
 
