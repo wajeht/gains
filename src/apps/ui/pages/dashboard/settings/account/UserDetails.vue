@@ -34,7 +34,6 @@ onMounted(async () => {
   const res = await api.get(`/api/v1/users/${userStore.user.id}`);
   const json = await res.json();
   const [data] = json.data;
-  console.log({ data });
   first_name.value = data.first_name;
   last_name.value = data.last_name;
   profile_picture_url.value = data.profile_picture_url;

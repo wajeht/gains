@@ -95,3 +95,47 @@ export const createLogs = [
       }
     }),
 ];
+
+export const uploadAVideo = [
+  param('log_id')
+    .trim()
+    .notEmpty()
+    .withMessage('lid must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('lid must be an ID!')
+    .bail()
+    .toInt()
+    .custom(async (log_id) => {
+      const log = await LogsQueries.getLogById(log_id);
+      if (log.length === 0) throw new Error('Log does not exist!');
+      return true;
+    })
+    .toInt(),
+  body('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('User id must not be empty!')
+    .isInt()
+    .withMessage('User id must be an number!')
+    .custom(async (user_id, { req }) => {
+      if (user_id) {
+        const user = await UserQueries.findUserById(user_id);
+        if (user.length === 0) throw new Error('User does not exist!');
+      }
+      return true;
+    })
+    .toInt(),
+  body('session_id')
+    .trim()
+    .notEmpty()
+    .withMessage('Session id must not be empty!')
+    .isInt()
+    .withMessage('Session id must be an ID!')
+    .custom(async (sid) => {
+      const user = await SessionsQueries.getSessionBySessionId(sid);
+      if (user.length === 0) throw new Error('Session id does not exist!');
+      return true;
+    })
+    .toInt(),
+];

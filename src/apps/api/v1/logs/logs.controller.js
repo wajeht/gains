@@ -1,4 +1,5 @@
 import * as LogsQueries from './logs.queries.js';
+import * as VideosQueries from '../videos/videos.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import logger from '../../../../utils/logger.js';
@@ -21,5 +22,34 @@ export async function createLogs(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was created successfully!',
     data: created,
+  });
+}
+
+/**
+ * It uploads a video to the server and inserts the video's path and url into the database
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function uploadAVideo(req, res) {
+  const { path: video_path } = req.file;
+  const video_url = req.file.path.split('public')[1];
+  const { user_id, session_id } = req.body;
+  const { log_id } = req.params;
+
+  const inserted = await VideosQueries.insertVideo({
+    video_path,
+    video_url,
+    user_id,
+    log_id,
+    session_id,
+  });
+
+  logger.info(`User id ${user_id} has inserted video id ${inserted[0].id} !`);
+
+  res.status(StatusCodes.CREATED).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was created successfully!',
+    data: inserted,
   });
 }
