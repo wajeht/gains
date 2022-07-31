@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import { root } from '../utils/directory.js';
-import logger from '../libs/logger.js';
+import logger from '../utils/logger.js';
 
 /* Checking if the .env file exists. If it doesn't, it will throw an error. */
 fs.access(path.join(root, '.env'), (err) => {

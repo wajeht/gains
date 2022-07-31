@@ -315,9 +315,9 @@ export const postUpdateProfilePicture = [
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
     })
-    .toInt(),
-  check('profilePicture').custom((value, { req }) => {
-    console.log(value);
-    console.log(req.file);
-  }),
+    .toInt()
+    .custom((value, { req }) => {
+      // console.log(req.file)
+      return true;
+    }),
 ];

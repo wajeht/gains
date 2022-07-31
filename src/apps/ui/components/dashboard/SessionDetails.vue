@@ -4,7 +4,7 @@ import SessionDetailsHeader from '../../components/dashboard/headers/SessionDeta
 import Loading from '../../components/dashboard/Loading.vue';
 
 // helpers
-import api from '../../../../libs/fetch-with-style.js';
+import api from '../../../../utils/fetch-with-style.js';
 import {
   formatToGainsDateLocal,
   gainsDateDisplay,

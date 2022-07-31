@@ -1,8 +1,8 @@
 import path from 'path';
 import { isEqual, xor } from 'lodash-es';
 import ejs from 'ejs';
-import logger from '../../libs/logger.js';
-import Chad from '../../libs/chad.js';
+import logger from '../../utils/logger.js';
+import Chad from '../../utils/chad.js';
 
 export default class Template {
   /* A map of the templates that we have. */

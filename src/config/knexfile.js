@@ -1,4 +1,4 @@
-import logger from '../libs/logger.js';
+import logger from '../utils/logger.js';
 import { database, env } from './env.js';
 
 let connection = null;

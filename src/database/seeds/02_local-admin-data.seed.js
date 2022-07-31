@@ -1,4 +1,4 @@
-import logger from '../../libs/logger.js';
+import logger from '../../utils/logger.js';
 import * as UsersQueries from '../../apps/api/v1/users/users.queries.js';
 import { admin, env } from '../../config/env.js';
 import dayjs from 'dayjs';

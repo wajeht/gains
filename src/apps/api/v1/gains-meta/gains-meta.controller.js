@@ -1,6 +1,6 @@
 import * as GainsMetaQueries from './gains-meta.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import logger from '../../../../libs/logger.js';
+import logger from '../../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
 
 /**

@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import { email } from '../config/env.js';
-import Chad from '../libs/chad.js';
-import logger from '../libs/logger.js';
+import Chad from '../utils/chad.js';
+import logger from '../utils/logger.js';
 import { red } from '../utils/rainbow-log.js';
 import Template from './templates/template.js';
 

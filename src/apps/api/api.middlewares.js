@@ -36,6 +36,7 @@ export function auth(req, res, next) {
     //! -------------------------------- API TOKEN AUTHENTICATION STARTS --------------------------------
     else if (req.headers['x-api-key']) {
       token = req.headers['x-api-key'];
+      // TODO: implement api key auth here
     } else {
       throw new CustomError.UnauthorizedError('Invalid authentication!');
     }
@@ -109,10 +110,3 @@ export const validator = (schemas) => {
     }
   };
 };
-
-/* It's creating a multer object that will be used to upload files to the server. */
-// TODO! update this to validate file size and extension
-export const upload = multer({
-  storage: multer.memoryStorage(),
-  dest: path.resolve(path.join(process.cwd(), 'src', 'public', 'uploads')),
-});

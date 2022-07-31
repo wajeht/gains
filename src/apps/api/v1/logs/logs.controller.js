@@ -1,7 +1,7 @@
 import * as LogsQueries from './logs.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
-import logger from '../../../../libs/logger.js';
+import logger from '../../../../utils/logger.js';
 
 /**
  * It creates a log for a user

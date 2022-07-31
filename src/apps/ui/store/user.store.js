@@ -13,6 +13,7 @@ const useUserStore = defineStore({
         first_name: null,
         last_name: null,
         weight: null,
+        profile_picture_url: null,
       },
     };
   },
@@ -34,12 +35,13 @@ const useUserStore = defineStore({
         this.clearUserInfo();
       }
     },
-    setUserInfo(id, username, email, first_name, last_name, weight) {
+    setUserInfo(id, username, email, first_name, last_name, weight, profile_picture_url) {
       this.user.id = id;
       this.user.username = username;
       this.user.email = email;
       this.user.first_name = first_name;
       this.user.last_name = last_name;
+      this.user.profile_picture_url = profile_picture_url;
       this.user.weight = weight;
     },
     clearUserInfo() {
@@ -49,6 +51,7 @@ const useUserStore = defineStore({
       this.user.first_name = null;
       this.user.last_name = null;
       this.user.weight = null;
+      this.user.profile_picture_url = null;
     },
     logout() {
       this.isLoggedIn = false;

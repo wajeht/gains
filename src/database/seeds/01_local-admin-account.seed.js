@@ -1,9 +1,9 @@
 import crypto from 'crypto';
 
 import EmailService from '../../services/email.service.js';
-import RandomPasswordGenerator from '../../libs/random-password-generator.js';
-import Password from '../../libs/password.js';
-import logger from '../../libs/logger.js';
+import RandomPasswordGenerator from '../../utils/random-password-generator.js';
+import Password from '../../utils/password.js';
+import logger from '../../utils/logger.js';
 import { admin, env } from '../../config/env.js';
 import { red } from '../../utils/rainbow-log.js';
 

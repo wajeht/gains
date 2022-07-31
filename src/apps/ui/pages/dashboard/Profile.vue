@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 import { Chart } from 'chart.js';
 import { sleep } from '../../../../utils/helpers.js';
 import { isMobile } from '../../../../utils/helpers.js';
-import api from '../../../../libs/fetch-with-style.js';
+import api from '../../../../utils/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 import dayjs from 'dayjs';
 import { omit } from 'lodash-es';
@@ -184,9 +184,12 @@ async function logout() {
             <div class="row g-3">
               <div class="col-4 d-flex flex-column justify-content-center align-items-center">
                 <img
-                  src="https://dummyimage.com/200x200/bdbdbd/000000.jpg"
+                  :src="
+                    userStore.user.profile_picture_url ??
+                    `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
+                  "
                   class="img-fluid rounded-circle"
-                  alt="..."
+                  style="height: 100%; width: 100%; object-fit: cover; object-position: center 50%"
                 />
               </div>
               <div class="col-8">
