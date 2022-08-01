@@ -3,6 +3,7 @@ import * as VideosQueries from '../videos/videos.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import logger from '../../../../utils/logger.js';
+import { capture } from '../../../../utils/screenshot.js';
 
 /**
  * It creates a log for a user
@@ -35,12 +36,15 @@ export async function uploadAVideo(req, res) {
   const video_url = req.file.path.split('public')[1];
   const { user_id, session_id } = req.body;
   const { log_id } = req.params;
+  const { screenshot_url, screenshot_path } = await capture(video_path);
 
   const inserted = await VideosQueries.insertVideo({
     video_path,
     video_url,
     user_id,
     log_id,
+    screenshot_path,
+    screenshot_url,
     session_id,
   });
 

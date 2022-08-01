@@ -161,11 +161,14 @@ export async function getSessionBySessionId(sid) {
 	    inner join logs l on l.id = v.log_id
     where
 	    v.session_id = ?
+    group by
+      l.id
   `,
     [sid],
   );
 
   // TODO: this is not good for performance
+  // TODO: find a way to merge two queries together
   sets.forEach((set, idx) => (set.videos = videos[idx]?.videos));
 
   // // session with block info
