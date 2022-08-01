@@ -846,7 +846,7 @@ function clearDataAndDismissUploadAVideoModal() {
                   v-if="log.videos?.length && log.collapsed"
                   class="card card-body p-0 m-0 pt-2 pb-1 border-0"
                 >
-                  <video v-for="v in log.videos" controls preload="none" :poster="v.screenshot_url">
+                  <video v-for="v in log.videos" controls preload="none" :poster="v.screenshot_url" playsinline>
                     <source :src="v.video_url" type="video/mp4" />
                   </video>
                 </div>
