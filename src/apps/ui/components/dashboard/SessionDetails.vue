@@ -84,6 +84,8 @@ const completeCurrentSessionLoading = ref(false);
 const deleteCurrentSessionLoading = ref(false);
 
 const uploadAVideoLoading = ref(false);
+const uploadAVideoLogId = ref(null);
+const uploadAVideoLogIndex = ref(null);
 const video = ref(null);
 
 // watches
@@ -601,7 +603,7 @@ async function uploadAVideo() {
       body: formData,
     };
 
-    const res = await window.fetch(`/api/v1/logs/${addASetLogId.value}/upload-a-video`, data); // prettier-ignore
+    const res = await window.fetch(`/api/v1/logs/${uploadAVideoLogId.value}/upload-a-video`, data); // prettier-ignore
     const json = await res.json();
 
     if (res.status === 403 || res.status === 401) {
@@ -619,6 +621,8 @@ async function uploadAVideo() {
 
     uploadAVideoLoading.value = false;
     clearDataAndDismissUploadAVideoModal();
+
+    currentSessionDetails.logs[uploadAVideoLogIndex.value].videos = [json.data[0]];
 
     alert.type = 'success';
     alert.msg = 'A video has been uploaded!';
@@ -842,7 +846,7 @@ function clearDataAndDismissUploadAVideoModal() {
                   v-if="log.videos?.length && log.collapsed"
                   class="card card-body p-0 m-0 pt-2 pb-1 border-0"
                 >
-                  <video v-for="v in log.videos" controls preload="none" poster="">
+                  <video v-for="v in log.videos" controls preload="none" :poster="v.screenshot_url">
                     <source :src="v.video_url" type="video/mp4" />
                   </video>
                 </div>
@@ -984,7 +988,11 @@ function clearDataAndDismissUploadAVideoModal() {
                   <!-- add a video group -->
                   <span>
                     <button
-                      @click="(addASetLogId = log.id), (set.exercise_name = log.name)"
+                      @click="
+                        (uploadAVideoLogId = log.id),
+                          (set.exercise_name = log.name),
+                          (uploadAVideoLogIndex = index)
+                      "
                       type="button"
                       class="btn btn-sm btn-outline-dark"
                       data-bs-toggle="modal"
