@@ -623,6 +623,8 @@ async function uploadAVideo() {
     alert.type = 'success';
     alert.msg = 'A video has been uploaded!';
   } catch (e) {
+    uploadAVideoLoading.value = false;
+    clearDataAndDismissUploadAVideoModal();
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -634,6 +636,7 @@ async function uploadAVideo() {
 }
 
 function clearDataAndDismissUploadAVideoModal() {
+  uploadAVideoLoading.value = false;
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('upload-a-video'));
   modal.hide();
 }
