@@ -39,11 +39,12 @@ export async function recentPrsByUserId(user_id) {
 	    json_agg(s.*)->0->>'created_at' as "date"
     from
 	    sets s
-    inner join exercises
-	    e on e.id = s.exercise_id
+    inner join exercises e on e.id = s.exercise_id
+    inner join sessions ss on ss.id = s.session_id
     where (
 	    s.reps between 1 and 3
 	    and s.rpe between 7 and 10
+      and ss.deleted = false
 	    and s.user_id = ?
     )
     group by

@@ -135,10 +135,12 @@ export async function getSessionBySessionId(sid) {
     `
     select
       l.*,
-      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets
+      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets,
+      (select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
     from
       sets s
       full join logs l on l.id = s.log_id
+      full join videos v on v.log_id = l.id
       full join sessions ss on ss.id = s.session_id
     where (
       l.deleted = false
@@ -152,24 +154,27 @@ export async function getSessionBySessionId(sid) {
     [sid],
   );
 
-  const { rows: videos } = await db.raw(
-    `
-    select
-	    (select coalesce(jsonb_agg(v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
-    from
-	    videos v
-	    inner join logs l on l.id = v.log_id
-    where
-	    v.session_id = ?
-    group by
-      l.id
-  `,
-    [sid],
-  );
+  // const { rows: videos } = await db.raw(
+  //   `
+  //   select
+  //     (select coalesce(jsonb_agg(v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
+  //   from
+  //     videos v
+  //     inner join logs l on l.id = v.log_id
+  //   where
+  //     v.session_id = ?
+  //   group by
+  //     l.id
+  // `,
+  //   [sid],
+  // );
 
-  // TODO: this is not good for performance
-  // TODO: find a way to merge two queries together
-  sets.forEach((set, idx) => (set.videos = videos[idx]?.videos));
+  // // TODO: this is not good for performance
+  // // TODO: find a way to merge two queries together
+  // sets.forEach((set, idx) => {
+  //   // console.log(set);
+  //   set.videos = videos[idx]?.videos;
+  // });
 
   // // session with block info
   // const joined = await db
@@ -332,6 +337,7 @@ export async function sessionsWithVideosByUserId(user_id) {
     where (
 	    ss.user_id = ?
 	    and v.deleted = false
+      and ss.deleted = false
     )
     group by
 	    ss.id

@@ -1,10 +1,14 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import api from '../../../../utils/fetch-with-style.js';
 import Backheader from './headers/Backheader.vue';
 import useAppStore from '../../store/app.store.js';
+import useUserStore from '../../store/user.store.js';
 
 const appStore = useAppStore();
+const userStore = useUserStore();
+const router = useRouter();
 
 const props = defineProps({
   id: String,
@@ -61,13 +65,15 @@ async function getCurrentSessionDetails() {
           <div class="d-flex justify-content-between card-header">
             <div>
               <img
-                src="https://github.com/mdo.png"
-                alt=""
+                :src="
+                  userStore.user.profile_picture_url ??
+                  `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
+                "
                 width="24"
                 height="24"
                 class="rounded-circle me-2"
               />
-              <span>yanlon</span>
+              <span>{{ userStore.user.username }}</span>
             </div>
             <div class="dropdown">
               <a
@@ -90,7 +96,7 @@ async function getCurrentSessionDetails() {
             <!-- log -->
             <span v-if="currentLogStep === index">
               <!-- video -->
-              <div class="card card-body p-0 m-0 border-0">
+              <div v-if="log?.videos?.length" class="card card-body p-0 m-0 border-0">
                 <video preload="none" :poster="log?.videos[0].screenshot_url" controls playsinline>
                   <source :src="log?.videos[0].video_url" type="video/mp4" />
                 </video>
@@ -141,6 +147,7 @@ async function getCurrentSessionDetails() {
 
           <div class="card-footer">
             <small class="d-flex justify-content-between text-muted">
+              <!-- left -->
               <span class="d-flex gap-3">
                 <!-- block -->
                 <span v-if="currentSessionDetails.block_name">
@@ -152,9 +159,19 @@ async function getCurrentSessionDetails() {
                 <span><i class="bi bi-calendar-check me-1"></i> 2020-01-01</span>
               </span>
 
-              <!-- comment -->
-              <div class="gap-2">
-                <span><i class="bi bi-journal-text me-2"></i></span>
+              <!-- right -->
+              <div class="d-flex gap-2">
+                <!-- session -->
+                <span
+                  role="button"
+                  @click="router.push(`/dashboard/sessions/${currentSessionDetails.id}`)"
+                  ><i class="bi bi-journal-text me-1"> </i>
+                  <span>
+                    {{ currentSessionDetails.id }}
+                  </span>
+                </span>
+
+                <!-- comment -->
                 <span><i class="bi bi-chat me-1"></i><span>2</span></span>
               </div>
             </small>
