@@ -66,7 +66,17 @@ async function sessionsWithVideos() {
       </div>
 
       <!-- videos -->
-      <div v-for="session in sessions" :key="`key-video-session-${session.id}`" class="col-3 p-0">
+      <div
+        v-for="session in sessions"
+        :key="`key-video-session-${session.id}`"
+        class="p-0"
+        :class="{
+          'col-12': sessions.length === 1,
+          'col-6': sessions.length === 2,
+          'col-4': sessions.length === 3,
+          'col-3': sessions.length >= 4,
+        }"
+      >
         <div class="d-flex flex-column">
           <router-link :to="{ name: 'VideoDetails', params: { id: session.id } }">
             <div class="card border">
