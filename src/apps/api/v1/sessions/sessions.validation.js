@@ -254,3 +254,22 @@ export const patchSession = [
     .isLength({ min: 1, max: 250 })
     .withMessage('Notes must be at least 1 character long or less than 250 characters long'),
 ];
+
+export const getSessionsWithVideos = [
+  param('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('User id must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('User id must be an number!')
+    .bail()
+    .custom(async (user_id) => {
+      if (user_id) {
+        const user = await UserQueries.findUserById(user_id);
+        if (user.length === 0) throw new Error('User does not exist!');
+      }
+      return true;
+    })
+    .toInt(),
+];
