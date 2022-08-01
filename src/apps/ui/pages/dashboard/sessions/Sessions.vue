@@ -105,23 +105,19 @@ function logDetails(sid) {
 
 <template>
   <SessionsHeader />
-  <div v-if="appStore.loading === false" class="container px-3">
-    <div class="my-3 d-flex flex-column gap-3">
+  <div class="container px-3" v-auto-animate>
+    <div class="my-3 d-flex flex-column gap-3" v-auto-animate>
       <!-- alert -->
-      <div
-        v-if="alert.type"
-        :class="`alert-${alert.type}`"
-        class="mb-0 alert animate__animated animate__zoomIn animate__faster"
-      >
+      <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0">
         <span>{{ alert.msg }}</span>
       </div>
 
       <!-- sessions -->
+      <!-- data-aos="fade-up"
+        data-aos-anchor-placement="top" -->
       <div
         v-for="session in sessions"
         :key="`session-${session}`"
-        data-aos="fade-up"
-        data-aos-anchor-placement="top"
         class="card"
         :style="{
           // today
@@ -134,6 +130,7 @@ function logDetails(sid) {
               : '',
         }"
         id="log"
+        v-auto-animate
       >
         <div @click="logDetails(session.id)" class="card-body">
           <div class="d-flex justify-content-between gap-5">
