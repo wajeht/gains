@@ -96,4 +96,16 @@ sessions.delete(
   catchAsyncErrors(SessionsController.deleteSession),
 );
 
+/**
+ * GET /api/v1/sessions/sessions-with-videos/{user_id}
+ * @tags sessions
+ * @summary get all the sessions that has videos in it by user id
+ * @param {number} user_id.path.required - the session id  - application/x-www-form-urlencoded
+ */
+sessions.get(
+  '/sessions-with-videos/:user_id',
+  validator(SessionsValidation.getSessionsWithVideos),
+  catchAsyncErrors(SessionsController.getSessionsWithVideos),
+);
+
 export default sessions;

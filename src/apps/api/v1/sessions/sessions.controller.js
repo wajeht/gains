@@ -123,3 +123,22 @@ export async function deleteSession(req, res) {
     data: session,
   });
 }
+
+/**
+ * It returns all sessions with videos for a given user id
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function getSessionsWithVideos(req, res) {
+  const user_id = req.params.user_id;
+  const sessions = await SessionQueries.sessionsWithVideosByUserId(user_id);
+
+  if (!sessions.length) throw new CustomError.BadRequestError(`There are no session with videos available available for user id ${user_id}!`); // prettier-ignore
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: sessions,
+  });
+}

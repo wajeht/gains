@@ -312,6 +312,39 @@ export async function updateSession(sid, uid, body) {
 }
 
 /**
+ * "Get all sessions for a user, and include all videos for each session."
+ *
+ * The first thing to notice is that we're using the `db.raw` method. This is a method that allows us
+ * to write raw SQL queries. We're using it here because we need to use the `jsonb_agg` function, which
+ * is a Postgres function that allows us to aggregate a column into a JSON array
+ * @param user_id - The user_id of the user whose sessions we want to retrieve.
+ * @returns An array of objects. Each object has a session and an array of videos.
+ */
+export async function sessionsWithVideosByUserId(user_id) {
+  const { rows } = await db.raw(
+    `
+    select
+	    ss.*,
+	    (select (jsonb_agg(v.* order by v.id))) as videos
+    from
+	    sessions ss
+	    inner join videos v on v.session_id = ss.id
+    where (
+	    ss.user_id = ?
+	    and v.deleted = false
+    )
+    group by
+	    ss.id
+    order by
+	    ss.id desc
+    `,
+    [user_id],
+  );
+
+  return rows;
+}
+
+/**
  * Update the session with the given sid and uid to be deleted.
  * @param sid - The session ID
  * @param uid - user id
