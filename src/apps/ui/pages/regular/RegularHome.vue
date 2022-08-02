@@ -57,7 +57,7 @@
     <div class="px-4 py-5">
       <div class="row g-4 row-cols-1 row-cols-lg-3">
         <!-- easy -->
-        <div class="feature col" data-aos="fade-up">
+        <div class="feature col">
           <div class="p-2 d-flex justify-content-center align-items-center">
             <i class="bi bi-hand-index-thumb" style="font-size: 5em"></i>
           </div>
@@ -66,7 +66,7 @@
         </div>
 
         <!-- open source -->
-        <div class="feature col" data-aos="fade-up">
+        <div class="feature col">
           <div class="p-2 d-flex justify-content-center align-items-center">
             <i class="bi bi-github" style="font-size: 5em"></i>
           </div>
@@ -80,7 +80,7 @@
         </div>
 
         <!-- privacy -->
-        <div class="feature col" data-aos="fade-up">
+        <div class="feature col">
           <div class="p-2 d-flex justify-content-center align-items-center">
             <i class="bi bi-shield-check" style="font-size: 5em"></i>
           </div>

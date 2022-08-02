@@ -10,17 +10,12 @@ import routes from './router.vue.js';
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 import 'animate.css';
-import 'hover.css';
-import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
-import AOS from 'aos';
 import tooltip from './tool-tip.vue.js';
 import FontAwesomeIcon from './font-awesome.vue.js';
 import { Chart, registerables } from 'chart.js';
-
-AOS.init();
 
 const app = createApp(App);
 const pinia = createPinia(piniaPluginPersistedstate);
