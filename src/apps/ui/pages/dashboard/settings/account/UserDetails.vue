@@ -96,7 +96,7 @@ async function updatePersonalInformation() {
     const user = {
       first_name: first_name.value,
       last_name: last_name.value,
-      birth_date: dayjs(birth_date.value).format('YYYY-MM-DD'),
+      birth_date: birth_date.value != null ? dayjs(birth_date.value).format('YYYY-MM-DD') : null,
       weight: weight.value,
     };
 
