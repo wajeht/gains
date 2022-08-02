@@ -2,7 +2,10 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import dotenv from 'dotenv';
+
 dotenv.config({ path: path.join(process.cwd(), '.env') });
+
+import purgecss from '@fullhuman/postcss-purgecss';
 
 export default defineConfig({
   server: {
@@ -28,6 +31,7 @@ export default defineConfig({
   root: './src/apps/ui',
   build: {
     outDir: '../../public',
+    reportCompressedSize: true,
     chunkSizeWarningLimit: 1600,
     emptyOutDir: false,
     rollupOptions: {
@@ -44,6 +48,10 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [
+        purgecss({
+          content: [`./src/public/**/*.html`, `./src/apps/ui/**/*.vue`],
+          safelist: [/modal/, /alert/, /alert-(\w+)/], // purgecss remove modal backdrop, this fixed it
+        }),
         {
           postcssPlugin: 'internal:charset-removal',
           AtRule: {

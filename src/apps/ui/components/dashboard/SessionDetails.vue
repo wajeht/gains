@@ -1031,153 +1031,6 @@ function clearDataAndDismissUploadAVideoModal() {
             <i class="bi bi-plus-circle-fill"></i>
             Add a exercise
           </button>
-
-          <!-- modal -->
-          <form
-            @submit.prevent="addAExercise()"
-            class="modal fade px-2 py-5"
-            id="add-a-exercise"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-          >
-            <div class="modal-dialog modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">
-                    <span> Add a exercise for </span>
-                    <span class="fw-light"> {{ currentSessionDetails.name }}</span>
-                  </h5>
-                  <button
-                    @click="clearDataAndDismissAddAExerciseModal()"
-                    type="reset"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <div v-if="!chooseCategories.length" class="mb-3">
-                    <div class="alert alert-warning p-2">
-                      <small
-                        >Exercise categories must be defined before being able to add new exercises.
-                        <router-link
-                          @click="clearDataAndDismissAddAExerciseModal()"
-                          class="alert-link"
-                          to="/dashboard/sessions/categories?model=true"
-                          >Click here!</router-link
-                        >
-                        to add exercise categories!</small
-                      >
-                    </div>
-                  </div>
-
-                  <!-- exercise category name -->
-                  <div class="mb-3">
-                    <span class="d-flex gap-1">
-                      <label for="session-details-exercise-category-name" class="form-label"
-                        >Exercise category name*</label
-                      >
-                      <router-link
-                        @click="clearDataAndDismissAddAExerciseModal()"
-                        class="alert-link link-secondary"
-                        to="/dashboard/sessions/categories?model=true"
-                      >
-                        <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
-                          >Add more</span
-                        >
-                      </router-link>
-                    </span>
-                    <select
-                      id="session-details-exercise-category-name"
-                      class="form-control form-select form-select-sm"
-                      v-model="chooseExerciseCategoryId"
-                      :disabled="loading || chooseCategories.length === 0"
-                      required
-                    >
-                      <option value="" selected disabled>Select a exercise category!</option>
-                      <option
-                        v-for="category in chooseCategories"
-                        :value="category.id"
-                        :key="`key-${category.id}`"
-                      >
-                        {{ category.name }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <!-- lift -->
-                  <div class="mb-3">
-                    <span class="d-flex gap-1">
-                      <label for="session-details-select-exercise" class="form-label"
-                        >Exercise name*</label
-                      >
-                      <router-link
-                        @click="clearDataAndDismissAddAExerciseModal()"
-                        class="alert-link link-secondary"
-                        to="/dashboard/sessions/exercises?model=true"
-                      >
-                        <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
-                          >Add more</span
-                        >
-                      </router-link>
-                    </span>
-                    <select
-                      id="session-details-select-exercise"
-                      class="form-control form-select form-select-sm"
-                      v-model="chooseExerciseId"
-                      :disabled="!chooseExerciseCategoryId || chooseExercises.length === 0"
-                      required
-                    >
-                      <option value="" selected disabled>select a exercise!</option>
-                      <option
-                        v-for="exercise in chooseExercises"
-                        :value="exercise.id"
-                        :key="`key-${exercise.id}`"
-                      >
-                        {{ exercise.name }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- footer -->
-                <div class="modal-footer">
-                  <!-- cancel -->
-                  <button
-                    @click="clearDataAndDismissAddAExerciseModal()"
-                    v-if="!addAExerciseLoading"
-                    type="reset"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    <i class="bi bi-x-circle-fill"></i>
-                    Cancel
-                  </button>
-
-                  <!-- add -->
-                  <button
-                    type="submit"
-                    class="btn btn-success"
-                    :disabled="addAExerciseLoading || !chooseExerciseId"
-                  >
-                    <div
-                      v-if="addAExerciseLoading"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <span v-if="!addAExerciseLoading">
-                      <i class="bi bi-check-circle-fill"></i>
-                      Submit
-                    </span>
-                    <span v-if="addAExerciseLoading"> Loading... </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
         </div>
 
         <!-- cancel or compte session -->
@@ -1201,81 +1054,6 @@ function clearDataAndDismissUploadAVideoModal() {
             </span>
           </button>
 
-          <!-- delete current session modal -->
-          <form
-            @submit.prevent="handleDeleteSession()"
-            class="modal fade px-2 py-5"
-            id="delete-current-session"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-          >
-            <div class="modal-dialog modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">
-                    <span v-if="!currentSessionDetails.end_date"> Cancel </span>
-                    <span v-if="currentSessionDetails.end_date"> Delete </span>
-                    <span class="fw-light"> session id: {{ currentSessionDetails.id }}</span>
-                  </h5>
-                  <button
-                    @click="clearDataAndDismissDeleteSessionModal()"
-                    type="reset"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <p class="mb-0 pb-0 text-center">
-                    Are you sure you want to
-                    <span v-if="!currentSessionDetails.end_date"> cancel </span>
-                    <span v-if="currentSessionDetails.end_date"> delete </span>
-                    <span class="badge bg-secondary text-white">{{
-                      currentSessionDetails.name
-                    }}</span>
-                    ?
-                  </p>
-                </div>
-
-                <!-- footer -->
-                <div class="modal-footer">
-                  <!-- cancel -->
-                  <button
-                    @click="clearDataAndDismissDeleteSessionModal()"
-                    v-if="!deleteCurrentSessionLoading"
-                    type="reset"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    <i class="bi bi-x-circle-fill"></i>
-                    Cancel
-                  </button>
-
-                  <!-- confirm -->
-                  <button
-                    type="submit"
-                    class="btn btn-success"
-                    :disabled="deleteCurrentSessionLoading"
-                  >
-                    <div
-                      v-if="deleteCurrentSessionLoading"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-
-                    <span v-if="!deleteCurrentSessionLoading"
-                      ><i class="bi bi-check-circle-fill"></i> Confirm
-                    </span>
-                    <span v-if="deleteCurrentSessionLoading"> Loading... </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-
           <!-- complete current session button -->
           <button
             v-if="!currentSessionDetails.end_date"
@@ -1291,707 +1069,895 @@ function clearDataAndDismissUploadAVideoModal() {
           >
             <span v-if="!loading"> <i class="bi bi-check-circle-fill"></i> Complete </span>
           </button>
-
-          <!-- complete current session modal -->
-          <form
-            @submit.prevent="handleCompleteCurrentSession()"
-            class="modal fade px-2 py-5"
-            id="complete-current-session"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-          >
-            <div class="modal-dialog modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">
-                    <span> Complete </span>
-                    <span class="fw-light"> {{ currentSessionDetails.name }}</span>
-                  </h5>
-                  <button
-                    @click="clearDataAndDismissCompleteCurrentSessionModal()"
-                    type="reset"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body" v-auto-animate>
-                  <!-- session rpe -->
-                  <div class="mb-3">
-                    <label for="complete-current-session-session-rpe" class="form-label"
-                      >Session rpe*</label
-                    >
-                    <input
-                      v-model="currentSessionDetails.session_rpe"
-                      id="complete-current-session-session-rpe"
-                      class="form-control form-control-sm"
-                      type="number"
-                      min="1"
-                      max="10"
-                      step=".5"
-                      inputmode="numeric"
-                      pattern="[1-10]*"
-                      required
-                      :disabled="completeCurrentSessionLoading"
-                    />
-                  </div>
-
-                  <!-- End time -->
-                  <div class="mb-3">
-                    <label for="complete-current-session-end-date" class="form-label"
-                      >End time*</label
-                    >
-                    <input
-                      v-model="currentSessionDetails.end_date"
-                      id="complete-current-session-end-date"
-                      class="form-control form-control-sm"
-                      type="datetime-local"
-                      required
-                      :disabled="completeCurrentSessionLoading"
-                    />
-                  </div>
-
-                  <!-- show/hide button -->
-                  <div class="form-check form-switch mb-3">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      id="complete-current-session-show-hide-button"
-                      v-model="completeCurrentSessionShowHideOtherFields"
-                      :disabled="completeCurrentSessionLoading"
-                    />
-                    <label class="form-check-label" for="complete-current-session-show-hide-button">
-                      <span v-if="completeCurrentSessionShowHideOtherFields">Hide</span>
-                      <span v-else>Show</span>
-                      <span> other fields</span>
-                    </label>
-                  </div>
-
-                  <span v-if="completeCurrentSessionShowHideOtherFields">
-                    <div class="row mb-3">
-                      <!-- bodyweight  -->
-                      <div class="col-6">
-                        <label for="complete-current-session-bodyweight" class="form-label"
-                          >Bodyweight</label
-                        >
-                        <input
-                          v-model="currentSessionDetails.body_weight"
-                          id="complete-current-session-bodyweight"
-                          class="form-control form-control-sm"
-                          min="1"
-                          inputmode="numeric"
-                          pattern="[1-10]*"
-                          type="number"
-                          :disabled="completeCurrentSessionLoading"
-                        />
-                      </div>
-
-                      <!-- hours of sleep  -->
-                      <div class="col-6">
-                        <label for="complete-current-session-sleep" class="form-label"
-                          >Hours of sleep</label
-                        >
-                        <input
-                          v-model="currentSessionDetails.hours_of_sleep"
-                          id="complete-current-session-sleep"
-                          class="form-control form-control-sm"
-                          min="1"
-                          type="number"
-                          inputmode="numeric"
-                          pattern="[0-24]*"
-                          :disabled="completeCurrentSessionLoading"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <!-- calories prior -->
-                      <div class="col-6">
-                        <label
-                          for="complete-current-session-calories_prior_session"
-                          class="form-label"
-                          >Calories
-                        </label>
-                        <input
-                          v-model="currentSessionDetails.calories_prior_session"
-                          id="complete-current-session-calories_prior_session"
-                          class="form-control form-control-sm"
-                          min="1"
-                          type="number"
-                          inputmode="numeric"
-                          pattern="[1-10000]*"
-                          :disabled="completeCurrentSessionLoading"
-                        />
-                      </div>
-
-                      <!-- caffeine intake -->
-                      <div class="col-6">
-                        <label for="complete-current-session-caffeine-intake" class="form-label"
-                          >Caffeine</label
-                        >
-                        <input
-                          v-model="currentSessionDetails.caffeine_intake"
-                          id="complete-current-session-caffeine-intake"
-                          class="form-control form-control-sm"
-                          min="1"
-                          type="number"
-                          inputmode="numeric"
-                          pattern="[1-10000]*"
-                          :disabled="completeCurrentSessionLoading"
-                        />
-                      </div>
-                    </div>
-
-                    <!-- notes -->
-                    <div v-if="completeCurrentSessionShowHideOtherFields" class="mb-2">
-                      <label for="complete-current-session-notes" class="form-label">Notes</label>
-                      <textarea
-                        v-model="currentSessionDetails.notes"
-                        class="form-control form-control-sm"
-                        id="complete-current-session-notes"
-                        rows="3"
-                        :disabled="completeCurrentSessionLoading"
-                      ></textarea>
-                    </div>
-                  </span>
-                </div>
-
-                <!-- footer -->
-                <div class="modal-footer">
-                  <!-- cancel -->
-                  <button
-                    @click="clearDataAndDismissCompleteCurrentSessionModal()"
-                    v-if="!completeCurrentSessionLoading"
-                    type="reset"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-
-                  <!-- submit -->
-                  <button
-                    type="submit"
-                    class="btn btn-success"
-                    :disabled="
-                      completeCurrentSessionLoading ||
-                      currentSessionDetails.session_rpe === null ||
-                      currentSessionDetails.end_date?.length === 0
-                    "
-                  >
-                    <div
-                      v-if="completeCurrentSessionLoading"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-
-                    <span v-if="!completeCurrentSessionLoading">Submit </span>
-                    <span v-if="completeCurrentSessionLoading"> Loading... </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
         </div>
-
-        <!-- add a exercise note -->
-        <form
-          @submit.prevent="handleAddAExerciseNote()"
-          class="modal fade px-1 pt-5"
-          id="add-a-note"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-        >
-          <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">
-                  <span>Add a note for </span>
-                  <span class="fw-light"> {{ set.exercise_name }}</span>
-                </h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <!-- note -->
-                <div class="mb-3">
-                  <label class="form-label">Note</label>
-                  <textarea
-                    v-model.trim="set.notes"
-                    class="form-control form-control-sm"
-                    id="notes-id"
-                    rows="3"
-                    :disabled="addAExerciseNoteLoading"
-                  ></textarea>
-                </div>
-              </div>
-
-              <!-- footer -->
-              <div class="modal-footer">
-                <!-- clear -->
-                <button v-if="!addAExerciseNoteLoading" type="reset" class="btn btn-outline-danger">
-                  <font-awesome-icon icon="broom" />
-                  Clear
-                </button>
-
-                <div class="btn-group" role="group">
-                  <!-- cancel -->
-                  <button
-                    @click="clearDataAndDismissAddAExerciseNoteModal()"
-                    v-if="!addAExerciseNoteLoading"
-                    type="reset"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    <i class="bi bi-x-circle"></i>
-                    Cancel
-                  </button>
-
-                  <!-- add -->
-                  <button type="submit" class="btn btn-success" :disabled="addAExerciseNoteLoading">
-                    <div
-                      v-if="addAExerciseNoteLoading"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <span v-if="!addAExerciseNoteLoading">
-                      <i class="bi bi-check-circle-fill"></i>
-                      Submit
-                    </span>
-                    <span v-if="addAExerciseNoteLoading"> Loading... </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <!-- add a set modal -->
-        <form
-          @submit.prevent="handleAddASet()"
-          class="modal fade px-1 pt-5"
-          id="add-a-set"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-        >
-          <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">
-                  <span> Add a set for </span>
-                  <span class="fw-light">{{ set.exercise_name }}</span>
-                </h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body" v-auto-animate>
-                <div class="row mb-3">
-                  <!-- reps -->
-                  <div class="col-4">
-                    <label for="rep" class="form-label">Rep*</label>
-                    <input
-                      v-model.number="set.reps"
-                      id="rep"
-                      class="form-control form-control-sm"
-                      min="1"
-                      max="30"
-                      step="1"
-                      type="number"
-                      inputmode="numeric"
-                      pattern="[1-9]*"
-                      required
-                      :disabled="addASetLoading"
-                    />
-                  </div>
-
-                  <!-- weight -->
-                  <div class="col-4">
-                    <label for="weight" class="form-label">Weight*</label>
-                    <input
-                      v-model.number="set.weight"
-                      id="weight"
-                      class="form-control form-control-sm"
-                      type="number"
-                      inputmode="numeric"
-                      pattern="[1-9]*"
-                      min="1"
-                      required
-                      :disabled="addASetLoading || !set.reps"
-                    />
-                  </div>
-
-                  <!-- rpe -->
-                  <div class="col-4">
-                    <label for="rpe" class="form-label">Rpe</label>
-                    <input
-                      v-model.number="set.rpe"
-                      id="rpe"
-                      class="form-control form-control-sm"
-                      min="1"
-                      step=".5"
-                      max="10"
-                      inputmode="numeric"
-                      pattern="[1-10]*"
-                      type="number"
-                      :disabled="addASetLoading || !set.weight"
-                    />
-                  </div>
-                </div>
-
-                <!-- show/hide button for note -->
-                <div class="form-check form-switch mb-3">
-                  <input
-                    v-model="addASetEnableDisableOtherFields"
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    id="add-a-set-enable-disable-note-button"
-                    :disabled="addASetLoading || !set.reps || !set.weight"
-                  />
-                  <label class="form-check-label" for="add-a-set-enable-disable-note-button">
-                    <span v-if="!addASetEnableDisableOtherFields">Enable</span>
-                    <span v-if="addASetEnableDisableOtherFields">Disable</span>
-                    <span> other fields</span>
-                  </label>
-                </div>
-
-                <!-- note -->
-                <div v-if="addASetEnableDisableOtherFields" class="mb-3">
-                  <label class="form-label">Set note</label>
-                  <textarea
-                    v-model.trim="set.notes"
-                    class="form-control form-control-sm"
-                    id="notes-id"
-                    rows="3"
-                    :disabled="addASetLoading"
-                  ></textarea>
-                </div>
-              </div>
-
-              <!-- footer -->
-              <div class="modal-footer">
-                <!-- clear -->
-                <button v-if="!addASetLoading" type="reset" class="btn btn-outline-danger">
-                  <font-awesome-icon icon="broom" />
-                  Clear
-                </button>
-
-                <!-- btn -->
-                <div class="btn-group" role="group">
-                  <!-- cancel -->
-                  <button
-                    @click="clearDataAndDismissAddASetModal()"
-                    v-if="!addASetLoading"
-                    type="reset"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    <i class="bi bi-x-circle-fill"></i>
-                    Cancel
-                  </button>
-
-                  <!-- add -->
-                  <button
-                    type="submit"
-                    class="btn btn-success"
-                    :disabled="addASetLoading || !set.reps || !set.weight"
-                  >
-                    <div
-                      v-if="addASetLoading"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <span v-if="!addASetLoading">
-                      <i class="bi bi-check-circle-fill"></i> Submit
-                    </span>
-                    <span v-if="addASetLoading"> Loading... </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <!-- modify a set modal -->
-        <form
-          @submit.prevent="modifyASet()"
-          class="modal fade px-1 pt-5"
-          id="modify-a-set"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-        >
-          <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">
-                  <span> Modify set id {{ set.id }} for </span>
-                  <span class="fw-light">{{ set.exercise_name }}</span>
-                </h5>
-                <button
-                  @click="clearDataAndDismissModifyASetModal()"
-                  type="reset"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body" v-auto-animate>
-                <div class="row mb-3">
-                  <!-- reps -->
-                  <div class="col-4">
-                    <label for="modify-rep" class="form-label">Rep*</label>
-                    <input
-                      v-model.number="set.reps"
-                      id="modify-rep"
-                      class="form-control form-control-sm"
-                      min="1"
-                      max="30"
-                      step="1"
-                      type="number"
-                      inputmode="numeric"
-                      pattern="[1-9]*"
-                      required
-                      :disabled="addASetLoading"
-                    />
-                  </div>
-
-                  <!-- weight -->
-                  <div class="col-4">
-                    <label for="modify-weight" class="form-label">Weight*</label>
-                    <input
-                      v-model.number="set.weight"
-                      id="modify-weight"
-                      class="form-control form-control-sm"
-                      type="number"
-                      inputmode="numeric"
-                      pattern="[1-9]*"
-                      min="1"
-                      required
-                      :disabled="addASetLoading"
-                    />
-                  </div>
-
-                  <!-- rpe -->
-                  <div class="col-4">
-                    <label for="modify-rpe" class="form-label">Rpe</label>
-                    <input
-                      v-model.number="set.rpe"
-                      id="modify-rpe"
-                      class="form-control form-control-sm"
-                      min="1"
-                      step=".5"
-                      max="10"
-                      inputmode="numeric"
-                      pattern="[1-10]*"
-                      type="number"
-                      :disabled="addASetLoading"
-                    />
-                  </div>
-                </div>
-
-                <!-- show/hide button for note -->
-                <div class="form-check form-switch mb-3">
-                  <input
-                    v-model="modifyASetEnableDisableOtherFields"
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    id="modify-a-set-enable-disable-note-button"
-                  />
-                  <label class="form-check-label" for="add-a-set-enable-disable-note-button">
-                    <span v-if="!modifyASetEnableDisableOtherFields">Enable</span>
-                    <span v-if="modifyASetEnableDisableOtherFields">Disable</span>
-                    <span> other fields</span>
-                  </label>
-                </div>
-
-                <!-- note -->
-                <div v-if="modifyASetEnableDisableOtherFields" class="mb-3">
-                  <label for="modify-notes-id" class="form-label">Set note</label>
-                  <textarea
-                    v-model.trim="set.notes"
-                    class="form-control form-control-sm"
-                    id="modify-notes-id"
-                    rows="3"
-                    :disabled="modifyASetLoading"
-                  ></textarea>
-                </div>
-              </div>
-
-              <!-- footer -->
-              <div class="modal-footer d-flex justify-content-between">
-                <!-- delete -->
-                <button
-                  v-if="!modifyASetLoading"
-                  @click="deleteASet()"
-                  type="button"
-                  class="btn btn-sm btn-danger"
-                  :disabled="deleteASetLoading"
-                >
-                  <div
-                    v-if="deleteASetLoading"
-                    class="spinner-border spinner-border-sm"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Deleting...</span>
-                  </div>
-                  <span v-if="!deleteASetLoading"> <i class="bi bi-trash"></i> Delete </span>
-                  <span v-if="deleteASetLoading"> Deleting... </span>
-                </button>
-
-                <!-- btn -->
-                <div class="btn-group btn-group-sm" role="group">
-                  <!-- clear -->
-                  <button
-                    v-if="!modifyASetLoading && !deleteASetLoading"
-                    type="reset"
-                    class="btn btn-outline-danger"
-                  >
-                    <font-awesome-icon icon="broom" />
-                    Clear
-                  </button>
-
-                  <!-- cancel -->
-                  <button
-                    v-if="!modifyASetLoading && !deleteASetLoading"
-                    @click="clearDataAndDismissModifyASetModal()"
-                    type="reset"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    <i class="bi bi-x-circle"></i>
-                    Cancel
-                  </button>
-
-                  <!-- modify -->
-                  <button
-                    v-if="!deleteASetLoading"
-                    type="submit"
-                    class="btn btn-success"
-                    :disabled="modifyASetLoading"
-                  >
-                    <div
-                      v-if="modifyASetLoading"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden"> Updating...</span>
-                    </div>
-                    <span v-if="!modifyASetLoading">
-                      <i class="bi bi-check-circle-fill"></i> Update
-                    </span>
-                    <span v-if="modifyASetLoading"> Updating... </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <!-- upload a video modal -->
-        <form
-          @submit.prevent="uploadAVideo()"
-          class="modal fade px-2 py-5"
-          id="upload-a-video"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-        >
-          <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-              <!-- header -->
-              <div class="modal-header">
-                <h5 class="modal-title">
-                  <span> Upload a video for </span>
-                  <span class="fw-light">{{ set.exercise_name }}</span>
-                </h5>
-                <button
-                  @click="clearDataAndDismissUploadAVideoModal()"
-                  type="reset"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-
-              <!-- body -->
-              <div class="modal-body text-center">
-                <div>
-                  <input
-                    ref="video"
-                    class="form-control"
-                    id="video"
-                    type="file"
-                    accept="video/*"
-                    hidden
-                  />
-
-                  <div
-                    @click="$refs.video.click()"
-                    class="alert alert-primary d-flex flex-column gap-1 m-0 p-0 py-3 my-1"
-                    role="button"
-                  >
-                    <i class="bi bi-cloud-arrow-up-fill"></i>
-                    <span> Click here to choose video! </span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- footer -->
-              <div class="modal-footer">
-                <!-- cancel -->
-                <button
-                  @click="clearDataAndDismissUploadAVideoModal()"
-                  v-if="!uploadAVideoLoading"
-                  type="reset"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  <i class="bi bi-x-circle-fill"></i>
-                  Cancel
-                </button>
-
-                <!-- confirm -->
-                <button type="submit" class="btn btn-success" :disabled="uploadAVideoLoading">
-                  <div
-                    v-if="uploadAVideoLoading"
-                    class="spinner-border spinner-border-sm"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-
-                  <span v-if="!uploadAVideoLoading"
-                    ><i class="bi bi-check-circle-fill"></i> Confirm
-                  </span>
-                  <span v-if="uploadAVideoLoading"> Loading... </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
       </div>
     </div>
   </div>
+
+  <!-- add a exercise -->
+  <form
+    @submit.prevent="addAExercise()"
+    class="modal fade px-2 py-5"
+    id="add-a-exercise"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span> Add a exercise for </span>
+            <span class="fw-light"> {{ currentSessionDetails.name }}</span>
+          </h5>
+          <button
+            @click="clearDataAndDismissAddAExerciseModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div v-if="!chooseCategories.length" class="mb-3">
+            <div class="alert alert-warning p-2">
+              <small
+                >Exercise categories must be defined before being able to add new exercises.
+                <router-link
+                  @click="clearDataAndDismissAddAExerciseModal()"
+                  class="alert-link"
+                  to="/dashboard/sessions/categories?model=true"
+                  >Click here!</router-link
+                >
+                to add exercise categories!</small
+              >
+            </div>
+          </div>
+
+          <!-- exercise category name -->
+          <div class="mb-3">
+            <span class="d-flex gap-1">
+              <label for="session-details-exercise-category-name" class="form-label"
+                >Exercise category name*</label
+              >
+              <router-link
+                @click="clearDataAndDismissAddAExerciseModal()"
+                class="alert-link link-secondary"
+                to="/dashboard/sessions/categories?model=true"
+              >
+                <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                  >Add more</span
+                >
+              </router-link>
+            </span>
+            <select
+              id="session-details-exercise-category-name"
+              class="form-control form-select form-select-sm"
+              v-model="chooseExerciseCategoryId"
+              :disabled="loading || chooseCategories.length === 0"
+              required
+            >
+              <option value="" selected disabled>Select a exercise category!</option>
+              <option
+                v-for="category in chooseCategories"
+                :value="category.id"
+                :key="`key-${category.id}`"
+              >
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- lift -->
+          <div class="mb-3">
+            <span class="d-flex gap-1">
+              <label for="session-details-select-exercise" class="form-label">Exercise name*</label>
+              <router-link
+                @click="clearDataAndDismissAddAExerciseModal()"
+                class="alert-link link-secondary"
+                to="/dashboard/sessions/exercises?model=true"
+              >
+                <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                  >Add more</span
+                >
+              </router-link>
+            </span>
+            <select
+              id="session-details-select-exercise"
+              class="form-control form-select form-select-sm"
+              v-model="chooseExerciseId"
+              :disabled="!chooseExerciseCategoryId || chooseExercises.length === 0"
+              required
+            >
+              <option value="" selected disabled>select a exercise!</option>
+              <option
+                v-for="exercise in chooseExercises"
+                :value="exercise.id"
+                :key="`key-${exercise.id}`"
+              >
+                {{ exercise.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearDataAndDismissAddAExerciseModal()"
+            v-if="!addAExerciseLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
+
+          <!-- add -->
+          <button
+            type="submit"
+            class="btn btn-success"
+            :disabled="addAExerciseLoading || !chooseExerciseId"
+          >
+            <div v-if="addAExerciseLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <span v-if="!addAExerciseLoading">
+              <i class="bi bi-check-circle-fill"></i>
+              Submit
+            </span>
+            <span v-if="addAExerciseLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- delete current session modal -->
+  <form
+    @submit.prevent="handleDeleteSession()"
+    class="modal fade px-2 py-5"
+    id="delete-current-session"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span v-if="!currentSessionDetails.end_date"> Cancel </span>
+            <span v-if="currentSessionDetails.end_date"> Delete </span>
+            <span class="fw-light"> session id: {{ currentSessionDetails.id }}</span>
+          </h5>
+          <button
+            @click="clearDataAndDismissDeleteSessionModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0 pb-0 text-center">
+            Are you sure you want to
+            <span v-if="!currentSessionDetails.end_date"> cancel </span>
+            <span v-if="currentSessionDetails.end_date"> delete </span>
+            <span class="badge bg-secondary text-white">{{ currentSessionDetails.name }}</span>
+            ?
+          </p>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearDataAndDismissDeleteSessionModal()"
+            v-if="!deleteCurrentSessionLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
+
+          <!-- confirm -->
+          <button type="submit" class="btn btn-success" :disabled="deleteCurrentSessionLoading">
+            <div
+              v-if="deleteCurrentSessionLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!deleteCurrentSessionLoading"
+              ><i class="bi bi-check-circle-fill"></i> Confirm
+            </span>
+            <span v-if="deleteCurrentSessionLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- add a exercise note modal -->
+  <form
+    @submit.prevent="handleAddAExerciseNote()"
+    class="modal fade px-1 pt-5"
+    id="add-a-note"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span>Add a note for </span>
+            <span class="fw-light"> {{ set.exercise_name }}</span>
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- note -->
+          <div class="mb-3">
+            <label class="form-label">Note</label>
+            <textarea
+              v-model.trim="set.notes"
+              class="form-control form-control-sm"
+              id="notes-id"
+              rows="3"
+              :disabled="addAExerciseNoteLoading"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- clear -->
+          <button v-if="!addAExerciseNoteLoading" type="reset" class="btn btn-outline-danger">
+            <font-awesome-icon icon="broom" />
+            Clear
+          </button>
+
+          <div class="btn-group" role="group">
+            <!-- cancel -->
+            <button
+              @click="clearDataAndDismissAddAExerciseNoteModal()"
+              v-if="!addAExerciseNoteLoading"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle"></i>
+              Cancel
+            </button>
+
+            <!-- add -->
+            <button type="submit" class="btn btn-success" :disabled="addAExerciseNoteLoading">
+              <div
+                v-if="addAExerciseNoteLoading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <span v-if="!addAExerciseNoteLoading">
+                <i class="bi bi-check-circle-fill"></i>
+                Submit
+              </span>
+              <span v-if="addAExerciseNoteLoading"> Loading... </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- complete current session modal -->
+  <form
+    @submit.prevent="handleCompleteCurrentSession()"
+    class="modal fade px-2 py-5"
+    id="complete-current-session"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span> Complete </span>
+            <span class="fw-light"> {{ currentSessionDetails.name }}</span>
+          </h5>
+          <button
+            @click="clearDataAndDismissCompleteCurrentSessionModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body" v-auto-animate>
+          <!-- session rpe -->
+          <div class="mb-3">
+            <label for="complete-current-session-session-rpe" class="form-label"
+              >Session rpe*</label
+            >
+            <input
+              v-model="currentSessionDetails.session_rpe"
+              id="complete-current-session-session-rpe"
+              class="form-control form-control-sm"
+              type="number"
+              min="1"
+              max="10"
+              step=".5"
+              inputmode="numeric"
+              pattern="[1-10]*"
+              required
+              :disabled="completeCurrentSessionLoading"
+            />
+          </div>
+
+          <!-- End time -->
+          <div class="mb-3">
+            <label for="complete-current-session-end-date" class="form-label">End time*</label>
+            <input
+              v-model="currentSessionDetails.end_date"
+              id="complete-current-session-end-date"
+              class="form-control form-control-sm"
+              type="datetime-local"
+              required
+              :disabled="completeCurrentSessionLoading"
+            />
+          </div>
+
+          <!-- show/hide button -->
+          <div class="form-check form-switch mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="complete-current-session-show-hide-button"
+              v-model="completeCurrentSessionShowHideOtherFields"
+              :disabled="completeCurrentSessionLoading"
+            />
+            <label class="form-check-label" for="complete-current-session-show-hide-button">
+              <span v-if="completeCurrentSessionShowHideOtherFields">Hide</span>
+              <span v-else>Show</span>
+              <span> other fields</span>
+            </label>
+          </div>
+
+          <span v-if="completeCurrentSessionShowHideOtherFields">
+            <div class="row mb-3">
+              <!-- bodyweight  -->
+              <div class="col-6">
+                <label for="complete-current-session-bodyweight" class="form-label"
+                  >Bodyweight</label
+                >
+                <input
+                  v-model="currentSessionDetails.body_weight"
+                  id="complete-current-session-bodyweight"
+                  class="form-control form-control-sm"
+                  min="1"
+                  inputmode="numeric"
+                  pattern="[1-10]*"
+                  type="number"
+                  :disabled="completeCurrentSessionLoading"
+                />
+              </div>
+
+              <!-- hours of sleep  -->
+              <div class="col-6">
+                <label for="complete-current-session-sleep" class="form-label"
+                  >Hours of sleep</label
+                >
+                <input
+                  v-model="currentSessionDetails.hours_of_sleep"
+                  id="complete-current-session-sleep"
+                  class="form-control form-control-sm"
+                  min="1"
+                  type="number"
+                  inputmode="numeric"
+                  pattern="[0-24]*"
+                  :disabled="completeCurrentSessionLoading"
+                />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <!-- calories prior -->
+              <div class="col-6">
+                <label for="complete-current-session-calories_prior_session" class="form-label"
+                  >Calories
+                </label>
+                <input
+                  v-model="currentSessionDetails.calories_prior_session"
+                  id="complete-current-session-calories_prior_session"
+                  class="form-control form-control-sm"
+                  min="1"
+                  type="number"
+                  inputmode="numeric"
+                  pattern="[1-10000]*"
+                  :disabled="completeCurrentSessionLoading"
+                />
+              </div>
+
+              <!-- caffeine intake -->
+              <div class="col-6">
+                <label for="complete-current-session-caffeine-intake" class="form-label"
+                  >Caffeine</label
+                >
+                <input
+                  v-model="currentSessionDetails.caffeine_intake"
+                  id="complete-current-session-caffeine-intake"
+                  class="form-control form-control-sm"
+                  min="1"
+                  type="number"
+                  inputmode="numeric"
+                  pattern="[1-10000]*"
+                  :disabled="completeCurrentSessionLoading"
+                />
+              </div>
+            </div>
+
+            <!-- notes -->
+            <div v-if="completeCurrentSessionShowHideOtherFields" class="mb-2">
+              <label for="complete-current-session-notes" class="form-label">Notes</label>
+              <textarea
+                v-model="currentSessionDetails.notes"
+                class="form-control form-control-sm"
+                id="complete-current-session-notes"
+                rows="3"
+                :disabled="completeCurrentSessionLoading"
+              ></textarea>
+            </div>
+          </span>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearDataAndDismissCompleteCurrentSessionModal()"
+            v-if="!completeCurrentSessionLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+
+          <!-- submit -->
+          <button
+            type="submit"
+            class="btn btn-success"
+            :disabled="
+              completeCurrentSessionLoading ||
+              currentSessionDetails.session_rpe === null ||
+              currentSessionDetails.end_date?.length === 0
+            "
+          >
+            <div
+              v-if="completeCurrentSessionLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!completeCurrentSessionLoading">Submit </span>
+            <span v-if="completeCurrentSessionLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- add a set modal -->
+  <form
+    @submit.prevent="handleAddASet()"
+    class="modal fade px-1 pt-5"
+    id="add-a-set"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span> Add a set for </span>
+            <span class="fw-light">{{ set.exercise_name }}</span>
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body" v-auto-animate>
+          <div class="row mb-3">
+            <!-- reps -->
+            <div class="col-4">
+              <label for="rep" class="form-label">Rep*</label>
+              <input
+                v-model.number="set.reps"
+                id="rep"
+                class="form-control form-control-sm"
+                min="1"
+                max="30"
+                step="1"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                required
+                :disabled="addASetLoading"
+              />
+            </div>
+
+            <!-- weight -->
+            <div class="col-4">
+              <label for="weight" class="form-label">Weight*</label>
+              <input
+                v-model.number="set.weight"
+                id="weight"
+                class="form-control form-control-sm"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                min="1"
+                required
+                :disabled="addASetLoading || !set.reps"
+              />
+            </div>
+
+            <!-- rpe -->
+            <div class="col-4">
+              <label for="rpe" class="form-label">Rpe</label>
+              <input
+                v-model.number="set.rpe"
+                id="rpe"
+                class="form-control form-control-sm"
+                min="1"
+                step=".5"
+                max="10"
+                inputmode="numeric"
+                pattern="[1-10]*"
+                type="number"
+                :disabled="addASetLoading || !set.weight"
+              />
+            </div>
+          </div>
+
+          <!-- show/hide button for note -->
+          <div class="form-check form-switch mb-3">
+            <input
+              v-model="addASetEnableDisableOtherFields"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="add-a-set-enable-disable-note-button"
+              :disabled="addASetLoading || !set.reps || !set.weight"
+            />
+            <label class="form-check-label" for="add-a-set-enable-disable-note-button">
+              <span v-if="!addASetEnableDisableOtherFields">Enable</span>
+              <span v-if="addASetEnableDisableOtherFields">Disable</span>
+              <span> other fields</span>
+            </label>
+          </div>
+
+          <!-- note -->
+          <div v-if="addASetEnableDisableOtherFields" class="mb-3">
+            <label class="form-label">Set note</label>
+            <textarea
+              v-model.trim="set.notes"
+              class="form-control form-control-sm"
+              id="notes-id"
+              rows="3"
+              :disabled="addASetLoading"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- clear -->
+          <button v-if="!addASetLoading" type="reset" class="btn btn-outline-danger">
+            <font-awesome-icon icon="broom" />
+            Clear
+          </button>
+
+          <!-- btn -->
+          <div class="btn-group" role="group">
+            <!-- cancel -->
+            <button
+              @click="clearDataAndDismissAddASetModal()"
+              v-if="!addASetLoading"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle-fill"></i>
+              Cancel
+            </button>
+
+            <!-- add -->
+            <button
+              type="submit"
+              class="btn btn-success"
+              :disabled="addASetLoading || !set.reps || !set.weight"
+            >
+              <div v-if="addASetLoading" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <span v-if="!addASetLoading"> <i class="bi bi-check-circle-fill"></i> Submit </span>
+              <span v-if="addASetLoading"> Loading... </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- modify a set modal -->
+  <form
+    @submit.prevent="modifyASet()"
+    class="modal fade px-1 pt-5"
+    id="modify-a-set"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span> Modify set id {{ set.id }} for </span>
+            <span class="fw-light">{{ set.exercise_name }}</span>
+          </h5>
+          <button
+            @click="clearDataAndDismissModifyASetModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body" v-auto-animate>
+          <div class="row mb-3">
+            <!-- reps -->
+            <div class="col-4">
+              <label for="modify-rep" class="form-label">Rep*</label>
+              <input
+                v-model.number="set.reps"
+                id="modify-rep"
+                class="form-control form-control-sm"
+                min="1"
+                max="30"
+                step="1"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                required
+                :disabled="addASetLoading"
+              />
+            </div>
+
+            <!-- weight -->
+            <div class="col-4">
+              <label for="modify-weight" class="form-label">Weight*</label>
+              <input
+                v-model.number="set.weight"
+                id="modify-weight"
+                class="form-control form-control-sm"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                min="1"
+                required
+                :disabled="addASetLoading"
+              />
+            </div>
+
+            <!-- rpe -->
+            <div class="col-4">
+              <label for="modify-rpe" class="form-label">Rpe</label>
+              <input
+                v-model.number="set.rpe"
+                id="modify-rpe"
+                class="form-control form-control-sm"
+                min="1"
+                step=".5"
+                max="10"
+                inputmode="numeric"
+                pattern="[1-10]*"
+                type="number"
+                :disabled="addASetLoading"
+              />
+            </div>
+          </div>
+
+          <!-- show/hide button for note -->
+          <div class="form-check form-switch mb-3">
+            <input
+              v-model="modifyASetEnableDisableOtherFields"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="modify-a-set-enable-disable-note-button"
+            />
+            <label class="form-check-label" for="add-a-set-enable-disable-note-button">
+              <span v-if="!modifyASetEnableDisableOtherFields">Enable</span>
+              <span v-if="modifyASetEnableDisableOtherFields">Disable</span>
+              <span> other fields</span>
+            </label>
+          </div>
+
+          <!-- note -->
+          <div v-if="modifyASetEnableDisableOtherFields" class="mb-3">
+            <label for="modify-notes-id" class="form-label">Set note</label>
+            <textarea
+              v-model.trim="set.notes"
+              class="form-control form-control-sm"
+              id="modify-notes-id"
+              rows="3"
+              :disabled="modifyASetLoading"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer d-flex justify-content-between">
+          <!-- delete -->
+          <button
+            v-if="!modifyASetLoading"
+            @click="deleteASet()"
+            type="button"
+            class="btn btn-sm btn-danger"
+            :disabled="deleteASetLoading"
+          >
+            <div v-if="deleteASetLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Deleting...</span>
+            </div>
+            <span v-if="!deleteASetLoading"> <i class="bi bi-trash"></i> Delete </span>
+            <span v-if="deleteASetLoading"> Deleting... </span>
+          </button>
+
+          <!-- btn -->
+          <div class="btn-group btn-group-sm" role="group">
+            <!-- clear -->
+            <button
+              v-if="!modifyASetLoading && !deleteASetLoading"
+              type="reset"
+              class="btn btn-outline-danger"
+            >
+              <font-awesome-icon icon="broom" />
+              Clear
+            </button>
+
+            <!-- cancel -->
+            <button
+              v-if="!modifyASetLoading && !deleteASetLoading"
+              @click="clearDataAndDismissModifyASetModal()"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle"></i>
+              Cancel
+            </button>
+
+            <!-- modify -->
+            <button
+              v-if="!deleteASetLoading"
+              type="submit"
+              class="btn btn-success"
+              :disabled="modifyASetLoading"
+            >
+              <div v-if="modifyASetLoading" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden"> Updating...</span>
+              </div>
+              <span v-if="!modifyASetLoading">
+                <i class="bi bi-check-circle-fill"></i> Update
+              </span>
+              <span v-if="modifyASetLoading"> Updating... </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- upload a video modal -->
+  <form
+    @submit.prevent="uploadAVideo()"
+    class="modal fade px-2 py-5"
+    id="upload-a-video"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <!-- header -->
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span> Upload a video for </span>
+            <span class="fw-light">{{ set.exercise_name }}</span>
+          </h5>
+          <button
+            @click="clearDataAndDismissUploadAVideoModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <!-- body -->
+        <div class="modal-body text-center">
+          <div>
+            <input
+              ref="video"
+              class="form-control"
+              id="video"
+              type="file"
+              accept="video/*"
+              hidden
+            />
+
+            <div
+              @click="$refs.video.click()"
+              class="alert alert-primary d-flex flex-column gap-1 m-0 p-0 py-3 my-1"
+              role="button"
+            >
+              <i class="bi bi-cloud-arrow-up-fill"></i>
+              <span> Click here to choose video! </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearDataAndDismissUploadAVideoModal()"
+            v-if="!uploadAVideoLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
+
+          <!-- confirm -->
+          <button type="submit" class="btn btn-success" :disabled="uploadAVideoLoading">
+            <div v-if="uploadAVideoLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!uploadAVideoLoading"
+              ><i class="bi bi-check-circle-fill"></i> Confirm
+            </span>
+            <span v-if="uploadAVideoLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </template>
 
 <style scoped>
