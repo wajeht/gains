@@ -10,11 +10,11 @@
 </template>
 
 <script>
-  import Login from '../../components/shared/Login.vue';
+import Login from '../../components/shared/Login.vue';
 
-  export default {
-    components: {
-      Login,
-    },
-  };
+export default {
+  components: {
+    Login,
+  },
+};
 </script>

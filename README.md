@@ -15,16 +15,18 @@ The best way to track your workouts
 - **Bootstrap 5** for basic styling
 - **Vitest** and **Cypress** for testing
 - **Chart.js** for beautiful charts
-- **[Hover.css](https://ianlunn.github.io/Hover/)** for button hover animation
+- ~~**[Hover.css](https://ianlunn.github.io/Hover/)** for button hover animation~~
 - **[Type.js](https://github.com/mattboldt/typed.js/)** for text typewriter animation
 - **[AOS.js](https://github.com/michalsnik/aos)** for animate on scroll animation
-- **[AnimXYZ](https://animxyz.com/)** for specialized animation
+- ~~**[AnimXYZ](https://animxyz.com/)** for specialized animation~~
 - **[Animate.css](https://animate.style/)** for ready-made animation
 - **Font-awesome** and **Bootstrap-icon** for icons
 - **Command And Conquer (CAC)** for CLI
 
 # 👨‍💻 Getting started
-Here below are some guides and docs to help set up your local development environment. Let us know if you have any questions! 
+
+Here below are some guides and docs to help set up your local development environment. Let us know if you have any questions!
+
 - [Development guide](https://github.com/allkindsofgains/gains/blob/main/docs/GETTING_STARTED.md)
 - [Contribution guide](https://github.com/allkindsofgains/gains/blob/main/docs/CONTRIBUTION.md)
 - [Code of Conduct](https://github.com/allkindsofgains/gains/blob/main/docs/CODE_OF_CONDUCT.md)

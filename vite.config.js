@@ -30,6 +30,13 @@ export default defineConfig({
     outDir: '../../public',
     chunkSizeWarningLimit: 1600,
     emptyOutDir: false,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name][extname]',
+      },
+    },
   },
   define: {
     'process.env': process.env,

@@ -57,7 +57,7 @@ async function getCurrentSessionDetails() {
   <Backheader />
 
   <!-- video details -->
-  <XyzTransition appear xyz="fade small out-down">
+  <div class="animate__animated animate__zoomIn animate__faster">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
         <!-- video -->
@@ -92,7 +92,10 @@ async function getCurrentSessionDetails() {
             </div>
           </div>
 
-          <span v-for="(log, index) in currentSessionDetails.logs">
+          <span
+            v-for="(log, index) in currentSessionDetails.logs"
+            :key="`key-video-details${log.id}`"
+          >
             <!-- log -->
             <span v-if="currentLogStep === index">
               <!-- video -->
@@ -111,6 +114,7 @@ async function getCurrentSessionDetails() {
                   role="button"
                   @click="currentLogStep = i"
                   v-for="(l, i) in currentSessionDetails.logs"
+                  :key="`key-dot-${l.id}`"
                 >
                   <i
                     class="bi m-0 p-0"
@@ -179,5 +183,5 @@ async function getCurrentSessionDetails() {
         </div>
       </div>
     </div>
-  </XyzTransition>
+  </div>
 </template>

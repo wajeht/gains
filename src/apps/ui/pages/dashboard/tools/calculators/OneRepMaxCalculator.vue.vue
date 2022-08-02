@@ -1,5 +1,5 @@
 <template>
-  <XyzTransition appear xyz="fade small out-down">
+  <div class="animate__animated animate__zoomIn animate__faster">
     <div class="container d-flex flex-column">
       <!-- rpe -->
       <div>
@@ -25,7 +25,7 @@
       <!-- button -->
       <button @click="calculate">Calculate</button>
     </div>
-  </XyzTransition>
+  </div>
 </template>
 
 <script>

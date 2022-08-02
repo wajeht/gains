@@ -35,10 +35,8 @@
 
         <!-- button -->
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-          <router-link to="/signup" class="hvr-grow btn btn-dark btn-lg px-4 me-sm-3"
-            >Sign up</router-link
-          >
-          <router-link to="/features" class="hvr-grow btn btn-outline-secondary btn-lg px-4"
+          <router-link to="/signup" class="btn btn-dark btn-lg px-4 me-sm-3">Sign up</router-link>
+          <router-link to="/features" class="btn btn-outline-secondary btn-lg px-4"
             >Learn more</router-link
           >
         </div>

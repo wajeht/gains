@@ -12,13 +12,11 @@ window.bootstrap = bootstrap;
 import 'animate.css';
 import 'hover.css';
 import 'aos/dist/aos.css';
-import '@animxyz/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import AOS from 'aos';
 import tooltip from './tool-tip.vue.js';
-import VueAnimXyz from '@animxyz/vue3';
 import FontAwesomeIcon from './font-awesome.vue.js';
 import { Chart, registerables } from 'chart.js';
 
@@ -37,7 +35,6 @@ Chart.register(...registerables);
 app.config.performance = true;
 app.config.devtools = true;
 
-app.use(VueAnimXyz);
 app.use(autoAnimatePlugin);
 app.directive('tooltip', tooltip);
 app.component('font-awesome-icon', FontAwesomeIcon);

@@ -1,5 +1,5 @@
 <template>
-  <XyzTransition appear xyz="fade small out-down">
+  <div class="animate__animated animate__zoomIn animate__faster">
     <h1>RPECalculator.vue</h1>
-  </XyzTransition>
+  </div>
 </template>
