@@ -25,7 +25,8 @@ export async function getExerciseCategoriesByUserId(uid) {
 	  INNER JOIN exercises e
       ON e.exercise_category_id = ec.id
     WHERE (
-      ec.user_id = ?
+      ec.deleted = false
+      and ec.user_id = ?
     )
     GROUP BY ec.id
     ORDER BY ec.id DESC
@@ -51,7 +52,8 @@ export async function getAllExerciseCategoriesByUserId(uid) {
     FROM
 	    exercise_categories ec
     WHERE (
-      ec.user_id = ?
+      ec.deleted = false
+      and ec.user_id = ?
     )
     ORDER BY ec.id DESC
   `,

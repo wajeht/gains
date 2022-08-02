@@ -364,7 +364,7 @@ function clearDataAndDismissModal() {
     <div class="flex flex-column justify-content-between my-3">
       <div class="d-flex flex-column gap-3" v-auto-animate>
         <!-- alert -->
-        <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0">
+        <div v-if="alert.type" :class="`alert-${alert.type}`" class="alert mb-0">
           <span>{{ alert.msg }}</span>
         </div>
 
