@@ -1,7 +1,7 @@
 <template>
   <DashboardHeader />
 
-  <div class="container px-3">
+  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="my-3 d-flex flex-column gap-3">
       <!-- calculator -->
       <div>

@@ -7,7 +7,7 @@ const appStore = useAppStore();
   <DashboardHeader />
 
   <!-- settings -->
-  <div class="container px-3">
+  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="flex flex-column justify-content-between my-3">
       <!-- setting items -->
       <div class="d-flex flex-column gap-3">
