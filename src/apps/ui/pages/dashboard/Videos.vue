@@ -80,14 +80,16 @@ async function sessionsWithVideos() {
         <div class="d-flex flex-column">
           <router-link :to="{ name: 'VideoDetails', params: { id: session.id } }">
             <div class="card border">
-              <img
-                class="card-img-top"
-                :src="
-                  session.videos[0].screenshot_url ??
-                  `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
-                "
-                :alt="session.name"
-              />
+              <span class="image-wrapper">
+                <img
+                  class="card-img-top image"
+                  :src="
+                    session.videos[0].screenshot_url ??
+                    `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
+                  "
+                  :alt="session.name"
+                />
+              </span>
             </div>
           </router-link>
         </div>
@@ -95,3 +97,18 @@ async function sessionsWithVideos() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.image-wrapper {
+  aspect-ratio: 1/1;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+</style>

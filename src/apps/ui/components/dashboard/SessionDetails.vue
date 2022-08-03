@@ -846,9 +846,18 @@ function clearDataAndDismissUploadAVideoModal() {
                   v-if="log.videos?.length && log.collapsed"
                   class="card card-body p-0 m-0 pt-2 pb-1 border-0"
                 >
-                  <video v-for="v in log.videos" controls preload="none" :poster="v.screenshot_url">
-                    <source :src="v.video_url" type="video/mp4" />
-                  </video>
+                  <div class="video-wrapper">
+                    <video
+                      class="video"
+                      v-for="v in log.videos"
+                      controls
+                      preload="none"
+                      :poster="v.screenshot_url"
+                      :key="`video-key-${v.id}`"
+                    >
+                      <source :src="v.video_url" type="video/mp4" />
+                    </video>
+                  </div>
                 </div>
 
                 <!-- notes -->
@@ -1961,6 +1970,19 @@ function clearDataAndDismissUploadAVideoModal() {
 </template>
 
 <style scoped>
+.video-wrapper {
+  aspect-ratio: 4/4;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 .bg-gray {
   background: #f0f1f2;
   color: black !important;

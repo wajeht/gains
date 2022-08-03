@@ -100,9 +100,17 @@ async function getCurrentSessionDetails() {
             <span v-if="currentLogStep === index">
               <!-- video -->
               <div v-if="log?.videos?.length" class="card card-body p-0 m-0 border-0">
-                <video preload="none" :poster="log?.videos[0].screenshot_url" controls playsinline>
-                  <source :src="log?.videos[0].video_url" type="video/mp4" />
-                </video>
+                <div class="video-wrapper">
+                  <video
+                    class="video"
+                    preload="none"
+                    :poster="log?.videos[0].screenshot_url"
+                    controls
+                    playsinline
+                  >
+                    <source :src="log?.videos[0].video_url" type="video/mp4" />
+                  </video>
+                </div>
               </div>
 
               <!-- dots -->
@@ -185,3 +193,17 @@ async function getCurrentSessionDetails() {
     </div>
   </div>
 </template>
+<style scoped>
+.video-wrapper {
+  aspect-ratio: 1/1;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+</style>
