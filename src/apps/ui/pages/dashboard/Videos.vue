@@ -59,7 +59,7 @@ async function sessionsWithVideos() {
 
   <div class="container">
     <!-- <div v-if="appStore.loading === false" class="row my-3 px-3"> -->
-    <div class="row my-3 px-3" v-auto-animate>
+    <div class="row my-3 px-3 animate__animated animate__fadeIn animate__faster">
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-3 alert">
         <span>{{ alert.msg }}</span>
