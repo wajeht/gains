@@ -6,6 +6,7 @@ on:
     paths-ignore:
       - '~/gains/gains/gains/gains/src/public/**'
       - 'src/public/**'
+      - '~/gains/gains/gains/gains/src/public'
 jobs:
   build:
     environment: allkindsofgains
