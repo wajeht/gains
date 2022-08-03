@@ -854,6 +854,7 @@ function clearDataAndDismissUploadAVideoModal() {
                       preload="none"
                       :poster="v.screenshot_url"
                       :key="`video-key-${v.id}`"
+                      playsinline
                     >
                       <source :src="v.video_url" type="video/mp4" />
                     </video>

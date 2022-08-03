@@ -183,15 +183,17 @@ async function logout() {
           <div class="card-body">
             <div class="row g-3">
               <div class="col-4 d-flex flex-column justify-content-center align-items-center">
-                <img
-                  :src="
-                    userStore.user.profile_picture_url ??
-                    `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
-                  "
-                  class="img-fluid rounded-circle"
-                  style="height: 100%; width: 100%; object-fit: cover; object-position: center 50%"
-                />
+                <span class="image-wrapper">
+                  <img
+                    :src="
+                      userStore.user.profile_picture_url ??
+                      `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
+                    "
+                    class="rounded-circle image"
+                  />
+                </span>
               </div>
+              <!-- style="height: 100%; width: 100%; object-fit: cover; object-position: center 50%" -->
               <div class="col-8">
                 <!-- name -->
                 <h5 class="card-title">
@@ -355,3 +357,18 @@ async function logout() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.image-wrapper {
+  aspect-ratio: 1/1;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+</style>
