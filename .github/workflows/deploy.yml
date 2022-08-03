@@ -4,7 +4,8 @@ on:
   push:
     branches: ['main']
     paths-ignore:
-      - './gains/gains/gains/gains/src/public/*'
+      - './gains/gains/gains/gains/src/public/**'
+      - 'gains/gains/gains/gains/src/public/**'
 jobs:
   build:
     environment: allkindsofgains
