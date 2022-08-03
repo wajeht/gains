@@ -724,7 +724,7 @@ function clearDataAndDismissUploadAVideoModal() {
                   <h5
                     v-if="currentSessionDetails.logs?.length > 1"
                     @click="hideOrCollapsedAllLogs()"
-                    style="cursor: pointer"
+                    style="cursor: pointer; margin-right: -12px"
                   >
                     <i v-if="!hideOrCollapsedAllLogsState" class="bi bi bi-toggle-off"></i>
                     <i
