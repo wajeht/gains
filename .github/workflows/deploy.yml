@@ -4,7 +4,7 @@ on:
   push:
     branches: ['main']
     paths-ignore:
-      - 'src/public/**'
+      - './src/public/*'
 jobs:
   build:
     environment: allkindsofgains
