@@ -129,7 +129,10 @@
         <h5><i class="bi bi-wrench"></i> Others</h5>
         <div class="list-group">
           <!-- bodyweight -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/others/bodyweight-tracker"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Bodyweight tacker</h6>
@@ -139,10 +142,13 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </router-link>
 
           <!-- calories -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/others/calories-tracker"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Calories Tracker</h6>
@@ -152,10 +158,13 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </router-link>
 
           <!-- recovery -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/others/recovery"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Recovery</h6>
@@ -163,10 +172,13 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </router-link>
 
           <!-- qr codes -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <router-link
+            to="/dashboard/tools/others/access-codes"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Access Codes</h6>
@@ -174,7 +186,7 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
   <Backheader />
 
   <!-- contact -->
-  <div class="container px-3">
+  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="my-3 d-flex flex-column gap-3">
       <!-- contact -->
       <div class="card">
@@ -16,13 +16,13 @@
 </template>
 
 <script>
-  import Contact from '../../../../components/shared/Contact.vue';
-  import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
+import Contact from '../../../../components/shared/Contact.vue';
+import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 
-  export default {
-    components: {
-      Contact,
-      Backheader,
-    },
-  };
+export default {
+  components: {
+    Contact,
+    Backheader,
+  },
+};
 </script>

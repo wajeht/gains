@@ -39,13 +39,19 @@ import UserDetails from './pages/dashboard/settings/account/UserDetails.vue';
 import SendFeedback from './pages/dashboard/settings/others/SendFeedback.vue';
 import DashboardPrivacy from './pages/dashboard/settings/others/DashboardPrivacy.vue';
 import DashboardTerms from './pages/dashboard/settings/others/DashboardTerms.vue';
+import Changelogs from './pages/dashboard/settings/others/Changelogs.vue';
+import HelpAndSupport from './pages/dashboard/settings/others/HelpAndSupport.vue';
 
-// resources
+// tools
 import Tools from './pages/dashboard/tools/Tools.vue';
 import OneRepMaxCalculator from './pages/dashboard/tools/calculators/OneRepMaxCalculator.vue.vue';
 import AttemptSelectionCalculator from './pages/dashboard/tools/calculators/AttemptSelectionCalculator.vue';
 import RPECalculator from './pages/dashboard/tools/calculators/RPECalculator.vue';
 import PlateCalculator from './pages/dashboard/tools/calculators/PlateCalculator.vue';
+import BodyweightTracker from './pages/dashboard/tools/others/BodyweightTracker.vue';
+import CaloriesTracker from './pages/dashboard/tools/others/CaloriesTracker.vue';
+import Recovery from './pages/dashboard/tools/others/Recovery.vue';
+import AccessCodes from './pages/dashboard/tools/others/AccessCodes.vue';
 
 const routes = [
   // regular
@@ -180,6 +186,24 @@ const routes = [
     },
   },
   {
+    path: '/dashboard/settings/others/changelogs',
+    name: 'Changelogs',
+    component: Changelogs,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/settings/others/help-and-support',
+    name: 'HelpAndSupport',
+    component: HelpAndSupport,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
     path: '/dashboard/settings/others/privacy',
     name: 'DashboardPrivacy',
     component: DashboardPrivacy,
@@ -251,6 +275,43 @@ const routes = [
     path: '/dashboard/tools/calculators/attempt-selection-calculator',
     name: 'AttemptSelectionCalculator',
     component: AttemptSelectionCalculator,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  // bodyweight tracker
+  {
+    path: '/dashboard/tools/others/bodyweight-tracker',
+    name: 'BodyweightTracker',
+    component: BodyweightTracker,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/tools/others/calories-tracker',
+    name: 'CaloriesTracker',
+    component: CaloriesTracker,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/tools/others/recovery',
+    name: 'Recovery',
+    component: Recovery,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/tools/others/access-codes',
+    name: 'AccessCodes',
+    component: AccessCodes,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,

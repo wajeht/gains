@@ -1,5 +1,18 @@
+<script setup>
+import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
+</script>
+
 <template>
-  <div class="animate__animated animate__zoomIn animate__faster">
-    <h1>PlateCalculator.vue</h1>
+  <!-- header -->
+  <Backheader />
+
+  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
+    <div class="my-3 d-flex flex-column gap-3">
+      <div class="card">
+        <div class="card-body">
+          <h1>Plate calculator</h1>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

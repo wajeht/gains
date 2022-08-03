@@ -179,7 +179,10 @@ async function updateAccountInfo() {
   <!-- header -->
   <Backheader />
 
-  <div v-if="!appStore.loading" class="container px-3" v-auto-animate>
+  <div
+    v-if="!appStore.loading"
+    class="container px-3 animate__animated animate__fadeIn animate__faster"
+  >
     <div class="my-3 d-flex flex-column gap-3" v-auto-animate>
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">

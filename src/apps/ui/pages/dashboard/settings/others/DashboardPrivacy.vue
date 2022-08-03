@@ -1,9 +1,14 @@
+<script setup>
+import Privacy from '../../../../components/shared/Privacy.vue';
+import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
+</script>
+
 <template>
   <!-- header -->
   <Backheader />
 
   <!-- contact -->
-  <div class="container px-3">
+  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="my-3 d-flex flex-column gap-3">
       <!-- contact -->
       <div class="card">
@@ -14,14 +19,3 @@
     </div>
   </div>
 </template>
-
-<script>
-  import Privacy from '../../../../components/shared/Privacy.vue';
-  import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
-  export default {
-    components: {
-      Privacy,
-      Backheader,
-    },
-  };
-</script>

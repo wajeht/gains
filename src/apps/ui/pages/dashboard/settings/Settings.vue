@@ -115,11 +115,14 @@ const appStore = useAppStore();
           <h5><i class="bi bi-code-slash"></i> Others</h5>
           <div class="list-group">
             <!-- help -->
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/others/help-and-support"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Help and Support</h6>
               </div>
-            </a>
+            </router-link>
 
             <!-- send -->
             <router-link
@@ -132,11 +135,14 @@ const appStore = useAppStore();
             </router-link>
 
             <!-- changelog -->
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/others/changelogs"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Changelogs</h6>
               </div>
-            </a>
+            </router-link>
 
             <!-- terms -->
             <router-link
