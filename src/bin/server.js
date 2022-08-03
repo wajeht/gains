@@ -16,6 +16,13 @@ app.listen(port, () => {
 
 // auto migrate db on start
 (async () => {
+  if (env !== 'production' || env !== 'prod') {
+    logger.warn(`We are on ${env} environment`);
+    logger.warn(`Skipping database auto migration!`);
+    logger.warn(`Please migrate manually!`);
+    return;
+  }
+
   try {
     const config = {
       directory: path.resolve(path.join(process.cwd(), 'src', 'database', 'migrations')),

@@ -114,6 +114,11 @@ onMounted(async () => {
   const uec = await getUserExerciseCategories();
   chooseCategories.value = uec || [];
 
+  // collapsed/expend all session state
+  const isDone = currentSessionDetails.logs.every((log) => log.collapsed == false);
+  if (isDone === true) hideOrCollapsedAllLogsState.value = false;
+  else hideOrCollapsedAllLogsState.value = true;
+
   appStore.loading = false;
 });
 
@@ -221,6 +226,32 @@ async function getUserExerciseDetails(eid) {
       alert.msg = e;
     }
   }
+}
+
+const hideOrCollapsedAllLogsState = ref(null);
+function hideOrCollapsedAllLogs() {
+  // if it was a done session, topically everything has collapsed
+  const isDone = currentSessionDetails.logs.every((log) => log.collapsed == false);
+  if (isDone === true) {
+    currentSessionDetails?.logs.forEach((log) => {
+      log.collapsed = true;
+    });
+    hideOrCollapsedAllLogsState.value = true;
+    return;
+  }
+
+  if (hideOrCollapsedAllLogsState.value === false) {
+    currentSessionDetails?.logs.forEach((log) => {
+      log.collapsed = true;
+    });
+    hideOrCollapsedAllLogsState.value = true;
+    return;
+  }
+
+  currentSessionDetails?.logs.forEach((log) => {
+    log.collapsed = false;
+  });
+  hideOrCollapsedAllLogsState.value = false;
 }
 
 // -------------- CRUD ---------------
@@ -684,9 +715,24 @@ function clearDataAndDismissUploadAVideoModal() {
               </div>
               <div class="col-8">
                 <!-- title -->
-                <h5 class="card-title">
-                  {{ currentSessionDetails.name }}
-                </h5>
+                <span class="d-flex justify-content-between">
+                  <h5 class="card-title">
+                    {{ currentSessionDetails.name }}
+                  </h5>
+
+                  <!-- collapsed/expend all cards -->
+                  <h5
+                    v-if="currentSessionDetails.logs?.length > 1"
+                    @click="hideOrCollapsedAllLogs()"
+                    style="cursor: pointer"
+                  >
+                    <i v-if="!hideOrCollapsedAllLogsState" class="bi bi bi-toggle-off"></i>
+                    <i
+                      v-if="hideOrCollapsedAllLogsState"
+                      class="bi bi bi-toggle-on text-success"
+                    ></i>
+                  </h5>
+                </span>
 
                 <!-- notes -->
                 <p
