@@ -3,7 +3,8 @@ name: Deploy CI
 on:
   push:
     branches: ['main']
-
+    paths-ignore:
+      - '/src/public/uploads/**'
 jobs:
   build:
     environment: allkindsofgains
@@ -15,9 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          clean: false
-
       - name: Create and populate .env file
         env:
           DB_CLIENT: ${{ secrets.DB_CLIENT }}
