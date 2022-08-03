@@ -5,6 +5,7 @@ on:
     branches: ['main']
     paths-ignore:
       - '~/gains/gains/gains/gains/src/public/**'
+      - 'gains/src/public/**'
       - 'src/public/**'
       - '~/gains/gains/gains/gains/src/public'
 jobs:
