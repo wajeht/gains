@@ -1,6 +1,15 @@
 import { defineStore } from 'pinia';
 import { isMobile } from '../../../utils/helpers.js';
 
+function removeAllModal() {
+  // close all modals but the one you want to open
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach((modal) => {
+    let currentModal = bootstrap.Modal.getInstance(modal);
+    if (currentModal) currentModal.hide();
+  });
+}
+
 const useUserStore = defineStore({
   id: 'user',
   state: () => {
@@ -25,6 +34,7 @@ const useUserStore = defineStore({
         if (res.status === 401 || res.status === 403) {
           this.isLoggedIn = false;
           this.clearUserInfo();
+          removeAllModal();
           let logoutLink = '/login';
           if (isMobile()) logoutLink = '/dashboard/login';
           this.router.push({ params: logoutLink });
@@ -56,6 +66,7 @@ const useUserStore = defineStore({
     logout() {
       this.isLoggedIn = false;
       this.clearUserInfo();
+      removeAllModal();
       let logoutLink = '/login';
       if (isMobile()) {
         logoutLink = '/dashboard/login';
