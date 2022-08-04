@@ -20,7 +20,7 @@ export async function getBlocks(req, res) {
   if (uid) {
     const usersBlocks = await BlocksQueries.getBlocksByUserId(uid);
 
-    if (!usersBlocks.length) throw new CustomError.BadRequestError(`There are no blocks available for user id ${uid}!`); // prettier-ignore
+    // if (!usersBlocks.length) throw new CustomError.BadRequestError(`There are no blocks available for user id ${uid}!`); // prettier-ignore
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
