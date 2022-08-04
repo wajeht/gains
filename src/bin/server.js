@@ -16,7 +16,7 @@ app.listen(port, () => {
 
 // auto migrate db on start
 (async () => {
-  if (env !== 'production' || env !== 'prod') {
+  if (env !== 'production') {
     logger.warn(`We are on ${env} environment`);
     logger.warn(`Skipping database auto migration!`);
     logger.warn(`Please migrate manually!`);
