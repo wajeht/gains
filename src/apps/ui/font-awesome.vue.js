@@ -21,6 +21,9 @@ import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faIdBadge } from '@fortawesome/free-solid-svg-icons';
 import { faBroom } from '@fortawesome/free-solid-svg-icons';
+import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { faHomeUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -42,5 +45,8 @@ library.add(faRefresh);
 library.add(faRightFromBracket);
 library.add(faIdBadge);
 library.add(faBroom);
+library.add(faUserGroup);
+library.add(faHomeUser);
+library.add(faBars);
 
 export default FontAwesomeIcon;

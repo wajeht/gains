@@ -396,7 +396,8 @@ async function addASession() {
         aria-expanded="false"
       >
         <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
-          <i class="bi bi-three-dots-vertical"> </i>
+          <!-- <i class="bi bi-three-dots-vertical"> </i> -->
+          <font-awesome-icon icon="bars" />
         </h5>
       </a>
 

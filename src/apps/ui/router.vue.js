@@ -18,6 +18,7 @@ import VerifyEmail from './pages/regular/VerifyEmail.vue';
 import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
+import DashboardHome from './pages/dashboard/DashboardHome.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
@@ -173,6 +174,15 @@ const routes = [
     meta: {
       layout: 'EmptyDashboardLayout',
       requiredAuth: false,
+    },
+  },
+  {
+    path: '/dashboard/home',
+    name: 'DashboardHome',
+    component: DashboardHome,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
     },
   },
   // settings -> others
