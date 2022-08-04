@@ -4,6 +4,7 @@ import useAppStore from '../../store/app.store.js';
 import useUserStore from '../../store/user.store.js';
 import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
 import api from '../../../../utils/fetch-with-style.js';
+import VideosAndProfileHeader from '../../components/dashboard/headers/VideosAndProfileHeader.vue';
 
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -13,6 +14,7 @@ const alert = reactive({
 });
 
 const sessions = ref(null);
+const sessionsPerWeek = ref(4);
 
 onMounted(async () => {
   appStore.loading = true;
@@ -52,14 +54,25 @@ async function sessionsWithVideos() {
     }
   }
 }
+
+const numberOfSessionsPerWeek = ref(appStore.numberOfSessionsPerWeek);
+function update(number) {
+  appStore.numberOfSessionsPerWeek = parseInt(number);
+  numberOfSessionsPerWeek.value = parseInt(number);
+}
 </script>
 
 <template>
-  <DashboardHeader />
+  <VideosAndProfileHeader
+    :numberOfSessionsPerWeek="numberOfSessionsPerWeek"
+    @updateLayout="update"
+  />
 
   <div class="container">
-    <!-- <div v-if="appStore.loading === false" class="row my-3 px-3"> -->
-    <div class="row my-3 px-3 animate__animated animate__fadeIn animate__faster">
+    <div
+      v-if="appStore.loading === false"
+      class="row my-3 px-3 animate__animated animate__fadeIn animate__faster"
+    >
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-3 alert">
         <span>{{ alert.msg }}</span>
@@ -71,10 +84,13 @@ async function sessionsWithVideos() {
         :key="`key-video-session-${session.id}`"
         class="p-0"
         :class="{
-          'col-12': sessions.length === 1,
-          'col-6': sessions.length === 2,
-          'col-4': sessions.length === 3,
-          'col-3': sessions.length >= 4,
+          'col-12': sessions.length === 1 || numberOfSessionsPerWeek === 1,
+          'col-6': sessions.length === 2 || numberOfSessionsPerWeek === 2,
+          'col-4': sessions.length === 3 || numberOfSessionsPerWeek === 3,
+          'col-3': sessions.length === 4 || numberOfSessionsPerWeek === 4,
+          'col-2': sessions.length === 5 || numberOfSessionsPerWeek === 5,
+          'col-1': sessions.length === 6 || numberOfSessionsPerWeek === 6,
+          'col-0': sessions.length === 7 || numberOfSessionsPerWeek === 7,
         }"
       >
         <div class="d-flex flex-column">
@@ -99,6 +115,18 @@ async function sessionsWithVideos() {
 </template>
 
 <style scoped>
+.col-2 {
+  width: 20%;
+}
+
+.col-1 {
+  width: 16.67%;
+}
+
+.col-0 {
+  width: 14.286%;
+}
+
 .image-wrapper {
   aspect-ratio: 1/1;
   width: auto;

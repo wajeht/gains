@@ -1,5 +1,5 @@
 <script setup>
-import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
+import VideosAndProfileHeader from '../../components/dashboard/headers/VideosAndProfileHeader.vue';
 
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -168,7 +168,8 @@ async function logout() {
 </script>
 
 <template>
-  <DashboardHeader />
+  <VideosAndProfileHeader />
+
   <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="my-3 d-flex flex-column gap-3">
       <!-- alert -->
@@ -178,7 +179,7 @@ async function logout() {
 
       <!-- profile -->
       <div>
-        <h5><i class="bi bi-person-fill"></i> Profile</h5>
+        <!-- <h5><i class="bi bi-person-fill"></i> Profile</h5> -->
         <div class="card">
           <div class="card-body">
             <div class="row g-3">

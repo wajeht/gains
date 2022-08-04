@@ -5,6 +5,7 @@ const useAppStore = defineStore({
   state: () => {
     return {
       loading: false,
+      numberOfSessionsPerWeek: 4,
       toast: {
         toggle: false,
         message: '',
@@ -37,6 +38,11 @@ const useAppStore = defineStore({
         this.clearToast();
       }, 5000);
     },
+  },
+  persist: {
+    id: 'app',
+    storage: window.localStorage,
+    paths: ['numberOfSessionsPerWeek', 'unit'],
   },
 });
 
