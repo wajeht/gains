@@ -93,7 +93,7 @@ export async function getUserSessions(req, res) {
 
   const sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);
 
-  if (!sessions.data.length) throw new CustomError.BadRequestError(`There are no sessions available for user id ${user_id}!`); // prettier-ignore
+  // if (!sessions.data.length) throw new CustomError.BadRequestError(`There are no sessions available for user id ${user_id}!`); // prettier-ignore
 
   res.status(StatusCodes.OK).json({
     status: 'success',

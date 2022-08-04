@@ -49,7 +49,8 @@ async function getUserSessions() {
     if (json.data?.length === 0) {
       appStore.loading = false;
       alert.type = 'warning';
-      alert.msg = json.message + ' Please add a session via click the plus icon!';
+      alert.msg =
+        'There are no session with videos available available at this time! Please add a session via click the plus icon!';
       return;
     }
 
