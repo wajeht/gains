@@ -145,7 +145,10 @@ async function getCurrentSessionDetails() {
                   </span>
 
                   <!-- sets -->
-                  <span class="pt-2 d-flex flex-column">
+                  <span
+                    class="d-flex flex-column"
+                    :class="{ 'pt-0': !log.notes, 'pt-2': log.notes }"
+                  >
                     <small v-for="set in log.sets" :key="`key-set-${set.id}`">
                       1 set(s) x {{ set.reps }} rep(s) x {{ set.weight }}
                       {{ appStore.unitLabel }} @{{ set.rpe }} rpe
@@ -193,6 +196,7 @@ async function getCurrentSessionDetails() {
     </div>
   </div>
 </template>
+
 <style scoped>
 .video-wrapper {
   aspect-ratio: 1/1;

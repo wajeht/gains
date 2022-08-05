@@ -10,6 +10,7 @@ export async function up(knex) {
       name                  VARCHAR(500) NOT NULL,
       notes                 VARCHAR(1000),
       collapsed             BOOLEAN DEFAULT FALSE,
+      private               BOOLEAN DEFAULT TRUE,
       sets_notes_visibility BOOLEAN DEFAULT FALSE,
       user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
       session_id            INT REFERENCES sessions on DELETE CASCADE NOT NULL,

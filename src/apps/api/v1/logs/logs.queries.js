@@ -17,3 +17,13 @@ export function createLog(body) {
 export function getLogById(log_id) {
   return db.select('*').from('logs').where({ id: log_id });
 }
+
+/**
+ * It updates the private state of a log
+ * @param log_id - The id of the log you want to update
+ * @param private_state - true or false
+ * @returns A promise
+ */
+export function updatePrivateState(log_id, private_state) {
+  return db.update({ private: private_state }).from('logs').where({ id: log_id }).returning('*');
+}

@@ -14,6 +14,7 @@ export const createLogs = [
       'json',
       'exercise_id',
       'collapsed',
+      'private',
       'sets_notes_visibility',
     ];
     const fields = Object.keys(data).some((key) => availableFields.indexOf(key) >= 0);
@@ -28,6 +29,16 @@ export const createLogs = [
     .bail()
     .isBoolean()
     .withMessage('collapsed must a boolean format')
+    .bail()
+    .toBoolean(),
+  body('private')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('private must not be empty!')
+    .bail()
+    .isBoolean()
+    .withMessage('private must a boolean format')
     .bail()
     .toBoolean(),
   body('sets_notes_visibility')
@@ -139,4 +150,31 @@ export const uploadAVideo = [
       return true;
     })
     .toInt(),
+];
+
+export const updatePrivateState = [
+  param('log_id')
+    .trim()
+    .notEmpty()
+    .withMessage('lid must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('lid must be an ID!')
+    .bail()
+    .toInt()
+    .custom(async (log_id) => {
+      const log = await LogsQueries.getLogById(log_id);
+      if (log.length === 0) throw new Error('Log does not exist!');
+      return true;
+    })
+    .toInt(),
+  body('private')
+    .trim()
+    .notEmpty()
+    .withMessage('private must not be empty!')
+    .bail()
+    .isBoolean()
+    .withMessage('private must a boolean format')
+    .bail()
+    .toBoolean(),
 ];

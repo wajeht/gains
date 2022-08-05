@@ -33,4 +33,17 @@ logs.post(
   catchAsyncErrors(LogsController.uploadAVideo),
 );
 
+/**
+ * POST /api/v1/logs/{log_id}/update-private-state
+ * @tags logs
+ * @summary set if a log is private or not
+ * @param {number} log_id.form.required - the name of the log - application/x-www-form-urlencoded
+ * @param {boolean} private.form.required  - private value - application/x-www-form-urlencoded
+ */
+logs.patch(
+  '/:log_id/update-private-state',
+  validator(LogsValidation.updatePrivateState),
+  catchAsyncErrors(LogsController.updatePrivateState),
+);
+
 export default logs;

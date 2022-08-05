@@ -6,6 +6,13 @@ import express from 'express';
 const sessions = express.Router();
 
 /**
+ * GET /api/v1/sessions/community-sessions
+ * @tags sessions
+ * @summary get all the sessions
+ */
+sessions.get('/community-sessions', catchAsyncErrors(SessionsController.getAllSessions));
+
+/**
  * POST /api/v1/sessions
  * @tags sessions
  * @summary create a session to start logging

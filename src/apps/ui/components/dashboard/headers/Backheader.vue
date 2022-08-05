@@ -29,8 +29,8 @@ export default {
       back = back[back.length - 2]; // this should be -1 // fix our folder structure
       this.previousPageName = capitalizeAWord(back);
     } else {
-      back = back.split('/');
-      back = back[back.length - 1];
+      back = back?.split('/');
+      back = back[back?.length - 1];
       this.previousPageName = capitalizeAWord(back);
     }
   },

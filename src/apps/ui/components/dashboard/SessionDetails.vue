@@ -276,6 +276,7 @@ async function addAExercise() {
       session_id: currentSessionDetails.session_id,
       name: exercise.name,
       collapsed: true,
+      private: true,
       exercise_id: exercise.id,
       sets_notes_visibility: false,
     };
@@ -675,6 +676,34 @@ function clearDataAndDismissUploadAVideoModal() {
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('upload-a-video'));
   modal.hide();
 }
+
+async function updateLogVisibility(log_id, state) {
+  try {
+    const res = await api.patch(`/api/v1/logs/${log_id}/update-private-state`, {
+      private: state,
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 </script>
 
 <template>
@@ -726,11 +755,8 @@ function clearDataAndDismissUploadAVideoModal() {
                     @click="hideOrCollapsedAllLogs()"
                     style="cursor: pointer; margin-right: -12px"
                   >
-                    <i v-if="!hideOrCollapsedAllLogsState" class="bi bi bi-toggle-off"></i>
-                    <i
-                      v-if="hideOrCollapsedAllLogsState"
-                      class="bi bi bi-toggle-on text-success"
-                    ></i>
+                    <i v-if="!hideOrCollapsedAllLogsState" class="bi bi-chevron-down"></i>
+                    <i v-if="hideOrCollapsedAllLogsState" class="bi bi-chevron-up"></i>
                   </h5>
                 </span>
 
@@ -746,10 +772,18 @@ function clearDataAndDismissUploadAVideoModal() {
 
                 <!-- icons group -->
                 <small class="card-text card-text d-flex flex-column">
-                  <!-- id -->
+                  <!-- session id -->
                   <span>
-                    <font-awesome-icon icon="id-badge" class="me-1" />Session ID:
+                    <!-- <font-awesome-icon icon="id-badge" class="me-1" />Session ID: -->
+                    <i class="bi bi-clipboard2-data-fill me-1"></i>Session ID:
                     <span class="fw-light">{{ currentSessionDetails.session_id }}</span>
+                  </span>
+
+                  <!-- user id -->
+                  <span>
+                    <!-- <font-awesome-icon icon="id-badge" class="me-1" />User ID: -->
+                    <i class="bi bi-person-fill me-1"></i>User ID:
+                    <span class="fw-light">{{ currentSessionDetails.user_id }}</span>
                   </span>
 
                   <!-- sleep -->
@@ -839,7 +873,14 @@ function clearDataAndDismissUploadAVideoModal() {
 
         <!-- exercise logs -->
         <span v-for="(log, index) in currentSessionDetails.logs" :key="`key-${log.index}`">
-          <div class="card p-0" v-auto-animate>
+          <div
+            class="card p-0"
+            :style="{
+              'border-top': `${!log.private ? '1.8px solid #FFC008' : ''}`,
+              'margin-top': `${!log.private ? '-.8px' : ''}`,
+            }"
+            v-auto-animate
+          >
             <!-- individual exercises log -->
             <div class="card-body">
               <span class="m-0 p-0" v-auto-animate>
@@ -849,7 +890,7 @@ function clearDataAndDismissUploadAVideoModal() {
                   <span>{{ index + 1 }}. {{ log.name }}</span>
 
                   <!-- options -->
-                  <span class="d-flex gap-2">
+                  <span class="d-flex gap-3 align-items-center">
                     <!-- show/hide button -->
                     <button
                       @click="log.collapsed = !log.collapsed"
@@ -861,6 +902,44 @@ function clearDataAndDismissUploadAVideoModal() {
                       <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
                       <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
                     </button>
+
+                    <!-- lock a video -->
+                    <span
+                      @click="
+                        (log.private = !log.private), updateLogVisibility(log.id, log.private)
+                      "
+                      style="cursor: pointer; color: #161616"
+                    >
+                      <span v-if="!log.private">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-unlock"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"
+                          />
+                        </svg>
+                      </span>
+
+                      <span v-if="log.private">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-lock"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
 
                     <!-- lift settings -->
                     <div class="dropdown">
