@@ -62,7 +62,7 @@ async function getSessions() {
 
   <div v-if="!appStore.loading" class="animate__animated animate__fadeIn animate__faster">
     <div class="container px-3">
-      <div class="my-3 d-flex flex-column gap-3">
+      <div class="my-3 d-flex flex-column gap-3" style="margin-top: 0px !important">
         <div v-for="s in sessions" :key="`dashboard-home-videos-key-${s.id}`">
           <span v-if="s.logs">
             <!-- card -->
@@ -79,13 +79,17 @@ async function getSessions() {
                     height="24"
                     class="rounded-circle me-2"
                   />
-                  <span>{{ s.username }}</span>
+                  <span role="button" @click="router.push('/dashboard/profile')">{{
+                    s.username
+                  }}</span>
                 </div>
 
                 <!-- right -->
                 <div class="d-flex justify-content-between gap-3">
                   <!-- session name -->
-                  <span>{{ s.name }}</span>
+                  <span role="button" @click="router.push(`/dashboard/sessions/${s.id}`)">{{
+                    s.name
+                  }}</span>
 
                   <!-- settings -->
                   <div class="dropdown">
