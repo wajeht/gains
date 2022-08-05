@@ -1,6 +1,11 @@
 import multer from 'multer';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { env } from '../config/env.js';
+
+function mb(value) {
+  return value * 1024 * 1024;
+}
 
 const imageFileFilter = (req, file, cb) => {
   const fileTypes = /jpeg|jpg|png|gif/;
@@ -15,11 +20,11 @@ const imageFileFilter = (req, file, cb) => {
 };
 
 const imageLimits = {
-  fileSize: 3 * 1024 * 1024, // 3mb
+  fileSize: env === 'production' ? mb(3) : mb(1000),
 };
 
 const videoLimits = {
-  fileSize: 10 * 1024 * 1024, // 10mb
+  fileSize: env === 'production' ? mb(10) : mb(1000),
 };
 
 const storage = multer.diskStorage({
