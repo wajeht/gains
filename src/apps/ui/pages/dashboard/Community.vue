@@ -37,7 +37,9 @@ async function getSessions() {
     }
 
     json.data.forEach((ss) => {
-      ss.logs['currentLogStep'] = 0;
+      if (ss.logs) {
+        ss.logs['currentLogStep'] = 0;
+      }
     });
 
     return json.data;
