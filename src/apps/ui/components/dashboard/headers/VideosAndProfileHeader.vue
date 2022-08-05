@@ -46,9 +46,22 @@ const number = ref(props.numberOfSessionsPerWeek);
     >
       <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
         <font-awesome-icon icon="user" />
-        <span>Profile</span>
+        <span>Profile layout</span>
       </h5>
     </router-link>
+
+    <!-- videos settings -->
+    <span
+      v-if="route.path === '/dashboard/videos'"
+      data-bs-toggle="modal"
+      data-bs-target="#update-videos-settings-layout"
+      class="link-secondary"
+      role="button"
+    >
+      <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
+        <font-awesome-icon icon="bars" />
+      </h5>
+    </span>
 
     <!-- profile view -->
     <router-link
@@ -59,20 +72,19 @@ const number = ref(props.numberOfSessionsPerWeek);
     >
       <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
         <font-awesome-icon icon="play" />
-        <span>Videos</span>
+        <span>Videos layout</span>
       </h5>
     </router-link>
 
-    <!-- settings -->
+    <!-- profile settings -->
     <span
-      v-if="route.path === '/dashboard/videos'"
-      data-bs-toggle="modal"
-      data-bs-target="#update-videos-settings-layout"
+      v-if="route.path === '/dashboard/profile'"
+      @click="router.push('/dashboard/settings/account/user-details')"
       class="link-secondary"
       role="button"
     >
       <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
-        <font-awesome-icon icon="bars" />
+        <font-awesome-icon icon="gear" />
       </h5>
     </span>
 

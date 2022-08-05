@@ -60,7 +60,7 @@ async function logout() {
     <router-link to="/dashboard/profile" class="link-secondary" role="button">
       <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
         <font-awesome-icon icon="user" />
-        <span>Profile</span>
+        <span>My profile</span>
       </h5>
     </router-link>
 
