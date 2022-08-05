@@ -60,8 +60,8 @@ onMounted(() => {
 });
 
 onMounted(() => {
-  let back = router.options.history.state.back.split('/');
-  back = back[back.length - 1];
+  let back = router.options.history.state.back?.split('/');
+  back = back[back?.length - 1];
   previousPageName.value = capitalizeAWord(back);
 });
 

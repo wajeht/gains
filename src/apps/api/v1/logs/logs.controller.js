@@ -57,3 +57,25 @@ export async function uploadAVideo(req, res) {
     data: inserted,
   });
 }
+
+/**
+ * It updates the private state of a log.
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The updated log
+ */
+export async function updatePrivateState(req, res) {
+  const { log_id } = req.params;
+  const value = req.body.private;
+
+  const updated = await LogsQueries.updatePrivateState(log_id, value);
+
+  logger.info(`User id: ${updated[0].user_id} has updated log into ${JSON.stringify(req.body)}!`);
+
+  return res.status(StatusCodes.CREATED).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: updated,
+  });
+}

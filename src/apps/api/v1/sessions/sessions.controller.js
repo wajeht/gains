@@ -133,8 +133,23 @@ export async function getSessionsWithVideos(req, res) {
   const user_id = req.params.user_id;
   const sessions = await SessionQueries.sessionsWithVideosByUserId(user_id);
 
-  if (!sessions.length) throw new CustomError.BadRequestError(`There are no session with videos available available for user id ${user_id}!`); // prettier-ignore
+  // if (!sessions.length) throw new CustomError.BadRequestError(`There are no session with videos available available for user id ${user_id}!`); // prettier-ignore
 
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: sessions,
+  });
+}
+
+/**
+ * It gets all the sessions from the database and returns them in the response
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function getAllSessions(req, res) {
+  const sessions = await SessionQueries.getAllSessions();
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,

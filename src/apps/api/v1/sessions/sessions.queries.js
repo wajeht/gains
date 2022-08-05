@@ -351,6 +351,81 @@ export async function sessionsWithVideosByUserId(user_id) {
 }
 
 /**
+ * Get all sessions, and for each session, get all videos that are not deleted, and order them by id.
+ * @returns An array of objects.
+ */
+export async function getAllSessions() {
+  // session sets info
+  const { rows: logs } = await db.raw(
+    `
+    select
+      l.*,
+      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets,
+      (select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
+    from
+      sets s
+      full join logs l on l.id = s.log_id
+      full join videos v on v.log_id = l.id
+      full join sessions ss on ss.id = s.session_id
+    where (
+      l.deleted = false
+      and l.private = false
+      and ss.end_date is not null
+    )
+    group by
+      l.id
+    order by
+      l.id asc
+    `,
+  );
+
+  const { rows: sessions } = await db.raw(
+    `
+    select
+      ss.*,
+      b.*,
+      v.*,
+      u.username,
+      ud.profile_picture_url,
+      ss.id as "session_id",
+      ss.name as "name",
+      ss.start_date as "start_date",
+      b.name as "block_name",
+      ss.end_date as "end_date",
+      ss.json as "json"
+    from
+      sessions ss
+      full join blocks b on b.id = ss.block_id
+      inner join variables v on v.session_id = ss.id
+      inner join users u on u.id = ss.user_id
+      inner join user_details ud on ud.user_id = u.id
+    where (
+      ss.deleted = false
+      and ss.end_date is not null
+    )
+  `,
+  );
+
+  // this is not good for performance, but I cannot figure who to combined complicated sql
+  const maps = {};
+  sessions.forEach((session, index) => {
+    maps[session.session_id] = session;
+  });
+
+  logs.forEach((log, index) => {
+    if (!maps[`${log.session_id}`]['logs']) {
+      maps[`${log.session_id}`]['logs'] = [];
+      maps[`${log.session_id}`]['logs'].push(log);
+    } else {
+      // maps[`${log.session_id}`]['logs'] = [log];
+      maps[`${log.session_id}`]['logs'].push(log);
+    }
+  });
+
+  return [...Object.values(maps).sort().reverse()];
+}
+
+/**
  * Update the session with the given sid and uid to be deleted.
  * @param sid - The session ID
  * @param uid - user id

@@ -126,45 +126,6 @@ async function getWeeklyWeightIn() {
     }
   }
 }
-
-async function logout() {
-  try {
-    loading.value = true;
-
-    await sleep(800);
-
-    const res = await api.get('/api/auth/logout');
-    const json = await res.json();
-
-    if (!res.ok) {
-      loading.value = false;
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
-    }
-
-    userStore.isLoggedIn = false;
-    userStore.clearUserInfo();
-
-    let logoutLink = '/login';
-    if (isMobile()) {
-      logoutLink = '/dashboard/login';
-    }
-
-    router.push({ path: logoutLink });
-  } catch (e) {
-    loading.value = false;
-    alert.type = 'danger';
-    if (Array.isArray(e)) {
-      alert.msg = e.map((cur) => cur.msg).join(' ');
-      return;
-    } else {
-      alert.msg = e;
-    }
-  }
-}
 </script>
 
 <template>
@@ -209,18 +170,6 @@ async function logout() {
 
                 <!-- description -->
                 <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-
-                <!-- logout -->
-                <button @click="logout()" class="btn btn-sm btn-danger" :disabled="loading">
-                  <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <span v-if="!loading">
-                    <font-awesome-icon icon="right-from-bracket" />
-                    Logout
-                  </span>
-                  <span v-if="loading"> Loading... </span>
-                </button>
 
                 <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
               </div>
@@ -272,7 +221,8 @@ async function logout() {
                     <tr>
                       <th class="text-start" scope="col">Lift</th>
                       <th class="text-start">
-                        Log <small class="text-muted fst-italic fw-light">(reps x weight)</small>
+                        Log
+                        <small class="text-muted fst-italic fw-light">(reps x weight)</small>
                       </th>
                       <th class="text-end" scope="col">e1RM</th>
                     </tr>
@@ -333,7 +283,9 @@ async function logout() {
                   <tbody>
                     <tr v-for="log in weeklyWeightIn" :key="`key-${log.id}`">
                       <td class="text-start">{{ dayjs(log.date).format('MM/DD') }}</td>
-                      <td class="text-center">{{ log.body_weight + ' ' + appStore.unitLabel }}</td>
+                      <td class="text-center">
+                        {{ log.body_weight + ' ' + appStore.unitLabel }}
+                      </td>
                       <td
                         class="text-center"
                         :class="{

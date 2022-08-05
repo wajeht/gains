@@ -10,12 +10,12 @@ const route = useRoute();
   >
     <!-- Home -->
     <router-link
-      :class="{ active: $route.name === 'DashboardHome' }"
+      :class="{ active: $route.name === 'Community' }"
       class="d-flex flex-column py-3 gap-1"
-      to="/dashboard/home"
+      to="/dashboard/community"
     >
-      <font-awesome-icon icon="home-user" />
-      <span>Home</span>
+      <font-awesome-icon icon="user-group" />
+      <span>Community</span>
     </router-link>
 
     <!-- Sessions -->
@@ -30,26 +30,26 @@ const route = useRoute();
 
     <!-- profile/videos -->
     <span>
-      <!-- profile -->
+      <!-- videos -->
       <router-link
-        v-if="route.path === '/dashboard/profile'"
-        :class="{ active: $route.name === 'Profile' }"
-        class="d-flex flex-column py-3 gap-1"
-        to="/dashboard/profile"
-      >
-        <font-awesome-icon icon="user" />
-        <span>Profile</span>
-      </router-link>
-
-      <!-- profile -->
-      <router-link
-        v-else
+        v-if="route.path === '/dashboard/videos'"
         :class="{ active: $route.name === 'Videos' }"
         class="d-flex flex-column py-3 gap-1"
         to="/dashboard/videos"
       >
         <font-awesome-icon icon="play" />
         <span>Videos</span>
+      </router-link>
+
+      <!-- profile -->
+      <router-link
+        v-else
+        :class="{ active: $route.name === 'Profile' }"
+        class="d-flex flex-column py-3 gap-1"
+        to="/dashboard/profile"
+      >
+        <font-awesome-icon icon="user" />
+        <span>Profile</span>
       </router-link>
     </span>
 
