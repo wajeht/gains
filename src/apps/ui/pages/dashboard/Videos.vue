@@ -83,15 +83,7 @@ function update(number) {
         v-for="session in sessions"
         :key="`key-video-session-${session.id}`"
         class="p-0"
-        :class="{
-          'col-12': sessions.length === 1 || numberOfSessionsPerWeek === 1,
-          'col-6': sessions.length === 2 || numberOfSessionsPerWeek === 2,
-          'col-4': sessions.length === 3 || numberOfSessionsPerWeek === 3,
-          'col-3': sessions.length === 4 || numberOfSessionsPerWeek === 4,
-          'col-2': sessions.length === 5 || numberOfSessionsPerWeek === 5,
-          'col-1': sessions.length === 6 || numberOfSessionsPerWeek === 6,
-          'col-0': sessions.length === 7 || numberOfSessionsPerWeek === 7,
-        }"
+        :style="{ width: 100 / numberOfSessionsPerWeek + '%' }"
       >
         <div class="d-flex flex-column">
           <router-link :to="{ name: 'VideoDetails', params: { id: session.id } }">
