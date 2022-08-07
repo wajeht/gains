@@ -1,12 +1,11 @@
+<img src="https://user-images.githubusercontent.com/58354193/183277639-9f9f3ee6-f62e-416c-895b-2a65d97291ed.png" width="270" height="535">
+
+
 # 💪 Gains
 
 [![Node.js CI](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/allkindsofgains/gains)
 
 The best way to track your workouts
-
-<video src="https://user-images.githubusercontent.com/58354193/183276928-2565bde9-63a8-460f-847c-7b8499dbf57b.mp4" autoplay controls>
-</video>
-
 
 # 📚 Technologies
 
