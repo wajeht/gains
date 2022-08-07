@@ -222,4 +222,12 @@ async function getSessions() {
   width: 100%;
   object-fit: cover;
 }
+
+video::-webkit-media-controls {
+  visibility: hidden;
+}
+
+video::-webkit-media-controls-enclosure {
+  visibility: visible;
+}
 </style>
