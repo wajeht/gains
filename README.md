@@ -4,8 +4,9 @@
 
 The best way to track your workouts
 
-<video width="414" height="736" src="./.gains/demo.mp4"  controls>
+<video src="https://user-images.githubusercontent.com/58354193/183276928-2565bde9-63a8-460f-847c-7b8499dbf57b.mp4" autoplay controls>
 </video>
+
 
 # 📚 Technologies
 
