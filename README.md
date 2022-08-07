@@ -4,8 +4,7 @@
 
 The best way to track your workouts
 
-<video width="414" height="736" controls>
-  <source src="data/demo.mp4" type="video/mp4">
+<video width="414" height="736" src="./.gains/demo.mp4"  controls>
 </video>
 
 # 📚 Technologies
