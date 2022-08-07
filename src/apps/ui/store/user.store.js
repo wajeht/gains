@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { isMobile } from '../../../utils/helpers.js';
 
+import useAppStore from './app.store.js';
+
 function removeAllModal() {
   // close all modals but the one you want to open
   const modals = document.querySelectorAll('.modal');
@@ -30,12 +32,14 @@ const useUserStore = defineStore({
   actions: {
     async checkAuthentication() {
       try {
+        const appStore = useAppStore();
         const res = await window.fetch(`/api/v1/users/check-authentication`);
         if (res.status === 401 || res.status === 403) {
           this.isLoggedIn = false;
           this.clearUserInfo();
           removeAllModal();
           let logoutLink = '/login';
+          appStore.loading = false;
           if (isMobile()) logoutLink = '/dashboard/login';
           this.router.push({ params: logoutLink });
         }
@@ -64,9 +68,11 @@ const useUserStore = defineStore({
       this.user.profile_picture_url = null;
     },
     logout() {
+      const appStore = useAppStore();
       this.isLoggedIn = false;
       this.clearUserInfo();
       removeAllModal();
+      appStore.loading = false;
       let logoutLink = '/login';
       if (isMobile()) {
         logoutLink = '/dashboard/login';
