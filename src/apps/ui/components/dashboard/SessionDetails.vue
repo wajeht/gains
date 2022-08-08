@@ -2056,6 +2056,7 @@ async function updateLogVisibility(log_id, state) {
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            :disabled="uploadAVideoLoading"
           ></button>
         </div>
 
@@ -2088,6 +2089,7 @@ async function updateLogVisibility(log_id, state) {
               @click="$refs.video.click()"
               class="alert alert-primary d-flex flex-column gap-1 m-0 p-0 py-3 my-1"
               role="button"
+              v-if="!uploadAVideoLoading"
             >
               <i class="bi bi-cloud-arrow-up-fill"></i>
               <span> Click here to choose video! </span>
