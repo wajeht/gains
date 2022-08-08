@@ -84,6 +84,7 @@ function update(number) {
         :key="`key-video-session-${session.id}`"
         class="p-0"
         :style="{ width: 100 / numberOfSessionsPerWeek + '%' }"
+        v-lazy-container="{ selector: 'img' }"
       >
         <div class="d-flex flex-column">
           <router-link :to="{ name: 'VideoDetails', params: { id: session.id } }">
@@ -91,7 +92,7 @@ function update(number) {
               <span class="image-wrapper">
                 <img
                   class="card-img-top image"
-                  :src="
+                  :data-src="
                     session.videos[0].screenshot_url ??
                     `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
                   "

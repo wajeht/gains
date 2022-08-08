@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout" />
+  <component :is="layout" :class="{ 'dashboard-layout-style': layout === 'DashboardLayout' }" />
 </template>
 
 <script>
@@ -21,7 +21,10 @@ export default {
   },
   watch: {
     $route(to) {
-      const userStore = useUserStore();
+      if (to.meta.layout === 'DashboardLayout') {
+        document.body.style.backgroundColor = 'black';
+      }
+
       // set layout by route meta
       if (to.meta.layout !== undefined) {
         this.layout = to.meta.layout;
@@ -32,3 +35,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.dashboard-layout-style {
+  max-width: 540px;
+  margin: 0 auto;
+  background-color: black !important;
+}
+</style>
