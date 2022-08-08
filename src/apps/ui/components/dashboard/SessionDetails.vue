@@ -2113,4 +2113,12 @@ async function updateLogVisibility(log_id, state) {
   background: #f0f1f2;
   color: black !important;
 }
+
+video::-webkit-media-controls {
+  visibility: hidden;
+}
+
+video::-webkit-media-controls-enclosure {
+  visibility: visible;
+}
 </style>
