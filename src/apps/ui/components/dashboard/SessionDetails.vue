@@ -87,6 +87,8 @@ const uploadAVideoLoading = ref(false);
 const uploadAVideoLogId = ref(null);
 const uploadAVideoLogIndex = ref(null);
 const video = ref(null);
+const videoPreview = ref(null);
+const videoPreviewFileExist = ref(false);
 
 // watches
 //  update exercise db as changes in categories
@@ -620,6 +622,19 @@ function clearDataAndDismissDeleteSessionModal() {
   modal.hide();
 }
 
+function previewVideoUpload() {
+  videoPreviewFileExist.value = true;
+  const file = video.value.files[0];
+  // let preview = document.getElementById('video-preview');
+  // console.log(videoPreview.value);
+  let reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.addEventListener('load', function () {
+    // preview.src = reader.result;
+    videoPreview.value.src = reader.result;
+  });
+}
+
 async function uploadAVideo() {
   try {
     uploadAVideoLoading.value = true;
@@ -644,6 +659,7 @@ async function uploadAVideo() {
     }
 
     if (!res.ok) {
+      videoPreviewFileExist.value = false;
       if (json.errors) {
         throw json.errors;
       } else {
@@ -658,6 +674,7 @@ async function uploadAVideo() {
 
     alert.type = 'success';
     alert.msg = 'A video has been uploaded!';
+    videoPreviewFileExist.value = false;
   } catch (e) {
     uploadAVideoLoading.value = false;
     clearDataAndDismissUploadAVideoModal();
@@ -2044,6 +2061,18 @@ async function updateLogVisibility(log_id, state) {
 
         <!-- body -->
         <div class="modal-body text-center">
+          <div class="video-wrapper mb-3" v-if="videoPreviewFileExist">
+            <video
+              id="video-preview"
+              ref="videoPreview"
+              class="video"
+              controls
+              playsinline
+              muted
+            ></video>
+          </div>
+
+          <!-- click here to chose video -->
           <div>
             <input
               ref="video"
@@ -2051,6 +2080,7 @@ async function updateLogVisibility(log_id, state) {
               id="video"
               type="file"
               accept="video/*"
+              @change="previewVideoUpload()"
               hidden
             />
 
