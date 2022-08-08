@@ -689,6 +689,7 @@ async function uploadAVideo() {
 }
 
 function clearDataAndDismissUploadAVideoModal() {
+  videoPreviewFileExist.value = false;
   uploadAVideoLoading.value = false;
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('upload-a-video'));
   modal.hide();
