@@ -412,15 +412,17 @@ export async function getAllSessions() {
     maps[session.session_id] = session;
   });
 
-  logs.forEach((log, index) => {
-    if (!maps[`${log.session_id}`]['logs']) {
-      maps[`${log.session_id}`]['logs'] = [];
-      maps[`${log.session_id}`]['logs'].push(log);
-    } else {
-      // maps[`${log.session_id}`]['logs'] = [log];
-      maps[`${log.session_id}`]['logs'].push(log);
-    }
-  });
+  if (logs.length) {
+    logs.forEach((log, index) => {
+      if (!maps[`${log.session_id}`]['logs']) {
+        maps[`${log.session_id}`]['logs'] = [];
+        maps[`${log.session_id}`]['logs'].push(log);
+      } else {
+        // maps[`${log.session_id}`]['logs'] = [log];
+        maps[`${log.session_id}`]['logs'].push(log);
+      }
+    });
+  }
 
   return [...Object.values(maps).sort().reverse()];
 }
