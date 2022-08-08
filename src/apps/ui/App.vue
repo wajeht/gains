@@ -1,5 +1,6 @@
 <template>
-  <component :is="layout" :class="{ 'dashboard-layout-style': layout === 'DashboardLayout' }" />
+  <component :is="layout"
+    :class="{ 'dashboard-layout-style': layout === 'DashboardLayout' || layout === 'EmptyDashboardLayout' }" />
 </template>
 
 <script>
@@ -21,8 +22,10 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.meta.layout === 'DashboardLayout') {
+      if (to.meta.layout === 'DashboardLayout' || to.meta.layout === 'EmptyDashboardLayout') {
         document.body.style.backgroundColor = 'black';
+      } else {
+        document.body.style.backgroundColor = ''
       }
 
       // set layout by route meta
