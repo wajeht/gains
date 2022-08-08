@@ -14,20 +14,11 @@
           </p>
         </div>
         <div class="col-md-5">
-          <svg
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: 500x500"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#eee"></rect>
-            <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
-          </svg>
+          <div class="video-wrapper">
+            <video class="video" controls playsinline muted preload="metadata">
+              <source src="../../assets/videos/tracking.mp4#t=0.1" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </section>
@@ -45,20 +36,11 @@
           </p>
         </div>
         <div class="col-md-5 order-md-1">
-          <svg
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: 500x500"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#eee"></rect>
-            <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
-          </svg>
+          <div class="video-wrapper">
+            <video class="video" controls playsinline muted preload="metadata">
+              <source src="../../assets/videos/instagram-style.mp4#t=0.1" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </section>
@@ -75,20 +57,11 @@
           </p>
         </div>
         <div class="col-md-5">
-          <svg
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: 500x500"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#eee"></rect>
-            <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
-          </svg>
+          <div class="video-wrapper">
+            <video class="video" controls playsinline muted preload="metadata">
+              <source src="../../assets/videos/calculators.mp4#t=0.1" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </section>
@@ -106,20 +79,11 @@
           </p>
         </div>
         <div class="col-md-5 order-md-1">
-          <svg
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500"
-            height="500"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: 500x500"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#eee"></rect>
-            <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
-          </svg>
+          <div class="video-wrapper">
+            <video class="video" controls playsinline muted preload="metadata">
+              <source src="../../assets/videos/chart.mp4#t=0.1" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </section>
@@ -159,3 +123,27 @@
     </section>
   </div>
 </template>
+
+<style scoped>
+.video-wrapper {
+  aspect-ratio: 1/1;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.video {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  background-color: black;
+}
+
+video::-webkit-media-controls {
+  visibility: hidden;
+}
+
+video::-webkit-media-controls-enclosure {
+  visibility: visible;
+}
+</style>
