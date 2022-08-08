@@ -3,7 +3,8 @@
   <div
     class="d-flex justify-content-center align-items-center container bg-white"
     style="
-      width: 100%;
+      /* width: 100%; */
+      max-width: 540px;
       height: 100%;
       position: fixed;
       z-index: 10000;

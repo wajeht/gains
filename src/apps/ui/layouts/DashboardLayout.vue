@@ -16,7 +16,7 @@ const appStore = useAppStore();
       class="container px-0 flex-grow-1"
       style="background-color: #ebeae2"
     >
-      <Loading v-if="appStore.loading" />
+      <Loading v-if="appStore.loading" style="max-width: 540px" />
 
       <!-- toast -->
       <Toast v-if="appStore.toast.toggle && !appStore.loading" :message="appStore.toast.message" />

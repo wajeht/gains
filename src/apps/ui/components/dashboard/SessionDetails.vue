@@ -726,7 +726,7 @@ async function updateLogVisibility(log_id, state) {
 
 <template>
   <!-- loading -->
-  <Loading v-if="appStore.loading" />
+  <Loading v-if="appStore.loading" style="max-width: 540px" />
 
   <!-- header -->
   <SessionDetailsHeader />
