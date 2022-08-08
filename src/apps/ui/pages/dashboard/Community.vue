@@ -120,8 +120,9 @@ async function getSessions() {
                     :poster="log?.videos[0].screenshot_url"
                     controls
                     playsinline
+                    muted
                   >
-                    <source :src="log?.videos[0].video_url" type="video/mp4" />
+                    <source :src="`/api/v1/videos/${log?.videos[0].id}/stream`" type="video/mp4" />
                   </video>
                 </div>
               </div>
