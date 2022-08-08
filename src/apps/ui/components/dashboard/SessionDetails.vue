@@ -980,8 +980,9 @@ async function updateLogVisibility(log_id, state) {
                       :poster="v.screenshot_url"
                       :key="`video-key-${v.id}`"
                       playsinline
+                      muted
                     >
-                      <source :src="v.video_url" type="video/mp4" />
+                      <source :src="`/api/v1/videos/${v.id}/stream`" type="video/mp4" />
                     </video>
                   </div>
                 </div>
