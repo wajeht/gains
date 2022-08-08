@@ -86,7 +86,19 @@ export async function getExercises(req, res) {
  */
 export async function postExercise(req, res) {
   const body = req.body;
-  const created = await ExercisesQueries.createExercise(body);
+
+  const e = body.name
+    .split(',')
+    .filter((curr) => curr.length != 0)
+    .map((curr) => {
+      return {
+        name: curr.trim(),
+        exercise_category_id: body.exercise_category_id,
+        user_id: body.user_id,
+      };
+    });
+
+  const created = await ExercisesQueries.createExercise(e);
 
   if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a exercise for  User ID: ${body.user_id}!`); // prettier-ignore
 

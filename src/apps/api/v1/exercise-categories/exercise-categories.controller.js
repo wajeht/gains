@@ -53,7 +53,20 @@ export async function getExerciseCategories(req, res) {
  */
 export async function postExerciseCategory(req, res) {
   const body = req.body;
-  const created = await ExerciseCategoriesQueries.createExerciseCategory(body);
+  const ec = req.body.name;
+  const uid = req.body.user_id;
+
+  const data = ec
+    .split(',')
+    .filter((curr) => curr.length != 0)
+    .map((curr) => {
+      return {
+        name: curr.trim(),
+        user_id: uid,
+      };
+    });
+
+  const created = await ExerciseCategoriesQueries.createExerciseCategory(data);
 
   if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a exercise categories for  User ID: ${body.user_id}!`); // prettier-ignore
 

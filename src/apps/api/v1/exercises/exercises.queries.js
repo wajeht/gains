@@ -26,7 +26,12 @@ export function getExerciseById(id) {
  * @returns An array of objects
  */
 export function getExerciseByUserId(uid) {
-  return db.select('*').from('exercises').where({ user_id: uid }).andWhere({ deleted: false });
+  return db
+    .select('*')
+    .from('exercises')
+    .where({ user_id: uid })
+    .andWhere({ deleted: false })
+    .orderBy('id', 'desc');
 }
 
 /**
@@ -60,8 +65,17 @@ export function searchExerciseName(name, uid, ecid) {
  * @param [body] - an object with the following keys: name, exercise_category_id, user_id
  * @returns The exercise that was just created.
  */
-export function createExercise(body = { name, exercise_category_id, user_id }) {
-  return db.insert(body).into('exercises').returning('*');
+// export function createExercise(body = { name, exercise_category_id, user_id }) {
+//   return db.insert(body).into('exercises').returning('*');
+// }
+
+/**
+ * It takes in an object, inserts it into the database, and returns the object
+ * @param data - an object containing the data to be inserted into the database
+ * @returns The data that was inserted into the database.
+ */
+export function createExercise(data) {
+  return db.insert(data).into('exercises').returning('*');
 }
 
 /**

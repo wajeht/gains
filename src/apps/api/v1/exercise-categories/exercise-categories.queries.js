@@ -108,6 +108,15 @@ export function searchExerciseCategoryName(name, uid) {
  * @param [body] - The body of the request.
  * @returns The exercise category that was created.
  */
-export function createExerciseCategory(body = { name, user_id }) {
-  return db.insert(body).into('exercise_categories').returning('*');
+// export function createExerciseCategory(body = { name, user_id }) {
+//   return db.insert(body).into('exercise_categories').returning('*');
+// }
+
+/**
+ * It takes in an object, inserts it into the database, and returns the object
+ * @param data - an object containing the data to be inserted into the database
+ * @returns The data that was inserted into the exercise_categories table.
+ */
+export function createExerciseCategory(data) {
+  return db.insert(data).into('exercise_categories').returning('*');
 }
