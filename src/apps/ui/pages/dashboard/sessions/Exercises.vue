@@ -152,7 +152,20 @@ async function addAExercise() {
       }
     }
 
-    exercises.value.unshift(exercise);
+    const data = exercise.name
+      .split(',')
+      .filter((c) => c.length != 0)
+      .map((c) => {
+        return {
+          name: c.trim(),
+          exercise_category_id: exercise.exercise_category_id,
+          user_id: exercise.user_id,
+        };
+      });
+
+    data.forEach((c) => {
+      exercises.value.unshift(c);
+    });
 
     clearDataAndDismissModal();
 

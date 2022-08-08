@@ -115,7 +115,16 @@ async function addAExerciseCategory() {
       }
     }
 
-    categories.value.unshift(category);
+    const data = category.name
+      .split(',')
+      .filter((c) => c.length != 0)
+      .map((c) => {
+        return { name: c, user_id: category.user_id };
+      });
+
+    data.forEach((c) => {
+      categories.value.unshift(c);
+    });
 
     clearDataAndDismissModal();
 

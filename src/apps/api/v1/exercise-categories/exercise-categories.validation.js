@@ -18,7 +18,8 @@ export const getExerciseCategories = [
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
 ];
 
 /* Checking the body of the request to make sure it has the required fields. */
@@ -41,7 +42,8 @@ export const postExerciseCategory = [
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
   body('name')
     .trim()
     .notEmpty()
