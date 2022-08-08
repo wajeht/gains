@@ -18,33 +18,42 @@ export async function getVideo(req, res) {
 
 export async function getStreamVideo(req, res) {
   const id = req.params.id;
-
-  const range = req.headers.range;
   if (!req.headers.range) throw new CustomError.BadRequestError('Requires range header!');
 
   const [video] = await VideosQueries.findVideoById(id);
 
-  const videoSize = fs.statSync(video.video_path).size;
+  const path = video.video_path;
+  const stat = fs.statSync(path);
+  const fileSize = stat.size;
+  const range = req.headers.range;
 
-  const CHUNK_SIZE = 7 ** 6; // 7th of a 1MB
-  const start = Number(range.replace(/\D/g, ''));
-  const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+  // if (range) {
+  const parts = range.replace(/bytes=/, '').split('-');
+  const start = parseInt(parts[0], 10);
+  const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
 
-  // Create headers
-  const contentLength = end - start + 1;
-  const headers = {
-    'Content-Range': `bytes ${start}-${end}/${videoSize}`,
+  if (start >= fileSize) {
+    res.status(416).send('Requested range not satisfiable\n' + start + ' >= ' + fileSize);
+    return;
+  }
+
+  const chunksize = end - start + 1;
+  const file = fs.createReadStream(path, { start, end });
+  const head = {
+    'Content-Range': `bytes ${start}-${end}/${fileSize}`,
     'Accept-Ranges': 'bytes',
-    'Content-Length': contentLength,
+    'Content-Length': chunksize,
     'Content-Type': 'video/mp4',
   };
 
-  // HTTP Status 206 for Partial Content
-  res.writeHead(206, headers);
-
-  // create video read stream for this particular chunk
-  const videoStream = fs.createReadStream(video.video_path, { start, end });
-
-  // Stream the video chunk to the client
-  videoStream.pipe(res);
+  res.writeHead(206, head);
+  file.pipe(res);
+  // } else {
+  //   const head = {
+  //     'Content-Length': fileSize,
+  //     'Content-Type': 'video/mp4',
+  //   };
+  //   res.writeHead(200, head);
+  //   fs.createReadStream(path).pipe(res);
+  // }
 }
