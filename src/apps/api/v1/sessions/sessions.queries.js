@@ -408,9 +408,12 @@ export async function getAllSessions() {
 
   // this is not good for performance, but I cannot figure who to combined complicated sql
   const maps = {};
-  sessions.forEach((session, index) => {
-    maps[session.session_id] = session;
-  });
+
+  if (sessions.length) {
+    sessions.forEach((session, index) => {
+      maps[session.session_id] = session;
+    });
+  }
 
   if (logs.length) {
     logs.forEach((log, index) => {
