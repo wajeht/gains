@@ -1,5 +1,31 @@
 import * as VariablesQueries from './variables.queries.js';
 import { StatusCodes } from 'http-status-codes';
+import fs from 'fs/promises';
+import path from 'path';
+import { marked } from 'marked';
+
+export async function getChangelogs(req, res) {
+  let changelogs = null;
+  try {
+    changelogs = await fs.readFile(path.resolve(path.join(process.cwd(), 'CHANGELOG.md')), 'utf-8');
+  } catch (e) {
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      changelogs: null,
+    });
+  }
+
+  const changeLogsInHTMLFormat = marked.parse(changelogs);
+
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    changelogs: changeLogsInHTMLFormat,
+  });
+}
 
 /**
  * We're getting the weekly body weight in for a user and then mapping the data to include a trend
