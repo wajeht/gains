@@ -25,13 +25,13 @@ export function getExerciseById(id) {
  * @param uid - the user id of the user who created the exercise
  * @returns An array of objects
  */
-export function getExerciseByUserId(uid) {
+export function getExerciseByUserId(uid, options = { orderBy: 'id', direction: 'desc' }) {
   return db
     .select('*')
     .from('exercises')
     .where({ user_id: uid })
     .andWhere({ deleted: false })
-    .orderBy('id', 'desc');
+    .orderBy(options.orderBy, options.direction);
 }
 
 /**

@@ -178,3 +178,40 @@ export const updatePrivateState = [
     .bail()
     .toBoolean(),
 ];
+
+export const postMultipleLogs = [
+  body('session_id')
+    .trim()
+    .notEmpty()
+    .withMessage('Session id must not be empty!')
+    .isInt()
+    .withMessage('Session id must be an ID!')
+    .custom(async (sid) => {
+      const user = await SessionsQueries.getSessionBySessionId(sid);
+      if (user.length === 0) throw new Error('Session id does not exist!');
+      return true;
+    })
+    .toInt(),
+  body('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('User id must not be empty!')
+    .isInt()
+    .withMessage('User id must be an number!')
+    .custom(async (user_id, { req }) => {
+      if (user_id) {
+        const user = await UserQueries.findUserById(user_id);
+        if (user.length === 0) throw new Error('User does not exist!');
+      }
+      return true;
+    })
+    .toInt(),
+  // body('logs')
+  //   .trim()
+  //   .notEmpty()
+  //   .withMessage('logs id must not be empty!')
+  //   .custom(async (logs) => {
+  //     // validate
+  //     return true;
+  //   }),
+];
