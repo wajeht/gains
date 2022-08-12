@@ -304,6 +304,7 @@ async function addAExercise() {
             session_id: currentSessionDetails.session_id,
             name: current.name,
             exercise_id: current.id,
+            collapsed: true,
           }
         }),
       }
@@ -315,6 +316,8 @@ async function addAExercise() {
       clearDataAndDismissAddAExerciseModal();
 
       json.data.forEach((log) => {
+        log.sets = [];
+        // log.collapsed = true;
         currentSessionDetails.logs.push(log);
       })
     }
@@ -801,6 +804,9 @@ async function updateLogVisibility(log_id, state) {
           <span>{{ alert.msg }}</span>
         </div>
 
+        <!-- debug -->
+        <!-- <pre class="alert alert-danger">{{ currentSessionDetails }}</pre> -->
+
         <!-- sessions card -->
         <div class="card p-0">
           <div class="card-body">
@@ -1189,6 +1195,8 @@ async function updateLogVisibility(log_id, state) {
       </div>
     </div>
   </div>
+
+  <!-- ---------------------------------------- MODAL BELOW --------------------------------------------------- -->
 
   <!-- add a exercise -->
   <form @submit.prevent="addAExercise()" class="modal fade px-2 py-5" id="add-a-exercise" data-bs-backdrop="static"
@@ -1583,6 +1591,8 @@ async function updateLogVisibility(log_id, state) {
     data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
+
+        <!-- header -->
         <div class="modal-header">
           <h5 class="modal-title">
             <span> Add a set for </span>
@@ -1590,6 +1600,8 @@ async function updateLogVisibility(log_id, state) {
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
+        <!-- body -->
         <div class="modal-body" v-auto-animate>
           <div class="row mb-3">
             <!-- reps -->
