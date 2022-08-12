@@ -279,6 +279,7 @@ async function copyPreviousSet(currentLogIndex) {
     }
 
     currentSessionDetails.logs[currentLogIndex].sets.push(data);
+    currentSessionDetails.logs[currentLogIndex].duplicateSetLoading = false;
   } catch (e) {
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -1224,12 +1225,21 @@ async function updateLogVisibility(log_id, state) {
                   <!-- duplicate previous set -->
                   <span>
                     <button
-                      @click="copyPreviousSet(index)"
+                      @click="(log.duplicateSetLoading = true), copyPreviousSet(index)"
                       type="button"
                       class="btn btn-sm btn-outline-dark"
-                      :disabled="log.sets?.length === 0"
+                      :disabled="
+                        log.sets?.length === 0 ||
+                        currentSessionDetails.end_date ||
+                        log?.duplicateSetLoading
+                      "
                     >
-                      <i class="bi bi-clipboard-check"></i>
+                      <span
+                        v-if="log?.duplicateSetLoading"
+                        class="spinner-border spinner-border-sm p-0 m-0"
+                        role="status"
+                      ></span>
+                      <i v-if="!log?.duplicateSetLoading" class="bi bi-clipboard-check"></i>
                     </button>
                   </span>
 
