@@ -82,8 +82,11 @@ export async function updatePrivateState(req, res) {
 
 export async function postMultipleLogs(req, res) {
   const logs = req.body.logs;
+  const user_id = req.body.user_id;
 
   const created = await LogsQueries.createMultipleLogs(logs);
+
+  logger.info(`User id: ${user_id} has created multiple logs to ${JSON.stringify(logs)}!`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',

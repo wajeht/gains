@@ -1110,7 +1110,7 @@ async function updateLogVisibility(log_id, state) {
                       (addASetExerciseIndex = index),
                       (addASetLogId = log.id),
                       (set.exercise_name = log.name)
-                    " type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
+                    " type="button" class="btn btn-xs btn-outline-dark" data-bs-toggle="modal"
                       data-bs-target="#add-a-set" :disabled="currentSessionDetails.end_date">
                       <i class="bi bi-plus-circle"></i>
                     </button>
@@ -1124,7 +1124,7 @@ async function updateLogVisibility(log_id, state) {
                       (addAExerciseNoteLogId = log.id),
                       (set.exercise_name = log.name),
                       (set.notes = log.notes)
-                    " type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
+                    " type="button" class="btn btn-xs btn-outline-dark" data-bs-toggle="modal"
                       data-bs-target="#add-a-note" :disabled="currentSessionDetails.end_date">
                       <i class="bi bi-pencil-square"></i>
                     </button>
@@ -1136,7 +1136,7 @@ async function updateLogVisibility(log_id, state) {
                       (uploadAVideoLogId = log.id),
                       (set.exercise_name = log.name),
                       (uploadAVideoLogIndex = index)
-                    " type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
+                    " type="button" class="btn btn-xs btn-outline-dark" data-bs-toggle="modal"
                       data-bs-target="#upload-a-video" :disabled="log.videos?.length || currentSessionDetails.end_date">
                       <i class="bi bi-play-circle"></i>
                     </button>
@@ -1145,10 +1145,10 @@ async function updateLogVisibility(log_id, state) {
 
                 <!-- right -->
                 <span class="d-flex justify-content-between gap-2">
-                  <button class="btn btn-sm btn-outline-dark" disabled>
+                  <button class="btn btn-xs btn-outline-dark" type="button" disabled>
                     <i class="bi bi-bar-chart"></i>
                   </button>
-                  <button class="btn btn-sm btn-outline-dark" disabled>
+                  <button class="btn btn-xs btn-outline-dark" type="button" disabled>
                     <i class="bi bi-journal-text"></i>
                   </button>
                 </span>

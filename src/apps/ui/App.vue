@@ -45,4 +45,11 @@ export default {
   margin: 0 auto;
   background-color: black !important;
 }
+
+.btn-xs {
+  padding: 1px 5px !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  border-radius: 3px !important;
+}
 </style>
