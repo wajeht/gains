@@ -5,10 +5,11 @@ import Loading from '../../components/dashboard/Loading.vue';
 
 // helpers
 import api from '../../../../utils/fetch-with-style.js';
-import { gainsDateDisplay, gainsCurrentDateTime, sleep } from '../../../../utils/helpers.js';
+import { gainsDateDisplay, gainsCurrentDateTime } from '../../../../utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';
+import filesize from 'filesize';
 import { pickBy, pick, omit } from 'lodash-es';
 
 // vue
@@ -87,6 +88,7 @@ const uploadAVideoLogIndex = ref(null);
 const video = ref(null);
 const videoPreview = ref(null);
 const videoPreviewFileExist = ref(false);
+const videoFileSize = ref(0);
 
 // watches
 //  update exercise db as changes in categories
@@ -720,6 +722,9 @@ function previewVideoUpload() {
   const file = video.value.files[0];
   // let preview = document.getElementById('video-preview');
   // console.log(videoPreview.value);
+
+  videoFileSize.value = file.size;
+
   let reader = new FileReader();
   reader.readAsDataURL(file);
   reader.addEventListener('load', function () {
@@ -784,6 +789,7 @@ async function uploadAVideo() {
 function clearDataAndDismissUploadAVideoModal() {
   videoPreviewFileExist.value = false;
   uploadAVideoLoading.value = false;
+  videoFileSize.value = 0;
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('upload-a-video'));
   modal.hide();
 }
@@ -973,18 +979,18 @@ async function updateLogVisibility(log_id, state) {
               <!-- danger -->
               <!-- prettier-ignore -->
               <span
-								v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today"
-								class="text-warning">
-								<font-awesome-icon icon="fa-refresh" class="me-1" /> session in progress
-							</span>
+                v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today"
+                class="text-warning">
+                <font-awesome-icon icon="fa-refresh" class="me-1" /> session in progress
+              </span>
 
               <!-- danger -->
               <!-- prettier-ignore -->
               <span
-								v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today"
-								class="text-danger">
-								<i class="bi bi-exclamation-triangle-fill text-danger"></i> session incomplete
-							</span>
+                v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today"
+                class="text-danger">
+                <i class="bi bi-exclamation-triangle-fill text-danger"></i> session incomplete
+              </span>
             </small>
           </small>
         </div>
@@ -2351,41 +2357,77 @@ async function updateLogVisibility(log_id, state) {
 
             <div
               @click="$refs.video.click()"
-              class="alert alert-primary d-flex flex-column gap-1 m-0 p-0 py-3 my-1"
+              class="alert d-flex flex-column gap-1 m-0 p-0 py-3 my-1"
+              :class="{
+                'alert-danger': videoFileSize > 10000000,
+                'alert-success': videoFileSize && videoFileSize < 10000000,
+                'alert-primary': !videoFileSize,
+              }"
               role="button"
               v-if="!uploadAVideoLoading"
             >
-              <i class="bi bi-cloud-arrow-up-fill"></i>
-              <span> Click here to choose video! </span>
+              <span v-if="videoFileSize">
+                <i v-if="videoFileSize > 10000000" class="bi bi-exclamation-triangle-fill"></i>
+                <i v-else-if="videoFileSize < 10000000" class="bi bi-check-circle-fill"></i>
+              </span>
+              <span v-else>
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+              </span>
+
+              <span v-if="videoFileSize > 10000000">
+                Your video is more than 10 MB. Click here to choose another video!</span
+              >
+              <span v-else> Click here to choose video! </span>
             </div>
           </div>
         </div>
 
         <!-- footer -->
-        <div class="modal-footer">
-          <!-- cancel -->
-          <button
-            @click="clearDataAndDismissUploadAVideoModal()"
-            v-if="!uploadAVideoLoading"
-            type="reset"
-            class="btn btn-danger"
-            data-bs-dismiss="modal"
-          >
-            <i class="bi bi-x-circle-fill"></i>
-            Cancel
-          </button>
-
-          <!-- confirm -->
-          <button type="submit" class="btn btn-success" :disabled="uploadAVideoLoading">
-            <div v-if="uploadAVideoLoading" class="spinner-border spinner-border-sm" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-
-            <span v-if="!uploadAVideoLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
+        <div class="modal-footer d-flex justify-content-between align-content-center">
+          <!-- details -->
+          <small>
+            <span v-if="videoFileSize">
+              <span :class="{ 'text-danger fw-bold': videoFileSize > 10000000 }">
+                {{ filesize(videoFileSize) }}
+              </span>
+              <span> / 10 MB (MAX) </span>
             </span>
-            <span v-if="uploadAVideoLoading"> Loading... </span>
-          </button>
+          </small>
+
+          <!-- buttons -->
+          <span class="d-flex justify-content-between gap-2">
+            <!-- cancel -->
+            <button
+              @click="clearDataAndDismissUploadAVideoModal()"
+              v-if="!uploadAVideoLoading"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle-fill"></i>
+              Cancel
+            </button>
+
+            <!-- confirm -->
+            <button
+              type="submit"
+              class="btn btn-success"
+              :disabled="uploadAVideoLoading || videoFileSize > 10000000"
+            >
+              <div
+                v-if="uploadAVideoLoading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+
+              <span v-if="!uploadAVideoLoading"
+                ><i class="bi bi-check-circle-fill"></i> Confirm
+              </span>
+              <span v-if="uploadAVideoLoading"> Loading... </span>
+            </button>
+          </span>
         </div>
       </div>
     </div>
