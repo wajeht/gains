@@ -79,3 +79,16 @@ export async function updatePrivateState(req, res) {
     data: updated,
   });
 }
+
+export async function postMultipleLogs(req, res) {
+  const logs = req.body.logs;
+
+  const created = await LogsQueries.createMultipleLogs(logs);
+
+  res.status(StatusCodes.CREATED).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was created successfully!',
+    data: created,
+  });
+}

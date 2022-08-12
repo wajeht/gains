@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
+import db from '../../../../database/db.js';
 
 import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
@@ -36,6 +37,7 @@ export async function getExercise(req, res) {
 export async function getExercises(req, res) {
   const uid = req.query.user_id;
   const ecid = req.query.exercise_category_id;
+  const ob = req.query.order_by;
 
   // when called via /api/v1/exercises?exercise_category_id=1
   if (ecid) {
@@ -54,7 +56,34 @@ export async function getExercises(req, res) {
 
   // when called via /api/v1/exercises?user_id=1
   if (uid) {
-    const userExercises = await ExercisesQueries.getExerciseByUserId(uid);
+    let userExercises = null;
+
+    if (ob === 'name') {
+      const { rows: temp } = await db.raw(`
+        select
+          ec.id as category_id,
+	        ec.name as category_name,
+	        json_agg(e.* order by e."name" asc) as exercises
+        from
+	        exercises e
+	        inner join exercise_categories ec on ec.id = e.exercise_category_id
+        where
+	        e.deleted = false
+	        and e.user_id = 1
+        group by
+	        ec.id
+        order by ec."name"
+      `);
+
+      userExercises = temp;
+
+      // userExercises = await ExercisesQueries.getExerciseByUserId(uid, {
+      //   orderBy: 'name',
+      //   direction: 'asc',
+      // });
+    } else {
+      userExercises = await ExercisesQueries.getExerciseByUserId(uid);
+    }
 
     if (!userExercises.length) throw new CustomError.BadRequestError(`There are no exercises available for user id ${uid}!`); // prettier-ignore
 

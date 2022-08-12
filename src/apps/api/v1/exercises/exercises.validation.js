@@ -19,7 +19,7 @@ export const getExercise = [
 ];
 
 export const getExercises = [
-  check('user_id')
+  query('user_id')
     .optional()
     .trim()
     .notEmpty()
@@ -33,7 +33,8 @@ export const getExercises = [
       if (user.length === 0) throw new Error('User does not exist!');
       return true;
     }),
-  check('category_id')
+  query('order_by').optional().trim().notEmpty().withMessage('order_by must not be empty!').bail(),
+  query('category_id')
     .optional()
     .trim()
     .notEmpty()

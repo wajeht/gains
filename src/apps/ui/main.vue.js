@@ -37,8 +37,9 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.use(VueLazyload, {
   lazyComponent: true,
-  preLoad: 1.3,
+  preLoad: 1,
   attempt: 1,
+  listenEvents: ['scroll'],
 });
 
 // --- init auth state on app starts --

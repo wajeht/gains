@@ -27,3 +27,12 @@ export function getLogById(log_id) {
 export function updatePrivateState(log_id, private_state) {
   return db.update({ private: private_state }).from('logs').where({ id: log_id }).returning('*');
 }
+
+/**
+ * It takes an array of logs, inserts them into the database, and returns the inserted logs
+ * @param logs - an array of objects that contain the following properties:
+ * @returns An array of objects
+ */
+export function createMultipleLogs(logs) {
+  return db.insert(logs).into('logs').returning('*');
+}
