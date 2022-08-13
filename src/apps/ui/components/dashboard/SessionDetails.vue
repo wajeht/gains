@@ -846,12 +846,14 @@ async function deleteALog() {
     clearAndDismissDeleteALogModal();
     deleteALogLoading.value = false;
 
-    currentSessionDetails.logs = currentSessionDetails.logs.filter((log, index) => log.id != deleteALogLogObject.value.id)
+    currentSessionDetails.logs = currentSessionDetails.logs.filter(
+      (log, index) => log.id != deleteALogLogObject.value.id,
+    );
 
     alert.type = 'success';
     alert.msg = `Log for ${deleteALogLogObject.value.name} has been deleted!`;
   } catch (e) {
-    clearAndDismissDeleteALogModal()
+    clearAndDismissDeleteALogModal();
     deleteALogLoading.value = false;
     loading.value = false;
     alert.type = 'danger';
@@ -890,18 +892,20 @@ function clearAndDismissDeleteALogModal() {
         <div class="card p-0">
           <div class="card-body">
             <div class="row mx-0">
-              <div :class="{
-                'bg-gray': currentSessionDetails.session_rpe === null,
+              <div
+                :class="{
+                  'bg-gray': currentSessionDetails.session_rpe === null,
 
-                'bg-success':
-                  currentSessionDetails.session_rpe >= 1 &&
-                  currentSessionDetails.session_rpe <= 7.5,
+                  'bg-success':
+                    currentSessionDetails.session_rpe >= 1 &&
+                    currentSessionDetails.session_rpe <= 7.5,
 
-                'bg-danger':
-                  currentSessionDetails.session_rpe >= 8 &&
-                  currentSessionDetails.session_rpe <= 10,
-              }"
-                class="col-4 text-white rounded d-flex justify-content-center align-items-center border border-1 rounded">
+                  'bg-danger':
+                    currentSessionDetails.session_rpe >= 8 &&
+                    currentSessionDetails.session_rpe <= 10,
+                }"
+                class="col-4 text-white rounded d-flex justify-content-center align-items-center border border-1 rounded"
+              >
                 <span>{{ currentSessionDetails.session_rpe ?? '?' }}</span>
               </div>
               <div class="col-8">
@@ -912,16 +916,21 @@ function clearAndDismissDeleteALogModal() {
                   </h5>
 
                   <!-- collapsed/expend all cards -->
-                  <h5 v-if="currentSessionDetails.logs?.length > 1" @click="hideOrCollapsedAllLogs()"
-                    style="cursor: pointer; margin-right: -12px">
+                  <h5
+                    v-if="currentSessionDetails.logs?.length > 1"
+                    @click="hideOrCollapsedAllLogs()"
+                    style="cursor: pointer; margin-right: -12px"
+                  >
                     <i v-if="!hideOrCollapsedAllLogsState" class="bi bi-chevron-down"></i>
                     <i v-if="hideOrCollapsedAllLogsState" class="bi bi-chevron-up"></i>
                   </h5>
                 </span>
 
                 <!-- notes -->
-                <p v-if="currentSessionDetails.notes"
-                  class="card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded mb-2">
+                <p
+                  v-if="currentSessionDetails.notes"
+                  class="card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded mb-2"
+                >
                   <small class="fst-italic fw-light">
                     {{ currentSessionDetails.notes }}
                   </small>
@@ -958,7 +967,8 @@ function clearAndDismissDeleteALogModal() {
                   <!-- calories_prior_session -->
                   <span v-if="currentSessionDetails.calories_prior_session">
                     <i class="bi bi-fire me-1"></i>Calories:
-                    <span class="fw-light">{{ currentSessionDetails.calories_prior_session }} kcal
+                    <span class="fw-light"
+                      >{{ currentSessionDetails.calories_prior_session }} kcal
                     </span>
                   </span>
 
@@ -966,7 +976,7 @@ function clearAndDismissDeleteALogModal() {
                   <span v-if="currentSessionDetails.start_date">
                     <font-awesome-icon icon="fa-clock" class="me-1" />Start:
                     <span class="fw-light">{{
-                        dayjs(currentSessionDetails.start_date).format('h:mm A')
+                      dayjs(currentSessionDetails.start_date).format('h:mm A')
                     }}</span>
                   </span>
 
@@ -974,7 +984,7 @@ function clearAndDismissDeleteALogModal() {
                   <span v-if="currentSessionDetails.end_time">
                     <font-awesome-icon icon="fa-clock" class="me-1" />End:
                     <span class="fw-light">{{
-                        dayjs(currentSessionDetails.end_time).format('h:mm A')
+                      dayjs(currentSessionDetails.end_time).format('h:mm A')
                     }}</span>
                   </span>
 
@@ -1008,7 +1018,10 @@ function clearAndDismissDeleteALogModal() {
             </small>
 
             <!-- incomplete or progress -->
-            <small v-if="!currentSessionDetails.end_date" class="fst-italic d-flex align-items-center">
+            <small
+              v-if="!currentSessionDetails.end_date"
+              class="fst-italic d-flex align-items-center"
+            >
               <!-- danger -->
               <!-- prettier-ignore -->
               <span
@@ -1030,10 +1043,14 @@ function clearAndDismissDeleteALogModal() {
 
         <!-- exercise logs -->
         <span v-for="(log, index) in currentSessionDetails.logs" :key="`key-${log.index}`">
-          <div class="card p-0" :style="{
-            'border-top': `${!log.private ? '1.8px solid #FFC008' : ''}`,
-            'margin-top': `${!log.private ? '-.8px' : ''}`,
-          }" v-auto-animate>
+          <div
+            class="card p-0"
+            :style="{
+              'border-top': `${!log.private ? '1.8px solid #FFC008' : ''}`,
+              'margin-top': `${!log.private ? '-.8px' : ''}`,
+            }"
+            v-auto-animate
+          >
             <!-- individual exercises log -->
             <div class="card-body">
               <span class="m-0 p-0" v-auto-animate>
@@ -1045,29 +1062,51 @@ function clearAndDismissDeleteALogModal() {
                   <!-- options -->
                   <span class="d-flex gap-3 align-items-center">
                     <!-- show/hide button -->
-                    <button @click="log.collapsed = !log.collapsed" class="p-0 m-0"
-                      style="background: none; border: none; box-shadow: none" role="button" v-auto-animate>
+                    <button
+                      @click="log.collapsed = !log.collapsed"
+                      class="p-0 m-0"
+                      style="background: none; border: none; box-shadow: none"
+                      role="button"
+                      v-auto-animate
+                    >
                       <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
                       <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
                     </button>
 
                     <!-- lock a video -->
-                    <span @click="
-                      (log.private = !log.private), updateLogVisibility(log.id, log.private)
-                    " style="cursor: pointer; color: #161616">
+                    <span
+                      @click="
+                        (log.private = !log.private), updateLogVisibility(log.id, log.private)
+                      "
+                      style="cursor: pointer; color: #161616"
+                    >
                       <span v-if="!log.private">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                          class="bi bi-unlock" viewBox="0 0 16 16">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-unlock"
+                          viewBox="0 0 16 16"
+                        >
                           <path
-                            d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z" />
+                            d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"
+                          />
                         </svg>
                       </span>
 
                       <span v-if="log.private">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                          class="bi bi-lock" viewBox="0 0 16 16">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-lock"
+                          viewBox="0 0 16 16"
+                        >
                           <path
-                            d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+                            d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"
+                          />
                         </svg>
                       </span>
                     </span>
@@ -1075,18 +1114,28 @@ function clearAndDismissDeleteALogModal() {
                     <!-- lift settings -->
                     <div class="dropdown">
                       <!-- setting icons -->
-                      <a class="link-dark" role="button" id="session-details-setting-button" data-bs-toggle="dropdown"
-                        aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></a>
+                      <a
+                        class="link-dark"
+                        role="button"
+                        id="session-details-setting-button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><i class="bi bi-three-dots-vertical"></i
+                      ></a>
 
                       <!-- setting links -->
                       <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
                         <li>
-                          <button class="dropdown-item btn-sm" type="button">Share</button>
+                          <button class="dropdown-item btn-sm" type="button" disabled>Share</button>
                         </li>
                         <li>
-                          <button @click="(deleteALogLogObject = log), (deleteALogLogIndex = index)"
-                            class="dropdown-item btn-sm" data-bs-toggle="modal" data-bs-target="#delete-a-log"
-                            type="button">
+                          <button
+                            @click="(deleteALogLogObject = log), (deleteALogLogIndex = index)"
+                            class="dropdown-item btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#delete-a-log"
+                            type="button"
+                          >
                             Delete
                           </button>
                         </li>
@@ -1096,19 +1145,32 @@ function clearAndDismissDeleteALogModal() {
                 </h6>
 
                 <!-- video -->
-                <div v-if="log.videos?.length && log.collapsed" class="card card-body p-0 m-0 pt-2 pb-1 border-0">
+                <div
+                  v-if="log.videos?.length && log.collapsed"
+                  class="card card-body p-0 m-0 pt-2 pb-1 border-0"
+                >
                   <div class="video-wrapper">
-                    <video class="video" v-for="v in log.videos" controls preload="none" :poster="v.screenshot_url"
-                      :key="`video-key-${v.id}`" playsinline muted>
+                    <video
+                      class="video"
+                      v-for="v in log.videos"
+                      controls
+                      preload="none"
+                      :poster="v.screenshot_url"
+                      :key="`video-key-${v.id}`"
+                      playsinline
+                      muted
+                    >
                       <source :src="`/api/v1/videos/${v.id}/stream`" type="video/mp4" />
                     </video>
                   </div>
                 </div>
 
                 <!-- notes -->
-                <p v-if="log.notes && log.collapsed"
+                <p
+                  v-if="log.notes && log.collapsed"
                   class="my-2 card-text card-text bg-secondary bg-opacity-10 p-2 border border-1 rounded"
-                  :class="{ 'mb-0': log?.sets?.length === 0 }">
+                  :class="{ 'mb-0': log?.sets?.length === 0 }"
+                >
                   <small class="fst-italic fw-light">
                     {{ log.notes }}
                   </small>
@@ -1136,7 +1198,10 @@ function clearAndDismissDeleteALogModal() {
                           <th class="text-center" scope="col">
                             <span @click="log.sets_notes_visibility = !log.sets_notes_visibility">
                               <i v-if="!log.sets_notes_visibility" class="bi bi bi-toggle-off"></i>
-                              <i v-if="log.sets_notes_visibility" class="bi bi bi-toggle-on text-success"></i>
+                              <i
+                                v-if="log.sets_notes_visibility"
+                                class="bi bi bi-toggle-on text-success"
+                              ></i>
                             </span>
                           </th>
                         </tr>
@@ -1150,27 +1215,36 @@ function clearAndDismissDeleteALogModal() {
                           <td class="text-center">{{ s.weight }}</td>
                           <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
 
-                          <td v-if="log.sets_notes_visibility" class="text-start text-truncate text-muted fst-italic">
+                          <td
+                            v-if="log.sets_notes_visibility"
+                            class="text-start text-truncate text-muted fst-italic"
+                          >
                             <small>{{ s.notes }}</small>
                           </td>
 
                           <td class="text-center">
                             <!-- modify a set button -->
-                            <button @click="
-                              (set.id = s.id),
-                              (set.set_index = idx),
-                              (set.log_index = index),
-                              (set.exercise_id = s.exercise_id),
-                              (set.user_id = s.user_id),
-                              (set.session_id = s.session_id),
-                              (set.reps = s.reps),
-                              (set.weight = s.weight),
-                              (set.rpe = s.rpe),
-                              (set.notes = s.notes),
-                              (set.log_id = log.id),
-                              (set.exercise_name = log.name)
-                            " type="button" class="btn btn-sm p-0 m-0" data-bs-toggle="modal"
-                              data-bs-target="#modify-a-set" :disabled="currentSessionDetails.end_date">
+                            <button
+                              @click="
+                                (set.id = s.id),
+                                  (set.set_index = idx),
+                                  (set.log_index = index),
+                                  (set.exercise_id = s.exercise_id),
+                                  (set.user_id = s.user_id),
+                                  (set.session_id = s.session_id),
+                                  (set.reps = s.reps),
+                                  (set.weight = s.weight),
+                                  (set.rpe = s.rpe),
+                                  (set.notes = s.notes),
+                                  (set.log_id = log.id),
+                                  (set.exercise_name = log.name)
+                              "
+                              type="button"
+                              class="btn btn-sm p-0 m-0"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modify-a-set"
+                              :disabled="currentSessionDetails.end_date"
+                            >
                               <i class="bi bi-pencil-square"></i>
                             </button>
                           </td>
@@ -1192,53 +1266,78 @@ function clearAndDismissDeleteALogModal() {
                 <span class="d-flex justify-content-between gap-2">
                   <!-- add a set model button -->
                   <span>
-                    <button @click="
-                      (addASetExerciseId = log.exercise_id),
-                      (addASetExerciseIndex = index),
-                      (addASetLogId = log.id),
-                      (set.exercise_name = log.name)
-                    " type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
-                      data-bs-target="#add-a-set" :disabled="currentSessionDetails.end_date">
+                    <button
+                      @click="
+                        (addASetExerciseId = log.exercise_id),
+                          (addASetExerciseIndex = index),
+                          (addASetLogId = log.id),
+                          (set.exercise_name = log.name)
+                      "
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#add-a-set"
+                      :disabled="currentSessionDetails.end_date"
+                    >
                       <i class="bi bi-plus-circle"></i>
                     </button>
                   </span>
 
                   <!-- duplicate previous set -->
                   <span>
-                    <button @click="(log.duplicateSetLoading = true), copyPreviousSet(index)" type="button"
-                      class="btn btn-sm btn-outline-dark" :disabled="
+                    <button
+                      @click="(log.duplicateSetLoading = true), copyPreviousSet(index)"
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      :disabled="
                         log.sets?.length === 0 ||
                         currentSessionDetails.end_date ||
                         log?.duplicateSetLoading
-                      ">
-                      <span v-if="log?.duplicateSetLoading" class="spinner-border spinner-border-sm p-0 m-0"
-                        role="status"></span>
+                      "
+                    >
+                      <span
+                        v-if="log?.duplicateSetLoading"
+                        class="spinner-border spinner-border-sm p-0 m-0"
+                        role="status"
+                      ></span>
                       <i v-if="!log?.duplicateSetLoading" class="bi bi-clipboard-check"></i>
                     </button>
                   </span>
 
                   <!-- add exercise notes -->
                   <span>
-                    <button @click="
-                      (addASetExerciseId = log.exercise_id),
-                      (addASetExerciseIndex = index),
-                      (addAExerciseNoteLogId = log.id),
-                      (set.exercise_name = log.name),
-                      (set.notes = log.notes)
-                    " type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
-                      data-bs-target="#add-a-note" :disabled="currentSessionDetails.end_date">
+                    <button
+                      @click="
+                        (addASetExerciseId = log.exercise_id),
+                          (addASetExerciseIndex = index),
+                          (addAExerciseNoteLogId = log.id),
+                          (set.exercise_name = log.name),
+                          (set.notes = log.notes)
+                      "
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#add-a-note"
+                      :disabled="currentSessionDetails.end_date"
+                    >
                       <i class="bi bi-pencil-square"></i>
                     </button>
                   </span>
 
                   <!-- add a video group -->
                   <span>
-                    <button @click="
-                      (uploadAVideoLogId = log.id),
-                      (set.exercise_name = log.name),
-                      (uploadAVideoLogIndex = index)
-                    " type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
-                      data-bs-target="#upload-a-video" :disabled="log.videos?.length || currentSessionDetails.end_date">
+                    <button
+                      @click="
+                        (uploadAVideoLogId = log.id),
+                          (set.exercise_name = log.name),
+                          (uploadAVideoLogIndex = index)
+                      "
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#upload-a-video"
+                      :disabled="log.videos?.length || currentSessionDetails.end_date"
+                    >
                       <i class="bi bi-play-circle"></i>
                     </button>
                   </span>
@@ -1261,8 +1360,13 @@ function clearAndDismissDeleteALogModal() {
         <!-- add a exercise button -->
         <div v-if="!currentSessionDetails.end_date" class="border">
           <!-- model button -->
-          <button type="button" class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#add-a-exercise"
-            :disabled="loading || currentSessionDetails.end_date">
+          <button
+            type="button"
+            class="btn btn-dark w-100"
+            data-bs-toggle="modal"
+            data-bs-target="#add-a-exercise"
+            :disabled="loading || currentSessionDetails.end_date"
+          >
             <i class="bi bi-plus-circle-fill"></i>
             Add a exercise
           </button>
@@ -1271,8 +1375,14 @@ function clearAndDismissDeleteALogModal() {
         <!-- cancel or compte session -->
         <div class="btn-group" role="group">
           <!-- delete current session -->
-          <button :disabled="loading" type="button" class="btn btn-danger" data-bs-toggle="modal"
-            data-bs-target="#delete-current-session" :class="{ rounded: currentSessionDetails.end_date != null }">
+          <button
+            :disabled="loading"
+            type="button"
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#delete-current-session"
+            :class="{ rounded: currentSessionDetails.end_date != null }"
+          >
             <span v-if="currentSessionDetails.end_date">
               <i class="bi bi-trash"></i>
               Delete
@@ -1284,12 +1394,18 @@ function clearAndDismissDeleteALogModal() {
           </button>
 
           <!-- complete current session button -->
-          <button v-if="!currentSessionDetails.end_date"
-            @click="currentSessionDetails.end_date = gainsCurrentDateTime()" data-bs-toggle="modal"
-            data-bs-target="#complete-current-session" type="button" class="btn btn-success"
-            :class="{ rounded: currentSessionDetails.end_date === null }" :disabled="
+          <button
+            v-if="!currentSessionDetails.end_date"
+            @click="currentSessionDetails.end_date = gainsCurrentDateTime()"
+            data-bs-toggle="modal"
+            data-bs-target="#complete-current-session"
+            type="button"
+            class="btn btn-success"
+            :class="{ rounded: currentSessionDetails.end_date === null }"
+            :disabled="
               loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
-            ">
+            "
+          >
             <span v-if="!loading"> <i class="bi bi-check-circle-fill"></i> Complete </span>
           </button>
         </div>
@@ -1300,8 +1416,14 @@ function clearAndDismissDeleteALogModal() {
   <!-- ---------------------------------------- MODAL BELOW --------------------------------------------------- -->
 
   <!-- add a exercise -->
-  <form @submit.prevent="addAExercise()" class="modal fade px-2 py-5" id="add-a-exercise" data-bs-backdrop="static"
-    data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="addAExercise()"
+    class="modal fade px-2 py-5"
+    id="add-a-exercise"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
@@ -1313,8 +1435,14 @@ function clearAndDismissDeleteALogModal() {
           </h5>
 
           <!-- close button -->
-          <button @click="clearDataAndDismissAddAExerciseModal()" type="reset" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close" :disabled="addAExerciseLoading"></button>
+          <button
+            @click="clearDataAndDismissAddAExerciseModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            :disabled="addAExerciseLoading"
+          ></button>
         </div>
 
         <!-- body -->
@@ -1322,17 +1450,28 @@ function clearAndDismissDeleteALogModal() {
           <!-- alert -->
           <div v-if="!chooseCategories.length" class="mb-3">
             <div class="alert alert-warning p-2">
-              <small>Exercise categories must be defined before being able to add new exercises.
-                <router-link @click="clearDataAndDismissAddAExerciseModal()" class="alert-link"
-                  to="/dashboard/sessions/categories?model=true">Click here!</router-link>
+              <small
+                >Exercise categories must be defined before being able to add new exercises.
+                <router-link
+                  @click="clearDataAndDismissAddAExerciseModal()"
+                  class="alert-link"
+                  to="/dashboard/sessions/categories?model=true"
+                  >Click here!</router-link
+                >
                 to add exercise categories!
               </small>
             </div>
           </div>
 
           <!-- selected exercises name -->
-          <div v-if="addAExerciseAllExercisesChecked.length" class="d-flex justify-content-center flex-wrap gap-1 mb-3">
-            <div class="badge bg-secondary text-white" v-for="ex in addAExerciseAllExercisesChecked">
+          <div
+            v-if="addAExerciseAllExercisesChecked.length"
+            class="d-flex justify-content-center flex-wrap gap-1 mb-3"
+          >
+            <div
+              class="badge bg-secondary text-white"
+              v-for="ex in addAExerciseAllExercisesChecked"
+            >
               {{ ex.name }}
             </div>
 
@@ -1343,12 +1482,19 @@ function clearAndDismissDeleteALogModal() {
 
           <!-- Disable/Enable selection -->
           <div class="form-check form-switch mb-3">
-            <input @click="
-              addAExerciseAllExercisesChecked.length
-                ? (addAExerciseAllExercisesChecked = [])
-                : null
-            " class="form-check-input" type="checkbox" role="switch" id="complete-current-session-show-hide-button"
-              v-model="addAExerciseShowAllExercises" :disabled="addAExerciseLoading" />
+            <input
+              @click="
+                addAExerciseAllExercisesChecked.length
+                  ? (addAExerciseAllExercisesChecked = [])
+                  : null
+              "
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="complete-current-session-show-hide-button"
+              v-model="addAExerciseShowAllExercises"
+              :disabled="addAExerciseLoading"
+            />
             <label class="form-check-label" for="complete-current-session-show-hide-button">
               <span v-if="addAExerciseShowAllExercises">Disable</span>
               <span v-else>Enable</span>
@@ -1364,9 +1510,14 @@ function clearAndDismissDeleteALogModal() {
               <label for="allExercises" class="form-label">Available exercises</label>
 
               <!-- add more -->
-              <router-link @click="clearDataAndDismissAddAExerciseModal()" class="alert-link link-secondary"
-                to="/dashboard/sessions/exercises?model=true">
-                <span class="fw-light fst-italic" style="font-size: 0.8rem !important">Add more</span>
+              <router-link
+                @click="clearDataAndDismissAddAExerciseModal()"
+                class="alert-link link-secondary"
+                to="/dashboard/sessions/exercises?model=true"
+              >
+                <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                  >Add more</span
+                >
               </router-link>
             </span>
 
@@ -1374,25 +1525,37 @@ function clearAndDismissDeleteALogModal() {
             <!-- <pre>{{ currentSessionDetails?.logs?.map((cur => cur.exercise_id)) }}</pre> -->
 
             <!-- container -->
-            <div class="rounded border border-1 p-2" style="height: 300px; overflow-y: auto; background-color: #f7f6f3">
+            <div
+              class="rounded border border-1 p-2"
+              style="height: 300px; overflow-y: auto; background-color: #f7f6f3"
+            >
               <span v-for="category in addAExerciseAllExercises" :key="category.id">
                 <!-- category name -->
                 <small class="fw-bold">{{ category.category_name }}</small>
 
                 <!-- list of exercises name -->
                 <div class="form-check" v-for="exercise in category.exercises" :key="exercise.id">
-                  <input class="form-check-input" type="checkbox" :value="exercise" :id="exercise.name" :disabled="
-                    currentSessionDetails?.logs
-                      ?.map((cur) => cur.exercise_id)
-                      .includes(exercise.id)
-                  " v-model="addAExerciseAllExercisesChecked" />
-                  <label class="form-check-label" :class="{
-                    strike: currentSessionDetails?.logs
-                      ?.map((cur) => cur.exercise_id)
-                      .includes(exercise.id),
-                  }" :for="exercise.name"><small>
-                      {{ exercise.name }} {{ exercise.id }}
-                    </small>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :value="exercise"
+                    :id="exercise.name"
+                    :disabled="
+                      currentSessionDetails?.logs
+                        ?.map((cur) => cur.exercise_id)
+                        .includes(exercise.id)
+                    "
+                    v-model="addAExerciseAllExercisesChecked"
+                  />
+                  <label
+                    class="form-check-label"
+                    :class="{
+                      strike: currentSessionDetails?.logs
+                        ?.map((cur) => cur.exercise_id)
+                        .includes(exercise.id),
+                    }"
+                    :for="exercise.name"
+                    ><small> {{ exercise.name }} {{ exercise.id }} </small>
                   </label>
                 </div>
               </span>
@@ -1404,16 +1567,32 @@ function clearAndDismissDeleteALogModal() {
             <!-- exercise category name -->
             <div class="mb-3">
               <span class="d-flex gap-1">
-                <label for="session-details-exercise-category-name" class="form-label">Exercise category name*</label>
-                <router-link @click="clearDataAndDismissAddAExerciseModal()" class="alert-link link-secondary"
-                  to="/dashboard/sessions/categories?model=true">
-                  <span class="fw-light fst-italic" style="font-size: 0.8rem !important">Add more</span>
+                <label for="session-details-exercise-category-name" class="form-label"
+                  >Exercise category name*</label
+                >
+                <router-link
+                  @click="clearDataAndDismissAddAExerciseModal()"
+                  class="alert-link link-secondary"
+                  to="/dashboard/sessions/categories?model=true"
+                >
+                  <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                    >Add more</span
+                  >
                 </router-link>
               </span>
-              <select id="session-details-exercise-category-name" class="form-control form-select form-select-sm"
-                v-model="chooseExerciseCategoryId" :disabled="loading || chooseCategories.length === 0" required>
+              <select
+                id="session-details-exercise-category-name"
+                class="form-control form-select form-select-sm"
+                v-model="chooseExerciseCategoryId"
+                :disabled="loading || chooseCategories.length === 0"
+                required
+              >
                 <option value="" selected disabled>Select a exercise category!</option>
-                <option v-for="category in chooseCategories" :value="category.id" :key="`key-${category.id}`">
+                <option
+                  v-for="category in chooseCategories"
+                  :value="category.id"
+                  :key="`key-${category.id}`"
+                >
                   {{ category.name }}
                 </option>
               </select>
@@ -1423,20 +1602,36 @@ function clearAndDismissDeleteALogModal() {
             <div class="mb-3">
               <!-- add more -->
               <span class="d-flex gap-1">
-                <label for="session-details-select-exercise" class="form-label">Exercise name*</label>
-                <router-link @click="clearDataAndDismissAddAExerciseModal()" class="alert-link link-secondary"
-                  to="/dashboard/sessions/exercises?model=true">
-                  <span class="fw-light fst-italic" style="font-size: 0.8rem !important">Add more</span>
+                <label for="session-details-select-exercise" class="form-label"
+                  >Exercise name*</label
+                >
+                <router-link
+                  @click="clearDataAndDismissAddAExerciseModal()"
+                  class="alert-link link-secondary"
+                  to="/dashboard/sessions/exercises?model=true"
+                >
+                  <span class="fw-light fst-italic" style="font-size: 0.8rem !important"
+                    >Add more</span
+                  >
                 </router-link>
               </span>
 
               <!-- list -->
-              <select id="session-details-select-exercise" class="form-control form-select form-select-sm"
-                v-model="chooseExerciseId" :disabled="!chooseExerciseCategoryId || chooseExercises.length === 0"
-                required>
-                <option v-for="exercise in chooseExercises" :value="exercise.id" :key="`key-${exercise.id}`" :disabled="
-                  currentSessionDetails?.logs?.map((cur) => cur.exercise_id).includes(exercise.id)
-                ">
+              <select
+                id="session-details-select-exercise"
+                class="form-control form-select form-select-sm"
+                v-model="chooseExerciseId"
+                :disabled="!chooseExerciseCategoryId || chooseExercises.length === 0"
+                required
+              >
+                <option
+                  v-for="exercise in chooseExercises"
+                  :value="exercise.id"
+                  :key="`key-${exercise.id}`"
+                  :disabled="
+                    currentSessionDetails?.logs?.map((cur) => cur.exercise_id).includes(exercise.id)
+                  "
+                >
                   {{ exercise.name }} {{ exercise.id }}
                 </option>
               </select>
@@ -1447,26 +1642,39 @@ function clearAndDismissDeleteALogModal() {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addAExerciseShowAllExercises || addAExerciseLoading"
-            @click="addAExerciseAllExercisesChecked = []" type="reset" class="btn btn-outline-danger">
+          <button
+            v-if="!addAExerciseShowAllExercises || addAExerciseLoading"
+            @click="addAExerciseAllExercisesChecked = []"
+            type="reset"
+            class="btn btn-outline-danger"
+          >
             <font-awesome-icon icon="broom" />
             Clear
           </button>
 
           <!-- cancel -->
-          <button @click="clearDataAndDismissAddAExerciseModal()" type="button" v-if="!addAExerciseLoading"
-            class="btn btn-danger" data-bs-dismiss="modal">
+          <button
+            @click="clearDataAndDismissAddAExerciseModal()"
+            type="button"
+            v-if="!addAExerciseLoading"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
             <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
           <!-- add -->
-          <button type="submit" class="btn btn-success" :disabled="
-            addAExerciseLoading ||
-            (addAExerciseShowAllExercises &&
-              (!chooseExerciseId || !addAExerciseAllExercisesChecked)) ||
-            (!addAExerciseShowAllExercises && addAExerciseAllExercisesChecked.length === 0)
-          ">
+          <button
+            type="submit"
+            class="btn btn-success"
+            :disabled="
+              addAExerciseLoading ||
+              (addAExerciseShowAllExercises &&
+                (!chooseExerciseId || !addAExerciseAllExercisesChecked)) ||
+              (!addAExerciseShowAllExercises && addAExerciseAllExercisesChecked.length === 0)
+            "
+          >
             <!-- <button type="submit" class="btn btn-success" :disabled="addAExerciseLoading"> -->
             <div v-if="addAExerciseLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
@@ -1483,8 +1691,14 @@ function clearAndDismissDeleteALogModal() {
   </form>
 
   <!-- delete a log -->
-  <form @submit.prevent="deleteALog()" class="modal fade px-2 py-5" id="delete-a-log" data-bs-backdrop="static"
-    data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="deleteALog()"
+    class="modal fade px-2 py-5"
+    id="delete-a-log"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -1492,8 +1706,14 @@ function clearAndDismissDeleteALogModal() {
             <span> Log </span>
             <span class="fw-light"> id: {{ deleteALogLogObject?.id }}</span>
           </h5>
-          <button @click="clearAndDismissDeleteALogModal()" type="reset" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close" :disabled="deleteALogLoading"></button>
+          <button
+            @click="clearAndDismissDeleteALogModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            :disabled="deleteALogLoading"
+          ></button>
         </div>
         <div class="modal-body">
           <p class="mb-0 pb-0 text-center">
@@ -1506,8 +1726,13 @@ function clearAndDismissDeleteALogModal() {
         <!-- footer -->
         <div class="modal-footer">
           <!-- cancel -->
-          <button @click="clearAndDismissDeleteALogModal()" v-if="!deleteALogLoading" type="reset"
-            class="btn btn-danger" data-bs-dismiss="modal">
+          <button
+            @click="clearAndDismissDeleteALogModal()"
+            v-if="!deleteALogLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
             <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
@@ -1527,8 +1752,14 @@ function clearAndDismissDeleteALogModal() {
   </form>
 
   <!-- delete current session modal -->
-  <form @submit.prevent="handleDeleteSession()" class="modal fade px-2 py-5" id="delete-current-session"
-    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="handleDeleteSession()"
+    class="modal fade px-2 py-5"
+    id="delete-current-session"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -1537,8 +1768,13 @@ function clearAndDismissDeleteALogModal() {
             <span v-if="currentSessionDetails.end_date"> Delete </span>
             <span class="fw-light"> session id: {{ currentSessionDetails.id }}</span>
           </h5>
-          <button @click="clearDataAndDismissDeleteSessionModal()" type="reset" class="btn-close"
-            data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            @click="clearDataAndDismissDeleteSessionModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <p class="mb-0 pb-0 text-center">
@@ -1553,19 +1789,29 @@ function clearAndDismissDeleteALogModal() {
         <!-- footer -->
         <div class="modal-footer">
           <!-- cancel -->
-          <button @click="clearDataAndDismissDeleteSessionModal()" v-if="!deleteCurrentSessionLoading" type="reset"
-            class="btn btn-danger" data-bs-dismiss="modal">
+          <button
+            @click="clearDataAndDismissDeleteSessionModal()"
+            v-if="!deleteCurrentSessionLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
             <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
           <!-- confirm -->
           <button type="submit" class="btn btn-success" :disabled="deleteCurrentSessionLoading">
-            <div v-if="deleteCurrentSessionLoading" class="spinner-border spinner-border-sm" role="status">
+            <div
+              v-if="deleteCurrentSessionLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteCurrentSessionLoading"><i class="bi bi-check-circle-fill"></i> Confirm
+            <span v-if="!deleteCurrentSessionLoading"
+              ><i class="bi bi-check-circle-fill"></i> Confirm
             </span>
             <span v-if="deleteCurrentSessionLoading"> Loading... </span>
           </button>
@@ -1575,8 +1821,14 @@ function clearAndDismissDeleteALogModal() {
   </form>
 
   <!-- add a exercise note modal -->
-  <form @submit.prevent="handleAddAExerciseNote()" class="modal fade px-1 pt-5" id="add-a-note"
-    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="handleAddAExerciseNote()"
+    class="modal fade px-1 pt-5"
+    id="add-a-note"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -1584,14 +1836,24 @@ function clearAndDismissDeleteALogModal() {
             <span>Add a note for </span>
             <span class="fw-light"> {{ set.exercise_name }}</span>
           </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <!-- note -->
           <div class="mb-3">
             <label class="form-label">Note</label>
-            <textarea v-model.trim="set.notes" class="form-control form-control-sm" id="notes-id" rows="3"
-              :disabled="addAExerciseNoteLoading"></textarea>
+            <textarea
+              v-model.trim="set.notes"
+              class="form-control form-control-sm"
+              id="notes-id"
+              rows="3"
+              :disabled="addAExerciseNoteLoading"
+            ></textarea>
           </div>
         </div>
 
@@ -1605,15 +1867,24 @@ function clearAndDismissDeleteALogModal() {
 
           <div class="btn-group" role="group">
             <!-- cancel -->
-            <button @click="clearDataAndDismissAddAExerciseNoteModal()" v-if="!addAExerciseNoteLoading" type="reset"
-              class="btn btn-danger" data-bs-dismiss="modal">
+            <button
+              @click="clearDataAndDismissAddAExerciseNoteModal()"
+              v-if="!addAExerciseNoteLoading"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
               <i class="bi bi-x-circle"></i>
               Cancel
             </button>
 
             <!-- add -->
             <button type="submit" class="btn btn-success" :disabled="addAExerciseNoteLoading">
-              <div v-if="addAExerciseNoteLoading" class="spinner-border spinner-border-sm" role="status">
+              <div
+                v-if="addAExerciseNoteLoading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
                 <span class="visually-hidden">Loading...</span>
               </div>
               <span v-if="!addAExerciseNoteLoading">
@@ -1629,8 +1900,14 @@ function clearAndDismissDeleteALogModal() {
   </form>
 
   <!-- complete current session modal -->
-  <form @submit.prevent="handleCompleteCurrentSession()" class="modal fade px-2 py-5" id="complete-current-session"
-    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="handleCompleteCurrentSession()"
+    class="modal fade px-2 py-5"
+    id="complete-current-session"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -1638,30 +1915,58 @@ function clearAndDismissDeleteALogModal() {
             <span> Complete </span>
             <span class="fw-light"> {{ currentSessionDetails.name }}</span>
           </h5>
-          <button @click="clearDataAndDismissCompleteCurrentSessionModal()" type="reset" class="btn-close"
-            data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            @click="clearDataAndDismissCompleteCurrentSessionModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body" v-auto-animate>
           <!-- session rpe -->
           <div class="mb-3">
-            <label for="complete-current-session-session-rpe" class="form-label">Session rpe*</label>
-            <input v-model="currentSessionDetails.session_rpe" id="complete-current-session-session-rpe"
-              class="form-control form-control-sm" type="number" min="1" max="10" step=".5" inputmode="numeric"
-              pattern="[1-10]*" required :disabled="completeCurrentSessionLoading" />
+            <label for="complete-current-session-session-rpe" class="form-label"
+              >Session rpe*</label
+            >
+            <input
+              v-model="currentSessionDetails.session_rpe"
+              id="complete-current-session-session-rpe"
+              class="form-control form-control-sm"
+              type="number"
+              min="1"
+              max="10"
+              step=".5"
+              inputmode="numeric"
+              pattern="[1-10]*"
+              required
+              :disabled="completeCurrentSessionLoading"
+            />
           </div>
 
           <!-- End time -->
           <div class="mb-3">
             <label for="complete-current-session-end-date" class="form-label">End time*</label>
-            <input v-model="currentSessionDetails.end_date" id="complete-current-session-end-date"
-              class="form-control form-control-sm" type="datetime-local" required
-              :disabled="completeCurrentSessionLoading" />
+            <input
+              v-model="currentSessionDetails.end_date"
+              id="complete-current-session-end-date"
+              class="form-control form-control-sm"
+              type="datetime-local"
+              required
+              :disabled="completeCurrentSessionLoading"
+            />
           </div>
 
           <!-- show/hide button -->
           <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" role="switch" id="complete-current-session-show-hide-button"
-              v-model="completeCurrentSessionShowHideOtherFields" :disabled="completeCurrentSessionLoading" />
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="complete-current-session-show-hide-button"
+              v-model="completeCurrentSessionShowHideOtherFields"
+              :disabled="completeCurrentSessionLoading"
+            />
             <label class="form-check-label" for="complete-current-session-show-hide-button">
               <span v-if="completeCurrentSessionShowHideOtherFields">Hide</span>
               <span v-else>Show</span>
@@ -1673,45 +1978,85 @@ function clearAndDismissDeleteALogModal() {
             <div class="row mb-3">
               <!-- bodyweight  -->
               <div class="col-6">
-                <label for="complete-current-session-bodyweight" class="form-label">Bodyweight</label>
-                <input v-model="currentSessionDetails.body_weight" id="complete-current-session-bodyweight"
-                  class="form-control form-control-sm" min="1" inputmode="numeric" pattern="[1-10]*" type="number"
-                  :disabled="completeCurrentSessionLoading" />
+                <label for="complete-current-session-bodyweight" class="form-label"
+                  >Bodyweight</label
+                >
+                <input
+                  v-model="currentSessionDetails.body_weight"
+                  id="complete-current-session-bodyweight"
+                  class="form-control form-control-sm"
+                  min="1"
+                  inputmode="numeric"
+                  pattern="[1-10]*"
+                  type="number"
+                  :disabled="completeCurrentSessionLoading"
+                />
               </div>
 
               <!-- hours of sleep  -->
               <div class="col-6">
-                <label for="complete-current-session-sleep" class="form-label">Hours of sleep</label>
-                <input v-model="currentSessionDetails.hours_of_sleep" id="complete-current-session-sleep"
-                  class="form-control form-control-sm" min="1" type="number" inputmode="numeric" pattern="[0-24]*"
-                  :disabled="completeCurrentSessionLoading" />
+                <label for="complete-current-session-sleep" class="form-label"
+                  >Hours of sleep</label
+                >
+                <input
+                  v-model="currentSessionDetails.hours_of_sleep"
+                  id="complete-current-session-sleep"
+                  class="form-control form-control-sm"
+                  min="1"
+                  type="number"
+                  inputmode="numeric"
+                  pattern="[0-24]*"
+                  :disabled="completeCurrentSessionLoading"
+                />
               </div>
             </div>
 
             <div class="row mb-3">
               <!-- calories prior -->
               <div class="col-6">
-                <label for="complete-current-session-calories_prior_session" class="form-label">Calories
+                <label for="complete-current-session-calories_prior_session" class="form-label"
+                  >Calories
                 </label>
-                <input v-model="currentSessionDetails.calories_prior_session"
-                  id="complete-current-session-calories_prior_session" class="form-control form-control-sm" min="1"
-                  type="number" inputmode="numeric" pattern="[1-10000]*" :disabled="completeCurrentSessionLoading" />
+                <input
+                  v-model="currentSessionDetails.calories_prior_session"
+                  id="complete-current-session-calories_prior_session"
+                  class="form-control form-control-sm"
+                  min="1"
+                  type="number"
+                  inputmode="numeric"
+                  pattern="[1-10000]*"
+                  :disabled="completeCurrentSessionLoading"
+                />
               </div>
 
               <!-- caffeine intake -->
               <div class="col-6">
-                <label for="complete-current-session-caffeine-intake" class="form-label">Caffeine</label>
-                <input v-model="currentSessionDetails.caffeine_intake" id="complete-current-session-caffeine-intake"
-                  class="form-control form-control-sm" min="1" type="number" inputmode="numeric" pattern="[1-10000]*"
-                  :disabled="completeCurrentSessionLoading" />
+                <label for="complete-current-session-caffeine-intake" class="form-label"
+                  >Caffeine</label
+                >
+                <input
+                  v-model="currentSessionDetails.caffeine_intake"
+                  id="complete-current-session-caffeine-intake"
+                  class="form-control form-control-sm"
+                  min="1"
+                  type="number"
+                  inputmode="numeric"
+                  pattern="[1-10000]*"
+                  :disabled="completeCurrentSessionLoading"
+                />
               </div>
             </div>
 
             <!-- notes -->
             <div v-if="completeCurrentSessionShowHideOtherFields" class="mb-2">
               <label for="complete-current-session-notes" class="form-label">Notes</label>
-              <textarea v-model="currentSessionDetails.notes" class="form-control form-control-sm"
-                id="complete-current-session-notes" rows="3" :disabled="completeCurrentSessionLoading"></textarea>
+              <textarea
+                v-model="currentSessionDetails.notes"
+                class="form-control form-control-sm"
+                id="complete-current-session-notes"
+                rows="3"
+                :disabled="completeCurrentSessionLoading"
+              ></textarea>
             </div>
           </span>
         </div>
@@ -1719,18 +2064,31 @@ function clearAndDismissDeleteALogModal() {
         <!-- footer -->
         <div class="modal-footer">
           <!-- cancel -->
-          <button @click="clearDataAndDismissCompleteCurrentSessionModal()" v-if="!completeCurrentSessionLoading"
-            type="reset" class="btn btn-danger" data-bs-dismiss="modal">
+          <button
+            @click="clearDataAndDismissCompleteCurrentSessionModal()"
+            v-if="!completeCurrentSessionLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
             Cancel
           </button>
 
           <!-- submit -->
-          <button type="submit" class="btn btn-success" :disabled="
-            completeCurrentSessionLoading ||
-            currentSessionDetails.session_rpe === null ||
-            currentSessionDetails.end_date?.length === 0
-          ">
-            <div v-if="completeCurrentSessionLoading" class="spinner-border spinner-border-sm" role="status">
+          <button
+            type="submit"
+            class="btn btn-success"
+            :disabled="
+              completeCurrentSessionLoading ||
+              currentSessionDetails.session_rpe === null ||
+              currentSessionDetails.end_date?.length === 0
+            "
+          >
+            <div
+              v-if="completeCurrentSessionLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
               <span class="visually-hidden">Loading...</span>
             </div>
 
@@ -1743,8 +2101,14 @@ function clearAndDismissDeleteALogModal() {
   </form>
 
   <!-- add a set modal -->
-  <form @submit.prevent="handleAddASet()" class="modal fade px-1 pt-5" id="add-a-set" data-bs-backdrop="static"
-    data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="handleAddASet()"
+    class="modal fade px-1 pt-5"
+    id="add-a-set"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
@@ -1753,7 +2117,12 @@ function clearAndDismissDeleteALogModal() {
             <span> Add a set for </span>
             <span class="fw-light">{{ set.exercise_name }}</span>
           </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
 
         <!-- body -->
@@ -1762,29 +2131,65 @@ function clearAndDismissDeleteALogModal() {
             <!-- reps -->
             <div class="col-4">
               <label for="rep" class="form-label">Rep*</label>
-              <input v-model.number="set.reps" id="rep" class="form-control form-control-sm" min="1" max="30" step="1"
-                type="number" inputmode="numeric" pattern="[1-9]*" required :disabled="addASetLoading" />
+              <input
+                v-model.number="set.reps"
+                id="rep"
+                class="form-control form-control-sm"
+                min="1"
+                max="30"
+                step="1"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                required
+                :disabled="addASetLoading"
+              />
             </div>
 
             <!-- weight -->
             <div class="col-4">
               <label for="weight" class="form-label">Weight*</label>
-              <input v-model.number="set.weight" id="weight" class="form-control form-control-sm" type="number"
-                inputmode="numeric" pattern="[1-9]*" min="1" required :disabled="addASetLoading || !set.reps" />
+              <input
+                v-model.number="set.weight"
+                id="weight"
+                class="form-control form-control-sm"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                min="1"
+                required
+                :disabled="addASetLoading || !set.reps"
+              />
             </div>
 
             <!-- rpe -->
             <div class="col-4">
               <label for="rpe" class="form-label">Rpe</label>
-              <input v-model.number="set.rpe" id="rpe" class="form-control form-control-sm" min="1" step=".5" max="10"
-                inputmode="numeric" pattern="[1-10]*" type="number" :disabled="addASetLoading || !set.weight" />
+              <input
+                v-model.number="set.rpe"
+                id="rpe"
+                class="form-control form-control-sm"
+                min="1"
+                step=".5"
+                max="10"
+                inputmode="numeric"
+                pattern="[1-10]*"
+                type="number"
+                :disabled="addASetLoading || !set.weight"
+              />
             </div>
           </div>
 
           <!-- show/hide button for note -->
           <div class="form-check form-switch mb-3">
-            <input v-model="addASetEnableDisableOtherFields" class="form-check-input" type="checkbox" role="switch"
-              id="add-a-set-enable-disable-note-button" :disabled="addASetLoading || !set.reps || !set.weight" />
+            <input
+              v-model="addASetEnableDisableOtherFields"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="add-a-set-enable-disable-note-button"
+              :disabled="addASetLoading || !set.reps || !set.weight"
+            />
             <label class="form-check-label" for="add-a-set-enable-disable-note-button">
               <span v-if="!addASetEnableDisableOtherFields">Enable</span>
               <span v-if="addASetEnableDisableOtherFields">Disable</span>
@@ -1795,8 +2200,13 @@ function clearAndDismissDeleteALogModal() {
           <!-- note -->
           <div v-if="addASetEnableDisableOtherFields" class="mb-3">
             <label class="form-label">Set note</label>
-            <textarea v-model.trim="set.notes" class="form-control form-control-sm" id="notes-id" rows="3"
-              :disabled="addASetLoading"></textarea>
+            <textarea
+              v-model.trim="set.notes"
+              class="form-control form-control-sm"
+              id="notes-id"
+              rows="3"
+              :disabled="addASetLoading"
+            ></textarea>
           </div>
         </div>
 
@@ -1811,14 +2221,23 @@ function clearAndDismissDeleteALogModal() {
           <!-- btn -->
           <div class="btn-group" role="group">
             <!-- cancel -->
-            <button @click="clearDataAndDismissAddASetModal()" v-if="!addASetLoading" type="reset"
-              class="btn btn-danger" data-bs-dismiss="modal">
+            <button
+              @click="clearDataAndDismissAddASetModal()"
+              v-if="!addASetLoading"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
               <i class="bi bi-x-circle-fill"></i>
               Cancel
             </button>
 
             <!-- add -->
-            <button type="submit" class="btn btn-success" :disabled="addASetLoading || !set.reps || !set.weight">
+            <button
+              type="submit"
+              class="btn btn-success"
+              :disabled="addASetLoading || !set.reps || !set.weight"
+            >
               <div v-if="addASetLoading" class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
@@ -1832,8 +2251,14 @@ function clearAndDismissDeleteALogModal() {
   </form>
 
   <!-- modify a set modal -->
-  <form @submit.prevent="modifyASet()" class="modal fade px-1 pt-5" id="modify-a-set" data-bs-backdrop="static"
-    data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="modifyASet()"
+    class="modal fade px-1 pt-5"
+    id="modify-a-set"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
@@ -1841,37 +2266,77 @@ function clearAndDismissDeleteALogModal() {
             <span> Modify set id {{ set.id }} for </span>
             <span class="fw-light">{{ set.exercise_name }}</span>
           </h5>
-          <button @click="clearDataAndDismissModifyASetModal()" type="reset" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+          <button
+            @click="clearDataAndDismissModifyASetModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body" v-auto-animate>
           <div class="row mb-3">
             <!-- reps -->
             <div class="col-4">
               <label for="modify-rep" class="form-label">Rep*</label>
-              <input v-model.number="set.reps" id="modify-rep" class="form-control form-control-sm" min="1" max="30"
-                step="1" type="number" inputmode="numeric" pattern="[1-9]*" required :disabled="addASetLoading" />
+              <input
+                v-model.number="set.reps"
+                id="modify-rep"
+                class="form-control form-control-sm"
+                min="1"
+                max="30"
+                step="1"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                required
+                :disabled="addASetLoading"
+              />
             </div>
 
             <!-- weight -->
             <div class="col-4">
               <label for="modify-weight" class="form-label">Weight*</label>
-              <input v-model.number="set.weight" id="modify-weight" class="form-control form-control-sm" type="number"
-                inputmode="numeric" pattern="[1-9]*" min="1" required :disabled="addASetLoading" />
+              <input
+                v-model.number="set.weight"
+                id="modify-weight"
+                class="form-control form-control-sm"
+                type="number"
+                inputmode="numeric"
+                pattern="[1-9]*"
+                min="1"
+                required
+                :disabled="addASetLoading"
+              />
             </div>
 
             <!-- rpe -->
             <div class="col-4">
               <label for="modify-rpe" class="form-label">Rpe</label>
-              <input v-model.number="set.rpe" id="modify-rpe" class="form-control form-control-sm" min="1" step=".5"
-                max="10" inputmode="numeric" pattern="[1-10]*" type="number" :disabled="addASetLoading" />
+              <input
+                v-model.number="set.rpe"
+                id="modify-rpe"
+                class="form-control form-control-sm"
+                min="1"
+                step=".5"
+                max="10"
+                inputmode="numeric"
+                pattern="[1-10]*"
+                type="number"
+                :disabled="addASetLoading"
+              />
             </div>
           </div>
 
           <!-- show/hide button for note -->
           <div class="form-check form-switch mb-3">
-            <input v-model="modifyASetEnableDisableOtherFields" class="form-check-input" type="checkbox" role="switch"
-              id="modify-a-set-enable-disable-note-button" />
+            <input
+              v-model="modifyASetEnableDisableOtherFields"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="modify-a-set-enable-disable-note-button"
+            />
             <label class="form-check-label" for="add-a-set-enable-disable-note-button">
               <span v-if="!modifyASetEnableDisableOtherFields">Enable</span>
               <span v-if="modifyASetEnableDisableOtherFields">Disable</span>
@@ -1882,16 +2347,26 @@ function clearAndDismissDeleteALogModal() {
           <!-- note -->
           <div v-if="modifyASetEnableDisableOtherFields" class="mb-3">
             <label for="modify-notes-id" class="form-label">Set note</label>
-            <textarea v-model.trim="set.notes" class="form-control form-control-sm" id="modify-notes-id" rows="3"
-              :disabled="modifyASetLoading"></textarea>
+            <textarea
+              v-model.trim="set.notes"
+              class="form-control form-control-sm"
+              id="modify-notes-id"
+              rows="3"
+              :disabled="modifyASetLoading"
+            ></textarea>
           </div>
         </div>
 
         <!-- footer -->
         <div class="modal-footer d-flex justify-content-between">
           <!-- delete -->
-          <button v-if="!modifyASetLoading" @click="deleteASet()" type="button" class="btn btn-sm btn-danger"
-            :disabled="deleteASetLoading">
+          <button
+            v-if="!modifyASetLoading"
+            @click="deleteASet()"
+            type="button"
+            class="btn btn-sm btn-danger"
+            :disabled="deleteASetLoading"
+          >
             <div v-if="deleteASetLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Deleting...</span>
             </div>
@@ -1902,20 +2377,34 @@ function clearAndDismissDeleteALogModal() {
           <!-- btn -->
           <div class="btn-group btn-group-sm" role="group">
             <!-- clear -->
-            <button v-if="!modifyASetLoading && !deleteASetLoading" type="reset" class="btn btn-outline-danger">
+            <button
+              v-if="!modifyASetLoading && !deleteASetLoading"
+              type="reset"
+              class="btn btn-outline-danger"
+            >
               <font-awesome-icon icon="broom" />
               Clear
             </button>
 
             <!-- cancel -->
-            <button v-if="!modifyASetLoading && !deleteASetLoading" @click="clearDataAndDismissModifyASetModal()"
-              type="reset" class="btn btn-danger" data-bs-dismiss="modal">
+            <button
+              v-if="!modifyASetLoading && !deleteASetLoading"
+              @click="clearDataAndDismissModifyASetModal()"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
               <i class="bi bi-x-circle"></i>
               Cancel
             </button>
 
             <!-- modify -->
-            <button v-if="!deleteASetLoading" type="submit" class="btn btn-success" :disabled="modifyASetLoading">
+            <button
+              v-if="!deleteASetLoading"
+              type="submit"
+              class="btn btn-success"
+              :disabled="modifyASetLoading"
+            >
               <div v-if="modifyASetLoading" class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden"> Updating...</span>
               </div>
@@ -1931,8 +2420,14 @@ function clearAndDismissDeleteALogModal() {
   </form>
 
   <!-- upload a video modal -->
-  <form @submit.prevent="uploadAVideo()" class="modal fade px-2 py-5" id="upload-a-video" data-bs-backdrop="static"
-    data-bs-keyboard="false" tabindex="-1">
+  <form
+    @submit.prevent="uploadAVideo()"
+    class="modal fade px-2 py-5"
+    id="upload-a-video"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
@@ -1941,26 +2436,52 @@ function clearAndDismissDeleteALogModal() {
             <span> Upload a video for </span>
             <span class="fw-light">{{ set.exercise_name }}</span>
           </h5>
-          <button @click="clearDataAndDismissUploadAVideoModal()" type="reset" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close" :disabled="uploadAVideoLoading"></button>
+          <button
+            @click="clearDataAndDismissUploadAVideoModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            :disabled="uploadAVideoLoading"
+          ></button>
         </div>
 
         <!-- body -->
         <div class="modal-body text-center">
           <div class="video-wrapper mb-3" v-if="videoPreviewFileExist">
-            <video id="video-preview" ref="videoPreview" class="video" controls playsinline muted></video>
+            <video
+              id="video-preview"
+              ref="videoPreview"
+              class="video"
+              controls
+              playsinline
+              muted
+            ></video>
           </div>
 
           <!-- click here to chose video -->
           <div>
-            <input ref="video" class="form-control" id="video" type="file" accept="video/*"
-              @change="previewVideoUpload()" hidden />
+            <input
+              ref="video"
+              class="form-control"
+              id="video"
+              type="file"
+              accept="video/*"
+              @change="previewVideoUpload()"
+              hidden
+            />
 
-            <div @click="$refs.video.click()" class="alert d-flex flex-column gap-1 m-0 p-0 py-3 my-1" :class="{
-              'alert-danger': videoFileSize > 10000000,
-              'alert-success': videoFileSize && videoFileSize < 10000000,
-              'alert-primary': !videoFileSize,
-            }" role="button" v-if="!uploadAVideoLoading">
+            <div
+              @click="$refs.video.click()"
+              class="alert d-flex flex-column gap-1 m-0 p-0 py-3 my-1"
+              :class="{
+                'alert-danger': videoFileSize > 10000000,
+                'alert-success': videoFileSize && videoFileSize < 10000000,
+                'alert-primary': !videoFileSize,
+              }"
+              role="button"
+              v-if="!uploadAVideoLoading"
+            >
               <span v-if="videoFileSize">
                 <i v-if="videoFileSize > 10000000" class="bi bi-exclamation-triangle-fill"></i>
                 <i v-else-if="videoFileSize < 10000000" class="bi bi-check-circle-fill"></i>
@@ -1970,7 +2491,8 @@ function clearAndDismissDeleteALogModal() {
               </span>
 
               <span v-if="videoFileSize > 10000000">
-                Your video is more than 10 MB. Click here to choose another video!</span>
+                Your video is more than 10 MB. Click here to choose another video!</span
+              >
               <span v-else> Click here to choose video! </span>
             </div>
           </div>
@@ -1991,19 +2513,33 @@ function clearAndDismissDeleteALogModal() {
           <!-- buttons -->
           <span class="d-flex justify-content-between gap-2">
             <!-- cancel -->
-            <button @click="clearDataAndDismissUploadAVideoModal()" v-if="!uploadAVideoLoading" type="reset"
-              class="btn btn-danger" data-bs-dismiss="modal">
+            <button
+              @click="clearDataAndDismissUploadAVideoModal()"
+              v-if="!uploadAVideoLoading"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
               <i class="bi bi-x-circle-fill"></i>
               Cancel
             </button>
 
             <!-- confirm -->
-            <button type="submit" class="btn btn-success" :disabled="uploadAVideoLoading || videoFileSize > 10000000">
-              <div v-if="uploadAVideoLoading" class="spinner-border spinner-border-sm" role="status">
+            <button
+              type="submit"
+              class="btn btn-success"
+              :disabled="uploadAVideoLoading || videoFileSize > 10000000"
+            >
+              <div
+                v-if="uploadAVideoLoading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
                 <span class="visually-hidden">Loading...</span>
               </div>
 
-              <span v-if="!uploadAVideoLoading"><i class="bi bi-check-circle-fill"></i> Confirm
+              <span v-if="!uploadAVideoLoading"
+                ><i class="bi bi-check-circle-fill"></i> Confirm
               </span>
               <span v-if="uploadAVideoLoading"> Loading... </span>
             </button>

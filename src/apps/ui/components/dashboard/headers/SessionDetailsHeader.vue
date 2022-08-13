@@ -69,6 +69,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
 
       <!-- setting links -->
       <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="min-width: fit-content">
+        <!-- edit -->
         <li>
           <button
             class="dropdown-item btn-sm"
@@ -79,7 +80,9 @@ function clearAndDismissUpdateCurrentSessionModal() {
             Edit
           </button>
         </li>
-        <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
+
+        <!-- share -->
+        <li><button class="dropdown-item btn-sm" type="button" disabled>Share</button></li>
       </ul>
     </div>
 

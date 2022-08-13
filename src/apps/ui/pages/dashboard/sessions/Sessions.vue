@@ -119,8 +119,6 @@ function logDetails(sid) {
 
       <!-- sessions -->
       <div
-        data-aos="fade-up"
-        data-aos-anchor-placement="top"
         v-for="session in sessions"
         :key="`session-${session}`"
         class="card"
@@ -151,15 +149,17 @@ function logDetails(sid) {
               <small style="font-size: 0.7rem">
                 <!-- danger -->
                 <!-- prettier-ignore -->
-                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today" class="text-warning">
-                    <font-awesome-icon icon="fa-refresh" />
-                  </span>
+                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today"
+                  class="text-warning">
+                  <font-awesome-icon icon="fa-refresh" />
+                </span>
 
                 <!-- danger -->
                 <!-- prettier-ignore -->
-                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today" class="text-danger">
-                    <i class="bi bi-exclamation-triangle-fill text-danger"></i>
-                  </span>
+                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today"
+                  class="text-danger">
+                  <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                </span>
               </small>
             </div>
 
