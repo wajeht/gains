@@ -90,7 +90,8 @@ export async function updateUserById(id, body) {
  * @returns The user that was deleted
  */
 export function deleteUser(id) {
-  return db.delete('*').from('users').where({ id }).returning('*');
+  // return db.delete('*').from('users').where({ id }).returning('*');
+  return db.update({ deleted: true }).from('users').where({ id }).returning('*');
 }
 
 /**

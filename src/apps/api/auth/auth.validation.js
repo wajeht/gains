@@ -37,6 +37,7 @@ export const postLogin = [
     // check to see if exist exist or not
     .custom(async (email) => {
       const exist = await UserQueries.findUserByParam({ email });
+      if (exist[0].deleted === true) throw new Error('This account has been deleted!');
       if (exist?.length === 0) throw new Error('The email or password is wrong!');
       return true;
     })

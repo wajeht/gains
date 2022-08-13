@@ -35,6 +35,7 @@ import Settings from './pages/dashboard/settings/Settings.vue';
 
 // account
 import UserDetails from './pages/dashboard/settings/account/UserDetails.vue';
+import DeleteAccount from './pages/dashboard/settings/account/DeleteAccount.vue';
 
 // others
 import SendFeedback from './pages/dashboard/settings/others/SendFeedback.vue';
@@ -341,6 +342,15 @@ const routes = [
     path: '/dashboard/settings/account/user-details',
     name: 'UserDetails',
     component: UserDetails,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/settings/account/delete-account',
+    name: 'DeleteAccount',
+    component: DeleteAccount,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,

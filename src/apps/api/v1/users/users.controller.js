@@ -2,6 +2,7 @@ import logger from '../../../../utils/logger.js';
 import * as UsersQueries from './users.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
+import { omit, without } from 'lodash-es';
 
 /**
  * check to see if a current users authentication is still valid
@@ -99,11 +100,19 @@ export async function deleteUser(req, res) {
 
   logger.info(`UserID: ${id} has disabled their account!`);
 
+  // clear jwt token
+  res.cookie('token', '', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+
+  const withoutPassword = omit(user[0], ['password', 'deleted']);
+
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was deleted successfully!',
-    data: user,
+    data: [withoutPassword],
   });
 }
 
