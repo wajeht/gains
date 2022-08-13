@@ -59,7 +59,8 @@ export async function getExercises(req, res) {
     let userExercises = null;
 
     if (ob === 'name') {
-      const { rows: temp } = await db.raw(`
+      const { rows: temp } = await db.raw(
+        `
         select
           ec.id as category_id,
 	        ec.name as category_name,
@@ -69,11 +70,13 @@ export async function getExercises(req, res) {
 	        inner join exercise_categories ec on ec.id = e.exercise_category_id
         where
 	        e.deleted = false
-	        and e.user_id = 1
+	        and e.user_id = ?
         group by
 	        ec.id
         order by ec."name"
-      `);
+      `,
+        [uid],
+      );
 
       userExercises = temp;
 

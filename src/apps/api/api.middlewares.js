@@ -3,7 +3,6 @@ import { jwt_secret, env } from '../../config/env.js';
 import { red } from '../../utils/rainbow-log.js';
 import { validationResult } from 'express-validator';
 import CustomError from './api.errors.js';
-import multer from 'multer';
 
 import path from 'path';
 
@@ -14,7 +13,7 @@ import path from 'path';
  * @param res - the response object
  * @param next - This is a function that you call when you're done with your middleware.
  */
-export function auth(req, res, next) {
+export function authenticateUser(req, res, next) {
   try {
     // if (env === 'development') {
     //   red('TODO!: Remove auth skipping in production!');
@@ -42,7 +41,13 @@ export function auth(req, res, next) {
     }
 
     try {
-      jwt.verify(token, jwt_secret);
+      const verified = jwt.verify(token, jwt_secret);
+
+      // attach to request response
+      req.user = {
+        user_id: verified.user_id,
+        role: verified.role,
+      };
     } catch (error) {
       throw new CustomError.UnauthenticatedError('Invalid signature!');
     }
@@ -65,6 +70,26 @@ export const catchAsyncErrors = (fn) => {
       await fn(req, res, next);
     } catch (err) {
       next(err);
+    }
+  };
+};
+
+/**
+ * It takes in a list of roles and returns a function that takes in a request, response and next
+ * object. It then checks if the user's role is included in the list of roles passed in. If it is, it
+ * calls next() to continue the request. If it isn't, it throws an error
+ * @param roles - An array of roles that are allowed to access the route.
+ * @returns A function that takes in 3 parameters.
+ */
+export const authorizePermissions = (...roles) => {
+  return (req, res, next) => {
+    try {
+      if (!roles.includes(req.user.role)) {
+        throw new CustomError.UnauthorizedError('Unauthorized to access this route');
+      }
+      next();
+    } catch (e) {
+      next(e);
     }
   };
 };
