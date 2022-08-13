@@ -63,6 +63,7 @@ async function getCurrentSessionDetails() {
         <!-- video -->
         <div class="card shadow-sm border">
           <div class="d-flex justify-content-between card-header">
+            <!-- right -->
             <div>
               <img
                 :src="
@@ -75,20 +76,32 @@ async function getCurrentSessionDetails() {
               />
               <span>{{ userStore.user.username }}</span>
             </div>
-            <div class="dropdown">
-              <a
-                class="link-dark"
+
+            <!-- left -->
+            <div class="d-flex justify-content-between gap-3">
+              <!-- session name -->
+              <span
                 role="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                ><i class="bi bi-three-dots"></i
-              ></a>
-              <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
-                <li><button class="dropdown-item btn-sm" type="button">Share</button></li>
-                <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
-              </ul>
+                @click="router.push(`/dashboard/sessions/${currentSessionDetails.id}`)"
+                >{{ currentSessionDetails.name }}</span
+              >
+
+              <!-- settings -->
+              <div class="dropdown">
+                <a
+                  class="link-dark"
+                  role="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
+                  <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
+                  <li><button class="dropdown-item btn-sm" type="button">Share</button></li>
+                  <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
+                </ul>
+              </div>
             </div>
           </div>
 
