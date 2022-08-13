@@ -24,6 +24,10 @@ The best way to track your workouts
 - **[Animate.css](https://animate.style/)** for ready-made animation
 - **Font-awesome** and **Bootstrap-icon** for icons
 - **Command And Conquer (CAC)** for CLI
+- **GitHub actions** for CI/CD
+- **Caprover with Docker** for for zero config deployment
+- **[AutoAnimate](https://auto-animate.formkit.com/)** for drop-in animation
+
 
 # 👨‍💻 Getting started
 
