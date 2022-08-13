@@ -23,6 +23,7 @@ export async function postLogin(req, res) {
   const token = jwt.sign(
     {
       user_id: user.id,
+      role: user.role,
     },
     jwt_secret,
     {
@@ -47,6 +48,7 @@ export async function postLogin(req, res) {
     data: [
       {
         id: user.id,
+        role: user.role,
         email: user.email,
         username: user.username,
         first_name: user.first_name,

@@ -83,6 +83,7 @@ export function getSessionsByUserId(user_id, pagination = { perPage: null, curre
     .fullOuterJoin('logs', { 'logs.session_id': 'sessions.id' })
     .where({ 'sessions.user_id': user_id })
     .andWhere({ 'sessions.deleted': false })
+    .andWhere({ 'logs.deleted': false })
     .orderBy('sessions.id', 'desc')
     .groupBy('sessions.id')
     .paginate({

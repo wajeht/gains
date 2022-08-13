@@ -36,3 +36,12 @@ export function updatePrivateState(log_id, private_state) {
 export function createMultipleLogs(logs) {
   return db.insert(logs).into('logs').returning('*');
 }
+
+/**
+ * It updates the deleted column of the logs table to true where the id matches the id passed in
+ * @param id - The id of the log you want to delete.
+ * @returns A promise
+ */
+export function deleteALog(id) {
+  return db.update({ deleted: true }).from('logs').where({ id }).returning('*');
+}

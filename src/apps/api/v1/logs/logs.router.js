@@ -60,4 +60,16 @@ logs.patch(
   catchAsyncErrors(LogsController.updatePrivateState),
 );
 
+/**
+ * DELETE /api/v1/logs/{id}
+ * @tags logs
+ * @summary delete a log
+ * @param {number} id.form.required - the name of the log - application/x-www-form-urlencoded
+ */
+logs.delete(
+  '/:id',
+  validator(LogsValidation.deleteALog),
+  catchAsyncErrors(LogsController.deleteALog),
+);
+
 export default logs;

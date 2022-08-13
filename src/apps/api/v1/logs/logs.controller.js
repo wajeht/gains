@@ -80,6 +80,11 @@ export async function updatePrivateState(req, res) {
   });
 }
 
+/**
+ * It takes in an array of logs and creates them in the database
+ * @param req - The request object.
+ * @param res - The response object.
+ */
 export async function postMultipleLogs(req, res) {
   const logs = req.body.logs;
   const user_id = req.body.user_id;
@@ -93,5 +98,20 @@ export async function postMultipleLogs(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was created successfully!',
     data: created,
+  });
+}
+
+export async function deleteALog(req, res) {
+  const id = req.params.id;
+
+  const deleted = await LogsQueries.deleteALog(id);
+
+  logger.info(`User id: ${deleted[0].user_id} has deleted a log id: ${deleted[0].id})}`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was deleted successfully!',
+    data: deleted,
   });
 }

@@ -215,3 +215,22 @@ export const postMultipleLogs = [
   //     return true;
   //   }),
 ];
+
+export const deleteALog = [
+  param('id')
+    .trim()
+    .notEmpty()
+    .withMessage('log id must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('log id must be an ID!')
+    .bail()
+    .toInt()
+    .custom(async (id, { req }) => {
+      const log = await LogsQueries.getLogById(id);
+      if (req.user.user_id !== log[0].user_id) throw new Error('You are not authorized to delete this!'); // prettier-ignore
+      if (log.length === 0) throw new Error('Log does not exist!');
+      return true;
+    })
+    .toInt(),
+];
