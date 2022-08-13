@@ -57,6 +57,7 @@ const set = reactive({
   id: null,
   set_index: null,
   log_index: null,
+  log_id: null,
   exercise_id: null,
   user_id: null,
   session_id: null,
@@ -280,7 +281,7 @@ async function copyPreviousSet(currentLogIndex) {
       }
     }
 
-    currentSessionDetails.logs[currentLogIndex].sets.push(data);
+    currentSessionDetails.logs[currentLogIndex].sets.push(json.data[0]);
     currentSessionDetails.logs[currentLogIndex].duplicateSetLoading = false;
   } catch (e) {
     alert.type = 'danger';
@@ -481,6 +482,7 @@ async function modifyASet() {
       weight: set.weight,
       rpe: set.rpe,
       notes: set.notes,
+      log_id: set.log_id,
     };
 
     const validModifyData = pickBy(modifyData, (value, key) => value !== null);
@@ -499,6 +501,8 @@ async function modifyASet() {
     clearDataAndDismissModifyASetModal();
     modifyASetLoading.value = false;
     const current = currentSessionDetails.logs[set.log_index].sets[set.set_index];
+
+    console.log(current);
 
     // update realtime sets
     for (let i in current) {
@@ -1182,6 +1186,7 @@ async function updateLogVisibility(log_id, state) {
                                   (set.weight = s.weight),
                                   (set.rpe = s.rpe),
                                   (set.notes = s.notes),
+                                  (set.log_id = log.id),
                                   (set.exercise_name = log.name)
                               "
                               type="button"
