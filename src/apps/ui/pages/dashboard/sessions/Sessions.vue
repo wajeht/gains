@@ -11,6 +11,9 @@ import api from '../../../../../utils/fetch-with-style.js';
 import useAppStore from '../../../store/app.store.js';
 import useUserStore from '../../../store/user.store.js';
 
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime); // use plugin
+
 const appStore = useAppStore();
 const userStore = useUserStore();
 const router = useRouter();
@@ -92,7 +95,8 @@ function calculateTotal(start, end) {
   if (!start || !end) return 0;
   const start_date = dayjs(start);
   const end_date = dayjs(end);
-  return end_date.diff(start_date, 'minute');
+  const total = end_date.diff(start_date, 'minute');
+  return total;
 }
 
 function logDetails(sid) {
@@ -174,14 +178,11 @@ function logDetails(sid) {
 
             <!-- end -->
             <div class="d-flex flex-column justify-content-between">
-              <small class="text-muted d-block text-end"
-                >{{
-                  calculateTotal(session.start_date, session.end_date) === 0
-                    ? '?'
-                    : calculateTotal(session.start_date, session.end_date)
-                }}
-                min</small
-              >
+              <small class="text-muted d-block text-end">{{
+                session.end_date === null
+                  ? '?'
+                  : dayjs(session.end_date).from(session.start_date, true)
+              }}</small>
             </div>
           </div>
         </div>
