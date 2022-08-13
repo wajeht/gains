@@ -502,8 +502,6 @@ async function modifyASet() {
     modifyASetLoading.value = false;
     const current = currentSessionDetails.logs[set.log_index].sets[set.set_index];
 
-    console.log(current);
-
     // update realtime sets
     for (let i in current) {
       current[i] = validModifyData[i];
