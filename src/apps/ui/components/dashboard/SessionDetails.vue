@@ -2447,7 +2447,7 @@ function clearAndDismissDeleteALogModal() {
         </div>
 
         <!-- body -->
-        <div class="modal-body text-center">
+        <div class="modal-body text-center" v-auto-animate>
           <div class="video-wrapper mb-3" v-if="videoPreviewFileExist">
             <video
               id="video-preview"
