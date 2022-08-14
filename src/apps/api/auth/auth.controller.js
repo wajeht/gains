@@ -16,28 +16,51 @@ import jwt from 'jsonwebtoken';
  * @param res - The response object.
  */
 export async function postLogin(req, res) {
-  const { email } = req.body;
+  const { email, remember_me } = req.body;
   let [user] = await UsersQueries.findUserByParam({ email });
   [user] = await UsersQueries.findUserById(user.id);
 
-  const token = jwt.sign(
-    {
-      user_id: user.id,
-      role: user.role,
-    },
-    jwt_secret,
-    {
-      issuer: 'AllKindsOfGains',
-      expiresIn: '1h',
-    },
-  );
+  let token = null;
 
-  res.cookie('token', token, {
-    expiresIn: '1h',
-    httpOnly: true,
-    secure: env === 'production',
-    signed: true,
-  });
+  if (remember_me) {
+    token = jwt.sign(
+      {
+        user_id: user.id,
+        role: user.role,
+      },
+      jwt_secret,
+      {
+        issuer: 'AllKindsOfGains',
+        expiresIn: '1d',
+      },
+    );
+
+    res.cookie('token', token, {
+      expiresIn: '1d',
+      httpOnly: true,
+      secure: env === 'production',
+      signed: true,
+    });
+  } else {
+    token = jwt.sign(
+      {
+        user_id: user.id,
+        role: user.role,
+      },
+      jwt_secret,
+      {
+        issuer: 'AllKindsOfGains',
+        expiresIn: '1h',
+      },
+    );
+
+    res.cookie('token', token, {
+      expiresIn: '1h',
+      httpOnly: true,
+      secure: env === 'production',
+      signed: true,
+    });
+  }
 
   logger.info(`User id ${user.id} has logged-in!`);
 

@@ -21,7 +21,7 @@ export const getReverify = [
 export const postLogin = [
   // only certain fields are allow
   body().custom((body) => {
-    const requiredFields = ['email', 'password'];
+    const requiredFields = ['email', 'password', 'remember_me'];
     const bodyFields = Object.keys(body);
     const equal = isEqual(requiredFields.sort(), bodyFields.sort());
     if (!equal) throw new Error('Fields must be in required format!');
@@ -64,6 +64,7 @@ export const postLogin = [
       if (!samePassword) throw new Error('The email or password is wrong!');
       return true;
     }),
+  body('remember_me').optional().trim().toBoolean(),
 ];
 
 /* A validation for the user input. */

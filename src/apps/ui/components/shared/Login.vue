@@ -51,7 +51,7 @@
     <!-- checkbox -->
     <div class="mb-3 form-check">
       <input
-        v-model="rememberMe"
+        v-model="remember_me"
         type="checkbox"
         class="form-check-input"
         id="remember-me"
@@ -135,7 +135,7 @@ export default {
     return {
       email: '',
       password: '',
-      rememberMe: '',
+      remember_me: false,
       loading: false,
       reVerifyMessage: false,
       signupLink: '/signup',
@@ -187,6 +187,7 @@ export default {
           body: JSON.stringify({
             email: this.email,
             password: this.password,
+            remember_me: this.remember_me,
           }),
         });
 
