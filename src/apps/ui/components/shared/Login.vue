@@ -89,8 +89,7 @@
 
   <!-- o-auth -->
   <div class="d-flex flex-column gap-2 mb-3">
-    <!-- discord -->
-    <a
+    <!-- <a
       :class="{ disabled: loading === true }"
       class="btn w-100 text-light"
       href="#"
@@ -100,7 +99,6 @@
       ><i class="bi bi-discord me-1"></i>Login with Discord</a
     >
 
-    <!-- github -->
     <a
       :class="{ disabled: loading === true }"
       class="btn btn-success w-100"
@@ -109,7 +107,7 @@
       v-tooltip
       title="Not supported yet!"
       ><i class="bi bi-github me-1"></i>Login with Github</a
-    >
+    > -->
 
     <!-- email -->
     <router-link
