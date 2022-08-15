@@ -3,7 +3,6 @@ import path from 'path';
 import { env } from '../config/env.js';
 import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
-import { red } from '../utils/rainbow-log.js';
 import requestIp from 'request-ip';
 
 /**

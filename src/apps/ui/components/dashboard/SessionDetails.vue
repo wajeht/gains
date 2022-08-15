@@ -1555,7 +1555,7 @@ function clearAndDismissDeleteALogModal() {
                         .includes(exercise.id),
                     }"
                     :for="exercise.name"
-                    ><small> {{ exercise.name }} {{ exercise.id }} </small>
+                    ><small> {{ exercise.name }}</small>
                   </label>
                 </div>
               </span>

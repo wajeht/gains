@@ -14,13 +14,19 @@ import dayjs from 'dayjs';
 const router = useRouter();
 const route = useRoute();
 
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, reactive } from 'vue';
 
 const sessions = ref([]);
+
+const alert = reactive({
+  type: '',
+  msg: '',
+});
 
 onMounted(async () => {
   appStore.loading = true;
   const s = await getSessions();
+  if (!s?.length) return;
   sessions.value = s.filter((s) => s.logs) || [];
   appStore.loading = false;
 });
@@ -36,6 +42,14 @@ async function getSessions() {
       } else {
         throw json.message;
       }
+    }
+
+    if (json.data?.length === 0) {
+      appStore.loading = false;
+      alert.type = 'warning';
+      alert.msg =
+        'There are no community session with videos available available at this time! Please add a session via click the plus icon!';
+      return;
     }
 
     json.data.forEach((ss) => {
@@ -63,6 +77,11 @@ async function getSessions() {
   <div v-if="!appStore.loading" class="animate__animated animate__fadeIn animate__faster">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
+        <!-- alert -->
+        <div v-if="alert.type" :class="`alert-${alert.type}`" class="alert mb-0">
+          <span>{{ alert.msg }}</span>
+        </div>
+
         <!-- card -->
         <div
           v-for="s in sessions"

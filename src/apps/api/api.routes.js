@@ -1,5 +1,5 @@
 import express from 'express';
-import v1 from './v1/v1.js';
+import v1 from './v1/v1.routes.js';
 
 import authRouter from './auth/auth.router.js';
 import contactRouter from './contact/contact.router.js';

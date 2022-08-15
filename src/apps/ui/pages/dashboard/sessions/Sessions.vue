@@ -37,7 +37,7 @@ const alert = reactive({
 onMounted(async () => {
   appStore.loading = true;
   await getUserSessions();
-  pagination.lastPage = pagination.details.lastPage;
+  pagination.lastPage = pagination.details?.lastPage;
   appStore.loading = false;
 });
 
