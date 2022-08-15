@@ -1,0 +1,8 @@
+.gains
+.github
+.vscode
+coverage
+docs
+node_modules
+.editorconfig
+.env.example
