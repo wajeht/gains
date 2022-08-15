@@ -1,11 +1,27 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { capitalizeAWord } from '../../../../../utils/helpers.js';
+import api from '.././../../../../utils/fetch-with-style';
 
 const router = useRouter();
 const previousPageName = ref('');
 const updateCurrentSessionLoading = ref(null);
+
+const alert = reactive({
+  type: '',
+  msg: '',
+});
+
+const props = defineProps({
+  sessionName: String,
+  sessionId: Number,
+  userId: Number,
+});
+
+const emit = defineEmits('updateSessionName');
+
+const newSessionName = ref('');
 
 onMounted(() => {
   let back = router.options.history.state.back?.split('/');
@@ -19,7 +35,39 @@ onUnmounted(() => document.body.removeChild(document.getElementById(`update-curr
 // this code above required for back drop problem fixed when adding a new session header model
 
 async function updateCurrentSession() {
-  console.log('updateCurrentSession()');
+  try {
+    updateCurrentSessionLoading.value = true;
+
+    const data = {
+      name: newSessionName.value,
+      user_id: props.userId,
+    };
+
+    const res = await api.patch(`/api/v1/sessions/${props.sessionId}`, data);
+    const json = await res.json();
+
+    emit('updateSessionName', newSessionName);
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    clearAndDismissUpdateCurrentSessionModal();
+    updateCurrentSessionLoading.value = false;
+  } catch (e) {
+    updateCurrentSessionLoading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 
 function clearAndDismissUpdateCurrentSessionModal() {
@@ -97,6 +145,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
     >
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
+          <!-- header -->
           <div class="modal-header">
             <h5 class="modal-title">
               <span> Update </span>
@@ -106,14 +155,32 @@ function clearAndDismissUpdateCurrentSessionModal() {
               type="reset"
               class="btn-close"
               data-bs-dismiss="modal"
+              :disabled="updateCurrentSessionLoading"
             ></button>
           </div>
-          <div class="modal-body">
-            <!-- input -->
-            <div class="mb-3"></div>
 
-            <!-- input -->
-            <div class="mb-3"></div>
+          <!-- body -->
+          <div class="modal-body">
+            <!-- alert -->
+            <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-3 alert">
+              <span>{{ alert.msg }}</span>
+            </div>
+
+            <!-- session name -->
+            <div class="mb-3">
+              <label for="session-details-header-session-name" class="form-label"
+                >Session name*</label
+              >
+              <input
+                v-model="newSessionName"
+                id="session-details-header-session-name"
+                class="form-control form-control-sm"
+                type="text"
+                required
+                :placeholder="sessionName"
+                :disabled="updateCurrentSessionLoading"
+              />
+            </div>
           </div>
 
           <!-- footer -->

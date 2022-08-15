@@ -12,6 +12,9 @@ import dayjs from 'dayjs';
 import filesize from 'filesize';
 import { pickBy, pick, omit } from 'lodash-es';
 
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime); // use plugin
+
 // vue
 import { ref, reactive, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -38,7 +41,6 @@ const alert = reactive({
 });
 const loading = ref(false);
 const today = dayjs().format('YYYY/MM/DD');
-const total = ref('');
 const sid = ref(null);
 const currentSessionDetails = reactive({});
 
@@ -111,11 +113,6 @@ onMounted(async () => {
   const s = await getCurrentSessionDetails();
   Object.assign(currentSessionDetails, s);
   currentSessionDetails.logs = s.logs || [];
-
-  // calculate total date format on load
-  const start_date = dayjs(currentSessionDetails.start_date);
-  const end_date = dayjs(currentSessionDetails.end_date);
-  total.value = end_date.diff(start_date, 'minute');
 
   // initialized categories on load
   const uec = await getUserExerciseCategories();
@@ -262,6 +259,10 @@ function hideOrCollapsedAllLogs() {
     log.collapsed = false;
   });
   hideOrCollapsedAllLogsState.value = false;
+}
+
+function updateNewSessionName(recieved) {
+  currentSessionDetails.name = recieved.value;
 }
 
 // -------------- CRUD ---------------
@@ -877,7 +878,12 @@ function clearAndDismissDeleteALogModal() {
   <Loading v-if="appStore.loading" style="max-width: 540px" />
 
   <!-- header -->
-  <SessionDetailsHeader />
+  <SessionDetailsHeader
+    :userId="currentSessionDetails.user_id"
+    :sessionId="currentSessionDetails.id"
+    :sessionName="currentSessionDetails.name"
+    @updateSessionName="updateNewSessionName"
+  />
 
   <!-- session details -->
   <div v-if="!appStore.loading" class="animate__animated animate__zoomIn animate__faster">
@@ -989,9 +995,16 @@ function clearAndDismissDeleteALogModal() {
                   </span>
 
                   <!-- total -->
-                  <span v-if="total">
+                  <span v-if="currentSessionDetails.end_date">
                     <font-awesome-icon icon="fa-plus" class="me-1" />Total:
-                    <span class="fw-light">{{ total }} min</span>
+                    <span class="fw-light">{{
+                      currentSessionDetails.end_date === null
+                        ? '?'
+                        : dayjs(currentSessionDetails.end_date).from(
+                            currentSessionDetails.start_date,
+                            true,
+                          )
+                    }}</span>
                   </span>
 
                   <!-- weight -->
@@ -1135,6 +1148,7 @@ function clearAndDismissDeleteALogModal() {
                             data-bs-toggle="modal"
                             data-bs-target="#delete-a-log"
                             type="button"
+                            :disabled="currentSessionDetails.end_date"
                           >
                             Delete
                           </button>
