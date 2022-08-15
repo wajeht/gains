@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: postgres-service
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    networks:
+      - gains-network
+    volumes:
+      - postgres-data:/data/postgres
+
+  gains:
+    image: gains
+    container_name: gains-service
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.dev
+    restart: unless-stopped
+    stdin_open: true
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - gains-network
+    depends_on:
+      - postgres
+
+networks:
+  gains-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local

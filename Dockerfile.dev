@@ -1,0 +1,17 @@
+FROM node:alpine
+
+WORKDIR /usr/src/app
+
+COPY ./package.json ./
+COPY ./package-lock.json ./
+
+RUN npm install
+RUN apk update
+RUN apk add
+RUN apk add ffmpeg
+
+COPY ./ .
+
+EXPOSE 8080
+
+CMD ["npm", "run", "dev"]

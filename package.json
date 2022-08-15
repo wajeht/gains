@@ -24,7 +24,8 @@
     "reset:db": "npm run migrate:rollback && npm run migrate:latest && npm run seed:run",
     "release": "standard-version",
     "release:alpha": "npm run release -- --prerelease alpha",
-    "rmds": "find . -name '.DS_Store' -delete"
+    "rmds": "find . -name '.DS_Store' -delete",
+    "prepare": "husky install"
   },
   "bin": {
     "gains": "./src/bin/gains.js"
