@@ -110,7 +110,10 @@ function logDetails(sid) {
 
 <template>
   <SessionsHeader />
-  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
+  <div
+    v-if="!appStore.loading"
+    class="container px-3 animate__animated animate__fadeIn animate__faster"
+  >
     <div class="my-3 d-flex flex-column gap-3">
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="alert mb-0">

@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column justify-content-evenly" style="min-height: calc(100vh - 170px)">
     <!-- hero -->
-    <div class="text-center px-4 pb-5 border-bottom mx-auto">
+    <div class="text-center pt-4 border-bottom mx-auto">
       <!-- alert -->
       <div
         class="alert alert-warning mb-3 py-2 mx-auto px-3 animate__animated animate__fadeInDown d-block"
@@ -43,11 +43,11 @@
       </div>
 
       <!-- image -->
-      <div class="px-5">
+      <div class="row px-5 text-center">
         <img
-          src="../../assets/images/hero.png"
-          style="width: 100%"
-          class="mb-4"
+          src="../../assets/images/hero-new-half.png"
+          class="mx-auto"
+          style="width: 80%"
           alt="gains app screenshot"
         />
       </div>
