@@ -1,10 +1,11 @@
 <script setup>
 import { onMounted, onUnmounted, ref, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { capitalizeAWord } from '../../../../../utils/helpers.js';
 import api from '.././../../../../utils/fetch-with-style';
 
 const router = useRouter();
+const route = useRoute();
 const previousPageName = ref('');
 const updateCurrentSessionLoading = ref(null);
 
@@ -25,6 +26,11 @@ const newSessionName = ref('');
 
 onMounted(() => {
   let back = router.options.history.state.back?.split('/');
+
+  if (back === undefined) {
+    back = route.path.split('/');
+  }
+
   back = back[back?.length - 1];
   previousPageName.value = capitalizeAWord(back);
 });
