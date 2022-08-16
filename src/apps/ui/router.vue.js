@@ -20,6 +20,7 @@ import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import Community from './pages/dashboard/Community.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
+import DashboardUnauthorized from './pages/dashboard/DashboardUnauthorized.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
 
@@ -440,6 +441,15 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: '404',
     component: DashboardNotFound,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/unauthorized',
+    name: 'DashboardUnauthorized',
+    component: DashboardUnauthorized,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,

@@ -114,6 +114,15 @@ onMounted(async () => {
   Object.assign(currentSessionDetails, s);
   currentSessionDetails.logs = s.logs || [];
 
+  // auth guard
+  if (currentSessionDetails.user_id != userStore.user.id) {
+    let beforeUnauthorized = router.options.history.state.back;
+    if (beforeUnauthorized == undefined) {
+      beforeUnauthorized = window.history.state.back;
+    }
+    router.push(`/dashboard/unauthorized?back=${beforeUnauthorized}`);
+  }
+
   // initialized categories on load
   const uec = await getUserExerciseCategories();
   chooseCategories.value = uec || [];

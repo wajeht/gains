@@ -98,15 +98,31 @@ async function getSessions() {
                 height="24"
                 class="rounded-circle me-2"
               />
-              <span role="button" @click="router.push('/dashboard/profile')">{{ s.username }}</span>
+              <span>
+                <span
+                  v-if="userStore.user.id == s.user_id"
+                  role="button"
+                  @click="router.push('/dashboard/profile')"
+                  >{{ s.username }}</span
+                >
+                <span v-else>{{ s.username }}</span>
+              </span>
             </div>
 
             <!-- right -->
             <div class="d-flex justify-content-between gap-3">
               <!-- session name -->
-              <span role="button" @click="router.push(`/dashboard/sessions/${s.id}`)">{{
-                s.name
-              }}</span>
+              <span>
+                <span
+                  v-if="userStore.user.id == s.user_id"
+                  role="button"
+                  @click="router.push(`/dashboard/sessions/${s.id}`)"
+                  >{{ s.name }}</span
+                >
+                <span v-else>
+                  {{ s.name }}
+                </span>
+              </span>
 
               <!-- settings -->
               <div class="dropdown">
@@ -119,9 +135,13 @@ async function getSessions() {
                   ><i class="bi bi-three-dots"></i
                 ></a>
                 <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                  <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
-                  <li><button class="dropdown-item btn-sm" type="button">Share</button></li>
-                  <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
+                  <li><button class="dropdown-item btn-sm" type="button" disabled>Edit</button></li>
+                  <li>
+                    <button class="dropdown-item btn-sm" type="button" disabled>Share</button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item btn-sm" type="button" disabled>Delete</button>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -189,6 +209,7 @@ async function getSessions() {
                 </p>
               </div>
 
+              <!-- footer -->
               <div class="card-footer">
                 <small class="d-flex justify-content-between text-muted">
                   <!-- left -->
@@ -217,7 +238,7 @@ async function getSessions() {
                     </span>
 
                     <!-- comment -->
-                    <span><i class="bi bi-chat me-1"></i><span>2</span></span>
+                    <!-- <span><i class="bi bi-chat me-1"></i><span>2</span></span> -->
                   </div>
                 </small>
               </div>
