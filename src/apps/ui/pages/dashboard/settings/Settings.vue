@@ -1,6 +1,15 @@
 <script setup>
 import useAppStore from '../../../store/app.store.js';
 const appStore = useAppStore();
+
+async function deleteAllData() {}
+
+async function downloadData() {}
+
+function clearAndDismissModal(modalId) {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(modalId));
+  modal.hide();
+}
 </script>
 <template>
   <!-- header -->
@@ -64,9 +73,9 @@ const appStore = useAppStore();
                 <div>
                   <h6 class="mb-0">
                     Delete your account
-                    <small class="bg-danger text-white px-1 rounded" style="padding-bottom: 2.5px"
+                    <!-- <small class="bg-danger text-white px-1 rounded" style="padding-bottom: 2.5px"
                       >warning</small
-                    >
+                    > -->
                   </h6>
                   <p class="mb-0 opacity-75">This action cannot be revert back to normal state!</p>
                 </div>
@@ -80,7 +89,10 @@ const appStore = useAppStore();
           <h5><i class="bi bi-file-earmark-bar-graph"></i> Data</h5>
           <div class="list-group">
             <!-- email -->
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <span
+              style="background: #f1f1f1"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted fw-light"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">Delete all data</h6>
@@ -88,10 +100,13 @@ const appStore = useAppStore();
                 </div>
                 <!-- <small class="opacity-50 text-nowrap">v1</small> -->
               </div>
-            </a>
+            </span>
 
             <!-- csv -->
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <span
+              style="background: #f1f1f1"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted fw-light"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">Download your data</h6>
@@ -99,17 +114,20 @@ const appStore = useAppStore();
                 </div>
                 <!-- <small class="opacity-50 text-nowrap">v1</small> -->
               </div>
-            </a>
+            </span>
 
             <!-- api-key -->
-            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+            <router-link
+              to="/dashboard/settings/data/api-keys"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">Request API Key</h6>
                   <p class="mb-0 opacity-75">Want to consume your data via api? That's great!</p>
                 </div>
               </div>
-            </a>
+            </router-link>
           </div>
         </div>
 
@@ -117,6 +135,17 @@ const appStore = useAppStore();
         <div>
           <h5><i class="bi bi-code-slash"></i> Others</h5>
           <div class="list-group">
+            <!-- api docs -->
+            <a
+              href="/docs/api/"
+              target="_blank"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <h6 class="mb-0">API Docs</h6>
+              </div>
+            </a>
+
             <!-- help -->
             <router-link
               to="/dashboard/settings/others/help-and-support"
