@@ -58,57 +58,63 @@ function clearAndDismissDeleteAccountModal() {
         <span>{{ alert.msg }}</span>
       </div>
 
-      <!-- card -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Delete account</h5>
-          <!-- alert -->
-          <p class="card-text">
-            This will permanently delete your account and all of its data. You will not be able to
-            reactivate this account.
-          </p>
+      <!-- User -->
+      <div>
+        <!-- title -->
+        <h5><i class="bi bi-person-fill"></i> Delete account</h5>
+        <div class="list-group">
+          <div class="card">
+            <div class="card-body">
+              <!-- <h5 class="card-title">Delete account</h5> -->
+              <!-- alert -->
+              <p class="card-text alert alert-warning">
+                This will permanently delete your account and all of its data. You will not be able
+                to reactivate this account.
+              </p>
 
-          <!-- reason -->
-          <div class="mb-3">
-            <label class="form-label" for="reasons"
-              >What is the main reason you are deleting your account?
-              <small class="text-muted fst-italic">(optional)</small></label
-            >
-            <select class="form-select" id="reasons">
-              <option selected disabled>Select a reason</option>
-              <option value="1">user experience sucks</option>
-              <option value="2">i like instagram better</option>
-              <option value="3">other reasons</option>
-            </select>
+              <!-- reason -->
+              <div class="mb-3">
+                <label class="form-label" for="reasons"
+                  >What is the main reason you are deleting your account?
+                  <small class="text-muted fst-italic">(optional)</small></label
+                >
+                <select class="form-select" id="reasons">
+                  <option selected disabled>Select a reason</option>
+                  <option value="1">user experience sucks</option>
+                  <option value="2">i like instagram better</option>
+                  <option value="3">other reasons</option>
+                </select>
+              </div>
+
+              <!-- text area -->
+              <div class="mb-3">
+                <label class="form-label" for="feedback"
+                  >We are sorry to see you go. Please explain why you are leaving to help us improve
+                  <small class="text-muted fst-italic">(optional)</small></label
+                >
+                <textarea class="form-control form-control-sm" id="feedback" rows="5"></textarea>
+              </div>
+
+              <!-- checkbox -->
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="sure" v-model="iAmSure" />
+                <label class="form-check-label" for="sure"
+                  >Yes, I want to permanently delete this account and all its data.</label
+                >
+              </div>
+
+              <!-- button -->
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#delete-account"
+                type="button"
+                class="btn btn-danger"
+                :disabled="!iAmSure"
+              >
+                Submit
+              </button>
+            </div>
           </div>
-
-          <!-- text area -->
-          <div class="mb-3">
-            <label class="form-label" for="feedback"
-              >We are sorry to see you go. Please explain why you are leaving to help us improve
-              <small class="text-muted fst-italic">(optional)</small></label
-            >
-            <textarea class="form-control form-control-sm" id="feedback" rows="5"></textarea>
-          </div>
-
-          <!-- checkbox -->
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="sure" v-model="iAmSure" />
-            <label class="form-check-label" for="sure"
-              >Yes, I want to permanently delete this account and all its data.</label
-            >
-          </div>
-
-          <!-- button -->
-          <button
-            data-bs-toggle="modal"
-            data-bs-target="#delete-account"
-            type="button"
-            class="btn btn-danger"
-            :disabled="!iAmSure"
-          >
-            Submit
-          </button>
         </div>
       </div>
     </div>
