@@ -92,6 +92,7 @@ async function deleteAComment() {
       (cur, index) => index != deleteACommentSelectedIndex.value,
     );
   } catch (e) {
+    clearAndDismissDeleteACommentModal();
     deleteACommentLoading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -181,6 +182,11 @@ async function postAComment() {
   <div v-if="!appStore.loading" class="animate__animated animate__zoomIn animate__faster">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
+        <!-- alert -->
+        <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
+          <span>{{ alert.msg }}</span>
+        </div>
+
         <!-- video -->
         <div class="card shadow-sm border">
           <div class="d-flex justify-content-between card-header">
