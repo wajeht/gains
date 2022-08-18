@@ -1,95 +1,94 @@
+<script setup>
+import { ref } from 'vue';
+import { sleep } from '../../../../utils/helpers.js';
+
+const currentFeature = ref(null);
+const features = ref([
+  {
+    id: 1,
+    name: 'tracking',
+    title: 'Data intensive tracking.',
+    subtitle: 'It’ll blow your mind.',
+    description:
+      'We take every piece of data that you give and formulate insightful and accurate graphics. Consider your sleep, diet, workouts and progress at a glance with our aggregation algorithm.',
+    poster: new URL('../../assets/images/tracking.png', import.meta.url).href,
+    video: new URL('../../assets/videos/tracking.mp4', import.meta.url).href,
+  },
+  {
+    id: 2,
+    name: 'instagram',
+    title: 'Instagram style video layout.',
+    subtitle: 'See for yourself.',
+    description:
+      "Browse other users' content, view popular content, like photos, and follow other users to add their content to a personal feed.",
+    poster: new URL('../../assets/images/videos.png', import.meta.url).href,
+    video: new URL('../../assets/videos/instagram-style.mp4', import.meta.url).href,
+  },
+  {
+    id: 3,
+    name: 'calculators',
+    title: 'A bunch of calculators.',
+    subtitle: 'It’ll blow your mind.',
+    description:
+      "Anxious to know where you're at? Find one of our many calculators and give it a whirl.",
+    poster: new URL('../../assets/images/calculators.png', import.meta.url).href,
+    video: new URL('../../assets/videos/calculators.mp4', import.meta.url).href,
+  },
+  {
+    id: 4,
+    name: 'charts',
+    title: 'Charts, Graphs, and Reports.',
+    subtitle: 'See for yourself.',
+    description:
+      'Chart tools are powerful, simple to use, and free. Try out our rich gallery of interactive charts and data tools.',
+    poster: new URL('../../assets/images/charts-and-graph.png', import.meta.url).href,
+    video: new URL('../../assets/videos/chart.mp4', import.meta.url).href,
+  },
+]);
+
+async function previewVideo(index) {
+  currentFeature.value = features.value[index];
+
+  await sleep(5);
+
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('preview-video'));
+  modal.show();
+}
+
+function clearAndDismissPreviewVideoModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('preview-video'));
+  modal.hide();
+  currentFeature.value = null;
+}
+</script>
+
 <template>
   <div class="px-4 mx-auto animate__animated animate__fadeIn">
-    <!-- feature 1 -->
-    <section class="pb-5">
+    <!-- features -->
+    <section
+      v-for="(f, index) in features"
+      class="pb-5 border-bottom"
+      :class="{ 'pt-5': index != 0 }"
+    >
       <div class="row">
         <div class="col-md-7">
           <h2 class="featurette-heading">
-            Data intensive tracking. <span class="text-muted">It’ll blow your mind.</span>
+            {{ f.title }} <span class="text-muted">{{ f.subtitle }}</span>
           </h2>
           <p class="lead">
-            We take every piece of data that you give and formulate insightful and accurate
-            graphics. Consider your sleep, diet, workouts and progress at a glance with our
-            aggregation algorithm.
+            {{ f.description }}
           </p>
         </div>
         <div class="col-md-5">
-          <div class="video-wrapper">
-            <video class="video" controls playsinline muted preload="metadata">
-              <source src="../../assets/videos/tracking.mp4#t=0.1" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- feature 2 -->
-    <section class="bg-white py-5 border-top">
-      <div class="row">
-        <div class="col-md-7 order-md-2">
-          <h2 class="featurette-heading">
-            Instagram style video layout. <span class="text-muted">See for yourself.</span>
-          </h2>
-          <p class="lead">
-            Browse other users' content, view popular content, like photos, and follow other users
-            to add their content to a personal feed.
-          </p>
-        </div>
-        <div class="col-md-5 order-md-1">
-          <div class="video-wrapper">
-            <video class="video" controls playsinline muted preload="metadata">
-              <source src="../../assets/videos/instagram-style.mp4#t=0.1" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- feature 3 -->
-    <section class="py-5 border-top">
-      <div class="row">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">
-            A bunch of calculators. <span class="text-muted">It’ll blow your mind.</span>
-          </h2>
-          <p class="lead">
-            Anxious to know where you're at? Find one of our many calculators and give it a whirl.
-          </p>
-        </div>
-        <div class="col-md-5">
-          <div class="video-wrapper">
-            <video class="video" controls playsinline muted preload="metadata">
-              <source src="../../assets/videos/calculators.mp4#t=0.1" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- feature 4 -->
-    <section class="px-4 py-5 border-top">
-      <div class="row">
-        <div class="col-md-7 order-md-2">
-          <h2 class="featurette-heading">
-            Charts, Graphs, and Reports. <span class="text-muted">See for yourself.</span>
-          </h2>
-          <p class="lead">
-            Chart tools are powerful, simple to use, and free. Try out our rich gallery of
-            interactive charts and data tools.
-          </p>
-        </div>
-        <div class="col-md-5 order-md-1">
-          <div class="video-wrapper">
-            <video class="video" controls playsinline muted preload="metadata">
-              <source src="../../assets/videos/chart.mp4#t=0.1" type="video/mp4" />
-            </video>
+          <div @click="previewVideo(index)" role="button" class="video-poster-wrapper">
+            <img class="video-poster" :src="f.poster" />
           </div>
         </div>
       </div>
     </section>
 
     <!-- github -->
-    <section class="py-5 border-top text-center">
+    <section id="github" class="py-5 text-center">
       <!-- title -->
       <h2 class="featurette-heading">
         Are you a developer? <span class="text-muted">That's cool..!</span>
@@ -122,21 +121,75 @@
       </div>
     </section>
   </div>
+
+  <!-- preview a video modal -->
+  <div
+    v-if="currentFeature != null"
+    class="modal fade px-2 py-5"
+    id="preview-video"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <!-- header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Preview video</h5>
+          <button
+            @click="clearAndDismissPreviewVideoModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <!-- body -->
+        <div class="modal-body">
+          <video class="video" controls playsinline autoplay muted>
+            <source :src="currentFeature.video" type="video/mp4" />
+          </video>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearAndDismissPreviewVideoModal()"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.video-wrapper {
-  aspect-ratio: 1/1;
-  width: auto;
-  height: auto;
-  overflow: hidden;
-}
-
 .video {
   height: 100%;
   width: 100%;
   object-fit: contain;
   background-color: black;
+}
+
+.video-poster-wrapper {
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.video-poster {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 video::-webkit-media-controls {
