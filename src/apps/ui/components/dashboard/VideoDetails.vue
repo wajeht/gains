@@ -35,7 +35,7 @@ onMounted(async () => {
   // sessions
   const s = await getCurrentSessionDetails();
   Object.assign(currentSessionDetails, s);
-  currentSessionDetails.logs = s.logs || [];
+  currentSessionDetails.logs = s.logs.filter((x) => x.videos.length) || []; // only disable post with videos
 
   // comments
   const c = await fetchComments();
