@@ -1038,8 +1038,9 @@ function clearAndDismissDeleteALogModal() {
             <!-- date -->
             <!-- left -->
             <small>
-              <font-awesome-icon icon="fa-calendar " class="me-1" />Date:
-              <span class="fw-light">{{ gainsDateDisplay(currentSessionDetails.created_at) }}</span>
+              <font-awesome-icon icon="fa-calendar " class="me-1" /><span class="fw-light">{{
+                gainsDateDisplay(currentSessionDetails.created_at)
+              }}</span>
             </small>
 
             <!-- right -->
@@ -1054,7 +1055,7 @@ function clearAndDismissDeleteALogModal() {
                 <span
                 v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today"
                 class="text-warning">
-                <font-awesome-icon icon="fa-refresh" class="me-1" /> session in progress
+                <font-awesome-icon icon="fa-refresh" class="me-1" /> in progress
               </span>
 
                 <!-- danger -->
@@ -1062,7 +1063,7 @@ function clearAndDismissDeleteALogModal() {
                 <span
                 v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today"
                 class="text-danger">
-                <i class="bi bi-exclamation-triangle-fill text-danger"></i> session incomplete
+                <i class="bi bi-exclamation-triangle-fill text-danger"></i> incomplete
               </span>
               </small>
 

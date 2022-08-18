@@ -195,24 +195,30 @@ async function postAComment() {
             <div>
               <img
                 :src="
-                  userStore.user.profile_picture_url ??
+                  currentSessionDetails.profile_picture_url ??
                   `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
                 "
                 width="24"
                 height="24"
                 class="rounded-circle me-2"
               />
-              <span>{{ userStore.user.username }}</span>
+              <span>{{ currentSessionDetails.username }}</span>
             </div>
 
             <!-- left -->
             <div class="d-flex justify-content-between gap-3">
               <!-- session name -->
-              <span
-                role="button"
-                @click="router.push(`/dashboard/sessions/${currentSessionDetails.id}`)"
-                >{{ currentSessionDetails.name }}</span
-              >
+              <span>
+                <router-link
+                  v-if="userStore.user.id == currentSessionDetails.user_id"
+                  :to="`/dashboard/sessions/${currentSessionDetails.id}`"
+                  class="link-dark text-decoration-none"
+                  >{{ currentSessionDetails.name }}</router-link
+                >
+                <span v-else>
+                  {{ currentSessionDetails.name }}
+                </span>
+              </span>
             </div>
           </div>
 
@@ -305,8 +311,9 @@ async function postAComment() {
               <div class="d-flex gap-2">
                 <!-- session -->
                 <router-link
-                  :to="`/dashboard/sessions/${currentSessionDetails.id}`"
+                  v-if="userStore.user.id === currentSessionDetails.user_id"
                   class="link-secondary text-decoration-none"
+                  :to="`/dashboard/sessions/${currentSessionDetails.id}`"
                   ><i class="bi bi-journal-text me-1"> </i>
                   <span>
                     {{ currentSessionDetails.id }}
