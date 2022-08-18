@@ -91,14 +91,15 @@ async function getSessions() {
           <!-- card header -->
           <div class="d-flex justify-content-between card-header">
             <!-- right -->
-            <div>
+            <div class="d-flex justify-content-between">
               <img
                 :src="s.profile_picture_url ?? `https://dummyimage.com/200x200/bdbdbd/000000.jpg`"
                 width="24"
                 height="24"
                 class="rounded-circle me-2"
               />
-              <span>
+              <span class="d-flex justify-content-between gap-1">
+                <!-- name -->
                 <span
                   v-if="userStore.user.id == s.user_id"
                   role="button"
@@ -106,6 +107,10 @@ async function getSessions() {
                   >{{ s.username }}</span
                 >
                 <span v-else>{{ s.username }}</span>
+                <!-- checkmark -->
+                <small v-if="userStore.user.id === s.user_id">
+                  <i class="bi bi-check-circle-fill text-primary"></i>
+                </small>
               </span>
             </div>
 
