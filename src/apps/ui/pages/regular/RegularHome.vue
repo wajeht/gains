@@ -8,7 +8,7 @@
         style="width: fit-content"
       >
         <small>
-          We are building Gains live at 8:00 PM (EDT). Join us via
+          Hi there 👋, we are building Gains live at 8:00 PM (EDT). Join us via 👉
           <a
             class="alert-link text-decoration-none"
             href="https://discord.com/channels/988167900420534273/989628732895543296"
@@ -22,7 +22,7 @@
 
       <!-- title -->
       <h1 class="display-4 fw-bold animate__animated animate__fadeIn mb-4">
-        Let's make all kinds of gains!
+        Let's make all kinds of gains! 💪
       </h1>
 
       <!-- description -->
@@ -38,7 +38,9 @@
 
         <!-- button -->
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-          <router-link to="/signup" class="btn btn-dark btn-lg px-4 me-sm-3">Sign up</router-link>
+          <router-link to="/signup" class="btn btn-dark btn-lg px-4 me-sm-3"
+            >Sign up ⚡</router-link
+          >
           <router-link to="/features" class="btn btn-outline-secondary btn-lg px-4"
             >Learn more</router-link
           >

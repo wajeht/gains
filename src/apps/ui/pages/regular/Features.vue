@@ -7,7 +7,7 @@ const features = ref([
   {
     id: 1,
     name: 'tracking',
-    title: 'Data intensive tracking.',
+    title: '📈 Data intensive tracking.',
     subtitle: 'It’ll blow your mind.',
     description:
       'We take every piece of data that you give and formulate insightful and accurate graphics. Consider your sleep, diet, workouts and progress at a glance with our aggregation algorithm.',
@@ -17,7 +17,7 @@ const features = ref([
   {
     id: 2,
     name: 'instagram',
-    title: 'Instagram style video layout.',
+    title: '📺 Instagram style video layout.',
     subtitle: 'See for yourself.',
     description:
       "Browse other users' content, view popular content, like photos, and follow other users to add their content to a personal feed.",
@@ -27,7 +27,7 @@ const features = ref([
   {
     id: 3,
     name: 'calculators',
-    title: 'A bunch of calculators.',
+    title: '🧮 A bunch of calculators.',
     subtitle: 'It’ll blow your mind.',
     description:
       "Anxious to know where you're at? Find one of our many calculators and give it a whirl.",
@@ -37,7 +37,7 @@ const features = ref([
   {
     id: 4,
     name: 'charts',
-    title: 'Charts, Graphs, and Reports.',
+    title: '📊 Charts, Graphs, and Reports.',
     subtitle: 'See for yourself.',
     description:
       'Chart tools are powerful, simple to use, and free. Try out our rich gallery of interactive charts and data tools.',
@@ -71,18 +71,24 @@ function clearAndDismissPreviewVideoModal() {
       :class="{ 'pt-5': index != 0 }"
     >
       <div class="row">
+        <!-- left -->
+        <div class="col-md-5">
+          <div role="button" @click="previewVideo(index)" class="poster-container">
+            <img :src="f.poster" style="width: 100%" />
+            <div class="middle">
+              <i class="bi bi-play-circle-fill" style="font-size: 80px; color: black"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- right -->
         <div class="col-md-7">
-          <h2 class="featurette-heading">
+          <h2 class="featurette-heading pt-md-3">
             {{ f.title }} <span class="text-muted">{{ f.subtitle }}</span>
           </h2>
           <p class="lead">
             {{ f.description }}
           </p>
-        </div>
-        <div class="col-md-5">
-          <div @click="previewVideo(index)" role="button" class="video-poster-wrapper">
-            <img class="video-poster" :src="f.poster" />
-          </div>
         </div>
       </div>
     </section>
@@ -91,7 +97,7 @@ function clearAndDismissPreviewVideoModal() {
     <section id="github" class="py-5 text-center">
       <!-- title -->
       <h2 class="featurette-heading">
-        Are you a developer? <span class="text-muted">That's cool..!</span>
+        👨‍💻 Are you a developer? <span class="text-muted">That's cool..!</span>
       </h2>
 
       <!-- description -->
@@ -171,6 +177,11 @@ function clearAndDismissPreviewVideoModal() {
 </template>
 
 <style scoped>
+@media (max-width: 768px) {
+  h2 {
+    padding-top: 20px;
+  }
+}
 .video {
   height: 100%;
   width: 100%;
@@ -178,7 +189,8 @@ function clearAndDismissPreviewVideoModal() {
   background-color: black;
 }
 
-.video-poster-wrapper {
+.poster-container {
+  position: relative;
   aspect-ratio: 1/1;
   border-radius: 4px;
   width: auto;
@@ -186,10 +198,38 @@ function clearAndDismissPreviewVideoModal() {
   overflow: hidden;
 }
 
-.video-poster {
+.image {
+  opacity: 1;
   height: 100%;
   width: 100%;
   object-fit: cover;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.poster-container:hover {
+  transition: 0.5s ease;
+  -webkit-filter: brightness(75%);
+  filter: brightness(75%);
+}
+
+.poster-container:hover .image {
+  opacity: 1;
+}
+
+.poster-container:hover .middle {
+  opacity: 1;
 }
 
 video::-webkit-media-controls {
