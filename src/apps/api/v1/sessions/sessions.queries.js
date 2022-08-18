@@ -210,6 +210,18 @@ export async function getSessionBySessionId(sid) {
   //   [sid],
   // );
 
+  const { rows: comments } = await db.raw(
+    `
+    select count(*) as comments
+    from comments c
+    where (
+      c.deleted = false
+      and c.session_id = ?
+    )
+  `,
+    [sid],
+  );
+
   // if (!joined.length) {
   //   result = [
   //     {
@@ -254,6 +266,7 @@ export async function getSessionBySessionId(sid) {
     {
       ...both[0],
       logs: sets,
+      counts_of_comments: Number(comments[0].comments),
     },
   ];
 
@@ -393,17 +406,25 @@ export async function getAllSessions() {
       ss.start_date as "start_date",
       b.name as "block_name",
       ss.end_date as "end_date",
+      (select count(c.*) filter (where c.deleted = false)) as counts_of_comments,
       ss.json as "json"
     from
       sessions ss
       full join blocks b on b.id = ss.block_id
       inner join variables v on v.session_id = ss.id
+      full join comments c on c.session_id = ss.id
       inner join users u on u.id = ss.user_id
       inner join user_details ud on ud.user_id = u.id
     where (
       ss.deleted = false
       and ss.end_date is not null
     )
+    group by
+      ss.id,
+      b.id,
+      v.id,
+      u.id,
+      ud.id
   `,
   );
 

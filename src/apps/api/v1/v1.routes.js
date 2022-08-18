@@ -7,6 +7,7 @@ import UsersRouter from './users/users.router.js';
 import VideosRouter from './videos/videos.router.js';
 import ApiKeysRoutes from './api-keys/api-keys.routes.js';
 import VariablesRouter from './variables/variables.router.js';
+import CommentsRoutes from './comments/comments.routes.js';
 import SetsRouter from './sets/sets.router.js';
 import LogsRouter from './logs/logs.router.js';
 
@@ -18,6 +19,7 @@ v1.use('/gains-meta', GainsMetaRouter);
 v1.use('/sessions', SessionsRouter);
 v1.use('/exercises', ExercisesRouter);
 v1.use('/variables', VariablesRouter);
+v1.use('/comments', CommentsRoutes);
 v1.use('/api-keys', ApiKeysRoutes);
 v1.use('/blocks', BlocksRouter);
 v1.use('/videos', VideosRouter);

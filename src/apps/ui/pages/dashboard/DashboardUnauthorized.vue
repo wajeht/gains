@@ -6,8 +6,6 @@ import Backheader from '../../components/dashboard/headers/Backheader.vue';
 const router = useRouter();
 const route = useRoute();
 
-console.log(route.query.back);
-
 function goBack() {
   if (route.query.back == null || route.query.back == undefined || route.query.back == 'null') {
     return window.history.go(-3);
