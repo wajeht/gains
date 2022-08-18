@@ -1,7 +1,6 @@
 {
   "name": "gains",
-  "version": "1.1.0-alpha.0",
-  "db-version": "1.0.0",
+  "version": "0.0.1",
   "description": "The best way to track your workouts",
   "main": "server.js",
   "type": "module",
