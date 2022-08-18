@@ -245,12 +245,16 @@ export async function getSessionBySessionId(sid) {
         v.*,
 	      ss.id as "session_id",
 	      ss.name as "name",
+        u.username as "username",
+        ud.profile_picture_url,
 	      ss.start_date as "start_date",
 	      b.name as "block_name",
 	      ss.end_date as "end_date",
 	      ss.json as "json"
       from
 	      sessions ss
+        inner join users u on u.id = ss.user_id
+        inner join user_details ud on ud.user_id = u.id
 	      full join blocks b on b.id = ss.block_id
 	      inner join variables v on v.session_id = ss.id
       where (
