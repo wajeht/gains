@@ -76,14 +76,13 @@ export function getSessionsByUserId(user_id, pagination = { perPage: null, curre
     .select(
       'sessions.*',
       db.raw(
-        `  (select coalesce(jsonb_agg(logs.* order by logs.id) filter (where logs.id is not null), '[]') ) as json`,
+        `  (select coalesce(jsonb_agg(logs.* order by logs.id) filter (where logs.id is not null and logs.deleted = false), '[]') ) as json`,
       ),
     )
     .from('sessions')
     .fullOuterJoin('logs', { 'logs.session_id': 'sessions.id' })
     .where({ 'sessions.user_id': user_id })
     .andWhere({ 'sessions.deleted': false })
-    .andWhere({ 'logs.deleted': false })
     .orderBy('sessions.id', 'desc')
     .groupBy('sessions.id')
     .paginate({
