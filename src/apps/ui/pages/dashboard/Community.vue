@@ -238,7 +238,9 @@ async function getSessions() {
                     </span>
 
                     <!-- comment -->
-                    <!-- <span><i class="bi bi-chat me-1"></i><span>2</span></span> -->
+                    <span @click="router.push(`/dashboard/videos/${s.id}`)" role="button"
+                      ><i class="bi bi-chat me-1"></i><span>{{ s.counts_of_comments }}</span></span
+                    >
                   </div>
                 </small>
               </div>
