@@ -905,6 +905,7 @@ function clearAndDismissDeleteALogModal() {
 
         <!-- sessions card -->
         <div class="card p-0">
+          <!-- body -->
           <div class="card-body">
             <div class="row mx-0">
               <div
@@ -1032,34 +1033,47 @@ function clearAndDismissDeleteALogModal() {
             </div>
           </div>
 
+          <!-- footer -->
           <small class="card-footer text-muted d-flex justify-content-between align-items-center">
             <!-- date -->
+            <!-- left -->
             <small>
               <font-awesome-icon icon="fa-calendar " class="me-1" />Date:
               <span class="fw-light">{{ gainsDateDisplay(currentSessionDetails.created_at) }}</span>
             </small>
 
-            <!-- incomplete or progress -->
-            <small
-              v-if="!currentSessionDetails.end_date"
-              class="fst-italic d-flex align-items-center"
-            >
-              <!-- danger -->
-              <!-- prettier-ignore -->
-              <span
+            <!-- right -->
+            <span class="d-flex justify-content-between align-items-center gap-2">
+              <!-- incomplete or progress -->
+              <small
+                v-if="!currentSessionDetails.end_date"
+                class="fst-italic d-flex align-items-center"
+              >
+                <!-- danger -->
+                <!-- prettier-ignore -->
+                <span
                 v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today"
                 class="text-warning">
                 <font-awesome-icon icon="fa-refresh" class="me-1" /> session in progress
               </span>
 
-              <!-- danger -->
-              <!-- prettier-ignore -->
-              <span
+                <!-- danger -->
+                <!-- prettier-ignore -->
+                <span
                 v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today"
                 class="text-danger">
                 <i class="bi bi-exclamation-triangle-fill text-danger"></i> session incomplete
               </span>
-            </small>
+              </small>
+
+              <!-- videos view -->
+              <router-link
+                class="fw-light link-secondary text-decoration-none"
+                :to="`/dashboard/videos/${currentSessionDetails.id}`"
+              >
+                <small> <i class="bi bi-play-circle-fill"></i> Video view </small>
+              </router-link>
+            </span>
           </small>
         </div>
 

@@ -21,16 +21,19 @@
       </div>
 
       <!-- title -->
-      <h1 class="display-4 fw-bold animate__animated animate__fadeIn">
+      <h1 class="display-4 fw-bold animate__animated animate__fadeIn mb-4">
         Let's make all kinds of gains!
       </h1>
 
       <!-- description -->
-      <div class="col-lg-6 mx-auto animate__animated animate__fadeIn">
-        <p class="lead mb-4">
-          The premier rep tracking and one rep max calculation application. Having trouble with any
+      <div class="mx-auto animate__animated animate__fadeIn mt-1">
+        <p class="lead mb-5">
+          <!-- The premier rep tracking and one rep max calculation application. Having trouble with any
           specific obstacles within your program? Just want to improve an individual lift?
-          allkindsagains will enable you to accurately and easily track your progression.
+          allkindsagains will enable you to accurately and easily track your progression. -->
+          Are you you a strength athlete who primarily uses Instagram to track training videos?
+          Cool, Gains will enable you to track all aspect of strength training and help you load the
+          right amount of weight at the right time!
         </p>
 
         <!-- button -->

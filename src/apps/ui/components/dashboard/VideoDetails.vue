@@ -189,6 +189,7 @@ async function postAComment() {
 
         <!-- video -->
         <div class="card shadow-sm border">
+          <!-- title -->
           <div class="d-flex justify-content-between card-header">
             <!-- right -->
             <div>
@@ -212,26 +213,10 @@ async function postAComment() {
                 @click="router.push(`/dashboard/sessions/${currentSessionDetails.id}`)"
                 >{{ currentSessionDetails.name }}</span
               >
-
-              <!-- settings -->
-              <div class="dropdown">
-                <a
-                  class="link-dark"
-                  role="button"
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                  <li><button class="dropdown-item btn-sm" type="button">Edit</button></li>
-                  <li><button class="dropdown-item btn-sm" type="button">Share</button></li>
-                  <li><button class="dropdown-item btn-sm" type="button">Delete</button></li>
-                </ul>
-              </div>
             </div>
           </div>
 
+          <!-- body -->
           <span
             v-for="(log, index) in currentSessionDetails.logs"
             :key="`key-video-details${log.id}`"
@@ -301,6 +286,7 @@ async function postAComment() {
             </span>
           </span>
 
+          <!-- footer -->
           <div class="card-footer">
             <small class="d-flex justify-content-between text-muted">
               <!-- left -->
@@ -318,14 +304,14 @@ async function postAComment() {
               <!-- right -->
               <div class="d-flex gap-2">
                 <!-- session -->
-                <span
-                  role="button"
-                  @click="router.push(`/dashboard/sessions/${currentSessionDetails.id}`)"
+                <router-link
+                  :to="`/dashboard/sessions/${currentSessionDetails.id}`"
+                  class="link-secondary text-decoration-none"
                   ><i class="bi bi-journal-text me-1"> </i>
                   <span>
                     {{ currentSessionDetails.id }}
                   </span>
-                </span>
+                </router-link>
 
                 <!-- comment -->
                 <span
