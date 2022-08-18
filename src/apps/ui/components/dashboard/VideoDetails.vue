@@ -336,7 +336,7 @@ async function postAComment() {
           </div>
         </div>
 
-        <!-- comment -->
+        <!-- comments -->
         <div v-if="comments.length" class="d-flex flex-column gap-3" v-auto-animate>
           <div
             v-for="(comment, index) in comments"
@@ -345,7 +345,7 @@ async function postAComment() {
           >
             <div class="card-body">
               <!-- title -->
-              <span class="d-flex justify-content-between align-items-center mb-2">
+              <span class="d-flex justify-content-between align-items-center mb-1">
                 <!-- left -->
                 <span class="d-flex justify-content-between align-items-center gap-1">
                   <h5 class="card-title m-0 p-0">{{ comment.username }}</h5>
@@ -357,6 +357,12 @@ async function postAComment() {
 
                 <!-- right -->
                 <small class="text-muted d-flex justify-content-between gap-2">
+                  <!-- calendar -->
+                  <span
+                    ><i class="bi bi-calendar-check me-1"></i>
+                    {{ dayjs(comment.created_at).format('YYYY/DD/MM') }}</span
+                  >
+
                   <!-- trash -->
                   <span
                     v-if="userStore.user.id === comment.user_id"
@@ -368,19 +374,13 @@ async function postAComment() {
                     data-bs-target="#delete-a-comment"
                     ><i class="bi bi-trash"></i>
                   </span>
-
-                  <!-- calendar -->
-                  <span
-                    ><i class="bi bi-calendar-check me-1"></i>
-                    {{ dayjs(comment.created_at).format('YYYY/DD/MM') }}</span
-                  >
                 </small>
               </span>
 
               <!-- comment -->
-              <p class="card-text">
+              <small class="card-text">
                 {{ comment.comment }}
-              </p>
+              </small>
             </div>
           </div>
         </div>
@@ -421,7 +421,7 @@ async function postAComment() {
     </div>
   </div>
 
-  <!-- delete a comment -->
+  <!-- delete a comment modal -->
   <form
     @submit.prevent="deleteAComment()"
     class="modal fade px-2 py-5"
