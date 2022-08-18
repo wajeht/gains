@@ -89,14 +89,14 @@ async function getSessions() {
           class="card shadow-sm border"
         >
           <!-- card header -->
-          <div class="d-flex justify-content-between card-header">
-            <!-- right -->
+          <div class="d-flex justify-content-between align-items-center card-header">
+            <!-- left -->
             <div class="d-flex d-flex justify-content-between align-items-center">
               <img
                 :src="s.profile_picture_url ?? `https://dummyimage.com/200x200/bdbdbd/000000.jpg`"
                 width="24"
                 height="24"
-                class="rounded-circle me-2"
+                class="rounded-circle me-1"
               />
               <span class="d-flex justify-content-between align-items-center gap-1">
                 <!-- name -->
@@ -118,37 +118,16 @@ async function getSessions() {
             <div class="d-flex justify-content-between gap-3">
               <!-- session name -->
               <span>
-                <span
+                <router-link
                   v-if="userStore.user.id == s.user_id"
-                  role="button"
-                  @click="router.push(`/dashboard/sessions/${s.id}`)"
-                  >{{ s.name }}</span
+                  :to="`/dashboard/sessions/${s.id}`"
+                  class="link-dark text-decoration-none"
+                  >{{ s.name }}</router-link
                 >
                 <span v-else>
                   {{ s.name }}
                 </span>
               </span>
-
-              <!-- settings -->
-              <div class="dropdown">
-                <a
-                  class="link-dark"
-                  role="button"
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end" style="min-width: fit-content">
-                  <li><button class="dropdown-item btn-sm" type="button" disabled>Edit</button></li>
-                  <li>
-                    <button class="dropdown-item btn-sm" type="button" disabled>Share</button>
-                  </li>
-                  <li>
-                    <button class="dropdown-item btn-sm" type="button" disabled>Delete</button>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
 
@@ -204,12 +183,13 @@ async function getSessions() {
                     class="d-flex flex-column"
                     :class="{ 'pt-0': !log.notes, 'pt-2': log.notes }"
                   >
-                    <small v-for="set in log.sets" :key="`key-set-${set.id}`">
+                    <small v-for="set in log.sets.slice(0, 5)" :key="`key-set-${set.id}`">
                       1 set(s) x {{ set.reps }} rep(s) x {{ set.weight }}
                       {{ appStore.unitLabel }} @{{ set.rpe }}
                       rpe
                       {{ set.notes ? `- ${set.notes}` : '' }}
                     </small>
+                    <small v-if="log.sets.length > 5" class="text-muted p-0 m-0">.......</small>
                   </span>
                 </p>
               </div>
@@ -232,19 +212,22 @@ async function getSessions() {
                   <!-- right -->
                   <div class="d-flex gap-2">
                     <!-- session -->
-                    <span
+                    <router-link
                       v-if="userStore.user.id === s.user_id"
-                      role="button"
-                      @click="router.push(`/dashboard/sessions/${s.id}`)"
+                      class="link-secondary text-decoration-none"
+                      :to="`/dashboard/sessions/${s.id}`"
                       ><i class="bi bi-journal-text me-1"> </i>
                       <span>
                         {{ s.id }}
                       </span>
-                    </span>
+                    </router-link>
 
                     <!-- comment -->
-                    <span @click="router.push(`/dashboard/videos/${s.id}`)" role="button"
-                      ><i class="bi bi-chat me-1"></i><span>{{ s.counts_of_comments }}</span></span
+                    <router-link
+                      :to="`/dashboard/videos/${s.id}`"
+                      class="link-secondary text-decoration-none"
+                      ><i class="bi bi-chat me-1"></i
+                      ><span>{{ s.counts_of_comments }}</span></router-link
                     >
                   </div>
                 </small>
