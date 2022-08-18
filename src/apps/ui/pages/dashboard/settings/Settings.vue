@@ -11,6 +11,7 @@ function clearAndDismissModal(modalId) {
   modal.hide();
 }
 </script>
+
 <template>
   <!-- header -->
   <DashboardHeader />
@@ -91,7 +92,7 @@ function clearAndDismissModal(modalId) {
             <!-- email -->
             <span
               style="background: #f1f1f1"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted fw-light"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
@@ -105,7 +106,7 @@ function clearAndDismissModal(modalId) {
             <!-- csv -->
             <span
               style="background: #f1f1f1"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted fw-light"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>

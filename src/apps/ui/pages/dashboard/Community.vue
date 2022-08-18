@@ -91,14 +91,14 @@ async function getSessions() {
           <!-- card header -->
           <div class="d-flex justify-content-between card-header">
             <!-- right -->
-            <div class="d-flex justify-content-between">
+            <div class="d-flex d-flex justify-content-between align-items-center">
               <img
                 :src="s.profile_picture_url ?? `https://dummyimage.com/200x200/bdbdbd/000000.jpg`"
                 width="24"
                 height="24"
                 class="rounded-circle me-2"
               />
-              <span class="d-flex justify-content-between gap-1">
+              <span class="d-flex justify-content-between align-items-center gap-1">
                 <!-- name -->
                 <span
                   v-if="userStore.user.id == s.user_id"

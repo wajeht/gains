@@ -179,7 +179,7 @@ async function postAComment() {
   <Backheader />
 
   <!-- video details -->
-  <div v-if="!appStore.loading" class="animate__animated animate__zoomIn animate__faster">
+  <div v-if="!appStore.loading" class="animate__animated animate__fadeIn animate__faster">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3">
         <!-- alert -->
@@ -347,7 +347,7 @@ async function postAComment() {
               <!-- title -->
               <span class="d-flex justify-content-between align-items-center mb-2">
                 <!-- left -->
-                <span class="d-flex justify-content-between align-items-center gap-2">
+                <span class="d-flex justify-content-between align-items-center gap-1">
                   <h5 class="card-title m-0 p-0">{{ comment.username }}</h5>
 
                   <small v-if="userStore.user.id === comment.user_id">
@@ -356,7 +356,7 @@ async function postAComment() {
                 </span>
 
                 <!-- right -->
-                <small class="text-muted d-flex justify-content-between gap-3">
+                <small class="text-muted d-flex justify-content-between gap-2">
                   <!-- trash -->
                   <span
                     v-if="userStore.user.id === comment.user_id"

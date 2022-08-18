@@ -895,7 +895,7 @@ function clearAndDismissDeleteALogModal() {
   />
 
   <!-- session details -->
-  <div v-if="!appStore.loading" class="animate__animated animate__zoomIn animate__faster">
+  <div v-if="!appStore.loading" class="animate__animated animate__fadeIn animate__faster">
     <div class="container px-3">
       <div class="my-3 d-flex flex-column gap-3" v-auto-animate>
         <!-- alert -->
@@ -1550,11 +1550,11 @@ function clearAndDismissDeleteALogModal() {
             <!-- container -->
             <div
               class="rounded border border-1 p-2"
-              style="height: 300px; overflow-y: auto; background-color: #f7f6f3"
+              style="max-height: 300px; overflow-y: auto; background-color: #f7f6f3"
             >
               <span v-for="category in addAExerciseAllExercises" :key="category.id">
                 <!-- category name -->
-                <small class="fw-bold">{{ category.category_name }}</small>
+                <span class="fw-bold">{{ category.category_name }}</span>
 
                 <!-- list of exercises name -->
                 <div class="form-check" v-for="exercise in category.exercises" :key="exercise.id">
@@ -1578,7 +1578,7 @@ function clearAndDismissDeleteALogModal() {
                         .includes(exercise.id),
                     }"
                     :for="exercise.name"
-                    ><small> {{ exercise.name }}</small>
+                    ><span> {{ exercise.name }}</span>
                   </label>
                 </div>
               </span>
