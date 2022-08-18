@@ -28,7 +28,8 @@
     "release": "standard-version",
     "release:alpha": "npm run release -- --prerelease alpha",
     "rmds": "find . -name '.DS_Store' -delete",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "cz"
   },
   "bin": {
     "gains": "./src/bin/gains.js"
@@ -121,7 +122,9 @@
     "@types/multer": "^1.4.7",
     "@types/request-ip": "^0.0.37",
     "c8": "^7.11.3",
+    "commitizen": "^4.2.5",
     "concurrently": "^7.2.2",
+    "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.1",
     "nodemon": "^2.0.18",
     "open-cli": "^7.0.1",
@@ -133,5 +136,10 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
