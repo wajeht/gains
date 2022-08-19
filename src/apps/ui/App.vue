@@ -1,6 +1,10 @@
 <template>
-  <component :is="layout"
-    :class="{ 'dashboard-layout-style': layout === 'DashboardLayout' || layout === 'EmptyDashboardLayout' }" />
+  <component
+    :is="layout"
+    :class="{
+      'dashboard-layout-style': layout === 'DashboardLayout' || layout === 'EmptyDashboardLayout',
+    }"
+  />
 </template>
 
 <script>
@@ -25,7 +29,7 @@ export default {
       if (to.meta.layout === 'DashboardLayout' || to.meta.layout === 'EmptyDashboardLayout') {
         document.body.style.backgroundColor = 'black';
       } else {
-        document.body.style.backgroundColor = ''
+        document.body.style.backgroundColor = '';
       }
 
       // set layout by route meta
@@ -40,6 +44,14 @@ export default {
 </script>
 
 <style>
+.btn-group-xs > .btn,
+.btn-xs {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.875rem;
+  line-height: 0.5;
+  border-radius: 0.2rem;
+}
+
 .dashboard-layout-style {
   max-width: 540px;
   margin: 0 auto;

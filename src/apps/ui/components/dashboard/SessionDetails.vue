@@ -1026,7 +1026,11 @@ function clearAndDismissDeleteALogModal() {
                   <!-- block -->
                   <span v-if="currentSessionDetails.block_name">
                     <i class="bi bi-clipboard2-data-fill me-1"></i>Block:
-                    <span class="fw-light">{{ currentSessionDetails.block_name }}</span>
+                    <router-link
+                      :to="`/dashboard/blocks/${currentSessionDetails.block_id}`"
+                      class="fw-light fst-italic link-dark"
+                      >{{ currentSessionDetails.block_name }}</router-link
+                    >
                   </span>
                 </small>
               </div>
@@ -1034,48 +1038,52 @@ function clearAndDismissDeleteALogModal() {
           </div>
 
           <!-- footer -->
-          <small class="card-footer text-muted d-flex justify-content-between align-items-center">
-            <!-- date -->
-            <!-- left -->
-            <small>
-              <font-awesome-icon icon="fa-calendar " class="me-1" /><span class="fw-light">{{
-                gainsDateDisplay(currentSessionDetails.created_at)
-              }}</span>
-            </small>
+          <div class="card-footer">
+            <span class="d-flex justify-content-between text-muted">
+              <!-- left -->
+              <span class="d-flex justify-content-between align-items-center gap-2">
+                <!-- date -->
+                <small>
+                  <i class="bi bi-calendar-check me-1"></i
+                  >{{ dayjs(currentSessionDetails.created_at).format('YYYY/MM/DD') }}
+                </small>
+              </span>
 
-            <!-- right -->
-            <span class="d-flex justify-content-between align-items-center gap-2">
-              <!-- incomplete or progress -->
-              <small
-                v-if="!currentSessionDetails.end_date"
-                class="fst-italic d-flex align-items-center"
-              >
-                <!-- danger -->
-                <!-- prettier-ignore -->
+              <!-- right -->
+              <span class="d-flex justify-content-between align-items-center gap-2">
+                <!-- incomplete or progress -->
                 <span
+                  v-if="!currentSessionDetails.end_date"
+                  class="fst-italic d-flex align-items-center"
+                >
+                  <!-- danger -->
+                  <!-- prettier-ignore -->
+                  <small
                 v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today"
                 class="text-warning">
                 <font-awesome-icon icon="fa-refresh" class="me-1" /> in progress
-              </span>
+              </small>
 
-                <!-- danger -->
-                <!-- prettier-ignore -->
-                <span
+                  <!-- danger -->
+                  <!-- prettier-ignore -->
+                  <small
                 v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today"
                 class="text-danger">
                 <i class="bi bi-exclamation-triangle-fill text-danger"></i> incomplete
-              </span>
               </small>
+                </span>
 
-              <!-- videos view -->
-              <router-link
-                class="fw-light link-secondary text-decoration-none"
-                :to="`/dashboard/videos/${currentSessionDetails.id}`"
-              >
-                <small> <i class="bi bi-play-circle-fill"></i> Video view </small>
-              </router-link>
+                <!-- videos view -->
+                <small>
+                  <router-link
+                    class="link-secondary text-decoration-none"
+                    :to="`/dashboard/videos/${currentSessionDetails.id}`"
+                    ><i class="bi bi-play-circle-fill me-1"></i>Video view
+                  </router-link>
+                </small>
+              </span>
             </span>
-          </small>
+          </div>
         </div>
 
         <!-- exercise logs -->
@@ -1383,10 +1391,17 @@ function clearAndDismissDeleteALogModal() {
 
                 <!-- right -->
                 <span class="d-flex justify-content-between gap-2">
+                  <!-- chart -->
                   <button class="btn btn-sm btn-outline-dark" type="button" disabled>
                     <i class="bi bi-bar-chart"></i>
                   </button>
-                  <button class="btn btn-sm btn-outline-dark" type="button" disabled>
+
+                  <!-- history -->
+                  <button
+                    @click="router.push(`/dashboard/exercises/${log.exercise_id}`)"
+                    class="btn btn-sm btn-outline-dark"
+                    type="button"
+                  >
                     <i class="bi bi-journal-text"></i>
                   </button>
                 </span>

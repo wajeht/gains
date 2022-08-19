@@ -78,7 +78,7 @@
         and our
         <a
           href="#"
-          class="btn btn-sm p-0 m-0"
+          class="btn btn-xs p-0 m-0"
           style="text-decoration: underline"
           :class="{ disabled: loading === true }"
           @click="$router.push('/privacy')"

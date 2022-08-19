@@ -20,6 +20,43 @@ export function getExerciseById(id) {
 }
 
 /**
+ * Get all the sets for a given exercise, ordered by the date they were created.
+ * @param id - the id of the exercise you want to get the history for
+ * @returns An array of objects
+ */
+export async function getExerciseHistoryByExerciseId(id) {
+  const { rows } = await db.raw(
+    `
+    select
+	    s.reps,
+	    s.weight,
+	    s.rpe as "rpe",
+      s.notes as "notes",
+	    s.created_at as "created_at",
+	    e."name" as "exercise_name",
+	    ec."name" as "category_name",
+	    e.id as "exercise_id",
+	    ec.id as "category_id",
+	    s.id as "set_id",
+	    s.session_id as "session_id",
+	    s.log_id as "log_id",
+      e.user_id as "user_id"
+    from
+	    exercises e
+	    inner join sets s on s.exercise_id = e.id
+	    inner join exercise_categories ec on ec.id = e.exercise_category_id
+    where
+	    e.deleted = false
+	    and e.id = ?
+    order by
+	    s.created_at desc
+  `,
+    [id],
+  );
+  return rows;
+}
+
+/**
  * Get all exercises from the database where the user_id matches the uid passed in and where the
  * deleted column is false.
  * @param uid - the user id of the user who created the exercise
