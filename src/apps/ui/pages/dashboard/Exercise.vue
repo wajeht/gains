@@ -4,11 +4,13 @@ import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
 
 import useUserStore from '../../store/user.store.js';
+import useAppStore from '../../store/app.store.js';
 import { useRouter } from 'vue-router';
 
 import { reactive, ref, onMounted } from 'vue';
 
-const useStore = useUserStore();
+const userStore = useUserStore();
+const appStore = useAppStore();
 const router = useRouter();
 
 const props = defineProps({
@@ -20,21 +22,30 @@ const alert = reactive({
   msg: '',
 });
 
+const pagination = reactive({
+  perPage: 20,
+  currentPage: 1,
+  total: -1,
+  lastPage: -1,
+});
+
 const setsHistory = ref(null);
 let exerciseDetails = reactive({});
+const getExerciseDetailsLoading = ref(null);
 
 onMounted(async () => {
-  const data = await getExerciseDetails();
+  appStore.loading = true;
+  const json = await getExerciseDetails(pagination.currentPage);
 
   // unauthorized access deny
-  if (data.length) {
-    const user_id = data[0]?.user_id;
-    if (user_id !== useStore.user.id) {
+  if (json.data.length) {
+    const user_id = json.data[0]?.user_id;
+    if (user_id !== userStore.user.id) {
       return router.push('/dashboard/unauthorized');
     }
   }
 
-  const first = data[0];
+  const first = json.data[0];
 
   Object.assign(exerciseDetails, {
     exercise_id: first.exercise_id,
@@ -43,12 +54,16 @@ onMounted(async () => {
     category_name: first.category_name,
   });
 
-  setsHistory.value = data;
+  pagination.total = Math.floor(json.pagination.total / pagination.perPage);
+
+  appStore.loading = false;
 });
 
-async function getExerciseDetails() {
+async function getExerciseDetails(currentPage) {
   try {
-    const res = await api.get(`/api/v1/exercises/${props.exercise_id}/history`);
+    const res = await api.get(
+      `/api/v1/exercises/${props.exercise_id}/history?perPage=${pagination.perPage}&currentPage=${currentPage}`,
+    );
     const json = await res.json();
 
     if (!res.ok) {
@@ -59,7 +74,11 @@ async function getExerciseDetails() {
       }
     }
 
-    return json.data;
+    // json.data.forEach((x) => setsHistory.value.push(x));
+    setsHistory.value = json.data;
+    setsHistory.value.pagination = json.pagination;
+
+    return json;
   } catch (e) {
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -76,7 +95,10 @@ async function getExerciseDetails() {
   <!-- header -->
   <Backheader />
 
-  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
+  <div
+    v-if="!appStore.loading"
+    class="container px-3 animate__animated animate__fadeIn animate__faster"
+  >
     <div class="my-3 d-flex flex-column gap-3">
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert" v-auto-animate>
@@ -99,7 +121,7 @@ async function getExerciseDetails() {
             <!-- right -->
             <span class="d-flex justify-content-between align-items-center gap-2">
               <!-- title -->
-              <h5 class="card-title my-2">{{ exerciseDetails.exercise_name }}</h5>
+              <h5 class="card-title my-1">{{ exerciseDetails.exercise_name }}</h5>
 
               <!-- badge -->
               <small class="bg-success rounded text-white px-1 py-0">{{
@@ -136,6 +158,7 @@ async function getExerciseDetails() {
                     <th class="align-middle text-center" scope="col">Reps</th>
                     <th class="align-middle text-center" scope="col">Weight</th>
                     <th class="align-middle text-center" scope="col">Rpe</th>
+                    <th class="align-middle text-center" scope="col">e1RM</th>
                     <th class="align-middle text-center" scope="col">Session</th>
                     <th class="align-middle text-center" scope="col">Video</th>
                     <th class="align-middle text-center" scope="col">Date</th>
@@ -150,6 +173,7 @@ async function getExerciseDetails() {
                     <td class="align-middle text-center">{{ s.reps }}</td>
                     <td class="align-middle text-center">{{ s.weight }}</td>
                     <td class="align-middle text-center">@{{ s.rpe }}</td>
+                    <td class="align-middle text-center">{{ s.e1RM === 0 ? '-' : s.e1RM }}</td>
                     <td class="align-middle text-center">
                       <router-link
                         :to="`/dashboard/sessions/${s.session_id}`"
@@ -176,15 +200,26 @@ async function getExerciseDetails() {
             </small>
           </div>
         </div>
-        <div class="card-footer">
-          <nav aria-label="Page navigation example">
+        <div v-if="pagination.total != -1" class="card-footer">
+          <nav>
             <ul class="pagination pagination-sm justify-content-center my-2">
               <li class="page-item disabled">
                 <a class="page-link">Previous</a>
               </li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li
+                v-for="(p, index) in pagination?.total"
+                :key="`page-${index}`"
+                class="page-item"
+                :class="{ active: index + 1 === pagination?.currentPage }"
+              >
+                <a
+                  class="page-link"
+                  @click="
+                    (pagination.currentPage = index + 1), getExerciseDetails(pagination.currentPage)
+                  "
+                  >{{ index + 1 }}</a
+                >
+              </li>
               <li class="page-item">
                 <a class="page-link" href="#">Next</a>
               </li>

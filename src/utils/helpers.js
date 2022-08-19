@@ -61,3 +61,13 @@ export function formatToGainsDateLocal(date) {
 export function isMobile() {
   return window.innerWidth <= 800 && window.innerHeight <= 600;
 }
+
+/**
+ * It takes in a weight, rpe, and reps and returns the estimated 1 rep max.
+ * @param weight - The weight you lifted
+ * @param rpe - Rate of Perceived Exertion
+ * @param reps - number of reps performed
+ */
+export function calculateE1RM(weight, rpe, reps) {
+  return Math.round(weight * (10 - rpe + reps) * 0.03 + weight, 1);
+}

@@ -43,10 +43,12 @@ exercises.get(
 );
 
 /**
- * GET /api/v1/exercises/{exercise_id}/history
+ * GET /api/v1/exercises/{exercise_id}/history?perPage={perPage}&currentPage={perPage}
  * @tags exercises
  * @summary get history of a exercises
  * @param {number} exercise_id.path.required - the exercise id - application/x-www-form-urlencoded
+ * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
+ * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
  */
 exercises.get(
   '/:exercise_id/history',
