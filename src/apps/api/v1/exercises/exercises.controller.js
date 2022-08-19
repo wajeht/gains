@@ -8,6 +8,24 @@ import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-cate
 import { omit } from 'lodash-es';
 
 /**
+ * It gets the exercise history for a given exercise id
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The exercise history for a specific exercise.
+ */
+export async function getExerciseHistory(req, res) {
+  const exercise_id = req.params.exercise_id;
+  const exercise = await ExercisesQueries.getExerciseHistoryByExerciseId(exercise_id);
+
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: exercise,
+  });
+}
+
+/**
  * It gets an exercise by its id
  * @param req - The request object.
  * @param res - The response object.
@@ -18,7 +36,7 @@ export async function getExercise(req, res) {
 
   const exercise = await ExercisesQueries.getExerciseById(eid);
 
-  if (!exercise.length) throw new CustomError.BadRequestError(`There are no exercise available for exercise id ${eid}!`); // prettier-ignore
+  // if (!exercise.length) throw new CustomError.BadRequestError(`There are no exercise available for exercise id ${eid}!`); // prettier-ignore
 
   return res.status(StatusCodes.OK).json({
     status: 'success',

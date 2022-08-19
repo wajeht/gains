@@ -15,6 +15,12 @@ export const getExercise = [
     .isNumeric()
     .withMessage('exercise id must be an number!')
     .bail()
+    .toInt()
+    .custom(async (eid) => {
+      const exercise = await ExercisesQueries.getExerciseById(eid);
+      if (exercise.length === 0) throw new Error('exercise does not exist!');
+      return true;
+    })
     .toInt(),
 ];
 
@@ -47,7 +53,8 @@ export const getExercises = [
       const user = await ExerciseCategoriesQueries.getExerciseCategoriesById(ecid);
       if (user.length === 0) throw new Error('category_id does not exist!');
       return true;
-    }),
+    })
+    .toInt(),
 ];
 
 export const postExercise = [
@@ -146,4 +153,22 @@ export const patchExerciseNote = [
       if (exercise.length === 0) throw new Error('exercise id does not exist!');
       return true;
     }),
+];
+
+export const getExerciseHistory = [
+  param('exercise_id')
+    .trim()
+    .notEmpty()
+    .withMessage('exercise id must not be empty!')
+    .bail()
+    .isNumeric()
+    .withMessage('exercise id must be an number!')
+    .bail()
+    .toInt()
+    .custom(async (exercise_id) => {
+      const exercise = await ExercisesQueries.getExerciseById(exercise_id);
+      if (exercise.length === 0) throw new Error('exercise does not exist!');
+      return true;
+    })
+    .toInt(),
 ];

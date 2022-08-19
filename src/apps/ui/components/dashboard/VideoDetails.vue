@@ -294,38 +294,43 @@ async function postAComment() {
 
           <!-- footer -->
           <div class="card-footer">
-            <small class="d-flex justify-content-between text-muted">
+            <span class="d-flex justify-content-between text-muted">
               <!-- left -->
-              <span class="d-flex gap-3">
-                <!-- block -->
-                <span v-if="currentSessionDetails.block_name">
-                  <i class="bi bi-clipboard2-data me-1"></i>Block:
-                  <span class="fw-light">{{ currentSessionDetails.block_name }}</span>
-                </span>
-
+              <span class="d-flex align-items-center gap-2">
                 <!-- date -->
-                <span><i class="bi bi-calendar-check me-1"></i> 2020-01-01</span>
+                <small
+                  ><i class="bi bi-calendar-check me-1"></i
+                  >{{ dayjs(currentSessionDetails.created_at).format('YYYY/MM/DD') }}</small
+                >
+
+                <!-- block -->
+                <small v-if="currentSessionDetails.block_name">
+                  <router-link
+                    :to="`/dashboard/blocks/${currentSessionDetails.block_id}`"
+                    class="link-secondary text-decoration-none"
+                  >
+                    <i class="bi bi-journal-text me-1"></i>{{ currentSessionDetails.block_name }}
+                  </router-link>
+                </small>
               </span>
 
               <!-- right -->
-              <div class="d-flex gap-2">
+              <div class="d-flex align-items-center gap-2">
                 <!-- session -->
-                <router-link
-                  v-if="userStore.user.id === currentSessionDetails.user_id"
-                  class="link-secondary text-decoration-none"
-                  :to="`/dashboard/sessions/${currentSessionDetails.id}`"
-                  ><i class="bi bi-journal-text me-1"> </i>
-                  <span>
+                <small>
+                  <router-link
+                    v-if="userStore.user.id === currentSessionDetails.user_id"
+                    class="link-secondary text-decoration-none"
+                    :to="`/dashboard/sessions/${currentSessionDetails.id}`"
+                    ><i class="bi bi-journal-text"></i>
                     {{ currentSessionDetails.id }}
-                  </span>
-                </router-link>
+                  </router-link>
+                </small>
 
                 <!-- comment -->
-                <span
-                  ><i class="bi bi-chat me-1"></i><span>{{ comments.length || 0 }}</span></span
-                >
+                <small><i class="bi bi-chat me-1"></i>{{ comments.length || 0 }}</small>
               </div>
-            </small>
+            </span>
           </div>
         </div>
 

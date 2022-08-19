@@ -43,6 +43,18 @@ exercises.get(
 );
 
 /**
+ * GET /api/v1/exercises/{exercise_id}/history
+ * @tags exercises
+ * @summary get history of a exercises
+ * @param {number} exercise_id.path.required - the exercise id - application/x-www-form-urlencoded
+ */
+exercises.get(
+  '/:exercise_id/history',
+  validator(ExercisesValidation.getExerciseHistory),
+  catchAsyncErrors(ExercisesController.getExerciseHistory),
+);
+
+/**
  * POST /api/v1/exercises
  * @tags exercises
  * @summary create an exercise

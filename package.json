@@ -29,7 +29,7 @@
     "release:alpha": "npm run release -- --prerelease alpha",
     "rmds": "find . -name '.DS_Store' -delete",
     "prepare": "husky install",
-    "commit": "cz"
+    "commit": "git add -A && cz"
   },
   "bin": {
     "gains": "./src/bin/gains.js"

@@ -196,41 +196,49 @@ async function getSessions() {
 
               <!-- footer -->
               <div class="card-footer">
-                <small class="d-flex justify-content-between text-muted">
+                <span class="d-flex justify-content-between text-muted">
                   <!-- left -->
-                  <span class="d-flex gap-3">
-                    <!-- block -->
-                    <span v-if="s.block_name">
-                      <i class="bi bi-clipboard2-data me-1"></i>Block:
-                      <span class="fw-light">{{ s.block_name }}</span>
-                    </span>
-
+                  <span class="d-flex gap-2">
                     <!-- date -->
-                    <span><i class="bi bi-calendar-check me-1"></i> 2020-01-01</span>
+                    <small
+                      ><i class="bi bi-calendar-check me-1"></i
+                      >{{ dayjs(s.created_at).format('YYYY/MM/DD') }}</small
+                    >
+
+                    <!-- block -->
+                    <small v-if="s.block_name">
+                      <router-link
+                        :to="`/dashboard/blocks/${s.block_id}`"
+                        class="link-secondary text-decoration-none"
+                      >
+                        <i class="bi bi-journal-text me-1"></i>{{ s.block_name }}
+                      </router-link>
+                    </small>
                   </span>
 
                   <!-- right -->
                   <div class="d-flex gap-2">
                     <!-- session -->
-                    <router-link
-                      v-if="userStore.user.id === s.user_id"
-                      class="link-secondary text-decoration-none"
-                      :to="`/dashboard/sessions/${s.id}`"
-                      ><i class="bi bi-journal-text me-1"> </i>
-                      <span>
+                    <small>
+                      <router-link
+                        v-if="userStore.user.id === s.user_id"
+                        class="link-secondary text-decoration-none"
+                        :to="`/dashboard/sessions/${s.id}`"
+                        ><i class="bi bi-journal-text"> </i>
                         {{ s.id }}
-                      </span>
-                    </router-link>
+                      </router-link>
+                    </small>
 
                     <!-- comment -->
-                    <router-link
-                      :to="`/dashboard/videos/${s.id}`"
-                      class="link-secondary text-decoration-none"
-                      ><i class="bi bi-chat me-1"></i
-                      ><span>{{ s.counts_of_comments }}</span></router-link
-                    >
+                    <small>
+                      <router-link
+                        :to="`/dashboard/videos/${s.id}`"
+                        class="link-secondary text-decoration-none"
+                        ><i class="bi bi-chat me-1"></i>{{ s.counts_of_comments }}</router-link
+                      >
+                    </small>
                   </div>
-                </small>
+                </span>
               </div>
             </span>
           </lazy-component>

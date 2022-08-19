@@ -31,6 +31,9 @@ import Blocks from './pages/dashboard/sessions/Blocks.vue';
 import Categories from './pages/dashboard/sessions/Categories.vue';
 import Exercises from './pages/dashboard/sessions/Exercises.vue';
 
+import Exercise from './pages/dashboard/Exercise.vue';
+import Block from './pages/dashboard/Block.vue';
+
 // --- settings ---
 import Settings from './pages/dashboard/settings/Settings.vue';
 
@@ -426,12 +429,36 @@ const routes = [
     },
   },
   {
+    path: '/dashboard/exercises/:exercise_id',
+    name: 'Exercise',
+    component: Exercise,
+    props: (route) => ({
+      exercise_id: Number(route.params.exercise_id),
+    }),
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/blocks/:block_id',
+    name: 'Block',
+    component: Block,
+    props: (route) => ({
+      block_id: Number(route.params.block_id),
+    }),
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
     path: '/dashboard/sessions/:sid',
     name: 'SessionDetails',
     component: SessionDetails,
-    props: (sid) => {
-      return Number(sid);
-    },
+    props: (route) => ({
+      sid: Number(route.params.sid),
+    }),
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,
