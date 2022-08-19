@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import fs from 'fs/promises';
 import path from 'path';
 import { marked } from 'marked';
+import { calculateE1RM } from '../../../../utils/helpers.js';
 
 export async function getChangelogs(req, res) {
   let changelogs = null;
@@ -85,8 +86,6 @@ export async function getWeeklyWeightIn(req, res) {
 export async function getRecentPrs(req, res) {
   const { user_id } = req.params;
   const result = await VariablesQueries.recentPrsByUserId(user_id);
-
-  const calculateE1RM = (weight, rpe, reps) => Math.round(weight * (10 - rpe + reps) * 0.03 + weight, 1); // prettier-ignore
 
   const mapped = [];
 

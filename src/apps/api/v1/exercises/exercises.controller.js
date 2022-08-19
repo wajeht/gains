@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
 import db from '../../../../database/db.js';
+import { calculateE1RM } from '../../../../utils/helpers.js';
 
 import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
@@ -15,13 +16,30 @@ import { omit } from 'lodash-es';
  */
 export async function getExerciseHistory(req, res) {
   const exercise_id = req.params.exercise_id;
-  const exercise = await ExercisesQueries.getExerciseHistoryByExerciseId(exercise_id);
+  const { perPage, currentPage } = req.query;
+
+  const pagination = {
+    perPage,
+    currentPage,
+  };
+
+  const exercise = await ExercisesQueries.getExerciseHistoryByExerciseId(exercise_id, pagination);
+
+  // calculate e1rm
+  exercise.data.map((e) => {
+    if (e.reps <= 3 && e.rpe >= 7) {
+      e.e1RM = calculateE1RM(e.weight, e.rpe, e.reps);
+    } else {
+      e.e1RM = 0;
+    }
+  });
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: exercise,
+    data: exercise.data,
+    pagination: exercise.pagination,
   });
 }
 

@@ -24,6 +24,10 @@ export default {
   client: database.client,
   // debug: env === 'development', // only in dev
   connection,
+  ping: function (connection, callback) {
+    connection.query({ sql: 'SELECT 1 = 1' }, [], callback);
+  },
+  pingTimeout: 3 * 1000,
   pool: {
     min: 2,
     max: 10,
