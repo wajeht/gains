@@ -16,7 +16,8 @@ const props = defineProps({
     <div class="my-3 d-flex flex-column gap-3">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Block</h5>
+          <h5 class="card-title">TODO</h5>
+          <p class="card-text">implement block page</p>
         </div>
       </div>
     </div>
