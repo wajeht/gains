@@ -139,7 +139,7 @@ async function getExerciseDetails(currentPage) {
         <div class="card">
           <!-- header -->
           <div class="card-header">
-            <span class="d-flex justify-content-between">
+            <span class="d-flex justify-content-between align-items-center gap-2">
               <!-- right -->
               <span class="d-flex justify-content-between align-items-center gap-2">
                 <!-- search -->
