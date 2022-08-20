@@ -52,6 +52,7 @@ export async function getExerciseHistoryByExerciseId(
     .orderBy('s.created_at', 'desc')
     .paginate({
       ...pagination,
+      isLengthAware: true,
     });
 
   // const { rows } = await db.raw(

@@ -2,12 +2,13 @@
 import Backheader from '../../components/dashboard/headers/Backheader.vue';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
+import { LineChart, useLineChart } from 'vue-chart-3';
 
 import useUserStore from '../../store/user.store.js';
 import useAppStore from '../../store/app.store.js';
 import { useRouter } from 'vue-router';
 
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, computed, ref, onMounted } from 'vue';
 
 const userStore = useUserStore();
 const appStore = useAppStore();
@@ -59,6 +60,23 @@ onMounted(async () => {
   appStore.loading = false;
 });
 
+// ----------- chart starts
+const chartData = computed(() => ({
+  labels: setsHistory.value?.map((s) => dayjs(s.created_at).format('MM/DD')).sort(),
+  datasets: [
+    {
+      label: 'e1RM',
+      data: setsHistory.value?.map((s) => s.weight).sort(),
+    },
+  ],
+}));
+
+const { lineChartProps } = useLineChart({
+  chartData,
+});
+
+// ----------- chart end
+
 async function getExerciseDetails(currentPage) {
   try {
     const res = await api.get(
@@ -106,129 +124,202 @@ async function getExerciseDetails(currentPage) {
       </div>
 
       <!-- card  -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ exerciseDetails.exercise_name }}</h5>
-          <p class="card-text">{{ exerciseDetails.category_name }}</p>
-          <span>highest max: 111</span>
+      <div>
+        <h5><i class="bi bi-graph-up-arrow me-2"></i>e1RM Chart</h5>
+        <div class="card" style="height: 100%">
+          <div class="card-body">
+            <LineChart :height="Number(237)" v-bind="lineChartProps" />
+          </div>
         </div>
       </div>
 
       <!-- table -->
-      <div class="card">
-        <div class="card-header">
-          <span class="d-flex justify-content-between">
-            <!-- right -->
-            <span class="d-flex justify-content-between align-items-center gap-2">
-              <!-- title -->
-              <h5 class="card-title my-1">{{ exerciseDetails.exercise_name }}</h5>
+      <div>
+        <h5><i class="bi bi-table me-2"></i>{{ exerciseDetails.exercise_name }}</h5>
+        <div class="card">
+          <!-- header -->
+          <div class="card-header">
+            <span class="d-flex justify-content-between">
+              <!-- right -->
+              <span class="d-flex justify-content-between align-items-center gap-2">
+                <!-- search -->
+                <div class="input-group input-group-sm">
+                  <input type="text" class="form-control" />
+                  <button class="btn btn-sm btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </span>
 
-              <!-- badge -->
-              <small class="bg-success rounded text-white px-1 py-0">{{
-                exerciseDetails.category_name
-              }}</small>
+              <!-- left -->
+              <span class="d-flex justify-content-between align-items-center gap-2">
+                <!--  -->
+                <button class="btn btn-sm btn-outline-dark">
+                  <i class="bi bi-journal-text"></i>
+                </button>
+
+                <!-- download -->
+                <button class="btn btn-sm btn-outline-dark">
+                  <i class="bi bi-download"></i>
+                </button>
+
+                <!-- setting -->
+                <button class="btn btn-sm btn-outline-dark">
+                  <i class="bi bi-gear-fill"></i>
+                </button>
+              </span>
             </span>
-
-            <!-- left -->
-            <span class="d-flex justify-content-between align-items-center gap-2">
-              <!--  -->
-              <button class="btn btn-sm btn-outline-dark d-block">
-                <i class="bi bi-journal-text"></i>
-              </button>
-
-              <!-- download -->
-              <button class="btn btn-sm btn-outline-dark">
-                <i class="bi bi-download"></i>
-              </button>
-
-              <!-- setting -->
-              <button class="btn btn-sm btn-outline-dark">
-                <i class="bi bi-gear-fill"></i>
-              </button>
-            </span>
-          </span>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <small>
-              <table class="table table-striped table-hover table-sm p-0 m-0">
-                <thead>
-                  <tr>
-                    <th class="align-middle text-center" scope="col">#</th>
-                    <th class="align-middle text-center" scope="col">Reps</th>
-                    <th class="align-middle text-center" scope="col">Weight</th>
-                    <th class="align-middle text-center" scope="col">Rpe</th>
-                    <th class="align-middle text-center" scope="col">e1RM</th>
-                    <th class="align-middle text-center" scope="col">Session</th>
-                    <th class="align-middle text-center" scope="col">Video</th>
-                    <th class="align-middle text-center" scope="col">Date</th>
-                    <th class="align-middle text-center" scope="col">Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(s, index) in setsHistory" :key="s.id">
-                    <th class="align-middle text-center" scope="row">
-                      <input class="form-check-input" type="checkbox" :value="s.id" />
-                    </th>
-                    <td class="align-middle text-center">{{ s.reps }}</td>
-                    <td class="align-middle text-center">{{ s.weight }}</td>
-                    <td class="align-middle text-center">@{{ s.rpe }}</td>
-                    <td class="align-middle text-center">{{ s.e1RM === 0 ? '-' : s.e1RM }}</td>
-                    <td class="align-middle text-center">
-                      <router-link
-                        :to="`/dashboard/sessions/${s.session_id}`"
-                        class="link-secondary text-decoration-none"
-                      >
-                        <i class="bi bi-journal-text"></i> {{ s.session_id }}
-                      </router-link>
-                    </td>
-                    <td class="align-middle text-center">
-                      <router-link
-                        :to="`/dashboard/videos/${s.session_id}`"
-                        class="link-secondary text-decoration-none"
-                      >
-                        <i class="bi bi-play-circle-fill"></i>
-                      </router-link>
-                    </td>
-                    <td class="align-middle text-center">
-                      {{ dayjs(s.created_at).format('MM/DD') }}
-                    </td>
-                    <td class="align-middle text-center">{{ s.notes }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </small>
           </div>
-        </div>
-        <div v-if="pagination.total != -1" class="card-footer">
-          <nav>
-            <ul class="pagination pagination-sm justify-content-center my-2">
-              <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-              </li>
-              <li
-                v-for="(p, index) in pagination?.total"
-                :key="`page-${index}`"
-                class="page-item"
-                :class="{ active: index + 1 === pagination?.currentPage }"
-              >
-                <a
-                  class="page-link"
-                  @click="
-                    (pagination.currentPage = index + 1), getExerciseDetails(pagination.currentPage)
-                  "
-                  >{{ index + 1 }}</a
+
+          <!-- body -->
+          <div class="card-body">
+            <div class="table-responsive">
+              <small>
+                <table class="table table-striped table-hover table-sm p-0 m-0">
+                  <thead>
+                    <tr>
+                      <th class="align-middle text-center" scope="col">#</th>
+                      <th class="align-middle text-center" scope="col">Reps</th>
+                      <th class="align-middle text-center" scope="col">Weight</th>
+                      <th class="align-middle text-center" scope="col">Rpe</th>
+                      <th class="align-middle text-center" scope="col">e1RM</th>
+                      <th class="align-middle text-center" scope="col">Session</th>
+                      <th class="align-middle text-center" scope="col">Video</th>
+                      <th class="align-middle text-center" scope="col">Date</th>
+                      <th class="align-middle text-center" scope="col">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(s, index) in setsHistory" :key="s.id">
+                      <th class="align-middle text-center" scope="row">
+                        <input class="form-check-input" type="checkbox" :value="s.id" />
+                      </th>
+                      <td class="align-middle text-center">{{ s.reps }}</td>
+                      <td class="align-middle text-center">{{ s.weight }}</td>
+                      <td class="align-middle text-center">@{{ s.rpe }}</td>
+                      <td class="align-middle text-center">{{ s.e1RM === 0 ? '-' : s.e1RM }}</td>
+                      <td class="align-middle text-center">
+                        <router-link
+                          :to="`/dashboard/sessions/${s.session_id}`"
+                          class="link-secondary text-decoration-none"
+                        >
+                          <i class="bi bi-journal-text"></i> {{ s.session_id }}
+                        </router-link>
+                      </td>
+                      <td class="align-middle text-center">
+                        <router-link
+                          :to="`/dashboard/videos/${s.session_id}`"
+                          class="link-secondary text-decoration-none"
+                        >
+                          <i class="bi bi-play-circle-fill"></i>
+                        </router-link>
+                      </td>
+                      <td class="align-middle text-center">
+                        {{ dayjs(s.created_at).format('MM/DD') }}
+                      </td>
+                      <td class="align-middle text-center">{{ s.notes }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </small>
+            </div>
+          </div>
+
+          <!-- footer -->
+          <div v-if="pagination.total != -1" class="card-footer">
+            <nav>
+              <ul class="pagination pagination-sm justify-content-center my-2">
+                <!-- previous -->
+                <li
+                  class="page-item"
+                  :class="{
+                    disabled: setsHistory?.pagination?.currentPage === 1,
+                  }"
                 >
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+                  <a
+                    @click="
+                      (pagination.currentPage = pagination.currentPage - 1),
+                        getExerciseDetails(pagination.currentPage)
+                    "
+                    href="#"
+                    class="page-link"
+                    >Previous</a
+                  >
+                </li>
+
+                <!-- middle -->
+                <li
+                  v-for="(p, index) in setsHistory?.pagination?.lastPage"
+                  :key="`page-${index}`"
+                  class="page-item"
+                  :class="{ active: index + 1 === pagination?.currentPage }"
+                >
+                  <a
+                    href="#"
+                    class="page-link"
+                    @click="
+                      (pagination.currentPage = index + 1),
+                        getExerciseDetails(pagination?.currentPage)
+                    "
+                  >
+                    {{ index + 1 }}
+                  </a>
+                </li>
+
+                <!-- next -->
+                <li
+                  class="page-item"
+                  :class="{
+                    disabled:
+                      setsHistory?.pagination?.lastPage === setsHistory?.pagination?.currentPage,
+                  }"
+                >
+                  <a
+                    @click="
+                      (pagination.currentPage = pagination.currentPage + 1),
+                        getExerciseDetails(pagination.currentPage)
+                    "
+                    class="page-link"
+                    href="#"
+                    >Next</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.pagination > li > a {
+  background-color: white;
+  color: #212529;
+  cursor: pointer;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: #5a5a5a;
+  background-color: #eee;
+  border-color: #ddd;
+  cursor: pointer;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: #212529 !important;
+  border: solid 1px #212529 !important;
+  cursor: pointer;
+}
+
+.pagination > .active > a:hover {
+  background-color: #212529 !important;
+  border: solid 1px #ffffff;
+  cursor: pointer;
+}
+</style>

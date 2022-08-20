@@ -73,7 +73,7 @@
     "bootstrap-icons": "^1.9.1",
     "cac": "^6.7.12",
     "chalk": "^5.0.1",
-    "chart.js": "^3.8.0",
+    "chart.js": "^3.9.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -109,6 +109,7 @@
     "uuid": "^8.3.2",
     "vite": "^2.9.14",
     "vue": "^3.2.37",
+    "vue-chart-3": "^3.1.8",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
