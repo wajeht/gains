@@ -9,6 +9,8 @@ import useUserStore from '../../store/user.store.js';
 import useAppStore from '../../store/app.store.js';
 import { useRouter } from 'vue-router';
 
+import { orderBy } from 'lodash-es';
+
 import { reactive, computed, ref, onMounted } from 'vue';
 
 const userStore = useUserStore();
@@ -36,6 +38,7 @@ let exerciseDetails = reactive({});
 const getExerciseDetailsLoading = ref(null);
 const notAvailableYet = ref(false);
 const searchText = ref('');
+const showDetails = ref(false);
 
 onMounted(async () => {
   try {
@@ -81,11 +84,23 @@ onMounted(async () => {
 
 // ----------- chart starts
 const chartData = computed(() => ({
-  labels: setsHistory.value?.map((s) => dayjs(s.created_at).format('MM/DD')).sort(),
+  labels: orderBy(setsHistory.value, (x) => new Date(x.created_at), ['asc']).map((x) =>
+    dayjs(x.created_at).format('MM/DD'),
+  ),
   datasets: [
     {
       label: 'e1RM',
-      data: setsHistory.value?.map((s) => s.e1RM).sort(),
+      data: orderBy(setsHistory.value, (x) => new Date(x.created_at), ['asc']).map((x) => x.e1RM),
+      backgroundColor: '#F5C2C7',
+      borderColor: '#DC3545',
+    },
+    {
+      label: 'Volume',
+      data: orderBy(setsHistory.value, (x) => new Date(x.created_at), ['asc']).map(
+        (x) => x.weight * x.reps,
+      ),
+      borderColor: '#47b784',
+      borderWidth: 3,
     },
   ],
 }));
@@ -141,6 +156,12 @@ async function exerciseTable(title, page = null) {
   el.download = `${dayjs().format('YYYY-MM-DD-h-mm-A')}--${title}.csv`;
   el.click();
 }
+
+function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
+  return Math.floor((weight / e1rm) * 100) == Infinity
+    ? nullFormat
+    : `${Math.floor((weight / e1rm) * 100)}%`;
+}
 </script>
 
 <template>
@@ -194,6 +215,16 @@ async function exerciseTable(title, page = null) {
                 <!-- reset -->
                 <button class="btn btn-sm btn-outline-secondary" type="button" disabled>
                   <i class="bi bi-arrow-repeat"></i>
+                </button>
+
+                <!-- hide/show details -->
+                <button
+                  @click="showDetails = !showDetails"
+                  class="btn btn-sm btn-outline-secondary"
+                  type="button"
+                >
+                  <i v-if="showDetails" class="bi bi-eye-slash"></i>
+                  <i v-else class="bi bi-eye"></i>
                 </button>
 
                 <!-- download -->
@@ -261,26 +292,42 @@ async function exerciseTable(title, page = null) {
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
                     <tr>
-                      <th class="align-middle text-center" scope="col">#</th>
+                      <!-- <th class="align-middle text-center" scope="col">#</th> -->
                       <th class="align-middle text-center" scope="col">Reps</th>
                       <th class="align-middle text-center" scope="col">Weight</th>
                       <th class="align-middle text-center" scope="col">Rpe</th>
+                      <th class="align-middle text-center" scope="col">RI</th>
                       <th class="align-middle text-center" scope="col">e1RM</th>
+                      <th class="align-middle text-center" scope="col">Volume</th>
                       <th class="align-middle text-center" scope="col">Session</th>
                       <th class="align-middle text-center" scope="col">Video</th>
                       <th class="align-middle text-center" scope="col">Date</th>
-                      <th class="align-middle text-center" scope="col">Notes</th>
+                      <th v-if="showDetails" class="align-middle text-center" scope="col">Notes</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(s, index) in setsHistory" :key="s.id">
-                      <th class="align-middle text-center" scope="row">
+                      <!-- checkbox -->
+                      <!-- <th class="align-middle text-center" scope="row">
                         <input class="form-check-input" type="checkbox" :value="s.id" />
-                      </th>
+                      </th> -->
+
                       <td class="align-middle text-center">{{ s.reps }}</td>
                       <td class="align-middle text-center">{{ s.weight }}</td>
                       <td class="align-middle text-center">@{{ s.rpe }}</td>
+
+                      <!-- r% -->
+                      <td class="align-middle text-center">
+                        {{ calculateRelativeIntensity(s.weight, s.e1RM, '-') }}
+                      </td>
+
+                      <!-- e1rm -->
                       <td class="align-middle text-center">{{ s.e1RM === 0 ? '-' : s.e1RM }}</td>
+
+                      <!-- volume -->
+                      <td class="align-middle text-center">{{ s.reps * s.weight }}</td>
+
+                      <!-- session details -->
                       <td class="align-middle text-center">
                         <router-link
                           :to="`/dashboard/sessions/${s.session_id}`"
@@ -289,6 +336,8 @@ async function exerciseTable(title, page = null) {
                           <i class="bi bi-journal-text"></i> {{ s.session_id }}
                         </router-link>
                       </td>
+
+                      <!-- video -->
                       <td class="align-middle text-center">
                         <router-link
                           :to="`/dashboard/videos/${s.session_id}`"
@@ -297,10 +346,14 @@ async function exerciseTable(title, page = null) {
                           <i class="bi bi-play-circle-fill"></i>
                         </router-link>
                       </td>
+
+                      <!-- date -->
                       <td class="align-middle text-center">
                         {{ dayjs(s.created_at).format('MM/DD') }}
                       </td>
-                      <td class="align-middle text-center">{{ s.notes }}</td>
+
+                      <!-- notes -->
+                      <td v-if="showDetails" class="align-middle text-center">{{ s.notes }}</td>
                     </tr>
                   </tbody>
                 </table>

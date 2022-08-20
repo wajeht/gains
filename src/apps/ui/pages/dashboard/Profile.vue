@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 import api from '../../../../utils/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 import dayjs from 'dayjs';
-import { omit } from 'lodash-es';
+import { omit, meanBy } from 'lodash-es';
 
 import useAppStore from '../../store/app.store.js';
 const appStore = useAppStore();
@@ -29,35 +29,7 @@ const weeklyWeightIn = reactive({});
 const recentPrs = reactive({});
 
 onMounted(async () => {
-  // ----------- chart starts
-  today.value = dayjs().format('MMMM DD, YYYY');
-  const data = {
-    type: 'line',
-    data: {
-      labels: ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'],
-      options: {
-        responsive: true,
-      },
-      datasets: [
-        {
-          label: 'Number of Moons',
-          data: [0, 0, 1, 2, 79, 82, 27, 14],
-          backgroundColor: 'rgba(54,73,93,.5)',
-          borderColor: '#36495d',
-          borderWidth: 3,
-        },
-        {
-          label: 'Planetary Mass (relative to the Sun x 10^-6)',
-          data: [0.166, 2.081, 3.003, 0.323, 954.792, 285.886, 43.662, 51.514],
-          backgroundColor: 'rgba(71, 183,132,.5)',
-          borderColor: '#47b784',
-          borderWidth: 3,
-        },
-      ],
-    },
-  };
-
-  // ----------- chart ends
+  appStore.loading = true;
 
   // warn user if they have not update user details
   const { user } = userStore;
@@ -78,6 +50,12 @@ onMounted(async () => {
   // recovery
   const r = await getRecovery();
   recovery.value = r || [];
+
+  appStore.loading = false;
+});
+
+const averageSleep = computed(() => {
+  return meanBy(recovery.value, (i) => i.hours_of_sleep).toFixed(2);
 });
 
 async function getRecentPrs() {
@@ -189,7 +167,10 @@ const { lineChartProps } = useLineChart({
 <template>
   <VideosAndProfileHeader />
 
-  <div class="container px-3 animate__animated animate__fadeIn animate__faster">
+  <div
+    v-if="!appStore.loading"
+    class="container px-3 animate__animated animate__fadeIn animate__faster"
+  >
     <div class="my-3 d-flex flex-column gap-3">
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
@@ -244,7 +225,7 @@ const { lineChartProps } = useLineChart({
 
             <!-- sleep -->
             <div class="d-flex flex-column align-items-center">
-              <small> ~ 7 hrs</small>
+              <small> ~ {{ averageSleep }} hrs</small>
               <small class="text-muted">Sleep</small>
             </div>
 
