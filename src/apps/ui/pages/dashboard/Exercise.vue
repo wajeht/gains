@@ -3,6 +3,7 @@ import Backheader from '../../components/dashboard/headers/Backheader.vue';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
 import { LineChart, useLineChart } from 'vue-chart-3';
+import Papa from 'papaparse';
 
 import useUserStore from '../../store/user.store.js';
 import useAppStore from '../../store/app.store.js';
@@ -34,6 +35,7 @@ const setsHistory = ref(null);
 let exerciseDetails = reactive({});
 const getExerciseDetailsLoading = ref(null);
 const notAvailableYet = ref(false);
+const searchText = ref('');
 
 onMounted(async () => {
   try {
@@ -83,7 +85,7 @@ const chartData = computed(() => ({
   datasets: [
     {
       label: 'e1RM',
-      data: setsHistory.value?.map((s) => s.weight).sort(),
+      data: setsHistory.value?.map((s) => s.e1RM).sort(),
     },
   ],
 }));
@@ -95,9 +97,15 @@ const { lineChartProps } = useLineChart({
 
 async function getExerciseDetails(currentPage) {
   try {
-    const res = await api.get(
-      `/api/v1/exercises/${props.exercise_id}/history?perPage=${pagination.perPage}&currentPage=${currentPage}`,
-    );
+    let url = '';
+
+    if (!currentPage) {
+      url = `/api/v1/exercises/${props.exercise_id}/history`;
+    } else {
+      url = `/api/v1/exercises/${props.exercise_id}/history?perPage=${pagination.perPage}&currentPage=${currentPage}`;
+    }
+
+    const res = await api.get(url);
     const json = await res.json();
 
     if (!res.ok) {
@@ -122,6 +130,16 @@ async function getExerciseDetails(currentPage) {
       alert.msg = e;
     }
   }
+}
+
+async function exerciseTable(title, page = null) {
+  const json = await getExerciseDetails(page);
+  const file = Papa.unparse(json);
+  const el = document.createElement('a');
+  el.href = 'data:text/csv;charset=utf-8,' + encodeURI(file);
+  el.target = '_blank';
+  el.download = `${dayjs().format('YYYY-MM-DD-h-mm-A')}--${title}.csv`;
+  el.click();
 }
 </script>
 
@@ -160,8 +178,12 @@ async function getExerciseDetails(currentPage) {
               <span class="d-flex justify-content-between align-items-center gap-2">
                 <!-- search -->
                 <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" />
-                  <button class="btn btn-sm btn-outline-secondary" type="button">
+                  <input type="text" class="form-control" v-model="searchText" />
+                  <button
+                    class="btn btn-sm btn-outline-secondary"
+                    type="button"
+                    :disabled="!searchText.length"
+                  >
                     <i class="bi bi-search"></i>
                   </button>
                 </div>
@@ -169,15 +191,60 @@ async function getExerciseDetails(currentPage) {
 
               <!-- left -->
               <span class="d-flex justify-content-between align-items-center gap-2">
-                <!--  -->
-                <button class="btn btn-sm btn-outline-dark">
-                  <i class="bi bi-journal-text"></i>
+                <!-- reset -->
+                <button class="btn btn-sm btn-outline-secondary" type="button" disabled>
+                  <i class="bi bi-arrow-repeat"></i>
                 </button>
 
                 <!-- download -->
-                <button class="btn btn-sm btn-outline-dark">
-                  <i class="bi bi-download"></i>
-                </button>
+                <div class="dropdown">
+                  <button
+                    id="download-exercise-table"
+                    data-bs-toggle="dropdown"
+                    class="btn btn-sm btn-outline-dark"
+                  >
+                    <i class="bi bi-download"></i>
+                  </button>
+
+                  <!-- dropdown links -->
+                  <ul
+                    class="dropdown-menu dropdown-menu-end shadow-sm"
+                    style="min-width: fit-content"
+                  >
+                    <!-- current -->
+                    <li>
+                      <button
+                        class="dropdown-item btn-sm"
+                        type="button"
+                        @click="
+                          exerciseTable(
+                            `${exerciseDetails.exercise_name.split(' ').join('-')}--page-${
+                              pagination.currentPage
+                            }`,
+                            pagination.currentPage,
+                          )
+                        "
+                      >
+                        Current page
+                      </button>
+                    </li>
+
+                    <!-- all -->
+                    <li>
+                      <button
+                        @click="
+                          exerciseTable(
+                            `${exerciseDetails.exercise_name.split(' ').join('-')}--all-pages`,
+                          )
+                        "
+                        class="dropdown-item btn-sm"
+                        type="button"
+                      >
+                        All page
+                      </button>
+                    </li>
+                  </ul>
+                </div>
 
                 <!-- setting -->
                 <button class="btn btn-sm btn-outline-dark">
@@ -310,6 +377,22 @@ async function getExerciseDetails(currentPage) {
 </template>
 
 <style scoped>
+textarea:focus,
+input:focus {
+  outline: 0 none !important;
+}
+
+.form-control:focus {
+  outline: 0 none !important;
+  border-color: none !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+*:focus {
+  outline: none !important;
+}
+
 .pagination > li > a {
   background-color: white;
   color: #212529;
