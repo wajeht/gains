@@ -57,3 +57,18 @@ export async function recentPrsByUserId(user_id) {
   );
   return rows;
 }
+
+export async function getRecovery(user_id, pagination = { perPage: null, currentPage: null }) {
+  return db
+    .select('v.stress_level', 'v.hours_of_sleep', 'ss.session_rpe', 'v.created_at')
+    .from('variables as v')
+    .innerJoin('sessions as ss', 'ss.id', 'v.session_id')
+    .where({ 'v.user_id': user_id })
+    .andWhere({ 'v.deleted': false })
+    .andWhere({ 'ss.deleted': false })
+    .orderBy('v.created_at', 'desc')
+    .paginate({
+      ...pagination,
+      isLengthAware: true,
+    });
+}

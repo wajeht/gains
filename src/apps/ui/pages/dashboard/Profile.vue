@@ -1,11 +1,8 @@
 <script setup>
 import VideosAndProfileHeader from '../../components/dashboard/headers/VideosAndProfileHeader.vue';
 
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { Chart } from 'chart.js';
-import { sleep } from '../../../../utils/helpers.js';
-import { isMobile } from '../../../../utils/helpers.js';
 import api from '../../../../utils/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 import dayjs from 'dayjs';
@@ -13,6 +10,8 @@ import { omit } from 'lodash-es';
 
 import useAppStore from '../../store/app.store.js';
 const appStore = useAppStore();
+
+import { LineChart, useLineChart } from 'vue-chart-3';
 
 const userStore = useUserStore();
 const router = useRouter();
@@ -22,6 +21,8 @@ const alert = reactive({
   type: '',
   msg: '',
 });
+
+const recovery = ref([]);
 
 const weeklyWeightIn = reactive({});
 
@@ -56,8 +57,6 @@ onMounted(async () => {
     },
   };
 
-  const ctx = document.getElementById('myChart');
-  new Chart(ctx, data);
   // ----------- chart ends
 
   // warn user if they have not update user details
@@ -75,6 +74,10 @@ onMounted(async () => {
   let rpr = await getRecentPrs();
   rpr.map((cur) => (cur.showRecentPrDetails = false));
   Object.assign(recentPrs, rpr);
+
+  // recovery
+  const r = await getRecovery();
+  recovery.value = r || [];
 });
 
 async function getRecentPrs() {
@@ -126,6 +129,61 @@ async function getWeeklyWeightIn() {
     }
   }
 }
+
+async function getRecovery() {
+  try {
+    const res = await api.get(`/api/v1/variables/recovery/${userStore.user.id}?perPage=7`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+// ----------- chart starts
+const chartData = computed(() => ({
+  labels: recovery.value?.map((r) => dayjs(r.created_at).format('MM/DD')),
+  datasets: [
+    {
+      label: 'sleep',
+      data: recovery.value?.map((r) => r.hours_of_sleep),
+      backgroundColor: '#BADBCC',
+      borderColor: '#198754',
+    },
+    {
+      label: 'stress',
+      data: recovery.value?.map((r) => r.stress_level),
+      backgroundColor: '#FFECB5',
+      borderColor: '#FFDE7A',
+    },
+    {
+      label: 'session_rpe',
+      data: recovery.value?.map((r) => r.session_rpe),
+      backgroundColor: '#F5C2C7',
+      borderColor: '#DC3545',
+    },
+  ],
+}));
+
+const { lineChartProps } = useLineChart({
+  chartData,
+});
+// ----------- chart end
 </script>
 
 <template>
@@ -204,7 +262,7 @@ async function getWeeklyWeightIn() {
         <h5><i class="bi bi-activity"></i> Recovery</h5>
         <div class="card" style="height: 100%">
           <div class="card-body">
-            <canvas id="myChart"></canvas>
+            <LineChart :height="Number(237)" v-bind="lineChartProps" />
           </div>
         </div>
       </div>
