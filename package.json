@@ -99,7 +99,6 @@
     "nodemailer": "^6.7.6",
     "papaparse": "^5.3.2",
     "pg": "^8.7.3",
-    "pg-native": "^3.0.1",
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate": "^1.6.1",
     "pino": "^8.1.0",
