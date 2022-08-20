@@ -1077,7 +1077,7 @@ function clearAndDismissDeleteALogModal() {
                 </span>
 
                 <!-- videos view -->
-                <small v-if="currentSessionDetails?.logs?.some((l) => l.videos.length) == true">
+                <small v-if="currentSessionDetails?.logs?.some((l) => l?.videos?.length) == true">
                   <router-link
                     class="link-secondary text-decoration-none"
                     :to="`/dashboard/videos/${currentSessionDetails.id}`"
@@ -2102,9 +2102,10 @@ function clearAndDismissDeleteALogModal() {
                   id="complete-current-session-sleep"
                   class="form-control form-control-sm"
                   min="1"
+                  max="24"
                   type="number"
                   inputmode="numeric"
-                  pattern="[0-24]*"
+                  pattern="[1-10]*"
                   :disabled="completeCurrentSessionLoading"
                 />
               </div>

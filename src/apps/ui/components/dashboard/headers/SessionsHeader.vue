@@ -288,8 +288,9 @@ async function addASession() {
                       id="session-header-bodyweight"
                       class="form-control form-control-sm"
                       min="1"
+                      max="300"
                       inputmode="numeric"
-                      pattern="[1-10]*"
+                      pattern="[1-300]*"
                       type="number"
                       :disabled="loading"
                     />
@@ -303,9 +304,10 @@ async function addASession() {
                       id="session-header-sleep"
                       class="form-control form-control-sm"
                       min="1"
+                      max="24"
                       type="number"
                       inputmode="numeric"
-                      pattern="[0-24]*"
+                      pattern="[1-24]*"
                       :disabled="loading"
                     />
                   </div>
@@ -322,9 +324,10 @@ async function addASession() {
                       id="session-header-calories_prior_session"
                       class="form-control form-control-sm"
                       min="1"
+                      max="5000"
                       type="number"
                       inputmode="numeric"
-                      pattern="[1-10000]*"
+                      pattern="[1-5000]*"
                       :disabled="loading"
                     />
                   </div>
@@ -337,9 +340,10 @@ async function addASession() {
                       id="session-header-caffeine-intake"
                       class="form-control form-control-sm"
                       min="1"
+                      max="1000"
                       type="number"
                       inputmode="numeric"
-                      pattern="[1-10000]*"
+                      pattern="[1-1000]*"
                       :disabled="loading"
                     />
                   </div>

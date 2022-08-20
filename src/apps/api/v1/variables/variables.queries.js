@@ -66,7 +66,7 @@ export async function getRecovery(user_id, pagination = { perPage: null, current
     .where({ 'v.user_id': user_id })
     .andWhere({ 'v.deleted': false })
     .andWhere({ 'ss.deleted': false })
-    .orderBy('v.created_at', 'desc')
+    .orderBy('v.created_at', 'asc')
     .paginate({
       ...pagination,
       isLengthAware: true,
