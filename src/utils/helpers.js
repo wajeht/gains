@@ -69,5 +69,10 @@ export function isMobile() {
  * @param reps - number of reps performed
  */
 export function calculateE1RM(weight, rpe, reps) {
-  return Math.round(weight * (10 - rpe + reps) * 0.03 + weight, 1);
+  if (rpe === 0 || rpe === null) {
+    return Math.ceil(weight * (reps - 1) * 0.03) + weight;
+  } else {
+    // prettier-ignore
+    return (Math.ceil(weight * ((10 - (rpe + 1)) + reps) * 0.03 + weight));
+  }
 }
