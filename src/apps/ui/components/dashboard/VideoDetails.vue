@@ -309,7 +309,7 @@ async function postAComment() {
                     :to="`/dashboard/blocks/${currentSessionDetails.block_id}`"
                     class="link-secondary text-decoration-none"
                   >
-                    <i class="bi bi-journal-text me-1"></i>{{ currentSessionDetails.block_name }}
+                    <i class="bi bi-bricks me-1"></i>{{ currentSessionDetails.block_name }}
                   </router-link>
                 </small>
               </span>

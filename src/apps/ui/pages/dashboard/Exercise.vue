@@ -45,6 +45,7 @@ onMounted(async () => {
     appStore.loading = true;
     const json = await getExerciseDetails(pagination.currentPage);
 
+    // empty
     if (json?.data.length === 0) {
       notAvailableYet.value = true;
       throw new Error('No stats available yet!');
@@ -131,7 +132,6 @@ async function getExerciseDetails(currentPage) {
       }
     }
 
-    // json.data.forEach((x) => setsHistory.value.push(x));
     setsHistory.value = json.data;
     setsHistory.value.pagination = json.pagination;
 

@@ -31,12 +31,6 @@ export default {
   pool: {
     min: 2,
     max: 10,
-    createTimeoutMillis: 8000,
-    acquireTimeoutMillis: 8000,
-    idleTimeoutMillis: 8000,
-    reapIntervalMillis: 1000,
-    createRetryIntervalMillis: 100,
-    propagateCreateError: false,
   },
   acquireConnectionTimeout: 5000,
   migrations: {

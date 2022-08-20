@@ -101,8 +101,6 @@ const deleteALogLoading = ref(false);
 const deleteALogLogObject = ref(null);
 const deleteALogLogIndex = ref(null);
 
-const downloadAVideoSelectedVideoIndex = ref(-1);
-
 // watches
 //  update exercise db as changes in categories
 watch(chooseExerciseCategoryId, async (currentValue, oldValue) => {
@@ -280,6 +278,12 @@ function updateNewSessionName(recieved) {
   currentSessionDetails.name = recieved.value;
 }
 
+function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
+  return Math.floor((weight / e1rm) * 100) == Infinity
+    ? nullFormat
+    : `${Math.floor((weight / e1rm) * 100)}%`;
+}
+
 // -------------- CRUD ---------------
 
 async function copyPreviousSet(currentLogIndex) {
@@ -367,6 +371,7 @@ async function addAExercise() {
 
       json.data.forEach((log) => {
         log.sets = [];
+        log.videos = [];
         // log.collapsed = true;
         currentSessionDetails.logs.push(log);
       });
@@ -402,6 +407,7 @@ async function addAExercise() {
 
       const temp = json.data[0];
       temp.sets = [];
+      temp.videos = [];
 
       currentSessionDetails.logs.push(temp);
     }
@@ -1276,7 +1282,9 @@ function clearAndDismissDeleteALogModal() {
                           <th class="text-center" scope="col"></th>
                           <th class="text-center" scope="col">Weight</th>
                           <th class="text-center" scope="col">Rpe</th>
+                          <th class="text-center" scope="col">RI</th>
                           <th class="text-center" scope="col">e1RM</th>
+                          <th class="text-center" scope="col">Volume</th>
 
                           <th v-if="log.sets_notes_visibility" class="text-start" scope="col">
                             Notes
@@ -1299,6 +1307,19 @@ function clearAndDismissDeleteALogModal() {
                           <td class="text-center text-muted">x</td>
                           <td class="text-center">{{ s.weight }}</td>
                           <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
+
+                          <!-- ri -->
+                          <td class="text-center">
+                            {{
+                              calculateRelativeIntensity(
+                                s.weight,
+                                calculateE1RM(s.weight, s.rpe, s.reps),
+                                '-',
+                              )
+                            }}
+                          </td>
+
+                          <!-- e1rm -->
                           <td class="text-center">
                             {{
                               `${
@@ -1308,6 +1329,9 @@ function clearAndDismissDeleteALogModal() {
                               }`
                             }}
                           </td>
+
+                          <!-- volume -->
+                          <td class="text-center">{{ s.weight * s.reps }}</td>
 
                           <td
                             v-if="log.sets_notes_visibility"
@@ -1441,12 +1465,7 @@ function clearAndDismissDeleteALogModal() {
                 <span class="d-flex justify-content-between gap-2">
                   <!-- download video -->
                   <a
-                    @click="downloadAVideoSelectedVideoIndex = 0"
-                    :href="`/api/v1/videos/${
-                      downloadAVideoSelectedVideoIndex === -1
-                        ? null
-                        : log?.videos[downloadAVideoSelectedVideoIndex]?.id
-                    }/download`"
+                    :href="`/api/v1/videos/${log?.videos[0]?.id}/download`"
                     class="btn btn-sm btn-outline-dark"
                     type="button"
                     :class="{ disabled: !log?.videos?.length }"
