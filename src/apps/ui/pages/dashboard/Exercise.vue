@@ -91,7 +91,6 @@ const chartData = computed(() => ({
 const { lineChartProps } = useLineChart({
   chartData,
 });
-
 // ----------- chart end
 
 async function getExerciseDetails(currentPage) {

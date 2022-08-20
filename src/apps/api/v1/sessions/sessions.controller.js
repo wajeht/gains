@@ -87,8 +87,8 @@ export async function getUserSessions(req, res) {
   const { perPage, currentPage } = req.query;
 
   const pagination = {
-    perPage,
-    currentPage,
+    perPage: perPage ?? null,
+    currentPage: currentPage ?? null,
   };
 
   const sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);

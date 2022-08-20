@@ -5,15 +5,38 @@ import path from 'path';
 import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
 
+/**
+ * It gets the recovery data for a user
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The recovery data for a user.
+ */
 export async function getRecovery(req, res) {
+  const { user_id } = req.params;
+  const { perPage, currentPage } = req.query;
+
+  const pagination = {
+    perPage: perPage ?? null,
+    currentPage: currentPage ?? null,
+  };
+
+  const recovery = await VariablesQueries.getRecovery(user_id, pagination);
+
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: [],
+    data: recovery.data,
+    pagination: recovery.pagination,
   });
 }
 
+/**
+ * It reads the `CHANGELOG.md` file and returns the content in HTML format
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The changelogs in HTML format.
+ */
 export async function getChangelogs(req, res) {
   let changelogs = null;
   try {
@@ -58,7 +81,8 @@ export async function getWeeklyWeightIn(req, res) {
   }
 
   const mapped = [];
-  // It's looping through the bodyWeight array and calculating the trend.
+
+  // It's iteration through the bodyWeight array and calculating the trend.
   for (let i = 0; i < bodyWeight.length; i++) {
     const current = bodyWeight[i];
     const previous = bodyWeight[i + 1];

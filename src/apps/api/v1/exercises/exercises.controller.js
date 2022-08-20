@@ -19,8 +19,8 @@ export async function getExerciseHistory(req, res) {
   const { perPage, currentPage } = req.query;
 
   const pagination = {
-    perPage,
-    currentPage,
+    perPage: perPage ?? null,
+    currentPage: currentPage ?? null,
   };
 
   const exercise = await ExercisesQueries.getExerciseHistoryByExerciseId(exercise_id, pagination);

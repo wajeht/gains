@@ -31,9 +31,11 @@ variables.get(
 );
 
 /**
- * GET /api/v1/variables/recovery/{user_id}
+ * GET /api/v1/variables/recovery/{user_id}?perPage={perPage}&currentPage={perPage}
  * @tags variables
  * @summary get recovery tracking information
+ * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
+ * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
  * @param {number} user_id.path.required - the user_id - application/x-www-form-urlencoded
  */
 variables.get(

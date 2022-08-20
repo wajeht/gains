@@ -1,4 +1,4 @@
-import { check, param, body } from 'express-validator';
+import { check, param, body, query } from 'express-validator';
 import * as UsersQueries from '../users/users.queries.js';
 
 /* Validating the user_id. */
@@ -42,6 +42,26 @@ export const getRecentPrs = [
 ];
 
 export const getRecovery = [
+  query('perPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('perPage must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('perPage must be an ID!')
+    .bail()
+    .toInt(),
+  query('currentPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('current-page must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('current-page must be an ID!')
+    .bail()
+    .toInt(),
   param('user_id')
     .trim()
     .notEmpty()
