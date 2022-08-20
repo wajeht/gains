@@ -1,5 +1,11 @@
 <script setup>
 import Backheader from '../../components/dashboard/headers/Backheader.vue';
+
+import { ref } from 'vue';
+
+const props = defineProps({
+  block_id: Number,
+});
 </script>
 
 <template>

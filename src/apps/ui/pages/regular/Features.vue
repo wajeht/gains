@@ -75,7 +75,7 @@ function clearAndDismissPreviewVideoModal() {
         <!-- left -->
         <div class="col-md-5">
           <div role="button" @click="previewVideo(index)" class="poster-container">
-            <img :src="f.poster" style="width: 100%" />
+            <img :src="f.poster" style="width: 100%" class="border border-1" />
             <div class="middle">
               <i class="bi bi-play-circle-fill" style="font-size: 80px; color: black"></i>
             </div>

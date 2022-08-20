@@ -33,31 +33,48 @@ const pagination = reactive({
 const setsHistory = ref(null);
 let exerciseDetails = reactive({});
 const getExerciseDetailsLoading = ref(null);
+const notAvailableYet = ref(false);
 
 onMounted(async () => {
-  appStore.loading = true;
-  const json = await getExerciseDetails(pagination.currentPage);
+  try {
+    appStore.loading = true;
+    const json = await getExerciseDetails(pagination.currentPage);
 
-  // unauthorized access deny
-  if (json.data.length) {
-    const user_id = json.data[0]?.user_id;
-    if (user_id !== userStore.user.id) {
-      return router.push('/dashboard/unauthorized');
+    if (json?.data.length === 0) {
+      notAvailableYet.value = true;
+      throw new Error('No stats available yet!');
+    }
+
+    // unauthorized access deny
+    if (json.data.length) {
+      const user_id = json.data[0]?.user_id;
+      if (user_id !== userStore.user.id) {
+        return router.push('/dashboard/unauthorized');
+      }
+    }
+
+    const first = json.data[0];
+
+    Object.assign(exerciseDetails, {
+      exercise_id: first.exercise_id,
+      category_id: first.exercise_id,
+      exercise_name: first.exercise_name,
+      category_name: first.category_name,
+    });
+
+    pagination.total = Math.floor(json.pagination.total / pagination.perPage);
+
+    appStore.loading = false;
+  } catch (e) {
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
     }
   }
-
-  const first = json.data[0];
-
-  Object.assign(exerciseDetails, {
-    exercise_id: first.exercise_id,
-    category_id: first.exercise_id,
-    exercise_name: first.exercise_name,
-    category_name: first.category_name,
-  });
-
-  pagination.total = Math.floor(json.pagination.total / pagination.perPage);
-
-  appStore.loading = false;
 });
 
 // ----------- chart starts
@@ -124,7 +141,7 @@ async function getExerciseDetails(currentPage) {
       </div>
 
       <!-- card  -->
-      <div>
+      <div v-if="!notAvailableYet">
         <h5><i class="bi bi-graph-up-arrow me-2"></i>e1RM Chart</h5>
         <div class="card" style="height: 100%">
           <div class="card-body">
@@ -134,7 +151,7 @@ async function getExerciseDetails(currentPage) {
       </div>
 
       <!-- table -->
-      <div>
+      <div v-if="!notAvailableYet">
         <h5><i class="bi bi-table me-2"></i>{{ exerciseDetails.exercise_name }}</h5>
         <div class="card">
           <!-- header -->

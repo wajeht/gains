@@ -227,7 +227,7 @@ async function getWeeklyWeightIn() {
                       <th class="text-end" scope="col">e1RM</th>
                     </tr>
                   </thead>
-                  <tbody v-auto-animate>
+                  <tbody>
                     <template v-for="pr in recentPrs" :key="`recent-prs-id-${pr.id}`">
                       <tr
                         @click="pr.showRecentPrDetails = !pr.showRecentPrDetails"
@@ -270,7 +270,7 @@ async function getWeeklyWeightIn() {
         <h5><i class="bi bi-table"></i> Bodyweight</h5>
         <div class="card">
           <div class="card-body">
-            <small class="p-0 m-0" v-auto-animate>
+            <small class="p-0 m-0">
               <div v-if="Object.keys(weeklyWeightIn).length > 0" class="table-responsive">
                 <table class="table table-striped table-hover table-sm p-0 m-0">
                   <thead>
