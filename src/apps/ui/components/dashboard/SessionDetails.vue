@@ -101,6 +101,8 @@ const deleteALogLoading = ref(false);
 const deleteALogLogObject = ref(null);
 const deleteALogLogIndex = ref(null);
 
+const downloadAVideoSelectedVideoIndex = ref(-1);
+
 // watches
 //  update exercise db as changes in categories
 watch(chooseExerciseCategoryId, async (currentValue, oldValue) => {
@@ -1439,12 +1441,17 @@ function clearAndDismissDeleteALogModal() {
                 <span class="d-flex justify-content-between gap-2">
                   <!-- download video -->
                   <a
-                    :href="`/api/v1/videos/${log?.videos[0]?.id}/download`"
+                    @click="downloadAVideoSelectedVideoIndex = 0"
+                    :href="`/api/v1/videos/${
+                      downloadAVideoSelectedVideoIndex === -1
+                        ? null
+                        : log?.videos[downloadAVideoSelectedVideoIndex]?.id
+                    }/download`"
                     class="btn btn-sm btn-outline-dark"
                     type="button"
                     :class="{ disabled: !log?.videos?.length }"
                   >
-                    <i class="bi bi-cloud-download"></i>
+                    <i class="bi bi-download"></i>
                   </a>
 
                   <!-- history -->
