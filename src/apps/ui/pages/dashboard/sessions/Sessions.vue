@@ -148,28 +148,35 @@ function logDetails(sid) {
                 <h5 class="card-title">{{ dayjs(session.start_date).format('DD') }}</h5>
               </div>
 
-              <!-- incomplete or progress -->
-              <small style="font-size: 0.7rem">
-                <!-- danger -->
-                <!-- prettier-ignore -->
-                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today"
+              <!-- block and progress -->
+              <span class="d-flex flex-column gap-1">
+                <!-- incomplete or progress -->
+                <small v-if="session.end_date === null" style="font-size: 0.7rem">
+                  <!-- danger -->
+                  <!-- prettier-ignore -->
+                  <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today"
                   class="text-warning">
                   <font-awesome-icon icon="fa-refresh" />
                 </span>
 
-                <!-- danger -->
-                <!-- prettier-ignore -->
-                <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today"
+                  <!-- danger -->
+                  <!-- prettier-ignore -->
+                  <span v-if="session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today"
                   class="text-danger">
                   <i class="bi bi-exclamation-triangle-fill text-danger"></i>
                 </span>
-              </small>
+                </small>
+
+                <!-- block -->
+                <small v-if="session.block_id" class="text-muted" style="font-size: 0.7rem">
+                  <i class="bi bi-bricks"></i>
+                </small>
+              </span>
             </div>
 
             <!-- middle -->
             <div class="flex-grow-1">
               <h5 class="card-title">{{ session.name }}</h5>
-
               <div class="card-text">
                 <small>
                   <ul class="list-unstyled mb-0 pb-0 list-group-numbered">

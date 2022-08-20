@@ -211,7 +211,7 @@ async function getSessions() {
                         :to="`/dashboard/blocks/${s.block_id}`"
                         class="link-secondary text-decoration-none"
                       >
-                        <i class="bi bi-journal-text me-1"></i>{{ s.block_name }}
+                        <i class="bi bi-bricks me-1"></i>{{ s.block_name }}
                       </router-link>
                     </small>
                   </span>

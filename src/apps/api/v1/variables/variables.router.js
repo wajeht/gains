@@ -31,6 +31,18 @@ variables.get(
 );
 
 /**
+ * GET /api/v1/variables/recovery/{user_id}
+ * @tags variables
+ * @summary get recovery tracking information
+ * @param {number} user_id.path.required - the user_id - application/x-www-form-urlencoded
+ */
+variables.get(
+  '/recovery/:user_id',
+  validator(VariablesValidation.getRecovery),
+  catchAsyncErrors(VariablesController.getRecovery),
+);
+
+/**
  * GET /api/v1/variables/changelogs
  * @tags variables
  * @summary get all the change logs

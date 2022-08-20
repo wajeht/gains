@@ -5,6 +5,15 @@ import path from 'path';
 import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
 
+export async function getRecovery(req, res) {
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [],
+  });
+}
+
 export async function getChangelogs(req, res) {
   let changelogs = null;
   try {

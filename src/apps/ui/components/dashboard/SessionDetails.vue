@@ -5,7 +5,11 @@ import Loading from '../../components/dashboard/Loading.vue';
 
 // helpers
 import api from '../../../../utils/fetch-with-style.js';
-import { gainsDateDisplay, gainsCurrentDateTime } from '../../../../utils/helpers.js';
+import {
+  gainsDateDisplay,
+  calculateE1RM,
+  gainsCurrentDateTime,
+} from '../../../../utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';
@@ -956,14 +960,12 @@ function clearAndDismissDeleteALogModal() {
                 <small class="card-text card-text d-flex flex-column">
                   <!-- session id -->
                   <span>
-                    <!-- <font-awesome-icon icon="id-badge" class="me-1" />Session ID: -->
-                    <i class="bi bi-clipboard2-data-fill me-1"></i>Session ID:
+                    <i class="bi bi-journal-text me-1"></i>Session ID:
                     <span class="fw-light">{{ currentSessionDetails.session_id }}</span>
                   </span>
 
                   <!-- user id -->
                   <span>
-                    <!-- <font-awesome-icon icon="id-badge" class="me-1" />User ID: -->
                     <i class="bi bi-person-fill me-1"></i>User ID:
                     <span class="fw-light">{{ currentSessionDetails.user_id }}</span>
                   </span>
@@ -1006,7 +1008,7 @@ function clearAndDismissDeleteALogModal() {
 
                   <!-- total -->
                   <span v-if="currentSessionDetails.end_date">
-                    <font-awesome-icon icon="fa-plus" class="me-1" />Total:
+                    <i class="bi bi-clock-history me-1"></i>Total:
                     <span class="fw-light">{{
                       currentSessionDetails.end_date === null
                         ? '?'
@@ -1025,7 +1027,8 @@ function clearAndDismissDeleteALogModal() {
 
                   <!-- block -->
                   <span v-if="currentSessionDetails.block_name">
-                    <i class="bi bi-clipboard2-data-fill me-1"></i>Block:
+                    <!-- <i class="bi bi-clipboard2-data-fill me-1"></i>Block: -->
+                    <i class="bi bi-bricks me-1"></i>Block:
                     <router-link
                       :to="`/dashboard/blocks/${currentSessionDetails.block_id}`"
                       class="fw-light fst-italic link-dark"
@@ -1074,11 +1077,12 @@ function clearAndDismissDeleteALogModal() {
                 </span>
 
                 <!-- videos view -->
-                <small>
+                <small v-if="currentSessionDetails?.logs?.some((l) => l.videos.length) == true">
                   <router-link
                     class="link-secondary text-decoration-none"
                     :to="`/dashboard/videos/${currentSessionDetails.id}`"
-                    ><i class="bi bi-play-circle-fill me-1"></i>Video view
+                  >
+                    <i class="bi bi-play-circle me-1"></i>Video view
                   </router-link>
                 </small>
               </span>
@@ -1100,14 +1104,50 @@ function clearAndDismissDeleteALogModal() {
             <div class="card-body">
               <span class="m-0 p-0" v-auto-animate>
                 <!-- header -->
-                <h6 class="card-title d-flex justify-content-between align-items-center mb-0">
-                  <!-- title -->
-                  <span>{{ index + 1 }}. {{ log.name }}</span>
+                <span class="card-title d-flex justify-content-between align-items-center m-0 p-0">
+                  <!-- left -->
+                  <span class="d-flex justify-content-between align-items-center gap-2 mb-0">
+                    <!-- title -->
+                    <h6 class="card-title m-0 p-0">{{ index + 1 }}. {{ log.name }}</h6>
 
-                  <!-- options -->
-                  <span class="d-flex gap-3 align-items-center">
+                    <!-- sets, volume, and other info -->
+                    <small
+                      class="fst-italic fw-light text-muted d-flex justify-content-between align-items-center gap-1"
+                      v-if="currentSessionDetails.end_date && log.sets.length"
+                    >
+                      <!-- sets -->
+                      <small>{{ log.sets.length }} sets,</small>
+
+                      <!-- e1rm -->
+                      <small>
+                        {{
+                          log.sets
+                            .filter((s) => s.rpe >= 7 && s.reps <= 3)
+                            .map((s) => calculateE1RM(s.weight, s.rpe, s.reps))
+                            .sort()
+                            .reverse()
+                            .map((cur) => (cur ? `${cur} e1rm,` : ''))[0]
+                        }}
+                      </small>
+
+                      <!-- volume -->
+                      <small
+                        >{{
+                          log.sets.reduce((prev, curr) => {
+                            const vol = Number(curr.reps) * Number(curr.weight);
+                            const tol = Number(prev) + Number(vol);
+                            return tol;
+                          }, 0)
+                        }}
+                        volume</small
+                      >
+                    </small>
+                  </span>
+
+                  <!-- right -->
+                  <span class="d-flex justify-content-between gap-3 align-items-center">
                     <!-- show/hide button -->
-                    <button
+                    <span
                       @click="log.collapsed = !log.collapsed"
                       class="p-0 m-0"
                       style="background: none; border: none; box-shadow: none"
@@ -1116,7 +1156,7 @@ function clearAndDismissDeleteALogModal() {
                     >
                       <i v-if="!log.collapsed" class="bi bi-chevron-down"></i>
                       <i v-if="log.collapsed" class="bi bi-chevron-up"></i>
-                    </button>
+                    </span>
 
                     <!-- lock a video -->
                     <span
@@ -1188,7 +1228,7 @@ function clearAndDismissDeleteALogModal() {
                       </ul>
                     </div>
                   </span>
-                </h6>
+                </span>
 
                 <!-- video -->
                 <div
@@ -1230,12 +1270,11 @@ function clearAndDismissDeleteALogModal() {
                     <table class="table table-sm table-striped table-hover p-0 m-0">
                       <thead>
                         <tr>
-                          <th class="text-center" scope="col">Set</th>
-                          <th class="text-center" scope="col"></th>
                           <th class="text-center" scope="col">Rep</th>
                           <th class="text-center" scope="col"></th>
                           <th class="text-center" scope="col">Weight</th>
                           <th class="text-center" scope="col">Rpe</th>
+                          <th class="text-center" scope="col">e1RM</th>
 
                           <th v-if="log.sets_notes_visibility" class="text-start" scope="col">
                             Notes
@@ -1254,12 +1293,19 @@ function clearAndDismissDeleteALogModal() {
                       </thead>
                       <tbody>
                         <tr v-for="(s, idx) in log.sets" :key="`key-${s.id}`">
-                          <td class="text-center">{{ idx + 1 }}</td>
-                          <td class="text-center text-muted">x</td>
                           <td class="text-center">{{ s.reps }}</td>
                           <td class="text-center text-muted">x</td>
                           <td class="text-center">{{ s.weight }}</td>
                           <td class="text-center"><span v-if="s.rpe">@</span>{{ s.rpe }}</td>
+                          <td class="text-center">
+                            {{
+                              `${
+                                s.rpe >= 7 && s.reps <= 3
+                                  ? calculateE1RM(s.weight, s.rpe, s.reps)
+                                  : '-'
+                              }`
+                            }}
+                          </td>
 
                           <td
                             v-if="log.sets_notes_visibility"
@@ -1402,7 +1448,7 @@ function clearAndDismissDeleteALogModal() {
                     class="btn btn-sm btn-outline-dark"
                     type="button"
                   >
-                    <i class="bi bi-journal-text"></i>
+                    <i class="bi bi-graph-up-arrow"></i>
                   </button>
                 </span>
               </span>
