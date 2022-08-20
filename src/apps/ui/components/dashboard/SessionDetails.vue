@@ -1437,10 +1437,15 @@ function clearAndDismissDeleteALogModal() {
 
                 <!-- right -->
                 <span class="d-flex justify-content-between gap-2">
-                  <!-- chart -->
-                  <button class="btn btn-sm btn-outline-dark" type="button" disabled>
-                    <i class="bi bi-bar-chart"></i>
-                  </button>
+                  <!-- download video -->
+                  <a
+                    :href="`/api/v1/videos/${log?.videos[0]?.id}/download`"
+                    class="btn btn-sm btn-outline-dark"
+                    type="button"
+                    :class="{ disabled: !log?.videos?.length }"
+                  >
+                    <i class="bi bi-cloud-download"></i>
+                  </a>
 
                   <!-- history -->
                   <button
