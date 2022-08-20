@@ -57,3 +57,16 @@ export async function getStreamVideo(req, res) {
   //   fs.createReadStream(path).pipe(res);
   // }
 }
+
+/**
+ * It gets the video path from the database, and then sends the video to the user
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function getDownloadVideo(req, res) {
+  const { id } = req.params;
+
+  const [{ video_path }] = await VideosQueries.findVideoById(id);
+
+  res.status(StatusCodes.OK).download(video_path);
+}
