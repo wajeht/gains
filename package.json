@@ -4,10 +4,6 @@
   "description": "The best way to track your workouts",
   "main": "server.js",
   "type": "module",
-  "engines": {
-    "npm": "8.00.0",
-    "node": "16.00.0"
-  },
   "scripts": {
     "start": "vite build && node ./src/bin/server.js",
     "test": "vitest run --coverage",
