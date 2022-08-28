@@ -25,7 +25,11 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(jwt_secret));
-app.use(express.static(path.resolve(path.join(process.cwd(), 'src', 'public')))); // prettier-ignore
+app.use(
+  express.static(path.resolve(path.join(process.cwd(), 'src', 'public')), {
+    maxage: '24h',
+  }),
+);
 
 expressJSDocSwagger(app)(expressJsdocOptions);
 
