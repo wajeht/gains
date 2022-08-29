@@ -54,9 +54,7 @@ export async function patchSession(req, res) {
     .andWhere({ user_id: uid });
 
   // delete cache so if they fetch again, they will get new cache query
-  if (body.end_date != null) {
-    await redis.del(`community-sessions`);
-  }
+  const deletedCacheSessions = await redis.del(`user-id-${body.user_id}-sessions`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -162,11 +160,15 @@ export async function getSessionsWithVideos(req, res) {
  * @param res - The response object.
  */
 export async function getAllSessions(req, res) {
-  let sessions = JSON.parse(await redis.get(`community-sessions`));
+  const user_id = req.user.user_id;
+  let sessions = JSON.parse(await redis.get(`user-id-${user_id}-community-sessions`));
 
   if (sessions === null) {
     sessions = await SessionQueries.getAllSessions();
-    const setSessions = await redis.set(`community-sessions`, JSON.stringify(sessions));
+    const setSessions = await redis.set(
+      `user-id-${user_id}-community-sessions`,
+      JSON.stringify(sessions),
+    );
   }
 
   res.status(StatusCodes.OK).json({

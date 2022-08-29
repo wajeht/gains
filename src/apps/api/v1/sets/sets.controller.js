@@ -1,6 +1,7 @@
 import * as SetsQueries from './sets.queries.js';
 import logger from '../../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
+import redis from '../../../../utils/redis.js';
 
 /**
  * It creates a set for a user.
@@ -41,6 +42,10 @@ export async function patchSet(req, res) {
       updated[0],
     )}`,
   );
+
+  if (body.end_date) {
+    const deletedCommunitySession = await redis.del(`user-id-${body.user_id}-community-sessions`);
+  }
 
   res.status(StatusCodes.OK).json({
     status: 'success',

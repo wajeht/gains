@@ -6,6 +6,7 @@ import BlocksRouter from './blocks/blocks.router.js';
 import UsersRouter from './users/users.router.js';
 import VideosRouter from './videos/videos.router.js';
 import ApiKeysRoutes from './api-keys/api-keys.routes.js';
+import CacheRoutes from './cache/cache.routes.js';
 import VariablesRouter from './variables/variables.router.js';
 import CommentsRoutes from './comments/comments.routes.js';
 import SetsRouter from './sets/sets.router.js';
@@ -24,6 +25,7 @@ v1.use('/api-keys', ApiKeysRoutes);
 v1.use('/blocks', BlocksRouter);
 v1.use('/videos', VideosRouter);
 v1.use('/users', UsersRouter);
+v1.use('/cache', CacheRoutes);
 v1.use('/sets', SetsRouter);
 v1.use('/logs', LogsRouter);
 
