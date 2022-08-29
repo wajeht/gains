@@ -138,6 +138,33 @@ async function addASession() {
     }
   }
 }
+
+async function clearUsersSessionsCache() {
+  try {
+    const user_id = userStore.user.id;
+
+    const res = await api.post(`/api/v1/cache/user-id-${user_id}-sessions/clear`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    router.go();
+  } catch (e) {
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 </script>
 
 <template>
@@ -245,8 +272,8 @@ async function addASession() {
                         to="/dashboard/sessions/blocks?model=true"
                         >Click here!</router-link
                       >
-                      to add start adding blocks!</small
-                    >
+                      to add start adding blocks!
+                    </small>
                   </div>
                 </div>
 
@@ -387,9 +414,14 @@ async function addASession() {
     </span>
 
     <!-- middle -->
-    <h5 class="mb-0 pb-0 text-muted">{{ dayjs().format('YYYY MMMM DD') }}</h5>
+    <span @click="clearUsersSessionsCache()" class="link-secondary" role="button">
+      <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
+        <i class="bi bi-arrow-repeat"></i>
+        <span>Clear cache</span>
+      </h5>
+    </span>
 
-    <!-- settings -->
+    <!-- right -->
     <div class="dropdown">
       <!-- setting icons -->
       <a

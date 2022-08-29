@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import logger from '../../../../utils/logger.js';
 import { capture } from '../../../../utils/screenshot.js';
+import redis from '../../../../utils/redis.js';
 
 /**
  * It creates a log for a user
@@ -17,6 +18,7 @@ export async function createLogs(req, res) {
   if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a log for for log id: ${body.user_id}!`); // prettier-ignore
 
   logger.info(`user id: ${body.user_id} has created a log id: ${created[0].id}`);
+  await redis.del(`user-id-${body.user_id}-sessions`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',
@@ -71,6 +73,7 @@ export async function updatePrivateState(req, res) {
   const updated = await LogsQueries.updatePrivateState(log_id, value);
 
   logger.info(`User id: ${updated[0].user_id} has updated log into ${JSON.stringify(req.body)}!`);
+  await redis.del(`user-id-${updated[0].user_id}-community-sessions`);
 
   return res.status(StatusCodes.CREATED).json({
     status: 'success',
@@ -92,6 +95,7 @@ export async function postMultipleLogs(req, res) {
   const created = await LogsQueries.createMultipleLogs(logs);
 
   logger.info(`User id: ${user_id} has created multiple logs to ${JSON.stringify(logs)}!`);
+  await redis.del(`user-id-${user_id}-sessions`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',
