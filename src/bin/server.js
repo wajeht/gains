@@ -48,3 +48,18 @@ app.listen(port, () => {
     Chad.flex(e.message, e.stack);
   }
 })();
+
+(async () => {
+  try {
+    const { rows } = await db.raw(`
+      create index on sessions(id, user_id, deleted, end_date);
+      create index on videos(id, user_id, log_id, session_id, deleted);
+      create index on logs(id, user_id, session_id, exercise_id, deleted, private);
+      create index on sets(id, user_id, session_id, exercise_id, deleted);
+      analyze;
+    `);
+  } catch (e) {
+    logger.error(e);
+    Chad.flex(e.message, e.stack);
+  }
+})();
