@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+
 /**
  * If the word is a string and has more than one character, return the word with the first character capitalized.
  * @param {string} word - The word that you want to capitalize.

@@ -37,7 +37,10 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.use(VueLazyload, {
   lazyComponent: true,
-  preLoad: 1,
+  lazyImage: true,
+  preLoad: 1.3,
+  error: false,
+  loading: new URL('./assets/images/loading.svg', import.meta.url).href,
   attempt: 1,
   listenEvents: ['scroll'],
 });
