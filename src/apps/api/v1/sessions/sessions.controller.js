@@ -168,6 +168,7 @@ export async function getAllSessions(req, res) {
     sessions = await SessionQueries.getAllSessions();
     const setSessions = await redis.set(`community-sessions`, JSON.stringify(sessions));
   }
+
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,

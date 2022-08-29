@@ -4,6 +4,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
+import redis from '../../../../utils/redis.js';
 
 /**
  * It gets the recovery data for a user
@@ -20,7 +21,17 @@ export async function getRecovery(req, res) {
     currentPage: currentPage ?? null,
   };
 
-  const recovery = await VariablesQueries.getRecovery(user_id, pagination);
+  let recovery = JSON.parse(await redis.get(`user-id-${user_id}-recovery`));
+
+  if (recovery === null) {
+    recovery = await VariablesQueries.getRecovery(user_id, pagination);
+    const setRecovery = await redis.set(
+      `user-id-${user_id}-recovery`,
+      JSON.stringify(recovery),
+      'EX',
+      24 * 60 * 60,
+    );
+  }
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
@@ -118,22 +129,29 @@ export async function getWeeklyWeightIn(req, res) {
  */
 export async function getRecentPrs(req, res) {
   const { user_id } = req.params;
-  const result = await VariablesQueries.recentPrsByUserId(user_id);
 
-  const mapped = [];
+  // check inside cache
+  let result = JSON.parse(await redis.get(`user-id-${user_id}-recent-prs`));
+  let mapped = [];
 
-  for (let i = 0; i < result.length; i++) {
-    const current = result[i];
-    mapped.push({
-      ...current,
-      e1rm: calculateE1RM(current.weight, current.rpe, current.reps),
-    });
+  if (result === null) {
+    result = await VariablesQueries.recentPrsByUserId(user_id);
+
+    for (let i = 0; i < result.length; i++) {
+      const current = result[i];
+      mapped.push({
+        ...current,
+        e1rm: calculateE1RM(current.weight, current.rpe, current.reps),
+      });
+    }
+
+    await redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(mapped), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: mapped,
+    data: mapped ?? result,
   });
 }
