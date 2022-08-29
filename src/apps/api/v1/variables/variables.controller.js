@@ -132,10 +132,10 @@ export async function getRecentPrs(req, res) {
 
   // check inside cache
   let result = JSON.parse(await redis.get(`user-id-${user_id}-recent-prs`));
-  let mapped = [];
 
   if (result === null) {
     result = await VariablesQueries.recentPrsByUserId(user_id);
+    let mapped = [];
 
     for (let i = 0; i < result.length; i++) {
       const current = result[i];
@@ -145,13 +145,15 @@ export async function getRecentPrs(req, res) {
       });
     }
 
-    await redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(mapped), 'EX', 24 * 60 * 60);
+    result = mapped;
+
+    await redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: mapped ?? result,
+    data: result,
   });
 }

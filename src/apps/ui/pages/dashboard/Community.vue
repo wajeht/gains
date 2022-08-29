@@ -131,7 +131,7 @@ async function getSessions() {
             </div>
           </div>
 
-          <lazy-component v-for="(log, index) in s.logs" :key="`key-video-details${log?.id}`">
+          <span v-for="(log, index) in s.logs" :key="`key-video-details${log?.id}`">
             <!-- log -->
             <span v-if="s.logs?.currentLogStep === index">
               <!-- video -->
@@ -241,7 +241,7 @@ async function getSessions() {
                 </span>
               </div>
             </span>
-          </lazy-component>
+          </span>
         </div>
       </div>
     </div>

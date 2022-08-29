@@ -16,7 +16,6 @@ import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import tooltip from './tool-tip.vue.js';
 import FontAwesomeIcon from './font-awesome.vue.js';
 import { Chart, registerables } from 'chart.js';
-import VueLazyload from '@jambonn/vue-lazyload';
 
 const app = createApp(App);
 const pinia = createPinia(piniaPluginPersistedstate);
@@ -34,16 +33,6 @@ app.config.devtools = true;
 app.use(autoAnimatePlugin);
 app.directive('tooltip', tooltip);
 app.component('font-awesome-icon', FontAwesomeIcon);
-
-app.use(VueLazyload, {
-  lazyComponent: true,
-  lazyImage: true,
-  preLoad: 1.3,
-  error: false,
-  loading: new URL('./assets/images/loading.svg', import.meta.url).href,
-  attempt: 1,
-  listenEvents: ['scroll'],
-});
 
 // --- init auth state on app starts --
 const userStore = useUserStore();
