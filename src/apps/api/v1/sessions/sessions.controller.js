@@ -97,6 +97,10 @@ export async function getUserSessions(req, res) {
     currentPage: currentPage ?? null,
   };
 
+  if (pagination.currentPage > 1) {
+    const deleted = await redis.del(`user-id-${user_id}-sessions`);
+  }
+
   let sessions = JSON.parse(await redis.get(`user-id-${user_id}-sessions`));
 
   if (sessions === null) {
