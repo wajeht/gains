@@ -4,6 +4,7 @@ import logger from '../../../../utils/logger.js';
 import { omit } from 'lodash-es';
 import CustomError from '../../api.errors.js';
 import db from '../../../../database/db.js';
+import redis from '../../../../utils/redis.js';
 
 /**
  * It creates a session for a user
@@ -12,9 +13,11 @@ import db from '../../../../database/db.js';
  */
 export async function postCreateSession(req, res) {
   const body = req.body;
+  const { user_id } = req.body;
   const created = await SessionQueries.createASession(body);
 
   if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a session for for  User ID: ${body.user_id}!`); // prettier-ignore
+  const deletedCacheSessions = await redis.del(`user-id-${user_id}-sessions`);
 
   logger.info(`UserID: ${body.user_id} has created a SessionID: ${created[0].id}`);
 
@@ -91,7 +94,12 @@ export async function getUserSessions(req, res) {
     currentPage: currentPage ?? null,
   };
 
-  const sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);
+  let sessions = JSON.parse(await redis.get(`user-id-${user_id}-sessions`));
+
+  if (sessions === null) {
+    sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);
+    const setSessions = await redis.set(`user-id-${user_id}-sessions`, JSON.stringify(sessions));
+  }
 
   // if (!sessions.data.length) throw new CustomError.BadRequestError(`There are no sessions available for user id ${user_id}!`); // prettier-ignore
 

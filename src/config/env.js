@@ -73,3 +73,12 @@ export const admin = {
   username: process.env.ADMIN_USERNAME,
   password: process.env.ADMIN_PASSWORD,
 };
+
+/* Exporting the redis object. */
+export const REDIS = {
+  port: process.env.REDIS_PORT,
+  host: process.env.REDIS_HOST,
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
+  db: process.env.REDIS_DB,
+};
