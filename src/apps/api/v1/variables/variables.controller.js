@@ -61,7 +61,19 @@ export async function getChangelogs(req, res) {
     });
   }
 
-  const changeLogsInHTMLFormat = marked.parse(changelogs);
+  const user_id = req.user.user_id;
+  let changeLogsInHTMLFormat = JSON.parse(await redis.get(`user-id-${user_id}-changelogs`));
+
+  if (changeLogsInHTMLFormat === null) {
+    changeLogsInHTMLFormat = marked.parse(changelogs);
+
+    const cache = await redis.set(
+      `user-id-${user_id}-changelogs`,
+      JSON.stringify(changeLogsInHTMLFormat),
+      'EX',
+      24 * 60 * 60,
+    );
+  }
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
