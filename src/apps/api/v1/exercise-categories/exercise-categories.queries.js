@@ -26,6 +26,7 @@ export async function getExerciseCategoriesByUserId(uid) {
       ON e.exercise_category_id = ec.id
     WHERE (
       ec.deleted = false
+      and e.deleted = false
       and ec.user_id = ?
     )
     GROUP BY ec.id
