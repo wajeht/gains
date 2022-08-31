@@ -13,8 +13,9 @@
 
         <!-- rpe -->
         <div class="list-group">
-          <router-link
+          <span
             to="/dashboard/tools/calculators/rpe-calculator"
+            style="background: #f1f1f1"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -26,11 +27,12 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </router-link>
+          </span>
 
           <!-- plate loader -->
-          <router-link
+          <span
             to="/dashboard/tools/calculators/plate-calculator"
+            style="background: #f1f1f1"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -40,7 +42,7 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </router-link>
+          </span>
 
           <!-- 1rm -->
           <router-link
@@ -64,8 +66,9 @@
           </router-link>
 
           <!-- attempt  -->
-          <router-link
+          <span
             to="/dashboard/tools/calculators/attempt-selection-calculator"
+            style="background: #f1f1f1"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -77,7 +80,7 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </router-link>
+          </span>
         </div>
       </div>
 
@@ -93,7 +96,7 @@
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Average Intensity</h6>
-                <p class="mb-0 opacity-75 fw-light">
+                <p class="mb-0 opacity-75">
                   Lifts with average intensity over a month period of time.
                 </p>
               </div>
@@ -109,7 +112,7 @@
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Maxes Over Time</h6>
-                <p class="mb-0 opacity-75 fw-light">
+                <p class="mb-0 opacity-75">
                   Show all the lifts that significant improved over a month period of time.
                 </p>
               </div>
@@ -125,11 +128,9 @@
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Lifts with RPE 8 or Higher</h6>
-                <p class="mb-0 opacity-75 fw-light">
-                  Lifts with rpe 8 or higher that leads into 1RM.
-                </p>
+                <p class="mb-0 opacity-75">Lifts with rpe 8 or higher that leads into 1RM.</p>
               </div>
-              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              <!-- <small class=" opacity-50 text-nowrap">v1</small> -->
             </div>
           </span>
 
@@ -153,8 +154,9 @@
         <h5><i class="bi bi-wrench"></i> Others</h5>
         <div class="list-group">
           <!-- bodyweight -->
-          <router-link
+          <span
             to="/dashboard/tools/others/bodyweight-tracker"
+            style="background: #f1f1f1"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -166,11 +168,12 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </router-link>
+          </span>
 
           <!-- calories -->
-          <router-link
+          <span
             to="/dashboard/tools/others/calories-tracker"
+            style="background: #f1f1f1"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -182,11 +185,12 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </router-link>
+          </span>
 
           <!-- recovery -->
-          <router-link
+          <span
             to="/dashboard/tools/others/recovery"
+            style="background: #f1f1f1"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -196,11 +200,12 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </router-link>
+          </span>
 
           <!-- qr codes -->
-          <router-link
+          <span
             to="/dashboard/tools/others/access-codes"
+            style="background: #f1f1f1"
             class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
@@ -210,7 +215,7 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </router-link>
+          </span>
         </div>
       </div>
     </div>
