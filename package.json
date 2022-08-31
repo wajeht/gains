@@ -99,6 +99,7 @@
     "pinia-plugin-persistedstate": "^1.6.1",
     "pino": "^8.1.0",
     "pino-pretty": "^8.1.0",
+    "read-pkg": "^7.1.0",
     "request-ip": "^3.0.2",
     "shelljs": "^0.8.5",
     "supertest": "^6.2.3",

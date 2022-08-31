@@ -14,6 +14,7 @@ const useAppStore = defineStore({
         toggle: true,
         label: 'lbs',
       },
+      appVersion: null,
     };
   },
   getters: {
@@ -42,7 +43,7 @@ const useAppStore = defineStore({
   persist: {
     id: 'app',
     storage: window.localStorage,
-    paths: ['numberOfSessionsPerWeek', 'unit'],
+    paths: ['numberOfSessionsPerWeek', 'unit', 'appVersion'],
   },
 });
 

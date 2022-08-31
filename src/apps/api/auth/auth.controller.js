@@ -9,6 +9,7 @@ import CustomError from '../api.errors.js';
 import { red } from '../../../utils/rainbow-log.js';
 import { env, domain, jwt_secret } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
+import pkg from '../../../utils/pkg.js';
 
 /**
  * It takes in a request and a response object, and returns a JSON object with a token
@@ -81,6 +82,7 @@ export async function postLogin(req, res) {
         // token,
       },
     ],
+    appVersion: pkg.version,
   });
 }
 

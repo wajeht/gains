@@ -1,4 +1,5 @@
 <script setup>
+import DashboardHeader from '../../../components/dashboard/DashboardHeader.vue';
 import useAppStore from '../../../store/app.store.js';
 const appStore = useAppStore();
 
@@ -206,7 +207,12 @@ function clearAndDismissModal(modalId) {
           <!-- version -->
           <small>
             Version:
-            <a href="#" class="link-secondary text-decoration-none" target="_blank">1.0.0</a>
+            <router-link
+              class="link-secondary text-decoration-none"
+              to="/dashboard/settings/others/changelogs"
+            >
+              {{ appStore.appVersion }}
+            </router-link>
           </small>
 
           <!-- copyright -->
@@ -231,13 +237,3 @@ function clearAndDismissModal(modalId) {
     </div>
   </div>
 </template>
-
-<script>
-import DashboardHeader from '../../../components/dashboard/DashboardHeader.vue';
-
-export default {
-  components: {
-    DashboardHeader,
-  },
-};
-</script>
