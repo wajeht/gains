@@ -190,7 +190,7 @@ async function postAComment() {
         <!-- video -->
         <div class="card shadow-sm border">
           <!-- title -->
-          <div class="d-flex justify-content-between card-header">
+          <div class="d-flex justify-content-between card-header text-truncate">
             <!-- right -->
             <div>
               <img
@@ -208,7 +208,7 @@ async function postAComment() {
             <!-- left -->
             <div class="d-flex justify-content-between gap-3 text-muted fw-light">
               <!-- session name -->
-              <span>
+              <span class="d-inline-block text-truncate" style="max-width: 15rem">
                 <router-link
                   v-if="userStore.user.id == currentSessionDetails.user_id"
                   :to="`/dashboard/sessions/${currentSessionDetails.id}`"
