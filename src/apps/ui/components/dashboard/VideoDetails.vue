@@ -206,13 +206,13 @@ async function postAComment() {
             </div>
 
             <!-- left -->
-            <div class="d-flex justify-content-between gap-3">
+            <div class="d-flex justify-content-between gap-3 text-muted fw-light">
               <!-- session name -->
               <span>
                 <router-link
                   v-if="userStore.user.id == currentSessionDetails.user_id"
                   :to="`/dashboard/sessions/${currentSessionDetails.id}`"
-                  class="link-dark text-decoration-none"
+                  class="link-secondary text-decoration-none"
                   >{{ currentSessionDetails.name }}</router-link
                 >
                 <span v-else>
@@ -322,7 +322,8 @@ async function postAComment() {
                     v-if="userStore.user.id === currentSessionDetails.user_id"
                     class="link-secondary text-decoration-none"
                     :to="`/dashboard/sessions/${currentSessionDetails.id}`"
-                    ><i class="bi bi-journal-text"></i>
+                  >
+                    <i class="bi bi-journal-text"></i>
                     {{ currentSessionDetails.id }}
                   </router-link>
                 </small>

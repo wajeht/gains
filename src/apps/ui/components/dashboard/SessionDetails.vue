@@ -1070,18 +1070,18 @@ function clearAndDismissDeleteALogModal() {
                   <!-- danger -->
                   <!-- prettier-ignore -->
                   <small
-                v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today"
-                class="text-warning">
-                <font-awesome-icon icon="fa-refresh" class="me-1" /> in progress
-              </small>
+                    v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') === today"
+                    class="text-warning">
+                    <font-awesome-icon icon="fa-refresh" class="me-1" /> in progress
+                  </small>
 
                   <!-- danger -->
                   <!-- prettier-ignore -->
                   <small
-                v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today"
-                class="text-danger">
-                <i class="bi bi-exclamation-triangle-fill text-danger"></i> incomplete
-              </small>
+                    v-if="currentSessionDetails.end_date === null && dayjs(currentSessionDetails.start_date).format('YYYY/MM/DD') < today"
+                    class="text-danger">
+                    <i class="bi bi-exclamation-triangle-fill text-danger"></i> incomplete
+                  </small>
                 </span>
 
                 <!-- videos view -->
@@ -1116,7 +1116,12 @@ function clearAndDismissDeleteALogModal() {
                   <!-- left -->
                   <span class="d-flex justify-content-between align-items-center gap-2 mb-0">
                     <!-- title -->
-                    <h6 class="card-title m-0 p-0">{{ index + 1 }}. {{ log.name }}</h6>
+                    <router-link
+                      class="link-dark text-decoration-none"
+                      :to="`/dashboard/exercises/${log.exercise_id}`"
+                    >
+                      <h6 class="card-title m-0 p-0">{{ index + 1 }}. {{ log.name }}</h6>
+                    </router-link>
 
                     <!-- sets, volume, and other info -->
                     <small
