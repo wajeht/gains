@@ -71,18 +71,25 @@ async function getUserExerciseByCategoryId() {
       </div>
 
       <!-- categories -->
-      <div class="list-group">
-        <router-link
-          v-for="(category, i) in categories"
-          :to="`/dashboard/exercises/${category.id}`"
-          class="list-group-item list-group-item-action d-flex justify-content-between py-3"
-        >
-          <!-- left -->
-          <h6 class="mb-0">{{ category.name }}</h6>
+      <div v-if="categories.length">
+        <!-- title -->
+        <h5>
+          <font-awesome-icon icon="fa-dumbbell" class="p-0 m-0" />
+          {{ categories[0]?.category_name }}
+        </h5>
+        <div class="list-group">
+          <router-link
+            v-for="(category, i) in categories"
+            :to="`/dashboard/exercises/${category.id}`"
+            class="list-group-item list-group-item-action d-flex justify-content-between py-3"
+          >
+            <!-- left -->
+            <h6 class="mb-0">{{ category.name }}</h6>
 
-          <!-- right -->
-          <!-- <small class="opacity-50 inline-block">x</small> -->
-        </router-link>
+            <!-- right -->
+            <!-- <small class="opacity-50 inline-block">x</small> -->
+          </router-link>
+        </div>
       </div>
     </div>
   </div>

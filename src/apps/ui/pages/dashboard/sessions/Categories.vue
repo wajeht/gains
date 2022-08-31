@@ -315,7 +315,9 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Exercises' }"
                 to="/dashboard/sessions/exercises"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5>
+                <h5 class="mb-0">
+                  <font-awesome-icon icon="fa-dumbbell" class="p-0 m-0" /> Exercises
+                </h5>
               </router-link>
             </li>
             <li class="nav-item">
@@ -324,7 +326,7 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Categories' }"
                 to="/dashboard/sessions/categories"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5>
+                <h5 class="mb-0"><i class="bi bi-tags-fill"></i> Categories</h5>
               </router-link>
             </li>
             <li class="nav-item">
@@ -333,7 +335,7 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Blocks' }"
                 to="/dashboard/sessions/blocks"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5>
+                <h5 class="mb-0"><i class="bi bi-bricks"></i> Blocks</h5>
               </router-link>
             </li>
           </ul>

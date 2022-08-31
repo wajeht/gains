@@ -24,6 +24,7 @@ import { faBroom } from '@fortawesome/free-solid-svg-icons';
 import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { faHomeUser } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -48,5 +49,6 @@ library.add(faBroom);
 library.add(faUserGroup);
 library.add(faHomeUser);
 library.add(faBars);
+library.add(faDumbbell);
 
 export default FontAwesomeIcon;

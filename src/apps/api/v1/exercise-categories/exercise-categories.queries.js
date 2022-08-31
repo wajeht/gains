@@ -90,7 +90,12 @@ export function getExerciseCategoriesById(ecid) {
  */
 export function getExercisesByExerciseCategoryId(ecid) {
   return db
-    .select('*', 'exercises.name as name', 'exercises.id as id')
+    .select(
+      '*',
+      'exercises.name as name',
+      'exercises.id as id',
+      'exercise_categories.name as category_name',
+    )
     .from('exercises')
     .innerJoin('exercise_categories', 'exercises.exercise_category_id', 'exercise_categories.id')
     .where({ 'exercise_categories.id': ecid });
