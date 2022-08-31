@@ -132,6 +132,19 @@
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
           </span>
+
+          <!-- blocks -->
+          <router-link
+            to="/dashboard/sessions/blocks"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Blocks review</h6>
+                <p class="mb-0 opacity-75">View volume dosage and lifts data of blocks</p>
+              </div>
+            </div>
+          </router-link>
         </div>
       </div>
 
