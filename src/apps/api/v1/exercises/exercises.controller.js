@@ -80,7 +80,7 @@ export async function getExercises(req, res) {
     const userExercisesByCategory =
       await ExerciseCategoriesQueries.getExercisesByExerciseCategoryId(ecid);
 
-    if (!userExercisesByCategory.length) throw new CustomError.BadRequestError(`There are no exercises available for category id ${ecid}!`); // prettier-ignore
+    // if (!userExercisesByCategory.length) throw new CustomError.BadRequestError(`There are no exercises available for category id ${ecid}!`); // prettier-ignore
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
