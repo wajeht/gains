@@ -1,7 +1,21 @@
 <script setup>
 import DashboardHeader from '../../../components/dashboard/DashboardHeader.vue';
 import useAppStore from '../../../store/app.store.js';
+import useUserSore from '../../../store/user.store.js';
+import api from '../../../../../utils/fetch-with-style.js';
+
+import { ref, reactive } from 'vue';
+
+const clearAllCacheLoading = ref(false);
+
+const alert = reactive({
+  type: '',
+  msg: '',
+});
+
 const appStore = useAppStore();
+
+const userStore = useUserSore();
 
 async function deleteAllData() {}
 
@@ -10,6 +24,36 @@ async function downloadData() {}
 function clearAndDismissModal(modalId) {
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(modalId));
   modal.hide();
+}
+
+async function clearAllCache() {
+  try {
+    clearAllCacheLoading.value = true;
+    const res = await api.post(`/api/v1/cache/user/${userStore.user.id}`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    clearAllCacheLoading.value = false;
+
+    alert.type = 'success';
+    alert.msg = 'Cache has been cleared!';
+  } catch (e) {
+    clearAllCacheLoading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 </script>
 
@@ -20,6 +64,11 @@ function clearAndDismissModal(modalId) {
   <!-- settings -->
   <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="flex flex-column justify-content-between my-3">
+      <!-- alert -->
+      <div v-if="alert.type" :class="`alert-${alert.type}`" class="alert">
+        <span>{{ alert.msg }}</span>
+      </div>
+
       <!-- setting items -->
       <div class="d-flex flex-column gap-3">
         <!-- User -->
@@ -76,8 +125,8 @@ function clearAndDismissModal(modalId) {
                   <h6 class="mb-0">
                     Delete your account
                     <!-- <small class="bg-danger text-white px-1 rounded" style="padding-bottom: 2.5px"
-                      >warning</small
-                    > -->
+                        >warning</small
+                      > -->
                   </h6>
                   <p class="mb-0 opacity-75">This action cannot be revert back to normal state!</p>
                 </div>
@@ -115,6 +164,35 @@ function clearAndDismissModal(modalId) {
                   <p class="mb-0 opacity-75">Export all of your data via CSV format!</p>
                 </div>
                 <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              </div>
+            </span>
+
+            <!-- clear all cache -->
+            <span
+              @click="clearAllCache()"
+              :style="{
+                background: clearAllCacheLoading ? '#f1f1f1' : '',
+                cursor: !clearAllCacheLoading ? 'pointer' : '',
+              }"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+              :class="{ disabled: clearAllCacheLoading }"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">Clear all cache</h6>
+                  <p class="mb-0">Latest application data without cache</p>
+                </div>
+
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+
+                <!-- loading -->
+                <div
+                  v-if="clearAllCacheLoading"
+                  class="spinner-border spinner-border-sm text-muted"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </div>
             </span>
 
