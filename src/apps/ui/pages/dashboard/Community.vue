@@ -115,13 +115,13 @@ async function getSessions() {
             </div>
 
             <!-- right -->
-            <div class="d-flex justify-content-between gap-3">
+            <div class="d-flex justify-content-between gap-3 fw-light">
               <!-- session name -->
               <span>
                 <router-link
                   v-if="userStore.user.id == s.user_id"
                   :to="`/dashboard/sessions/${s.id}`"
-                  class="link-dark text-decoration-none"
+                  class="link-secondary text-decoration-none"
                   >{{ s.name }}</router-link
                 >
                 <span v-else>

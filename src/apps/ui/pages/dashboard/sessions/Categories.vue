@@ -315,8 +315,8 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Exercises' }"
                 to="/dashboard/sessions/exercises"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5>
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -324,8 +324,8 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Categories' }"
                 to="/dashboard/sessions/categories"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5>
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -333,8 +333,8 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Blocks' }"
                 to="/dashboard/sessions/blocks"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5>
+              </router-link>
             </li>
           </ul>
 
@@ -343,7 +343,7 @@ function clearDataAndDismissModal() {
             <router-link
               v-for="category in categories"
               :key="`key-${category.id}`"
-              to=""
+              :to="`/dashboard/categories/${category.id}`"
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">

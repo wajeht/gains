@@ -443,8 +443,7 @@ function clearDataAndDismissModal() {
                 </div>
               </div>
               <small class="opacity-50 d-flex flex-column gap-2">
-                <!-- <span>{{ dayjs(block.start_date).format('YY/MM/DD') }}</span> -->
-                <!-- <span>{{ dayjs(block.end_date).format('YY/MM/DD') }}</span> -->
+                {{ exercise.category_name }}
               </small>
             </router-link>
           </div>

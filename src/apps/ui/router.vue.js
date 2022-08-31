@@ -33,6 +33,7 @@ import Exercises from './pages/dashboard/sessions/Exercises.vue';
 
 import Exercise from './pages/dashboard/Exercise.vue';
 import Block from './pages/dashboard/Block.vue';
+import Category from './pages/dashboard/Category.vue';
 
 // --- settings ---
 import Settings from './pages/dashboard/settings/Settings.vue';
@@ -446,6 +447,18 @@ const routes = [
     component: Block,
     props: (route) => ({
       block_id: Number(route.params.block_id),
+    }),
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/categories/:category_id',
+    name: 'Category',
+    component: Category,
+    props: (route) => ({
+      category_id: Number(route.params.category_id),
     }),
     meta: {
       layout: 'DashboardLayout',

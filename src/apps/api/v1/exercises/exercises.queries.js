@@ -95,11 +95,13 @@ export async function getExerciseHistoryByExerciseId(
  */
 export function getExerciseByUserId(uid, options = { orderBy: 'id', direction: 'desc' }) {
   return db
-    .select('*')
-    .from('exercises')
-    .where({ user_id: uid })
-    .andWhere({ deleted: false })
-    .orderBy(options.orderBy, options.direction);
+    .select('e.*', 'ec.name as category_name')
+    .from('exercises as e')
+    .innerJoin('exercise_categories as ec', 'ec.id', 'e.id')
+    .where({ 'e.user_id': uid })
+    .andWhere({ 'e.deleted': false })
+    .andWhere({ 'ec.deleted': false })
+    .orderBy(`e.${options.orderBy}`, options.direction);
 }
 
 /**
