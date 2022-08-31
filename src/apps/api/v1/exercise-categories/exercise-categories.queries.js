@@ -48,15 +48,21 @@ export async function getAllExerciseCategoriesByUserId(uid) {
   // only return categories which have exercises, an hide the rest
   const { rows } = await db.raw(
     `
-    SELECT
-	    *
-    FROM
-	    exercise_categories ec
-    WHERE (
+    select
+      ec.*,
+      count(e.id) as exercises_counts
+    from
+      exercise_categories ec
+      full join exercises e on e.exercise_category_id = ec.id
+    where (
       ec.deleted = false
+      -- and e.deleted = false
       and ec.user_id = ?
     )
-    ORDER BY ec.id DESC
+    group by
+      ec.id
+    order by
+      ec.id desc
   `,
     [uid],
   );

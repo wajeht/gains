@@ -6,7 +6,7 @@ import db from '../../../../database/db.js';
  * @returns An array of objects.
  */
 export function getAllExercises() {
-  return db.select('*').from('exercises').orderBy('id', 'desc');
+  return db.select('*').from('exercises').where({ deleted: false }).orderBy('id', 'desc');
 }
 
 /**
@@ -97,7 +97,7 @@ export function getExerciseByUserId(uid, options = { orderBy: 'id', direction: '
   return db
     .select('e.*', 'ec.name as category_name')
     .from('exercises as e')
-    .innerJoin('exercise_categories as ec', 'ec.id', 'e.id')
+    .fullOuterJoin('exercise_categories as ec', 'ec.id', 'e.exercise_category_id')
     .where({ 'e.user_id': uid })
     .andWhere({ 'e.deleted': false })
     .andWhere({ 'ec.deleted': false })

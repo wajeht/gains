@@ -431,13 +431,13 @@ function clearDataAndDismissModal() {
           <!-- individual blocks -->
           <div class="list-group" v-auto-animate>
             <router-link
-              v-for="exercise in exercises"
+              v-for="(exercise, i) in exercises"
               :key="`key-${exercise.id}`"
               :to="`/dashboard/exercises/${exercise.id}`"
               class="list-group-item list-group-item-action d-flex justify-content-between py-3"
             >
               <!-- left -->
-              <h6 class="mb-0">{{ exercise.name }}</h6>
+              <h6 class="mb-0">{{ i + 1 }}. {{ exercise.name }}</h6>
 
               <!-- right -->
               <small class="opacity-50 inline-block">{{ exercise.category_name }}</small>
