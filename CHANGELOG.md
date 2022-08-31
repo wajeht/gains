@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/allkindsofgains/gains/compare/v0.0.2...v0.0.3) (2022-08-31)
+
+### Features
+
+- added 24 hours cache ([#188](https://github.com/allkindsofgains/gains/issues/188)) ([05e8acd](https://github.com/allkindsofgains/gains/commit/05e8acdb516983c4ac553c0c32b8e34119e9a3d9))
+- added a api to clear cache ([#191](https://github.com/allkindsofgains/gains/issues/191)) ([4059619](https://github.com/allkindsofgains/gains/commit/4059619c195eee7e3501e05dfdc39ffb4ce19c66))
+- added more data in exercise history and avg sleep function ([#186](https://github.com/allkindsofgains/gains/issues/186)) ([30a3ff4](https://github.com/allkindsofgains/gains/commit/30a3ff4cda775bb8aa8481357e7cb25d4472ca28))
+- added one rep max calculator ([#187](https://github.com/allkindsofgains/gains/issues/187)) ([1883c1a](https://github.com/allkindsofgains/gains/commit/1883c1a2b3b0303374e6a67183e198f4a36911bd))
+- added recovery chart/api ([#183](https://github.com/allkindsofgains/gains/issues/183)) ([9672645](https://github.com/allkindsofgains/gains/commit/9672645839e856c58b3629a8fc72309824707a42))
+- added redis for community-query ([e8466dc](https://github.com/allkindsofgains/gains/commit/e8466dc18c674dcae6b472c8ac08fc5175f4a165))
+- added redis to cache large queries ([#190](https://github.com/allkindsofgains/gains/issues/190)) ([2dbabe2](https://github.com/allkindsofgains/gains/commit/2dbabe2d8674508745b155e0cf3da20db4a2caad))
+- added script to add auto index on db call on server start ([#189](https://github.com/allkindsofgains/gains/issues/189)) ([fe01241](https://github.com/allkindsofgains/gains/commit/fe012411bd248701745972de14968b87b18f3c2f))
+- added video download option ([#184](https://github.com/allkindsofgains/gains/issues/184)) ([f785cfb](https://github.com/allkindsofgains/gains/commit/f785cfb317135b996d1035af34aca57a8165784f))
+- cache user state queries ([e1e75ee](https://github.com/allkindsofgains/gains/commit/e1e75ee9268d68555d7b4e4836228baae81d481b))
+- enable lading spinner for lazy lading iamge ([cf17682](https://github.com/allkindsofgains/gains/commit/cf17682d681752a7ca3564483e85ee8d5160f8c0))
+- **exercise-history:** added interactive chart to display e1rm ([#182](https://github.com/allkindsofgains/gains/issues/182)) ([f373376](https://github.com/allkindsofgains/gains/commit/f373376aed4c7c6c268e929fc33f6f370c6ddf31))
+- export exercise history table to CSV ([#185](https://github.com/allkindsofgains/gains/issues/185)) ([c60297c](https://github.com/allkindsofgains/gains/commit/c60297c1881199712e33feb6249c46f9707ab640))
+- now you can clear cache ([2b8898e](https://github.com/allkindsofgains/gains/commit/2b8898e51a7efc22b2d5d1ef639aa48ee81d2a33))
+- only show changeloag after api call ([8ea5815](https://github.com/allkindsofgains/gains/commit/8ea58152253aad2260e7509a38687cbaf40a389e))
+- scaffold exercise history with chart ([#180](https://github.com/allkindsofgains/gains/issues/180)) ([3db3349](https://github.com/allkindsofgains/gains/commit/3db334975dac85f2a469559f65dc1faabe3ce8b0))
+- scaffold pagination functionality for exercise history card ([#181](https://github.com/allkindsofgains/gains/issues/181)) ([0366071](https://github.com/allkindsofgains/gains/commit/036607184784bbda7b62844ac4f2b4651710bada))
+- udpate node engine ([f1b2cf7](https://github.com/allkindsofgains/gains/commit/f1b2cf7e3abb7ca18e931c5c18e75979e3acefbe))
+- udpate node engine ([2038706](https://github.com/allkindsofgains/gains/commit/2038706780c327eb41615634b1f473a2d1662f33))
+
+### Bug Fixes
+
+- added max guard in input number type ([d4a94f2](https://github.com/allkindsofgains/gains/commit/d4a94f213fb8776b90b163916bb1b9891cfe2005))
+- clear pagination cache ([3c41429](https://github.com/allkindsofgains/gains/commit/3c41429bfb7e0dd1d2121064018433b9cd26dbe1))
+- display real app version ([ff38bd7](https://github.com/allkindsofgains/gains/commit/ff38bd7139c84f26edd71d428d7637c2794db7d3))
+- fixed a css bug between exercise history title ([747bb2f](https://github.com/allkindsofgains/gains/commit/747bb2f5e28f8b7fe77ef90826b7ddb475baa575))
+- fixed download video problem after adding empty session ([ee2b486](https://github.com/allkindsofgains/gains/commit/ee2b4861ae4280a238b9627cb477338474b74e75))
+- fixed recent-prs not returning from cache and remove vue lazy load images ([3d299ee](https://github.com/allkindsofgains/gains/commit/3d299ee25c4cb4d6171b5d463156d6fe1e2da3c3))
+- remove pg-native causing err on deployment ([0ed152c](https://github.com/allkindsofgains/gains/commit/0ed152c69ed663fca9064e2ac4d20aa807b11f59))
+
 ### 0.0.2 (2022-08-18)
 
 ### Features

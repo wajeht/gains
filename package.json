@@ -1,6 +1,6 @@
 {
   "name": "gains",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The best way to track your workouts",
   "main": "server.js",
   "type": "module",
