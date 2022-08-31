@@ -256,8 +256,8 @@ function clearDataAndDismissModal() {
                         to="/dashboard/sessions/categories?model=true"
                         >Click here!</router-link
                       >
-                      to add exercise categories!</small
-                    >
+                      to add exercise categories!
+                    </small>
                   </div>
                 </div>
 
@@ -405,8 +405,8 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Exercises' }"
                 to="/dashboard/sessions/exercises"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5>
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -414,8 +414,8 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Categories' }"
                 to="/dashboard/sessions/categories"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5>
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -423,29 +423,24 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Blocks' }"
                 to="/dashboard/sessions/blocks"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5>
+              </router-link>
             </li>
           </ul>
 
           <!-- individual blocks -->
           <div class="list-group" v-auto-animate>
             <router-link
-              v-for="exercise in exercises"
+              v-for="(exercise, i) in exercises"
               :key="`key-${exercise.id}`"
-              to=""
-              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+              :to="`/dashboard/exercises/${exercise.id}`"
+              class="list-group-item list-group-item-action d-flex justify-content-between py-3"
             >
-              <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                  <h6 class="mb-0">{{ exercise.name }}</h6>
-                  <!-- <p class="mb-0 opacity-75">{{ block.description }}</p> -->
-                </div>
-              </div>
-              <small class="opacity-50 d-flex flex-column gap-2">
-                <!-- <span>{{ dayjs(block.start_date).format('YY/MM/DD') }}</span> -->
-                <!-- <span>{{ dayjs(block.end_date).format('YY/MM/DD') }}</span> -->
-              </small>
+              <!-- left -->
+              <h6 class="mb-0">{{ i + 1 }}. {{ exercise.name }}</h6>
+
+              <!-- right -->
+              <small class="opacity-50 inline-block">{{ exercise.category_name }}</small>
             </router-link>
           </div>
         </div>

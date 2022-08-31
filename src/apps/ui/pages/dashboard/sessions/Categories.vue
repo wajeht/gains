@@ -315,8 +315,8 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Exercises' }"
                 to="/dashboard/sessions/exercises"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Exercises</h5>
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -324,8 +324,8 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Categories' }"
                 to="/dashboard/sessions/categories"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Categories</h5>
+              </router-link>
             </li>
             <li class="nav-item">
               <router-link
@@ -333,29 +333,26 @@ function clearDataAndDismissModal() {
                 :class="{ active: $route.name === 'Blocks' }"
                 to="/dashboard/sessions/blocks"
               >
-                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5></router-link
-              >
+                <h5 class="mb-0"><i class="bi bi-person-fill"></i> Blocks</h5>
+              </router-link>
             </li>
           </ul>
 
           <!-- individual blocks -->
           <div class="list-group" v-auto-animate>
             <router-link
-              v-for="category in categories"
+              v-for="(category, i) in categories"
               :key="`key-${category.id}`"
-              to=""
-              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+              :to="`/dashboard/categories/${category.id}`"
+              class="list-group-item list-group-item-action d-flex justify-content-between py-3"
             >
-              <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                  <h6 class="mb-0">{{ category.name }}</h6>
-                  <!-- <p class="mb-0 opacity-75">{{ block.description }}</p> -->
-                </div>
-              </div>
-              <small class="opacity-50 d-flex flex-column gap-2">
-                <!-- <span>{{ dayjs(block.start_date).format('YY/MM/DD') }}</span> -->
-                <!-- <span>{{ dayjs(block.end_date).format('YY/MM/DD') }}</span> -->
-              </small>
+              <!-- left -->
+              <h6 class="mb-0">{{ i + 1 }}. {{ category.name }}</h6>
+
+              <!-- right -->
+              <small v-if="category.exercises_counts > 0" class="opacity-50 inline-block"
+                >{{ category.exercises_counts }}x</small
+              >
             </router-link>
           </div>
         </div>
