@@ -434,17 +434,13 @@ function clearDataAndDismissModal() {
               v-for="exercise in exercises"
               :key="`key-${exercise.id}`"
               :to="`/dashboard/exercises/${exercise.id}`"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+              class="list-group-item list-group-item-action d-flex justify-content-between py-3"
             >
-              <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                  <h6 class="mb-0">{{ exercise.name }}</h6>
-                  <!-- <p class="mb-0 opacity-75">{{ block.description }}</p> -->
-                </div>
-              </div>
-              <small class="opacity-50 d-flex flex-column gap-2">
-                {{ exercise.category_name }}
-              </small>
+              <!-- left -->
+              <h6 class="mb-0">{{ exercise.name }}</h6>
+
+              <!-- right -->
+              <small class="opacity-50 inline-block">{{ exercise.category_name }}</small>
             </router-link>
           </div>
         </div>
