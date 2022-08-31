@@ -326,7 +326,7 @@ All notable changes to this project will be documented in this file. See [standa
 - fixed returning multiple empy logs on video details ([#179](https://github.com/allkindsofgains/gains/issues/179)) ([10ad066](https://github.com/allkindsofgains/gains/commit/10ad066896abe4b390f34bd45f59ca84e847826c))
 - fixed sessin add button style ([a8282ad](https://github.com/allkindsofgains/gains/commit/a8282ad80e1c782d03f218c134c6d7553230e5c6))
 
-## 0.0.1 (2022-08-08)
+### 0.0.1 (2022-08-08)
 
 ### Features
 

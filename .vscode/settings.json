@@ -66,5 +66,6 @@
     "wajeht",
     "wout",
     "yanlon"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

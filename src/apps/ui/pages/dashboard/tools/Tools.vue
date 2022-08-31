@@ -86,41 +86,52 @@
         <h5><i class="bi bi-table"></i> Reports</h5>
         <div class="list-group">
           <!-- avg -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <span
+            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            style="background: #f1f1f1"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Average Intensity</h6>
-                <p class="mb-0 opacity-75">
+                <p class="mb-0 opacity-75 fw-light">
                   Lifts with average intensity over a month period of time.
                 </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </span>
 
           <!-- maxes -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <span
+            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            style="background: #f1f1f1"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Maxes Over Time</h6>
-                <p class="mb-0 opacity-75">
+                <p class="mb-0 opacity-75 fw-light">
                   Show all the lifts that significant improved over a month period of time.
                 </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </span>
 
           <!-- rpe -->
-          <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+          <span
+            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            style="background: #f1f1f1"
+          >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
                 <h6 class="mb-0">Lifts with RPE 8 or Higher</h6>
-                <p class="mb-0 opacity-75">Lifts with rpe 8 or higher that leads into 1RM.</p>
+                <p class="mb-0 opacity-75 fw-light">
+                  Lifts with rpe 8 or higher that leads into 1RM.
+                </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </a>
+          </span>
         </div>
       </div>
 
@@ -192,6 +203,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import DashboardHeader from '../../../components/dashboard/DashboardHeader.vue';
 export default {

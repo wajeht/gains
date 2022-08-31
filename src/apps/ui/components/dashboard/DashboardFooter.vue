@@ -92,7 +92,8 @@ a:hover {
 .active {
   text-decoration: none;
   color: #191919;
-  border-top: 2px solid #191919;
-  margin-top: -2px;
+  /* border-top: 2px solid #191919;
+  margin-top: -2px; */
+  box-shadow: 0 4px 0 #000 inset;
 }
 </style>
