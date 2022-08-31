@@ -1,3 +1,132 @@
+<script>
+import Or from './Or.vue';
+import useUserStore from '../../store/user.store.js';
+import userAppStore from '../../store/app.store.js';
+import { isMobile } from '../../../../utils/helpers.js';
+import useAppStore from '../../store/app.store.js';
+
+export default {
+  components: {
+    Or,
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      remember_me: false,
+      loading: false,
+      reVerifyMessage: false,
+      signupLink: '/signup',
+      alert: {
+        type: '',
+        msg: '',
+      },
+    };
+  },
+  mounted() {
+    if (isMobile()) this.signupLink = '/dashboard/signup';
+  },
+  methods: {
+    async reSendVerificationEmail() {
+      try {
+        this.alert.type = '';
+        this.alert.type = '';
+        this.loading = true;
+
+        const res = await fetch(`/api/auth/reverify?email=${this.email}`);
+        const json = await res.json();
+
+        if (!res.ok) {
+          this.loading = false;
+          throw json.errors;
+        }
+
+        this.reVerifyMessage = false;
+        this.loading = false;
+        this.alert.type = 'success';
+        this.alert.msg = 'We have sent a new re-verification link to your email!';
+        this.email = '';
+        this.password = '';
+      } catch (e) {
+        this.alert.type = 'danger';
+        this.alert.msg = e.map((cur) => cur.msg).join(' ');
+      }
+    },
+    async handleSubmit() {
+      try {
+        this.loading = true;
+        const userStore = useUserStore();
+        const appStore = useAppStore();
+
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password,
+            remember_me: this.remember_me,
+          }),
+        });
+
+        const json = await res.json();
+
+        if (!res.ok) {
+          this.loading = false;
+          if (json.errors) {
+            throw json.errors;
+          } else {
+            throw json.message;
+          }
+        }
+
+        const [user] = json.data;
+
+        appStore.appVersion = json.appVersion;
+        userStore.isLoggedIn = true;
+        userStore.setUserInfo(
+          user.id,
+          user.username,
+          user.email,
+          user.first_name,
+          user.last_name,
+          user.weight,
+          user.profile_picture_url,
+        );
+
+        this.$router.push({ path: '/dashboard/profile' });
+      } catch (e) {
+        this.loading = false;
+        this.alert.type = 'danger';
+
+        if (Array.isArray(e)) {
+          this.alert.msg = e.map((cur) => cur.msg).join(' ');
+          return;
+        }
+
+        this.alert.msg = e;
+
+        const connectionErrorString =
+          `select * from "users" where "email" = $1 - Connection terminated unexpectedly select * from "users" where "email" = $1 Connection terminated unexpectedly`.split(
+            ' ',
+          );
+        if (this.alert.msg.includes(...connectionErrorString)) {
+          this.alert.msg = 'Woops! I just woke the database up. Please Login again!';
+          return;
+        }
+
+        // resent verification email
+        if (this.alert.msg.includes('verification')) {
+          this.reVerifyMessage = true;
+          this.password = '';
+        }
+      }
+    },
+  },
+};
+</script>
+
 <template>
   <!-- form -->
   <form @submit.prevent="handleSubmit" autocomplete="on">
@@ -119,117 +248,3 @@
     >
   </div>
 </template>
-
-<script>
-import Or from './Or.vue';
-import useUserStore from '../../store/user.store.js';
-import { isMobile } from '../../../../utils/helpers.js';
-
-export default {
-  components: {
-    Or,
-  },
-  data() {
-    return {
-      email: '',
-      password: '',
-      remember_me: false,
-      loading: false,
-      reVerifyMessage: false,
-      signupLink: '/signup',
-      alert: {
-        type: '',
-        msg: '',
-      },
-    };
-  },
-  mounted() {
-    if (isMobile()) this.signupLink = '/dashboard/signup';
-  },
-  methods: {
-    async reSendVerificationEmail() {
-      try {
-        this.alert.type = '';
-        this.alert.type = '';
-        this.loading = true;
-
-        const res = await fetch(`/api/auth/reverify?email=${this.email}`);
-        const json = await res.json();
-
-        if (!res.ok) {
-          this.loading = false;
-          throw json.errors;
-        }
-
-        this.reVerifyMessage = false;
-        this.loading = false;
-        this.alert.type = 'success';
-        this.alert.msg = 'We have sent a new re-verification link to your email!';
-        this.email = '';
-        this.password = '';
-      } catch (e) {
-        this.alert.type = 'danger';
-        this.alert.msg = e.map((cur) => cur.msg).join(' ');
-      }
-    },
-    async handleSubmit() {
-      try {
-        this.loading = true;
-        const userStore = useUserStore();
-
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password,
-            remember_me: this.remember_me,
-          }),
-        });
-
-        const json = await res.json();
-
-        if (!res.ok) {
-          this.loading = false;
-          if (json.errors) {
-            throw json.errors;
-          } else {
-            throw json.message;
-          }
-        }
-
-        const [user] = json.data;
-
-        userStore.isLoggedIn = true;
-        userStore.setUserInfo(
-          user.id,
-          user.username,
-          user.email,
-          user.first_name,
-          user.last_name,
-          user.weight,
-          user.profile_picture_url,
-        );
-
-        this.$router.push({ path: '/dashboard/profile' });
-      } catch (e) {
-        this.loading = false;
-        this.alert.type = 'danger';
-        if (Array.isArray(e)) {
-          this.alert.msg = e.map((cur) => cur.msg).join(' ');
-          return;
-        }
-        this.alert.msg = e;
-
-        // resent verification email
-        if (this.alert.msg.includes('verification')) {
-          this.reVerifyMessage = true;
-          this.password = '';
-        }
-      }
-    },
-  },
-};
-</script>
