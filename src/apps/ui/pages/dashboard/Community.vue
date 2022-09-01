@@ -115,7 +115,10 @@ async function getSessions() {
             </div>
 
             <!-- right -->
-            <div class="d-flex justify-content-between gap-3 fw-light">
+            <div
+              class="d-flex justify-content-between gap-3 fw-light"
+              style="overflow: hidden !important"
+            >
               <!-- session name -->
               <span class="d-inline-block text-truncate" style="max-width: 15rem">
                 <router-link

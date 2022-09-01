@@ -939,7 +939,7 @@ function clearAndDismissDeleteALogModal() {
               <div class="col-8">
                 <!-- title -->
                 <span class="d-flex justify-content-between">
-                  <h5 class="card-title">
+                  <h5 class="card-title" style="overflow: hidden !important">
                     {{ currentSessionDetails.name }}
                   </h5>
 

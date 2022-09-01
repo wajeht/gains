@@ -191,7 +191,7 @@ async function postAComment() {
         <div class="card shadow-sm border">
           <!-- title -->
           <div class="d-flex justify-content-between card-header text-truncate">
-            <!-- right -->
+            <!-- left -->
             <div>
               <img
                 :src="
@@ -205,8 +205,11 @@ async function postAComment() {
               <span>{{ currentSessionDetails.username }}</span>
             </div>
 
-            <!-- left -->
-            <div class="d-flex justify-content-between gap-3 text-muted fw-light">
+            <!-- right -->
+            <div
+              class="d-flex justify-content-between gap-3 text-muted fw-light"
+              style="overflow: hidden !important"
+            >
               <!-- session name -->
               <span class="d-inline-block text-truncate" style="max-width: 15rem">
                 <router-link
