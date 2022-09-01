@@ -1,8 +1,7 @@
 <script setup>
 import api from '../../../../../utils/fetch-with-style.js';
-import { sleep } from '../../../../../utils/helpers.js';
 
-import { nextTick, ref, onMounted, reactive, onUpdated, onUnmounted } from 'vue';
+import { ref, onMounted, reactive, onUnmounted } from 'vue';
 import { pickBy } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -139,32 +138,32 @@ async function addASession() {
   }
 }
 
-async function clearUsersSessionsCache() {
-  try {
-    const user_id = userStore.user.id;
+// async function clearUsersSessionsCache() {
+//   try {
+//     const user_id = userStore.user.id;
 
-    const res = await api.post(`/api/v1/cache/user-id-${user_id}-sessions/clear`);
-    const json = await res.json();
+//     const res = await api.post(`/api/v1/cache/user-id-${user_id}-sessions/clear`);
+//     const json = await res.json();
 
-    if (!res.ok) {
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
-    }
+//     if (!res.ok) {
+//       if (json.errors) {
+//         throw json.errors;
+//       } else {
+//         throw json.message;
+//       }
+//     }
 
-    router.go();
-  } catch (e) {
-    alert.type = 'danger';
-    if (Array.isArray(e)) {
-      alert.msg = e.map((cur) => cur.msg).join(' ');
-      return;
-    } else {
-      alert.msg = e;
-    }
-  }
-}
+//     router.go();
+//   } catch (e) {
+//     alert.type = 'danger';
+//     if (Array.isArray(e)) {
+//       alert.msg = e.map((cur) => cur.msg).join(' ');
+//       return;
+//     } else {
+//       alert.msg = e;
+//     }
+//   }
+// }
 </script>
 
 <template>
@@ -414,12 +413,12 @@ async function clearUsersSessionsCache() {
     </span>
 
     <!-- middle -->
-    <span @click="clearUsersSessionsCache()" class="link-secondary" role="button">
+    <!-- <span @click="clearUsersSessionsCache()" class="link-secondary" role="button">
       <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
         <i class="bi bi-arrow-repeat"></i>
         <span>Clear cache</span>
       </h5>
-    </span>
+    </span> -->
 
     <!-- right -->
     <div class="dropdown">
