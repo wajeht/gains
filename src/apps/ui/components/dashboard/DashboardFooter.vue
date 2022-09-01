@@ -4,74 +4,81 @@ const router = useRouter();
 const route = useRoute();
 </script>
 <template>
-  <div
-    class="position-sticky bottom-0 container d-flex justify-content-between border-top bg-white text-muted"
-    style="z-index: 2"
-  >
-    <!-- Home -->
-    <router-link
-      :class="{ active: $route.name === 'Community' }"
-      class="d-flex flex-column py-3 gap-1"
-      to="/dashboard/community"
-    >
-      <font-awesome-icon icon="user-group" />
-      <span>Community</span>
-    </router-link>
+  <div class="position-sticky bottom-0 container border-top bg-white text-muted" style="z-index: 2">
+    <div class="d-flex flex-row">
+      <!-- Home -->
+      <div class="col">
+        <router-link
+          :class="{ active: $route.name === 'Community' }"
+          class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+          to="/dashboard/community"
+        >
+          <font-awesome-icon icon="user-group" />
+          <span>Community</span>
+        </router-link>
+      </div>
 
-    <!-- Sessions -->
-    <router-link
-      :class="{ active: $route.name === 'Sessions' }"
-      to="/dashboard/sessions"
-      class="d-flex flex-column py-3 gap-1"
-    >
-      <font-awesome-icon icon="calendar-days" />
-      <span>Sessions</span>
-    </router-link>
+      <!-- Sessions -->
+      <div class="col">
+        <router-link
+          :class="{ active: $route.name === 'Sessions' }"
+          to="/dashboard/sessions"
+          class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+        >
+          <font-awesome-icon icon="calendar-days" />
+          <span>Sessions</span>
+        </router-link>
+      </div>
 
-    <!-- profile/videos -->
-    <span>
-      <!-- videos -->
-      <router-link
-        v-if="route.path === '/dashboard/videos'"
-        :class="{ active: $route.name === 'Videos' }"
-        class="d-flex flex-column py-3 gap-1"
-        to="/dashboard/videos"
-      >
-        <font-awesome-icon icon="play" />
-        <span>Videos</span>
-      </router-link>
+      <!-- profile/videos -->
+      <div class="col" v-if="route.path === '/dashboard/videos'">
+        <!-- videos -->
+        <router-link
+          :class="{ active: $route.name === 'Videos' }"
+          class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+          to="/dashboard/videos"
+        >
+          <font-awesome-icon icon="play" />
+          <span>Videos</span>
+        </router-link>
+      </div>
 
       <!-- profile -->
-      <router-link
-        v-else
-        :class="{ active: $route.name === 'Profile' }"
-        class="d-flex flex-column py-3 gap-1"
-        to="/dashboard/profile"
-      >
-        <font-awesome-icon icon="user" />
-        <span>Profile</span>
-      </router-link>
-    </span>
+      <div class="col" v-else>
+        <router-link
+          :class="{ active: $route.name === 'Profile' }"
+          class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+          to="/dashboard/profile"
+        >
+          <font-awesome-icon icon="user" />
+          <span>Profile</span>
+        </router-link>
+      </div>
 
-    <!-- Tools -->
-    <router-link
-      :class="{ active: $route.name === 'Tools' }"
-      to="/dashboard/tools"
-      class="d-flex flex-column py-3 gap-1"
-    >
-      <font-awesome-icon icon="screwdriver-wrench" />
-      <span>Tools</span>
-    </router-link>
+      <!-- Tools -->
+      <div class="col">
+        <router-link
+          :class="{ active: $route.name === 'Tools' }"
+          to="/dashboard/tools"
+          class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+        >
+          <font-awesome-icon icon="screwdriver-wrench" />
+          <span>Tools</span>
+        </router-link>
+      </div>
 
-    <!-- settings -->
-    <router-link
-      :class="{ active: $route.name === 'Settings' }"
-      to="/dashboard/settings"
-      class="d-flex flex-column py-3 gap-1"
-    >
-      <font-awesome-icon icon="gear" />
-      <span>Settings</span>
-    </router-link>
+      <!-- settings -->
+      <div class="col">
+        <router-link
+          :class="{ active: $route.name === 'Settings' }"
+          to="/dashboard/settings"
+          class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+        >
+          <font-awesome-icon icon="gear" />
+          <span>Settings</span>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
