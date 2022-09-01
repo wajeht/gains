@@ -892,6 +892,10 @@ function clearAndDismissDeleteALogModal() {
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('delete-a-log'));
   modal.hide();
 }
+
+function downloadVideo(url) {
+  window.location.href = url;
+}
 </script>
 
 <template>
@@ -1469,14 +1473,14 @@ function clearAndDismissDeleteALogModal() {
                 <!-- right -->
                 <span class="d-flex justify-content-between gap-2">
                   <!-- download video -->
-                  <a
-                    :href="`/api/v1/videos/${log?.videos[0]?.id}/download`"
+                  <button
+                    @click="downloadVideo(`/api/v1/videos/${log?.videos[0]?.id}/download`)"
                     class="btn btn-sm btn-outline-dark"
                     type="button"
                     :class="{ disabled: !log?.videos?.length }"
                   >
                     <i class="bi bi-download"></i>
-                  </a>
+                  </button>
 
                   <!-- history -->
                   <button
