@@ -7,6 +7,18 @@ import express from 'express';
 const variables = express.Router();
 
 /**
+ * GET /api/v1/variables/open-powerlifting?q={q}
+ * @tags variables
+ * @summary search a user in open powerlifting
+ * @param {number} q.query.required - the search text  - application/x-www-form-urlencoded
+ */
+variables.get(
+  '/open-powerlifting',
+  validator(VariablesValidation.getOpenPowerliftingResult),
+  catchAsyncErrors(VariablesController.getOpenPowerliftingResult),
+);
+
+/**
  * GET /api/v1/variables/weekly-weight-in/{user_id}
  * @tags variables
  * @summary get weekly weight of a user

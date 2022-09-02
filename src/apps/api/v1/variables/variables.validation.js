@@ -2,6 +2,18 @@ import { check, param, body, query } from 'express-validator';
 import * as UsersQueries from '../users/users.queries.js';
 
 /* Validating the user_id. */
+export const getOpenPowerliftingResult = [
+  query('q')
+    .trim()
+    .notEmpty()
+    .withMessage('search text must not be empty!')
+    .bail()
+    .isLength({ min: 1, max: 30 })
+    .withMessage('search text must be at least 1 character long or less than 30 character long')
+    .bail(),
+];
+
+/* Validating the user_id. */
 export const getWeeklyWeightIn = [
   param('user_id')
     .trim()

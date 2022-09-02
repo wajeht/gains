@@ -5,6 +5,27 @@ import path from 'path';
 import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
 import redis from '../../../../utils/redis.js';
+import axios from 'axios';
+
+export async function getOpenPowerliftingResult(req, res) {
+  const q = req.query.q;
+
+  const { data } = await axios
+    .get(`https://www.openpowerlifting.org/api/search/rankings?q=${q}&start=0`)
+    .then((result) => {
+      const index = result.data.next_index;
+      return axios.get(
+        `https://www.openpowerlifting.org/api/rankings?start=${index}&end=14304&lang=en&units=lbs`,
+      );
+    })
+    .then((err) => err.data);
+
+  console.log(data);
+
+  res.json({
+    msg: 'ok',
+  });
+}
 
 /**
  * It gets the recovery data for a user
