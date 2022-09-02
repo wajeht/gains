@@ -10,20 +10,36 @@ import axios from 'axios';
 export async function getOpenPowerliftingResult(req, res) {
   const q = req.query.q;
 
-  const { data } = await axios
+  const index = await axios
     .get(`https://www.openpowerlifting.org/api/search/rankings?q=${q}&start=0`)
-    .then((result) => {
-      const index = result.data.next_index;
-      return axios.get(
-        `https://www.openpowerlifting.org/api/rankings?start=${index}&end=14304&lang=en&units=lbs`,
-      );
-    })
-    .then((err) => err.data);
+    .then((result) => result.data.next_index)
+    .then((err) => err);
+
+  if (index === null) {
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      data: [],
+    });
+  }
+
+  const data = await axios
+    .get(
+      `https://www.openpowerlifting.org/api/rankings?start=${index}&end=${
+        index + 100
+      }&lang=en&units=lbs`,
+    )
+    .then((result) => result.data)
+    .then((err) => err);
 
   console.log(data);
 
-  res.json({
-    msg: 'ok',
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data,
   });
 }
 
