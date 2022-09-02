@@ -154,8 +154,8 @@
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
-                <h6 class="mb-0">Open Powerlifting</h6>
-                <p class="mb-0 opacity-75">Search lifters inside open powerlifting</p>
+                <h6 class="mb-0">Open Powerlifting Database</h6>
+                <p class="mb-0 opacity-75">Search lifters inside open powerlifting database</p>
               </div>
             </div>
           </router-link>
