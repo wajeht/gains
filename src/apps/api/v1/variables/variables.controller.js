@@ -30,10 +30,8 @@ export async function getOpenPowerliftingResult(req, res) {
         index + 100
       }&lang=en&units=lbs`,
     )
-    .then((result) => result.data)
+    .then((result) => result.data.rows)
     .then((err) => err);
-
-  console.log(data);
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
