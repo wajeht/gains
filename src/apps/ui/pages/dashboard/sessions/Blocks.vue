@@ -1,11 +1,7 @@
 <script setup>
-import {
-  capitalizeAWord,
-  formatToGainsDateLocal,
-  sleep,
-  gainsDateDisplay,
-} from '../../../../../utils/helpers.js';
+import { capitalizeAWord } from '../../../../../utils/helpers.js';
 import api from '../../../../../utils/fetch-with-style.js';
+import ExercisesCategoriesBlocksNav from '../../../components/shared/ExercisesCategoriesBlocksNav.vue';
 
 import dayjs from 'dayjs';
 
@@ -20,8 +16,6 @@ const userStore = useUserStore();
 const appStore = useAppStore();
 const route = useRoute();
 const router = useRouter();
-
-const random_uuid = ref(uuidv4());
 
 const blocks = reactive({
   items: [],
@@ -371,37 +365,7 @@ function clearDataAndDismissModal() {
         <!-- blocks -->
         <div>
           <!-- title -->
-          <ul class="nav nav-tabs border-0">
-            <li class="nav-item">
-              <router-link
-                class="nav-link"
-                :class="{ active: $route.name === 'Exercises' }"
-                to="/dashboard/sessions/exercises"
-              >
-                <h5 class="mb-0">
-                  <font-awesome-icon icon="fa-dumbbell" class="p-0 m-0" /> Exercises
-                </h5>
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link
-                class="nav-link"
-                :class="{ active: $route.name === 'Categories' }"
-                to="/dashboard/sessions/categories"
-              >
-                <h5 class="mb-0"><i class="bi bi-tags-fill"></i> Categories</h5>
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link
-                class="nav-link"
-                :class="{ active: $route.name === 'Blocks' }"
-                to="/dashboard/sessions/blocks"
-              >
-                <h5 class="mb-0"><i class="bi bi-bricks"></i> Blocks</h5>
-              </router-link>
-            </li>
-          </ul>
+          <ExercisesCategoriesBlocksNav />
 
           <!-- individual blocks -->
           <div class="list-group" v-auto-animate>
@@ -434,24 +398,5 @@ function clearDataAndDismissModal() {
 .dropdown-item:active {
   background: #212529;
   color: white;
-}
-
-.nav-link {
-  color: #212529;
-}
-
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-  background: #212529;
-  color: white;
-}
-
-.nav-link:hover {
-  background: #6c757d;
-  color: white;
-}
-
-.nav-link.active:hover {
-  text-decoration: none;
 }
 </style>
