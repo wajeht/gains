@@ -26,7 +26,7 @@ function calculate() {
     <div class="my-3 d-flex flex-column gap-3">
       <!-- card -->
       <div>
-        <h5><i class="bi bi-calculator me-2"></i>One Rep Max Calculator</h5>
+        <h5><i class="bi bi-calculator me-1"></i>One Rep Max Calculator</h5>
         <div class="card">
           <div class="card-body">
             <div class="py-5">

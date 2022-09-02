@@ -116,11 +116,11 @@ async function getSessions() {
 
             <!-- right -->
             <div
-              class="d-flex justify-content-between gap-3 fw-light"
+              class="d-flex justify-content-between gap-3 fw-light fst-italic"
               style="overflow: hidden !important"
             >
               <!-- session name -->
-              <span class="d-inline-block text-truncate" style="max-width: 15rem">
+              <small class="d-inline-block text-truncate" style="max-width: 15rem">
                 <router-link
                   v-if="userStore.user.id == s.user_id"
                   :to="`/dashboard/sessions/${s.id}`"
@@ -130,7 +130,7 @@ async function getSessions() {
                 <span v-else>
                   {{ s.name }}
                 </span>
-              </span>
+              </small>
             </div>
           </div>
 

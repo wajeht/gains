@@ -259,10 +259,7 @@ const { lineChartProps } = useLineChart({
                   <thead>
                     <tr>
                       <th class="text-start" scope="col">Lift</th>
-                      <th class="text-start">
-                        Log
-                        <small class="text-muted fst-italic fw-light">(reps x weight)</small>
-                      </th>
+                      <th class="text-start">Log</th>
                       <th class="text-end" scope="col">e1RM</th>
                     </tr>
                   </thead>
@@ -281,7 +278,9 @@ const { lineChartProps } = useLineChart({
                           {{ pr.name }}
                         </td>
                         <td class="text-start">
-                          {{ pr.reps }} x {{ pr.weight + ' ' + appStore.unitLabel }} @{{ pr.rpe }}
+                          {{ pr.reps }} reps x {{ pr.weight + ' ' + appStore.unitLabel }} @{{
+                            pr.rpe
+                          }}
                         </td>
                         <td class="text-end">{{ pr.e1rm + ' ' + appStore.unitLabel }}</td>
                       </tr>
