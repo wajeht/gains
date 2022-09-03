@@ -19,7 +19,9 @@ export async function getBodyweight(req, res) {
 
   const bodyweight = await VariablesQueries.getAllBodyweightOfAUser(user_id, pagination);
   res.json({
-    msg: 'ok',
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
     data: bodyweight.data,
     pagination: bodyweight.pagination,
   });
