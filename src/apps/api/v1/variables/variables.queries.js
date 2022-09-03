@@ -1,6 +1,28 @@
 import db from '../../../../database/db.js';
 
 /**
+ * Get all bodyweight of a user.
+ * @param user_id - the id of the user
+ * @returns An array of objects with the body_weight property
+ */
+export function getAllBodyweightOfAUser(
+  user_id,
+  pagination = { perPage: null, currentPage: null },
+) {
+  return db
+    .select('id', 'body_weight', 'created_at as date')
+    .from('variables')
+    .whereNotNull('body_weight')
+    .andWhere({ user_id })
+    .andWhere({ deleted: false })
+    .orderBy('id', 'desc')
+    .paginate({
+      ...pagination,
+      isLengthAware: true,
+    });
+}
+
+/**
  * This function returns the last 8 body weights for a given user
  * @param user_id - the user's id
  * @returns An array of objects with the following properties:

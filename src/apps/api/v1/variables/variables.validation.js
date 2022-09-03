@@ -14,6 +14,46 @@ export const getOpenPowerliftingResult = [
 ];
 
 /* Validating the user_id. */
+export const getBodyweight = [
+  query('perPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('perPage must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('perPage must be an ID!')
+    .bail()
+    .toInt(),
+  query('currentPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('current-page must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('current-page must be an ID!')
+    .bail()
+    .toInt(),
+  param('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('User id must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('User id must be an number!')
+    .bail()
+    .custom(async (user_id) => {
+      if (user_id) {
+        const user = await UsersQueries.findUserById(user_id);
+        if (user.length === 0) throw new Error('User does not exist!');
+      }
+      return true;
+    })
+    .toInt(),
+];
+
+/* Validating the user_id. */
 export const getWeeklyWeightIn = [
   param('user_id')
     .trim()

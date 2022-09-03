@@ -7,6 +7,20 @@ import express from 'express';
 const variables = express.Router();
 
 /**
+ * GET /api/v1/variables/bodyweight/{user_id}?perPage={perPage}&currentPage={currentPage}
+ * @tags variables
+ * @summary get all the body of a  user
+ * @param {number} user_id.path.required - the user_id  - application/x-www-form-urlencoded
+ * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
+ * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
+ */
+variables.get(
+  '/bodyweight/:user_id',
+  validator(VariablesValidation.getBodyweight),
+  catchAsyncErrors(VariablesController.getBodyweight),
+);
+
+/**
  * GET /api/v1/variables/open-powerlifting?q={q}
  * @tags variables
  * @summary search a user in open powerlifting
@@ -43,7 +57,7 @@ variables.get(
 );
 
 /**
- * GET /api/v1/variables/recovery/{user_id}?perPage={perPage}&currentPage={perPage}
+ * GET /api/v1/variables/recovery/{user_id}?perPage={perPage}&currentPage={currentPage}
  * @tags variables
  * @summary get recovery tracking information
  * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
