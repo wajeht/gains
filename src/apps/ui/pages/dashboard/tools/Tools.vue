@@ -166,23 +166,6 @@
       <div>
         <h5><i class="bi bi-wrench"></i> Others</h5>
         <div class="list-group">
-          <!-- bodyweight -->
-          <span
-            to="/dashboard/tools/others/bodyweight-tracker"
-            style="background: #f1f1f1"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
-          >
-            <div class="d-flex gap-2 w-100 justify-content-between">
-              <div>
-                <h6 class="mb-0">Bodyweight tacker</h6>
-                <p class="mb-0 opacity-75">
-                  Track your bodyweight without logging another session.
-                </p>
-              </div>
-              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
-            </div>
-          </span>
-
           <!-- calories -->
           <span
             to="/dashboard/tools/others/calories-tracker"
@@ -229,6 +212,22 @@
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
           </span>
+
+          <!-- bodyweight -->
+          <router-link
+            to="/dashboard/tools/others/bodyweight-tracker"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+          >
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">Bodyweight tacker</h6>
+                <p class="mb-0 opacity-75">
+                  Track your bodyweight without logging another session.
+                </p>
+              </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+            </div>
+          </router-link>
         </div>
       </div>
     </div>

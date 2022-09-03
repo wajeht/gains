@@ -7,6 +7,24 @@ import { calculateE1RM } from '../../../../utils/helpers.js';
 import redis from '../../../../utils/redis.js';
 import axios from 'axios';
 
+export async function getBodyweight(req, res) {
+  const { user_id } = req.params;
+
+  const { perPage, currentPage } = req.query;
+
+  const pagination = {
+    perPage: perPage ?? null,
+    currentPage: currentPage ?? null,
+  };
+
+  const bodyweight = await VariablesQueries.getAllBodyweightOfAUser(user_id, pagination);
+  res.json({
+    msg: 'ok',
+    data: bodyweight.data,
+    pagination: bodyweight.pagination,
+  });
+}
+
 export async function getOpenPowerliftingResult(req, res) {
   const q = req.query.q;
 
