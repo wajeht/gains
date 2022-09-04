@@ -77,6 +77,26 @@ export async function getBodyweight(req, res) {
   });
 }
 
+export async function getCalories(req, res) {
+  const { user_id } = req.params;
+
+  const { perPage, currentPage } = req.query;
+
+  const pagination = {
+    perPage: perPage ?? null,
+    currentPage: currentPage ?? null,
+  };
+
+  const calories = await VariablesQueries.getAllCaloriesOfAUser(user_id, pagination);
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: calories.data,
+    pagination: calories.pagination,
+  });
+}
+
 /**
  * It takes a query parameter, q, and returns the first 100 results from the OpenPowerlifting API
  * @param req - The request object.

@@ -1,4 +1,6 @@
 <script setup>
+import { onMounted, ref, reactive } from 'vue';
+import dayjs from 'dayjs';
 import DashboardHomeHeader from '../../components/dashboard/headers/DashboardHomeHeader.vue';
 import api from '../../../../utils/fetch-with-style.js';
 import { useRouter, useRoute } from 'vue-router';
@@ -9,12 +11,8 @@ import useAppStore from '../../store/app.store.js';
 const userStore = useUserStore();
 const appStore = useAppStore();
 
-import dayjs from 'dayjs';
-
 const router = useRouter();
 const route = useRoute();
-
-import { onMounted, ref, reactive } from 'vue';
 
 const sessions = ref([]);
 
