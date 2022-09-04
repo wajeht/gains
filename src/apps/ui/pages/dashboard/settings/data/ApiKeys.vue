@@ -4,6 +4,7 @@ import api from '../../../../../../utils/fetch-with-style.js';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 import useAppStore from '../../../../store/app.store';
 import useUserStore from '../../../../store/user.store.js';
+import { sleep } from '../../../../../../utils/helpers.js';
 
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -52,6 +53,9 @@ async function getApiKeys() {
 async function requestApiKey() {
   try {
     requestApiKeyLoading.value = true;
+
+    const wait = await sleep(1000); // wait a while before generating new keys because of db error
+
     const res = await api.post(`/api/v1/api-keys/`, { user_id: userStore.user.id });
     const json = await res.json();
 
