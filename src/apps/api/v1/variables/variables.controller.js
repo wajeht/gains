@@ -6,7 +6,57 @@ import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
 import redis from '../../../../utils/redis.js';
 import axios from 'axios';
+import logger from '../../../../utils/logger.js';
 
+/**
+ * It deletes a variable from the database
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns a status code of 200 and a json object with a status, request_url, message, and data.
+ */
+export async function deleteAVariable(req, res) {
+  const { user_id } = req.query;
+  const { variable_id } = req.params;
+
+  const variables = await VariablesQueries.deleteAVariable(variable_id, user_id);
+
+  logger.info(`User id: ${user_id} has deleted variables ${variable_id}!`);
+
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was created successfully!',
+    data: variables,
+  });
+}
+
+/**
+ * It creates a variable and returns the created variable
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns a response with a status code of 201 and a message.
+ */
+export async function postAVariable(req, res) {
+  const body = req.body;
+
+  const variables = await VariablesQueries.createAVariable(body);
+
+  logger.info(`User id: ${body.user_id} has created variables ${JSON.stringify(body)}!`);
+
+  return res.status(StatusCodes.CREATED).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was created successfully!',
+    data: variables,
+  });
+}
+
+/**
+ * It gets all the bodyweight of a user
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The bodyweight of a user.
+ */
 export async function getBodyweight(req, res) {
   const { user_id } = req.params;
 
@@ -18,7 +68,7 @@ export async function getBodyweight(req, res) {
   };
 
   const bodyweight = await VariablesQueries.getAllBodyweightOfAUser(user_id, pagination);
-  res.json({
+  return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
@@ -27,6 +77,12 @@ export async function getBodyweight(req, res) {
   });
 }
 
+/**
+ * It takes a query parameter, q, and returns the first 100 results from the OpenPowerlifting API
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The data is being returned as an array of objects.
+ */
 export async function getOpenPowerliftingResult(req, res) {
   const q = req.query.q;
 
