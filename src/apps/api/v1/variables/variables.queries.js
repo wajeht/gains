@@ -59,6 +59,25 @@ export function getAllBodyweightOfAUser(
     });
 }
 
+export function getAllCaloriesOfAUser(user_id, pagination = { perPage: null, currentPage: null }) {
+  return (
+    db
+      .select('id', 'calories_prior_session', 'total_calories', 'created_at')
+      .from('variables')
+      .where({ user_id })
+      .andWhere({ deleted: false })
+      .andWhereRaw(`calories_prior_session is not null or total_calories is not null`)
+      .andWhere({ deleted: false })
+      // .andWhereNot({ calories_prior_session: null })
+      // .andWhereNot({ total_calories: null })
+      .orderBy('id', 'desc')
+      .paginate({
+        ...pagination,
+        isLengthAware: true,
+      })
+  );
+}
+
 /**
  * This function returns the last 8 body weights for a given user
  * @param user_id - the user's id

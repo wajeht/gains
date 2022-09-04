@@ -167,10 +167,9 @@
         <h5><i class="bi bi-wrench"></i> Others</h5>
         <div class="list-group">
           <!-- calories -->
-          <span
+          <router-link
             to="/dashboard/tools/others/calories-tracker"
-            style="background: #f1f1f1"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -181,7 +180,7 @@
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
             </div>
-          </span>
+          </router-link>
 
           <!-- recovery -->
           <span

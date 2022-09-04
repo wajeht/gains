@@ -55,6 +55,20 @@ variables.get(
 );
 
 /**
+ * GET /api/v1/variables/calories/{user_id}?perPage={perPage}&currentPage={currentPage}
+ * @tags variables
+ * @summary get all the calories of a  user
+ * @param {number} user_id.path.required - the user_id  - application/x-www-form-urlencoded
+ * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
+ * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
+ */
+variables.get(
+  '/calories/:user_id',
+  validator(VariablesValidation.getCalories),
+  catchAsyncErrors(VariablesController.getCalories),
+);
+
+/**
  * GET /api/v1/variables/open-powerlifting?q={q}
  * @tags variables
  * @summary search a user in open powerlifting
