@@ -16,7 +16,7 @@ client.on('error', (error) => {
   Chad.flex(e.message, e.stack);
 });
 
-client.on('error', (error) => {
+client.on('connect', (error) => {
   logger.info(`Redis client started`);
 });
 
