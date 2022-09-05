@@ -14,31 +14,32 @@ const appStore = useAppStore();
 
 const alert = reactive({ msg: '', type: '' });
 
-const calories = ref([]);
+const recovery = ref([]);
 const pagination = ref({});
-const calories_prior_session = ref(null);
-const total_calories = ref(null);
-const caloriesCheckbox = ref([]);
-const checkCaloriesCheckbox = ref(false);
+const stress_level = ref(null);
+const hours_of_sleep = ref(null);
 
-const logACaloriesLoading = ref(false);
-const deleteACaloriesLoading = ref(false);
+const recoveryCheckbox = ref([]);
+const checkRecoveryCheckbox = ref(false);
+
+const logARecoveryLoading = ref(false);
+const deleteARecoveryLoading = ref(false);
 
 onMounted(async () => {
-  const bw = await getAllCaloriesOfAUser();
+  const bw = await getRecoveryOfAUser();
 });
 
 // checkbox
-watch(checkCaloriesCheckbox, (prev, cur) => {
+watch(checkRecoveryCheckbox, (prev, cur) => {
   if (prev === true) {
-    calories.value.forEach((bw) => {
-      caloriesCheckbox.value.push(bw.id);
+    recovery.value.forEach((bw) => {
+      recoveryCheckbox.value.push(bw.id);
     });
     return;
   }
 
   if (prev === false) {
-    caloriesCheckbox.value = [];
+    recoveryCheckbox.value = [];
     return;
   }
 });
@@ -50,7 +51,7 @@ async function downloadTable({
   currentPage = pagination.currentPage,
   perPage = 999999999999999,
 } = {}) {
-  const json = await getAllCaloriesOfAUser({
+  const json = await getRecoveryOfAUser({
     download: true,
     currentPage,
     perPage,
@@ -69,11 +70,11 @@ function printTable() {
 
 // ------------------------------ async functions ------------------------------
 
-async function getAllCaloriesOfAUser({ perPage = 25, currentPage = 1, download = false } = {}) {
+async function getRecoveryOfAUser({ perPage = 25, currentPage = 1, download = false } = {}) {
   try {
     appStore.loading = true;
 
-    const url = `/api/v1/variables/calories/${userStore.user.id}?perPage=${perPage}&currentPage=${currentPage}`;
+    const url = `/api/v1/variables/recovery/${userStore.user.id}?cache=false&perPage=${perPage}&currentPage=${currentPage}`;
     const res = await api.get(url);
     const json = await res.json();
 
@@ -90,7 +91,7 @@ async function getAllCaloriesOfAUser({ perPage = 25, currentPage = 1, download =
       return json.data;
     }
 
-    calories.value = json.data || [];
+    recovery.value = json.data || [];
     pagination.value = json.pagination || {};
 
     appStore.loading = false;
@@ -105,12 +106,12 @@ async function getAllCaloriesOfAUser({ perPage = 25, currentPage = 1, download =
   }
 }
 
-async function deleteACalories() {
+async function deleteARecovery() {
   try {
-    deleteACaloriesLoading.value = true;
+    deleteARecoveryLoading.value = true;
 
     const ress = await Promise.all(
-      caloriesCheckbox.value.map((body_weight_id) =>
+      recoveryCheckbox.value.map((body_weight_id) =>
         api.delete(`/api/v1/variables/${body_weight_id}?user_id=${userStore.user.id}`),
       ),
     );
@@ -129,20 +130,20 @@ async function deleteACalories() {
       }
     });
 
-    clearDataAndDismissDeleteACalories();
-    deleteACaloriesLoading.value = false;
+    clearDataAndDismissDeleteARecovery();
+    deleteARecoveryLoading.value = false;
 
-    caloriesCheckbox.value.forEach((bwck) => {
-      calories.value = calories.value.filter((bw) => bw.id != bwck);
+    recoveryCheckbox.value.forEach((bwck) => {
+      recovery.value = recovery.value.filter((bw) => bw.id != bwck);
     });
 
     alert.type = 'success';
-    alert.msg = `Calories ID (s) ${caloriesCheckbox.value} were removed!`;
+    alert.msg = `Recovery ID (s) ${recoveryCheckbox.value} were removed!`;
 
-    caloriesCheckbox.value = [];
+    recoveryCheckbox.value = [];
   } catch (e) {
-    clearDataAndDismissDeleteACalories();
-    deleteACaloriesLoading.value = false;
+    clearDataAndDismissDeleteARecovery();
+    deleteARecoveryLoading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -153,14 +154,14 @@ async function deleteACalories() {
   }
 }
 
-async function logACalories() {
+async function logARecovery() {
   try {
-    logACaloriesLoading.value = true;
+    logARecoveryLoading.value = true;
 
     const body = {
       user_id: userStore.user.id,
-      calories_prior_session: calories_prior_session.value ?? 0,
-      total_calories: total_calories.value ?? 0,
+      stress_level: stress_level.value ?? 0,
+      hours_of_sleep: hours_of_sleep.value ?? 0,
     };
 
     const res = await api.post(`/api/v1/variables`, body);
@@ -174,15 +175,15 @@ async function logACalories() {
       }
     }
 
-    logACaloriesLoading.value = false;
-    clearDataAndDismissLogACalories();
+    logARecoveryLoading.value = false;
+    clearDataAndDismissLogARecovery();
 
-    calories.value.unshift(json.data[0]);
-    calories_prior_session.value = null;
+    recovery.value.unshift(json.data[0]);
+    stress_level.value = null;
   } catch (e) {
-    clearDataAndDismissLogACalories();
-    logACaloriesLoading.value = false;
-    calories_prior_session.value = null;
+    clearDataAndDismissLogARecovery();
+    logARecoveryLoading.value = false;
+    stress_level.value = null;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -195,38 +196,46 @@ async function logACalories() {
 
 // ------------------------------ dismiss models ------------------------------
 
-function clearDataAndDismissLogACalories() {
-  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`log-a-calories`));
+function clearDataAndDismissLogARecovery() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`log-a-recovery`));
   modal.hide();
 }
 
-function clearDataAndDismissDeleteACalories() {
-  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`delete-a-calories`));
+function clearDataAndDismissDeleteARecovery() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`delete-a-recovery`));
   modal.hide();
 }
 
 // ------------------------------ chart ------------------------------
 
 const chartData = computed(() => ({
-  labels: orderBy(calories.value, (x) => new Date(x.created_at), ['asc']).map((x) =>
+  labels: orderBy(recovery.value, (x) => new Date(x.created_at), ['asc']).map((x) =>
     dayjs(x.created_at).format('MM/DD'),
   ),
   datasets: [
     {
-      label: 'Calories Prior Session',
-      data: orderBy(calories.value, (x) => new Date(x.created_at), ['asc']).map(
-        (x) => x.calories_prior_session ?? 0,
+      label: 'Stress Level',
+      data: orderBy(recovery.value, (x) => new Date(x.created_at), ['asc']).map(
+        (x) => x.stress_level ?? 0,
       ),
       backgroundColor: '#BADBCC',
-      borderColor: '#198854',
+      borderColor: '#198754',
     },
     {
-      label: 'Total Calories',
-      data: orderBy(calories.value, (x) => new Date(x.created_at), ['asc']).map(
-        (x) => x.total_calories ?? 0,
+      label: 'Hours Of Sleep',
+      data: orderBy(recovery.value, (x) => new Date(x.created_at), ['asc']).map(
+        (x) => x.hours_of_sleep ?? 0,
       ),
       backgroundColor: '#FFECB5',
-      borderColor: '#FFDF7A',
+      borderColor: '#FFDE7A',
+    },
+    {
+      label: 'Session RPE',
+      data: orderBy(recovery.value, (x) => new Date(x.created_at), ['asc']).map(
+        (x) => x.session_rpe ?? 0,
+      ),
+      backgroundColor: '#F5C2C7',
+      borderColor: '#DC3545',
     },
   ],
 }));
@@ -260,7 +269,7 @@ const { lineChartProps } = useLineChart({
 
         <!-- table -->
         <div>
-          <h5><i class="bi bi-table"></i> Calories Tracker</h5>
+          <h5><i class="bi bi-table"></i> Recovery Tracker</h5>
           <div class="card">
             <!-- header -->
             <div class="card-header">
@@ -270,7 +279,7 @@ const { lineChartProps } = useLineChart({
                   <!-- add -->
                   <button
                     data-bs-toggle="modal"
-                    data-bs-target="#log-a-calories"
+                    data-bs-target="#log-a-recovery"
                     class="btn btn-sm btn-outline-dark"
                     type="button"
                   >
@@ -280,10 +289,10 @@ const { lineChartProps } = useLineChart({
                   <!-- delete -->
                   <button
                     data-bs-toggle="modal"
-                    data-bs-target="#delete-a-calories"
+                    data-bs-target="#delete-a-recovery"
                     class="btn btn-sm btn-outline-dark"
                     type="button"
-                    :disabled="!caloriesCheckbox.length"
+                    :disabled="!recoveryCheckbox.length"
                   >
                     <i class="bi bi-trash"></i>
                   </button>
@@ -293,7 +302,7 @@ const { lineChartProps } = useLineChart({
                 <span class="d-flex justify-content-between align-items-center gap-2">
                   <!-- reset -->
                   <button
-                    @click="getAllCaloriesOfAUser()"
+                    @click="getRecoveryOfAUser()"
                     class="btn btn-sm btn-outline-dark"
                     type="button"
                   >
@@ -362,42 +371,56 @@ const { lineChartProps } = useLineChart({
                       <tr>
                         <th class="text-center">
                           <input
-                            v-model="checkCaloriesCheckbox"
+                            v-model="checkRecoveryCheckbox"
                             class="form-check-input input-sm m-0 p-0"
                             type="checkbox"
                           />
                         </th>
                         <th class="align-middle text-center" scope="col">ID</th>
-                        <th class="align-middle text-center" scope="col">Calories Prior Session</th>
-                        <th class="align-middle text-center" scope="col">Total Calories</th>
+                        <th class="align-middle text-center" scope="col">Stress Level</th>
+                        <th class="align-middle text-center" scope="col">Hours Of Sleep</th>
+                        <th class="align-middle text-center" scope="col">Session RPE</th>
                         <th class="align-middle text-center" scope="col">Date</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="bw in calories" :key="`body-weight-key-${bw.id}`">
+                      <tr v-for="bw in recovery" :key="`body-weight-key-${bw.id}`">
                         <td class="align-middle text-center">
                           <input
                             class="form-check-input input-sm m-0 p-0"
                             type="checkbox"
-                            v-model="caloriesCheckbox"
+                            v-model="recoveryCheckbox"
                             :value="bw.id"
                           />
                         </td>
+
+                        <!-- id -->
                         <td class="align-middle text-center">{{ bw.id }}</td>
+
+                        <!-- stress -->
                         <td class="align-middle text-center">
                           {{
-                            bw.calories_prior_session === null || bw.calories_prior_session === 0
-                              ? ''
-                              : bw.calories_prior_session
+                            bw.stress_level === null || bw.stress_level === 0 ? '' : bw.stress_level
                           }}
                         </td>
+
+                        <!-- sleep -->
                         <td class="align-middle text-center">
                           {{
-                            bw.total_calories === null || bw.total_calories === 0
+                            bw.hours_of_sleep === null || bw.hours_of_sleep === 0
                               ? ''
-                              : bw.total_calories
+                              : bw.hours_of_sleep
                           }}
                         </td>
+
+                        <!-- session -->
+                        <td class="align-middle text-center">
+                          {{
+                            bw.session_rpe === null || bw.session_rpe === 0 ? '' : bw.session_rpe
+                          }}
+                        </td>
+
+                        <!-- date -->
                         <td class="align-middle text-center">
                           {{ dayjs(bw.created_at).format('YYYY/MM/DD') }}
                         </td>
@@ -420,7 +443,7 @@ const { lineChartProps } = useLineChart({
                     }"
                   >
                     <a
-                      @click="getAllCaloriesOfAUser({ currentPage: pagination?.currentPage - 1 })"
+                      @click="getRecoveryOfAUser({ currentPage: pagination?.currentPage - 1 })"
                       href="#"
                       class="page-link"
                       >Previous</a
@@ -435,7 +458,7 @@ const { lineChartProps } = useLineChart({
                     :class="{ active: index + 1 === pagination?.currentPage }"
                   >
                     <a
-                      @click="getAllCaloriesOfAUser({ currentPage: index + 1 })"
+                      @click="getRecoveryOfAUser({ currentPage: index + 1 })"
                       href="#"
                       class="page-link"
                     >
@@ -451,7 +474,7 @@ const { lineChartProps } = useLineChart({
                     }"
                   >
                     <a
-                      @click="getAllCaloriesOfAUser({ currentPage: pagination?.currentPage + 1 })"
+                      @click="getRecoveryOfAUser({ currentPage: pagination?.currentPage + 1 })"
                       class="page-link"
                       href="#"
                       >Next</a
@@ -466,11 +489,11 @@ const { lineChartProps } = useLineChart({
     </div>
   </div>
 
-  <!-- log a calories modal -->
+  <!-- log a recovery modal -->
   <form
-    @submit.prevent="logACalories()"
+    @submit.prevent="logARecovery()"
     class="modal fade px-1 pt-5"
-    id="log-a-calories"
+    id="log-a-recovery"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -479,54 +502,52 @@ const { lineChartProps } = useLineChart({
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
-          <h5 class="modal-title">Add a calories</h5>
+          <h5 class="modal-title">Add a recovery</h5>
           <button
-            @click="clearDataAndDismissLogACalories()"
+            @click="clearDataAndDismissLogARecovery()"
             type="reset"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
-            :disabled="logACaloriesLoading"
+            :disabled="logARecoveryLoading"
           ></button>
         </div>
 
         <!-- body -->
-        <div class="modal-body" v-auto-animate>
-          <!-- calories_prior_session -->
+        <div class="modal-body">
+          <!-- stress level -->
           <div class="mb-3">
-            <label for="rep" class="form-label">Calories prior session*</label>
+            <label for="rep" class="form-label">stress level*</label>
             <input
-              v-model.number="calories_prior_session"
-              id="rep"
-              class="form-control form-control-sm"
-              min="0"
-              max="5000"
-              step="1"
-              type="number"
-              inputmode="numeric"
-              pattern="[1-5000]*"
-              required
-              :disabled="logACaloriesLoading"
-            />
-          </div>
-
-          <!-- total_calories  -->
-          <div class="mb-3">
-            <label for="rep" class="form-label"
-              >Total calories
-              <small class="text-muted fst-italic"> (optional) </small>
-            </label>
-            <input
-              v-model.number="total_calories"
+              v-model.number="stress_level"
               id="rep"
               class="form-control form-control-sm"
               min="1"
-              max="5000"
+              max="10"
               step="1"
               type="number"
               inputmode="numeric"
-              pattern="[1-5000]*"
-              :disabled="logACaloriesLoading"
+              pattern="[1-10]*"
+              required
+              :disabled="logARecoveryLoading"
+            />
+          </div>
+
+          <!-- hours of sleep  -->
+          <div class="mb-3">
+            <label for="rep" class="form-label">Hours of sleep*</label>
+            <input
+              v-model.number="hours_of_sleep"
+              id="rep"
+              class="form-control form-control-sm"
+              min="1"
+              max="24"
+              step="1"
+              type="number"
+              inputmode="numeric"
+              pattern="[1-24]*"
+              required
+              :disabled="logARecoveryLoading"
             />
           </div>
         </div>
@@ -535,8 +556,8 @@ const { lineChartProps } = useLineChart({
         <div class="modal-footer">
           <!-- cancel -->
           <button
-            @click="clearDataAndDismissLogACalories()"
-            v-if="!logACaloriesLoading"
+            @click="clearDataAndDismissLogARecovery()"
+            v-if="!logARecoveryLoading"
             type="reset"
             class="btn btn-danger"
             data-bs-dismiss="modal"
@@ -546,25 +567,25 @@ const { lineChartProps } = useLineChart({
           </button>
 
           <!-- add -->
-          <button type="submit" class="btn btn-success" :disabled="logACaloriesLoading">
-            <div v-if="logACaloriesLoading" class="spinner-border spinner-border-sm" role="status">
+          <button type="submit" class="btn btn-success" :disabled="logARecoveryLoading">
+            <div v-if="logARecoveryLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!logACaloriesLoading">
+            <span v-if="!logARecoveryLoading">
               <i class="bi bi-check-circle-fill"></i> Submit
             </span>
-            <span v-if="logACaloriesLoading"> Loading... </span>
+            <span v-if="logARecoveryLoading"> Loading... </span>
           </button>
         </div>
       </div>
     </div>
   </form>
 
-  <!-- delete a calories modal -->
+  <!-- delete a recovery modal -->
   <form
-    @submit.prevent="deleteACalories()"
+    @submit.prevent="deleteARecovery()"
     class="modal fade px-1 pt-5"
-    id="delete-a-calories"
+    id="delete-a-recovery"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -573,14 +594,14 @@ const { lineChartProps } = useLineChart({
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
-          <h5 class="modal-title">Delete calories</h5>
+          <h5 class="modal-title">Delete recovery</h5>
           <button
-            @click="clearDataAndDismissDeleteACalories()"
+            @click="clearDataAndDismissDeleteARecovery()"
             type="reset"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
-            :disabled="deleteACaloriesLoading"
+            :disabled="deleteARecoveryLoading"
           ></button>
         </div>
 
@@ -591,10 +612,10 @@ const { lineChartProps } = useLineChart({
 
           <!-- badges -->
           <div
-            v-if="caloriesCheckbox.length"
+            v-if="recoveryCheckbox.length"
             class="d-flex justify-content-center flex-wrap gap-1 mb-3"
           >
-            <div class="badge bg-secondary text-white" v-for="bw in caloriesCheckbox">
+            <div class="badge bg-secondary text-white" v-for="bw in recoveryCheckbox">
               {{ bw }}
             </div>
           </div>
@@ -604,8 +625,8 @@ const { lineChartProps } = useLineChart({
         <div class="modal-footer">
           <!-- cancel -->
           <button
-            @click="clearDataAndDismissDeleteACalories()"
-            v-if="!deleteACaloriesLoading"
+            @click="clearDataAndDismissDeleteARecovery()"
+            v-if="!deleteARecoveryLoading"
             type="reset"
             class="btn btn-danger"
             data-bs-dismiss="modal"
@@ -615,18 +636,18 @@ const { lineChartProps } = useLineChart({
           </button>
 
           <!-- add -->
-          <button type="submit" class="btn btn-success" :disabled="deleteACaloriesLoading">
+          <button type="submit" class="btn btn-success" :disabled="deleteARecoveryLoading">
             <div
-              v-if="deleteACaloriesLoading"
+              v-if="deleteARecoveryLoading"
               class="spinner-border spinner-border-sm"
               role="status"
             >
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!deleteACaloriesLoading">
+            <span v-if="!deleteARecoveryLoading">
               <i class="bi bi-check-circle-fill"></i> Submit
             </span>
-            <span v-if="deleteACaloriesLoading"> Loading... </span>
+            <span v-if="deleteARecoveryLoading"> Loading... </span>
           </button>
         </div>
       </div>

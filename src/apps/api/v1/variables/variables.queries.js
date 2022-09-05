@@ -136,15 +136,21 @@ export async function recentPrsByUserId(user_id) {
   return rows;
 }
 
+/**
+ * Get all the variables for a user, and join them with the session they belong to
+ * @param user_id - the user id of the user you want to get the recovery data for
+ * @param [pagination] - { perPage: null, currentPage: null }
+ * @returns An array of objects.
+ */
 export async function getRecovery(user_id, pagination = { perPage: null, currentPage: null }) {
   return db
-    .select('v.stress_level', 'v.hours_of_sleep', 'ss.session_rpe', 'v.created_at')
+    .select('v.id as id', 'v.stress_level', 'v.hours_of_sleep', 'ss.session_rpe', 'v.created_at')
     .from('variables as v')
-    .innerJoin('sessions as ss', 'ss.id', 'v.session_id')
+    .fullOuterJoin('sessions as ss', 'ss.id', 'v.session_id')
     .where({ 'v.user_id': user_id })
     .andWhere({ 'v.deleted': false })
-    .andWhere({ 'ss.deleted': false })
-    .orderBy('v.created_at', 'asc')
+    .andWhereRaw(`v.deleted = 'false' or ss.deleted = 'false'`)
+    .orderBy('v.created_at', 'desc')
     .paginate({
       ...pagination,
       isLengthAware: true,
