@@ -201,7 +201,7 @@ const routes = [
     name: 'SendFeedback',
     component: SendFeedback,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -210,7 +210,7 @@ const routes = [
     name: 'Changelogs',
     component: Changelogs,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -219,7 +219,7 @@ const routes = [
     name: 'HelpAndSupport',
     component: HelpAndSupport,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -228,7 +228,7 @@ const routes = [
     name: 'DashboardPrivacy',
     component: DashboardPrivacy,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -237,7 +237,7 @@ const routes = [
     name: 'DashboardTerms',
     component: DashboardTerms,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -266,7 +266,7 @@ const routes = [
     name: 'OneRepMaxCalculator',
     component: OneRepMaxCalculator,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -276,7 +276,7 @@ const routes = [
     name: 'RPECalculator',
     component: RPECalculator,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -286,7 +286,7 @@ const routes = [
     name: 'PlateCalculator',
     component: PlateCalculator,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -296,7 +296,7 @@ const routes = [
     name: 'AttemptSelectionCalculator',
     component: AttemptSelectionCalculator,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -306,7 +306,7 @@ const routes = [
     name: 'OpenPowerlifting',
     component: OpenPowerlifting,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -316,7 +316,7 @@ const routes = [
     name: 'BodyweightTracker',
     component: BodyweightTracker,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -325,7 +325,7 @@ const routes = [
     name: 'CaloriesTracker',
     component: CaloriesTracker,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -334,7 +334,7 @@ const routes = [
     name: 'Recovery',
     component: Recovery,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -343,7 +343,7 @@ const routes = [
     name: 'AccessCodes',
     component: AccessCodes,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -362,7 +362,7 @@ const routes = [
     name: 'UserDetails',
     component: UserDetails,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -371,7 +371,7 @@ const routes = [
     name: 'DeleteAccount',
     component: DeleteAccount,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -380,7 +380,7 @@ const routes = [
     name: 'ApiKeys',
     component: ApiKeys,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -399,7 +399,7 @@ const routes = [
     component: VideoDetails,
     props: true,
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -448,7 +448,7 @@ const routes = [
       exercise_id: Number(route.params.exercise_id),
     }),
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -460,7 +460,7 @@ const routes = [
       block_id: Number(route.params.block_id),
     }),
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -472,7 +472,7 @@ const routes = [
       category_id: Number(route.params.category_id),
     }),
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
@@ -484,7 +484,7 @@ const routes = [
       sid: Number(route.params.sid),
     }),
     meta: {
-      layout: 'DashboardLayout',
+      layout: 'SingleDashboardLayout',
       requiredAuth: true,
     },
   },
