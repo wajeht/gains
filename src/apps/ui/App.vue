@@ -2,22 +2,26 @@
   <component
     :is="layout"
     :class="{
-      'dashboard-layout-style': layout === 'DashboardLayout' || layout === 'EmptyDashboardLayout',
+      'dashboard-layout-style':
+        layout === 'DashboardLayout' ||
+        layout === 'EmptyDashboardLayout' ||
+        layout === 'SingleDashboardLayout',
     }"
   />
 </template>
 
 <script>
 import DashboardLayout from './layouts/DashboardLayout.vue';
+import SingleDashboardLayout from './layouts/SingleDashboardLayout.vue';
 import EmptyDashboardLayout from './layouts/EmptyDashboardLayout.vue';
 import RegularLayout from './layouts/RegularLayout.vue';
-import useUserStore from './store/user.store.js';
 
 export default {
   components: {
     DashboardLayout,
     RegularLayout,
     EmptyDashboardLayout,
+    SingleDashboardLayout,
   },
   data() {
     return {
@@ -26,7 +30,11 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.meta.layout === 'DashboardLayout' || to.meta.layout === 'EmptyDashboardLayout') {
+      if (
+        to.meta.layout === 'DashboardLayout' ||
+        to.meta.layout === 'EmptyDashboardLayout' ||
+        to.meta.layout == 'SingleDashboardLayout'
+      ) {
         document.body.style.backgroundColor = 'black';
       } else {
         document.body.style.backgroundColor = '';
