@@ -11,10 +11,11 @@ const route = useRoute();
         <router-link
           :class="{ active: $route.name === 'Community' }"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+          style="min-height: 77px"
           to="/dashboard/community"
         >
-          <font-awesome-icon icon="user-group" />
-          <span>Community</span>
+          <font-awesome-icon icon="user-group" class="big-font-size-on-mobile" />
+          <span class="hide-on-mobile">Community</span>
         </router-link>
       </div>
 
@@ -23,10 +24,11 @@ const route = useRoute();
         <router-link
           :class="{ active: $route.name === 'Sessions' }"
           to="/dashboard/sessions"
+          style="min-height: 77px"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
         >
-          <font-awesome-icon icon="calendar-days" />
-          <span>Sessions</span>
+          <font-awesome-icon icon="calendar-days" class="big-font-size-on-mobile" />
+          <span class="hide-on-mobile">Sessions</span>
         </router-link>
       </div>
 
@@ -36,10 +38,11 @@ const route = useRoute();
         <router-link
           :class="{ active: $route.name === 'Videos' }"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+          style="min-height: 77px"
           to="/dashboard/videos"
         >
-          <font-awesome-icon icon="play" />
-          <span>Videos</span>
+          <font-awesome-icon icon="play" class="big-font-size-on-mobile" />
+          <span class="hide-on-mobile">Videos</span>
         </router-link>
       </div>
 
@@ -48,10 +51,11 @@ const route = useRoute();
         <router-link
           :class="{ active: $route.name === 'Profile' }"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
+          style="min-height: 77px"
           to="/dashboard/profile"
         >
-          <font-awesome-icon icon="user" />
-          <span>Profile</span>
+          <font-awesome-icon icon="user" class="big-font-size-on-mobile" />
+          <span class="hide-on-mobile">Profile</span>
         </router-link>
       </div>
 
@@ -60,10 +64,11 @@ const route = useRoute();
         <router-link
           :class="{ active: $route.name === 'Tools' }"
           to="/dashboard/tools"
+          style="min-height: 77px"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
         >
-          <font-awesome-icon icon="screwdriver-wrench" />
-          <span>Tools</span>
+          <font-awesome-icon icon="screwdriver-wrench" class="big-font-size-on-mobile" />
+          <span class="hide-on-mobile">Tools</span>
         </router-link>
       </div>
 
@@ -72,10 +77,11 @@ const route = useRoute();
         <router-link
           :class="{ active: $route.name === 'Settings' }"
           to="/dashboard/settings"
+          style="min-height: 77px"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1"
         >
-          <font-awesome-icon icon="gear" />
-          <span>Settings</span>
+          <font-awesome-icon icon="gear" class="big-font-size-on-mobile" />
+          <span class="hide-on-mobile">Settings</span>
         </router-link>
       </div>
     </div>
@@ -102,5 +108,14 @@ a:hover {
   /* border-top: 2px solid #191919;
   margin-top: -2px; */
   box-shadow: 0 4px 0 #000 inset;
+}
+
+@media screen and (max-width: 540px) {
+  .big-font-size-on-mobile {
+    font-size: 1.5rem;
+  }
+  .hide-on-mobile {
+    display: none;
+  }
 }
 </style>
