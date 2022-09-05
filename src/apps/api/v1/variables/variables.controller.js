@@ -145,12 +145,24 @@ export async function getOpenPowerliftingResult(req, res) {
  */
 export async function getRecovery(req, res) {
   const { user_id } = req.params;
-  const { perPage, currentPage } = req.query;
+  const { perPage, currentPage, cache } = req.query;
 
   const pagination = {
     perPage: perPage ?? null,
     currentPage: currentPage ?? null,
   };
+
+  if (cache == false) {
+    const recovery = await VariablesQueries.getRecovery(user_id, pagination);
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      cache: cache,
+      data: recovery.data,
+      pagination: recovery.pagination,
+    });
+  }
 
   let recovery = JSON.parse(await redis.get(`user-id-${user_id}-recovery`));
 
@@ -168,6 +180,7 @@ export async function getRecovery(req, res) {
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
+    cache: cache,
     data: recovery.data,
     pagination: recovery.pagination,
   });
