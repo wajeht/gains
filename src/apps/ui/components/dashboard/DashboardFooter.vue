@@ -106,7 +106,7 @@ a:hover {
 
 @media screen and (max-width: 540px) {
   .min-heigh-on-mobile {
-    min-height: 64px;
+    min-height: 70px;
   }
   .big-font-size-on-mobile {
     font-size: 1.2rem;
