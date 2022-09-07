@@ -7,6 +7,9 @@ import logger from '../utils/logger.js';
 import path from 'path';
 import db from '../database/db.js';
 import Chad from '../utils/chad.js';
+import pkg from '../utils/pkg.js';
+import EmailService from '../services/email.service.js';
+import latestChangelog from '../utils/latest-changelog.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);
@@ -14,7 +17,7 @@ app.listen(port, () => {
   if (process.env.HMR === 'true') logger.warn(`But use http://localhost:${vue_port} for hmr!`);
 });
 
-// auto migrate db on start
+// ------------------------------ auto migrate db on start (production only) ------------------------------
 (async () => {
   if (env !== 'production') {
     logger.warn(`Environment is on ${env}!`);
@@ -49,6 +52,7 @@ app.listen(port, () => {
   }
 })();
 
+// ------------------------------ auto create indexes ------------------------------
 // (async () => {
 //   try {
 //     const { rows } = await db.raw(`
@@ -63,3 +67,45 @@ app.listen(port, () => {
 //     Chad.flex(e.message, e.stack);
 //   }
 // })();
+
+// ------------------------------ send changelog subscription (production only)  ------------------------------
+(async () => {
+  try {
+    if (env != 'prod') {
+      logger.warn(`Skipping auto changelog email service!`);
+      return;
+    }
+
+    const changelogSubscriptions = await db
+      .select('s.email as email', 'u.username as username', 's.object_id as subscribed_version')
+      .from('subscriptions as s')
+      .innerJoin('users as u', 'u.id', 's.user_id')
+      .where({ 's.deleted': false })
+      .andWhere({ 's.object': 'changelog' });
+
+    for (const user of changelogSubscriptions) {
+      // not triple equals ==== because of string type
+      if (pkg.version > user.subscribed_version) {
+        await EmailService.send({
+          to: user.email,
+          subject: `Gains v${pkg.version}`,
+          template: 'new-changelog',
+          data: {
+            username: user.email,
+            changelog: await latestChangelog(),
+          },
+        });
+        logger.info(`Changelog email was sent to email: ${user.email}`);
+      }
+    }
+
+    await db
+      .update({ object_id: pkg.version })
+      .from('subscriptions')
+      .where({ deleted: false })
+      .andWhere({ object: 'changelog' });
+  } catch (e) {
+    logger.error(e);
+    Chad.flex(e.message, e.stack);
+  }
+})();
