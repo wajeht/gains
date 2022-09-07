@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "vite build && node ./src/bin/server.js",
+    "start": "node ./src/bin/server.js",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"nodemon ./src/bin/server.js\" \"vite build --watch --mode development\"",
