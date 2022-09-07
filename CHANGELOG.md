@@ -309,4 +309,4 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-- fixed sessin add button style ([a8282ad](https://github.com/allkindsofgains/gains/commit/a8282ad80e1c782d03f218c134c6d7553230e5c6))
+- fixed session add button style ([a8282ad](https://github.com/allkindsofgains/gains/commit/a8282ad80e1c782d03f218c134c6d7553230e5c6))

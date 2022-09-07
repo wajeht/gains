@@ -29,10 +29,30 @@ onMounted(async () => {
     v-if="!appStore.loading"
     class="container px-3 animate__animated animate__fadeIn animate__faster"
   >
+    <!-- loop -->
     <div class="my-3 d-flex flex-column gap-3">
-      <div class="card">
-        <div class="card-body">
-          <div v-html="changelogs"></div>
+      <div v-for="(cl, i) in changelogs" :key="i" class="card">
+        <div class="card-body mt-0 pt-2">
+          <!-- title -->
+          <div class="d-flex justify-content-between gap-3 align-items-center">
+            <!-- version -->
+            <div v-html="cl.version"></div>
+
+            <!-- collapsed/expend all cards -->
+            <span
+              @click="cl.current = !cl.current"
+              class="p-0 m-0"
+              style="background: none; border: none; box-shadow: none"
+              role="button"
+              v-auto-animate
+            >
+              <i v-if="!cl.current" class="bi bi-chevron-down"></i>
+              <i v-if="cl.current" class="bi bi-chevron-up"></i>
+            </span>
+          </div>
+
+          <!-- changelog -->
+          <div v-if="cl.current" v-html="cl.changelog"></div>
         </div>
       </div>
     </div>

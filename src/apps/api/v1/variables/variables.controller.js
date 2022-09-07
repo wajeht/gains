@@ -211,6 +211,31 @@ export async function getChangelogs(req, res) {
   if (changeLogsInHTMLFormat === null) {
     changeLogsInHTMLFormat = marked.parse(changelogs);
 
+    // grab pattern indexes
+    const versions = changelogs.match(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g);
+
+    // split by pattern
+    changeLogsInHTMLFormat = changelogs
+      .split(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g)
+      .slice(1);
+
+    const result = [];
+    changeLogsInHTMLFormat.forEach((cl, idx) => {
+      let ver = '';
+      let temp;
+      ver = versions[idx];
+      ver = ver.slice(0, 3) + ' Versions' + ver.slice(3);
+      ver = marked.parse(ver);
+      temp = marked.parse(cl);
+      result.push({
+        version: ver,
+        current: idx === 0,
+        changelog: temp,
+      });
+    });
+
+    changeLogsInHTMLFormat = result;
+
     const cache = await redis.set(
       `user-id-${user_id}-changelogs`,
       JSON.stringify(changeLogsInHTMLFormat),
