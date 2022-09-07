@@ -221,16 +221,13 @@ export async function getChangelogs(req, res) {
 
     const result = [];
     changeLogsInHTMLFormat.forEach((cl, idx) => {
-      let ver = '';
-      let temp;
-      ver = versions[idx];
+      let ver = versions[idx];
       ver = ver.slice(0, 3) + ' Versions' + ver.slice(3);
       ver = marked.parse(ver);
-      temp = marked.parse(cl);
       result.push({
         version: ver,
         current: idx === 0,
-        changelog: temp,
+        changelog: marked.parse(cl),
       });
     });
 

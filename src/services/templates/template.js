@@ -7,6 +7,19 @@ import Chad from '../../utils/chad.js';
 export default class Template {
   /* A map of the templates that we have. */
   static _maps = {
+    'new-changelog': {
+      path: path.resolve(path.join('src', 'services', 'templates', 'new-changelog.html')),
+      data: [
+        {
+          name: 'username',
+          type: 'string',
+        },
+        {
+          name: 'changelog',
+          type: 'string',
+        },
+      ],
+    },
     contact: {
       path: path.resolve(path.join('src', 'services', 'templates', 'contact.html')),
       data: [
