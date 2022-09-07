@@ -71,7 +71,7 @@ app.listen(port, () => {
 // ------------------------------ send changelog subscription (production only)  ------------------------------
 (async () => {
   try {
-    if (env != 'prod') {
+    if (env != 'prod' || env != 'production') {
       logger.warn(`Skipping auto changelog email service!`);
       return;
     }
