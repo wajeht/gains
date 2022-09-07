@@ -29,8 +29,10 @@ export default {
   },
   pingTimeout: 3 * 1000,
   pool: {
-    min: 2,
-    max: 10,
+    min: 0,
+    max: 5,
+    acquireTimeoutMillis: 60000,
+    idleTimeoutMillis: 600000,
   },
   acquireConnectionTimeout: 5000,
   migrations: {
