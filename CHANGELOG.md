@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/allkindsofgains/gains/compare/v0.0.3...v0.0.4) (2022-09-07)
+
+### Features
+
+- added a new layout for page that does not need dashboard footer ([#205](https://github.com/allkindsofgains/gains/issues/205)) ([2241507](https://github.com/allkindsofgains/gains/commit/22415077c861beba4cb033217214b89919a242e8))
+- added icons ([e325975](https://github.com/allkindsofgains/gains/commit/e3259755a4978d6e7b3ed7172fa2ff6ab4ea3936))
+- added proper response msg to bodyweight tracker api ([2765f52](https://github.com/allkindsofgains/gains/commit/2765f52d2d2e7e349e29fc92758adec962ec5b73))
+- added styles to header on card ([a2ffd8f](https://github.com/allkindsofgains/gains/commit/a2ffd8f1644e935b4dde6b6ca91342db563ee466))
+- all the change logs are split into individual version ([#206](https://github.com/allkindsofgains/gains/issues/206)) ([d470c27](https://github.com/allkindsofgains/gains/commit/d470c275b43e37b65bfa1f7afe90a11b7b971347))
+- api to pull body weight ([69da30f](https://github.com/allkindsofgains/gains/commit/69da30f3068be679c88e872d438544670a07b591))
+- cache changelogs query ([#193](https://github.com/allkindsofgains/gains/issues/193)) ([f73d0fb](https://github.com/allkindsofgains/gains/commit/f73d0fb637771af491d02e0b6a159af0ef754f79))
+- complte open-powerlifting database ([4245b54](https://github.com/allkindsofgains/gains/commit/4245b545cf228e4ec9305334f0809e0cc16c408c))
+- disbale un-implimented card ([7afb17e](https://github.com/allkindsofgains/gains/commit/7afb17efa005d98cf31b24cc18f2ba879a606d88))
+- disbale un-implimented card ([65b6191](https://github.com/allkindsofgains/gains/commit/65b6191ee0aae003c8e222fa63643e504837bb9e))
+- disbale un-implimented card ([067cbfa](https://github.com/allkindsofgains/gains/commit/067cbfa49ac5d9257b56d68fa85a967b15a793f9))
+- fixed log header not flex on profile ([9f9ee03](https://github.com/allkindsofgains/gains/commit/9f9ee03b8233880767f5e62d096d8508020da407))
+- fixed open powerlifing stuff ([39f7e79](https://github.com/allkindsofgains/gains/commit/39f7e794a6762924acb8990e11d74e3616da1930))
+- fixed style errors ([d3ccb4d](https://github.com/allkindsofgains/gains/commit/d3ccb4d5ade75b58b33c8a8c8c0a4f464c2b3ab0))
+- hide footer menu bar text on mobile ([#204](https://github.com/allkindsofgains/gains/issues/204)) ([f998ed1](https://github.com/allkindsofgains/gains/commit/f998ed15f92aadde7d53813917e83e7ff48441ba))
+- list exercises of a category ([#195](https://github.com/allkindsofgains/gains/issues/195)) ([b65502a](https://github.com/allkindsofgains/gains/commit/b65502a4e581d0966920844e06924b101df4767c))
+- **recovery:** added the ability to log recovery via api/ui ([#203](https://github.com/allkindsofgains/gains/issues/203)) ([b6a0c78](https://github.com/allkindsofgains/gains/commit/b6a0c7827dcc7ee32e48320efd63d5e1585af2b5))
+- refactor categories blocks exercises as a single component ([#198](https://github.com/allkindsofgains/gains/issues/198)) ([d28b670](https://github.com/allkindsofgains/gains/commit/d28b670291a8ffe4f112fdfb495daf5a7a497fa7))
+- the ability to subscribe to changelog release ([#207](https://github.com/allkindsofgains/gains/issues/207)) ([6189ef5](https://github.com/allkindsofgains/gains/commit/6189ef57c13c8ab69e6168d424c1de6207a97c3d))
+- the ability to track bodyweight via api/ui ([#200](https://github.com/allkindsofgains/gains/issues/200)) ([673858a](https://github.com/allkindsofgains/gains/commit/673858a9e6643ae09e296a3c65f89736f82bdb2f))
+- update most of the pages dummy content ([08d81c8](https://github.com/allkindsofgains/gains/commit/08d81c8250336c474145e65289df56dde18eb855))
+
+### Bug Fixes
+
+- fixed card titel not truncucationg ([a826796](https://github.com/allkindsofgains/gains/commit/a82679651702b87b4bf0756512d6840f0d08e0b2))
+- fixed card title not truncating ([19d5a29](https://github.com/allkindsofgains/gains/commit/19d5a2915fe503bdf77eba70cf13a5393869c03a))
+- fixed dashboard now flexing evenly on mobile screen ([#196](https://github.com/allkindsofgains/gains/issues/196)) ([d0a4eb4](https://github.com/allkindsofgains/gains/commit/d0a4eb4a6e6b5de69c57605ed1b0838abe65f6bc))
+- fixed download button was not rendering properly on mobile ([0f37681](https://github.com/allkindsofgains/gains/commit/0f376814dd8344c1e8c3f2ec7086104ef11655e9))
+- fixed duplicated changelogs ([ece3059](https://github.com/allkindsofgains/gains/commit/ece3059bd207c920b0921ee9ca874889b2ae0336))
+
 ### [0.0.3](https://github.com/allkindsofgains/gains/compare/v0.0.2...v0.0.3) (2022-08-31)
 
 ### Features
