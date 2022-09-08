@@ -1,0 +1,18 @@
+{
+  "verbose": false,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "./src/apps/ui",
+    ".logs",
+    "logs/**",
+    "logs",
+    ".gains",
+    ".github",
+    ".husky",
+    "coverage",
+    "docs",
+    "log/*",
+    "src/public"
+  ]
+}
