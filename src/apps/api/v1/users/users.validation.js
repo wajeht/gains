@@ -321,3 +321,19 @@ export const postUpdateProfilePicture = [
       return true;
     }),
 ];
+
+export const postDeleteUserData = [
+  param('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('The user_id must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('The user_id must be an ID!')
+    .bail()
+    .custom(async (value) => {
+      const user = await UserQueries.findUserById(value);
+      if (user.length === 0) throw new Error('User does not exist!');
+    })
+    .toInt(),
+];

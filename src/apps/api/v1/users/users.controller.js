@@ -158,6 +158,12 @@ export async function patchUpdateAccountInformation(req, res) {
   });
 }
 
+/**
+ * It updates the profile picture of a user
+ * @param req - The request object.
+ * @param res - The response object.
+ * @param next - The next middleware function in the stack.
+ */
 export async function postUpdateProfilePicture(req, res, next) {
   const { path: profile_picture_path } = req.file;
   const profile_picture_url = req.file.path.split('public')[1];
@@ -176,5 +182,26 @@ export async function postUpdateProfilePicture(req, res, next) {
     request_url: req.originalUrl,
     message: 'The resource was updated successfully!',
     data: updated,
+  });
+}
+
+/**
+ * It deletes all of the user's data from the database.
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function postDeleteUserData(req, res) {
+  const { user_id } = req.params;
+  const deleted = await UsersQueries.deleteUserData(user_id);
+
+  logger.info(
+    `User id ${user_id} has deleted all of comments, videos, variables, sets, logs, sessions and blocks`,
+  );
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: deleted,
   });
 }
