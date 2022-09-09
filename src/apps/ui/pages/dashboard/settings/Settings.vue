@@ -14,10 +14,40 @@ const alert = reactive({
 });
 
 const appStore = useAppStore();
-
 const userStore = useUserSore();
 
-async function deleteAllData() {}
+const deleteAllDataOfAUserLoading = ref(false);
+
+async function deleteAllDataOfAUser() {
+  try {
+    deleteAllDataOfAUserLoading.value = true;
+
+    const res = await api.delete(`/api/v1/users/${userStore.user.id}/data`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    deleteAllDataOfAUserLoading.value = false;
+    clearAndDismissModal('delete-all-data-of-a-user');
+  } catch (e) {
+    clearAndDismissModal('delete-all-data-of-a-user');
+    deleteAllDataOfAUserLoading.value = false;
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 
 async function downloadData() {}
 
@@ -45,6 +75,7 @@ async function clearAllCache() {
     alert.type = 'success';
     alert.msg = 'Cache has been cleared!';
   } catch (e) {
+    appStore.loading = false;
     clearAllCacheLoading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -141,8 +172,10 @@ async function clearAllCache() {
           <div class="list-group">
             <!-- email -->
             <span
-              style="background: #f1f1f1"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+              role="button"
+              data-bs-toggle="modal"
+              data-bs-target="#delete-all-data-of-a-user"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
@@ -314,4 +347,66 @@ async function clearAllCache() {
       </div>
     </div>
   </div>
+
+  <!-- delete all data of a  user modal -->
+  <form
+    @submit.prevent="deleteAllDataOfAUser()"
+    class="modal fade px-2 py-5"
+    id="delete-all-data-of-a-user"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm</h5>
+          <button
+            @click="clearAndDismissModal('delete-all-data-of-a-user')"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            :disabled="deleteAllDataOfAUserLoading"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0 pb-0 text-center">
+            Are you sure you want to delete all of your data? This cannot be undone!
+          </p>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearAndDismissModal('delete-all-data-of-a-user')"
+            v-if="!deleteAllDataOfAUserLoading"
+            type="reset"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
+
+          <!-- confirm -->
+          <button type="submit" class="btn btn-success" :disabled="deleteAllDataOfAUserLoading">
+            <div
+              v-if="deleteAllDataOfAUserLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!deleteAllDataOfAUserLoading"
+              ><i class="bi bi-check-circle-fill"></i> Confirm
+            </span>
+            <span v-if="deleteAllDataOfAUserLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </template>
