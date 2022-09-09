@@ -92,6 +92,18 @@ users.patch(
 );
 
 /**
+ * DELETE /api/v1/users/{user_id}/data
+ * @tags users
+ * @summary delete a user data from the database
+ * @param {number} user_id.path.required - user id
+ */
+users.delete(
+  '/:user_id/data',
+  validator(UsersValidation.postDeleteUserData),
+  catchAsyncErrors(UsersController.postDeleteUserData),
+);
+
+/**
  * DELETE /api/v1/users/{id}
  * @tags users
  * @summary delete a user from the database

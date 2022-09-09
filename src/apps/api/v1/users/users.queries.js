@@ -122,10 +122,32 @@ export function updateAccountInformation(id, body) {
     .returning('*');
 }
 
+/**
+ * Update the profile picture path and url in the user_details table where the user_id matches the
+ * user_id passed in
+ * @returns The updated user_details row.
+ */
 export function updateProfilePicture({ profile_picture_url, profile_picture_path, user_id }) {
   return db
     .update({ profile_picture_path, profile_picture_url })
     .from('user_details')
     .where({ user_id })
     .returning('*');
+}
+
+/**
+ * It deletes all the data associated with a user
+ * @param user_id - The user's id
+ * @returns An array of promises.
+ */
+export function deleteUserData(user_id) {
+  return Promise.all([
+    db.update({ deleted: true }).from('comments').where({ user_id }).returning('*'),
+    db.update({ deleted: true }).from('videos').where({ user_id }).returning('*'),
+    db.update({ deleted: true }).from('variables').where({ user_id }).returning('*'),
+    db.update({ deleted: true }).from('sets').where({ user_id }).returning('*'),
+    db.update({ deleted: true }).from('logs').where({ user_id }).returning('*'),
+    db.update({ deleted: true }).from('sessions').where({ user_id }).returning('*'),
+    db.update({ deleted: true }).from('blocks').where({ user_id }).returning('*'),
+  ]);
 }
