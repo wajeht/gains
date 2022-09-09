@@ -11,6 +11,8 @@ import { env, domain, jwt_secret } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../../utils/pkg.js';
 
+import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
+
 /**
  * It takes in a request and a response object, and returns a JSON object with a token
  * @param req - The request object.
@@ -150,6 +152,10 @@ export async function getVerifyEmail(req, res) {
   if (!verified) throw new CustomError.BadRequestError(`Something went wrong with verifying user id ${uid}!`); // prettier-ignore
 
   logger.info(`User id ${uid} was successfully verified!`);
+
+  const gde = await generateDefaultExercises(uid);
+
+  logger.info(`Generated default exercises for User id ${uid}!`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',

@@ -131,6 +131,9 @@ export async function deleteSession(req, res) {
 
   if (!session.length) throw new CustomError.BadRequestError(`Something went wrong while deleting session id ${sid}!`); // prettier-ignore
 
+  const deletedCacheSessions = await redis.del(`user-id-${uid}-sessions`);
+  const deletedCacheCommunitySessions = await redis.del(`user-id-${uid}-community-sessions`);
+
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,

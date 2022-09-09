@@ -5,6 +5,7 @@ import Password from '../../../utils/password.js';
 import { red } from '../../../utils/rainbow-log.js';
 import logger from '../../../utils/logger.js';
 import requestIp from 'request-ip';
+import { env } from './.././../../config/env.js';
 
 /* A validation for the user input. */
 export const getReverify = [
@@ -131,7 +132,9 @@ export const getVerifyEmail = [
       const exist = await UserQueries.findUserByParam({ id: uid });
       // user does not exist
       // TODO!: we should not return invalid uid for security
-      red('TODO!: we should not return invalid uid for security');
+      if (env === 'dev' || env === 'development') {
+        red('TODO!: we should not return invalid uid for security');
+      }
       if (exist.length === 0) {
         throw new Error(`User ID: ${uid} is invalid to verify email process!`);
       }
@@ -190,7 +193,9 @@ export const postResetPassword = [
       const ip = requestIp.getClientIp(req);
       const exist = await UserQueries.findUserByParam({ id: uid });
       // user does not exist
-      red('TODO!: we should not return invalid uid for security');
+      if (env === 'dev' || env === 'development') {
+        red('TODO!: we should not return invalid uid for security');
+      }
       if (exist.length === 0) {
         logger.info(`IP: ${ip} attempt to proceed to reset password with invalid UserID: ${uid}!`);
         throw new Error(`User ID: ${uid} is invalid to proceed password resetting process!`); // prettier-ignore

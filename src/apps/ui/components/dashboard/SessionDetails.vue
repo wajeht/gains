@@ -160,6 +160,7 @@ async function getCurrentSessionDetails() {
 
     return result;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -185,6 +186,7 @@ async function getUserExerciseCategories() {
 
     return json.data;
   } catch (e) {
+    appStore.loading = false;
     loading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -333,6 +335,7 @@ async function getAllUserExercises() {
 
     addAExerciseAllExercises.value = json.data;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');

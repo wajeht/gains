@@ -388,6 +388,7 @@ export async function getAllSessions() {
       l.deleted = false
       and l.private = false
       and ss.end_date is not null
+      and v.deleted = false
     )
     group by
       l.id
@@ -464,6 +465,27 @@ export async function getAllSessions() {
 export async function softDeleteSession(sid, uid) {
   await db.update({ deleted: true }).from('sets').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
   await db.update({ deleted: true }).from('variables').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  await db.update({ deleted: true }).from('gains_meta').where({ user_id: uid }).andWhereRaw(`(json->'session_id')::int = ?`, [sid]); // prettier-ignore
+  // await db.update({ deleted: true }).from('gains_meta').where({ user_id: uid }).andWhereRaw(`(json->'session_id')::int = ?`, [sid]); // prettier-ignore
+  await db.update({ deleted: true }).from('logs').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
+  await db.update({ deleted: true }).from('videos').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
+  await db.update({ deleted: true }).from('comments').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
+  await db.update({ deleted: true }).from('sets').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
+  await db.update({ deleted: true }).from('variables').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
   return db.update({ deleted: true }).from('sessions').where({ id: sid }).andWhere({ user_id: uid }).returning('*'); // prettier-ignore
+}
+
+/**
+ * It undoes the soft delete of a session by setting the deleted flag to false for all the tables that
+ * are associated with a session
+ * @returns The session that was undeleted.
+ */
+export async function undoSoftDeleteSession({ user_id, session_id }) {
+  await db.update({ deleted: false }).from('sets').where({ session_id }).andWhere({ user_id}); // prettier-ignore
+  await db.update({ deleted: false }).from('variables').where({ session_id }).andWhere({ user_id}); // prettier-ignore
+  await db.update({ deleted: false }).from('logs').where({ session_id }).andWhere({ user_id}); // prettier-ignore
+  await db.update({ deleted: false }).from('videos').where({ session_id }).andWhere({ user_id}); // prettier-ignore
+  await db.update({ deleted: false }).from('comments').where({ session_id }).andWhere({ user_id}); // prettier-ignore
+  await db.update({ deleted: false }).from('sets').where({ session_id }).andWhere({ user_id}); // prettier-ignore
+  await db.update({ deleted: false }).from('variables').where({ session_id }).andWhere({ user_id}); // prettier-ignore
+  return db.update({ deleted: false }).from('sessions').where({ id: sid }).andWhere({ user_id: uid }).returning('*'); // prettier-ignore
 }

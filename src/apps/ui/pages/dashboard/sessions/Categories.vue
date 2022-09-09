@@ -76,6 +76,7 @@ async function getUserExerciseCategories() {
 
     return json.data;
   } catch (e) {
+    appStore.loading = false;
     loading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
