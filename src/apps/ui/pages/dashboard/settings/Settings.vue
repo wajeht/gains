@@ -170,6 +170,20 @@ async function clearAllCache() {
         <div>
           <h5><i class="bi bi-file-earmark-bar-graph"></i> Data</h5>
           <div class="list-group">
+            <!-- download -->
+            <span
+              style="background: #f1f1f1"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">Download your data</h6>
+                  <p class="mb-0 opacity-75">Export all of your data via CSV format!</p>
+                </div>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              </div>
+            </span>
+
             <!-- delete data -->
             <span
               role="button"
@@ -181,20 +195,6 @@ async function clearAllCache() {
                 <div>
                   <h6 class="mb-0">Delete all data</h6>
                   <p class="mb-0 opacity-75">One click to wipe your data, but not account!</p>
-                </div>
-                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
-              </div>
-            </span>
-
-            <!-- download -->
-            <span
-              style="background: #f1f1f1"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
-            >
-              <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                  <h6 class="mb-0">Download your data</h6>
-                  <p class="mb-0 opacity-75">Export all of your data via CSV format!</p>
                 </div>
                 <!-- <small class="opacity-50 text-nowrap">v1</small> -->
               </div>
