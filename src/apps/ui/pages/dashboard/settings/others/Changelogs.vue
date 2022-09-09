@@ -70,6 +70,7 @@ async function getChangelogs() {
 
     return json.changelogs;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -166,13 +167,13 @@ function clearDataAndDismissSubscribeChangelogRelease() {
     v-if="!appStore.loading"
     class="container px-3 animate__animated animate__fadeIn animate__faster"
   >
-    <!-- alert -->
-    <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
-      <span>{{ alert.msg }}</span>
-    </div>
-
-    <!-- loop -->
     <div class="my-3 d-flex flex-column gap-3">
+      <!-- alert -->
+      <div v-if="alert.type" :class="`alert-${alert.type}`" class="mb-0 alert">
+        <span>{{ alert.msg }}</span>
+      </div>
+
+      <!-- loop -->
       <div class="card">
         <div class="card-body d-flex flex-column justify-content-center text-center">
           <!-- subscribe -->
