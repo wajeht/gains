@@ -170,7 +170,7 @@ async function clearAllCache() {
         <div>
           <h5><i class="bi bi-file-earmark-bar-graph"></i> Data</h5>
           <div class="list-group">
-            <!-- email -->
+            <!-- delete data -->
             <span
               role="button"
               data-bs-toggle="modal"
@@ -186,7 +186,7 @@ async function clearAllCache() {
               </div>
             </span>
 
-            <!-- csv -->
+            <!-- download -->
             <span
               style="background: #f1f1f1"
               class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
