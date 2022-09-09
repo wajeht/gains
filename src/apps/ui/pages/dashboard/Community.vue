@@ -58,6 +58,7 @@ async function getSessions() {
 
     return json.data;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
