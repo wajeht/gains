@@ -1,7 +1,7 @@
 {
   "name": "gains",
   "version": "0.0.4",
-  "description": "The best way to track your workouts",
+  "description": "All in one tools to help strength athletes load the right amount of training dosage!",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -45,7 +45,10 @@
     "deadlift",
     "press"
   ],
-  "author": "wajeht",
+  "author": {
+    "name": "wajeht",
+    "url": "https://jaw.dev/"
+  },
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/allkindsofgains/gains/issues"
@@ -101,7 +104,6 @@
     "pino-pretty": "^8.1.0",
     "read-pkg": "^7.1.0",
     "request-ip": "^3.0.2",
-    "shelljs": "^0.8.5",
     "supertest": "^6.2.3",
     "typed.js": "^2.0.12",
     "uuid": "^8.3.2",

@@ -1,12 +1,6 @@
 import cac from 'cac';
-import fs from 'fs';
-import { exec } from 'child_process';
-import shell from 'shelljs';
-import cp from 'child_process';
 import path from 'path';
-
-let pkg = fs.readFileSync(path.resolve(path.join(process.cwd(), 'package.json')), 'utf-8');
-pkg = JSON.parse(pkg);
+import pkg from '../../utils/pkg.js';
 
 const cli = cac();
 
