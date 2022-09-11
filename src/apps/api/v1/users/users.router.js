@@ -104,6 +104,18 @@ users.delete(
 );
 
 /**
+ * POST /api/v1/users/{user_id}/restore-data
+ * @tags users
+ * @summary restore user data
+ * @param {number} user_id.path.required - user id
+ */
+users.post(
+  '/:user_id/restore-data',
+  validator(UsersValidation.postRestoreUserData),
+  catchAsyncErrors(UsersController.postRestoreUserData),
+);
+
+/**
  * DELETE /api/v1/users/{id}
  * @tags users
  * @summary delete a user from the database

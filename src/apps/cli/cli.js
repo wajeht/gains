@@ -1,17 +1,10 @@
-import cac from 'cac';
-import path from 'path';
+#! /usr/bin/env node
+
 import pkg from '../../utils/pkg.js';
+import minimist from 'minimist';
 
-const cli = cac();
+const cli = minimist(process.argv.slice(2));
 
-cli.command('run', 'dev').action((options) => {
-  const p = path.resolve(path.join(process.cwd(), 'src', 'bin', 'run-dev.sh'));
-  shell.chmod('+x', p);
-  shell.exec(`${p}`);
-});
-
-cli.help();
-
-cli.version(pkg.version);
+console.log(cli._);
 
 export default cli;
