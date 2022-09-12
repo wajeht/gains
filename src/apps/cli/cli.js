@@ -1,17 +1,35 @@
-import cac from 'cac';
-import path from 'path';
-import pkg from '../../utils/pkg.js';
+#! /usr/bin/env node
 
-const cli = cac();
+import minimist from 'minimist';
+import commands from './commands/commands.js';
 
-cli.command('run', 'dev').action((options) => {
-  const p = path.resolve(path.join(process.cwd(), 'src', 'bin', 'run-dev.sh'));
-  shell.chmod('+x', p);
-  shell.exec(`${p}`);
-});
+const args = minimist(process.argv.slice(2));
+let cmd = args._[0];
 
-cli.help();
+// -v or --version
+// example: gains -v
+// example: gains --version
+if (args.v || args.version) cmd = 'version';
 
-cli.version(pkg.version);
+// -h or --help
+// example: gains -h
+// example: gains --help
+if (args.h || args.help) cmd = 'help';
 
-export default cli;
+switch (cmd) {
+  case 'restore-data':
+    commands.restoreData(args);
+    break;
+
+  case 'version':
+    commands.version(args);
+    break;
+
+  case 'help':
+    commands.help(args);
+    break;
+
+  default:
+    commands.help(args);
+    break;
+}

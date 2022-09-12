@@ -3,6 +3,7 @@ import * as UsersQueries from './users.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import { omit, without } from 'lodash-es';
+import * as CacheQueries from '../cache/cache.queries.js';
 
 /**
  * check to see if a current users authentication is still valid
@@ -198,10 +199,38 @@ export async function postDeleteUserData(req, res) {
     `User id ${user_id} has deleted all of comments, videos, variables, sets, logs, sessions and blocks`,
   );
 
+  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+
+  logger.info(`User id ${user_id} has cleared all of their cached data!`);
+
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was updated successfully!',
     data: deleted,
+  });
+}
+
+/**
+ * It restores all of the user's data.
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function postRestoreUserData(req, res) {
+  const { user_id } = req.params;
+
+  const restore = await UsersQueries.restoreUserData(user_id);
+
+  logger.info(`User id ${user_id} has restore all of their data!`);
+
+  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+
+  logger.info(`User id ${user_id} has cleared all of their cached data!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: [],
   });
 }
