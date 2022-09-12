@@ -35,6 +35,9 @@ async function deleteAllDataOfAUser() {
 
     deleteAllDataOfAUserLoading.value = false;
     clearAndDismissModal('delete-all-data-of-a-user');
+
+    alert.type = 'success';
+    alert.msg = 'All user training data has been deleted!';
   } catch (e) {
     clearAndDismissModal('delete-all-data-of-a-user');
     deleteAllDataOfAUserLoading.value = false;
@@ -94,7 +97,7 @@ async function clearAllCache() {
 
   <!-- settings -->
   <div class="container px-3 animate__animated animate__fadeIn animate__faster">
-    <div class="flex flex-column justify-content-between my-3">
+    <div class="flex flex-column justify-content-between my-3" v-auto-animate>
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="alert">
         <span>{{ alert.msg }}</span>

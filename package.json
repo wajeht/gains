@@ -1,7 +1,7 @@
 {
   "name": "gains",
   "version": "0.0.4",
-  "description": "The best way to track your workouts",
+  "description": "All in one tools to help strength athletes load the right amount of training dosage!",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -28,7 +28,7 @@
     "commit": "git add -A && cz"
   },
   "bin": {
-    "gains": "./src/bin/gains.js"
+    "gains": "./src/apps/cli/cli.js"
   },
   "repository": {
     "type": "git",
@@ -45,7 +45,10 @@
     "deadlift",
     "press"
   ],
-  "author": "wajeht",
+  "author": {
+    "name": "wajeht",
+    "url": "https://jaw.dev/"
+  },
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/allkindsofgains/gains/issues"
@@ -66,7 +69,6 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.1.3",
     "bootstrap-icons": "^1.9.1",
-    "cac": "^6.7.12",
     "chalk": "^4.1.2",
     "chart.js": "^3.9.1",
     "compression": "^1.7.4",
@@ -90,6 +92,7 @@
     "knex-paginate": "^3.0.1",
     "lodash-es": "^4.17.21",
     "marked": "^4.0.18",
+    "minimist": "^1.2.6",
     "multer": "^1.4.5-lts.1",
     "node-cron": "^3.0.1",
     "nodemailer": "^6.7.6",
@@ -101,7 +104,6 @@
     "pino-pretty": "^8.1.0",
     "read-pkg": "^7.1.0",
     "request-ip": "^3.0.2",
-    "shelljs": "^0.8.5",
     "supertest": "^6.2.3",
     "typed.js": "^2.0.12",
     "uuid": "^8.3.2",

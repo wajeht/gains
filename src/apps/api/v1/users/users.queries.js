@@ -151,3 +151,20 @@ export function deleteUserData(user_id) {
     db.update({ deleted: true }).from('blocks').where({ user_id }).returning('*'),
   ]);
 }
+
+/**
+ * It restores all the data for a user that has been deleted
+ * @param user_id - the user's id
+ * @returns An array of promises.
+ */
+export function restoreUserData(user_id) {
+  return Promise.all([
+    db.update({ deleted: false }).from('comments').where({ user_id }).returning('*'),
+    db.update({ deleted: false }).from('videos').where({ user_id }).returning('*'),
+    db.update({ deleted: false }).from('variables').where({ user_id }).returning('*'),
+    db.update({ deleted: false }).from('sets').where({ user_id }).returning('*'),
+    db.update({ deleted: false }).from('logs').where({ user_id }).returning('*'),
+    db.update({ deleted: false }).from('sessions').where({ user_id }).returning('*'),
+    db.update({ deleted: false }).from('blocks').where({ user_id }).returning('*'),
+  ]);
+}

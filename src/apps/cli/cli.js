@@ -1,23 +1,35 @@
-import cac from 'cac';
-import fs from 'fs';
-import { exec } from 'child_process';
-import shell from 'shelljs';
-import cp from 'child_process';
-import path from 'path';
+#! /usr/bin/env node
 
-let pkg = fs.readFileSync(path.resolve(path.join(process.cwd(), 'package.json')), 'utf-8');
-pkg = JSON.parse(pkg);
+import minimist from 'minimist';
+import commands from './commands/commands.js';
 
-const cli = cac();
+const args = minimist(process.argv.slice(2));
+let cmd = args._[0];
 
-cli.command('run', 'dev').action((options) => {
-  const p = path.resolve(path.join(process.cwd(), 'src', 'bin', 'run-dev.sh'));
-  shell.chmod('+x', p);
-  shell.exec(`${p}`);
-});
+// -v or --version
+// example: gains -v
+// example: gains --version
+if (args.v || args.version) cmd = 'version';
 
-cli.help();
+// -h or --help
+// example: gains -h
+// example: gains --help
+if (args.h || args.help) cmd = 'help';
 
-cli.version(pkg.version);
+switch (cmd) {
+  case 'restore-data':
+    commands.restoreData(args);
+    break;
 
-export default cli;
+  case 'version':
+    commands.version(args);
+    break;
+
+  case 'help':
+    commands.help(args);
+    break;
+
+  default:
+    commands.help(args);
+    break;
+}
