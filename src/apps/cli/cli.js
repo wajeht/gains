@@ -25,6 +25,10 @@ switch (cmd) {
     commands.version(args);
     break;
 
+  case 'users':
+    commands.users(args);
+    break;
+
   case 'help':
     commands.help(args);
     break;

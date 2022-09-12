@@ -37,7 +37,7 @@ export default async function restoreData(args) {
     // success code
     process.exit(0);
   } catch (e) {
-    Logger.error(e.message);
+    Logger.error(e?.response?.data ?? e.message);
     process.exit(1);
   }
 }
