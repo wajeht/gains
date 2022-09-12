@@ -71,6 +71,5 @@
     "wout",
     "yanlon"
   ],
-  "typescript.tsdk": "node_modules/typescript/lib",
   "dotenv.enableAutocloaking": true
 }

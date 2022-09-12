@@ -234,3 +234,27 @@ export async function postRestoreUserData(req, res) {
     data: [],
   });
 }
+
+/**
+ * It restores a user's account and clears all of their cached data.
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function postRestoreUser(req, res) {
+  const { user_id } = req.params;
+
+  const restore = await UsersQueries.postRestoreUser(user_id);
+
+  logger.info(`User id ${user_id} has been restored!`);
+
+  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+
+  logger.info(`User id ${user_id} has cleared all of their cached data!`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was updated successfully!',
+    data: restore,
+  });
+}

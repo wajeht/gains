@@ -168,3 +168,12 @@ export function restoreUserData(user_id) {
     db.update({ deleted: false }).from('blocks').where({ user_id }).returning('*'),
   ]);
 }
+
+/**
+ * Update the user with the given id and set the deleted field to true, returning the updated user.
+ * @param user_id - The id of the user to be restored.
+ * @returns The user object
+ */
+export function postRestoreUser(user_id) {
+  return db.update({ deleted: false }).from('users').where({ id: user_id }).returning('*');
+}
