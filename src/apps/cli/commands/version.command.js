@@ -1,8 +1,9 @@
+import pkg from '../../../utils/pkg.js';
 import Logger from '../../../utils/logger.js';
 
-export default function help(args) {
+export default function version(args) {
   try {
-    console.log(args, 'help() function has not been implemented yet!');
+    console.log(`\n Gains v${pkg.version} \n`);
     process.exit(0);
   } catch (e) {
     Logger.error(e.message);
