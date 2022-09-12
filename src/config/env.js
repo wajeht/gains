@@ -10,7 +10,7 @@ fs.access(path.join(root, '.env'), (err) => {
     logger.error('No .env file found!');
     // process.exit(1); // this causes test to failed on github action
   }
-  logger.info('Found .env file!');
+  // logger.info('Found .env file!');
 });
 
 /* Loading the .env file. */

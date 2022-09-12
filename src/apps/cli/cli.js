@@ -17,10 +17,6 @@ if (args.v || args.version) cmd = 'version';
 if (args.h || args.help) cmd = 'help';
 
 switch (cmd) {
-  case 'restore-data':
-    commands.restoreData(args);
-    break;
-
   case 'version':
     commands.version(args);
     break;
