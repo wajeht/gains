@@ -10,7 +10,8 @@ export async function verifyUser(uid, date) {
   return db
     .update({ verified: true, verified_at: date })
     .from('user_details')
-    .where({ user_id: uid });
+    .where({ user_id: uid })
+    .returning('*');
 }
 
 /**

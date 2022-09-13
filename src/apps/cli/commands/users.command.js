@@ -1,7 +1,11 @@
 import * as UsersQueries from '../../api/v1/users/users.queries.js';
 import * as CacheQueries from '../../api/v1/cache/cache.queries.js';
+import * as AuthQueries from '../../api/auth/auth.queries.js';
 import Logger from '../../../utils/logger.js';
 import axios from '../../../utils/axios.cli.js';
+import { faker } from '@faker-js/faker';
+import Password from '../../../utils/password.js';
+import crypto from 'crypto';
 
 // gains users --restore-data --user-id=1 --prod
 // gains users --clear-cache --user-id=1 --prod
@@ -89,13 +93,97 @@ async function disable(user_id, prod = false) {
   }
 }
 
+async function add(email, prod = false, verify = true, demo = false) {
+  try {
+    const hashedPassword = await Password.hash(faker.internet.password(12, false));
+    const verificationToken = crypto.randomBytes(64).toString('hex');
+
+    const newUser = {
+      email: faker.internet.email(),
+      username: faker.internet.userName(),
+      password: hashedPassword,
+      first_name: faker.name.firstName(),
+      last_name: faker.name.lastName(),
+      birth_date: faker.date.birthdate(),
+      weight: faker.datatype.number(300),
+      profile_picture_url: faker.image.abstract(),
+    };
+
+    // gains users --add --email=test@domain.com --verify --prod
+    if (prod == true && verify == true) {
+      const user = await (
+        await axios.post(`/api/auth/signup`, {
+          email: email,
+          username: newUser.username,
+          password: newUser.password,
+        })
+      ).data;
+      console.log(user);
+      process.exit(0);
+    }
+
+    // gains users --add --demo
+    if (demo == true && prod == false) {
+      const [user] = await UsersQueries.createUser(
+        {
+          email: newUser.email,
+          username: newUser.username,
+          password: newUser.password,
+        },
+        verificationToken,
+      );
+
+      const date = new Date();
+      const [verified] = await AuthQueries.verifyUser(user.id, date);
+
+      const { email, username, password, ...rest } = newUser;
+      const [updated] = await UsersQueries.updateUserById(verified.id, rest);
+
+      Logger.info(`A new demo user has been generated!\n`);
+      console.log(updated);
+    }
+
+    process.exit(0);
+  } catch (e) {
+    Logger.error(e?.response?.data ?? e.message);
+    process.exit(1);
+  }
+}
+
+async function validate({ ...args }) {
+  try {
+    const { prod, verify, user_id, email } = args;
+
+    // ---------- prod
+
+    // prettier-ignore
+    if (prod && user_id) await (await axios.get(`/api/v1/users/${user_id}`)).data.data;
+    if (prod && email) await (await axios.get(`/api/v1/users?email=${email}`)).data.data;
+
+    // ---------- dev
+
+    if (user_id) {
+      const user_user_id = await UsersQueries.findUserById(user_id);
+      if (user_user_id.length === 0) throw new Error(`User does not exit with user_id ${user_id}!`);
+    }
+
+    if (email) {
+      const user_email = await UsersQueries.findUserByParam({ email });
+      if (user_email.length) throw new Error(`User exit with email ${email}!`);
+    }
+  } catch (e) {
+    Logger.error(e?.response?.data ?? e.message);
+    process.exit(1);
+  }
+}
+
 export default async function users(args) {
   try {
     // example commands ===>    gains users --enable
     // args ===>                { _: [ 'users' ], enable: true }
     // Object.keys(args) ===>   [ '_', 'enable' ]
 
-    const ACTIONS = ['restore-data', 'disable', 'enable', 'clear-cache'];
+    const ACTIONS = ['restore-data', 'disable', 'enable', 'clear-cache', 'add'];
     const action = Object.keys(args)[1];
 
     // check if the actions include some of the available commands
@@ -103,40 +191,36 @@ export default async function users(args) {
     if (!isValidActions) throw new Error(`Action commands should be any of ${ACTIONS.join(', ')}!`);
 
     const user_id = args['user-id'];
-    const prod = args.prod;
-    let user;
+    const email = args['email'];
+    const verify = args['verify'];
+    const prod = args['prod'];
+    const demo = args['demo'];
 
-    // check for null and valid type
-    if (user_id === null) throw new Error('user-id must not be null!');
-    if (typeof user_id !== 'number') throw new Error('user-id must be a number!');
-
-    // check if it was validity of user_id
-    // prod
-    if (prod) {
-      Logger.warn('--prod was given, Running for production database!');
-      [user] = await (await axios.get(`/api/v1/users/${user_id}`)).data.data;
-      // Logger.info(`User ID: ${user_id} is a valid user!`);
-    }
-    // dev
-    else {
-      [user] = await UsersQueries.findUserById(user_id);
-      if (user === null || user === undefined) throw new Error(`user-id ${user_id} does not exit!`);
-    }
+    if (prod) Logger.warn('--prod was given, Running for production database!');
 
     switch (action) {
+      case 'add':
+        await validate({ email, verify, prod });
+        await add(email, verify, prod, demo);
+        break;
+
       case 'restore-data':
+        await validate({ user_id, prod });
         await restoreData(user_id, prod);
         break;
 
       case 'clear-cache':
+        await validate({ user_id, prod });
         await clearCache(user_id, prod);
         break;
 
       case 'enable':
+        await validate({ user_id, prod });
         await enable(user_id, prod);
         break;
 
       case 'disable':
+        await validate({ user_id, prod });
         await disable(user_id, prod);
         break;
 
