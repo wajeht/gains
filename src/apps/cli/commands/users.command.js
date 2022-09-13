@@ -95,7 +95,8 @@ async function disable(user_id, prod = false) {
 
 async function add(email, prod = false, verify = true, demo = false) {
   try {
-    const hashedPassword = await Password.hash(faker.internet.password(12, false));
+    const plainPassword = faker.internet.password(12, false);
+    const hashedPassword = await Password.hash(plainPassword);
     const verificationToken = crypto.randomBytes(64).toString('hex');
 
     const newUser = {
@@ -118,6 +119,8 @@ async function add(email, prod = false, verify = true, demo = false) {
           password: newUser.password,
         })
       ).data;
+      user.data[0].password = plainPassword;
+      Logger.info(`A new demo user has been generated!\n`);
       console.log(user);
       process.exit(0);
     }
@@ -140,6 +143,7 @@ async function add(email, prod = false, verify = true, demo = false) {
       const [updated] = await UsersQueries.updateUserById(verified.id, rest);
 
       Logger.info(`A new demo user has been generated!\n`);
+      updated.password = plainPassword;
       console.log(updated);
     }
 
