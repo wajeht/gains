@@ -21,6 +21,10 @@ switch (cmd) {
     commands.version(args);
     break;
 
+  case 'check-prod':
+    commands.checkProd();
+    break;
+
   case 'users':
     commands.users(args);
     break;
