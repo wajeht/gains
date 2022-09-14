@@ -7,6 +7,7 @@ import { faker } from '@faker-js/faker';
 import Password from '../../../utils/password.js';
 import crypto from 'crypto';
 import { red } from '../../../utils/rainbow-log.js';
+import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 
 // gains users --restore-data --user-id=1 --prod
 // gains users --clear-cache --user-id=1 --prod
@@ -180,6 +181,10 @@ async function add({ email, prod = false, verify = false, demo = false }) {
 
       const { email, username, password, ...rest } = newUser;
       const [updated] = await UsersQueries.updateUserById(verified.id, rest);
+
+      const gde = await generateDefaultExercises(updated.id);
+
+      Logger.info(`Generated default exercises for User id ${updated.id}!`);
 
       Logger.info(`A new demo user has been generated!\n`);
       updated.password = plainPassword;
