@@ -112,7 +112,6 @@ export async function postSignup(req, res) {
   // we skip sending email for verification
   const { verify } = req.query;
   if (verify === true) {
-    console.log({ verify });
     const date = new Date();
     const [verifiedUser] = await AuthQueries.verifyUser(user.id, date);
 
