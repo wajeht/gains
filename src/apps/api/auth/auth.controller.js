@@ -115,15 +115,20 @@ export async function postSignup(req, res) {
     console.log({ verify });
     const date = new Date();
     const [verifiedUser] = await AuthQueries.verifyUser(user.id, date);
+
     logger.info(`User id ${user.id} was auto verified because of verify query!`);
+
     const gde = await generateDefaultExercises(user.id);
+
     logger.info(`Generated default exercises for User id ${user.id}!`);
+
+    user.verified = true;
 
     return res.status(StatusCodes.CREATED).json({
       status: 'success',
       request_url: req.originalUrl,
       message: 'The resource was created successfully!',
-      data: [verifiedUser],
+      data: [user],
     });
   }
 

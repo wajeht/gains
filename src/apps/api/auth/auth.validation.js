@@ -1,6 +1,6 @@
 import { param, body, query } from 'express-validator';
 import * as UserQueries from '../v1/users/users.queries.js';
-import { isEqual } from 'lodash-es';
+import { isEqual, kebabCase } from 'lodash-es';
 import Password from '../../../utils/password.js';
 import { red } from '../../../utils/rainbow-log.js';
 import logger from '../../../utils/logger.js';
@@ -85,7 +85,8 @@ export const postSignup = [
     .bail()
     .isBoolean()
     .withMessage('verify must be a boolean format!')
-    .bail(),
+    .bail()
+    .toBoolean(),
   body('email')
     .trim()
     .notEmpty()
