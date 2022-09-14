@@ -103,9 +103,29 @@ export async function postSignup(req, res) {
     email: req.body.email,
     password: hashedPassword,
   };
+
   // create user
   const [user] = await UsersQueries.createUser(newUser, verificationToken);
   logger.info(`User ID: ${user.id} was created!`);
+
+  // if /api/auth/signup?verify=true
+  // we skip sending email for verification
+  const { verify } = req.query;
+  if (verify === true) {
+    console.log({ verify });
+    const date = new Date();
+    const [verifiedUser] = await AuthQueries.verifyUser(user.id, date);
+    logger.info(`User id ${user.id} was auto verified because of verify query!`);
+    const gde = await generateDefaultExercises(user.id);
+    logger.info(`Generated default exercises for User id ${user.id}!`);
+
+    return res.status(StatusCodes.CREATED).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was created successfully!',
+      data: [verifiedUser],
+    });
+  }
 
   let origin = '';
 

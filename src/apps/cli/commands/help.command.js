@@ -21,10 +21,11 @@ COMMANDS:
   version     gains version information
 
 users:
-  --enable --user-id=<USER_ID>
-  --disable --user-id=<USER_ID>
-  --clear-cache --user-id=<USER_ID>
-  --restore-data --user-id=<USER_ID>
+  --enable --user-id=<user id> (optional --prod)
+  --disable --user-id=<user id> (optional --prod)
+  --clear-cache --user-id=<user id> (optional --prod)
+  --restore-data --user-id=<user id> (optional --prod)
+  --add --email=<email address> (optional: --verify, --demo, --prod)
 `;
 
 export default function help(args) {
