@@ -25,7 +25,7 @@ users:
   --disable --user-id=<user id> (optional --prod)
   --clear-cache --user-id=<user id> (optional --prod)
   --restore-data --user-id=<user id> (optional --prod)
-  --add --email=<email address> (optional: --verify)
+  --add --email=<email address> (optional: --verify, --demo, --prod)
 `;
 
 export default function help(args) {

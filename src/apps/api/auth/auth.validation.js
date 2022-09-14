@@ -77,6 +77,15 @@ export const postSignup = [
     if (!equal) throw new Error('Fields must be in required format!');
     return true;
   }),
+  query('verify')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('verify must not be empty!')
+    .bail()
+    .isBoolean()
+    .withMessage('verify must be a boolean format!')
+    .bail(),
   body('email')
     .trim()
     .notEmpty()
