@@ -43,7 +43,14 @@ export async function postUser(req, res) {
  * @param res - The response object.
  */
 export async function getUsers(req, res) {
-  const users = await UsersQueries.getAllUsers();
+  const { email } = req.query;
+  let users;
+
+  if (email) {
+    users = await UsersQueries.getAllUsers(email);
+  } else {
+    users = await UsersQueries.getAllUsers();
+  }
 
   res.status(StatusCodes.OK).json({
     status: 'success',
