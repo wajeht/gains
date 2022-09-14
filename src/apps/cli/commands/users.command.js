@@ -102,9 +102,9 @@ async function add({ email, prod = false, verify = false, demo = false }) {
     const verificationToken = crypto.randomBytes(64).toString('hex');
 
     const newUser = {
-      email: faker.internet.email(),
       username: faker.internet.userName(),
-      password: hashedPassword,
+      email: faker.internet.email(),
+      password: plainPassword,
       first_name: faker.name.firstName(),
       last_name: faker.name.lastName(),
       birth_date: faker.date.birthdate(),
@@ -120,7 +120,7 @@ async function add({ email, prod = false, verify = false, demo = false }) {
         await axios.post(`/api/auth/signup`, {
           email: email,
           username: newUser.username,
-          password: newUser.password,
+          password: plainPassword,
         })
       ).data;
       user.data[0].password = plainPassword;
@@ -137,7 +137,7 @@ async function add({ email, prod = false, verify = false, demo = false }) {
         await axios.post(`/api/auth/signup?verify=true`, {
           email: email,
           username: newUser.username,
-          password: newUser.password,
+          password: plainPassword,
         })
       ).data;
       user.data[0].password = plainPassword;
@@ -154,7 +154,7 @@ async function add({ email, prod = false, verify = false, demo = false }) {
         await axios.post(`/api/auth/signup?verify=true`, {
           email: newUser.email,
           username: newUser.username,
-          password: newUser.password,
+          password: plainPassword,
         })
       ).data;
       user.data[0].password = plainPassword;
@@ -171,7 +171,7 @@ async function add({ email, prod = false, verify = false, demo = false }) {
         {
           email: newUser.email,
           username: newUser.username,
-          password: newUser.password,
+          password: hashedPassword,
         },
         verificationToken,
       );

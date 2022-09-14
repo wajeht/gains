@@ -61,8 +61,6 @@ export const postLogin = [
       if (exist.length === 0) throw new Error('Email or password is wrong!');
       const oldPassword = exist[0]?.password;
 
-      console.log(exist);
-
       const samePassword = await Password.compare(password, oldPassword);
       if (!samePassword) throw new Error('The email or password is wrong!');
       return true;
