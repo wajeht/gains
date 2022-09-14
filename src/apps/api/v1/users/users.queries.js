@@ -7,8 +7,17 @@ import { pick, omit } from 'lodash-es';
  * Get all users from the database.
  * @returns An array of objects
  */
-export function getAllUsers() {
-  return db.select('*').from('users').leftJoin('user_details', 'users.id', 'user_details.user_id');
+export function getAllUsers(email) {
+  const query = db
+    .select('*')
+    .from('users')
+    .leftJoin('user_details', 'users.id', 'user_details.user_id');
+
+  if (email) {
+    query.where({ 'users.email': email });
+  }
+
+  return query;
 }
 
 /**
