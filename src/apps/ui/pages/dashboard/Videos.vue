@@ -20,7 +20,9 @@ onMounted(async () => {
   appStore.loading = true;
   const v = await sessionsWithVideos();
 
-  if (v === undefined) {
+  console.log(v);
+
+  if (v === undefined || v.length === 0) {
     appStore.loading = false;
     alert.type = 'warning';
     alert.msg = 'There are no session with videos available available at this time!';
