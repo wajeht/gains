@@ -95,7 +95,7 @@ async function disable({ user_id, prod = false }) {
   }
 }
 
-async function add({ email, prod = false, verify = false, demo = false }) {
+async function add({ email, prod = false, verify = false, demo = false, data = false }) {
   try {
     // Logger.info(`add(), email: ${email}, prod: ${prod}, verify: ${verify}, demo: ${demo}`);
 
@@ -167,8 +167,8 @@ async function add({ email, prod = false, verify = false, demo = false }) {
 
     // ---------- dev ----------
 
-    // gains users --add --demo
-    if (demo && !prod && !verify && !email) {
+    // gains users --add --demo --data
+    if (demo && data && !prod && !verify && !email) {
       const [user] = await UsersQueries.createUser(
         {
           email: newUser.email,
@@ -188,6 +188,29 @@ async function add({ email, prod = false, verify = false, demo = false }) {
 
       Logger.info(`Generated default exercises for User id ${updated.id}!`);
 
+      Logger.info(`A new demo user has been generated with mock training data!\n`);
+      updated.password = plainPassword;
+      console.log(updated);
+      process.exit(0);
+    }
+
+    // gains users --add --demo
+    if (demo && !data && !prod && !verify && !email) {
+      const [user] = await UsersQueries.createUser(
+        {
+          email: newUser.email,
+          username: newUser.username,
+          password: hashedPassword,
+        },
+        verificationToken,
+      );
+
+      const date = new Date();
+      const [verified] = await AuthQueries.verifyUser(user.id, date);
+
+      const { email, username, password, ...rest } = newUser;
+      const [updated] = await UsersQueries.updateUserById(verified.id, rest);
+
       Logger.info(`A new demo user has been generated!\n`);
       updated.password = plainPassword;
       console.log(updated);
@@ -199,6 +222,7 @@ async function add({ email, prod = false, verify = false, demo = false }) {
       $ gains users --add --email=test@domain.com --prod
       $ gains users --add --email=test@domain.com --verify --prod
       $ gains users --add --demo --verify --prod
+      $ gains users --add --demo --data
       $ gains users --add --demo`);
   } catch (e) {
     Logger.error(e?.response?.data ?? e.message);

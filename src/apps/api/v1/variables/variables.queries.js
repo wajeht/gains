@@ -66,7 +66,7 @@ export function getAllCaloriesOfAUser(user_id, pagination = { perPage: null, cur
       .from('variables')
       .where({ user_id })
       .andWhere({ deleted: false })
-      .andWhereRaw(`calories_prior_session is not null or total_calories is not null`)
+      .andWhereRaw(`(calories_prior_session is not null or total_calories is not null)`)
       .andWhere({ deleted: false })
       // .andWhereNot({ calories_prior_session: null })
       // .andWhereNot({ total_calories: null })
@@ -144,12 +144,18 @@ export async function recentPrsByUserId(user_id) {
  */
 export async function getRecovery(user_id, pagination = { perPage: null, currentPage: null }) {
   return db
-    .select('v.id as id', 'v.stress_level', 'v.hours_of_sleep', 'ss.session_rpe', 'v.created_at')
+    .select(
+      'v.id as id',
+      'v.stress_level',
+      'v.hours_of_sleep',
+      'ss.session_rpe',
+      'v.created_at',
+      'v.user_id as user_id',
+    )
     .from('variables as v')
     .fullOuterJoin('sessions as ss', 'ss.id', 'v.session_id')
     .where({ 'v.user_id': user_id })
-    .andWhere({ 'v.deleted': false })
-    .andWhereRaw(`v.deleted = false or ss.deleted = false`)
+    .andWhereRaw(`(v.deleted = false or ss.deleted = false)`)
     .orderBy('v.created_at', 'desc')
     .paginate({
       ...pagination,

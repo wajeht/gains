@@ -245,7 +245,14 @@ const { lineChartProps } = useLineChart({
         <h5><i class="bi bi-activity"></i> Recovery</h5>
         <div class="card" style="height: 100%">
           <div class="card-body">
-            <LineChart :height="Number(237)" v-bind="lineChartProps" />
+            <LineChart
+              v-if="Object.keys(recentPrs).length"
+              :height="Number(237)"
+              v-bind="lineChartProps"
+            />
+            <div v-else class="text-muted text-center fw-light">
+              <small> No relevant data available yet! </small>
+            </div>
           </div>
         </div>
       </div>
