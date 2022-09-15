@@ -214,7 +214,7 @@ async function mockData({ email, user_id, prod = false }) {
 
     // gains users --mock-data --user-id=1 --prod
     if (user_id && prod) {
-      console.log('user_id and prod');
+      throw new Error(`Have not implemented yet!`);
     }
 
     // gains users --mock-data --email=test@domain.com --prod
@@ -242,18 +242,19 @@ async function validate({ ...args }) {
     }
 
     // check if user not exist
-    if (prod && !email.exist) {
+    if (prod && !email?.exist) {
       const user = await (await axios.get(`/api/v1/users?email=${email.email}`)).data.data;
       if (!user.length) throw new Error(`User does not exist with email ${email.email}!`);
     }
 
     // check if user exist
-    if (prod && email.exist) {
+    if (prod && email?.exist) {
       const user = await (await axios.get(`/api/v1/users?email=${email.email}`)).data.data;
       if (user.length) throw new Error(`User exit with email ${email.email}!`);
     }
 
     // ---------- dev ----------
+
     // check if user exist
     if (!prod && user_id) {
       const user_user_id = await UsersQueries.findUserById(user_id);
@@ -261,7 +262,7 @@ async function validate({ ...args }) {
     }
 
     // check if user not exist
-    if (!prod && !email.exist) {
+    if (!prod && !email?.exist && !user_id) {
       const user_email = await UsersQueries.findUserByParam({ email: email.email });
       if (user_email.length) throw new Error(`User exit with email ${email.email}!`);
     }
