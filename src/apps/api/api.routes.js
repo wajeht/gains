@@ -14,7 +14,7 @@ api.use('/contact', contactRouter);
 api.use('/auth', authRouter);
 
 // admin
-api.use('/admin', authenticateUser, authorizePermissions('admin'), adminRouter);
+api.use('/admin', authenticateUser, authorizePermissions('admin', 'api-admin-user'), adminRouter);
 
 // routes with version
 api.use('/v1', authenticateUser, v1);

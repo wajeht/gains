@@ -208,17 +208,21 @@ async function add({ email, prod = false, verify = false, demo = false }) {
 
 async function mockData({ email, user_id, prod = false }) {
   try {
-    Logger.info(`mockData(), email: ${email}, prod: ${prod}, user_id: ${user_id}`);
+    // Logger.info(`mockData(), email: ${email}, prod: ${prod}, user_id: ${user_id}`);
 
     if (email && user_id && prod) throw new Error(`You must chose either email or user_id!`);
 
     // gains users --mock-data --user-id=1 --prod
-    // if (user_id && prod) {
-    // }
+    if (user_id && prod) {
+      console.log('user_id and prod');
+    }
 
     // gains users --mock-data --email=test@domain.com --prod
-    // if (email && prod) {
-    // }
+    if (email && prod) {
+      const data = await axios.post('/api/admin/seed-mock-training-data', { email });
+      Logger.info(`Mock training data was generated for email: ${email}!\n`);
+      // process.exit(0);
+    }
   } catch (e) {
     Logger.error(e?.response?.data ?? e.message);
     process.exit(1);
@@ -234,13 +238,19 @@ async function validate({ ...args }) {
     // check if user exist
     if (prod && user_id) {
       const user = await (await axios.get(`/api/v1/users/${user_id}`)).data.data;
-      if (user.length) throw new Error(`User exit with id ${id}!`);
+      if (!user.length) throw new Error(`User does not exit with id ${user_id}!`);
+    }
+
+    // check if user not exist
+    if (prod && !email.exist) {
+      const user = await (await axios.get(`/api/v1/users?email=${email.email}`)).data.data;
+      if (!user.length) throw new Error(`User does not exist with email ${email.email}!`);
     }
 
     // check if user exist
-    if (prod && email) {
-      const user = await (await axios.get(`/api/v1/users?email=${email}`)).data.data;
-      if (user.length) throw new Error(`User exit with email ${email}!`);
+    if (prod && email.exist) {
+      const user = await (await axios.get(`/api/v1/users?email=${email.email}`)).data.data;
+      if (user.length) throw new Error(`User exit with email ${email.email}!`);
     }
 
     // ---------- dev ----------
@@ -251,9 +261,9 @@ async function validate({ ...args }) {
     }
 
     // check if user not exist
-    if (!prod && email) {
-      const user_email = await UsersQueries.findUserByParam({ email });
-      if (user_email.length) throw new Error(`User exit with email ${email}!`);
+    if (!prod && !email.exist) {
+      const user_email = await UsersQueries.findUserByParam({ email: email.email });
+      if (user_email.length) throw new Error(`User exit with email ${email.email}!`);
     }
   } catch (e) {
     Logger.error(e?.response?.data ?? e.message);
@@ -284,12 +294,12 @@ export default async function users({ ...args }) {
 
     switch (action) {
       case 'add':
-        await validate({ email, prod });
+        await validate({ email: { exist: true, email }, prod });
         await add({ email, verify, prod, demo });
         break;
 
       case 'mock-data':
-        await validate({ email, user_id, prod });
+        await validate({ email: { exist: false, email }, user_id, prod });
         await mockData({ email, user_id, prod });
         break;
 
