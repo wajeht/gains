@@ -149,7 +149,7 @@ export async function getRecovery(user_id, pagination = { perPage: null, current
     .fullOuterJoin('sessions as ss', 'ss.id', 'v.session_id')
     .where({ 'v.user_id': user_id })
     .andWhere({ 'v.deleted': false })
-    .andWhereRaw(`v.deleted = 'false' or ss.deleted = 'false'`)
+    .andWhereRaw(`v.deleted = false or ss.deleted = false`)
     .orderBy('v.created_at', 'desc')
     .paginate({
       ...pagination,
