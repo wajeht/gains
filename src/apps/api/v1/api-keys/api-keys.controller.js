@@ -1,4 +1,5 @@
 import * as ApiKeysQueries from './api-keys.queries.js';
+import * as UsersQueries from '../users/users.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import logger from '../../../../utils/logger.js';
@@ -31,6 +32,15 @@ export async function postGenerateApiKey(req, res) {
   const user_id = req.body.user_id;
 
   const apiKeys = await ApiKeysQueries.getApiKey(user_id);
+  const [user] = await UsersQueries.findUserById(user_id);
+
+  let role;
+
+  if (user.role !== 'admin') {
+    role = 'api-user';
+  } else {
+    role = 'api-admin-user';
+  }
 
   if (apiKeys.length === 5) {
     throw new CustomError.BadRequestError(`You've reached maximum api keys request!`); // prettier-ignore
@@ -39,7 +49,7 @@ export async function postGenerateApiKey(req, res) {
   const plainApiKey = jwt.sign(
     {
       user_id: user_id,
-      role: 'api_user',
+      role,
     },
     jwt_secret,
 

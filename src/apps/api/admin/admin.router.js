@@ -8,4 +8,10 @@ const admin = express.Router();
 
 admin.get('/view-logs', catchAsyncErrors(AdminController.getViewLogs));
 
+admin.post(
+  '/seed-mock-training-data',
+  validator(AdminValidation.postSeedMockTrainingDataUser),
+  catchAsyncErrors(AdminController.postSeedMockTrainingData),
+);
+
 export default admin;
