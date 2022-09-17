@@ -9,17 +9,12 @@ const redisConfig = {
   username: REDIS.username,
   password: REDIS.password,
   db: REDIS.db,
-  autoResubscribe: false,
-  lazyConnect: true,
-  maxRetriesPerRequest: 0,
-  tls: null,
-  enableReadyCheck: false,
 };
 
 let client;
 
 try {
-  client = new Redis({});
+  client = new Redis(redisConfig);
   logger.info(`Redis client started`);
 } catch (e) {
   logger.error(e);
