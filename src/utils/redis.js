@@ -3,21 +3,34 @@ import Redis from 'ioredis';
 import logger from './logger.js';
 import Chad from './chad.js';
 
-const client = new Redis({
-  port: REDIS.port, // Redis port
-  host: REDIS.host, // Redis host
-  username: REDIS.username, // needs Redis >= 6
+const redisConfig = {
+  port: REDIS.port,
+  host: REDIS.host,
+  username: REDIS.username,
   password: REDIS.password,
-  db: REDIS.db, // Defaults to 0
-});
+  db: REDIS.db,
+  autoResubscribe: false,
+  lazyConnect: true,
+  maxRetriesPerRequest: 0,
+};
 
-client.on('error', (error) => {
+let client;
+
+try {
+  client = new Redis(redisConfig);
+  logger.info(`Redis client started`);
+} catch (e) {
   logger.error(e);
   Chad.flex(e.message, e.stack);
-});
+}
 
-client.on('connect', (error) => {
-  logger.info(`Redis client started`);
-});
+// client.on('error', (error) => {
+//   logger.error(e);
+//   Chad.flex(e.message, e.stack);
+// });
+
+// client.on('connect', (error) => {
+//   logger.info(`Redis client started`);
+// });
 
 export default client;
