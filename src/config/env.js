@@ -81,4 +81,5 @@ export const REDIS = {
   username: process.env.REDIS_USERNAME,
   password: process.env.REDIS_PASSWORD,
   db: process.env.REDIS_DB,
+  url: process.env.REDIS_URL,
 };
