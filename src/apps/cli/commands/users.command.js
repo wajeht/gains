@@ -8,6 +8,7 @@ import Password from '../../../utils/password.js';
 import crypto from 'crypto';
 import { red } from '../../../utils/rainbow-log.js';
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
+import seedMockTrainingData from '../../../utils/seed-mock-training-data.js';
 
 // gains users --restore-data --user-id=1 --prod
 // gains users --clear-cache --user-id=1 --prod
@@ -246,7 +247,30 @@ async function mockData({ email, user_id, prod = false }) {
       const data = await axios.post('/api/admin/seed-mock-training-data', { email });
       Logger.info(`Mock training data was generated for email: ${email}!\n`);
       // process.exit(0);
+      return;
     }
+
+    // gains users --mock-data --user_id=1
+    if (user_id && !prod && !email) {
+      const [{ email }] = await UsersQueries.findUserById(user_id);
+      const mock = await seedMockTrainingData(email);
+      Logger.info(`User ID: ${user_id} has generated mock training data!`);
+      return;
+    }
+
+    // gains users --mock-data --email=test@domain.com
+    if (email && !prod && !user_id) {
+      const mock = await seedMockTrainingData(email);
+      Logger.info(`User ID: ${user_id} has generated mock training data!`);
+      return;
+    }
+
+    Logger.error(`Use the following proper commands!`);
+    console.log(`
+        $ gains users --mock-data --user-id=1 --prod
+        $ gains users --mock-data --email=test@domain.com --prod
+        $ gains users --mock-data --user_id=1
+        $ gains users --mock-data --email=test@domain.com`);
   } catch (e) {
     Logger.error(e?.response?.data ?? e.message);
     process.exit(1);
