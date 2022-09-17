@@ -8,7 +8,7 @@ export default class Template {
   /* A map of the templates that we have. */
   static _maps = {
     'new-changelog': {
-      path: path.resolve(path.join('src', 'services', 'templates', 'new-changelog.html')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'new-changelog.html')),
       data: [
         {
           name: 'username',
@@ -21,7 +21,7 @@ export default class Template {
       ],
     },
     'download-user-data': {
-      path: path.resolve(path.join('src', 'services', 'templates', 'download-user-data.html')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'download-user-data.html')),
       data: [
         {
           name: 'username',
@@ -30,7 +30,7 @@ export default class Template {
       ],
     },
     contact: {
-      path: path.resolve(path.join('src', 'services', 'templates', 'contact.html')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'contact.html')),
       data: [
         {
           name: 'email',
@@ -47,7 +47,7 @@ export default class Template {
       ],
     },
     'verify-email': {
-      path: path.resolve(path.join('src', 'services', 'templates', 'verify-email.html')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'verify-email.html')),
       data: [
         {
           name: 'username',
@@ -60,7 +60,7 @@ export default class Template {
       ],
     },
     'forget-password': {
-      path: path.resolve(path.join('src', 'services', 'templates', 'forget-password.html')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'forget-password.html')),
       data: [
         {
           name: 'username',
@@ -73,7 +73,7 @@ export default class Template {
       ],
     },
     'happy-birthday': {
-      path: path.resolve(path.join('src', 'services', 'templates', 'happy-birthday.html')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'happy-birthday.html')),
       data: [
         {
           name: 'username',
@@ -82,7 +82,7 @@ export default class Template {
       ],
     },
     'admin-account': {
-      path: path.resolve(path.join('src', 'services', 'templates', 'admin-account.html')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'admin-account.html')),
       data: [
         {
           name: 'username',

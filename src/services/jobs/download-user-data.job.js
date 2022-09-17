@@ -3,14 +3,13 @@
 // const q = new Queue('download-user-data');
 
 import fs from 'fs';
-import path, { resolve } from 'path';
+import path from 'path';
 import util from 'util';
 
-import Chad from '../../utils/chad.js';
 import Logger from '../../utils/logger.js';
-import db from '../../database/db.js';
 import { sleep } from '../../utils/helpers.js';
 
+import Bull, { Job } from 'bull';
 import Papa from 'papaparse';
 import dayjs from 'dayjs';
 import AdmZip from 'adm-zip';
@@ -169,7 +168,7 @@ async function zipFiles({ userFolderPath, filePaths }) {
  * files, and then deletes the zipped files
  * @param user_id - The user id of the user you want to download the data for.
  */
-export async function downloadUserData(user_id) {
+async function downloadUserDataProcess(user_id) {
   try {
     const { filePaths, userFolderPath } = await generateCSVFiles(user_id);
     const zippedPath = await zipFiles({ userFolderPath, filePaths });
@@ -214,4 +213,23 @@ export async function downloadUserData(user_id) {
   }
 }
 
-await downloadUserData(1);
+// -------------------- que --------------------
+
+const downloadUserDataQue = new Bull('download-user-data', {
+  redis: `redis://${process.env.REDIS_PASSWORD}:@${process.env.REDIS_HOST}`,
+});
+
+downloadUserDataQue.process(async (job) => {
+  return await downloadUserDataProcess(job.data.user_id);
+});
+
+export default async function InitiateDownloadUserDataJob(user_id) {
+  downloadUserDataQue.add(
+    { user_id },
+    {
+      attempts: 2,
+    },
+  );
+}
+
+// -------------------- que --------------------

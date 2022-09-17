@@ -3,7 +3,7 @@ import { email } from '../config/env.js';
 import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import { red } from '../utils/rainbow-log.js';
-import Template from './templates/template.js';
+import Template from './emails/template.js';
 
 // use https://ethereal.email/ for testing purposes
 const transporter = nodemailer.createTransport({
