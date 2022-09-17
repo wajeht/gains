@@ -32,6 +32,7 @@
 - **GitHub actions** for CI/CD
 - **Caprover with Docker** for for zero config deployment
 - **[AutoAnimate](https://auto-animate.formkit.com/)** for drop-in animation
+- **Redis** to cache some of the large queries
 
 
 # 👨‍💻 Getting started
