@@ -45,3 +45,12 @@ export function createMultipleLogs(logs) {
 export function deleteALog(id) {
   return db.update({ deleted: true }).from('logs').where({ id }).returning('*');
 }
+
+/**
+ * Get all logs that are not deleted and belong to the user with the given user_id.
+ * @param user_id - The user_id of the user whose logs you want to retrieve.
+ * @returns An array of objects
+ */
+export function getAllLogsByUserId(user_id) {
+  return db.select('*').from('logs').where({ deleted: false }).andWhere({ user_id });
+}

@@ -107,3 +107,5 @@ src/public/index.html
 src/public/upload/*
 src/public/uploads/*
 src/templates/tempCodeRunnerFile.js
+*.csv
+.DS_Store

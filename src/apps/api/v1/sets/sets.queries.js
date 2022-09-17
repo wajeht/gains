@@ -32,6 +32,10 @@ export function updateSetById(body, id) {
   return db.update(withoutId).from('sets').where({ id }).returning('*');
 }
 
+export function getAllSetsByUserId(user_id) {
+  return db.select('*').from('sets').where({ deleted: false }).andWhere({ user_id });
+}
+
 /**
  * It deletes a set by id
  * @param id - the id of the set you want to delete

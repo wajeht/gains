@@ -3,7 +3,7 @@ import { email } from '../config/env.js';
 import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import { red } from '../utils/rainbow-log.js';
-import Template from './templates/template.js';
+import Template from './emails/template.js';
 
 // use https://ethereal.email/ for testing purposes
 const transporter = nodemailer.createTransport({
@@ -27,9 +27,11 @@ transporter.verify((error, success) => {
 
 export default class EmailService {
   /**
-   * It sends an email to the user with the given data
+   * It sends an email to a user
+   * @returns The sent email
+   * @params files {Object}
    */
-  static async send({ to, subject, template = 'verify-email', data }) {
+  static async send({ to, subject, template = 'verify-email', data, files }) {
     try {
       // mail options
       const mail = {
@@ -38,6 +40,10 @@ export default class EmailService {
         subject,
         html: Template.generate(template, data),
       };
+
+      if (files) {
+        mail.attachments = files;
+      }
 
       // mail action
       const sent = await transporter.sendMail(mail);
