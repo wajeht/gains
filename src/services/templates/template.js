@@ -20,6 +20,15 @@ export default class Template {
         },
       ],
     },
+    'download-user-data': {
+      path: path.resolve(path.join('src', 'services', 'templates', 'download-user-data.html')),
+      data: [
+        {
+          name: 'username',
+          type: 'string',
+        },
+      ],
+    },
     contact: {
       path: path.resolve(path.join('src', 'services', 'templates', 'contact.html')),
       data: [

@@ -27,9 +27,11 @@ transporter.verify((error, success) => {
 
 export default class EmailService {
   /**
-   * It sends an email to the user with the given data
+   * It sends an email to a user
+   * @returns The sent email
+   * @params files {Object}
    */
-  static async send({ to, subject, template = 'verify-email', data }) {
+  static async send({ to, subject, template = 'verify-email', data, files }) {
     try {
       // mail options
       const mail = {
@@ -38,6 +40,10 @@ export default class EmailService {
         subject,
         html: Template.generate(template, data),
       };
+
+      if (files) {
+        mail.attachments = files;
+      }
 
       // mail action
       const sent = await transporter.sendMail(mail);

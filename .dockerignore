@@ -6,3 +6,4 @@ docs
 node_modules
 .editorconfig
 .env.example
+*.csv
