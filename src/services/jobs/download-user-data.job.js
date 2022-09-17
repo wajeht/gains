@@ -8,6 +8,7 @@ import util from 'util';
 
 import Logger from '../../utils/logger.js';
 import { sleep } from '../../utils/helpers.js';
+import { REDIS } from '../../config/env.js';
 
 import Bull, { Job } from 'bull';
 import Papa from 'papaparse';
@@ -214,7 +215,11 @@ async function downloadUserDataProcess(user_id) {
 // -------------------- que --------------------
 
 const downloadUserDataQue = new Bull('download-user-data', {
-  redis: `redis://${process.env.REDIS_PASSWORD}:@${process.env.REDIS_HOST}`,
+  port: REDIS.port, // Redis port
+  host: REDIS.host, // Redis host
+  username: REDIS.username, // needs Redis >= 6
+  password: REDIS.password,
+  db: REDIS.db, // Defaults to 0
 });
 
 downloadUserDataQue.process(async (job) => {
