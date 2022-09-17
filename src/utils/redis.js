@@ -13,9 +13,6 @@ const redisConfig = {
   lazyConnect: true,
   maxRetriesPerRequest: 0,
   tls: null,
-  lazyConnect: false,
-  showFriendlyErrorStack: true,
-  maxRetriesPerRequest: null,
   enableReadyCheck: false,
 };
 

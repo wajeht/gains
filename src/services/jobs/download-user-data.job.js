@@ -220,11 +220,7 @@ const downloadUserDataQue = new Bull('download-user-data', {
   username: REDIS.username,
   password: REDIS.password,
   db: REDIS.db,
-  autoResubscribe: false,
-  lazyConnect: true,
-  maxRetriesPerRequest: 0,
-  tls: null,
-  showFriendlyErrorStack: true,
+  maxRetriesPerRequest: null,
   enableReadyCheck: false,
 });
 
