@@ -215,11 +215,14 @@ async function downloadUserDataProcess(user_id) {
 // -------------------- que --------------------
 
 const downloadUserDataQue = new Bull('download-user-data', {
-  port: REDIS.port, // Redis port
-  host: REDIS.host, // Redis host
-  username: REDIS.username, // needs Redis >= 6
+  port: REDIS.port,
+  host: REDIS.host,
+  username: REDIS.username,
   password: REDIS.password,
-  db: REDIS.db, // Defaults to 0
+  db: REDIS.db,
+  autoResubscribe: false,
+  lazyConnect: true,
+  maxRetriesPerRequest: 0,
 });
 
 downloadUserDataQue.process(async (job) => {
