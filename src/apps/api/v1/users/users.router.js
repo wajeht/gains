@@ -40,6 +40,18 @@ users.post('/', validator(UsersValidation.postUser), catchAsyncErrors(UsersContr
 users.get('/:id', validator(UsersValidation.getUser), catchAsyncErrors(UsersController.getUser));
 
 /**
+ * GET /api/v1/users/{id}/download-user-data
+ * @tags users
+ * @summary download all data of a user
+ * @param {number} user_id.path.required - user id
+ */
+users.get(
+  '/:user_id/download-user-data',
+  validator(UsersValidation.getDownloadUserData),
+  catchAsyncErrors(UsersController.getDownloadUserData),
+);
+
+/**
  * PATCH /api/v1/users/{id}
  * @tags users
  * @summary update a specific user details

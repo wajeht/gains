@@ -372,3 +372,16 @@ export const postRestoreUser = [
     })
     .toInt(),
 ];
+
+export const getDownloadUserData = [
+  param('user_id')
+    .trim()
+    .notEmpty()
+    .withMessage('The user_id must not be empty!')
+    .isInt()
+    .withMessage('The user_id must be an ID!')
+    .custom(async (user_id) => {
+      const user = await UserQueries.findUserById(user_id);
+      if (user.length === 0) throw new Error('User does not exist!');
+    }),
+];

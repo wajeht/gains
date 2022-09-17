@@ -7,6 +7,7 @@ import api from '../../../../../utils/fetch-with-style.js';
 import { ref, reactive } from 'vue';
 
 const clearAllCacheLoading = ref(false);
+const downloadUserDataLoading = ref(false);
 
 const alert = reactive({
   type: '',
@@ -52,7 +53,37 @@ async function deleteAllDataOfAUser() {
   }
 }
 
-async function downloadData() {}
+async function downloadUserData() {
+  try {
+    downloadUserDataLoading.value = true;
+
+    const res = await api.get(`/api/v1/users/${userStore.user.id}/download-user-data`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    downloadUserDataLoading.value = false;
+
+    alert.type = 'success';
+    alert.msg = 'Request has been sent successfully. We will email you after processing the data!';
+  } catch (e) {
+    appStore.loading = false;
+    downloadUserDataLoading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 
 function clearAndDismissModal(modalId) {
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(modalId));
@@ -175,15 +206,28 @@ async function clearAllCache() {
           <div class="list-group">
             <!-- download -->
             <span
-              style="background: #f1f1f1"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+              @click="downloadUserData()"
+              :style="{
+                background: downloadUserDataLoading ? '#f1f1f1' : '',
+                cursor: !downloadUserDataLoading ? 'pointer' : '',
+              }"
+              :class="{ disabled: downloadUserDataLoading }"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">Download your data</h6>
                   <p class="mb-0 opacity-75">Export all of your data via CSV format!</p>
                 </div>
-                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+
+                <!-- loading -->
+                <div
+                  v-if="downloadUserDataLoading"
+                  class="spinner-border spinner-border-sm text-muted"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </div>
             </span>
 

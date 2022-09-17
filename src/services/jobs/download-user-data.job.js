@@ -205,8 +205,6 @@ async function downloadUserDataProcess(user_id) {
       await rm(zippedPath, { recursive: true });
       Logger.info(`Done deleting .zip files after sending the email!`);
     }
-
-    process.exit(0);
   } catch (e) {
     Logger.error(e.message);
     throw new Error(e.message);
@@ -224,12 +222,7 @@ downloadUserDataQue.process(async (job) => {
 });
 
 export default async function InitiateDownloadUserDataJob(user_id) {
-  downloadUserDataQue.add(
-    { user_id },
-    {
-      attempts: 2,
-    },
-  );
+  downloadUserDataQue.add({ user_id });
 }
 
 // -------------------- que --------------------
