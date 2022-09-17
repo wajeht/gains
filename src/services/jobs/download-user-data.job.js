@@ -90,6 +90,8 @@ async function writeToFile(userId, tableName, data) {
  */
 async function generateCSVFiles(user_id) {
   try {
+    Logger.info(`Generating CSV process started!`);
+
     const { userFolderPath } = useUserFolder(user_id);
     const result = {
       userFolderPath,
@@ -132,6 +134,7 @@ async function generateCSVFiles(user_id) {
     const userLogs = await LogsQueries.getAllLogsByUserId(user_id);
     result.filePaths.push(await writeToFile(user_id, 'logs', userLogs));
 
+    Logger.info(`Generating CSV process done!`);
     return result;
   } catch (e) {
     Logger.error(e.message);
@@ -141,6 +144,8 @@ async function generateCSVFiles(user_id) {
 
 async function zipFiles({ userFolderPath, filePaths }) {
   try {
+    Logger.info(`Zipping process started!`);
+
     const zipName = `${userFolderPath}.zip`;
 
     const zip = new AdmZip();
@@ -151,6 +156,7 @@ async function zipFiles({ userFolderPath, filePaths }) {
 
     await zip.writeZipPromise(zipName);
 
+    Logger.info(`Zipping process done!`);
     return zipName;
   } catch (e) {
     Logger.error(e.message);
@@ -207,3 +213,5 @@ export async function downloadUserData(user_id) {
     throw new Error(e.message);
   }
 }
+
+await downloadUserData(1);
