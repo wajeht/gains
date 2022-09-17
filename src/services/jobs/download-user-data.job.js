@@ -223,6 +223,9 @@ const downloadUserDataQue = new Bull('download-user-data', {
   autoResubscribe: false,
   lazyConnect: true,
   maxRetriesPerRequest: 0,
+  tls: null,
+  showFriendlyErrorStack: true,
+  enableReadyCheck: false,
 });
 
 downloadUserDataQue.process(async (job) => {

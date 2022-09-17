@@ -12,12 +12,17 @@ const redisConfig = {
   autoResubscribe: false,
   lazyConnect: true,
   maxRetriesPerRequest: 0,
+  tls: null,
+  lazyConnect: false,
+  showFriendlyErrorStack: true,
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
 };
 
 let client;
 
 try {
-  client = new Redis(redisConfig);
+  client = new Redis({});
   logger.info(`Redis client started`);
 } catch (e) {
   logger.error(e);
