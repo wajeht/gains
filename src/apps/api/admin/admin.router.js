@@ -6,7 +6,11 @@ import * as AdminValidation from './admin.validation.js';
 import express from 'express';
 const admin = express.Router();
 
-admin.get('/view-logs', catchAsyncErrors(AdminController.getViewLogs));
+admin.get(
+  '/view-logs',
+  validator(AdminValidation.getViewLogs),
+  catchAsyncErrors(AdminController.getViewLogs),
+);
 
 admin.post(
   '/seed-mock-training-data',

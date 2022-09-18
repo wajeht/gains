@@ -3,11 +3,42 @@ import * as UsersQueries from '../v1/users/users.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../api.errors.js';
 import seedMockTrainingData from '../../../utils/seed-mock-training-data.js';
+import dayjs from 'dayjs';
+import fsp from 'fs/promises';
+import fs from 'fs';
+import path from 'path';
+
+const TODAY = dayjs().format('YYYY-MM-DD');
 
 export async function getViewLogs(req, res) {
-  res.json({
-    msg: 'ok',
-  });
+  const { download } = req.query;
+
+  const todaysLogName = `${TODAY}.log`;
+  const todaysLogPath = path.resolve(path.join(process.cwd(), 'logs', todaysLogName));
+
+  let log = null;
+
+  if (!fs.existsSync(todaysLogPath)) {
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      data: [],
+    });
+  }
+
+  if (download) {
+    return res.status(StatusCodes.OK).download(todaysLogPath);
+  } else {
+    log = await fsp.readFile(todaysLogPath, 'utf-8');
+    log = log.split('\n');
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      data: log,
+    });
+  }
 }
 
 /**
