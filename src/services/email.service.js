@@ -2,7 +2,6 @@ import nodemailer from 'nodemailer';
 import { email } from '../config/env.js';
 import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
-import { red } from '../utils/rainbow-log.js';
 import Template from './emails/template.js';
 
 // use https://ethereal.email/ for testing purposes
@@ -49,6 +48,8 @@ export default class EmailService {
       const sent = await transporter.sendMail(mail);
 
       if (!sent) throw new Error('Something went wrong while sending email!');
+
+      logger.info(`${template} email was sent to ${to}!`);
 
       return sent;
     } catch (e) {

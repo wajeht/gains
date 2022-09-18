@@ -25,3 +25,18 @@ export async function deleteAllCachesOfAUser(user_id) {
     });
   });
 }
+
+/**
+ * It deletes all the keys in Redis that match the pattern "user-id-.-request-download-user-data".
+ * @returns a promise that resolves to the value of the redis.get() call.
+ */
+export async function clearDownloadUserDataRequestCounts() {
+  redis.keys('*', function (err, keys) {
+    if (err) return null;
+    keys.forEach((key) => {
+      if (key.match(/user-id-.-request-download-user-data/)) {
+        redis.del(key);
+      }
+    });
+  });
+}

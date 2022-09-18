@@ -2,6 +2,7 @@ import db from '../../../../database/db.js';
 import logger from '../../../../utils/logger.js';
 import { red } from '../../../../utils/rainbow-log.js';
 import { pick, omit } from 'lodash-es';
+import dayjs from 'dayjs';
 
 /**
  * Get all users from the database.
@@ -185,4 +186,17 @@ export function restoreUserData(user_id) {
  */
 export function postRestoreUser(user_id) {
   return db.update({ deleted: false }).from('users').where({ id: user_id }).returning('*');
+}
+
+/**
+ * Get all users whose birthday is today.
+ * @returns An array of objects.
+ */
+export function getAllUsersWhoseBirthdayIsToday() {
+  const TODAY = dayjs().format('YYYY-MM-DD');
+  return db
+    .select('*')
+    .from('users')
+    .leftJoin('user_details', 'users.id', 'user_details.user_id')
+    .andWhere({ birth_date: TODAY });
 }

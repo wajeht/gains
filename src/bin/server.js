@@ -10,6 +10,7 @@ import Chad from '../utils/chad.js';
 import pkg from '../utils/pkg.js';
 import EmailService from '../services/email.service.js';
 import latestChangelog from '../utils/latest-changelog.js';
+import CronsServices from '../services/cron.services.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);
@@ -109,3 +110,6 @@ app.listen(port, () => {
     Chad.flex(e.message, e.stack);
   }
 })();
+
+// ------------------------------ crons ------------------------------
+CronsServices.start();
