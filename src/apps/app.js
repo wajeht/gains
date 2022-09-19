@@ -3,6 +3,8 @@ import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
 import cookieParser from 'cookie-parser';
 import apiRoutes from './api/api.routes.js';
 import expressJSDocSwagger from 'express-jsdoc-swagger';
@@ -12,12 +14,20 @@ import { regularLimiter, apiLimiter } from '../config/rateLimiter.js';
 import { jwt_secret } from '../config/env.js';
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+app.use((req, res, next) => {
+  res.setHeader('X-Powered-By', 'Caddy, Express, Apache, Nginx, Nuxt, IIS');
+  next();
+});
 
 // TODO!: configure this helmet for production
 app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
+    hidePoweredBy: false,
   }),
 );
 app.use(cors());
@@ -33,6 +43,7 @@ app.use(
 
 expressJSDocSwagger(app)(expressJsdocOptions);
 
+app.use((req, res, next) => { req.io = io; next(); }); // prettier-ignore
 app.use('/api', apiLimiter, apiRoutes);
 app.use('/health', AppRoutes.getHealthCheck);
 app.use('*', regularLimiter, AppRoutes.vueHandler);
@@ -40,4 +51,4 @@ app.use('*', regularLimiter, AppRoutes.vueHandler);
 app.use(AppRoutes.notFoundHandler);
 app.use(AppRoutes.errorHandler);
 
-export default app;
+export default server;
