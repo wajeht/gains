@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex flex-column justify-content-evenly" style="min-height: calc(100vh - 170px)">
+  <div
+    class="d-flex px-4 flex-column justify-content-evenly"
+    style="min-height: calc(100vh - 170px)"
+  >
     <!-- hero -->
     <div class="text-center pt-4 border-bottom mx-auto">
       <!-- alert -->
