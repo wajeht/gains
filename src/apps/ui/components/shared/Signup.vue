@@ -56,7 +56,7 @@
           class="btn btn-outline-dark"
           type="button"
           id="show-hide-password-button"
-          :disabled="loading || !email || !password"
+          :disabled="loading || !password"
         >
           <i v-if="showPassword" class="bi bi-eye-slash"></i>
           <i v-else class="bi bi-eye"></i>
@@ -101,7 +101,11 @@
     </div>
 
     <!-- button -->
-    <button type="submit" class="btn btn-dark w-100" :disabled="loading">
+    <button
+      type="submit"
+      class="btn btn-dark w-100"
+      :disabled="loading || !email || !username || !password"
+    >
       <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>

@@ -53,7 +53,11 @@
     </div>
 
     <!-- button -->
-    <button type="submit" class="btn btn-dark w-100" :disabled="loading">
+    <button
+      type="submit"
+      class="btn btn-dark w-100"
+      :disabled="loading || !email || !message || !subject"
+    >
       <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
@@ -84,70 +88,69 @@
   </div>
 </template>
 
-
 <script>
-  import { sleep } from '../../../../utils/helpers.js';
-  import Or from './Or.vue';
+import { sleep } from '../../../../utils/helpers.js';
+import Or from './Or.vue';
 
-  export default {
-    components: {
-      Or,
-    },
-    data() {
-      return {
-        subject: '',
-        email: '',
-        message: '',
-        alert: {
-          type: '',
-          msg: '',
-        },
-        loading: false,
-      };
-    },
-    methods: {
-      async handleSubmit() {
-        try {
-          this.loading = true;
-
-          const res = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: this.email,
-              subject: this.subject,
-              message: this.message,
-            }),
-          });
-
-          const json = await res.json();
-
-          if (!res.ok) {
-            this.loading = false;
-            throw json.errors;
-          }
-
-          this.loading = false;
-
-          this.alert.type = 'success';
-          this.alert.msg = "We'll get in touch with you soon!";
-
-          this.subject = '';
-          this.email = '';
-          this.message = '';
-
-          // clear alert success after few sec
-          await sleep(5000);
-
-          this.alert.type = '';
-          this.alert.msg = '';
-        } catch (e) {
-          this.alert.type = 'danger';
-          this.alert.msg = e.map((cur) => cur.msg).join(' ');
-        }
+export default {
+  components: {
+    Or,
+  },
+  data() {
+    return {
+      subject: '',
+      email: '',
+      message: '',
+      alert: {
+        type: '',
+        msg: '',
       },
+      loading: false,
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        this.loading = true;
+
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            subject: this.subject,
+            message: this.message,
+          }),
+        });
+
+        const json = await res.json();
+
+        if (!res.ok) {
+          this.loading = false;
+          throw json.errors;
+        }
+
+        this.loading = false;
+
+        this.alert.type = 'success';
+        this.alert.msg = "We'll get in touch with you soon!";
+
+        this.subject = '';
+        this.email = '';
+        this.message = '';
+
+        // clear alert success after few sec
+        await sleep(5000);
+
+        this.alert.type = '';
+        this.alert.msg = '';
+      } catch (e) {
+        this.alert.type = 'danger';
+        this.alert.msg = e.map((cur) => cur.msg).join(' ');
+      }
     },
-  };
+  },
+};
 </script>

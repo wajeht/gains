@@ -182,7 +182,7 @@ export default {
           class="btn btn-outline-dark"
           type="button"
           id="show-hide-password-button"
-          :disabled="loading || !email || !password"
+          :disabled="loading || !password"
         >
           <i v-if="showPassword" class="bi bi-eye-slash"></i>
           <i v-else class="bi bi-eye"></i>
