@@ -75,5 +75,7 @@ export default {
 
 *:disabled {
   cursor: not-allowed !important;
+  cursor: -moz-not-allowed !important;
+  cursor: -webkit-not-allowed !important;
 }
 </style>
