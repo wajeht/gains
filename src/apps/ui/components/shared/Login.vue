@@ -166,7 +166,7 @@ export default {
 
     <!-- password -->
     <div class="mb-3">
-      <div class="d-flex gap-2 align-items-center flex-row">
+      <div class="d-flex gap-2">
         <label for="password" class="form-label me-2">Password</label>
         <div role="button" @click="showPassword = !showPassword" style="cursor: pointer">
           <i v-if="showPassword" class="bi bi-eye-slash"></i>

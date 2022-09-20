@@ -40,10 +40,16 @@
 
     <!-- password -->
     <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+      <div class="d-flex gap-2">
+        <label for="password" class="form-label me-2">Password</label>
+        <div role="button" @click="showPassword = !showPassword" style="cursor: pointer">
+          <i v-if="showPassword" class="bi bi-eye-slash"></i>
+          <i v-else class="bi bi-eye"></i>
+        </div>
+      </div>
       <input
         v-model="password"
-        type="password"
+        :type="showPassword ? 'text' : 'password'"
         class="form-control"
         id="password"
         :disabled="loading"
@@ -149,6 +155,7 @@ export default {
       email: '',
       password: '',
       checkbox: '',
+      showPassword: false,
       loading: false,
       loginLink: '/login',
       alert: {
