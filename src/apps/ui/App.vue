@@ -73,8 +73,7 @@ export default {
   border-radius: 3px !important;
 }
 
-button:disabled {
-  cursor: not-allowed;
-  pointer-events: all !important;
+*:disabled {
+  cursor: not-allowed !important;
 }
 </style>
