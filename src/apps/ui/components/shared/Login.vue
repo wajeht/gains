@@ -13,6 +13,7 @@ export default {
     return {
       email: '',
       password: '',
+      showPassword: false,
       remember_me: false,
       loading: false,
       reVerifyMessage: false,
@@ -165,10 +166,16 @@ export default {
 
     <!-- password -->
     <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+      <div class="d-flex gap-2 align-items-center flex-row">
+        <label for="password" class="form-label me-2">Password</label>
+        <div role="button" @click="showPassword = !showPassword" style="cursor: pointer">
+          <i v-if="showPassword" class="bi bi-eye-slash"></i>
+          <i v-else class="bi bi-eye"></i>
+        </div>
+      </div>
       <input
         v-model="password"
-        type="password"
+        :type="showPassword ? 'text' : 'password'"
         class="form-control"
         id="password"
         autocomplete="on"
