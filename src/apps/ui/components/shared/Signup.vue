@@ -40,21 +40,28 @@
 
     <!-- password -->
     <div class="mb-3">
-      <div class="d-flex gap-2">
-        <label for="password" class="form-label me-2">Password</label>
-        <div role="button" @click="showPassword = !showPassword" style="cursor: pointer">
+      <label for="password" class="form-label">Password</label>
+      <div class="input-group">
+        <input
+          v-model="password"
+          :type="showPassword ? 'text' : 'password'"
+          class="form-control"
+          id="password"
+          autocomplete="on"
+          required
+          :disabled="loading"
+        />
+        <button
+          @click="showPassword = !showPassword"
+          class="btn btn-outline-dark"
+          type="button"
+          id="show-hide-password-button"
+          :disabled="loading || !email || !password"
+        >
           <i v-if="showPassword" class="bi bi-eye-slash"></i>
           <i v-else class="bi bi-eye"></i>
-        </div>
+        </button>
       </div>
-      <input
-        v-model="password"
-        :type="showPassword ? 'text' : 'password'"
-        class="form-control"
-        id="password"
-        :disabled="loading"
-        required
-      />
     </div>
 
     <!-- checkbox -->

@@ -72,4 +72,9 @@ export default {
   line-height: 1.5 !important;
   border-radius: 3px !important;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
 </style>
