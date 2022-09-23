@@ -1,4 +1,5 @@
 import redis from '../../../../utils/redis.js';
+import logger from '../../../../utils/logger.js';
 
 /**
  * It gets the value of a key from the Redis cache
@@ -20,6 +21,7 @@ export async function deleteAllCachesOfAUser(user_id) {
 
     keys.forEach((key) => {
       if (key.includes(`user-id-${user_id}`)) {
+        logger.info(`Deleted redis cache ${key}!`);
         redis.del(key);
       }
     });
@@ -34,6 +36,7 @@ export async function clearDownloadUserDataRequestCounts() {
   redis.keys('*', function (err, keys) {
     if (err) return null;
     keys.forEach((key) => {
+      logger.info(`Deleted redis cache ${key}!`);
       if (key.match(/user-id-.-request-download-user-data/)) {
         redis.del(key);
       }

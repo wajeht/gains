@@ -4,9 +4,11 @@ import redis from './redis.js';
 import { sleep } from './helpers.js';
 import { faker } from '@faker-js/faker';
 import chalk from 'chalk';
+import copyMockVideos from './copy-mock-videos.js';
 import * as SessionsQueries from '../apps/api/v1/sessions/sessions.queries.js';
 import * as CacheQueries from '../apps/api/v1/cache/cache.queries.js';
 import * as UsersQueries from '../apps/api/v1/users/users.queries.js';
+import * as VideosQueries from '../apps/api/v1/videos/videos.queries.js';
 import * as LogsQueries from '../apps/api/v1/logs/logs.queries.js';
 import * as ExercisesQueries from '../apps/api/v1/exercises/exercises.queries.js';
 import * as SetsQueries from '../apps/api/v1/sets/sets.queries.js';
@@ -14,6 +16,7 @@ import * as SetsQueries from '../apps/api/v1/sets/sets.queries.js';
 export default async function seedMockTrainingData(email) {
   try {
     const [{ id: user_id }] = await UsersQueries.findUserByParam({ email });
+    const copiedVideos = await copyMockVideos();
 
     // generate 20 sessions at a time
     for (let k = 0; k < 20; k++) {
@@ -55,6 +58,22 @@ export default async function seedMockTrainingData(email) {
           private: false,
           sets_notes_visibility: true,
         });
+
+        // ----------------- video starts ---------------------
+        const randomNumberForVideo = faker.datatype.number({ max: Object.keys(copiedVideos).length - 1}); // prettier-ignore
+        const randomVideo = copiedVideos[Object.keys(copiedVideos)[randomNumberForVideo]];
+        const splitAtUpload = (path) => `/uploads${path.split('uploads')[1]}`;
+
+        const insertedVideo = await VideosQueries.insertVideo({
+          video_path: randomVideo.video,
+          video_url: splitAtUpload(randomVideo.video),
+          screenshot_path: randomVideo.screenshot,
+          screenshot_url: splitAtUpload(randomVideo.screenshot),
+          session_id: session.id,
+          log_id: log.id,
+          user_id,
+        });
+        // ----------------- video ends ---------------------
 
         // logger.info(`generating a log for exercise: ${log}`);
 

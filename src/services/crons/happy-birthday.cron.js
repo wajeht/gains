@@ -5,12 +5,13 @@ import * as UsersServices from '../../apps/api/v1/users/users.queries.js';
 
 export default async function sendHappyBirthdayEmailCron() {
   try {
-    Logger.info('sendHappyBirthdayEmailCron() cron has started!');
+    Logger.info('***** sendHappyBirthdayEmailCron() cron has started! *****');
 
     const users = await UsersServices.getAllUsersWhoseBirthdayIsToday();
 
     await Promise.all(
       users.map((user) => {
+        Logger.info(`Happy birthday email was sent to ${user.email}!`);
         return EmailServices.send({
           to: user.email,
           subject: 'Happy Birthday',
@@ -22,7 +23,7 @@ export default async function sendHappyBirthdayEmailCron() {
       }),
     );
 
-    Logger.info('sendHappyBirthdayEmailCron() cron has finished!');
+    Logger.info('***** sendHappyBirthdayEmailCron() cron has finished! *****');
   } catch (e) {
     Logger.error(e.message);
   }
