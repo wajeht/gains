@@ -238,12 +238,12 @@ async function mockData({ email, user_id, prod = false }) {
     if (email && user_id && prod) throw new Error(`You must chose either email or user_id!`);
 
     // gains users --mock-data --user-id=1 --prod
-    if (user_id && prod) {
+    if (user_id && prod && !email) {
       throw new Error(`Have not implemented yet!`);
     }
 
     // gains users --mock-data --email=test@domain.com --prod
-    if (email && prod) {
+    if (email && prod && !user_id) {
       const data = await axios.post('/api/admin/seed-mock-training-data', { email });
       Logger.info(`Mock training data was generated for email: ${email}!\n`);
       // process.exit(0);
