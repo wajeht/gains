@@ -22,6 +22,8 @@ export default async function seedMockTrainingData(email) {
     const copiedVideos = await copyMockVideos();
 
     const blocks = await BlocksQueries.getBlocksByUserId(user_id);
+    // generate a exercise
+    const exercises = await ExercisesQueries.getExerciseByUserId(user_id);
 
     // generate 20 sessions at a time
     for (let k = 0; k < 20; k++) {
@@ -53,9 +55,6 @@ export default async function seedMockTrainingData(email) {
       console.log();
       logger.info(`session ${session.id}: ${session.name}`);
       console.log();
-
-      // generate a exercise
-      const exercises = await ExercisesQueries.getExerciseByUserId(user_id);
 
       if (exercises.length < 2) {
         throw new Error(`User: ${user_id || email} does not have enough exercises to generate!`);
