@@ -306,6 +306,18 @@ async function postAComment() {
                   >{{ dayjs(currentSessionDetails.created_at).format('YYYY/MM/DD') }}</small
                 >
 
+                <!-- session -->
+                <small>
+                  <router-link
+                    v-if="userStore.user.id === currentSessionDetails.user_id"
+                    class="link-secondary text-decoration-none"
+                    :to="`/dashboard/sessions/${currentSessionDetails.id}`"
+                  >
+                    <i class="bi bi-journal-text"></i>
+                    {{ currentSessionDetails.id }}
+                  </router-link>
+                </small>
+
                 <!-- block -->
                 <small v-if="currentSessionDetails.block_name">
                   <router-link
@@ -319,18 +331,6 @@ async function postAComment() {
 
               <!-- right -->
               <div class="d-flex align-items-center gap-2">
-                <!-- session -->
-                <small>
-                  <router-link
-                    v-if="userStore.user.id === currentSessionDetails.user_id"
-                    class="link-secondary text-decoration-none"
-                    :to="`/dashboard/sessions/${currentSessionDetails.id}`"
-                  >
-                    <i class="bi bi-journal-text"></i>
-                    {{ currentSessionDetails.id }}
-                  </router-link>
-                </small>
-
                 <!-- comment -->
                 <small><i class="bi bi-chat me-1"></i>{{ comments.length || 0 }}</small>
               </div>

@@ -1131,14 +1131,12 @@ function downloadVideo(url) {
                     </router-link>
 
                     <!-- sets, volume, and other info -->
-                    <small
+                    <!-- <small
                       class="fst-italic fw-light text-muted d-flex justify-content-between align-items-center gap-1"
                       v-if="currentSessionDetails.end_date && log.sets.length"
                     >
-                      <!-- sets -->
                       <small>{{ log.sets.length }} sets,</small>
 
-                      <!-- e1rm -->
                       <small>
                         {{
                           log.sets
@@ -1150,7 +1148,6 @@ function downloadVideo(url) {
                         }}
                       </small>
 
-                      <!-- volume -->
                       <small
                         >{{
                           log.sets.reduce((prev, curr) => {
@@ -1161,7 +1158,7 @@ function downloadVideo(url) {
                         }}
                         volume</small
                       >
-                    </small>
+                    </small> -->
                   </span>
 
                   <!-- right -->

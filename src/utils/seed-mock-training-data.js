@@ -12,6 +12,7 @@ import * as VideosQueries from '../apps/api/v1/videos/videos.queries.js';
 import * as LogsQueries from '../apps/api/v1/logs/logs.queries.js';
 import * as ExercisesQueries from '../apps/api/v1/exercises/exercises.queries.js';
 import * as SetsQueries from '../apps/api/v1/sets/sets.queries.js';
+import * as BlocksQueries from '../apps/api/v1/blocks/blocks.queries.js';
 
 const randomBoolean = () => faker.datatype.number({ min: 0, max: 1 }) === 1;
 
@@ -20,11 +21,16 @@ export default async function seedMockTrainingData(email) {
     const [{ id: user_id }] = await UsersQueries.findUserByParam({ email });
     const copiedVideos = await copyMockVideos();
 
+    const blocks = await BlocksQueries.getBlocksByUserId(user_id);
+
     // generate 20 sessions at a time
     for (let k = 0; k < 20; k++) {
       console.log('-'.repeat(process.stdout.columns));
       // generate a session
-      const [session] = await SessionsQueries.createASession({
+
+      const randomBlock = faker.datatype.number({ max: blocks.length - 1 });
+
+      const sessionObject = {
         name: faker.lorem.words(5),
         body_weight: faker.datatype.number({ max: 225 }),
         caffeine_intake: faker.datatype.number({ max: 300 }),
@@ -36,9 +42,16 @@ export default async function seedMockTrainingData(email) {
         stress_level: faker.datatype.number({ max: 10 }),
         notes: faker.lorem.words(10),
         user_id: user_id,
-      });
+      };
+
+      if (blocks.length && randomBoolean()) {
+        sessionObject.block_id = blocks[randomBlock].id;
+      }
+
+      const [session] = await SessionsQueries.createASession(sessionObject);
       console.log();
-      logger.info(`session: ${session.name}`);
+      logger.info(`session ${session.id}: ${session.name}`);
+      console.log();
 
       // generate a exercise
       const exercises = await ExercisesQueries.getExerciseByUserId(user_id);
@@ -52,8 +65,6 @@ export default async function seedMockTrainingData(email) {
         const randomNumber = faker.datatype.number({ max: exercises.length - 1 });
         const randomExercise = exercises[randomNumber];
 
-        logger.info(`lift: ${randomExercise.name}`);
-
         const [log] = await LogsQueries.createLog({
           name: randomExercise.name,
           notes: faker.lorem.words(10),
@@ -64,6 +75,8 @@ export default async function seedMockTrainingData(email) {
           private: randomBoolean(),
           sets_notes_visibility: true,
         });
+
+        logger.info(`log ${log.id}: ${randomExercise.name}`);
 
         // ----------------- video starts ---------------------
         const randomNumberForVideo = faker.datatype.number({ max: Object.keys(copiedVideos).length - 1}); // prettier-ignore
@@ -97,12 +110,13 @@ export default async function seedMockTrainingData(email) {
           });
 
           logger.info(
-            ` - ${set.reps} x ${set.weight} @${set.rpe} - ${set.notes
+            ` set ${set.id}: - ${set.reps} x ${set.weight} @${set.rpe} - ${set.notes
               .split(' ')
               .slice(0, 3)
               .join(' ')}...`,
           );
         }
+        logger.info(`log ${log.id} set to ${log.private}`);
         console.log();
       }
 
@@ -111,6 +125,8 @@ export default async function seedMockTrainingData(email) {
         const completeSession = await SessionsQueries.updateSession(session.id, session.user_id, {
           end_date: faker.date.soon(),
         });
+        logger.info(`session ${session.id} set to completed!`);
+        console.log();
       }
     }
 

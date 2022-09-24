@@ -207,6 +207,17 @@ async function getSessions() {
                       >{{ dayjs(s.created_at).format('YYYY/MM/DD') }}</small
                     >
 
+                    <!-- session -->
+                    <small>
+                      <router-link
+                        v-if="userStore.user.id === s.user_id"
+                        class="link-secondary text-decoration-none"
+                        :to="`/dashboard/sessions/${s.id}`"
+                        ><i class="bi bi-journal-text"> </i>
+                        {{ s.id }}
+                      </router-link>
+                    </small>
+
                     <!-- block -->
                     <small v-if="s.block_name">
                       <router-link
@@ -220,17 +231,6 @@ async function getSessions() {
 
                   <!-- right -->
                   <div class="d-flex gap-2">
-                    <!-- session -->
-                    <small>
-                      <router-link
-                        v-if="userStore.user.id === s.user_id"
-                        class="link-secondary text-decoration-none"
-                        :to="`/dashboard/sessions/${s.id}`"
-                        ><i class="bi bi-journal-text"> </i>
-                        {{ s.id }}
-                      </router-link>
-                    </small>
-
                     <!-- comment -->
                     <small>
                       <router-link
