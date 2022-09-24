@@ -13,6 +13,8 @@ import * as LogsQueries from '../apps/api/v1/logs/logs.queries.js';
 import * as ExercisesQueries from '../apps/api/v1/exercises/exercises.queries.js';
 import * as SetsQueries from '../apps/api/v1/sets/sets.queries.js';
 
+const randomBoolean = () => faker.datatype.number({ min: 0, max: 1 }) === 1;
+
 export default async function seedMockTrainingData(email) {
   try {
     const [{ id: user_id }] = await UsersQueries.findUserByParam({ email });
@@ -41,6 +43,10 @@ export default async function seedMockTrainingData(email) {
       // generate a exercise
       const exercises = await ExercisesQueries.getExerciseByUserId(user_id);
 
+      if (exercises.length < 2) {
+        throw new Error(`User: ${user_id || email} does not have enough exercises to generate!`);
+      }
+
       // generate a log
       for (let i = 0; i < faker.datatype.number({ max: 10 }); i++) {
         const randomNumber = faker.datatype.number({ max: exercises.length - 1 });
@@ -55,7 +61,7 @@ export default async function seedMockTrainingData(email) {
           session_id: session.id,
           exercise_id: randomExercise.id,
           collapsed: true,
-          private: false,
+          private: randomBoolean(),
           sets_notes_visibility: true,
         });
 
@@ -100,9 +106,16 @@ export default async function seedMockTrainingData(email) {
         console.log();
       }
 
-      // clear all the cache
-      await redis.flushall();
+      // complete the session
+      if (randomBoolean()) {
+        const completeSession = await SessionsQueries.updateSession(session.id, session.user_id, {
+          end_date: faker.date.soon(),
+        });
+      }
     }
+
+    // clear all the cache
+    await redis.flushall();
   } catch (e) {
     logger.error(e);
   }
