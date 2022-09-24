@@ -137,5 +137,6 @@ export default async function seedMockTrainingData(email) {
     await redis.flushall();
   } catch (e) {
     logger.error(e);
+    throw new Error(e);
   }
 }
