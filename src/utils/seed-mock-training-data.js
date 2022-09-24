@@ -30,9 +30,6 @@ export default async function seedMockTrainingData(email) {
       console.log('-'.repeat(process.stdout.columns));
       // generate a session
 
-      const randomBlockLength = blocks.length - 1;
-      const randomBlock = faker.datatype.number({ max: randomBlockLength });
-
       const sessionObject = {
         name: faker.lorem.words(5),
         body_weight: faker.datatype.number({ max: 225 }),
@@ -48,6 +45,8 @@ export default async function seedMockTrainingData(email) {
       };
 
       if (blocks.length && randomBoolean()) {
+        const randomBlockLength = blocks.length - 1;
+        const randomBlock = faker.datatype.number({ min: 0, max: randomBlockLength });
         sessionObject.block_id = blocks[randomBlock].id;
       }
 
@@ -56,14 +55,14 @@ export default async function seedMockTrainingData(email) {
       logger.info(`session ${session.id}: ${session.name}`);
       console.log();
 
-      if (exercises.length < 2) {
+      if (exercises.length < 1) {
         throw new Error(`User: ${user_id || email} does not have enough exercises to generate!`);
       }
 
       // generate a log
       for (let i = 0; i < faker.datatype.number({ max: 10 }); i++) {
         const randomNumberExercise = exercises.length - 1;
-        const randomNumber = faker.datatype.number({ max: randomNumberExercise });
+        const randomNumber = faker.datatype.number({ min: 0, max: randomNumberExercise });
         const randomExercise = exercises[randomNumber];
 
         const [log] = await LogsQueries.createLog({
@@ -81,7 +80,7 @@ export default async function seedMockTrainingData(email) {
 
         // ----------------- video starts ---------------------
         const randomNumberForVideoLength = Object.keys(copiedVideos).length - 1;
-        const randomNumberForVideo = faker.datatype.number({ max: randomNumberForVideoLength}); // prettier-ignore
+        const randomNumberForVideo = faker.datatype.number({ min: 0, max: randomNumberForVideoLength}); // prettier-ignore
         const randomVideo = copiedVideos[Object.keys(copiedVideos)[randomNumberForVideo]];
         const splitAtUpload = (path) => `/uploads${path.split('uploads')[1]}`;
 
