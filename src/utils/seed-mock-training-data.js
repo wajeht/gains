@@ -28,7 +28,8 @@ export default async function seedMockTrainingData(email) {
       console.log('-'.repeat(process.stdout.columns));
       // generate a session
 
-      const randomBlock = faker.datatype.number({ max: blocks.length - 1 });
+      const randomBlockLength = blocks.length - 1;
+      const randomBlock = faker.datatype.number({ max: randomBlockLength });
 
       const sessionObject = {
         name: faker.lorem.words(5),
@@ -62,7 +63,8 @@ export default async function seedMockTrainingData(email) {
 
       // generate a log
       for (let i = 0; i < faker.datatype.number({ max: 10 }); i++) {
-        const randomNumber = faker.datatype.number({ max: exercises.length - 1 });
+        const randomNumberExercise = exercises.length - 1;
+        const randomNumber = faker.datatype.number({ max: randomNumberExercise });
         const randomExercise = exercises[randomNumber];
 
         const [log] = await LogsQueries.createLog({
@@ -79,7 +81,8 @@ export default async function seedMockTrainingData(email) {
         logger.info(`log ${log.id}: ${randomExercise.name}`);
 
         // ----------------- video starts ---------------------
-        const randomNumberForVideo = faker.datatype.number({ max: Object.keys(copiedVideos).length - 1}); // prettier-ignore
+        const randomNumberForVideoLength = Object.keys(copiedVideos).length - 1;
+        const randomNumberForVideo = faker.datatype.number({ max: randomNumberForVideoLength}); // prettier-ignore
         const randomVideo = copiedVideos[Object.keys(copiedVideos)[randomNumberForVideo]];
         const splitAtUpload = (path) => `/uploads${path.split('uploads')[1]}`;
 
