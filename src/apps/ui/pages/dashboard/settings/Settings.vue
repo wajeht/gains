@@ -155,31 +155,6 @@ async function clearAllCache() {
               </div>
             </router-link>
 
-            <!-- change unit -->
-            <div
-              @click="appStore.changeUnit()"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3"
-              role="button"
-            >
-              <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                  <h6 class="mb-0">Change unit</h6>
-                  <p class="mb-0 opacity-75">Change unit to kg. or lbs.</p>
-                </div>
-                <div class="form-check form-switch form-check-reverse">
-                  <input
-                    v-model="appStore.unit.toggle"
-                    class="form-check-input"
-                    type="checkbox"
-                    id="settings-toggle-unit"
-                  />
-                  <label class="form-check-label" for="settings-toggle-unit">{{
-                    appStore.unitLabel
-                  }}</label>
-                </div>
-              </div>
-            </div>
-
             <!-- delete  -->
             <router-link
               to="/dashboard/settings/account/delete-account"
@@ -247,6 +222,27 @@ async function clearAllCache() {
               </div>
             </span>
 
+            <!-- api-key -->
+            <router-link
+              to="/dashboard/settings/data/api-keys"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">Request API Key</h6>
+                  <p class="mb-0 opacity-75">Want to consume your data via api? That's great!</p>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+
+        <!-- app setting -->
+        <div>
+          <!-- title -->
+          <h5><i class="bi bi-person-fill"></i> App</h5>
+
+          <div class="list-group">
             <!-- clear all cache -->
             <span
               @click="clearAllCache()"
@@ -276,18 +272,44 @@ async function clearAllCache() {
               </div>
             </span>
 
-            <!-- api-key -->
-            <router-link
-              to="/dashboard/settings/data/api-keys"
+            <!-- change unit -->
+            <div
+              @click="appStore.changeUnit()"
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
+              role="button"
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                  <h6 class="mb-0">Request API Key</h6>
-                  <p class="mb-0 opacity-75">Want to consume your data via api? That's great!</p>
+                  <h6 class="mb-0">Change unit</h6>
+                  <p class="mb-0 opacity-75">Change unit to kg. or lbs.</p>
+                </div>
+                <div class="form-check form-check-reverse form-switch">
+                  <input
+                    v-model="appStore.unit.toggle"
+                    class="form-check-input"
+                    type="checkbox"
+                    id="settings-toggle-unit"
+                  />
+                  <label class="form-check-label" for="settings-toggle-unit">{{
+                    appStore.unitLabel
+                  }}</label>
                 </div>
               </div>
-            </router-link>
+            </div>
+
+            <!-- theme -->
+            <div class="list-group-item list-group-item-action d-flex gap-3 py-3 disabled">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">System theme</h6>
+                  <p class="mb-0 opacity-75">Change theme to light or dark</p>
+                </div>
+                <div class="form-check form-check-reverse form-switch">
+                  <input class="form-check-input" type="checkbox" id="light-or-dark" />
+                  <label class="form-check-label" for="light-or-dark">light</label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
