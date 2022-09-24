@@ -6,6 +6,8 @@ import App from './App.vue';
 import useUserStore from './store/user.store.js';
 import routes from './router.vue.js';
 
+import { VueQueryPlugin } from 'vue-query';
+
 // external
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
@@ -30,6 +32,7 @@ Chart.register(...registerables);
 app.config.performance = true;
 app.config.devtools = true;
 
+app.use(VueQueryPlugin);
 app.use(autoAnimatePlugin);
 app.directive('tooltip', tooltip);
 app.component('font-awesome-icon', FontAwesomeIcon);

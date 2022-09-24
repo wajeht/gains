@@ -113,6 +113,7 @@
     "vite": "^2.9.14",
     "vue": "^3.2.37",
     "vue-chart-3": "^3.1.8",
+    "vue-query": "^1.26.0",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {

@@ -12,6 +12,7 @@ import expressJsdocOptions from '../config/express-jsdoc-options.js';
 import * as AppRoutes from './app.routes.js';
 import { regularLimiter, apiLimiter } from '../config/rateLimiter.js';
 import { jwt_secret } from '../config/env.js';
+import * as Middlewares from './api/api.middlewares.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -41,6 +42,7 @@ app.use(
   }),
 );
 
+app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, next, true));
 expressJSDocSwagger(app)(expressJsdocOptions);
 
 app.use((req, res, next) => { req.io = io; next(); }); // prettier-ignore

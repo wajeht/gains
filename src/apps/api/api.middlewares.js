@@ -13,7 +13,7 @@ import path from 'path';
  * @param res - the response object
  * @param next - This is a function that you call when you're done with your middleware.
  */
-export function authenticateUser(req, res, next) {
+export function authenticateUser(req, res, next, ui = false) {
   try {
     // if (env === 'development') {
     //   red('TODO!: Remove auth skipping in production!');
@@ -54,7 +54,11 @@ export function authenticateUser(req, res, next) {
 
     next();
   } catch (error) {
-    next(error);
+    if (ui) {
+      return res.redirect('/dashboard/login');
+    } else {
+      next(error);
+    }
   }
 }
 
