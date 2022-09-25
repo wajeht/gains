@@ -9,8 +9,14 @@ const sessions = express.Router();
  * GET /api/v1/sessions/community-sessions
  * @tags sessions
  * @summary get all the sessions
+ * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
+ * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
  */
-sessions.get('/community-sessions', catchAsyncErrors(SessionsController.getAllSessions));
+sessions.get(
+  '/community-sessions',
+  validator(SessionsValidation.getAllSessions),
+  catchAsyncErrors(SessionsController.getAllSessions),
+);
 
 /**
  * POST /api/v1/sessions

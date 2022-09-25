@@ -240,7 +240,7 @@ async function clearAllCache() {
         <!-- app setting -->
         <div>
           <!-- title -->
-          <h5><i class="bi bi-person-fill"></i> App</h5>
+          <h5><i class="bi bi-gear-fill"></i> App</h5>
 
           <div class="list-group">
             <!-- clear all cache -->

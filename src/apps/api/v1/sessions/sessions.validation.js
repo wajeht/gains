@@ -144,6 +144,29 @@ export const getUserSessions = [
     .toInt(),
 ];
 
+export const getAllSessions = [
+  query('perPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('perPage must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('perPage must be an ID!')
+    .bail()
+    .toInt(),
+  query('currentPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('current-page must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('current-page must be an ID!')
+    .bail()
+    .toInt(),
+];
+
 export const getSession = [
   param('sid')
     .trim()

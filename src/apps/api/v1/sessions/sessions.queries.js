@@ -371,7 +371,7 @@ export async function sessionsWithVideosByUserId(user_id) {
  * Get all sessions, and for each session, get all videos that are not deleted, and order them by id.
  * @returns An array of objects.
  */
-export async function getAllSessions() {
+export async function getAllSessions(pagination = { perPage: null, currentPage: null }) {
   // session sets info
   const { rows: logs } = await db.raw(
     `
