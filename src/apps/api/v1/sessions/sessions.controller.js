@@ -99,6 +99,14 @@ export async function getUserSessions(req, res) {
 
   if (pagination.currentPage > 1) {
     const deleted = await redis.del(`user-id-${user_id}-sessions`);
+    const sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      data: sessions.data,
+      pagination: sessions.pagination,
+    });
   }
 
   let sessions = JSON.parse(await redis.get(`user-id-${user_id}-sessions`));

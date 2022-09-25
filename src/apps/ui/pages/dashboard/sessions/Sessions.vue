@@ -203,7 +203,7 @@ function logDetails(sid) {
         v-if="pagination.details?.currentPage !== pagination.lastPage && sessions.length"
         @click="getUserSessions()"
         type="button"
-        class="btn btn-success"
+        class="btn btn-dark"
         :disabled="loading"
       >
         <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
