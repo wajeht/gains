@@ -240,7 +240,7 @@ async function clearAllCache() {
         <!-- app setting -->
         <div>
           <!-- title -->
-          <h5><i class="bi bi-person-fill"></i> App</h5>
+          <h5><i class="bi bi-gear-fill"></i> App</h5>
 
           <div class="list-group">
             <!-- clear all cache -->
@@ -283,7 +283,7 @@ async function clearAllCache() {
                   <h6 class="mb-0">Change unit</h6>
                   <p class="mb-0 opacity-75">Change unit to kg. or lbs.</p>
                 </div>
-                <div class="form-check form-check-reverse form-switch">
+                <div class="form-check form-switch form-check-reverse">
                   <input
                     v-model="appStore.unit.toggle"
                     class="form-check-input"
@@ -305,8 +305,36 @@ async function clearAllCache() {
                   <p class="mb-0 opacity-75">Change theme to light or dark</p>
                 </div>
                 <div class="form-check form-check-reverse form-switch">
-                  <input class="form-check-input" type="checkbox" id="light-or-dark" />
                   <label class="form-check-label" for="light-or-dark">light</label>
+                  <input class="form-check-input" type="checkbox" id="light-or-dark" />
+                </div>
+              </div>
+            </div>
+
+            <!-- enable community sessions -->
+            <div
+              @click="appStore.community = !appStore.community"
+              role="button"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">Community</h6>
+                  <p class="mb-0 opacity-75">Enable or Disable community feature</p>
+                </div>
+                <div class="form-check form-switch form-check-reverse">
+                  <input
+                    class="form-check-input"
+                    v-model="appStore.community"
+                    type="checkbox"
+                    id="enable-disable-community"
+                  />
+                  <label class="form-check-label" for="enable-disable-community">
+                    <span @click="appStore.community = false" v-if="appStore.community"
+                      >enable</span
+                    >
+                    <span @click="appStore.community = true" v-else>disable</span>
+                  </label>
                 </div>
               </div>
             </div>

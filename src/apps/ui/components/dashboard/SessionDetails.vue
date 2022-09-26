@@ -1110,8 +1110,8 @@ function downloadVideo(url) {
           <div
             class="card p-0"
             :style="{
-              'border-top': `${!log.private ? '1.8px solid #FFC008' : ''}`,
-              'margin-top': `${!log.private ? '-.8px' : ''}`,
+              'border-top': `${!log.private && appStore.community ? '1.8px solid #FFC008' : ''}`,
+              'margin-top': `${!log.private && appStore.community ? '-.8px' : ''}`,
             }"
             v-auto-animate
           >
@@ -1177,6 +1177,7 @@ function downloadVideo(url) {
 
                     <!-- lock a video -->
                     <span
+                      v-if="appStore.community"
                       @click="
                         (log.private = !log.private), updateLogVisibility(log.id, log.private)
                       "
