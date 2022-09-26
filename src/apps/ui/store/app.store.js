@@ -11,7 +11,7 @@ const useAppStore = defineStore({
         toggle: false,
         message: '',
       },
-      toggleTheme: false,
+      toggleTheme: true,
       community: false,
       unit: {
         toggle: true,
