@@ -1,15 +1,14 @@
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/variables";
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/variables';
 
 .dark-mode {
-
   * {
-    color: #BDBBB5 !important;
+    color: #bdbbb5 !important;
   }
 
   .list-group-item {
-    background-color: #181A1B !important;
+    background-color: #181a1b !important;
     border-color: rgba(140, 130, 115, 0.13) !important;
   }
 
@@ -23,21 +22,28 @@
   }
 
   .card {
-    background-color: #181A1B !important;
+    border-color: rgb(56, 61, 63) !important;
+    background-color: #181a1b !important;
   }
 
   .list-group {
-    background-color: #181A1B !important;
+    background-color: #181a1b !important;
   }
 
-  #dashboard-footer, #videos-and-profile-header, #dashboard-header, #dashboard-home-header, #sessions-header, #session-details-header {
-    color: #BDBBB5 !important;
-    background-color: #1B1C1B !important;
+  .active {
+    box-shadow: 0 4px 0 #bdbbb5 inset;
   }
 
+  #dashboard-footer,
+  #videos-and-profile-header,
+  #dashboard-header,
+  #dashboard-home-header,
+  #sessions-header,
+  #session-details-header {
+    color: #bdbbb5 !important;
+    background-color: #1b1c1b !important;
+    border-color: rgb(56, 61, 63) !important;
+  }
 }
 
-@import "bootstrap/scss/bootstrap";
-
-
-
+@import 'bootstrap/scss/bootstrap';
