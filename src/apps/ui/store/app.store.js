@@ -11,7 +11,7 @@ const useAppStore = defineStore({
         toggle: false,
         message: '',
       },
-      toggleTheme: true,
+      darkMode: false,
       community: false,
       unit: {
         toggle: true,
@@ -27,12 +27,12 @@ const useAppStore = defineStore({
   },
   actions: {
     changeTheme() {
-      if (document.body.classList.contains('dark-mode')) {
+      if (!this.darkMode) {
         document.body.classList.remove('dark-mode');
-        this.toggleTheme = false;
+        this.darkMode = false;
       } else {
         document.body.classList.add('dark-mode');
-        this.toggleTheme = true;
+        this.darkMode = true;
       }
     },
     changeUnit() {
@@ -55,7 +55,7 @@ const useAppStore = defineStore({
   persist: {
     id: 'app',
     storage: window.localStorage,
-    paths: ['numberOfSessionsPerWeek', 'unit', 'appVersion', 'community', 'toggleTheme'],
+    paths: ['numberOfSessionsPerWeek', 'unit', 'appVersion', 'community', 'darkMode'],
   },
 });
 

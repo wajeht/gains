@@ -7,7 +7,7 @@ import useAppStore from '../store/app.store.js';
 
 const appStore = useAppStore();
 
-if (appStore.toggleTheme) {
+if (appStore.darkMode) {
   document.body.classList.add('dark-mode');
 } else {
   document.body.classList.remove('dark-mode');

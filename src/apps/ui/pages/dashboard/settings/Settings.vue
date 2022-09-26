@@ -320,14 +320,14 @@ async function clearAllCache() {
                     class="form-check-label"
                     for="light-or-dark"
                   >
-                    <span v-if="appStore.toggleTheme">dark</span>
-                    <span v-if="!appStore.toggleTheme">light</span>
+                    <span v-if="appStore.darkMode">dark</span>
+                    <span v-if="!appStore.darkMode">light</span>
                   </label>
                   <input
                     class="form-check-input"
                     type="checkbox"
                     id="light-or-dark"
-                    v-model="appStore.toggleTheme"
+                    v-model="appStore.darkMode"
                   />
                 </div>
               </div>
