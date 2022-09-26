@@ -63,12 +63,8 @@ const appStore = useAppStore();
           <!-- login -->
           <li @click="appStore.changeTheme()" class="nav-item" role="button">
             <div class="nav-link link-dark">
-              <span v-if="appStore.darkMode" @click="appStore.darkMode = false"
-                ><i class="bi bi-lightbulb-fill"></i
-              ></span>
-              <span v-if="!appStore.darkMode" @click="appStore.darkMode = true"
-                ><i class="bi bi-lightbulb"></i
-              ></span>
+              <span v-if="appStore.darkMode === true"><i class="bi bi-lightbulb-fill"></i></span>
+              <span v-if="appStore.darkMode === false"><i class="bi bi-lightbulb"></i></span>
             </div>
           </li>
         </ul>
