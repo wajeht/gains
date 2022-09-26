@@ -1,3 +1,8 @@
+<script setup>
+import useAppStore from '../../store/app.store.js';
+const appStore = useAppStore();
+</script>
+
 <template>
   <header class="py-3 mb-4 border-bottom sticky-top" style="backdrop-filter: blur(10px)">
     <div class="container d-flex justify-content-between align-items-center">
@@ -54,6 +59,18 @@
               >Login</router-link
             >
           </li>
+
+          <!-- login -->
+          <li @click="appStore.changeTheme()" class="nav-item" role="button">
+            <div class="nav-link link-dark">
+              <span v-if="appStore.toggleTheme" @click="appStore.toggleTheme = false"
+                ><i class="bi bi-lightbulb-fill"></i
+              ></span>
+              <span v-if="!appStore.toggleTheme" @click="appStore.toggleTheme = true"
+                ><i class="bi bi-lightbulb"></i
+              ></span>
+            </div>
+          </li>
         </ul>
 
         <!-- mobile menu -->
@@ -99,41 +116,41 @@
   </header>
 </template>
 
-<style  scoped>
-  .nav-pills .nav-link.active,
-  .nav-pills .show > .nav-link {
-    background: #212529;
-    color: white;
-  }
+<style scoped>
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background: #212529;
+  color: white;
+}
 
-  .nav-link:hover {
-    background: #6c757d;
-    color: white;
-  }
+.nav-link:hover {
+  background: #6c757d;
+  color: white;
+}
 
-  .nav-link.active:hover {
-    text-decoration: none;
-  }
+.nav-link.active:hover {
+  text-decoration: none;
+}
 
+#mobile-menu {
+  display: none;
+}
+
+@media screen and (max-width: 500px) {
   #mobile-menu {
+    display: block;
+  }
+
+  #links {
+    display: flex;
+    flex-direction: column;
     display: none;
   }
 
-  @media screen and (max-width: 500px) {
-    #mobile-menu {
-      display: block;
-    }
-
-    #links {
-      display: flex;
-      flex-direction: column;
-      display: none;
-    }
-
-    .dropdown-item.active,
-    .dropdown-item:active {
-      background: #212529;
-      color: white;
-    }
+  .dropdown-item.active,
+  .dropdown-item:active {
+    background: #212529;
+    color: white;
   }
+}
 </style>

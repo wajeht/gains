@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { watchEffect, toRef } from 'vue';
 
 const useAppStore = defineStore({
   id: 'app',
@@ -25,6 +26,15 @@ const useAppStore = defineStore({
     },
   },
   actions: {
+    changeTheme() {
+      if (document.body.classList.contains('dark-mode')) {
+        document.body.classList.remove('dark-mode');
+        this.toggleTheme = false;
+      } else {
+        document.body.classList.add('dark-mode');
+        this.toggleTheme = true;
+      }
+    },
     changeUnit() {
       this.unit.toggle = !this.unit.toggle;
     },

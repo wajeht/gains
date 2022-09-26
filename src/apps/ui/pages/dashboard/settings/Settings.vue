@@ -121,16 +121,6 @@ async function clearAllCache() {
     }
   }
 }
-
-function toggleTheme() {
-  if (document.body.classList.contains('dark-mode')) {
-    document.body.classList.remove('dark-mode');
-    appStore.toggleTheme = false;
-  } else {
-    document.body.classList.add('dark-mode');
-    appStore.toggleTheme = true;
-  }
-}
 </script>
 
 <template>
@@ -314,7 +304,7 @@ function toggleTheme() {
 
             <!-- theme -->
             <div
-              @click="toggleTheme()"
+              @click="appStore.changeTheme()"
               role="button"
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
             >
@@ -325,7 +315,7 @@ function toggleTheme() {
                 </div>
                 <div class="form-check form-check-reverse form-switch">
                   <label
-                    @click="toggleTheme()"
+                    @click="appStore.changeTheme()"
                     style="cursor: pointer"
                     class="form-check-label"
                     for="light-or-dark"

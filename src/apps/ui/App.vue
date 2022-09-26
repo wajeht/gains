@@ -31,11 +31,7 @@ export default {
   },
   mounted() {
     const appStore = useAppStore();
-    if (appStore.toggleTheme) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
+    appStore.changeTheme();
   },
   watch: {
     $route(to) {
