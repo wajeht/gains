@@ -290,9 +290,13 @@ async function clearAllCache() {
                     type="checkbox"
                     id="settings-toggle-unit"
                   />
-                  <label class="form-check-label" for="settings-toggle-unit">{{
-                    appStore.unitLabel
-                  }}</label>
+                  <label
+                    @click="appStore.changeUnit()"
+                    style="cursor: pointer"
+                    class="form-check-label"
+                    for="settings-toggle-unit"
+                    >{{ appStore.unitLabel }}</label
+                  >
                 </div>
               </div>
             </div>
@@ -305,7 +309,9 @@ async function clearAllCache() {
                   <p class="mb-0 opacity-75">Change theme to light or dark</p>
                 </div>
                 <div class="form-check form-check-reverse form-switch">
-                  <label class="form-check-label" for="light-or-dark">light</label>
+                  <label style="cursor: pointer" class="form-check-label" for="light-or-dark"
+                    >light</label
+                  >
                   <input class="form-check-input" type="checkbox" id="light-or-dark" />
                 </div>
               </div>
@@ -329,7 +335,11 @@ async function clearAllCache() {
                     type="checkbox"
                     id="enable-disable-community"
                   />
-                  <label class="form-check-label" for="enable-disable-community">
+                  <label
+                    style="cursor: pointer"
+                    class="form-check-label"
+                    for="enable-disable-community"
+                  >
                     <span @click="appStore.community = false" v-if="appStore.community"
                       >enable</span
                     >
