@@ -10,11 +10,17 @@ import useAppStore from '../../store/app.store.js';
 
 const userStore = useUserStore();
 const appStore = useAppStore();
-
 const router = useRouter();
 const route = useRoute();
+const loading = ref(false);
 
 const sessions = ref([]);
+const pagination = reactive({
+  perPage: 25,
+  currentPage: 0,
+  details: null,
+  lastPage: null,
+});
 
 const alert = reactive({
   type: '',
@@ -23,24 +29,18 @@ const alert = reactive({
 
 onMounted(async () => {
   appStore.loading = true;
-  const s = await getSessions();
-  if (!s?.length) return;
-  sessions.value = s.filter((s) => s.logs) || [];
+  await getSessions();
+  pagination.lastPage = pagination.details?.lastPage;
   appStore.loading = false;
 });
 
 async function getSessions() {
   try {
-    const res = await api.get(`/api/v1/sessions/community-sessions`);
-    const json = await res.json();
+    pagination.currentPage++;
+    loading.value = true; // loading more button
 
-    if (!res.ok) {
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
-    }
+    const res = await api.get(`/api/v1/sessions/community-sessions?perPage=${pagination.perPage}&currentPage=${pagination.currentPage}`); // prettier-ignore
+    const json = await res.json();
 
     if (json.data?.length === 0) {
       appStore.loading = false;
@@ -50,15 +50,39 @@ async function getSessions() {
       return;
     }
 
-    json.data.forEach((ss) => {
-      if (ss.logs) {
-        ss.logs['currentLogStep'] = 0;
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
       }
-    });
+    }
 
-    return json.data;
+    pagination.details = json.pagination;
+
+    if (sessions.value?.length === 0) {
+      sessions.value = json.data.filter((ss) => ss.logs.length);
+
+      sessions.value.forEach((ss) => {
+        if (ss.logs.length) {
+          ss.logs['currentLogStep'] = 0;
+        }
+      });
+    } else {
+      loading.value = true; // loading more button
+      json.data.forEach((ss) => {
+        if (ss.logs.length) {
+          sessions.value.push(ss);
+          ss.logs['currentLogStep'] = 0;
+        }
+      });
+      loading.value = false;
+    }
+
+    loading.value = false; // loading more button
   } catch (e) {
     appStore.loading = false;
+    loading.value = false; // loading more button
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -245,6 +269,22 @@ async function getSessions() {
             </span>
           </span>
         </div>
+
+        <!-- load more -->
+        <button
+          v-if="pagination.details?.currentPage !== pagination.lastPage && sessions.length"
+          @click="getSessions()"
+          type="button"
+          class="btn btn-dark"
+          :disabled="loading"
+        >
+          <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+
+          <span v-if="!loading"> Load more </span>
+          <span v-if="loading"> Loading... </span>
+        </button>
       </div>
     </div>
   </div>

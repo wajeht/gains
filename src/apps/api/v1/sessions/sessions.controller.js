@@ -177,12 +177,24 @@ export async function getSessionsWithVideos(req, res) {
 export async function getAllSessions(req, res) {
   const user_id = req.user.user_id;
 
-  const { perPage, currentPage } = req.query;
+  const { perPage, currentPage, cache } = req.query;
 
   const pagination = {
     perPage: perPage ?? null,
     currentPage: currentPage ?? null,
   };
+
+  if (cache == false) {
+    const sessions = await SessionQueries.getAllSessions(pagination);
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      cache: cache,
+      data: sessions.data,
+      pagination: sessions.pagination,
+    });
+  }
 
   if (pagination.currentPage > 1) {
     const deleted = await redis.del(`user-id-${user_id}-community-sessions`);
@@ -210,6 +222,7 @@ export async function getAllSessions(req, res) {
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: sessions,
+    data: sessions.data,
+    pagination: sessions.pagination,
   });
 }
