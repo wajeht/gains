@@ -46,6 +46,13 @@ export default defineConfig({
     'process.env': process.env,
   },
   css: {
+    preprocessorOptions: {
+      sass: {
+        additionalData: `
+          @import "@/assets/sass/main.scss";
+        `,
+      },
+    },
     postcss: {
       plugins: [
         purgecss({

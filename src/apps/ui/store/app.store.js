@@ -10,6 +10,7 @@ const useAppStore = defineStore({
         toggle: false,
         message: '',
       },
+      toggleTheme: false,
       community: false,
       unit: {
         toggle: true,
@@ -44,7 +45,7 @@ const useAppStore = defineStore({
   persist: {
     id: 'app',
     storage: window.localStorage,
-    paths: ['numberOfSessionsPerWeek', 'unit', 'appVersion', 'community'],
+    paths: ['numberOfSessionsPerWeek', 'unit', 'appVersion', 'community', 'toggleTheme'],
   },
 });
 

@@ -34,6 +34,7 @@ const number = ref(props.numberOfSessionsPerWeek);
 
 <template>
   <div
+    id="videos-and-profile-header"
     style="height: 64px"
     class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3"
   >

@@ -121,6 +121,16 @@ async function clearAllCache() {
     }
   }
 }
+
+function toggleTheme() {
+  if (document.body.classList.contains('dark-mode')) {
+    document.body.classList.remove('dark-mode');
+    appStore.toggleTheme = false;
+  } else {
+    document.body.classList.add('dark-mode');
+    appStore.toggleTheme = true;
+  }
+}
 </script>
 
 <template>
@@ -303,17 +313,32 @@ async function clearAllCache() {
             </div>
 
             <!-- theme -->
-            <div class="list-group-item list-group-item-action d-flex gap-3 py-3 disabled">
+            <div
+              @click="toggleTheme()"
+              role="button"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
                   <h6 class="mb-0">System theme</h6>
                   <p class="mb-0 opacity-75">Change theme to light or dark</p>
                 </div>
                 <div class="form-check form-check-reverse form-switch">
-                  <label style="cursor: pointer" class="form-check-label" for="light-or-dark"
-                    >light</label
+                  <label
+                    @click="toggleTheme()"
+                    style="cursor: pointer"
+                    class="form-check-label"
+                    for="light-or-dark"
                   >
-                  <input class="form-check-input" type="checkbox" id="light-or-dark" />
+                    <span v-if="appStore.toggleTheme">dark</span>
+                    <span v-if="!appStore.toggleTheme">light</span>
+                  </label>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="light-or-dark"
+                    v-model="appStore.toggleTheme"
+                  />
                 </div>
               </div>
             </div>

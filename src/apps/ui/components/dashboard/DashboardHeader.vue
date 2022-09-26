@@ -1,5 +1,6 @@
 <template>
   <div
+    id="dashboard-header"
     class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3"
   >
     <!-- profile image -->

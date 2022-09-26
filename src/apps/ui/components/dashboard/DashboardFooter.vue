@@ -7,7 +7,11 @@ const router = useRouter();
 const route = useRoute();
 </script>
 <template>
-  <div class="position-sticky bottom-0 container border-top bg-white text-muted" style="z-index: 2">
+  <div
+    id="dashboard-footer"
+    class="position-sticky bottom-0 container border-top bg-white text-muted"
+    style="z-index: 2"
+  >
     <div class="d-flex flex-row">
       <!-- community-session -->
       <div v-if="appStore.community" class="col">

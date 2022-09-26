@@ -1,0 +1,43 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/variables";
+
+.dark-mode {
+
+  * {
+    color: #BDBBB5 !important;
+  }
+
+  .list-group-item {
+    background-color: #181A1B !important;
+    border-color: rgba(140, 130, 115, 0.13) !important;
+  }
+
+  #log:hover {
+    background-image: initial;
+    background-color: rgb(30, 33, 34) !important;
+  }
+
+  #admin-router-wrapper {
+    background-color: #242219 !important;
+  }
+
+  .card {
+    background-color: #181A1B !important;
+  }
+
+  .list-group {
+    background-color: #181A1B !important;
+  }
+
+  #dashboard-footer, #videos-and-profile-header, #dashboard-header, #dashboard-home-header, #sessions-header, #session-details-header {
+    color: #BDBBB5 !important;
+    background-color: #1B1C1B !important;
+  }
+
+}
+
+@import "bootstrap/scss/bootstrap";
+
+
+

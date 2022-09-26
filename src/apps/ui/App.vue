@@ -51,6 +51,10 @@ export default {
 };
 </script>
 
+<style lang="scss">
+@import '@/assets/styles/scss/custom.scss';
+</style>
+
 <style>
 .btn-group-xs > .btn,
 .btn-xs {
