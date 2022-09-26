@@ -145,6 +145,16 @@ export const getUserSessions = [
 ];
 
 export const getAllSessions = [
+  query('cache')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('cache must not be empty!')
+    .bail()
+    .isBoolean()
+    .withMessage('cache must be a boolean format')
+    .bail()
+    .toBoolean(),
   query('perPage')
     .optional()
     .trim()

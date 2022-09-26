@@ -373,87 +373,159 @@ export async function sessionsWithVideosByUserId(user_id) {
  */
 export async function getAllSessions(pagination = { perPage: null, currentPage: null }) {
   // session sets info
-  const { rows: logs } = await db.raw(
-    `
-    select
-      l.*,
-      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets,
-      (select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
-    from
-      sets s
-      full join logs l on l.id = s.log_id
-      full join videos v on v.log_id = l.id
-      full join sessions ss on ss.id = s.session_id
-    where (
-      l.deleted = false
-      and l.private = false
-      and ss.end_date is not null
-      and v.deleted = false
-    )
-    group by
-      l.id
-    order by
-      l.id asc
-    `,
-  );
+  // const { rows: logs } = await db.raw(
+  //   `
+  //   select
+  //     l.*,
+  //     (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets,
+  //     (select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
+  //   from
+  //     sets s
+  //     full join logs l on l.id = s.log_id
+  //     full join videos v on v.log_id = l.id
+  //     full join sessions ss on ss.id = s.session_id
+  //   where (
+  //     l.deleted = false
+  //     and l.private = false
+  //     and ss.end_date is not null
+  //     and v.deleted = false
+  //   )
+  //   group by
+  //     l.id
+  //   order by
+  //     l.id asc
+  //   `,
+  // );
 
-  const { rows: sessions } = await db.raw(
-    `
-    select
-      ss.*,
-      b.*,
-      v.*,
-      u.username,
-      ud.profile_picture_url,
-      ss.id as "session_id",
-      ss.name as "name",
-      ss.start_date as "start_date",
-      b.name as "block_name",
-      ss.end_date as "end_date",
-      (select count(c.*) filter (where c.deleted = false)) as counts_of_comments,
-      ss.json as "json"
-    from
-      sessions ss
-      full join blocks b on b.id = ss.block_id
-      inner join variables v on v.session_id = ss.id
-      full join comments c on c.session_id = ss.id
-      inner join users u on u.id = ss.user_id
-      inner join user_details ud on ud.user_id = u.id
-    where (
-      ss.deleted = false
-      and ss.end_date is not null
+  const logs = await db
+    .select(
+      'l.*',
+      db.raw(
+        `(select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets`,
+      ),
+      db.raw(
+        `(select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos`,
+      ),
     )
-    group by
+    .from('sets as s')
+    .fullOuterJoin('logs as l', 'l.id', 's.log_id')
+    .fullOuterJoin('videos as v', 'v.log_id', 'l.id')
+    .fullOuterJoin('sessions as ss', 'ss.id', 's.session_id')
+    .whereRaw(
+      `
+        l.deleted = false
+        and l.private = false
+        and ss.end_date is not null
+        and v.deleted = false
+    `,
+    )
+    .groupBy('l.id')
+    .orderBy('l.id', 'asc');
+  // .paginate({
+  //   ...pagination,
+  // });
+
+  // const { rows: sessions } = await db.raw(
+  //   `
+  //   select
+  //     ss.*,
+  //     b.*,
+  //     v.*,
+  //     u.username,
+  //     ud.profile_picture_url,
+  //     ss.id as "session_id",
+  //     ss.name as "name",
+  //     ss.start_date as "start_date",
+  //     b.name as "block_name",
+  //     ss.end_date as "end_date",
+  //     (select count(c.*) filter (where c.deleted = false)) as counts_of_comments,
+  //     ss.json as "json"
+  //   from
+  //     sessions ss
+  //     full join blocks b on b.id = ss.block_id
+  //     inner join variables v on v.session_id = ss.id
+  //     full join comments c on c.session_id = ss.id
+  //     inner join users u on u.id = ss.user_id
+  //     inner join user_details ud on ud.user_id = u.id
+  //   where (
+  //     ss.deleted = false
+  //     and ss.end_date is not null
+  //   )
+  //   group by
+  //     ss.id,
+  //     b.id,
+  //     v.id,
+  //     u.id,
+  //     ud.id
+  // `,
+  // );
+
+  const sessions = await db
+    .select(
+      'ss.*',
+      'b.*',
+      'v.*',
+      'u.username',
+      'ud.profile_picture_url',
+      'ss.id as session_id',
+      'ss.name as name',
+      'ss.start_date as start_date',
+      'b.name as block_name',
+      'ss.end_date as end_date',
+      db.raw(`(select count(c.*) filter (where c.deleted = false)) as counts_of_comments`),
+      'ss.json as json',
+    )
+    .from('sessions as ss')
+    .fullOuterJoin('blocks as b', 'b.id', 'ss.block_id')
+    .innerJoin('variables as v', 'v.session_id', 'ss.id')
+    .fullOuterJoin('comments as c', 'c.session_id', 'ss.id')
+    .innerJoin('users as u', 'u.id', 'ss.user_id')
+    .innerJoin('user_details as ud', 'ud.user_id', 'u.id')
+    .whereRaw(`ss.deleted = false and ss.end_date is not null`)
+    .groupByRaw(
+      `
       ss.id,
       b.id,
       v.id,
       u.id,
       ud.id
-  `,
-  );
+      `,
+    )
+    .orderBy('ss.id', 'desc')
+    .paginate({
+      ...pagination,
+    });
 
   // this is not good for performance, but I cannot figure who to combined complicated sql
   const maps = {};
 
-  if (sessions.length) {
-    sessions.forEach((session, index) => {
+  if (sessions.data.length) {
+    sessions.data.forEach((session, index) => {
       maps[session.session_id] = session;
+      maps[`${session.session_id}`]['logs'] = [];
     });
   }
 
   if (logs.length) {
     logs.forEach((log, index) => {
-      if (!maps[`${log.session_id}`]['logs']) {
-        maps[`${log.session_id}`]['logs'] = [];
-        maps[`${log.session_id}`]['logs'].push(log);
-      } else {
-        // maps[`${log.session_id}`]['logs'] = [log];
-        maps[`${log.session_id}`]['logs'].push(log);
+      // if (!maps[`${log.session_id}`]['logs']) {
+      //   maps[`${log.session_id}`]['logs'] = [];
+      if (maps[`${log.session_id}`]) {
+        maps[`${log.session_id}`].logs.push(log);
       }
+      // } else {
+      // maps[`${log.session_id}`]['logs'] = [log];
+      // maps[`${log.session_id}`]['logs'].push(log);
+      // }
     });
   }
 
-  return [...Object.values(maps).sort().reverse()];
+  return {
+    data: [...Object.values(maps).sort().reverse()],
+    // data: [...Object.values(maps).reverse()],
+    // data: [...Object.values(maps)],
+    pagination: sessions.pagination,
+  };
 }
 
 /**
