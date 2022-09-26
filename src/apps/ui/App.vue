@@ -15,6 +15,7 @@ import DashboardLayout from './layouts/DashboardLayout.vue';
 import SingleDashboardLayout from './layouts/SingleDashboardLayout.vue';
 import EmptyDashboardLayout from './layouts/EmptyDashboardLayout.vue';
 import RegularLayout from './layouts/RegularLayout.vue';
+import useAppStore from './store/app.store.js';
 
 export default {
   components: {
@@ -27,6 +28,14 @@ export default {
     return {
       layout: null,
     };
+  },
+  mounted() {
+    const appStore = useAppStore();
+    if (appStore.toggleTheme) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
   },
   watch: {
     $route(to) {

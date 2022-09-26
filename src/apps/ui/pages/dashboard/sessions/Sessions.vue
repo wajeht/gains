@@ -129,10 +129,10 @@ function logDetails(sid) {
           // today
           'border-left':
             session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today
-              ? '5px solid var(--bs-warning)'
+              ? '5px solid var(--bs-warning) !important'
               : // yesterday
               session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today
-              ? '5px solid var(--bs-danger)'
+              ? '5px solid var(--bs-danger) !important'
               : '',
         }"
         id="log"

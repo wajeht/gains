@@ -7,14 +7,127 @@
     color: #bdbbb5 !important;
   }
 
+  input:focus,
+  textarea:focus {
+    outline: none !important;
+    background-color: rgb(24, 26, 27) !important;
+  }
+
+  #regular {
+    background-color: #181A1B !important;
+
+    .alert-warning {
+      color: rgb(251, 222, 134) !important;
+      background-color: rgb(61, 46, 0) !important;
+      border-color: rgb(124, 92, 0) !important;
+    }
+
+   .border-top {
+      border-top-color: rgb(56, 61, 63) !important;
+    }
+
+    .nav-link:hover {
+      background-color: rgb(88, 95, 99) !important;
+      color: rgb(232, 230, 227) !important;
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+      background-color: rgb(28, 30, 31);
+      color: rgb(232, 230, 227);
+    }
+
+    .border-bottom {
+      border-bottom-color: rgb(56, 61, 63) !important;
+    }
+
+    .text-dark {
+      color: rgb(209, 205, 199) !important;
+    }
+
+    .btn-light {
+      color: rgb(232, 230, 227);
+      background-color: rgb(27, 30, 31);
+      border-color: rgb(50, 54, 56);
+    }
+
+    .btn-dark.disabled, .btn-dark:disabled {
+      color: rgb(232, 230, 227);
+      background-color: rgb(28, 30, 31);
+      border-color: rgb(128, 119, 105);
+    }
+
+    footer {
+      background-color: #181A1B !important;
+    }
+  }
+
+  .alert-warning {
+    color: rgb(251, 222, 134);
+    background-color: rgb(61, 46, 0);
+    border-color: rgb(124, 92, 0);
+  }
+
+  .card-footer {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-top-color: rgba(140, 130, 115, 0.13);
+  }
+
+  .alert-success {
+    color: rgb(202, 197, 190);
+    background-color: rgb(32, 61, 51);
+    border-color: rgb(46, 88, 69);
+  }
+
+  .list-group-item-action:focus, .list-group-item-action:hover {
+    background-color: rgb(27, 30, 31) !important;
+  }
+
+  .dropdown-item:focus, .dropdown-item:hover {
+    color: rgb(211, 207, 201);
+    background-color: rgb(35, 38, 39);
+  }
+
+  .dropdown-menu {
+    color: rgb(209, 205, 199);
+    list-style-image: initial;
+    background-color: rgb(24, 26, 27);
+    border-color: rgba(140, 130, 115, 0.15);
+  }
+
   .list-group-item {
     background-color: #181a1b !important;
     border-color: rgba(140, 130, 115, 0.13) !important;
   }
 
+  #rpe-card {
+    background-image: initial;
+    background-color: rgb(32, 35, 36);
+    color: rgb(232, 230, 227) !important;
+  }
+
+  .bg-gray {
+    background-image: initial;
+    background-color: rgb(32, 35, 36);
+    color: rgb(232, 230, 227) !important;
+  }
+
+  .btn-dark {
+    color: rgb(232, 230, 227) !important;
+    background-color: rgb(28, 30, 31) !important;
+    border-color: rgb(56, 61, 63) !important;
+  }
+
+  .border {
+    border-color: rgb(56, 61, 63) !important;
+  }
+
   #log:hover {
     background-image: initial;
     background-color: rgb(30, 33, 34) !important;
+  }
+
+  .text-muted {
+    color: rgb(158, 150, 137) !important;
   }
 
   #admin-router-wrapper {
@@ -26,12 +139,57 @@
     background-color: #181a1b !important;
   }
 
+  .list-group-item-action:active {
+    background-color: rgb(35, 38, 39) !important;
+  }
+
+  .btn-success {
+    color: rgb(232, 230, 227) !important;
+    background-color: rgb(20, 108, 67) !important;
+    border-color: rgb(32, 175, 109) !important;
+  }
+
+  .btn-outline-danger {
+    color: rgb(223, 70, 85) !important;
+    border-color: rgb(148, 26, 37) !important;
+  }
+
+  td {
+    border-color: #383D3F !important;
+  }
+
+  .form-control:disabled, .form-control[readonly] {
+    background-color: rgb(35, 38, 39);
+  }
+
   .list-group {
     background-color: #181a1b !important;
   }
 
+  .form-control {
+    color: rgb(209, 205, 199);
+    background-color: rgb(24, 26, 27);
+    border-color: rgb(60, 65, 68);
+  }
+
+  .btn-danger {
+    color: rgb(232, 230, 227) !important;
+    background-color: rgb(165, 29, 42) !important;
+    border-color: rgb(148, 26, 37) !important;
+  }
+
+  .modal-content {
+    background-color: rgb(24, 26, 27);
+    border-color: rgba(140, 130, 115, 0.2);
+    outline-color: initial;
+  }
+
   .active {
-    box-shadow: 0 4px 0 #bdbbb5 inset;
+    box-shadow: 0 4px 0 #bdbbb5 inset !important;
+  }
+
+  #dashboard-footer:hover {
+    color: #D8D5D0 !important;
   }
 
   #dashboard-footer,
@@ -39,11 +197,13 @@
   #dashboard-header,
   #dashboard-home-header,
   #sessions-header,
+  #back-header,
   #session-details-header {
-    color: #bdbbb5 !important;
+    color: #9E9689 !important;
     background-color: #1b1c1b !important;
     border-color: rgb(56, 61, 63) !important;
   }
+
 }
 
 @import 'bootstrap/scss/bootstrap';

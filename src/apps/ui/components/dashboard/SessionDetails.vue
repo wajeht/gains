@@ -928,6 +928,7 @@ function downloadVideo(url) {
           <div class="card-body">
             <div class="row mx-0">
               <div
+                id="rpe-card"
                 :class="{
                   'bg-gray': currentSessionDetails.session_rpe === null,
 
