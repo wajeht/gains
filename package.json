@@ -106,6 +106,7 @@
     "pino-pretty": "^8.1.0",
     "read-pkg": "^7.1.0",
     "request-ip": "^3.0.2",
+    "sass": "^1.55.0",
     "socket.io": "^4.5.2",
     "supertest": "^6.2.3",
     "typed.js": "^2.0.12",
