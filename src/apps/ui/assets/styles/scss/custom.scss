@@ -16,6 +16,36 @@
   #regular {
     background-color: #181A1B !important;
 
+    .btn-success {
+      color: rgb(232, 230, 227);
+      background-color: rgb(20, 108, 67);
+      border-color: rgb(32, 175, 109);
+    }
+
+    .btn-primary {
+      color: rgb(232, 230, 227);
+      background-color: rgb(2, 80, 196);
+      border-color: rgb(1, 71, 174);
+    }
+
+    .btn-light:hover {
+      color: rgb(232, 230, 227);
+      background-color: rgb(27, 29, 30);
+      border-color: rgb(49, 54, 56);
+    }
+
+    .btn-success:hover {
+      color: rgb(232, 230, 227);
+      background-color: rgb(17, 92, 57);
+      border-color: rgb(34, 183, 113);
+    }
+
+    .btn-primary:hover {
+      color: rgb(232, 230, 227);
+      background-color: rgb(9, 75, 172);
+      border-color: rgb(9, 79, 182);
+    }
+
     .alert-warning {
       color: rgb(251, 222, 134) !important;
       background-color: rgb(61, 46, 0) !important;
@@ -31,9 +61,9 @@
       color: rgb(232, 230, 227) !important;
     }
 
-    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-      background-color: rgb(28, 30, 31);
-      color: rgb(232, 230, 227);
+    .nav-link.active {
+      background-color: rgb(28, 30, 31) !important;
+      border: 1px solid rgb(128, 119, 105);
     }
 
     .border-bottom {
@@ -42,6 +72,12 @@
 
     .text-dark {
       color: rgb(209, 205, 199) !important;
+    }
+
+    .btn-dark:hover {
+      color: rgb(232, 230, 227);
+      background-color: rgb(24, 26, 27);
+      border-color: rgb(130, 121, 107);
     }
 
     .btn-light {
@@ -59,6 +95,14 @@
     footer {
       background-color: #181A1B !important;
     }
+  }
+
+  #loading-spinner {
+    background-color: rgba(24, 26, 27, 0.75) !important;
+  }
+
+  .disabled-list-group-item {
+    background-color: #202324 !important;
   }
 
   .alert-warning {
@@ -95,8 +139,8 @@
   }
 
   .list-group-item {
-    background-color: #181a1b !important;
-    border-color: rgba(140, 130, 115, 0.13) !important;
+    background-color: #181a1b ;
+    border-color: rgba(140, 130, 115, 0.13);
   }
 
   #rpe-card {
@@ -184,12 +228,21 @@
     outline-color: initial;
   }
 
-  .active {
-    box-shadow: 0 4px 0 #bdbbb5 inset !important;
+
+  #dashboard-footer {
+    .active {
+      box-shadow: 0 4px 0 #bdbbb5 inset !important;
+    }
   }
 
   #dashboard-footer:hover {
     color: #D8D5D0 !important;
+  }
+
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: rgb(181, 175, 166) !important;
+    background-color: rgb(24, 26, 27) !important;
+    border-color: rgb(56, 61, 63) rgb(56, 61, 63) rgb(48, 52, 54) !important;
   }
 
   #dashboard-footer,
@@ -198,6 +251,9 @@
   #dashboard-home-header,
   #sessions-header,
   #back-header,
+  #exercises-page-header,
+  #blocks-page-header,
+  #categories-page-header,
   #session-details-header {
     color: #9E9689 !important;
     background-color: #1b1c1b !important;

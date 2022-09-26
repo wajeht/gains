@@ -1,6 +1,7 @@
 <template>
   <!-- ---------- loading ---------- -->
   <div
+    id="loading-spinner"
     class="d-flex justify-content-center align-items-center container bg-white"
     style="
       /* width: 100%; */

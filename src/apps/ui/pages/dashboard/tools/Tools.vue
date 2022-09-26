@@ -15,8 +15,7 @@
         <div class="list-group">
           <span
             to="/dashboard/tools/calculators/rpe-calculator"
-            style="background: #f1f1f1"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -32,8 +31,7 @@
           <!-- plate loader -->
           <span
             to="/dashboard/tools/calculators/plate-calculator"
-            style="background: #f1f1f1"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -47,7 +45,7 @@
           <!-- 1rm -->
           <router-link
             to="/dashboard/tools/calculators/one-rep-max-calculator"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -68,8 +66,7 @@
           <!-- attempt  -->
           <span
             to="/dashboard/tools/calculators/attempt-selection-calculator"
-            style="background: #f1f1f1"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -90,8 +87,7 @@
         <div class="list-group">
           <!-- avg -->
           <span
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
-            style="background: #f1f1f1"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -106,8 +102,7 @@
 
           <!-- maxes -->
           <span
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
-            style="background: #f1f1f1"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -122,8 +117,7 @@
 
           <!-- rpe -->
           <span
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
-            style="background: #f1f1f1"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -199,8 +193,7 @@
           <!-- qr codes -->
           <span
             to="/dashboard/tools/others/access-codes"
-            style="background: #f1f1f1"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
+            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3 text-muted"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -240,3 +233,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.disabled-list-group-item {
+  background: #f1f1f1;
+}
+</style>
