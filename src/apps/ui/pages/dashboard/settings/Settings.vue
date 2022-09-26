@@ -3,6 +3,7 @@ import DashboardHeader from '../../../components/dashboard/DashboardHeader.vue';
 import useAppStore from '../../../store/app.store.js';
 import useUserSore from '../../../store/user.store.js';
 import api from '../../../../../utils/fetch-with-style.js';
+import LogoutButton from '../../../components/dashboard/LogoutButton.vue';
 
 import { ref, reactive } from 'vue';
 
@@ -417,6 +418,8 @@ async function clearAllCache() {
             </router-link>
           </div>
         </div>
+
+        <LogoutButton />
       </div>
 
       <!-- footer -->
