@@ -1,13 +1,16 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
+import useAppStore from '../../store/app.store.js';
+
+const appStore = useAppStore();
 const router = useRouter();
 const route = useRoute();
 </script>
 <template>
   <div class="position-sticky bottom-0 container border-top bg-white text-muted" style="z-index: 2">
     <div class="d-flex flex-row">
-      <!-- Home -->
-      <div class="col">
+      <!-- community-session -->
+      <div v-if="appStore.community" class="col">
         <router-link
           :class="{ active: $route.name === 'Community' }"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1 min-heigh-on-mobile"
