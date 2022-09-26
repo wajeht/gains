@@ -18,6 +18,7 @@ import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import tooltip from './tool-tip.vue.js';
 import FontAwesomeIcon from './font-awesome.vue.js';
 import { Chart, registerables } from 'chart.js';
+import useAppStore from './store/app.store.js';
 
 const app = createApp(App);
 const pinia = createPinia(piniaPluginPersistedstate);
@@ -36,6 +37,15 @@ app.use(VueQueryPlugin);
 app.use(autoAnimatePlugin);
 app.directive('tooltip', tooltip);
 app.component('font-awesome-icon', FontAwesomeIcon);
+
+// --- change theme
+const appStore = useAppStore();
+if (appStore.darkMode === false) {
+  document.body.classList.remove('dark-mode');
+} else {
+  document.body.classList.add('dark-mode');
+}
+// --- change theme
 
 // --- init auth state on app starts --
 const userStore = useUserStore();
