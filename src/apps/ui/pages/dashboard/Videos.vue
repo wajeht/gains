@@ -20,8 +20,6 @@ onMounted(async () => {
   appStore.loading = true;
   const v = await sessionsWithVideos();
 
-  console.log(v);
-
   if (v === undefined || v.length === 0) {
     appStore.loading = false;
     alert.type = 'warning';

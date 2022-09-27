@@ -72,6 +72,23 @@ export default {
 </style>
 
 <style>
+html {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+  position: relative;
+}
+
+#app {
+  position: sticky;
+  position: -webkit-sticky;
+}
+
 .btn-group-xs > .btn,
 .btn-xs {
   padding: 0.25rem 0.4rem;
