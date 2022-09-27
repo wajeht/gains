@@ -73,20 +73,17 @@ export default {
 
 <style>
 html {
+  position: fixed;
   height: 100%;
   overflow: hidden;
-  position: relative;
 }
 
 body {
-  height: 100%;
-  overflow: auto;
-  position: relative;
-}
-
-#app {
-  position: sticky;
-  position: -webkit-sticky;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .btn-group-xs > .btn,
