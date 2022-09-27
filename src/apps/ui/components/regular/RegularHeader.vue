@@ -7,13 +7,21 @@ const appStore = useAppStore();
   <header class="py-3 mb-4 border-bottom sticky-top" style="backdrop-filter: blur(10px)">
     <div class="container d-flex justify-content-between align-items-center">
       <!-- branding -->
-      <router-link to="/" class="d-flex link-dark text-decoration-none">
+      <router-link
+        to="/"
+        class="d-flex link-dark text-decoration-none justify-content-between align-items-center"
+      >
         <!-- logo -->
         <svg
           class="bi me-2"
           height="32"
           viewBox="0 0 125 125"
           width="32"
+          :style="`${
+            appStore.darkMode
+              ? 'outline: 1px solid #383d3f; border-radius: 50%; background-color: #BDBBB5;'
+              : ''
+          }`"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
