@@ -19,7 +19,7 @@ const appStore = useAppStore();
           width="32"
           :style="`${
             appStore.darkMode
-              ? 'outline: 1px solid #383d3f; border-radius: 50%; background-color: #BDBBB5;'
+              ? 'border: 1px solid #383d3f; overflow: hidden; display: inline-block; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; -khtml-border-radius: 50%; background-color: #BDBBB5;'
               : ''
           }`"
           xmlns="http://www.w3.org/2000/svg"
