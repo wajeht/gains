@@ -27,13 +27,7 @@ const useAppStore = defineStore({
   },
   actions: {
     changeTheme() {
-      if (!this.darkMode) {
-        document.body.classList.remove('dark-mode');
-        this.darkMode = false;
-      } else {
-        document.body.classList.add('dark-mode');
-        this.darkMode = true;
-      }
+      this.darkMode = !this.darkMode;
     },
     changeUnit() {
       this.unit.toggle = !this.unit.toggle;

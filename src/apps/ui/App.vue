@@ -10,6 +10,21 @@
   />
 </template>
 
+<script setup>
+import { watch, toRef } from 'vue';
+
+// --- change theme
+const appStore = useAppStore();
+watch(toRef(appStore, 'darkMode'), () => {
+  if (appStore.darkMode === true) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
+});
+// --- change theme
+</script>
+
 <script>
 import DashboardLayout from './layouts/DashboardLayout.vue';
 import SingleDashboardLayout from './layouts/SingleDashboardLayout.vue';
@@ -28,10 +43,6 @@ export default {
     return {
       layout: null,
     };
-  },
-  mounted() {
-    const appStore = useAppStore();
-    appStore.changeTheme();
   },
   watch: {
     $route(to) {
