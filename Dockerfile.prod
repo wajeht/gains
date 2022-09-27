@@ -10,9 +10,10 @@ RUN apk update
 RUN apk add
 RUN apk add ffmpeg
 
-RUN npm run build
 
 COPY ./ .
+
+RUN npm run build:ui
 
 EXPOSE 8080
 
