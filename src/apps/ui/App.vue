@@ -1,4 +1,5 @@
 <template>
+  <meta name="theme-color" :content="appStore.darkMode ? '#1B1C1B' : '#FFFFFF'" />
   <component
     :is="layout"
     :class="{
