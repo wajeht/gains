@@ -272,7 +272,22 @@ async function postAComment() {
 
               <!-- body -->
               <div class="card-body">
-                <h5 class="card-title">{{ log.name }}</h5>
+                <!-- title group -->
+                <div class="d-flex gap-3 align-items-center">
+                  <!-- title -->
+                  <h5 class="card-title">{{ log.name }}</h5>
+
+                  <!-- tags -->
+                  <small v-if="log.tags" class="d-flex gap-2 mb-2">
+                    <small
+                      v-for="t in log?.tags"
+                      class="bg-light fw-light text-muted rounded px-2 d-block"
+                      style="background-color: #b3b3b3"
+                      >{{ t.name }}</small
+                    >
+                  </small>
+                </div>
+
                 <p class="card-text">
                   <!-- notes -->
                   <span>
@@ -332,14 +347,20 @@ async function postAComment() {
               <!-- right -->
               <div class="d-flex align-items-center gap-2">
                 <!-- comment -->
-                <small><i class="bi bi-chat me-1"></i>{{ comments.length || 0 }}</small>
+                <small v-if="appStore.community"
+                  ><i class="bi bi-chat me-1"></i>{{ comments.length || 0 }}</small
+                >
               </div>
             </span>
           </div>
         </div>
 
         <!-- comments -->
-        <div v-if="comments.length" class="d-flex flex-column gap-3" v-auto-animate>
+        <div
+          v-if="comments.length && appStore.community"
+          class="d-flex flex-column gap-3"
+          v-auto-animate
+        >
           <div
             v-for="(comment, index) in comments"
             :key="`comment-key-${comment.id}`"
@@ -388,7 +409,7 @@ async function postAComment() {
         </div>
 
         <!-- post a comment -->
-        <div class="card shadow-sm border">
+        <div v-if="appStore.community" class="card shadow-sm border">
           <div class="card-body">
             <form @submit.prevent="postAComment()">
               <!-- textarea -->
@@ -425,6 +446,7 @@ async function postAComment() {
 
   <!-- delete a comment modal -->
   <form
+    v-if="appStore.community"
     @submit.prevent="deleteAComment()"
     class="modal fade px-2 py-5"
     id="delete-a-comment"

@@ -96,6 +96,7 @@ async function getRecoveryOfAUser({ perPage = 25, currentPage = 1, download = fa
 
     appStore.loading = false;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -142,6 +143,7 @@ async function deleteARecovery() {
 
     recoveryCheckbox.value = [];
   } catch (e) {
+    appStore.loading = false;
     clearDataAndDismissDeleteARecovery();
     deleteARecoveryLoading.value = false;
     alert.type = 'danger';
@@ -181,6 +183,7 @@ async function logARecovery() {
     recovery.value.unshift(json.data[0]);
     stress_level.value = null;
   } catch (e) {
+    appStore.loading = false;
     clearDataAndDismissLogARecovery();
     logARecoveryLoading.value = false;
     stress_level.value = null;

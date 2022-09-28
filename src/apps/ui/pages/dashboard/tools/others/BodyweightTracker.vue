@@ -94,6 +94,7 @@ async function getAllBodyWeightOfAUser({ perPage = 25, currentPage = 1, download
 
     appStore.loading = false;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -140,6 +141,7 @@ async function deleteABodyWeight() {
 
     bodyweightCheckbox.value = [];
   } catch (e) {
+    appStore.loading = false;
     clearDataAndDismissDeleteABodyWeight();
     deleteABodyWeightLoading.value = false;
     alert.type = 'danger';
@@ -178,6 +180,7 @@ async function logABodyWeight() {
     bodyweight.value.unshift(json.data[0]);
     bodyweightInput.value = null;
   } catch (e) {
+    appStore.loading = false;
     logABodyWeightLoading.value = false;
     bodyweightInput.value = null;
     alert.type = 'danger';
