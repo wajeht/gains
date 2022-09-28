@@ -89,6 +89,11 @@ const completeCurrentSessionShowHideOtherFields = ref(false);
 const completeCurrentSessionLoading = ref(false);
 const deleteCurrentSessionLoading = ref(false);
 
+const tagName = ref('');
+const addATagLoading = ref(false);
+const addATagLogIndex = ref(null);
+const addATagLogId = ref(null);
+
 const uploadAVideoLoading = ref(false);
 const uploadAVideoLogId = ref(null);
 const uploadAVideoLogIndex = ref(null);
@@ -287,6 +292,51 @@ function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
 }
 
 // -------------- CRUD ---------------
+
+async function addATag() {
+  try {
+    const res = await api.post(`/api/v1/tags/`, {
+      log_id: addATagLogId.value,
+      user_id: currentSessionDetails.user_id,
+      name: tagName.value,
+    });
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    if (currentSessionDetails.logs[addATagLogIndex.value].tags) {
+      currentSessionDetails.logs[addATagLogIndex.value].tags.push(json.data[0]);
+    } else {
+      currentSessionDetails.logs[addATagLogIndex.value].tags = [];
+      currentSessionDetails.logs[addATagLogIndex.value].tags.push(json.data[0]);
+    }
+
+    addATagLoading.value = false;
+    clearDataAndDismissAddATagModal();
+  } catch (e) {
+    loading.value = false;
+    addATagLoading.value = false;
+    clearDataAndDismissAddATagModal();
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+function clearDataAndDismissAddATagModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-tag`));
+  modal.hide();
+}
 
 async function copyPreviousSet(currentLogIndex) {
   try {
@@ -1131,6 +1181,16 @@ function downloadVideo(url) {
                       <h6 class="card-title m-0 p-0">{{ index + 1 }}. {{ log.name }}</h6>
                     </router-link>
 
+                    <!-- tags -->
+                    <small v-if="log.tags" class="d-flex gap-2">
+                      <small
+                        v-for="t in log?.tags"
+                        class="bg-light fw-light text-muted rounded px-2 d-block"
+                        style="background-color: #b3b3b3"
+                        >{{ t.name }}</small
+                      >
+                    </small>
+
                     <!-- sets, volume, and other info -->
                     <!-- <small
                       class="fst-italic fw-light text-muted d-flex justify-content-between align-items-center gap-1"
@@ -1468,6 +1528,24 @@ function downloadVideo(url) {
                       :disabled="log.videos?.length || currentSessionDetails.end_date"
                     >
                       <i class="bi bi-play-circle"></i>
+                    </button>
+                  </span>
+
+                  <!-- add a tag -->
+                  <span>
+                    <button
+                      @click="
+                        (addATagLogId = log.id),
+                          (set.exercise_name = log.name),
+                          (addATagLogIndex = index)
+                      "
+                      type="button"
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#add-a-tag"
+                      :disabled="currentSessionDetails.end_date"
+                    >
+                      <i class="bi bi-tags"></i>
                     </button>
                   </span>
                 </span>
@@ -1841,7 +1919,9 @@ function downloadVideo(url) {
     tabindex="-1"
   >
     <div class="modal-dialog modal-dialog-scrollable">
+      <!-- content -->
       <div class="modal-content">
+        <!-- header -->
         <div class="modal-header">
           <h5 class="modal-title">
             <span> Log </span>
@@ -1856,6 +1936,8 @@ function downloadVideo(url) {
             :disabled="deleteALogLoading"
           ></button>
         </div>
+
+        <!-- body -->
         <div class="modal-body">
           <p class="mb-0 pb-0 text-center">
             Are you sure you want to delete
@@ -2033,6 +2115,81 @@ function downloadVideo(url) {
                 Submit
               </span>
               <span v-if="addAExerciseNoteLoading"> Loading... </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- add a tag -->
+  <form
+    @submit.prevent="addATag()"
+    class="modal fade px-1 pt-5"
+    id="add-a-tag"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span>Add a note for </span>
+            <span class="fw-light"> {{ set.exercise_name }}</span>
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- tag -->
+          <div class="mb-3">
+            <label class="form-label">Tag</label>
+            <textarea
+              v-model.trim="tagName"
+              class="form-control form-control-sm"
+              id="tag-id"
+              rows="1"
+              :disabled="addATagLoading"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- clear -->
+          <button v-if="!addATagLoading" type="reset" class="btn btn-outline-danger">
+            <font-awesome-icon icon="broom" />
+            Clear
+          </button>
+
+          <div class="btn-group" role="group">
+            <!-- cancel -->
+            <button
+              @click="clearDataAndDismissAddATagModal()"
+              v-if="!addATagLoading"
+              type="reset"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle"></i>
+              Cancel
+            </button>
+
+            <!-- add -->
+            <button type="submit" class="btn btn-success" :disabled="addATagLoading">
+              <div v-if="addATagLoading" class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <span v-if="!addATagLoading">
+                <i class="bi bi-check-circle-fill"></i>
+                Submit
+              </span>
+              <span v-if="addATagLoading"> Loading... </span>
             </button>
           </div>
         </div>
