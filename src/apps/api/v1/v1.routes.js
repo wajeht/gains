@@ -12,6 +12,7 @@ import VariablesRouter from './variables/variables.router.js';
 import CommentsRoutes from './comments/comments.routes.js';
 import SetsRouter from './sets/sets.router.js';
 import LogsRouter from './logs/logs.router.js';
+import TagsRoutes from './tags/tags.routes.js';
 
 import express from 'express';
 const v1 = express.Router();
@@ -30,5 +31,6 @@ v1.use('/users', UsersRouter);
 v1.use('/cache', CacheRoutes);
 v1.use('/sets', SetsRouter);
 v1.use('/logs', LogsRouter);
+v1.use('/tags', TagsRoutes);
 
 export default v1;
