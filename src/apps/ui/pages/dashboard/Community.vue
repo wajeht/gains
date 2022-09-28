@@ -256,7 +256,7 @@ async function getSessions() {
                   <!-- right -->
                   <div class="d-flex gap-2">
                     <!-- comment -->
-                    <small>
+                    <small v-if="appStore.community">
                       <router-link
                         :to="`/dashboard/videos/${s.id}`"
                         class="link-secondary text-decoration-none"

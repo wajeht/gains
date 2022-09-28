@@ -41,20 +41,20 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 // --- change theme
 
 const appStore = useAppStore();
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-  const theme = event.matches ? 'dark' : 'light';
-  if (theme === 'dark') {
-    appStore.darkMode = true;
-  } else {
-    appStore.darkMode = false;
-  }
-});
+// window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+//   const theme = event.matches ? 'dark' : 'light';
+//   if (theme === 'dark') {
+//     appStore.darkMode = true;
+//   } else {
+//     appStore.darkMode = false;
+//   }
+// });
 
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  appStore.darkMode = true;
-} else {
-  appStore.darkMode = false;
-}
+// if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+//   appStore.darkMode = true;
+// } else {
+//   appStore.darkMode = false;
+// }
 
 if (appStore.darkMode === false) {
   document.body.classList.remove('dark-mode');
