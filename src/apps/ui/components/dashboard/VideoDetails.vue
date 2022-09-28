@@ -272,7 +272,22 @@ async function postAComment() {
 
               <!-- body -->
               <div class="card-body">
-                <h5 class="card-title">{{ log.name }}</h5>
+                <!-- title group -->
+                <div class="d-flex gap-3 align-items-center">
+                  <!-- title -->
+                  <h5 class="card-title">{{ log.name }}</h5>
+
+                  <!-- tags -->
+                  <small v-if="log.tags" class="d-flex gap-2 mb-2">
+                    <small
+                      v-for="t in log?.tags"
+                      class="bg-light fw-light text-muted rounded px-2 d-block"
+                      style="background-color: #f2f2f2"
+                      >{{ t.name }}</small
+                    >
+                  </small>
+                </div>
+
                 <p class="card-text">
                   <!-- notes -->
                   <span>

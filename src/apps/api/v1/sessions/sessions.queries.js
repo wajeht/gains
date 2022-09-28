@@ -406,10 +406,14 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
       db.raw(
         `(select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos`,
       ),
+      db.raw(
+        `(select coalesce(jsonb_agg(distinct t.*) filter (where t.id is not null and t.deleted = false), '[]')) as tags`,
+      ),
     )
     .from('sets as s')
     .fullOuterJoin('logs as l', 'l.id', 's.log_id')
     .fullOuterJoin('videos as v', 'v.log_id', 'l.id')
+    .fullOuterJoin('tags as t', 't.log_id', 'l.id')
     .fullOuterJoin('sessions as ss', 'ss.id', 's.session_id')
     .whereRaw(
       `
