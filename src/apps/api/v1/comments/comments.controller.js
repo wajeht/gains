@@ -4,6 +4,7 @@ import * as CommentsQueries from '../comments//comments.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import { omit, without } from 'lodash-es';
+import redis from '../../../../utils/redis.js';
 
 /**
  * It creates a comment in the database and returns the created comment.
@@ -19,6 +20,9 @@ export async function postAComment(req, res) {
     `User id: ${body.user_id} has created comment id: ${created[0].id}, ${JSON.stringify(
       created[0],
     )}!`,
+  );
+  const deletedCacheCommunitySessions = await redis.del(
+    `user-id-${body.user_id}-community-sessions`,
   );
 
   res.status(StatusCodes.CREATED).json({

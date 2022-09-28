@@ -207,7 +207,7 @@ async function getSessions() {
                     <small
                       v-for="t in log?.tags"
                       class="bg-light fw-light text-muted rounded px-2 d-block"
-                      style="background-color: #f2f2f2"
+                      style="background-color: #b3b3b3"
                       >{{ t.name }}</small
                     >
                   </small>
