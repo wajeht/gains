@@ -389,59 +389,71 @@ export async function sessionsWithVideosByUserId(user_id) {
  */
 export async function getAllSessions(pagination = { perPage: null, currentPage: null }) {
   // session sets info
-  // const { rows: logs } = await db.raw(
-  //   `
-  //   select
-  //     l.*,
-  //     (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets,
-  //     (select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
-  //   from
-  //     sets s
-  //     full join logs l on l.id = s.log_id
-  //     full join videos v on v.log_id = l.id
-  //     full join sessions ss on ss.id = s.session_id
-  //   where (
-  //     l.deleted = false
-  //     and l.private = false
-  //     and ss.end_date is not null
-  //     and v.deleted = false
-  //   )
-  //   group by
-  //     l.id
-  //   order by
-  //     l.id asc
-  //   `,
-  // );
-
-  const logs = await db
-    .select(
-      'l.*',
-      db.raw(
-        `(select distinct coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets`,
-      ),
-      db.raw(
-        `(select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos`,
-      ),
-      db.raw(
-        `(select coalesce(jsonb_agg(distinct t.*) filter (where t.id is not null and t.deleted = false), '[]')) as tags`,
-      ),
+  const { rows: logs } = await db.raw(
+    `
+    select
+      l.*,
+      l.id as log_id,
+      (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets,
+      (select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
+    from
+      sets s
+      full join logs l on l.id = s.log_id
+      left join videos v on v.log_id = l.id
+      full join sessions ss on ss.id = s.session_id
+    where (
+      l.deleted = false
+      and l.private = false
+      and ss.end_date is not null
+      and v.deleted = false
     )
-    .from('sets as s')
-    .fullOuterJoin('logs as l', 'l.id', 's.log_id')
-    .fullOuterJoin('videos as v', 'v.log_id', 'l.id')
-    .fullOuterJoin('tags as t', 't.log_id', 'l.id')
-    .fullOuterJoin('sessions as ss', 'ss.id', 's.session_id')
-    .whereRaw(
-      `
-        l.deleted = false
-        and t.deleted = false
-        and l.private = false
-        and ss.end_date is not null
-        and v.deleted = false
+    group by
+      l.id
+    order by
+      l.id asc
     `,
-    )
-    .groupBy('l.id')
-    .orderBy('l.id', 'asc');
+  );
+
+  // build tags
+  const logIds = logs.map((l) => l.log_id); // grab all ids
+  let tags = await Promise.all(logIds.map((l) => db.select('*').from('tags').where({ log_id: l })));
+  tags = tags.flat();
+  for (const t in tags) {
+    const current = tags[t];
+    let [s] = logs.filter((s) => s.log_id === current.log_id);
+    if (!s.tags) {
+      s.tags = [];
+      s.tags.push(current);
+    } else {
+      s.tags.push(current);
+    }
+  }
+
+  // const logs = await db
+  //   .select(
+  //     'l.*',
+  //     db.raw(
+  //       `(select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets`,
+  //     ),
+  //     db.raw(
+  //       `(select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos`,
+  //     ),
+  //   )
+  //   .from('sets as s')
+  //   .join('logs as l', 'l.id', 's.log_id')
+  //   .join('videos as v', 'v.log_id', 'l.id')
+  //   .join('sessions as ss', 'ss.id', 's.session_id')
+  //   .whereRaw(
+  //     `
+  //       l.deleted = false
+  //       and t.deleted = false
+  //       and l.private = false
+  //       and ss.end_date is not null
+  //       and v.deleted = false
+  //   `,
+  //   )
+  //   .groupBy('l.id')
+  //   .orderBy('l.id', 'asc');
   // .paginate({
   //   ...pagination,
   // });
