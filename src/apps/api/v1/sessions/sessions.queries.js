@@ -135,6 +135,7 @@ export async function getSessionBySessionId(sid) {
     `
     select
       l.*,
+      l.id as log_id,
       (select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets,
       (select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
     from
@@ -153,6 +154,21 @@ export async function getSessionBySessionId(sid) {
     `,
     [sid],
   );
+
+  const logIds = sets.map((l) => l.log_id);
+  let tags = await Promise.all(logIds.map((l) => db.select('*').from('tags').where({ log_id: l })));
+  tags = tags.flat();
+
+  for (const t in tags) {
+    const current = tags[t];
+    let [s] = sets.filter((s) => s.log_id === current.log_id);
+    if (!s.tags) {
+      s.tags = [];
+      s.tags.push(current);
+    } else {
+      s.tags.push(current);
+    }
+  }
 
   // const { rows: videos } = await db.raw(
   //   `
@@ -401,7 +417,7 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
     .select(
       'l.*',
       db.raw(
-        `(select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets`,
+        `(select distinct coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets`,
       ),
       db.raw(
         `(select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos`,
@@ -418,6 +434,7 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
     .whereRaw(
       `
         l.deleted = false
+        and t.deleted = false
         and l.private = false
         and ss.end_date is not null
         and v.deleted = false
