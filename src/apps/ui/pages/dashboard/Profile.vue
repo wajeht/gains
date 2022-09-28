@@ -1,6 +1,7 @@
 <script setup>
 import VideosAndProfileHeader from '../../components/dashboard/headers/VideosAndProfileHeader.vue';
 
+import { LineChart, useLineChart } from 'vue-chart-3';
 import { onMounted, reactive, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '../../../../utils/fetch-with-style.js';
@@ -10,8 +11,6 @@ import { omit, meanBy } from 'lodash-es';
 
 import useAppStore from '../../store/app.store.js';
 const appStore = useAppStore();
-
-import { LineChart, useLineChart } from 'vue-chart-3';
 
 const userStore = useUserStore();
 const router = useRouter();
@@ -29,29 +28,42 @@ const weeklyWeightIn = reactive({});
 const recentPrs = reactive({});
 
 onMounted(async () => {
-  appStore.loading = true;
+  try {
+    appStore.loading = true;
 
-  // warn user if they have not update user details
-  const { user } = userStore;
-  for (const u in user) {
-    if (user[u] === null) {
-      alert.type = 'warning';
-      alert.msg = `Some of user data are not defined. Please update them via Settings > User details`;
+    // warn user if they have not update user details
+    const { user } = userStore;
+    for (const u in user) {
+      if (user[u] === null) {
+        alert.type = 'warning';
+        alert.msg = `Some of user data are not defined. Please update them via Settings > User details`;
+      }
+    }
+
+    const wwi = await getWeeklyWeightIn();
+    Object.assign(weeklyWeightIn, wwi);
+
+    let rpr = await getRecentPrs();
+
+    rpr.map((cur) => (cur.showRecentPrDetails = false));
+    Object.assign(recentPrs, rpr);
+
+    // recovery
+    const r = await getRecovery();
+    recovery.value = r || [];
+
+    appStore.loading = false;
+  } catch (e) {
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+      return;
     }
   }
-
-  const wwi = await getWeeklyWeightIn();
-  Object.assign(weeklyWeightIn, wwi);
-
-  let rpr = await getRecentPrs();
-  rpr.map((cur) => (cur.showRecentPrDetails = false));
-  Object.assign(recentPrs, rpr);
-
-  // recovery
-  const r = await getRecovery();
-  recovery.value = r || [];
-
-  appStore.loading = false;
 });
 
 const averageSleep = computed(() => {
@@ -73,12 +85,14 @@ async function getRecentPrs() {
 
     return json.data;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
       return;
     } else {
       alert.msg = e;
+      return;
     }
   }
 }
@@ -98,6 +112,7 @@ async function getWeeklyWeightIn() {
 
     return json.data;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -125,6 +140,7 @@ async function getRecovery() {
 
     return json.data;
   } catch (e) {
+    appStore.loading = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');

@@ -103,6 +103,12 @@
     }
   }
 
+  .alert-danger {
+    color: rgb(255, 183, 196);
+    background-color: rgb(101, 18, 26);
+    border-color: rgb(159, 26, 39);
+  }
+
   #loading-spinner {
     background-color: rgba(24, 26, 27, 0.75) !important;
   }
