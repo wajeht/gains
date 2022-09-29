@@ -1,3 +1,5 @@
 #!/bin/sh
 
-sudo kill -9 $(lsof -t -i:8080)
+export $(xargs < .env)
+
+sudo kill -9 $(lsof -t -i:$PORT)

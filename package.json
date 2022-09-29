@@ -8,6 +8,7 @@
     "start": "node ./src/bin/server.js",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
+    "kill:port": "./src/bin/kill-used-port.sh",
     "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"nodemon ./src/bin/server.js\" \"vite build --watch --mode development\"",
     "dev:ui": "vite",
     "dev:api": "nodemon ./src/bin/server.js",
