@@ -21,7 +21,7 @@ const features = ref([
     subtitle: 'See for yourself.',
     description:
       "Browse other users' content, view popular content, like photos, and follow other users to add their content to a personal feed.",
-    poster: new URL('../../assets/images/videos.png', import.meta.url).href,
+    poster: new URL('../../assets/images/videos.jpeg', import.meta.url).href,
     video: new URL('../../assets/videos/instagram-style.mp4', import.meta.url).href,
   },
   {
@@ -75,7 +75,7 @@ function clearAndDismissPreviewVideoModal() {
         <!-- left -->
         <div class="col-md-5">
           <div role="button" @click="previewVideo(index)" class="poster-container">
-            <img :src="f.poster" style="width: 100%" class="border border-1" />
+            <img :src="f.poster" style="width: 100%" class="border border-1" rel="preload" />
             <div class="middle">
               <i class="bi bi-play-circle-fill" style="font-size: 80px; color: black"></i>
             </div>

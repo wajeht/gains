@@ -55,8 +55,9 @@
         <img
           src="../../assets/images/hero-new-half.png"
           class="mx-auto"
-          style="width: 80%"
+          style="height: auto; width: 80%"
           alt="gains app screenshot"
+          rel="preload"
         />
       </div>
     </div>
