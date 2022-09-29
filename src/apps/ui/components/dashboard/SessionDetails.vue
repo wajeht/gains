@@ -1746,6 +1746,7 @@ function downloadVideo(url) {
 
             <!-- container -->
             <div
+            id="available-exercises"
               class="rounded border border-1 p-2"
               style="max-height: 300px; overflow-y: auto; background-color: #f7f6f3"
             >

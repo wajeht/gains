@@ -113,14 +113,38 @@
     background-color: rgba(24, 26, 27, 0.75) !important;
   }
 
-  .disabled-list-group-item {
-    background-color: #202324 !important;
+  .list-group > .disabled-list-group-item {
+    background-image: initial !important;
+    background-color: rgb(48, 53, 54) !important;
   }
+
+  .list-group > .disabled-list-group-item:hover {
+    background-image: initial !important;
+    background-color: rgb(48, 53, 54) !important;
+}
 
   .alert-warning {
     color: rgb(251, 222, 134);
     background-color: rgb(61, 46, 0);
     border-color: rgb(124, 92, 0);
+  }
+
+  #available-exercises {
+    background-color:  #2a271c !important;
+  }
+
+  .modal-header {
+    border-bottom-color: rgb(84, 92, 95);
+  }
+
+  *:disabled {
+    cursor: not-allowed !important;
+    cursor: -moz-not-allowed !important;
+    cursor: -webkit-not-allowed !important;
+  }
+
+  .modal-footer {
+    border-top-color: rgb(84, 92, 95);
   }
 
   .card-footer {
