@@ -21,7 +21,7 @@ const features = ref([
     subtitle: 'See for yourself.',
     description:
       "Browse other users' content, view popular content, like photos, and follow other users to add their content to a personal feed.",
-    poster: new URL('../../assets/images/videos.jpeg', import.meta.url).href,
+    poster: new URL('../../assets/images/videos.jpg', import.meta.url).href,
     video: new URL('../../assets/videos/instagram-style.mp4', import.meta.url).href,
   },
   {
