@@ -1175,20 +1175,21 @@ function downloadVideo(url) {
                   <span class="d-flex justify-content-between align-items-center gap-2 mb-0">
                     <!-- title -->
                     <router-link
-                      class="link-dark text-decoration-none"
+                      class="link-dark text-decoration-none underline-hover"
                       :to="`/dashboard/exercises/${log.exercise_id}`"
                     >
                       <h6 class="card-title m-0 p-0">{{ index + 1 }}. {{ log.name }}</h6>
                     </router-link>
 
                     <!-- tags -->
-                    <small v-if="log.tags" class="d-flex gap-2">
+                    <small v-if="log.tags" class="d-flex gap-2 text-muted">
                       <small
                         v-for="t in log?.tags"
-                        class="bg-light fw-light text-muted rounded px-2 d-block"
-                        style="background-color: #b3b3b3"
-                        >{{ t.name }}</small
+                        class="fw-light rounded d-flex px-2 tag"
+                        style="background-color: #ededed"
                       >
+                        {{ t.name }}
+                      </small>
                     </small>
 
                     <!-- sets, volume, and other info -->
@@ -2878,5 +2879,14 @@ video::-webkit-media-controls {
 
 video::-webkit-media-controls-enclosure {
   visibility: visible;
+}
+
+.underline-hover:hover {
+  text-decoration: underline !important;
+}
+
+.tag:hover {
+  background-color: #dadada !important;
+  cursor: pointer !important;
 }
 </style>
