@@ -45,7 +45,7 @@
           <!-- 1rm -->
           <router-link
             to="/dashboard/tools/calculators/one-rep-max-calculator"
-            class="disabled-list-group-item list-group-item list-group-item-action d-flex gap-3 py-3"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
           >
             <div class="d-flex gap-2 w-100 justify-content-between">
               <div>
@@ -236,6 +236,6 @@ export default {
 
 <style scoped>
 .disabled-list-group-item {
-  background: #f1f1f1;
+  background: #f1f1f1 !important;
 }
 </style>

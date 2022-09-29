@@ -30,7 +30,7 @@ const alert = reactive({
 });
 
 onMounted(async () => {
-  // appStore.loading = true;
+  appStore.loading = true;
   const res = await api.get(`/api/v1/users/${userStore.user.id}`);
   const json = await res.json();
   const [data] = json.data;
@@ -44,7 +44,7 @@ onMounted(async () => {
   weight.value = data.weight;
   email.value = data.email;
   username.value = data.username;
-  // appStore.loading = false;
+  appStore.loading = false;
 });
 
 async function updateProfilePicture() {
