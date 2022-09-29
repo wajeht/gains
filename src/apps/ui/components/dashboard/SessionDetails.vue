@@ -1746,7 +1746,7 @@ function downloadVideo(url) {
 
             <!-- container -->
             <div
-            id="available-exercises"
+              id="available-exercises"
               class="rounded border border-1 p-2"
               style="max-height: 300px; overflow-y: auto; background-color: #f7f6f3"
             >
@@ -1867,7 +1867,7 @@ function downloadVideo(url) {
             v-if="!addAExerciseShowAllExercises || addAExerciseLoading"
             @click="addAExerciseAllExercisesChecked = []"
             type="reset"
-            class="btn btn-outline-danger"
+            class="btn btn-outline-dark"
           >
             <font-awesome-icon icon="broom" />
             Clear
@@ -1878,7 +1878,7 @@ function downloadVideo(url) {
             @click="clearDataAndDismissAddAExerciseModal()"
             type="button"
             v-if="!addAExerciseLoading"
-            class="btn btn-danger"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -1955,7 +1955,7 @@ function downloadVideo(url) {
             @click="clearAndDismissDeleteALogModal()"
             v-if="!deleteALogLoading"
             type="reset"
-            class="btn btn-danger"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -1963,7 +1963,7 @@ function downloadVideo(url) {
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-success" :disabled="deleteALogLoading">
+          <button type="submit" class="btn btn-danger" :disabled="deleteALogLoading">
             <div v-if="deleteALogLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
@@ -2018,7 +2018,7 @@ function downloadVideo(url) {
             @click="clearDataAndDismissDeleteSessionModal()"
             v-if="!deleteCurrentSessionLoading"
             type="reset"
-            class="btn btn-danger"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -2026,7 +2026,7 @@ function downloadVideo(url) {
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-success" :disabled="deleteCurrentSessionLoading">
+          <button type="submit" class="btn btn-danger" :disabled="deleteCurrentSessionLoading">
             <div
               v-if="deleteCurrentSessionLoading"
               class="spinner-border spinner-border-sm"
@@ -2369,9 +2369,10 @@ function downloadVideo(url) {
             @click="clearDataAndDismissCompleteCurrentSessionModal()"
             v-if="!completeCurrentSessionLoading"
             type="reset"
-            class="btn btn-danger"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
+            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -2393,7 +2394,9 @@ function downloadVideo(url) {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!completeCurrentSessionLoading">Submit </span>
+            <span v-if="!completeCurrentSessionLoading"
+              ><i class="bi bi-check-circle-fill"></i> Confirm
+            </span>
             <span v-if="completeCurrentSessionLoading"> Loading... </span>
           </button>
         </div>
