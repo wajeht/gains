@@ -2,9 +2,10 @@ version: '3.9'
 services:
   postgres:
     image: postgres:alpine
-    container_name: postgres-service
-    restart: unless-stopped
+    container_name: postgres
+    restart: always
     environment:
+      POSTGRES_HOST: ${DB_HOST}
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -15,13 +16,26 @@ services:
     volumes:
       - postgres-data:/data/postgres
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    environment:
+      REDIS_URL: ${REDIS_URL}
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    networks:
+      - gains-network
+    volumes:
+      - redis-data:/data/redis
+
   gains:
     image: gains
-    container_name: gains-service
+    container_name: gains
     build:
       context: ./
       dockerfile: ./Dockerfile.dev
-    restart: unless-stopped
+    restart: always
     stdin_open: true
     ports:
       - ${PORT}:${PORT}
@@ -32,6 +46,7 @@ services:
       - gains-network
     depends_on:
       - postgres
+      - redis
 
 networks:
   gains-network:
@@ -39,4 +54,6 @@ networks:
 
 volumes:
   postgres-data:
+    driver: local
+  redis-data:
     driver: local
