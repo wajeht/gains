@@ -489,19 +489,29 @@ const routes = [
     },
   },
   {
-    path: '/:pathMatch(.*)*',
-    name: '404',
-    component: DashboardNotFound,
+    path: '/dashboard/unauthorized',
+    name: 'DashboardUnauthorized',
+    component: DashboardUnauthorized,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,
     },
   },
   {
-    path: '/dashboard/unauthorized',
-    name: 'DashboardUnauthorized',
-    component: DashboardUnauthorized,
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: RegularNotFound,
     meta: {
+      layout: 'RegularLayout',
+      requiredAuth: false,
+    },
+  },
+  {
+    path: '/dashboard/:err+',
+    name: 'Not found',
+    component: DashboardNotFound,
+    meta: {
+      title: 'Not Found',
       layout: 'DashboardLayout',
       requiredAuth: true,
     },
