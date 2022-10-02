@@ -508,10 +508,9 @@ const routes = [
   },
   {
     path: '/dashboard/:err+',
-    name: 'Not found',
+    name: '404',
     component: DashboardNotFound,
     meta: {
-      title: 'Not Found',
       layout: 'DashboardLayout',
       requiredAuth: true,
     },
