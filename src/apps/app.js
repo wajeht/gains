@@ -13,6 +13,7 @@ import * as AppRoutes from './app.routes.js';
 import { regularLimiter, apiLimiter } from '../config/rateLimiter.js';
 import { jwt_secret } from '../config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
+import CustomError from './api/api.errors.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -48,6 +49,19 @@ expressJSDocSwagger(app)(expressJsdocOptions);
 app.use((req, res, next) => { req.io = io; next(); }); // prettier-ignore
 app.use('/api', apiLimiter, apiRoutes);
 app.use('/health', AppRoutes.getHealthCheck);
+
+app.use((req, res, next) => {
+  // matching /api/v[number]/
+  const isApiPrefix = req.url.match(/\/api\/v\d\//g);
+
+  // console.log(req.url);
+  if (isApiPrefix) {
+    throw new CustomError.BadRequestError('The resource does not exist!');
+  }
+
+  next();
+});
+
 app.use('*', regularLimiter, AppRoutes.vueHandler);
 
 app.use(AppRoutes.notFoundHandler);
