@@ -26,7 +26,7 @@ export function getHealthCheck(req, res) {
  */
 export function vueHandler(req, res, next) {
   try {
-    res.sendFile(path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'))); // prettier-ignore
+    return res.sendFile(path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'))); // prettier-ignore
   } catch (error) {
     next(error);
   }

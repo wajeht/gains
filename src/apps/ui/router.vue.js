@@ -489,8 +489,17 @@ const routes = [
     },
   },
   {
-    path: '/:pathMatch(.*)*',
-    name: '404',
+    path: '/dashboard/unauthorized',
+    name: 'DashboardUnauthorized',
+    component: DashboardUnauthorized,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/:routes+',
+    name: 'DashboardNotFound',
     component: DashboardNotFound,
     meta: {
       layout: 'DashboardLayout',
@@ -498,12 +507,12 @@ const routes = [
     },
   },
   {
-    path: '/dashboard/unauthorized',
-    name: 'DashboardUnauthorized',
-    component: DashboardUnauthorized,
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: RegularNotFound,
     meta: {
-      layout: 'DashboardLayout',
-      requiredAuth: true,
+      layout: 'RegularLayout',
+      requiredAuth: false,
     },
   },
 ];
@@ -556,6 +565,7 @@ router.beforeEach(async (to, from, next) => {
         return next('/dashboard/profile');
       }
     }
+
     next();
   }
 });
