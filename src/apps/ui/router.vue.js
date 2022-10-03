@@ -498,21 +498,21 @@ const routes = [
     },
   },
   {
+    path: '/dashboard/:routes+',
+    name: 'DashboardNotFound',
+    component: DashboardNotFound,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: '404',
     component: RegularNotFound,
     meta: {
       layout: 'RegularLayout',
       requiredAuth: false,
-    },
-  },
-  {
-    path: '/dashboard/:err+',
-    name: '404',
-    component: DashboardNotFound,
-    meta: {
-      layout: 'DashboardLayout',
-      requiredAuth: true,
     },
   },
 ];
@@ -565,6 +565,7 @@ router.beforeEach(async (to, from, next) => {
         return next('/dashboard/profile');
       }
     }
+
     next();
   }
 });
