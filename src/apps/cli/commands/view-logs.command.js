@@ -2,19 +2,31 @@ import pkg from '../../../utils/pkg.js';
 import Logger from '../../../utils/logger.js';
 import axios from '../../../utils/axios.cli.js';
 
+function transformData(logs) {
+  if (logs.length === 1) {
+    return [];
+  }
+
+  const data = [];
+
+  for (const l of logs) {
+    const obj = JSON.parse(l);
+    data.push(obj);
+  }
+
+  return data;
+}
+
 async function grabOldest({ listOf, prod }) {
   try {
     if (prod) {
-      console.log('oldest()', `prod = ${prod}`);
-
-      const logs = await (await axios.get(`/api/admin/view-logs?latest=${listOf}`)).data;
-
-      console.log(logs);
-
+      let logs = await (await axios.get(`/api/admin/view-logs?latest=${listOf}`)).data.data;
+      logs = transformData(logs);
+      console.table(logs);
       process.exit(0);
     }
 
-    console.log('oldest()');
+    console.log('grabOldest() function has not implemented for dev yet!');
 
     process.exit(0);
   } catch (e) {
@@ -26,11 +38,13 @@ async function grabOldest({ listOf, prod }) {
 async function grabLatest({ listOf, prod }) {
   try {
     if (prod) {
-      console.log('latest()', `prod = ${prod}`);
+      let logs = await (await axios.get(`/api/admin/view-logs?latest=-${listOf}`)).data.data;
+      logs = transformData(logs);
+      console.table(logs);
       process.exit(0);
     }
 
-    console.log('latest()');
+    console.log('grabLatest() function has not implemented for dev yet!');
     process.exit(0);
   } catch (e) {
     Logger.error(e?.response?.data ?? e.message);
