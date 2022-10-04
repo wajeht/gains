@@ -108,7 +108,7 @@ async function getSessions() {
         <!-- card -->
         <div
           v-for="s in sessions"
-          :key="`dashboard-home-videos-key-${s.id}`"
+          :key="`dashboard-home-videos-key-${s.session_id}`"
           class="card shadow-sm border"
         >
           <!-- card header -->
@@ -146,7 +146,7 @@ async function getSessions() {
               <small class="d-inline-block text-truncate" style="max-width: 15rem">
                 <router-link
                   v-if="userStore.user.id == s.user_id"
-                  :to="`/dashboard/sessions/${s.id}`"
+                  :to="`/dashboard/sessions/${s.session_id}`"
                   class="link-secondary text-decoration-none"
                   >{{ s.name }}
                 </router-link>
@@ -254,7 +254,7 @@ async function getSessions() {
                         class="link-secondary text-decoration-none"
                         :to="`/dashboard/sessions/${s.id}`"
                         ><i class="bi bi-journal-text"> </i>
-                        {{ s.id }}
+                        {{ s.session_id }}
                       </router-link>
                     </small>
 
