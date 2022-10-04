@@ -256,6 +256,7 @@ export async function getSessionBySessionId(sid) {
   const { rows: both } = await db.raw(
     `
       select
+        ss.id as id,
         ss.*,
         b.*,
         v.*,
