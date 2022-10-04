@@ -822,7 +822,7 @@ async function uploadAVideo() {
     let formData = new FormData();
     formData.append('video', file);
     formData.append('user_id', userStore.user.id);
-    formData.append('session_id', currentSessionDetails.id);
+    formData.append('session_id', currentSessionDetails.session_id);
 
     const data = {
       method: 'POST',
