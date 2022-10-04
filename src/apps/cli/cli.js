@@ -29,6 +29,10 @@ switch (cmd) {
     commands.users(args);
     break;
 
+  case 'view-logs':
+    commands.viewLogs(args);
+    break;
+
   case 'help':
     commands.help(args);
     break;

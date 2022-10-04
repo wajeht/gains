@@ -11,7 +11,7 @@ import path from 'path';
 const TODAY = dayjs().format('YYYY-MM-DD');
 
 export async function getViewLogs(req, res) {
-  const { download } = req.query;
+  const { download, latest } = req.query;
 
   const todaysLogName = `${TODAY}.log`;
   const todaysLogPath = path.resolve(path.join(process.cwd(), 'logs', todaysLogName));
@@ -29,9 +29,22 @@ export async function getViewLogs(req, res) {
 
   if (download) {
     return res.status(StatusCodes.OK).download(todaysLogPath);
-  } else {
-    log = await fsp.readFile(todaysLogPath, 'utf-8');
-    log = log.split('\n');
+  }
+
+  log = await fsp.readFile(todaysLogPath, 'utf-8');
+  log = log.split('\n');
+
+  if (latest) {
+    // grabbing the latest from the back
+    if (latest.includes('-')) {
+      log = log.slice(latest);
+    }
+
+    // grabbing the oldest from the beginning
+    else {
+      log = log.slice(0, latest);
+    }
+
     return res.status(StatusCodes.OK).json({
       status: 'success',
       request_url: req.originalUrl,
@@ -39,6 +52,13 @@ export async function getViewLogs(req, res) {
       data: log,
     });
   }
+
+  return res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: log,
+  });
 }
 
 /**
