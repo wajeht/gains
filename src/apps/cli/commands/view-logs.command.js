@@ -3,7 +3,7 @@ import Logger from '../../../utils/logger.js';
 import axios from '../../../utils/axios.cli.js';
 
 function transformData(logs) {
-  if (logs.length === 1) {
+  if (logs.length === 0) {
     return [];
   }
 

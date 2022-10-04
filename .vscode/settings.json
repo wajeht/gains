@@ -77,7 +77,7 @@
     "wout",
     "yanlon"
   ],
-  "dotenv.enableAutocloaking": true,
+  "dotenv.enableAutocloaking": false,
   "editor.quickSuggestions": {
     "strings": "on"
   }

@@ -37,7 +37,8 @@ export async function getViewLogs(req, res) {
   if (latest) {
     // grabbing the latest from the back
     if (latest.includes('-')) {
-      log = log.slice(latest);
+      const negative = parseInt(latest);
+      log = log.slice(negative);
     }
 
     // grabbing the oldest from the beginning
