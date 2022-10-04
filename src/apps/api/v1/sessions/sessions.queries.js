@@ -496,6 +496,7 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
 
   const sessions = await db
     .select(
+      'ss.id as id',
       'ss.*',
       'b.*',
       'v.*',
