@@ -77,3 +77,11 @@ export function calculateE1RM(weight, rpe, reps) {
     return (Math.ceil(weight * ((10 - (rpe + 1)) + reps) * 0.03 + weight));
   }
 }
+
+/**
+ * > It returns true if the first argument of the process.argv array contains the string 'gains'
+ * @returns a boolean value.
+ */
+export function cli() {
+  return process.argv[0].includes('gains');
+}
