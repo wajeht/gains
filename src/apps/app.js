@@ -14,6 +14,7 @@ import { regularLimiter, apiLimiter } from '../config/rateLimiter.js';
 import { jwt_secret } from '../config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
+import logger from '../utils/logger.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -46,7 +47,15 @@ app.use(
 app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, next, true));
 expressJSDocSwagger(app)(expressJsdocOptions);
 
-app.use((req, res, next) => { req.io = io; next(); }); // prettier-ignore
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
+io.on('connection', function (socket) {
+  logger.info('socket.io connection was made!');
+});
+
 app.use('/api', apiLimiter, apiRoutes);
 app.use('/health', AppRoutes.getHealthCheck);
 

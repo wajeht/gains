@@ -326,7 +326,15 @@ export default async function users({ ...args }) {
     // args ===>                { _: [ 'users' ], enable: true }
     // Object.keys(args) ===>   [ '_', 'enable' ]
 
-    const ACTIONS = ['restore-data', 'disable', 'enable', 'clear-cache', 'add', 'mock-data'];
+    const ACTIONS = [
+      'restore-data',
+      'disable',
+      'enable',
+      'clear-cache',
+      'add',
+      'mock-data',
+      'prod',
+    ];
     const action = Object.keys(args)[1];
 
     // check if the actions include some of the available commands
