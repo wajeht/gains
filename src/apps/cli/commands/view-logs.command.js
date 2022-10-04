@@ -10,8 +10,10 @@ function transformData(logs) {
   const data = [];
 
   for (const l of logs) {
-    const obj = JSON.parse(l);
-    data.push(obj);
+    if (l.length) {
+      const obj = JSON.parse(l);
+      data.push(obj);
+    }
   }
 
   return data;
