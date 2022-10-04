@@ -2,6 +2,7 @@ import { REDIS } from '../config/env.js';
 import Redis from 'ioredis';
 import logger from './logger.js';
 import Chad from './chad.js';
+import { cli } from './helpers.js';
 
 const redisConfig = {
   port: REDIS.port,
@@ -15,7 +16,9 @@ let client;
 
 try {
   client = new Redis(redisConfig);
-  logger.info(`Redis client started`);
+  if (!cli) {
+    logger.info(`Redis client started`);
+  }
 } catch (e) {
   logger.error(e);
   Chad.flex(e.message, e.stack);

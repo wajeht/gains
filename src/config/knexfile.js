@@ -1,5 +1,6 @@
 import logger from '../utils/logger.js';
 import { database, env } from './env.js';
+import { cli } from '../utils/helpers.js';
 
 let connection = null;
 
@@ -17,7 +18,10 @@ if (
     user: database.username,
     password: database.password,
   };
-  logger.warn('Not using database connection string!');
+
+  if (!cli) {
+    logger.warn('Not using database connection string!');
+  }
 }
 
 export default {
