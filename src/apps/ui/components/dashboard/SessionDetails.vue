@@ -1178,7 +1178,7 @@ function downloadVideo(url) {
                       class="link-dark text-decoration-none underline-hover"
                       :to="`/dashboard/exercises/${log.exercise_id}`"
                     >
-                      <h6 class="card-title m-0 p-0">{{ index + 1 }}. {{ log.name }}</h6>
+                      <h6 class="card-title m-0 p-0">{{ log.id }}. {{ log.name }}</h6>
                     </router-link>
 
                     <!-- tags -->
