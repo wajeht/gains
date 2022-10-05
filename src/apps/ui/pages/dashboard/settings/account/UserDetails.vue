@@ -289,13 +289,13 @@ async function updateAccountInfo() {
             <div class="d-flex gap-2">
               <button
                 @click="edit_personal_info = !edit_personal_info"
-                class="btn btn-secondary w-50"
+                class="btn btn-outline-secondary w-50"
                 type="button"
               >
                 <span v-if="edit_personal_info">Edit</span>
                 <span v-if="!edit_personal_info">Cancel</span>
               </button>
-              <button class="btn btn-secondary w-50" type="submit" :disabled="edit_personal_info">
+              <button class="btn btn-dark w-50" type="submit" :disabled="edit_personal_info">
                 Update
               </button>
             </div>
@@ -359,13 +359,13 @@ async function updateAccountInfo() {
             <div class="d-flex gap-2">
               <button
                 @click="edit_account_info = !edit_account_info"
-                class="btn btn-secondary w-50"
+                class="btn btn-outline-secondary w-50"
                 type="button"
               >
                 <span v-if="edit_account_info">Edit</span>
                 <span v-if="!edit_account_info">Cancel</span>
               </button>
-              <button class="btn btn-secondary w-50" type="submit" :disabled="edit_account_info">
+              <button class="btn btn-dark w-50" type="submit" :disabled="edit_account_info">
                 Update
               </button>
             </div>
