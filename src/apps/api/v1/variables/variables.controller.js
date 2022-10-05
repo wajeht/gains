@@ -296,6 +296,13 @@ export async function getWeeklyWeightIn(req, res) {
     });
 
     result = mapped;
+
+    await redis.set(
+      `user-id-${user_id}-weekly-weight-in`,
+      JSON.stringify(result),
+      'EX',
+      24 * 60 * 60,
+    );
   }
 
   return res.status(StatusCodes.OK).json({
