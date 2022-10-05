@@ -258,44 +258,51 @@ export async function getChangelogs(req, res) {
  */
 export async function getWeeklyWeightIn(req, res) {
   const { user_id } = req.params;
-  const bodyWeight = await VariablesQueries.weeklyWeightInByUserId(user_id);
 
-  if (!bodyWeight.length) {
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      data: bodyWeight,
-    });
-  }
+  let result = JSON.parse(await redis.get(`user-id-${user_id}-weekly-weight-in`));
 
-  const mapped = [];
+  if (result === null) {
+    const bodyWeight = await VariablesQueries.weeklyWeightInByUserId(user_id);
 
-  // It's iteration through the bodyWeight array and calculating the trend.
-  for (let i = 0; i < bodyWeight.length; i++) {
-    const current = bodyWeight[i];
-    const previous = bodyWeight[i + 1];
-
-    if (previous) {
-      const trend = current.body_weight - previous.body_weight;
-      mapped.push({
-        trend,
-        ...bodyWeight[i],
+    if (!bodyWeight.length) {
+      return res.status(StatusCodes.OK).json({
+        status: 'success',
+        request_url: req.originalUrl,
+        message: 'The resource was returned successfully!',
+        data: bodyWeight,
       });
     }
-  }
 
-  // last element was left out so we manually push it back
-  mapped.push({
-    ...bodyWeight[bodyWeight.length - 1],
-    trend: 0,
-  });
+    const mapped = [];
+
+    // It's iteration through the bodyWeight array and calculating the trend.
+    for (let i = 0; i < bodyWeight.length; i++) {
+      const current = bodyWeight[i];
+      const previous = bodyWeight[i + 1];
+
+      if (previous) {
+        const trend = current.body_weight - previous.body_weight;
+        mapped.push({
+          trend,
+          ...bodyWeight[i],
+        });
+      }
+    }
+
+    // last element was left out so we manually push it back
+    mapped.push({
+      ...bodyWeight[bodyWeight.length - 1],
+      trend: 0,
+    });
+
+    result = mapped;
+  }
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: mapped,
+    data: result,
   });
 }
 
