@@ -9,7 +9,7 @@
 [![Node.js CI](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/allkindsofgains/gains)
 </div>
 
-<p align="center">All in one tools to help strength athletes utilize the right amount of training dosage!</p>
+<p align="center">All in one tools to help strength athletes load the right amount of training dosage!</p>
 
 # 📚 Technologies
 
