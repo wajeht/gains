@@ -56,7 +56,18 @@ io.on('connection', function (socket) {
   logger.info('socket.io connection was made!');
 });
 
+/**
+ * GET /api
+ * @tag app
+ * @summary gains api routes
+ */
 app.use('/api', apiLimiter, apiRoutes);
+
+/**
+ * GET /health
+ * @tag app
+ * @summary gains health check route
+ */
 app.use('/health', AppRoutes.getHealthCheck);
 
 app.use((req, res, next) => {
