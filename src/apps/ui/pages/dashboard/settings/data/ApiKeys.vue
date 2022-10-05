@@ -17,6 +17,7 @@ const copyApiKeySelectedIcon = ref(null);
 const requestApiKeyLoading = ref(false);
 const deleteApiKeySelectedIndex = ref(false);
 const apiKeys = ref([]);
+const showApiKey = ref(false);
 
 onMounted(async () => {
   appStore.loading = true;
@@ -172,12 +173,24 @@ function clearAndDismissDeleteApiKeyModal() {
               <span v-if="apiKeys.length" v-auto-animate>
                 <div v-for="(key, index) in apiKeys" :key="key.id" class="input-group mb-3">
                   <input
-                    type="text"
+                    :type="showApiKey ? 'text' : 'password'"
                     class="form-control"
                     :value="key.key"
                     :id="key.key"
                     readonly="readonly"
                   />
+
+                  <!-- eye -->
+                  <button
+                    @click="showApiKey = !showApiKey"
+                    class="btn btn-outline-secondary"
+                    type="button"
+                  >
+                    <i v-if="showApiKey" class="bi bi-eye"></i>
+                    <i v-else="" class="bi bi-eye-slash"></i>
+                  </button>
+
+                  <!-- copy -->
                   <button
                     @click="(copyApiKeySelectedIndex = index), copyApiKey(index)"
                     class="btn btn-outline-secondary"
@@ -191,6 +204,8 @@ function clearAndDismissDeleteApiKeyModal() {
                       <i class="bi bi-clipboard2-check"></i>
                     </span>
                   </button>
+
+                  <!-- delete -->
                   <button
                     @click="(deleteApiKeySelectedId = key.id), (deleteApiKeySelectedIndex = index)"
                     data-bs-toggle="modal"
