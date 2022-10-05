@@ -1,6 +1,9 @@
 <script setup>
 import useAppStore from '../../store/app.store.js';
+import useUserStore from '../../store/user.store.js';
+
 const appStore = useAppStore();
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -58,8 +61,13 @@ const appStore = useAppStore();
             >
           </li>
 
+          <!-- app -->
+          <li v-if="userStore.isLoggedIn" class="nav-item">
+            <router-link to="/dashboard/profile" class="nav-link link-dark">App</router-link>
+          </li>
+
           <!-- login -->
-          <li class="nav-item">
+          <li v-else class="nav-item">
             <router-link
               to="/login"
               class="nav-link link-dark"
@@ -68,7 +76,7 @@ const appStore = useAppStore();
             >
           </li>
 
-          <!-- login -->
+          <!-- theme -->
           <li @click="appStore.changeTheme()" class="nav-item" role="button">
             <div class="nav-link link-dark">
               <span v-if="appStore.darkMode === true"><i class="bi bi-lightbulb-fill"></i></span>
@@ -104,8 +112,13 @@ const appStore = useAppStore();
               >
             </li>
 
+            <!-- app -->
+            <li v-if="userStore.isLoggedIn" class="nav-item">
+              <router-link to="/login" class="nav-link link-dark dropdown-item">App</router-link>
+            </li>
+
             <!-- login -->
-            <li class="nav-item">
+            <li v-else class="nav-item">
               <router-link
                 to="/login"
                 class="nav-link link-dark dropdown-item"
