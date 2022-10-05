@@ -3,16 +3,11 @@ import { email } from '../config/env.js';
 import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import Template from './emails/template.js';
+import emailConfig from '../config/mail.config.js';
+import { env } from '../config/env.js';
 
 // use https://ethereal.email/ for testing purposes
-const transporter = nodemailer.createTransport({
-  host: email.host,
-  port: email.port,
-  auth: {
-    user: email.auth_email,
-    pass: email.auth_pass,
-  },
-});
+const transporter = nodemailer.createTransport(emailConfig);
 
 /* Verifying the email service. */
 transporter.verify((error, success) => {

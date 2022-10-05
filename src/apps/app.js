@@ -10,7 +10,7 @@ import apiRoutes from './api/api.routes.js';
 import expressJSDocSwagger from 'express-jsdoc-swagger';
 import expressJsdocOptions from '../config/express-jsdoc-options.js';
 import * as AppRoutes from './app.routes.js';
-import { regularLimiter, apiLimiter } from '../config/rateLimiter.js';
+import { regularLimiter, apiLimiter } from '../config/rate-limiter.config.js';
 import { jwt_secret } from '../config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
