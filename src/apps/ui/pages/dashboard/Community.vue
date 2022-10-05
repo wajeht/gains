@@ -274,7 +274,7 @@ async function getSessions() {
                     <!-- comment -->
                     <small v-if="appStore.community">
                       <router-link
-                        :to="`/dashboard/videos/${s.id}`"
+                        :to="`/dashboard/videos/${s.session_id}`"
                         class="link-secondary text-decoration-none"
                         ><i class="bi bi-chat me-1"></i>{{ s.counts_of_comments }}</router-link
                       >
