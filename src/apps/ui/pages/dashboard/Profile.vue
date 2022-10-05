@@ -40,17 +40,24 @@ onMounted(async () => {
       }
     }
 
-    const wwi = await getWeeklyWeightIn();
-    Object.assign(weeklyWeightIn, wwi);
+    // const wwi = await getWeeklyWeightIn();
+    // Object.assign(weeklyWeightIn, wwi);
 
-    let rpr = await getRecentPrs();
+    // let rpr = await getRecentPrs();
+    // rpr.map((cur) => (cur.showRecentPrDetails = false));
+    // Object.assign(recentPrs, rpr);
 
-    rpr.map((cur) => (cur.showRecentPrDetails = false));
-    Object.assign(recentPrs, rpr);
+    // // recovery
+    // const r = await getRecovery();
+    // recovery.value = r || [];
 
-    // recovery
-    const r = await getRecovery();
-    recovery.value = r || [];
+    const data = await Promise.all([getWeeklyWeightIn(), getRecentPrs(), getRecentPrs()]);
+    Object.assign(weeklyWeightIn, data[0]);
+
+    data[1].map((cur) => (cur.showRecentPrDetails = false));
+    Object.assign(recentPrs, data[1]);
+
+    recovery.value = data[2] || [];
 
     appStore.loading = false;
   } catch (e) {
