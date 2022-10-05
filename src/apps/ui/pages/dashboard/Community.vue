@@ -252,7 +252,7 @@ async function getSessions() {
                       <router-link
                         v-if="userStore.user.id === s.user_id"
                         class="link-secondary text-decoration-none"
-                        :to="`/dashboard/sessions/${s.id}`"
+                        :to="`/dashboard/sessions/${s.session_id}`"
                         ><i class="bi bi-journal-text"> </i>
                         {{ s.session_id }}
                       </router-link>
