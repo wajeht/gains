@@ -186,8 +186,8 @@ function clearAndDismissDeleteApiKeyModal() {
                     class="btn btn-outline-secondary"
                     type="button"
                   >
-                    <i v-if="showApiKey" class="bi bi-eye"></i>
-                    <i v-else="" class="bi bi-eye-slash"></i>
+                    <i v-if="showApiKey" class="bi bi-eye-slash"></i>
+                    <i v-else="" class="bi bi-eye"></i>
                   </button>
 
                   <!-- copy -->
