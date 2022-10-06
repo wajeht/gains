@@ -51,13 +51,13 @@ onMounted(async () => {
     // const r = await getRecovery();
     // recovery.value = r || [];
 
-    const data = await Promise.all([getWeeklyWeightIn(), getRecentPrs(), getRecentPrs()]);
-    Object.assign(weeklyWeightIn, data[0]);
+    const [wwi, rpr, r] = await Promise.all([getWeeklyWeightIn(), getRecentPrs(), getRecentPrs()]);
+    Object.assign(weeklyWeightIn, wwi);
 
-    data[1].map((cur) => (cur.showRecentPrDetails = false));
-    Object.assign(recentPrs, data[1]);
+    rpr.map((cur) => (cur.showRecentPrDetails = false));
+    Object.assign(recentPrs, rpr);
 
-    recovery.value = data[2] || [];
+    recovery.value = r || [];
 
     appStore.loading = false;
   } catch (e) {
