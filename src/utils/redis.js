@@ -16,7 +16,7 @@ let client;
 
 try {
   client = new Redis(redisConfig);
-  if (!cli) {
+  if (!cli()) {
     logger.info(`Redis client started`);
   }
 } catch (e) {

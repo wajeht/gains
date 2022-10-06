@@ -1,5 +1,6 @@
 import pkg from '../../../utils/pkg.js';
 import Logger from '../../../utils/logger.js';
+import dayjs from 'dayjs';
 import axios from '../../../utils/axios.cli.js';
 
 function transformData(logs) {
@@ -12,7 +13,24 @@ function transformData(logs) {
   for (const l of logs) {
     if (l.length) {
       const obj = JSON.parse(l);
-      data.push(obj);
+      delete obj.hostname;
+      obj.time = dayjs(obj.time).format('YYYY/DD/MM hh:MM:ss');
+      delete obj.pid;
+      delete obj.length;
+
+      if (Object.keys(obj).length != 3) {
+        const e = [];
+        for (const o in obj) {
+          if (o !== 'level' && o !== 'time' && !o !== 'msg') {
+            e.push(obj[o]);
+            delete obj[o];
+          }
+        }
+        obj['msg'] = e.toString();
+        data.push(obj);
+      } else {
+        data.push(obj);
+      }
     }
   }
 

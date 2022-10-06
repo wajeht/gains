@@ -19,7 +19,7 @@ if (
     password: database.password,
   };
 
-  if (!cli) {
+  if (!cli()) {
     logger.warn('Not using database connection string!');
   }
 }

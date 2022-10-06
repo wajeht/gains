@@ -3,12 +3,14 @@ import options from '../config/knexfile.js';
 import logger from '../utils/logger.js';
 import { yellow, red } from '../utils/rainbow-log.js';
 import { attachPaginate } from 'knex-paginate';
+import { cli } from '../utils/helpers.js';
 
 Knex(options)
   .raw('SELECT 1 + 1')
   .then((res) => {
-    const msg = 'Database connection started!';
-    logger.info(msg);
+    if (!cli()) {
+      logger.info('Database connection started!');
+    }
   })
   .catch((err) => {
     logger.error('Database connection failed!');

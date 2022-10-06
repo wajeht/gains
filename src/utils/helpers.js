@@ -79,9 +79,8 @@ export function calculateE1RM(weight, rpe, reps) {
 }
 
 /**
- * > It returns true if the first argument of the process.argv array contains the string 'gains'
- * @returns a boolean value.
+ * It returns true if the first argument of the process is the string 'gains'
  */
 export function cli() {
-  return process.argv[0].includes('gains');
+  return process.argv[1].includes('/bin/gains') === true;
 }
