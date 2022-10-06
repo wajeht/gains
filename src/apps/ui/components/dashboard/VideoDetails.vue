@@ -112,7 +112,7 @@ function clearAndDismissDeleteACommentModal() {
 
 async function fetchComments() {
   try {
-    const res = await api.get(`/api/v1/comments/sessions/${currentSessionDetails.id}`);
+    const res = await api.get(`/api/v1/comments/sessions/${currentSessionDetails.session_id}`);
     const json = await res.json();
 
     if (!res.ok) {
@@ -141,7 +141,7 @@ async function postAComment() {
 
     const body = {
       user_id: userStore.user.id,
-      session_id: currentSessionDetails.id,
+      session_id: currentSessionDetails.session_id,
       comment: comment.value,
     };
 
@@ -214,7 +214,7 @@ async function postAComment() {
               <small class="d-inline-block text-truncate" style="max-width: 15rem">
                 <router-link
                   v-if="userStore.user.id == currentSessionDetails.user_id"
-                  :to="`/dashboard/sessions/${currentSessionDetails.id}`"
+                  :to="`/dashboard/sessions/${currentSessionDetails.session_id}`"
                   class="link-secondary text-decoration-none"
                   >{{ currentSessionDetails.name }}</router-link
                 >
@@ -326,10 +326,10 @@ async function postAComment() {
                   <router-link
                     v-if="userStore.user.id === currentSessionDetails.user_id"
                     class="link-secondary text-decoration-none"
-                    :to="`/dashboard/sessions/${currentSessionDetails.id}`"
+                    :to="`/dashboard/sessions/${currentSessionDetails.session_id}`"
                   >
                     <i class="bi bi-journal-text"></i>
-                    {{ currentSessionDetails.id }}
+                    {{ currentSessionDetails.session_id }}
                   </router-link>
                 </small>
 
