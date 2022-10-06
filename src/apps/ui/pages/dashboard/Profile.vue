@@ -51,7 +51,7 @@ onMounted(async () => {
     // const r = await getRecovery();
     // recovery.value = r || [];
 
-    const [wwi, rpr, r] = await Promise.all([getWeeklyWeightIn(), getRecentPrs(), getRecentPrs()]);
+    const [wwi, rpr, r] = await Promise.all([getWeeklyWeightIn(), getRecentPrs(), getRecovery()]);
     Object.assign(weeklyWeightIn, wwi);
 
     rpr.map((cur) => (cur.showRecentPrDetails = false));
