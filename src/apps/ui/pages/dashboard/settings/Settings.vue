@@ -431,6 +431,16 @@ async function clearAllCache() {
                 <h6 class="mb-0">Privacy Policy</h6>
               </div>
             </router-link>
+
+            <!-- issues/pull requests -->
+            <router-link
+              to="/dashboard/settings/others/issues-and-pull-requests"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <h6 class="mb-0">Issues and Pull requests</h6>
+              </div>
+            </router-link>
           </div>
         </div>
 
