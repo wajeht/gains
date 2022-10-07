@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import fsp from 'fs/promises';
 import fs from 'fs';
 import path from 'path';
+import axios from 'axios';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
 
@@ -82,5 +83,22 @@ export async function postSeedMockTrainingData(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: [],
+  });
+}
+
+/**
+ * It makes a request to the GitHub API to get all the issues for the gains repository, and then
+ * returns the response to the client
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function getIssues(req, res) {
+  const issues = await axios.get(`https://api.github.com/repos/allkindsofgains/gains/issues`);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: issues.data,
   });
 }
