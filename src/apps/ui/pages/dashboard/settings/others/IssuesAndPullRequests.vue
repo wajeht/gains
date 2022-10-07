@@ -64,21 +64,42 @@ async function fetchIssues() {
       </div>
 
       <div class="list-group">
-        <div
+        <a
           v-for="i in issues"
           :key="`issue-key-${i.id}`"
+          :href="i.html_url"
+          target="_blank"
           class="list-group-item list-group-item-action d-flex gap-3 py-3"
         >
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
-              <h6 class="mb-0">{{ i.title }}</h6>
+              <div class="d-flex gap-1">
+                <!-- title -->
+                <h6 class="mb-0">
+                  {{ i.title }}
+                </h6>
+
+                <!-- label -->
+                <div class="d-flex flex-row gap-2">
+                  <small
+                    v-for="l in i?.labels"
+                    :key="`issue-label-key-${i.labels.id}`"
+                    :style="{ 'background-color': `#${l.color} !important` }"
+                    style="padding-bottom: 1px"
+                    class="rounded px-1"
+                  >
+                    {{ l.name }}
+                  </small>
+                </div>
+              </div>
+
               <p class="mb-0 opacity-75">
                 #{{ i.number }} {{ i.state }} {{ dayjs().from(i.created_at, true) }} by
                 {{ i.user.login }}
               </p>
             </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>

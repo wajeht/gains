@@ -83,3 +83,9 @@ export const REDIS = {
   db: process.env.REDIS_DB,
   url: process.env.REDIS_URL,
 };
+
+/* This is used to create an issue on github. */
+export const GITHUB = {
+  api_key: process.env.GITHUB_API_KEY,
+  issue_url: process.env.GITHUB_ISSUE_URL,
+};

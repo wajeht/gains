@@ -8,6 +8,7 @@ import fsp from 'fs/promises';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import { GITHUB } from '../../../config/env.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
 
@@ -93,7 +94,11 @@ export async function postSeedMockTrainingData(req, res) {
  * @param res - The response object.
  */
 export async function getIssues(req, res) {
-  const issues = await axios.get(`https://api.github.com/repos/allkindsofgains/gains/issues`);
+  const issues = await axios.get(GITHUB.issue_url, {
+    headers: {
+      Authorization: `Bearer ${GITHUB.api_key}`,
+    },
+  });
 
   res.status(StatusCodes.OK).json({
     status: 'success',
