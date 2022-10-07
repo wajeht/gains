@@ -20,6 +20,7 @@ try {
     logger.info(`Redis client started`);
   }
 } catch (e) {
+  logger.error(`Redis client failed!`);
   logger.error(e);
   Chad.flex(e.message, e.stack);
 }
