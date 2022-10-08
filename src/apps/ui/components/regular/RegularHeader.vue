@@ -4,6 +4,8 @@ import useUserStore from '../../store/user.store.js';
 
 const appStore = useAppStore();
 const userStore = useUserStore();
+
+const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
 </script>
 
 <template>
@@ -42,7 +44,7 @@ const userStore = useUserStore();
         <!-- links -->
         <ul id="links" class="nav nav-pills">
           <!-- features -->
-          <li class="nav-item">
+          <li v-if="!admin" class="nav-item">
             <router-link
               to="/features"
               class="nav-link link-dark"
@@ -52,7 +54,7 @@ const userStore = useUserStore();
           </li>
 
           <!-- contact -->
-          <li class="nav-item">
+          <li v-if="!admin" class="nav-item">
             <router-link
               to="/contact"
               class="nav-link link-dark"

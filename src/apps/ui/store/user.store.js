@@ -17,7 +17,6 @@ const useUserStore = defineStore({
   state: () => {
     return {
       isLoggedIn: false,
-      isAdmin: false,
       user: {
         role: null,
         id: null,
@@ -37,7 +36,6 @@ const useUserStore = defineStore({
         const res = await window.fetch(`/api/v1/users/check-authentication`);
         if (res.status === 401 || res.status === 403) {
           this.isLoggedIn = false;
-          this.isAdmin = false;
           this.clearUserInfo();
           removeAllModal();
           let logoutLink = '/login';
@@ -60,10 +58,6 @@ const useUserStore = defineStore({
       this.user.profile_picture_url = profile_picture_url;
       this.user.weight = weight;
       this.user.role = role;
-
-      if (role === 'admin') {
-        this.isAdmin = true;
-      }
     },
     clearUserInfo() {
       this.user.id = null;
@@ -78,7 +72,6 @@ const useUserStore = defineStore({
     logout() {
       const appStore = useAppStore();
       this.isLoggedIn = false;
-      this.isAdmin = false;
       this.clearUserInfo();
       removeAllModal();
       appStore.loading = false;

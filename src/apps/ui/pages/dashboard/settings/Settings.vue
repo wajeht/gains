@@ -373,7 +373,7 @@ async function clearAllCache() {
           <div class="list-group">
             <!-- admin panel -->
             <a
-              v-if="userStore.isAdmin"
+              v-if="userStore.user.role === 'admin'"
               href="/admin"
               target="_blank"
               class="list-group-item list-group-item-action d-flex gap-3 py-3"
