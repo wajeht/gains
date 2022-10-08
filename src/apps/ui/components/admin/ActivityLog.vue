@@ -11,7 +11,8 @@ const alert = reactive({ type: '', msg: '' });
 
 onMounted(async () => {
   let fa = await fetchActivities();
-  fa.pop();
+  // last item is like "''", so we gotta pop it or json parse will failed
+  if (fa.length > 2) fa.pop();
   activities.value = fa
     .map((a) => JSON.parse(a))
     .map((a) => {
