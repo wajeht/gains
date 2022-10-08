@@ -74,7 +74,17 @@ async function fetchActivities() {
           </thead>
           <tbody>
             <tr v-for="(a, index) in activities" :key="`activities-key-$${index}`">
-              <td>{{ a.level }}</td>
+              <td>
+                <small
+                  :class="{
+                    'bg-info text-black px-1 rounded': a.level === 'info',
+                    'bg-warning text-black px-1 rounded': a.level === 'warn',
+                    'bg-danger text-white px-1 rounded': a.level === 'error',
+                  }"
+                >
+                  {{ a.level }}
+                </small>
+              </td>
               <td>{{ dayjs(a.time).format('YYYY/DD/MM hh:MM:ss a') }}</td>
               <td>{{ a.msg }}</td>
             </tr>
