@@ -65,7 +65,12 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
 
           <!-- admin -->
           <li v-if="userStore.isLoggedIn && userStore.user.role === 'admin'" class="nav-item">
-            <router-link to="/admin" class="nav-link link-dark">Admin</router-link>
+            <router-link
+              to="/admin"
+              class="nav-link link-dark"
+              :class="{ active: $route.path === '/admin' }"
+              >Admin</router-link
+            >
           </li>
 
           <!-- app -->

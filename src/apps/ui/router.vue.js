@@ -14,6 +14,9 @@ import RegularSignup from './pages/regular/RegularSignup.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
 import VerifyEmail from './pages/regular/VerifyEmail.vue';
 
+// -------------------- admin ---------------------------
+import AdminHome from './pages/admin/AdminHome.vue';
+
 // -------------------- dashboard ---------------------------
 import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
@@ -168,6 +171,17 @@ const routes = [
       requiredAuth: false,
     },
   },
+  // admin
+  {
+    path: '/admin',
+    name: 'AdminHome',
+    component: AdminHome,
+    meta: {
+      layout: 'RegularLayout',
+      requiredAuth: true,
+    },
+  },
+
   // dashboard
   {
     path: '/dashboard/login',
