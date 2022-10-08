@@ -12,15 +12,16 @@ const alert = reactive({ type: '', msg: '' });
 const collapsed = ref(false);
 const loading = ref(false);
 
+const AMOUNT = ref(25);
+
 onMounted(async () => {
   collapsed.value = true;
-
   await fetchActivities();
 });
 
 async function fetchActivities() {
   try {
-    const res = await api.get(`/api/admin/view-logs?latest=-25`);
+    const res = await api.get(`/api/admin/view-logs?latest=-${AMOUNT.value}`);
     const json = await res.json();
 
     if (!res.ok) {
@@ -66,7 +67,8 @@ async function refetch() {
 <template>
   <div class="card">
     <div class="card-body" v-auto-animate>
-      <div class="d-flex justify-content-between">
+      <!-- title -->
+      <div class="d-flex justify-content-between mb-2">
         <!-- left -->
         <div class="d-flex gap-3">
           <!-- title -->
@@ -103,34 +105,41 @@ async function refetch() {
       </div>
 
       <!-- table -->
-      <small v-else v-if="collapsed">
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th scope="col">level</th>
-              <th scope="col">time</th>
-              <th scope="col">message</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(a, index) in activities" :key="`activities-key-$${index}`">
-              <td>
-                <small
-                  :class="{
-                    'bg-info text-black px-1 rounded': a.level === 'info',
-                    'bg-warning text-black px-1 rounded': a.level === 'warn',
-                    'bg-danger text-white px-1 rounded': a.level === 'error',
-                  }"
-                >
-                  {{ a.level }}
-                </small>
-              </td>
-              <td>{{ dayjs(a.time).format('YYYY/DD/MM hh:MM:ss a') }}</td>
-              <td>{{ a.msg }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </small>
+      <div
+        v-else
+        v-if="collapsed"
+        style="overflow-y: scroll !important"
+        :style="{ 'max-height': `${30 * activities.length}px !important` }"
+      >
+        <small>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">level</th>
+                <th scope="col">time</th>
+                <th scope="col">message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(a, index) in activities" :key="`activities-key-$${index}`">
+                <td>
+                  <small
+                    :class="{
+                      'bg-info text-black px-1 rounded': a.level === 'info',
+                      'bg-warning text-black px-1 rounded': a.level === 'warn',
+                      'bg-danger text-white px-1 rounded': a.level === 'error',
+                    }"
+                  >
+                    {{ a.level }}
+                  </small>
+                </td>
+                <td>{{ dayjs(a.time).format('YYYY/DD/MM hh:MM:ss a') }}</td>
+                <td>{{ a.msg }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </small>
+      </div>
     </div>
   </div>
 </template>
