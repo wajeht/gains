@@ -39,6 +39,7 @@ const appStore = useAppStore();
 
     <!-- show activity -->
     <div
+      role="button"
       @click="appStore.showActivity = !appStore.showActivity"
       class="list-group-item list-group-item-action"
     >

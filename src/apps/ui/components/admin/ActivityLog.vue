@@ -1,6 +1,7 @@
 <script setup>
 import api from '../../../../utils/fetch-with-style.js';
 import useAppStore from '../../store/app.store.js';
+import { sleep } from '../../../../utils/helpers.js';
 import dayjs from 'dayjs';
 
 import { onMounted, ref, reactive } from 'vue';
@@ -9,20 +10,12 @@ const activities = ref([]);
 const appStore = useAppStore();
 const alert = reactive({ type: '', msg: '' });
 const collapsed = ref(false);
+const loading = ref(false);
 
 onMounted(async () => {
-  let fa = await fetchActivities();
-  // last item is like "''", so we gotta pop it or json parse will failed
-  if (fa.length > 2) fa.pop();
-  activities.value = fa
-    .map((a) => JSON.parse(a))
-    .map((a) => {
-      return {
-        level: a.level,
-        time: a.time,
-        msg: a.msg,
-      };
-    });
+  collapsed.value = true;
+
+  await fetchActivities();
 });
 
 async function fetchActivities() {
@@ -38,7 +31,17 @@ async function fetchActivities() {
       }
     }
 
-    return json.data;
+    // last item is like "''", so we gotta pop it or json parse will failed
+    if (json.data.length > 2) json.data.pop();
+    activities.value = json.data
+      .map((a) => JSON.parse(a))
+      .map((a) => {
+        return {
+          level: a.level,
+          time: a.time,
+          msg: a.msg,
+        };
+      });
   } catch (e) {
     appStore.loading = false;
     alert.type = 'danger';
@@ -49,6 +52,14 @@ async function fetchActivities() {
       alert.msg = e;
     }
   }
+}
+
+async function refetch() {
+  loading.value = true;
+
+  await fetchActivities();
+
+  loading.value = false;
 }
 </script>
 
@@ -68,8 +79,14 @@ async function fetchActivities() {
         <!-- right -->
         <div class="d-flex gap-3">
           <!-- refresh -->
-          <span v-if="collapsed" role="button">
-            <i class="bi bi-arrow-repeat"></i>
+          <span v-if="collapsed" role="button" @click="refetch()">
+            <!-- arrow -->
+            <i v-if="!loading" class="bi bi-arrow-repeat"></i>
+
+            <!-- spinner -->
+            <div v-if="loading" class="spinner-border spinner-border-sm text-muted" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </span>
 
           <!-- show/hide -->
