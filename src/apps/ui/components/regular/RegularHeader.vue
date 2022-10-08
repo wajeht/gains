@@ -44,7 +44,7 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
         <!-- links -->
         <ul id="links" class="nav nav-pills">
           <!-- features -->
-          <li v-if="!admin" class="nav-item">
+          <li class="nav-item">
             <router-link
               to="/features"
               class="nav-link link-dark"
@@ -54,7 +54,7 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
           </li>
 
           <!-- contact -->
-          <li v-if="!admin" class="nav-item">
+          <li class="nav-item">
             <router-link
               to="/contact"
               class="nav-link link-dark"
