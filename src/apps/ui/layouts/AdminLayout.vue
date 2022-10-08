@@ -1,3 +1,8 @@
+<script setup>
+import RegularHeader from '../components/regular/RegularHeader.vue';
+import RegularFooter from '../components/regular/RegularFooter.vue';
+</script>
+
 <template>
   <div id="regular" class="d-flex flex-column min-vh-100">
     <RegularHeader />
@@ -52,13 +57,10 @@
   </div>
 </template>
 
-<script>
-import RegularHeader from '../components/regular/RegularHeader.vue';
-import RegularFooter from '../components/regular/RegularFooter.vue';
-export default {
-  components: {
-    RegularHeader,
-    RegularFooter,
-  },
-};
-</script>
+<style scoped>
+.list-group-item.active {
+  border-color: #383d3f;
+  background: #212529;
+  color: white;
+}
+</style>
