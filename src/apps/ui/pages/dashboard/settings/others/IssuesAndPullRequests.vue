@@ -94,7 +94,7 @@ async function fetchIssues() {
               </div>
 
               <small class="mb-0 opacity-75">
-                #{{ i.number }} {{ i.state }} {{ dayjs().from(i.created_at, true) }} by
+                #{{ i.number }} {{ i.state }} {{ dayjs().from(i.created_at, true) }} ago by
                 {{ i.user.login }}
               </small>
             </div>
