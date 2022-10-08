@@ -73,7 +73,13 @@ async function fetchUsers() {
                 <div class="d-flex flex-column gap-1">
                   <span class="d-flex gap-1 justify-content-center align-items-center">
                     <span class="fw-bold">{{ u.first_name + ' ' + u.last_name }}</span>
-                    <small class="fst-italic"> - {{ u.role }}</small>
+                    <small class="fst-italic">
+                      - {{ u.role }}
+                      <font-awesome-icon
+                        v-if="u.role === 'admin'"
+                        icon="fa-crown"
+                        style="color: #faa819"
+                    /></small>
                   </span>
                   <small class="d-flex flex-column">
                     <span> <i class="bi bi-person-fill me-1"></i>@{{ u.username }}</span>

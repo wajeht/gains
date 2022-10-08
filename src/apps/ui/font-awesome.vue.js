@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCrow, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
@@ -25,6 +25,7 @@ import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { faHomeUser } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus);
 library.add(faTrash);
@@ -50,5 +51,6 @@ library.add(faUserGroup);
 library.add(faHomeUser);
 library.add(faBars);
 library.add(faDumbbell);
+library.add(faCrown);
 
 export default FontAwesomeIcon;
