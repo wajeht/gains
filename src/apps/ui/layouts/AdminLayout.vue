@@ -4,6 +4,8 @@ import RegularFooter from '../components/regular/RegularFooter.vue';
 import ActivityLog from '../components/admin/ActivityLog.vue';
 import AdminMenuBar from '../components/admin/AdminMenuBar.vue';
 import LogoutButton from '../components/dashboard/LogoutButton.vue';
+import useAppStore from '../store/app.store.js';
+const appStore = useAppStore();
 </script>
 
 <template>
@@ -25,7 +27,7 @@ import LogoutButton from '../components/dashboard/LogoutButton.vue';
           <router-view> </router-view>
 
           <!-- log -->
-          <ActivityLog />
+          <ActivityLog v-if="appStore.showActivity" />
         </div>
       </div>
     </div>

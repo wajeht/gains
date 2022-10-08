@@ -8,6 +8,7 @@ import { onMounted, ref, reactive } from 'vue';
 const activities = ref([]);
 const appStore = useAppStore();
 const alert = reactive({ type: '', msg: '' });
+const collapsed = ref(false);
 
 onMounted(async () => {
   let fa = await fetchActivities();
@@ -53,9 +54,31 @@ async function fetchActivities() {
 
 <template>
   <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Activities</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Latest 50 logs</h6>
+    <div class="card-body" v-auto-animate>
+      <div class="d-flex justify-content-between">
+        <!-- left -->
+        <div class="d-flex gap-3">
+          <!-- title -->
+          <h5 class="card-title mb-0">
+            <span>Activities</span>
+            <small class="text-muted"> - view activities of gains</small>
+          </h5>
+        </div>
+
+        <!-- right -->
+        <div class="d-flex gap-3">
+          <!-- refresh -->
+          <span v-if="collapsed" role="button">
+            <i class="bi bi-arrow-repeat"></i>
+          </span>
+
+          <!-- show/hide -->
+          <span role="button" @click="collapsed = !collapsed">
+            <i v-if="!collapsed" class="bi bi-chevron-down"></i>
+            <i v-else class="bi bi-chevron-up"></i>
+          </span>
+        </div>
+      </div>
 
       <!-- alert -->
       <div v-if="alert.type" :class="`alert-${alert.type}`" class="alert">
@@ -63,7 +86,7 @@ async function fetchActivities() {
       </div>
 
       <!-- table -->
-      <small v-else>
+      <small v-else v-if="collapsed">
         <table class="table table-sm">
           <thead>
             <tr>
