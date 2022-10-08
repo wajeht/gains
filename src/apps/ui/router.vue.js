@@ -16,6 +16,9 @@ import VerifyEmail from './pages/regular/VerifyEmail.vue';
 
 // -------------------- admin ---------------------------
 import AdminHome from './pages/admin/AdminHome.vue';
+import AdminUsers from './pages/admin/AdminUsers.vue';
+import AdminVideos from './pages/admin/AdminVideos.vue';
+import AdminSessions from './pages/admin/AdminSessions.vue';
 
 // -------------------- dashboard ---------------------------
 import Profile from './pages/dashboard/Profile.vue';
@@ -177,7 +180,34 @@ const routes = [
     name: 'AdminHome',
     component: AdminHome,
     meta: {
-      layout: 'RegularLayout',
+      layout: 'AdminLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/admin/users',
+    name: 'AdminUsers',
+    component: AdminUsers,
+    meta: {
+      layout: 'AdminLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/admin/videos',
+    name: 'AdminVideos',
+    component: AdminVideos,
+    meta: {
+      layout: 'AdminLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/admin/sessions',
+    name: 'AdminSessions',
+    component: AdminSessions,
+    meta: {
+      layout: 'AdminLayout',
       requiredAuth: true,
     },
   },

@@ -68,7 +68,7 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
             <router-link
               to="/admin"
               class="nav-link link-dark"
-              :class="{ active: $route.path === '/admin' }"
+              :class="{ active: $route.path.includes('/admin') }"
               >Admin</router-link
             >
           </li>
