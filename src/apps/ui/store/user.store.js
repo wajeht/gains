@@ -17,7 +17,9 @@ const useUserStore = defineStore({
   state: () => {
     return {
       isLoggedIn: false,
+      isAdmin: false,
       user: {
+        role: null,
         id: null,
         username: null,
         email: null,
@@ -28,7 +30,6 @@ const useUserStore = defineStore({
       },
     };
   },
-  getters: {},
   actions: {
     async checkAuthentication() {
       try {
@@ -36,6 +37,7 @@ const useUserStore = defineStore({
         const res = await window.fetch(`/api/v1/users/check-authentication`);
         if (res.status === 401 || res.status === 403) {
           this.isLoggedIn = false;
+          this.isAdmin = false;
           this.clearUserInfo();
           removeAllModal();
           let logoutLink = '/login';
@@ -49,7 +51,7 @@ const useUserStore = defineStore({
         this.clearUserInfo();
       }
     },
-    setUserInfo(id, username, email, first_name, last_name, weight, profile_picture_url) {
+    setUserInfo({ id, username, email, first_name, last_name, weight, profile_picture_url, role }) {
       this.user.id = id;
       this.user.username = username;
       this.user.email = email;
@@ -57,10 +59,16 @@ const useUserStore = defineStore({
       this.user.last_name = last_name;
       this.user.profile_picture_url = profile_picture_url;
       this.user.weight = weight;
+      this.user.role = role;
+
+      if (role === 'admin') {
+        this.isAdmin = true;
+      }
     },
     clearUserInfo() {
       this.user.id = null;
       this.user.username = null;
+      this.user.role = null;
       this.user.email = null;
       this.user.first_name = null;
       this.user.last_name = null;
@@ -70,6 +78,7 @@ const useUserStore = defineStore({
     logout() {
       const appStore = useAppStore();
       this.isLoggedIn = false;
+      this.isAdmin = false;
       this.clearUserInfo();
       removeAllModal();
       appStore.loading = false;

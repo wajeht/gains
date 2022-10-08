@@ -61,6 +61,11 @@ const userStore = useUserStore();
             >
           </li>
 
+          <!-- admin -->
+          <li v-if="userStore.isLoggedIn && userStore.user.role === 'admin'" class="nav-item">
+            <router-link to="/admin" class="nav-link link-dark">Admin</router-link>
+          </li>
+
           <!-- app -->
           <li v-if="userStore.isLoggedIn" class="nav-item">
             <router-link to="/dashboard/profile" class="nav-link link-dark">App</router-link>
