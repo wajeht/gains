@@ -90,7 +90,11 @@ export default {
           ...user,
         });
 
-        this.$router.push({ path: '/dashboard/profile' });
+        if (user?.role === 'admin') {
+          this.$router.push({ path: '/admin' });
+        } else {
+          this.$router.push({ path: '/dashboard/profile' });
+        }
       } catch (e) {
         this.loading = false;
         this.alert.type = 'danger';
