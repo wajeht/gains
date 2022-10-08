@@ -2,8 +2,8 @@
   <div id="regular" class="d-flex flex-column min-vh-100">
     <RegularHeader />
 
-    <div class="px-4 mx-auto animate__animated animate__fadeIn flex-grow-1">
-      <div class="row gap-3">
+    <div class="px-4 animate__animated animate__fadeIn flex-grow-1 container">
+      <div class="row gap-2">
         <!-- menu -->
         <div class="col-sm-12 col-lg-3">
           <div class="list-group">
