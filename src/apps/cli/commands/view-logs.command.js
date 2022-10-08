@@ -14,7 +14,7 @@ function transformData(logs) {
     if (l.length) {
       const obj = JSON.parse(l);
       delete obj.hostname;
-      obj.time = dayjs(obj.time).format('YYYY/DD/MM hh:MM:ss');
+      obj.time = dayjs(obj.time).format('YYYY/DD/MM hh:MM:ss a');
       delete obj.pid;
       delete obj.length;
 

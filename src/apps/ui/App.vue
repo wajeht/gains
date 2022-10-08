@@ -28,6 +28,7 @@ watch(toRef(appStore, 'darkMode'), () => {
 
 <script>
 import DashboardLayout from './layouts/DashboardLayout.vue';
+import AdminLayout from './layouts/AdminLayout.vue';
 import SingleDashboardLayout from './layouts/SingleDashboardLayout.vue';
 import EmptyDashboardLayout from './layouts/EmptyDashboardLayout.vue';
 import RegularLayout from './layouts/RegularLayout.vue';
@@ -37,6 +38,7 @@ export default {
   components: {
     DashboardLayout,
     RegularLayout,
+    AdminLayout,
     EmptyDashboardLayout,
     SingleDashboardLayout,
   },

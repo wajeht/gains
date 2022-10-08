@@ -371,6 +371,18 @@ async function clearAllCache() {
         <div>
           <h5><i class="bi bi-code-slash"></i> Others</h5>
           <div class="list-group">
+            <!-- admin panel -->
+            <a
+              v-if="userStore.user.role === 'admin'"
+              href="/admin"
+              target="_blank"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <h6 class="mb-0">Admin Panel</h6>
+              </div>
+            </a>
+
             <!-- api docs -->
             <a
               href="/docs/api/"

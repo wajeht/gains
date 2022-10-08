@@ -14,6 +14,12 @@ import RegularSignup from './pages/regular/RegularSignup.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
 import VerifyEmail from './pages/regular/VerifyEmail.vue';
 
+// -------------------- admin ---------------------------
+import AdminHome from './pages/admin/AdminHome.vue';
+import AdminUsers from './pages/admin/AdminUsers.vue';
+import AdminVideos from './pages/admin/AdminVideos.vue';
+import AdminSessions from './pages/admin/AdminSessions.vue';
+
 // -------------------- dashboard ---------------------------
 import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
@@ -168,6 +174,44 @@ const routes = [
       requiredAuth: false,
     },
   },
+  // admin
+  {
+    path: '/admin',
+    name: 'AdminHome',
+    component: AdminHome,
+    meta: {
+      layout: 'AdminLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/admin/users',
+    name: 'AdminUsers',
+    component: AdminUsers,
+    meta: {
+      layout: 'AdminLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/admin/videos',
+    name: 'AdminVideos',
+    component: AdminVideos,
+    meta: {
+      layout: 'AdminLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/admin/sessions',
+    name: 'AdminSessions',
+    component: AdminSessions,
+    meta: {
+      layout: 'AdminLayout',
+      requiredAuth: true,
+    },
+  },
+
   // dashboard
   {
     path: '/dashboard/login',

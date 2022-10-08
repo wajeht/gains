@@ -86,15 +86,9 @@ export default {
 
         appStore.appVersion = json.appVersion;
         userStore.isLoggedIn = true;
-        userStore.setUserInfo(
-          user.id,
-          user.username,
-          user.email,
-          user.first_name,
-          user.last_name,
-          user.weight,
-          user.profile_picture_url,
-        );
+        userStore.setUserInfo({
+          ...user,
+        });
 
         this.$router.push({ path: '/dashboard/profile' });
       } catch (e) {

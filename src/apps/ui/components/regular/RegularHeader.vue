@@ -4,6 +4,8 @@ import useUserStore from '../../store/user.store.js';
 
 const appStore = useAppStore();
 const userStore = useUserStore();
+
+const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
 </script>
 
 <template>
@@ -58,6 +60,16 @@ const userStore = useUserStore();
               class="nav-link link-dark"
               :class="{ active: $route.name === 'Contact' }"
               >Contact</router-link
+            >
+          </li>
+
+          <!-- admin -->
+          <li v-if="admin" class="nav-item">
+            <router-link
+              to="/admin"
+              class="nav-link link-dark"
+              :class="{ active: $route.path.includes('/admin') }"
+              >Admin</router-link
             >
           </li>
 
