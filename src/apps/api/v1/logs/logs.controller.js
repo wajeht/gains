@@ -72,7 +72,9 @@ export async function updatePrivateState(req, res) {
 
   const updated = await LogsQueries.updatePrivateState(log_id, value);
 
-  logger.info(`User id: ${updated[0].user_id} has updated log into ${JSON.stringify(req.body)}!`);
+  logger.info(
+    `User id: ${updated[0].user_id} has updated log id ${log_id} into ${JSON.stringify(req.body)}!`,
+  );
   await redis.del(`user-id-${updated[0].user_id}-community-sessions`);
 
   return res.status(StatusCodes.CREATED).json({
