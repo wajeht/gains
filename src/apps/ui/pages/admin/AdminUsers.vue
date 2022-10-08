@@ -54,22 +54,20 @@ async function fetchUsers() {
             <th scope="col">ID</th>
             <th scope="col">User</th>
             <th scope="col">Date Created</th>
-            <th scope="col">Verified</th>
-            <th scope="col">Deleted</th>
+            <th scope="col">Status</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="u in users"
-            :key="`user-key-${u.id}`"
-            :class="{ 'grayscale text-muted': !u.verified || u.deleted }"
-          >
+          <tr v-for="u in users" :key="`user-key-${u.id}`">
+            <!-- id -->
             <th scope="row">{{ u.id }}</th>
+
+            <!-- user -->
             <td>
               <div class="d-flex gap-1">
                 <!-- pic -->
-                <img :src="u.profile_picture_url" style="max-width: 50px; max-height: auto" />
+                <img :src="u.profile_picture_url" style="max-width: 20%; max-height: auto" />
 
                 <!-- role -->
                 <div class="d-flex flex-column gap-1">
@@ -78,16 +76,51 @@ async function fetchUsers() {
                     <small class="fst-italic"> - {{ u.role }}</small>
                   </span>
                   <small class="d-flex flex-column">
-                    <span>@{{ u.username }}</span>
-                    <span>{{ u.weight }} {{ appStore.unit.label }}</span>
-                    <span>{{ dayjs(u.birth_date).format('YYYY/MM/DD') }}</span>
+                    <span> <i class="bi bi-person-fill me-1"></i>@{{ u.username }}</span>
+                    <span>
+                      <font-awesome-icon icon="fa-weight-scale " class="me-1" />{{ u.weight }}
+                      {{ appStore.unit.label }}
+                    </span>
+                    <span>
+                      <i class="bi bi-balloon-fill me-1"></i
+                      >{{ dayjs(u.birth_date).format('YYYY/MM/DD') }}</span
+                    >
                   </small>
                 </div>
               </div>
             </td>
+
+            <!-- date created -->
             <td>{{ dayjs(u.created_at).format('YYYY/MM/DD') }}</td>
-            <td>{{ u.verified }}</td>
-            <td>{{ u.deleted }}</td>
+
+            <!-- status -->
+            <td>
+              <div class="d-flex flex-column gap-1">
+                <!-- verified -->
+                <span
+                  :class="{
+                    'bg-success text-white px-1 rounded': u.verified,
+                    'bg-danger text-white px-1 rounded': !u.verified,
+                  }"
+                >
+                  <span v-if="!u.verified">not verified</span>
+                  <span v-if="u.verified">verified</span>
+                </span>
+
+                <!-- deleted -->
+                <span
+                  :class="{
+                    'bg-success text-white px-1 rounded': !u.deleted,
+                    'bg-danger text-white px-1 rounded': u.deleted,
+                  }"
+                >
+                  <span v-if="!u.deleted">active</span>
+                  <span v-if="u.deleted">inactive</span>
+                </span>
+              </div>
+            </td>
+
+            <!-- actions -->
             <td>
               <div class="d-flex gap-2">
                 <span role="button"><i class="bi bi-pencil-square"></i></span>
@@ -103,6 +136,7 @@ async function fetchUsers() {
 </template>
 
 <style scoped>
+/* :class="{ 'grayscale text-muted': !u.verified || u.deleted }" */
 .grayscale {
   filter: grayscale(100);
 }
