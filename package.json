@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./src/apps/server.js",
+    "build:start": "npm run build && node ./src/apps/server.js",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "kill:port": "./src/bin/kill-used-port.sh",
