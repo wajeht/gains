@@ -149,7 +149,7 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   background: #212529;
-  color: white;
+  color: white !important;
 }
 
 .nav-link:hover {
