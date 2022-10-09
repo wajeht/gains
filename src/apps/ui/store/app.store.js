@@ -19,6 +19,7 @@ const useAppStore = defineStore({
       },
       appVersion: null,
       showActivity: false,
+      redirect_url: '',
     };
   },
   getters: {

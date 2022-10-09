@@ -70,6 +70,7 @@ import BodyweightTracker from './pages/dashboard/tools/others/BodyweightTracker.
 import CaloriesTracker from './pages/dashboard/tools/others/CaloriesTracker.vue';
 import Recovery from './pages/dashboard/tools/others/Recovery.vue';
 import AccessCodes from './pages/dashboard/tools/others/AccessCodes.vue';
+import useAppStore from './store/app.store.js';
 
 const routes = [
   // regular
@@ -582,6 +583,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   document.title = to.name;
   const userStore = useUserStore();
+  const appStore = useAppStore();
 
   // TODO: refactor this code below!
   // if we hit required routes
@@ -600,9 +602,15 @@ router.beforeEach(async (to, from, next) => {
       //   userStore.clearUserInfo();
       // }
 
+      // protect admin routes
+      if (to.path.includes('/admin') && userStore.role !== 'admin') {
+        return next('/404');
+      }
+
       next();
     } else {
       // else go back to login page
+      appStore.redirect_url = to.path;
       next('/dashboard/login');
     }
   } else {
@@ -612,6 +620,12 @@ router.beforeEach(async (to, from, next) => {
       if (!res.ok) {
         userStore.isLoggedIn = false;
         userStore.clearUserInfo();
+        return;
+      }
+
+      // protect admin routes
+      if (to.path.includes('/admin') && userStore.role !== 'admin') {
+        return next('/404');
       }
 
       // if they are already login, redirect to dashboard

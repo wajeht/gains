@@ -90,6 +90,11 @@ export default {
           ...user,
         });
 
+        if (appStore.redirect_url) {
+          this.$router.push({ path: appStore.redirect_url });
+          return;
+        }
+
         if (user?.role === 'admin') {
           this.$router.push({ path: '/admin' });
         } else {
