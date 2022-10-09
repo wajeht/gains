@@ -7,6 +7,9 @@ dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 import purgecss from '@fullhuman/postcss-purgecss';
 
+// assets will generate styles.XXXXX.css for production
+// and style.css for dev. we have to do this because of cloud flare cache
+// typically we do this via /styles.css?ver=1.2, and incrementing version every time
 const rollupOptions = {};
 if (process.env.ENV === 'dev' || process.env.ENV === 'development') {
   rollupOptions.output = {
