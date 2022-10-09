@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(jwt_secret));
 app.use(
   express.static(path.resolve(path.join(process.cwd(), 'src', 'public')), {
-    // maxage: '24h',
+    maxage: '24h',
   }),
 );
 
