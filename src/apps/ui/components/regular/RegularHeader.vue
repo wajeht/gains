@@ -79,7 +79,7 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
           </li>
 
           <!-- login -->
-          <li v-else class="nav-item">
+          <li v-if="!userStore.isLoggedIn" class="nav-item">
             <router-link
               to="/login"
               class="nav-link link-dark"
@@ -124,13 +124,23 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
               >
             </li>
 
+            <!-- admin -->
+            <li v-if="admin" class="nav-item">
+              <router-link
+                to="/admin"
+                class="nav-link link-dark dropdown-item"
+                :class="{ active: $route.path.includes('/admin') }"
+                >Admin</router-link
+              >
+            </li>
+
             <!-- app -->
             <li v-if="userStore.isLoggedIn" class="nav-item">
               <router-link to="/login" class="nav-link link-dark dropdown-item">App</router-link>
             </li>
 
             <!-- login -->
-            <li v-else class="nav-item">
+            <li v-if="!userStore.isLoggedIn" class="nav-item">
               <router-link
                 to="/login"
                 class="nav-link link-dark dropdown-item"
