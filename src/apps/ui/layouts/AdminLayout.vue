@@ -9,7 +9,7 @@ const appStore = useAppStore();
 </script>
 
 <template>
-  <div id="regular" class="d-flex flex-column min-vh-100">
+  <div id="admin" class="d-flex flex-column min-vh-100">
     <RegularHeader />
 
     <div class="px-4 animate__animated animate__fadeIn flex-grow-1 container">
