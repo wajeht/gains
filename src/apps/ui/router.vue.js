@@ -603,7 +603,7 @@ router.beforeEach(async (to, from, next) => {
       // }
 
       // protect admin routes
-      if (to.path.includes('/admin') && userStore.role !== 'admin') {
+      if (to.path.includes('/admin') && userStore.user.role !== 'admin') {
         return next('/404');
       }
 
@@ -624,7 +624,7 @@ router.beforeEach(async (to, from, next) => {
       }
 
       // protect admin routes
-      if (to.path.includes('/admin') && userStore.role !== 'admin') {
+      if (to.path.includes('/admin') && userStore.user.role !== 'admin') {
         return next('/404');
       }
 
