@@ -12,8 +12,8 @@ RUN apk add ffmpeg
 
 COPY ./ .
 
-# RUN npm run build:ui
+RUN npm run build:ui
 
 EXPOSE 8080
 
-CMD ["npm", "run", "build:start"]
+CMD ["npm", "run", "start"]

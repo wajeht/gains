@@ -7,6 +7,15 @@ dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 import purgecss from '@fullhuman/postcss-purgecss';
 
+const rollupOptions = {};
+if (process.env.ENV === 'dev' || process.env.ENV === 'development') {
+  rollupOptions.output = {
+    entryFileNames: 'assets/[name].js',
+    chunkFileNames: 'assets/[name].js',
+    assetFileNames: 'assets/[name][extname]',
+  };
+}
+
 export default defineConfig({
   server: {
     port: process.env.VUE_PORT,
@@ -34,13 +43,7 @@ export default defineConfig({
     reportCompressedSize: true,
     chunkSizeWarningLimit: 1600,
     emptyOutDir: false,
-    rollupOptions: {
-      output: {
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name][extname]',
-      },
-    },
+    rollupOptions,
   },
   define: {
     'process.env': process.env,
