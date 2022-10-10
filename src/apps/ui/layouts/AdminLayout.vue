@@ -16,7 +16,7 @@ const appStore = useAppStore();
     <div class="px-4 animate__animated animate__fadeIn flex-grow-1 container">
       <div class="row gap-2">
         <!-- menu -->
-        <div class="col-sm-12 col-lg-3 d-flex flex-column gap-3">
+        <div class="col-sm-12 col-lg-3 d-flex flex-column gap-3 sticky">
           <!-- menu -->
           <AdminMenuBar />
 
@@ -41,3 +41,20 @@ const appStore = useAppStore();
     <RegularFooter />
   </div>
 </template>
+
+<style scoped>
+.sticky {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 97px !important;
+  align-self: flex-start !important;
+}
+
+@media screen and (max-width: 992px) {
+  .sticky {
+    position: unset !important;
+    top: unset !important;
+    align-self: unset !important;
+  }
+}
+</style>
