@@ -9,6 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import { GITHUB } from '../../../config/env.js';
+import redis from '../../../utils/redis.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
 
@@ -105,5 +106,25 @@ export async function getIssues(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: issues.data,
+  });
+}
+
+/**
+ * It gets the number of online users from Redis and returns it to the client
+ * @param req - The request object.
+ * @param res - The response object.
+ */
+export async function getOnlineUsers(req, res) {
+  let users = (await redis.get('online-users')) || [];
+
+  if (users) {
+    users = JSON.parse(users);
+  }
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: users,
   });
 }

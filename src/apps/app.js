@@ -15,6 +15,8 @@ import { jwt_secret } from '../config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
 import logger from '../utils/logger.js';
+import redis from '../utils/redis.js';
+import { red } from '../utils/rainbow-log.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -47,13 +49,26 @@ app.use(
 app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, next, true));
 expressJSDocSwagger(app)(expressJsdocOptions);
 
+io.on('connection', function (socket) {
+  logger.info(`socket.io connection was made!, ${socket.id}`);
+
+  // TODO: refactor this!!
+  socket.on('logout-user', async (user_id) => {
+    let users = await redis.get('online-users');
+    users = JSON.parse(users);
+    users = users.filter((u) => u.id != user_id);
+    await redis.set('online-users', JSON.stringify(users));
+    io.emit('online-user', users);
+  });
+
+  socket.on('disconnect', () => {
+    logger.info(`socket.io connection was dropped!, ${socket.id}`);
+  });
+});
+
 app.use((req, res, next) => {
   req.io = io;
   next();
-});
-
-io.on('connection', function (socket) {
-  logger.info('socket.io connection was made!');
 });
 
 /**

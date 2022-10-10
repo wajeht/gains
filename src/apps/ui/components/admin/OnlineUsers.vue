@@ -44,16 +44,26 @@ async function fetchLatestOnlineUsers() {
 </script>
 
 <template>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Admin home</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-      <p class="card-text">
-        Some quick example text to build on the card title and make up the bulk of the card's
-        content.
-      </p>
-
-      <a href="#" class="card-link">Another link</a>
+  <div class="list-group">
+    <div
+      v-for="u in users"
+      :key="`user-key-${u.id}`"
+      class="d-flex align-items-center gap-2 list-group-item list-group-item-action list-group-item-hover"
+    >
+      <div style="position: relative">
+        <img class="rounded" :src="u.profile_picture_url" width="30" height="30" />
+        <div
+          style="
+            background-color: green;
+            border-radius: 50%;
+            padding: 5px;
+            position: absolute;
+            right: 0;
+            bottom: 0px;
+          "
+        ></div>
+      </div>
+      <span>{{ u.username }}</span>
     </div>
   </div>
 </template>

@@ -20,4 +20,6 @@ admin.post(
   catchAsyncErrors(AdminController.postSeedMockTrainingData),
 );
 
+admin.get('/online-users', catchAsyncErrors(AdminController.getOnlineUsers));
+
 export default admin;
