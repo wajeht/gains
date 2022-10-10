@@ -51,7 +51,7 @@ async function fetchLatestOnlineUsers() {
       class="d-flex align-items-center gap-2 list-group-item list-group-item-action list-group-item-hover"
     >
       <div style="position: relative">
-        <img class="rounded" :src="u.profile_picture_url" width="30" height="30" />
+        <img class="rounded" :src="u.profile_picture_url" width="35" height="35" />
         <div
           style="
             background-color: green;
@@ -63,7 +63,12 @@ async function fetchLatestOnlineUsers() {
           "
         ></div>
       </div>
-      <span>{{ u.username }}</span>
+      <span class="d-flex flex-column">
+        <span class="fw-normal">{{ u.username }}</span>
+        <small class="text-muted fst-italic fw-light" style="margin-top: -5px"
+          ><small>{{ u.agent }}</small></small
+        >
+      </span>
     </div>
   </div>
 </template>

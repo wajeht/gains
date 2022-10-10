@@ -10,6 +10,7 @@ import { env, domain, jwt_secret } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../../utils/pkg.js';
 import redis from '../../../utils/redis.js';
+import useragent from 'useragent';
 
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 
@@ -67,6 +68,8 @@ export async function postLogin(req, res) {
 
   logger.info(`User id ${user.id} has logged-in!`);
 
+  const agent = useragent.parse(req.headers['user-agent']).toString();
+
   let onlineUsers = await redis.get('online-users');
 
   if (onlineUsers === null) {
@@ -75,7 +78,7 @@ export async function postLogin(req, res) {
   }
 
   onlineUsers = JSON.parse(onlineUsers);
-  onlineUsers.push(user);
+  onlineUsers.push({ ...user, agent });
   await redis.set('online-users', JSON.stringify(onlineUsers));
 
   // req.io.sockets.emit('online-user', onlineUsers);

@@ -113,6 +113,7 @@
     "socket.io-client": "^4.5.2",
     "supertest": "^6.3.0",
     "typed.js": "^2.0.12",
+    "useragent": "^2.3.0",
     "uuid": "^8.3.2",
     "vite": "^2.9.15",
     "vue": "^3.2.37",
