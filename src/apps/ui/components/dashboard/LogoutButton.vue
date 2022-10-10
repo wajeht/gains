@@ -5,10 +5,14 @@ import { useRouter, useRoute } from 'vue-router';
 import { sleep, isMobile } from '../../../../utils/helpers.js';
 import api from '../../../../utils/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
+import { io } from 'socket.io-client';
 
+const socket = io('/');
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
+
+socket.emit('logout-user', userStore.user.id);
 
 async function logout() {
   try {

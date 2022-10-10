@@ -47,13 +47,17 @@ app.use(
 app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, next, true));
 expressJSDocSwagger(app)(expressJsdocOptions);
 
+io.on('connection', function (socket) {
+  logger.info(`socket.io connection was made!, ${socket.id}`);
+
+  socket.on('disconnect', () => {
+    logger.info(`socket.io connection was dropped!, ${socket.id}`);
+  });
+});
+
 app.use((req, res, next) => {
   req.io = io;
   next();
-});
-
-io.on('connection', function (socket) {
-  logger.info('socket.io connection was made!');
 });
 
 /**

@@ -6,10 +6,10 @@ import Password from '../../../utils/password.js';
 import EmailService from '../../../services/email.service.js';
 import crypto from 'crypto';
 import CustomError from '../api.errors.js';
-import { red } from '../../../utils/rainbow-log.js';
 import { env, domain, jwt_secret } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../../utils/pkg.js';
+import redis from '../../../utils/redis.js';
 
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 
@@ -66,6 +66,19 @@ export async function postLogin(req, res) {
   }
 
   logger.info(`User id ${user.id} has logged-in!`);
+
+  let onlineUsers = await redis.get('online-users');
+
+  if (!onlineUsers) {
+    onlineUsers = await redis.set('online-users', JSON.stringify([user]));
+  }
+
+  onlineUsers = JSON.parse(onlineUsers);
+  onlineUsers.push(user);
+  await redis.set('online-users', JSON.stringify(onlineUsers));
+
+  // req.io.sockets.emit('online-user', onlineUsers);
+  req.io.emit('online-user', onlineUsers);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -349,6 +362,10 @@ export async function postResetPassword(req, res) {
  * @param res - The response object.
  */
 export function getLogout(req, res) {
+  req.io.on('logout-user', (data) => {
+    console.log(data);
+  });
+
   res.cookie('token', '', {
     httpOnly: true,
     expires: new Date(Date.now()),
