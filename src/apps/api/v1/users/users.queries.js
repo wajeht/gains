@@ -11,8 +11,9 @@ import dayjs from 'dayjs';
 export function getAllUsers(email) {
   const query = db
     .select('*')
-    .from('users')
-    .leftJoin('user_details', 'users.id', 'user_details.user_id');
+    .from('users as u')
+    .leftJoin('user_details as ud', 'u.id', 'ud.user_id')
+    .orderBy('u.id', 'desc');
 
   if (email) {
     query.where({ 'users.email': email });
