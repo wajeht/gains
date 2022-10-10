@@ -67,13 +67,19 @@ async function fetchUsers() {
             <td>
               <div class="d-flex gap-1">
                 <!-- pic -->
-                <img :src="u.profile_picture_url" style="max-width: 20%; max-height: auto" />
+                <img
+                  :src="u.profile_picture_url"
+                  style="max-width: 20%; max-height: auto; box-sizing: border-box"
+                  :style="{
+                    'border-left': u.role === 'admin' ? '5px solid #FAA819 !important' : '',
+                  }"
+                />
 
                 <!-- role -->
                 <div class="d-flex flex-column gap-1">
                   <span class="d-flex gap-1 justify-content-center align-items-center">
                     <span class="fw-bold">{{ u.first_name + ' ' + u.last_name }}</span>
-                    <small class="fst-italic">
+                    <small class="fst-italic fw-light">
                       - {{ u.role }}
                       <font-awesome-icon
                         v-if="u.role === 'admin'"
@@ -81,13 +87,18 @@ async function fetchUsers() {
                         style="color: #faa819"
                     /></small>
                   </span>
-                  <small class="d-flex flex-column">
-                    <span> <i class="bi bi-person-fill me-1"></i>@{{ u.username }}</span>
-                    <span>
+                  <small class="d-flex flex-column fw-light">
+                    <!-- username -->
+                    <span><i class="bi bi-person-fill me-1"></i>@{{ u.username }}</span>
+
+                    <!-- weight -->
+                    <span v-if="u.weight">
                       <font-awesome-icon icon="fa-weight-scale " class="me-1" />{{ u.weight }}
                       {{ appStore.unit.label }}
                     </span>
-                    <span>
+
+                    <!-- birthday -->
+                    <span v-if="u.birth_date">
                       <i class="bi bi-balloon-fill me-1"></i
                       >{{ dayjs(u.birth_date).format('YYYY/MM/DD') }}</span
                     >
