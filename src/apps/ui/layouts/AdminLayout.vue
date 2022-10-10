@@ -5,6 +5,7 @@ import ActivityLog from '../components/admin/ActivityLog.vue';
 import AdminMenuBar from '../components/admin/AdminMenuBar.vue';
 import LogoutButton from '../components/dashboard/LogoutButton.vue';
 import useAppStore from '../store/app.store.js';
+import OnlineUsers from '../components/admin/OnlineUsers.vue';
 const appStore = useAppStore();
 </script>
 
@@ -18,6 +19,11 @@ const appStore = useAppStore();
         <div class="col-sm-12 col-lg-3 d-flex flex-column gap-3">
           <!-- menu -->
           <AdminMenuBar />
+
+          <!-- online -->
+          <OnlineUsers />
+
+          <!-- logout -->
           <LogoutButton />
         </div>
 

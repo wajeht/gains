@@ -115,7 +115,11 @@ export async function getIssues(req, res) {
  * @param res - The response object.
  */
 export async function getOnlineUsers(req, res) {
-  const users = (await redis.get('online-users')) || [];
+  let users = (await redis.get('online-users')) || [];
+
+  if (users) {
+    users = JSON.parse(users);
+  }
 
   res.status(StatusCodes.OK).json({
     status: 'success',
