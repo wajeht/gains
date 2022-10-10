@@ -362,10 +362,6 @@ export async function postResetPassword(req, res) {
  * @param res - The response object.
  */
 export function getLogout(req, res) {
-  req.io.on('logout-user', (data) => {
-    console.log(data);
-  });
-
   res.cookie('token', '', {
     httpOnly: true,
     expires: new Date(Date.now()),

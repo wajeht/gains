@@ -12,8 +12,6 @@ const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
 
-socket.emit('logout-user', userStore.user.id);
-
 async function logout() {
   try {
     loading.value = true;
@@ -31,6 +29,8 @@ async function logout() {
         throw json.message;
       }
     }
+
+    socket.emit('logout-user', userStore.user.id);
 
     userStore.isLoggedIn = false;
     userStore.clearUserInfo();
