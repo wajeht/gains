@@ -70,7 +70,7 @@ export async function postLogin(req, res) {
   let onlineUsers = await redis.get('online-users');
 
   if (onlineUsers === null) {
-    await redis.set('online-users', JSON.stringify([user]));
+    await redis.set('online-users', JSON.stringify([]));
     onlineUsers = await redis.get('online-users');
   }
 
