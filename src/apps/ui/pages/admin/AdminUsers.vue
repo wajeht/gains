@@ -7,11 +7,17 @@ import dayjs from 'dayjs';
 // import InsideLoading from '../../components/shared/InsideLoading.vue';
 
 const appStore = useAppStore();
-const alert = reactive({ type: '', msg: '' });
 const users = ref([]);
 const checkedUsers = ref([]);
 const loading = ref(false);
 const checkAll = ref(false);
+
+const alert = reactive({ type: '', msg: '' });
+const pagination = reactive({
+  perPage: 5,
+  currentPage: 0,
+  lastPage: null,
+});
 
 onMounted(async () => {
   loading.value = true;
@@ -32,9 +38,17 @@ watch(checkAll, (value) => {
   }
 });
 
+async function addUser() {
+  // ...
+}
+
+async function deleteUser() {
+  // ...
+}
+
 async function fetchUsers() {
   try {
-    const res = await api.get(`/api/v1/users`);
+    const res = await api.get(`/api/v1/users?cache=false`);
     const json = await res.json();
 
     if (!res.ok) {

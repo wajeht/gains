@@ -18,8 +18,11 @@ users.get('/check-authentication', UsersController.getCheckAuthentication);
  * GET /api/v1/users
  * @tags users
  * @summary get a list of users
+ * @param {cache} cache.query.required - the cache - application/x-www-form-urlencoded
+ * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
+ * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
  */
-users.get('/', catchAsyncErrors(UsersController.getUsers));
+users.get('/', validator(UsersValidation.getUsers), catchAsyncErrors(UsersController.getUsers));
 
 /**
  * POST /api/v1/users
