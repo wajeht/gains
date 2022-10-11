@@ -60,7 +60,44 @@ async function fetchUsers() {
     <!-- card -->
     <div class="card">
       <!-- header -->
-      <div class="card-header">Featured</div>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <!-- left -->
+        <div class="d-flex gap-2 align-items-center">
+          <h5 class="card-title mb-0 mt-0">Users</h5>
+          <h6 class="card-subtitle mb-0 mt-0 text-muted">- all users inside gains</h6>
+        </div>
+
+        <!-- right -->
+        <div class="d-flex gap-2 align-items-center">
+          <!-- search -->
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" for="search" />
+            <button class="btn btn-outline-dark" type="button" id="search">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+
+          <!-- add -->
+          <button class="btn btn-sm btn-outline-dark" type="button">
+            <i class="bi bi-plus-circle"></i>
+          </button>
+
+          <!-- trash -->
+          <button class="btn btn-sm btn-outline-dark" type="button">
+            <i class="bi bi-trash"></i>
+          </button>
+
+          <!-- reset -->
+          <button class="btn btn-sm btn-outline-dark" type="button">
+            <i class="bi bi-arrow-repeat"></i>
+          </button>
+
+          <!-- settings -->
+          <button class="btn btn-sm btn-outline-dark" type="button">
+            <i class="bi bi-gear-fill"></i>
+          </button>
+        </div>
+      </div>
 
       <!-- body -->
       <div class="card-body" style="overflow: scroll !important">
