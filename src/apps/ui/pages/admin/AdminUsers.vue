@@ -16,7 +16,7 @@ const checkAll = ref(false);
 onMounted(async () => {
   loading.value = true;
 
-  // await sleep(10000000000000);
+  // await sleep(1000);
   await fetchUsers();
 
   loading.value = false;
