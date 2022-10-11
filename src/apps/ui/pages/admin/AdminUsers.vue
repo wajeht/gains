@@ -48,7 +48,9 @@ async function deleteUser() {
 
 async function fetchUsers() {
   try {
-    const res = await api.get(`/api/v1/users?cache=false`);
+    const res = await api.get(
+      `/api/v1/users?cache=false&perPage=${pagination.perPage}&currentPage=${pagination.currentPage}`,
+    );
     const json = await res.json();
 
     if (!res.ok) {
@@ -158,7 +160,7 @@ async function fetchUsers() {
             v-if="loading"
             class="placeholder-glow animate__animated animate__fadeIn animate__faster"
           >
-            <tr v-for="(i, index) in 20" :key="`loading-key-${index}`">
+            <tr v-for="(i, index) in pagination.perPage" :key="`loading-key-${index}`">
               <!-- checkbox -->
               <th scope="row">
                 <span class="placeholder col-6"></span>
@@ -354,5 +356,34 @@ async function fetchUsers() {
 /* :class="{ 'grayscale text-muted': !u.verified || u.deleted }" */
 .grayscale {
   filter: grayscale(100);
+}
+
+.pagination > li > a {
+  background-color: white;
+  color: #212529;
+  cursor: pointer;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: #5a5a5a;
+  background-color: #eee;
+  border-color: #ddd;
+  cursor: pointer;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: #212529 !important;
+  border: solid 1px #212529 !important;
+  cursor: pointer;
+}
+
+.pagination > .active > a:hover {
+  background-color: #212529 !important;
+  border: solid 1px #ffffff;
+  cursor: pointer;
 }
 </style>

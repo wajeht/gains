@@ -54,9 +54,9 @@ export async function getUsers(req, res) {
     currentPage: currentPage ?? null,
   };
 
-  if (cache === false) {
-    let users;
+  let users;
 
+  if (cache === false) {
     if (email) {
       users = await UsersQueries.getAllUsers({ email, pagination });
     } else {
@@ -73,11 +73,9 @@ export async function getUsers(req, res) {
     });
   }
 
-  const cachedUsers = JSON.parse(await redis.get(`user-id-${req.user.user_id}-users`));
+  users = JSON.parse(await redis.get(`user-id-${req.user.user_id}-users`));
 
-  let users;
-
-  if (cachedUsers === null) {
+  if (users === null) {
     if (email) {
       users = await UsersQueries.getAllUsers({ email, pagination });
     } else {
@@ -92,8 +90,8 @@ export async function getUsers(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     cache,
-    data: cachedUsers.data,
-    pagination: cachedUsers.pagination,
+    data: users.data,
+    pagination: users.pagination,
   });
 }
 
