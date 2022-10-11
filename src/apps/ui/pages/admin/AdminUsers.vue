@@ -3,8 +3,8 @@ import { ref, onMounted, reactive, watch } from 'vue';
 import useAppStore from '../../store/app.store.js';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
-import { sleep } from '../../../../utils/helpers.js';
-import InsideLoading from '../../components/shared/InsideLoading.vue';
+// import { sleep } from '../../../../utils/helpers.js';
+// import InsideLoading from '../../components/shared/InsideLoading.vue';
 
 const appStore = useAppStore();
 const alert = reactive({ type: '', msg: '' });
@@ -16,7 +16,7 @@ const checkAll = ref(false);
 onMounted(async () => {
   loading.value = true;
 
-  await sleep(1000);
+  // await sleep(1000);
   await fetchUsers();
 
   loading.value = false;
@@ -67,7 +67,7 @@ async function fetchUsers() {
 
   <div style="position: relative">
     <!-- loading -->
-    <InsideLoading v-if="loading" />
+    <!-- <InsideLoading v-if="loading" /> -->
 
     <!-- card -->
     <div class="card">
@@ -139,7 +139,67 @@ async function fetchUsers() {
           </thead>
 
           <!-- table body -->
-          <tbody>
+          <!-- **************************** LOADING STATE STARTS **************************** -->
+          <tbody v-if="loading" class="placeholder-glow">
+            <tr v-for="(i, index) in 20" :key="`loading-key-${index}`">
+              <!-- checkbox -->
+              <th scope="row">
+                <span class="placeholder col-6"></span>
+              </th>
+
+              <!-- id -->
+              <th scope="row"><span class="placeholder col-6"></span></th>
+
+              <!-- user -->
+              <td>
+                <div class="d-flex gap-1">
+                  <!-- pic -->
+                  <span class="placeholder col-6"></span>
+
+                  <!-- role -->
+                  <div class="d-flex flex-column gap-1">
+                    <!-- top -->
+                    <span class="placeholder col-6"></span>
+
+                    <!-- bottom -->
+                    <span class="d-flex flex-column fw-light">
+                      <!-- username -->
+                      <span class="placeholder col-6"></span>
+
+                      <!-- weight -->
+                      <span class="placeholder col-6"></span>
+
+                      <!-- birthday -->
+                      <span class="placeholder col-6"></span>
+                    </span>
+                  </div>
+                </div>
+              </td>
+
+              <!-- date created -->
+              <td><span class="placeholder col-6"></span></td>
+
+              <!-- status -->
+              <td>
+                <div class="d-flex flex-column gap-1">
+                  <span class="placeholder bg-success col-6"></span>
+                  <span class="placeholder bg-success col-6"></span>
+                </div>
+              </td>
+
+              <!-- actions -->
+              <td>
+                <div class="d-flex gap-2">
+                  <span class="placeholder col-6"></span>
+                  <span class="placeholder col-6"></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <!-- **************************** LOADING STATE ENDS **************************** -->
+
+          <!-- table body -->
+          <tbody v-if="!loading">
             <tr v-for="u in users" :key="`user-key-${u.id}`">
               <!-- checkbox -->
               <th scope="row">

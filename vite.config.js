@@ -63,7 +63,7 @@ export default defineConfig({
       plugins: [
         purgecss({
           content: [`./src/public/**/*.html`, `./src/apps/ui/**/*.vue`],
-          safelist: [/tooltip/, /tooltip-inner/, /modal/, /alert/, /alert-(\w+)/], // purgecss remove modal backdrop, this fixed it
+          safelist: [/tooltip/, /placeholder-/, /tooltip-inner/, /modal/, /alert/, /alert-(\w+)/], // purgecss remove modal backdrop, this fixed it
         }),
         {
           postcssPlugin: 'internal:charset-removal',
