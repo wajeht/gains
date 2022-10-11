@@ -135,6 +135,7 @@ async function fetchUsers() {
                   <img
                     :src="u.profile_picture_url"
                     style="max-width: 20%; max-height: auto; box-sizing: border-box"
+                    class="rounded"
                     :style="{
                       'border-left': u.role === 'admin' ? '5px solid #FAA819 !important' : '',
                     }"
