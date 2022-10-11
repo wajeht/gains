@@ -106,6 +106,9 @@ async function fetchUsers() {
           <!-- table header -->
           <thead>
             <tr>
+              <th scope="col">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox" />
+              </th>
               <th scope="col">ID</th>
               <th scope="col">User</th>
               <th scope="col">Date Created</th>
@@ -117,6 +120,11 @@ async function fetchUsers() {
           <!-- table body -->
           <tbody>
             <tr v-for="u in users" :key="`user-key-${u.id}`">
+              <!-- checkbox -->
+              <th scope="row">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox" />
+              </th>
+
               <!-- id -->
               <th scope="row">{{ u.id }}</th>
 
