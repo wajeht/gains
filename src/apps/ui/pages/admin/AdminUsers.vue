@@ -161,13 +161,11 @@ async function fetchUsers({ perPage = 25, currentPage = 1 }) {
             v-if="loading"
             class="placeholder-glow animate__animated animate__fadeIn animate__faster"
           >
-            <<<<<<< HEAD
             <tr v-for="(i, index) in pagination.perPage" :key="`loading-key-${index}`">
               =======
             </tr>
 
             <tr v-for="(i, index) in 20" :key="`loading-key-${index}`">
-              >>>>>>> f88678e (feat: improved laoding state on admin users)
               <!-- checkbox -->
               <th scope="row">
                 <span class="placeholder col-6"></span>
@@ -356,5 +354,34 @@ async function fetchUsers({ perPage = 25, currentPage = 1 }) {
 /* :class="{ 'grayscale text-muted': !u.verified || u.deleted }" */
 .grayscale {
   filter: grayscale(100);
+}
+
+.pagination > li > a {
+  background-color: white;
+  color: #212529;
+  cursor: pointer;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: #5a5a5a;
+  background-color: #eee;
+  border-color: #ddd;
+  cursor: pointer;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: #212529 !important;
+  border: solid 1px #212529 !important;
+  cursor: pointer;
+}
+
+.pagination > .active > a:hover {
+  background-color: #212529 !important;
+  border: solid 1px #ffffff;
+  cursor: pointer;
 }
 </style>
