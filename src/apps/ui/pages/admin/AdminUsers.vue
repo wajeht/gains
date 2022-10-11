@@ -64,16 +64,20 @@ async function fetchUsers() {
 
       <!-- body -->
       <div class="card-body" style="overflow: scroll !important">
+        <!-- table -->
         <table class="table text-nowrap">
+          <!-- table header -->
           <thead>
             <tr>
               <th scope="col">ID</th>
               <th scope="col">User</th>
               <th scope="col">Date Created</th>
-              <th scope="col">Status</th>
+              <th scope="col">Account Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
+
+          <!-- table body -->
           <tbody>
             <tr v-for="u in users" :key="`user-key-${u.id}`">
               <!-- id -->
@@ -128,28 +132,30 @@ async function fetchUsers() {
 
               <!-- status -->
               <td>
-                <div class="d-flex flex-column gap-1">
-                  <!-- verified -->
-                  <small
-                    :class="{
-                      'bg-success text-white px-1 rounded': u.verified,
-                      'bg-danger text-white px-1 rounded': !u.verified,
-                    }"
-                  >
-                    <span v-if="!u.verified">not verified</span>
-                    <span v-if="u.verified">verified</span>
-                  </small>
+                <div style="display: inline-block !important">
+                  <div class="d-flex flex-column gap-1">
+                    <!-- verified -->
+                    <small
+                      :class="{
+                        'bg-success text-white px-1 rounded': u.verified,
+                        'bg-danger text-white px-1 rounded': !u.verified,
+                      }"
+                    >
+                      <span v-if="!u.verified">not verified</span>
+                      <span v-if="u.verified">verified</span>
+                    </small>
 
-                  <!-- deleted -->
-                  <small
-                    :class="{
-                      'bg-success text-white px-1 rounded': !u.deleted,
-                      'bg-danger text-white px-1 rounded': u.deleted,
-                    }"
-                  >
-                    <span v-if="!u.deleted">active</span>
-                    <span v-if="u.deleted">inactive</span>
-                  </small>
+                    <!-- deleted -->
+                    <small
+                      :class="{
+                        'bg-success text-white px-1 rounded': !u.deleted,
+                        'bg-danger text-white px-1 rounded': u.deleted,
+                      }"
+                    >
+                      <span v-if="!u.deleted">active</span>
+                      <span v-if="u.deleted">inactive</span>
+                    </small>
+                  </div>
                 </div>
               </td>
 
