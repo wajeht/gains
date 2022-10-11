@@ -16,7 +16,7 @@ const checkAll = ref(false);
 onMounted(async () => {
   loading.value = true;
 
-  // await sleep(1000);
+  // await sleep(10000000000000);
   await fetchUsers();
 
   loading.value = false;
@@ -140,7 +140,10 @@ async function fetchUsers() {
 
           <!-- table body -->
           <!-- **************************** LOADING STATE STARTS **************************** -->
-          <tbody v-if="loading" class="placeholder-glow">
+          <tbody
+            v-if="loading"
+            class="placeholder-glow animate__animated animate__fadeIn animate__faster"
+          >
             <tr v-for="(i, index) in 20" :key="`loading-key-${index}`">
               <!-- checkbox -->
               <th scope="row">
@@ -152,17 +155,20 @@ async function fetchUsers() {
 
               <!-- user -->
               <td>
-                <div class="d-flex gap-1">
+                <div class="d-flex gap-1" style="min-height: 90px !important">
                   <!-- pic -->
-                  <span class="placeholder col-6"></span>
+                  <span class="placeholder col-6 rounded"></span>
 
                   <!-- role -->
-                  <div class="d-flex flex-column gap-1">
+                  <div class="d-flex flex-column gap-1 justify-content-between">
                     <!-- top -->
                     <span class="placeholder col-6"></span>
 
                     <!-- bottom -->
-                    <span class="d-flex flex-column fw-light">
+                    <div
+                      class="d-flex flex-column fw-light gap-1"
+                      style="min-width: 200px !important"
+                    >
                       <!-- username -->
                       <span class="placeholder col-6"></span>
 
@@ -171,7 +177,7 @@ async function fetchUsers() {
 
                       <!-- birthday -->
                       <span class="placeholder col-6"></span>
-                    </span>
+                    </div>
                   </div>
                 </div>
               </td>
@@ -182,8 +188,8 @@ async function fetchUsers() {
               <!-- status -->
               <td>
                 <div class="d-flex flex-column gap-1">
-                  <span class="placeholder bg-success col-6"></span>
-                  <span class="placeholder bg-success col-6"></span>
+                  <span class="placeholder bg-success col-6 rounded"></span>
+                  <span class="placeholder bg-success col-6 rounded"></span>
                 </div>
               </td>
 
@@ -199,7 +205,7 @@ async function fetchUsers() {
           <!-- **************************** LOADING STATE ENDS **************************** -->
 
           <!-- table body -->
-          <tbody v-if="!loading">
+          <tbody v-if="!loading" class="animate__animated animate__fadeIn animate__faster">
             <tr v-for="u in users" :key="`user-key-${u.id}`">
               <!-- checkbox -->
               <th scope="row">
