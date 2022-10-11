@@ -161,7 +161,13 @@ async function fetchUsers({ perPage = 25, currentPage = 1 }) {
             v-if="loading"
             class="placeholder-glow animate__animated animate__fadeIn animate__faster"
           >
+            <<<<<<< HEAD
             <tr v-for="(i, index) in pagination.perPage" :key="`loading-key-${index}`">
+              =======
+            </tr>
+
+            <tr v-for="(i, index) in 20" :key="`loading-key-${index}`">
+              >>>>>>> f88678e (feat: improved laoding state on admin users)
               <!-- checkbox -->
               <th scope="row">
                 <span class="placeholder col-6"></span>
