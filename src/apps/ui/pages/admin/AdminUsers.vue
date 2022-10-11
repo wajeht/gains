@@ -160,6 +160,7 @@ async function fetchUsers() {
                 <div class="d-flex gap-1">
                   <!-- pic -->
                   <img
+                    v-if="u.profile_picture_url"
                     :src="u.profile_picture_url"
                     style="max-width: 20%; max-height: auto; box-sizing: border-box"
                     class="rounded"
@@ -170,8 +171,11 @@ async function fetchUsers() {
 
                   <!-- role -->
                   <div class="d-flex flex-column gap-1">
+                    <!-- top -->
                     <span class="d-flex gap-1 justify-content-center align-items-center">
-                      <span class="fw-bold">{{ u.first_name + ' ' + u.last_name }}</span>
+                      <span v-if="u.first_name || u.last_name" class="fw-bold">{{
+                        u.first_name + ' ' + u.last_name
+                      }}</span>
                       <small class="fst-italic fw-light">
                         - {{ u.role }}
                         <font-awesome-icon
@@ -180,6 +184,8 @@ async function fetchUsers() {
                           style="color: #faa819"
                       /></small>
                     </span>
+
+                    <!-- bottom -->
                     <small class="d-flex flex-column fw-light">
                       <!-- username -->
                       <span><i class="bi bi-person-fill me-1"></i>@{{ u.username }}</span>
