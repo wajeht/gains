@@ -46,19 +46,26 @@ export async function postUser(req, res) {
  */
 export async function getUsers(req, res) {
   const { email } = req.query;
+
+  const cachedUsers = JSON.parse(await redis.get(`user-id-${req.user.user_id}-users`));
+
   let users;
 
-  if (email) {
-    users = await UsersQueries.getAllUsers(email);
-  } else {
-    users = await UsersQueries.getAllUsers();
+  if (cachedUsers === null) {
+    if (email) {
+      users = await UsersQueries.getAllUsers(email);
+    } else {
+      users = await UsersQueries.getAllUsers();
+    }
+
+    await redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
   }
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: users,
+    data: cachedUsers,
   });
 }
 
