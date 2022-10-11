@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, watch } from 'vue';
 import useAppStore from '../../store/app.store.js';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
@@ -9,7 +9,9 @@ import InsideLoading from '../../components/shared/InsideLoading.vue';
 const appStore = useAppStore();
 const alert = reactive({ type: '', msg: '' });
 const users = ref([]);
+const checkedUsers = ref([]);
 const loading = ref(false);
+const checkAll = ref(false);
 
 onMounted(async () => {
   loading.value = true;
@@ -18,6 +20,16 @@ onMounted(async () => {
   await fetchUsers();
 
   loading.value = false;
+});
+
+watch(checkAll, (value) => {
+  if (!value) {
+    checkedUsers.value = [];
+  }
+
+  if (value) {
+    checkedUsers.value = users.value.map((u) => u.id);
+  }
 });
 
 async function fetchUsers() {
@@ -83,7 +95,11 @@ async function fetchUsers() {
           </button>
 
           <!-- trash -->
-          <button class="btn btn-sm btn-outline-dark" type="button">
+          <button
+            class="btn btn-sm btn-outline-dark"
+            type="button"
+            :disabled="!checkedUsers.length"
+          >
             <i class="bi bi-trash"></i>
           </button>
 
@@ -102,12 +118,17 @@ async function fetchUsers() {
       <!-- body -->
       <div class="card-body" style="overflow: scroll !important">
         <!-- table -->
-        <table class="table text-nowrap">
+        <table class="table table-hover text-nowrap">
           <!-- table header -->
           <thead>
             <tr>
               <th scope="col">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox" />
+                <input
+                  @click="checkAll = !checkAll"
+                  class="form-check-input"
+                  type="checkbox"
+                  id="checkbox-for-title"
+                />
               </th>
               <th scope="col">ID</th>
               <th scope="col">User</th>
@@ -122,7 +143,13 @@ async function fetchUsers() {
             <tr v-for="u in users" :key="`user-key-${u.id}`">
               <!-- checkbox -->
               <th scope="row">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox" />
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :value="u.id"
+                  v-model="checkedUsers"
+                  :id="`checkbox-id-${u.id}`"
+                />
               </th>
 
               <!-- id -->
