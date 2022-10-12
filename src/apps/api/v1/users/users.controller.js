@@ -56,7 +56,29 @@ export async function getUsers(req, res) {
 
   let users;
 
+  // /api/v1/users?cache=false
   if (cache === false) {
+    if (email) {
+      users = await UsersQueries.getAllUsers({ email, pagination });
+    } else {
+      users = await UsersQueries.getAllUsers({ pagination });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      cache,
+      data: users.data,
+      pagination: users.pagination,
+    });
+  }
+
+  // only cache page 1
+  // don't cache any results after page 1
+  if (pagination.currentPage > 1) {
+    await redis.del(`user-id-${req.user.user_id}-users`);
+
     if (email) {
       users = await UsersQueries.getAllUsers({ email, pagination });
     } else {

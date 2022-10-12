@@ -42,13 +42,15 @@ async function modifyUser() {
   // ...
 }
 
-async function fetchUsers({ perPage = 25, currentPage = 1 }) {
+async function resetTable() {
+  await fetchUsers({});
+}
+
+async function fetchUsers({ perPage = 10, currentPage = 1 }) {
   try {
     loading.value = true;
 
-    const res = await api.get(
-      `/api/v1/users?cache=false&perPage=${perPage}&currentPage=${currentPage}`,
-    );
+    const res = await api.get(`/api/v1/users?perPage=${perPage}&currentPage=${currentPage}`);
     const json = await res.json();
 
     if (!res.ok) {
@@ -121,7 +123,7 @@ async function fetchUsers({ perPage = 25, currentPage = 1 }) {
           </button>
 
           <!-- reset -->
-          <button class="btn btn-sm btn-outline-dark" type="button">
+          <button @click="resetTable()" class="btn btn-sm btn-outline-dark" type="button">
             <i class="bi bi-arrow-repeat"></i>
           </button>
 
