@@ -47,25 +47,51 @@ export async function postUser(req, res) {
 export async function getUsers(req, res) {
   const { email } = req.query;
 
-  const cachedUsers = JSON.parse(await redis.get(`user-id-${req.user.user_id}-users`));
+  const { perPage, currentPage, cache } = req.query;
+
+  const pagination = {
+    perPage: perPage ?? null,
+    currentPage: currentPage ?? null,
+  };
 
   let users;
 
-  if (cachedUsers === null) {
+  if (cache === false) {
     if (email) {
-      users = await UsersQueries.getAllUsers(email);
+      users = await UsersQueries.getAllUsers({ email, pagination });
     } else {
-      users = await UsersQueries.getAllUsers();
+      users = await UsersQueries.getAllUsers({ pagination });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      cache,
+      data: users.data,
+      pagination: users.pagination,
+    });
+  }
+
+  users = JSON.parse(await redis.get(`user-id-${req.user.user_id}-users`));
+
+  if (users === null) {
+    if (email) {
+      users = await UsersQueries.getAllUsers({ email, pagination });
+    } else {
+      users = await UsersQueries.getAllUsers({ pagination });
     }
 
     await redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
   }
 
-  res.status(StatusCodes.OK).json({
+  return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: cachedUsers,
+    cache,
+    data: users.data,
+    pagination: users.pagination,
   });
 }
 

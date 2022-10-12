@@ -8,12 +8,16 @@ import dayjs from 'dayjs';
  * Get all users from the database.
  * @returns An array of objects
  */
-export function getAllUsers(email) {
+export function getAllUsers({ email, pagination = { perPage: null, currentPage: null } }) {
   const query = db
     .select('*')
     .from('users as u')
     .leftJoin('user_details as ud', 'u.id', 'ud.user_id')
-    .orderBy('u.id', 'desc');
+    .orderBy('u.id', 'desc')
+    .paginate({
+      ...pagination,
+      isLengthAware: true,
+    });
 
   if (email) {
     query.where({ 'users.email': email });

@@ -1,4 +1,4 @@
-import { check, checkSchema, param, body } from 'express-validator';
+import { query, check, checkSchema, param, body } from 'express-validator';
 import { blue, custom, green, red, yellow } from '../../../../utils/rainbow-log.js';
 import * as UserQueries from './users.queries.js';
 import { isEqual } from 'lodash-es';
@@ -50,6 +50,39 @@ export const postUser = [
       if (/\d/.test(value)) return true;
     })
     .withMessage('The value must include a number character!'),
+];
+
+export const getUsers = [
+  query('cache')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('cache must not be empty!')
+    .bail()
+    .isBoolean()
+    .withMessage('cache must be a boolean format')
+    .bail()
+    .toBoolean(),
+  query('perPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('perPage must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('perPage must be an ID!')
+    .bail()
+    .toInt(),
+  query('currentPage')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('current-page must not be empty!')
+    .bail()
+    .isInt()
+    .withMessage('current-page must be an ID!')
+    .bail()
+    .toInt(),
 ];
 
 /* Validating the user input. */
