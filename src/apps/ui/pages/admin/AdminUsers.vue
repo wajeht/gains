@@ -4,7 +4,7 @@ import useAppStore from '../../store/app.store.js';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
 import Paginator from '../../components/shared/Paginator.vue';
-// import { sleep } from '../../../../utils/helpers.js';
+import { sleep } from '../../../../utils/helpers.js';
 // import InsideLoading from '../../components/shared/InsideLoading.vue';
 
 const appStore = useAppStore();
@@ -14,7 +14,12 @@ const loading = ref(false);
 const checkAll = ref(false);
 
 const alert = reactive({ type: '', msg: '' });
-const pagination = reactive({});
+
+const DEFAULT_PER_PAGE = 10;
+
+const pagination = reactive({
+  perPage: DEFAULT_PER_PAGE,
+});
 
 onMounted(async () => {
   await fetchUsers({});
@@ -46,7 +51,7 @@ async function resetTable() {
   await fetchUsers({});
 }
 
-async function fetchUsers({ perPage = 10, currentPage = 1 }) {
+async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
   try {
     loading.value = true;
 
@@ -163,9 +168,7 @@ async function fetchUsers({ perPage = 10, currentPage = 1 }) {
             v-if="loading"
             class="placeholder-glow animate__animated animate__fadeIn animate__faster"
           >
-            <tr v-for="(i, index) in pagination.perPage" :key="`loading-key-${index}`"></tr>
-
-            <tr v-for="(i, index) in 20" :key="`loading-key-${index}`">
+            <tr v-for="(i, index) in pagination.perPage" :key="`loading-key-${index}`">
               <!-- checkbox -->
               <th scope="row">
                 <span class="placeholder col-6"></span>
