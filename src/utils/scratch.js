@@ -1,5 +1,8 @@
-import dayjs from 'dayjs';
+const pagination = {
+  from: 5,
+  to: 10,
+};
 
-const now = new Date().toISOString();
-
-console.log(now);
+for (const p in pagination.to) {
+  console.log(p);
+}

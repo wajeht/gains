@@ -16,6 +16,7 @@ export function getAllUsers({ email, pagination = { perPage: null, currentPage: 
     .orderBy('u.id', 'desc')
     .paginate({
       ...pagination,
+      isLengthAware: true,
     });
 
   if (email) {

@@ -3,6 +3,7 @@ import { ref, onMounted, reactive, watch } from 'vue';
 import useAppStore from '../../store/app.store.js';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
+import Paginator from '../../components/shared/Paginator.vue';
 // import { sleep } from '../../../../utils/helpers.js';
 // import InsideLoading from '../../components/shared/InsideLoading.vue';
 
@@ -13,19 +14,10 @@ const loading = ref(false);
 const checkAll = ref(false);
 
 const alert = reactive({ type: '', msg: '' });
-const pagination = reactive({
-  perPage: 5,
-  currentPage: 0,
-  lastPage: null,
-});
+const pagination = reactive({});
 
 onMounted(async () => {
-  loading.value = true;
-
-  // await sleep(1000);
-  await fetchUsers();
-
-  loading.value = false;
+  await fetchUsers({});
 });
 
 watch(checkAll, (value) => {
@@ -46,10 +38,16 @@ async function deleteUser() {
   // ...
 }
 
-async function fetchUsers() {
+async function modifyUser() {
+  // ...
+}
+
+async function fetchUsers({ perPage = 25, currentPage = 1 }) {
   try {
+    loading.value = true;
+
     const res = await api.get(
-      `/api/v1/users?cache=false&perPage=${pagination.perPage}&currentPage=${pagination.currentPage}`,
+      `/api/v1/users?cache=false&perPage=${perPage}&currentPage=${currentPage}`,
     );
     const json = await res.json();
 
@@ -62,6 +60,9 @@ async function fetchUsers() {
     }
 
     users.value = json.data;
+    Object.assign(pagination, json.pagination);
+
+    loading.value = false;
   } catch (e) {
     appStore.loading = false;
     alert.type = 'danger';
@@ -334,19 +335,12 @@ async function fetchUsers() {
 
       <!-- footer -->
       <div class="card-footer text-muted">
-        <nav aria-label="Page navigation example" class="py-2">
-          <ul class="pagination justify-content-center mb-0 pb-0">
-            <li class="page-item disabled">
-              <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-          </ul>
-        </nav>
+        <Paginator
+          :pagination="pagination"
+          @previous="fetchUsers({ currentPage: pagination.currentPage - 1 })"
+          @to="(page) => fetchUsers({ currentPage: page })"
+          @next="fetchUsers({ currentPage: pagination.currentPage + 1 })"
+        />
       </div>
     </div>
   </div>
@@ -356,34 +350,5 @@ async function fetchUsers() {
 /* :class="{ 'grayscale text-muted': !u.verified || u.deleted }" */
 .grayscale {
   filter: grayscale(100);
-}
-
-.pagination > li > a {
-  background-color: white;
-  color: #212529;
-  cursor: pointer;
-}
-
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover {
-  color: #5a5a5a;
-  background-color: #eee;
-  border-color: #ddd;
-  cursor: pointer;
-}
-
-.pagination > .active > a {
-  color: white;
-  background-color: #212529 !important;
-  border: solid 1px #212529 !important;
-  cursor: pointer;
-}
-
-.pagination > .active > a:hover {
-  background-color: #212529 !important;
-  border: solid 1px #ffffff;
-  cursor: pointer;
 }
 </style>
