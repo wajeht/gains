@@ -279,26 +279,26 @@ async function mockData({ email, user_id, prod = false }) {
 
 async function validate({ ...args }) {
   try {
-    const { prod, user_id, email } = args;
+    const { prod, user_id, email, demo } = args;
 
     // ---------- prod ----------
 
     // check if user exist
-    if (prod && user_id && !email) {
+    if (prod && user_id && !email && !demo) {
       const user = await (await axios.get(`/api/v1/users/${user_id}`)).data.data;
       if (!user.length) throw new Error(`User does not exit with id ${user_id}!`);
     }
 
     // check if user not exist
-    if (prod && !email?.exist && !user_id) {
+    if (prod && !email?.exist && !user_id && !demo) {
       const user = await (await axios.get(`/api/v1/users?email=${email.email}`)).data.data;
       if (!user.length) throw new Error(`User does not exist with email ${email.email}!`);
     }
 
     // check if user exist
-    if (prod && email?.exist) {
+    if (prod && email?.exist && !demo) {
       const user = await (await axios.get(`/api/v1/users?email=${email.email}`)).data.data;
-      if (user.length) throw new Error(`User exit with email ${email.email}!`);
+      if (user?.length) throw new Error(`User exit with email ${email.email}!`);
     }
 
     // ---------- dev ----------
