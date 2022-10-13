@@ -17,6 +17,8 @@ const searchInput = ref('');
 const checkAllRef = ref();
 
 const deleteAUserLoading = ref(false);
+const addAUserLoading = ref(false);
+const modifyAUserLoading = ref(false);
 
 const alert = reactive({ type: '', msg: '' });
 
@@ -41,7 +43,7 @@ watch(checkAll, (value) => {
 });
 
 async function addUser() {
-  // ...
+  clearAndDismissAddAUserModal();
 }
 
 async function deleteUser() {
@@ -100,10 +102,11 @@ async function deleteUser() {
 }
 
 async function modifyUser() {
-  // ...
+  clearAndDismissModifyAUserModal();
 }
 
 async function resetTable() {
+  searchInput.value = '';
   await fetchUsers({});
 }
 
@@ -141,8 +144,17 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
 }
 
 // this code below required for back drop problem fixed when adding a new session header model
+// modify
+onMounted(() => document.body.appendChild(document.getElementById(`modify-a-user`)));
+onUnmounted(() => document.body.removeChild(document.getElementById(`modify-a-user`)));
+
+// delete
 onMounted(() => document.body.appendChild(document.getElementById(`delete-a-user`)));
 onUnmounted(() => document.body.removeChild(document.getElementById(`delete-a-user`)));
+
+// add
+onMounted(() => document.body.appendChild(document.getElementById(`add-a-user`)));
+onUnmounted(() => document.body.removeChild(document.getElementById(`add-a-user`)));
 // this code above required for back drop problem fixed when adding a new session header model
 
 function clearAndDismissDeleteAUserModal() {
@@ -151,6 +163,16 @@ function clearAndDismissDeleteAUserModal() {
   checkAllRef.value.checked = false;
   checkedUsers.value = [];
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('delete-a-user'));
+  modal.hide();
+}
+
+function clearAndDismissAddAUserModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('add-a-user'));
+  modal.hide();
+}
+
+function clearAndDismissModifyAUserModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('modify-a-user'));
   modal.hide();
 }
 </script>
@@ -191,7 +213,12 @@ function clearAndDismissDeleteAUserModal() {
           </button>
 
           <!-- add -->
-          <button class="btn btn-sm btn-dark" type="button">
+          <button
+            data-bs-toggle="modal"
+            data-bs-target="#add-a-user"
+            class="btn btn-sm btn-dark"
+            type="button"
+          >
             <i class="bi bi-plus-circle"></i>
           </button>
 
@@ -410,7 +437,9 @@ function clearAndDismissDeleteAUserModal() {
               <!-- actions -->
               <td>
                 <div class="d-flex gap-2">
-                  <span role="button"><i class="bi bi-pencil-square"></i></span>
+                  <span data-bs-toggle="modal" data-bs-target="#modify-a-user" role="button"
+                    ><i class="bi bi-pencil-square"></i
+                  ></span>
                   <span
                     @click="checkedUsers.push(u.id)"
                     data-bs-toggle="modal"
@@ -438,6 +467,123 @@ function clearAndDismissDeleteAUserModal() {
   </div>
 
   <!-- ------------------- modals ------------------------ -->
+
+  <!-- modify a user -->
+  <form
+    @submit.prevent="modifyUser()"
+    class="modal fade px-2 py-5"
+    id="modify-a-user"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <!-- content -->
+      <div class="modal-content">
+        <!-- header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Add a user</h5>
+          <button
+            @click="clearAndDismissModifyAUserModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            :disabled="modifyAUserLoading"
+          ></button>
+        </div>
+
+        <!-- body -->
+        <div class="modal-body">
+          <p class="mb-0 pb-0 text-center">Modify a user stuff</p>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearAndDismissModifyAUserModal()"
+            v-if="!modifyAUserLoading"
+            type="reset"
+            class="btn btn-dark"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
+
+          <!-- confirm -->
+          <button type="submit" class="btn btn-danger" :disabled="modifyAUserLoading">
+            <div v-if="modifyAUserLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!modifyAUserLoading"><i class="bi bi-check-circle-fill"></i> Confirm </span>
+            <span v-if="modifyAUserLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- add a user -->
+  <form
+    @submit.prevent="addUser()"
+    class="modal fade px-2 py-5"
+    id="add-a-user"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <!-- content -->
+      <div class="modal-content">
+        <!-- header -->
+        <div class="modal-header">
+          <h5 class="modal-title">Add a user</h5>
+          <button
+            @click="clearAndDismissAddAUserModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            :disabled="addAUserLoading"
+          ></button>
+        </div>
+
+        <!-- body -->
+        <div class="modal-body">
+          <p class="mb-0 pb-0 text-center">add a using stuff here</p>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearAndDismissAddAUserModal()"
+            v-if="!addAUserLoading"
+            type="reset"
+            class="btn btn-dark"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
+
+          <!-- confirm -->
+          <button type="submit" class="btn btn-danger" :disabled="addAUserLoading">
+            <div v-if="addAUserLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!addAUserLoading"><i class="bi bi-check-circle-fill"></i> Confirm </span>
+            <span v-if="addAUserLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
   <!-- delete a log -->
   <form
     @submit.prevent="deleteUser()"
