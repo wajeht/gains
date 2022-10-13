@@ -165,11 +165,14 @@ export async function deleteUser(req, res) {
 
   logger.info(`UserID: ${id} has disabled their account!`);
 
-  // clear jwt token
-  res.cookie('token', '', {
-    httpOnly: true,
-    expires: new Date(Date.now()),
-  });
+  // if request was from currently logged in user, log them out
+  if (user.id === req.user.user_id) {
+    // clear jwt token
+    res.cookie('token', '', {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+    });
+  }
 
   await redis.del(`user-id-${req.user.user_id}-users`);
 

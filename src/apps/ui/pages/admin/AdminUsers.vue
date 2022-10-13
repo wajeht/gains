@@ -14,6 +14,8 @@ const loading = ref(false);
 const checkAll = ref(false);
 const searchInput = ref('');
 
+const checkAllRef = ref();
+
 const deleteAUserLoading = ref(false);
 
 const alert = reactive({ type: '', msg: '' });
@@ -76,11 +78,14 @@ async function deleteUser() {
     checkedUsers.value = [];
     checkAll.value = false;
 
+    checkAllRef.value.checked = false;
+
     deleteAUserLoading.value = false;
     clearAndDismissDeleteAUserModal();
   } catch (e) {
     deleteAUserLoading.value = false;
     checkAll.value = false;
+    checkAllRef.value.checked = false;
     checkedUsers.value = [];
     clearAndDismissDeleteAUserModal();
     appStore.loading = false;
@@ -215,6 +220,7 @@ function clearAndDismissDeleteAUserModal() {
                 <input
                   @click="checkAll = !checkAll"
                   class="form-check-input"
+                  ref="checkAllRef"
                   type="checkbox"
                   id="checkbox-for-title"
                 />
