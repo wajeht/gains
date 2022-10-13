@@ -12,6 +12,7 @@ const users = ref([]);
 const checkedUsers = ref([]);
 const loading = ref(false);
 const checkAll = ref(false);
+const searchInput = ref('');
 
 const deleteAUserLoading = ref(false);
 
@@ -169,25 +170,25 @@ function clearAndDismissDeleteAUserModal() {
         <div class="d-flex gap-2 align-items-center">
           <!-- search -->
           <div class="input-group input-group-sm">
-            <input type="text" class="form-control" for="search" />
-            <button class="btn btn-outline-dark" type="button" id="search">
+            <input v-model="searchInput" type="text" class="form-control" for="search" />
+            <button class="btn btn-dark" type="button" id="search" :disabled="!searchInput.length">
               <i class="bi bi-search"></i>
             </button>
           </div>
 
           <!-- reset -->
-          <button @click="resetTable()" class="btn btn-sm btn-outline-dark" type="button">
+          <button @click="resetTable()" class="btn btn-sm btn-dark" type="button">
             <i class="bi bi-arrow-repeat"></i>
           </button>
 
           <!-- add -->
-          <button class="btn btn-sm btn-outline-dark" type="button">
+          <button class="btn btn-sm btn-dark" type="button">
             <i class="bi bi-plus-circle"></i>
           </button>
 
           <!-- trash -->
           <button
-            class="btn btn-sm btn-outline-dark"
+            class="btn btn-sm btn-dark"
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#delete-a-user"
@@ -197,7 +198,7 @@ function clearAndDismissDeleteAUserModal() {
           </button>
 
           <!-- settings -->
-          <button class="btn btn-sm btn-outline-dark" type="button">
+          <button class="btn btn-sm btn-dark" type="button">
             <i class="bi bi-funnel"></i>
           </button>
         </div>
@@ -471,7 +472,7 @@ function clearAndDismissDeleteAUserModal() {
             @click="clearAndDismissDeleteAUserModal()"
             v-if="!deleteAUserLoading"
             type="reset"
-            class="btn btn-outline-dark"
+            class="btn btn-dark"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
