@@ -19,6 +19,7 @@ const checkAllRef = ref();
 const deleteAUserLoading = ref(false);
 const addAUserLoading = ref(false);
 const modifyAUserLoading = ref(false);
+const selectedModifyAUser = reactive({});
 
 const alert = reactive({ type: '', msg: '' });
 
@@ -172,6 +173,7 @@ function clearAndDismissAddAUserModal() {
 }
 
 function clearAndDismissModifyAUserModal() {
+  Object.assign(selectedModifyAUser, {});
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('modify-a-user'));
   modal.hide();
 }
@@ -437,7 +439,13 @@ function clearAndDismissModifyAUserModal() {
               <!-- actions -->
               <td>
                 <div class="d-flex gap-2">
-                  <span data-bs-toggle="modal" data-bs-target="#modify-a-user" role="button"
+                  <span
+                    @click="
+                      Object.assign(selectedModifyAUser, ...users.filter((x) => x.id === u.id))
+                    "
+                    data-bs-toggle="modal"
+                    data-bs-target="#modify-a-user"
+                    role="button"
                     ><i class="bi bi-pencil-square"></i
                   ></span>
                   <span
@@ -497,7 +505,7 @@ function clearAndDismissModifyAUserModal() {
         <div class="modal-body">
           <!-- image -->
           <div class="row mb-3">
-            <img src="" width="100" height="100" />
+            <img :src="selectedModifyAUser.profile_picture_url" width="100" height="100" />
           </div>
 
           <!-- name -->
@@ -507,8 +515,9 @@ function clearAndDismissModifyAUserModal() {
               <label for="rep" class="form-label">First name</label>
               <input
                 id="first_name"
-                class="form-control form-control-sm"
+                class="form-control form-control"
                 type="text"
+                v-model="selectedModifyAUser.first_name"
                 :disabled="modifyAUserLoading"
               />
             </div>
@@ -518,7 +527,8 @@ function clearAndDismissModifyAUserModal() {
               <label for="weight" class="form-label">Last name</label>
               <input
                 id="last_name"
-                class="form-control form-control-sm"
+                class="form-control form-control"
+                v-model="selectedModifyAUser.last_name"
                 type="text"
                 :disabled="modifyAUserLoading"
               />
@@ -530,13 +540,25 @@ function clearAndDismissModifyAUserModal() {
             <!-- username -->
             <div class="col-6">
               <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" />
+              <input
+                v-model="selectedModifyAUser.username"
+                type="text"
+                class="form-control"
+                id="username"
+                :disabled="modifyAUserLoading"
+              />
             </div>
 
             <!-- body weight -->
             <div class="col-6">
               <label for="body_weight" class="form-label">Body weight</label>
-              <input type="number" class="form-control" id="body_weight" />
+              <input
+                v-model="selectedModifyAUser.weight"
+                type="number"
+                class="form-control"
+                id="body_weight"
+                :disabled="modifyAUserLoading"
+              />
             </div>
           </div>
 
@@ -545,18 +567,26 @@ function clearAndDismissModifyAUserModal() {
             <!-- status -->
             <div class="col-6">
               <label for="verified" class="form-label">Verified</label>
-              <select class="form-select">
-                <option value="false">Unverified</option>
-                <option value="true">Verified</option>
+              <select
+                class="form-select"
+                v-model="selectedModifyAUser.deleted"
+                :disabled="modifyAUserLoading"
+              >
+                <option value="false">Active</option>
+                <option value="true">Inactive</option>
               </select>
             </div>
 
             <!-- verified -->
             <div class="col-6">
               <label for="status" class="form-label">Status</label>
-              <select class="form-select">
-                <option value="false">Active</option>
-                <option value="true">Inactive</option>
+              <select
+                class="form-select"
+                v-model="selectedModifyAUser.verified"
+                :disabled="modifyAUserLoading"
+              >
+                <option value="false">Unverified</option>
+                <option value="true">Verified</option>
               </select>
             </div>
           </div>
@@ -566,13 +596,18 @@ function clearAndDismissModifyAUserModal() {
             <!-- date of birth -->
             <div class="col-6">
               <label for="date_of_birth" class="form-label">Date of birth</label>
-              <input type="date" class="form-control" id="date_of_birth" />
+              <input
+                type="date"
+                class="form-control"
+                id="date_of_birth"
+                :disabled="modifyAUserLoading"
+              />
             </div>
 
             <!-- date created -->
             <div class="col-6">
               <label for="created" class="form-label">Date created</label>
-              <input type="date" class="form-control" id="created" />
+              <input type="date" class="form-control" id="created" :disabled="modifyAUserLoading" />
             </div>
           </div>
         </div>
@@ -592,7 +627,7 @@ function clearAndDismissModifyAUserModal() {
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-danger" :disabled="modifyAUserLoading">
+          <button type="submit" class="btn btn-success" :disabled="modifyAUserLoading">
             <div v-if="modifyAUserLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
