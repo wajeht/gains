@@ -24,7 +24,7 @@ const appStore = useAppStore();
           <OnlineUsers />
 
           <!-- logout -->
-          <LogoutButton />
+          <LogoutButton style="min-height: 43px !important" />
         </div>
 
         <!-- card -->
