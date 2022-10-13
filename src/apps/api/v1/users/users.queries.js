@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
  */
 export function getAllUsers({ email, pagination = { perPage: null, currentPage: null } }) {
   const query = db
-    .select('*')
+    .select('*', 'u.deleted as deleted')
     .from('users as u')
     .leftJoin('user_details as ud', 'u.id', 'ud.user_id')
     .orderBy('u.id', 'desc')

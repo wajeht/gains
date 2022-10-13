@@ -171,6 +171,8 @@ export async function deleteUser(req, res) {
     expires: new Date(Date.now()),
   });
 
+  await redis.del(`user-id-${req.user.user_id}-users`);
+
   const withoutPassword = omit(user[0], ['password', 'deleted']);
 
   res.status(StatusCodes.OK).json({

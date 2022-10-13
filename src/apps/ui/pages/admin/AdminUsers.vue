@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, reactive, watch } from 'vue';
+import { ref, onMounted, reactive, watch, onUnmounted } from 'vue';
 import useAppStore from '../../store/app.store.js';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
@@ -12,6 +12,8 @@ const users = ref([]);
 const checkedUsers = ref([]);
 const loading = ref(false);
 const checkAll = ref(false);
+
+const deleteAUserLoading = ref(false);
 
 const alert = reactive({ type: '', msg: '' });
 
@@ -40,7 +42,55 @@ async function addUser() {
 }
 
 async function deleteUser() {
-  // ...
+  try {
+    deleteAUserLoading.value = true;
+
+    const ress = await Promise.all(
+      checkedUsers.value.map((id) => api.delete(`/api/v1/users/${id}`)),
+    );
+    const jsons = await Promise.all(ress.map((data) => data.json()));
+
+    ress.forEach((res) => {
+      if (!res.ok) {
+        jsons.forEach((json) => {
+          if (json.errors) {
+            throw json.errors;
+          } else {
+            throw json.message;
+          }
+        });
+      }
+    });
+
+    // update the dom
+    for (const u in users.value) {
+      for (const ck in checkedUsers.value) {
+        // console.log(checkedUsers.value[ck], users.value[u].id);
+        if (users.value[u].id == checkedUsers.value[ck]) {
+          users.value[u].deleted = true;
+        }
+      }
+    }
+
+    checkedUsers.value = [];
+    checkAll.value = false;
+
+    deleteAUserLoading.value = false;
+    clearAndDismissDeleteAUserModal();
+  } catch (e) {
+    deleteAUserLoading.value = false;
+    checkAll.value = false;
+    checkedUsers.value = [];
+    clearAndDismissDeleteAUserModal();
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 
 async function modifyUser() {
@@ -81,6 +131,16 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
     }
   }
 }
+
+// this code below required for back drop problem fixed when adding a new session header model
+onMounted(() => document.body.appendChild(document.getElementById(`delete-a-user`)));
+onUnmounted(() => document.body.removeChild(document.getElementById(`delete-a-user`)));
+// this code above required for back drop problem fixed when adding a new session header model
+
+function clearAndDismissDeleteAUserModal() {
+  const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('delete-a-user'));
+  modal.hide();
+}
 </script>
 
 <template>
@@ -113,6 +173,11 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
             </button>
           </div>
 
+          <!-- reset -->
+          <button @click="resetTable()" class="btn btn-sm btn-outline-dark" type="button">
+            <i class="bi bi-arrow-repeat"></i>
+          </button>
+
           <!-- add -->
           <button class="btn btn-sm btn-outline-dark" type="button">
             <i class="bi bi-plus-circle"></i>
@@ -122,19 +187,16 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
           <button
             class="btn btn-sm btn-outline-dark"
             type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#delete-a-user"
             :disabled="!checkedUsers.length"
           >
             <i class="bi bi-trash"></i>
           </button>
 
-          <!-- reset -->
-          <button @click="resetTable()" class="btn btn-sm btn-outline-dark" type="button">
-            <i class="bi bi-arrow-repeat"></i>
-          </button>
-
           <!-- settings -->
           <button class="btn btn-sm btn-outline-dark" type="button">
-            <i class="bi bi-gear-fill"></i>
+            <i class="bi bi-funnel"></i>
           </button>
         </div>
       </div>
@@ -247,7 +309,7 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
 
               <!-- user -->
               <td>
-                <div class="d-flex gap-1">
+                <div class="d-flex gap-1" :class="{ 'grayscale text-muted': u.deleted }">
                   <!-- pic -->
                   <img
                     v-if="u.profile_picture_url"
@@ -266,7 +328,7 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
                       <span v-if="u.first_name || u.last_name" class="fw-bold">{{
                         u.first_name + ' ' + u.last_name
                       }}</span>
-                      <small class="fst-italic fw-light">
+                      <small v-if="u.first_name || u.last_name" class="fst-italic fw-light">
                         - {{ u.role }}
                         <font-awesome-icon
                           v-if="u.role === 'admin'"
@@ -297,7 +359,11 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
               </td>
 
               <!-- date created -->
-              <td>{{ dayjs(u.created_at).format('YYYY/MM/DD') }}</td>
+              <td>
+                <span :class="{ 'grayscale text-muted': u.deleted }">
+                  {{ dayjs(u.created_at).format('YYYY/MM/DD') }}
+                </span>
+              </td>
 
               <!-- status -->
               <td>
@@ -351,12 +417,85 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
       </div>
     </div>
   </div>
+
+  <!-- ------------------- modals ------------------------ -->
+  <!-- delete a log -->
+  <form
+    @submit.prevent="deleteUser()"
+    class="modal fade px-2 py-5"
+    id="delete-a-user"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-scrollable">
+      <!-- content -->
+      <div class="modal-content">
+        <!-- header -->
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span> User </span>
+            <span class="fw-light"> id: {{ checkedUsers.join(', ') }}</span>
+          </h5>
+          <button
+            @click="clearAndDismissDeleteAUserModal()"
+            type="reset"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            :disabled="deleteAUserLoading"
+          ></button>
+        </div>
+
+        <!-- body -->
+        <div class="modal-body">
+          <p class="mb-0 pb-0 text-center">
+            <span class="mb-2"> Are you sure you want to delete user(s) the following ID(s)? </span>
+            <span class="d-flex justify-content-center flex-wrap gap-1 mb-3">
+              <span
+                v-for="ck in checkedUsers"
+                :key="`checked-user-key-${ck.id}`"
+                class="badge bg-secondary text-white"
+                >{{ ck }}</span
+              >
+            </span>
+          </p>
+        </div>
+
+        <!-- footer -->
+        <div class="modal-footer">
+          <!-- cancel -->
+          <button
+            @click="clearAndDismissDeleteAUserModal()"
+            v-if="!deleteAUserLoading"
+            type="reset"
+            class="btn btn-outline-dark"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
+
+          <!-- confirm -->
+          <button type="submit" class="btn btn-danger" :disabled="deleteAUserLoading">
+            <div v-if="deleteAUserLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!deleteAUserLoading"><i class="bi bi-check-circle-fill"></i> Confirm </span>
+            <span v-if="deleteAUserLoading"> Loading... </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </template>
 
 <style scoped>
 /* :class="{ 'grayscale text-muted': !u.verified || u.deleted }" */
 .grayscale {
   filter: grayscale(100);
+  text-decoration: line-through;
 }
 
 .pagination > li > a {
