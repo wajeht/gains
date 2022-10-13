@@ -482,7 +482,7 @@ function clearAndDismissModifyAUserModal() {
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
-          <h5 class="modal-title">Add a user</h5>
+          <h5 class="modal-title">Modify a user</h5>
           <button
             @click="clearAndDismissModifyAUserModal()"
             type="reset"
@@ -495,7 +495,86 @@ function clearAndDismissModifyAUserModal() {
 
         <!-- body -->
         <div class="modal-body">
-          <p class="mb-0 pb-0 text-center">Modify a user stuff</p>
+          <!-- image -->
+          <div class="row mb-3">
+            <img src="" width="100" height="100" />
+          </div>
+
+          <!-- name -->
+          <div class="row mb-3">
+            <!-- first -->
+            <div class="col-6">
+              <label for="rep" class="form-label">First name</label>
+              <input
+                id="first_name"
+                class="form-control form-control-sm"
+                type="text"
+                :disabled="modifyAUserLoading"
+              />
+            </div>
+
+            <!-- last -->
+            <div class="col-6">
+              <label for="weight" class="form-label">Last name</label>
+              <input
+                id="last_name"
+                class="form-control form-control-sm"
+                type="text"
+                :disabled="modifyAUserLoading"
+              />
+            </div>
+          </div>
+
+          <!-- username and body weight -->
+          <div class="row mb-3">
+            <!-- username -->
+            <div class="col-6">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username" />
+            </div>
+
+            <!-- body weight -->
+            <div class="col-6">
+              <label for="body_weight" class="form-label">Body weight</label>
+              <input type="number" class="form-control" id="body_weight" />
+            </div>
+          </div>
+
+          <!-- status and verified -->
+          <div class="row mb-3">
+            <!-- status -->
+            <div class="col-6">
+              <label for="verified" class="form-label">Verified</label>
+              <select class="form-select">
+                <option value="false">Unverified</option>
+                <option value="true">Verified</option>
+              </select>
+            </div>
+
+            <!-- verified -->
+            <div class="col-6">
+              <label for="status" class="form-label">Status</label>
+              <select class="form-select">
+                <option value="false">Active</option>
+                <option value="true">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- date of birth and date created -->
+          <div class="row mb-3">
+            <!-- date of birth -->
+            <div class="col-6">
+              <label for="date_of_birth" class="form-label">Date of birth</label>
+              <input type="date" class="form-control" id="date_of_birth" />
+            </div>
+
+            <!-- date created -->
+            <div class="col-6">
+              <label for="created" class="form-label">Date created</label>
+              <input type="date" class="form-control" id="created" />
+            </div>
+          </div>
         </div>
 
         <!-- footer -->
@@ -505,7 +584,7 @@ function clearAndDismissModifyAUserModal() {
             @click="clearAndDismissModifyAUserModal()"
             v-if="!modifyAUserLoading"
             type="reset"
-            class="btn btn-dark"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -563,7 +642,7 @@ function clearAndDismissModifyAUserModal() {
             @click="clearAndDismissAddAUserModal()"
             v-if="!addAUserLoading"
             type="reset"
-            class="btn btn-dark"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -634,7 +713,7 @@ function clearAndDismissModifyAUserModal() {
             @click="clearAndDismissDeleteAUserModal()"
             v-if="!deleteAUserLoading"
             type="reset"
-            class="btn btn-dark"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
