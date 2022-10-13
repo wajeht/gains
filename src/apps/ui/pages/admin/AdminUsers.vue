@@ -146,6 +146,10 @@ onUnmounted(() => document.body.removeChild(document.getElementById(`delete-a-us
 // this code above required for back drop problem fixed when adding a new session header model
 
 function clearAndDismissDeleteAUserModal() {
+  deleteAUserLoading.value = false;
+  checkAll.value = false;
+  checkAllRef.value.checked = false;
+  checkedUsers.value = [];
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('delete-a-user'));
   modal.hide();
 }
@@ -407,7 +411,13 @@ function clearAndDismissDeleteAUserModal() {
               <td>
                 <div class="d-flex gap-2">
                   <span role="button"><i class="bi bi-pencil-square"></i></span>
-                  <span role="button"><i class="bi bi-trash"></i></span>
+                  <span
+                    @click="checkedUsers.push(u.id)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#delete-a-user"
+                    role="button"
+                    ><i class="bi bi-trash"></i
+                  ></span>
                 </div>
               </td>
             </tr>
