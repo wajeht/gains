@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import Paginator from '../../components/shared/Paginator.vue';
 import { sleep } from '../../../../utils/helpers.js';
 // import InsideLoading from '../../components/shared/InsideLoading.vue';
+import { pickBy, isEqual } from 'lodash-es';
 
 const appStore = useAppStore();
 const users = ref([]);
@@ -19,7 +20,9 @@ const checkAllRef = ref();
 const deleteAUserLoading = ref(false);
 const addAUserLoading = ref(false);
 const modifyAUserLoading = ref(false);
+const selectedModifyAUserOG = reactive({});
 const selectedModifyAUser = reactive({});
+const selectedModifyAUserIndex = ref(-1);
 
 const alert = reactive({ type: '', msg: '' });
 
@@ -103,7 +106,48 @@ async function deleteUser() {
 }
 
 async function modifyUser() {
-  clearAndDismissModifyAUserModal();
+  const diff = pickBy(selectedModifyAUser, (v, k) => !isEqual(selectedModifyAUserOG[k], v));
+
+  // ------------ refactor this below ---------------------
+  // remember trying to convert the correct date format to insert into db
+  // db uses iso string
+  const dateFormat = (date) => dayjs(date).format('YYYY-MM-DD');
+  if (dateFormat(selectedModifyAUser.birth_date) === dateFormat(selectedModifyAUserOG.birth_date)) delete diff.birth_date; // prettier-ignore
+  if (dateFormat(selectedModifyAUser.created_at) === dateFormat(selectedModifyAUserOG.created_at)) delete diff.created_at; // prettier-ignore
+  if (diff.created_at) diff.created_at = dayjs(diff.created_at).toISOString();
+  if (diff.birth_date) diff.birth_date = dayjs(diff.birth_date).toISOString();
+  // ------------ refactor this above ---------------------
+
+  try {
+    modifyAUserLoading.value = true;
+
+    const res = await api.patch(`/api/v1/users/${selectedModifyAUserOG.id}`, diff);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    modifyAUserLoading.value = false;
+    clearAndDismissModifyAUserModal();
+
+    users.value[selectedModifyAUserIndex.value] = json.data[0];
+  } catch (e) {
+    clearAndDismissModifyAUserModal();
+    modifyAUserLoading.value = false;
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 
 async function resetTable() {
@@ -334,7 +378,7 @@ function clearAndDismissModifyAUserModal() {
 
           <!-- table body -->
           <tbody v-if="!loading" class="animate__animated animate__fadeIn animate__faster">
-            <tr v-for="u in users" :key="`user-key-${u.id}`">
+            <tr v-for="(u, index) in users" :key="`user-key-${u.id}`">
               <!-- checkbox -->
               <th scope="row">
                 <input
@@ -414,8 +458,8 @@ function clearAndDismissModifyAUserModal() {
                     <!-- verified -->
                     <small
                       :class="{
-                        'bg-success text-white px-1 rounded': u.verified,
-                        'bg-danger text-white px-1 rounded': !u.verified,
+                        'bg-black text-white px-1 rounded': u.verified,
+                        'bg-secondary text-white px-1 rounded': !u.verified,
                       }"
                     >
                       <span v-if="!u.verified">not verified</span>
@@ -425,8 +469,8 @@ function clearAndDismissModifyAUserModal() {
                     <!-- deleted -->
                     <small
                       :class="{
-                        'bg-success text-white px-1 rounded': !u.deleted,
-                        'bg-danger text-white px-1 rounded': u.deleted,
+                        'bg-black text-white px-1 rounded': !u.deleted,
+                        'bg-secondary text-white px-1 rounded': u.deleted,
                       }"
                     >
                       <span v-if="!u.deleted">active</span>
@@ -442,6 +486,8 @@ function clearAndDismissModifyAUserModal() {
                   <span
                     @click="
                       () => {
+                        selectedModifyAUserIndex = index;
+                        Object.assign(selectedModifyAUserOG, ...users.filter((x) => x.id === u.id));
                         Object.assign(selectedModifyAUser, ...users.filter((x) => x.id === u.id));
 
                         selectedModifyAUser.birth_date = dayjs(
@@ -583,7 +629,7 @@ function clearAndDismissModifyAUserModal() {
           <div class="row mb-3">
             <!-- status -->
             <div class="col-6">
-              <label for="verified" class="form-label">Verified</label>
+              <label for="verified" class="form-label">Status</label>
               <select
                 class="form-select"
                 v-model="selectedModifyAUser.deleted"
@@ -596,7 +642,7 @@ function clearAndDismissModifyAUserModal() {
 
             <!-- verified -->
             <div class="col-6">
-              <label for="status" class="form-label">Status</label>
+              <label for="status" class="form-label">Verification</label>
               <select
                 class="form-select"
                 v-model="selectedModifyAUser.verified"
@@ -656,7 +702,7 @@ function clearAndDismissModifyAUserModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!modifyAUserLoading"><i class="bi bi-check-circle-fill"></i> Confirm </span>
+            <span v-if="!modifyAUserLoading"><i class="bi bi-check-circle-fill"></i> Update </span>
             <span v-if="modifyAUserLoading"> Loading... </span>
           </button>
         </div>
@@ -709,12 +755,12 @@ function clearAndDismissModifyAUserModal() {
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-danger" :disabled="addAUserLoading">
+          <button type="submit" class="btn btn-success" :disabled="addAUserLoading">
             <div v-if="addAUserLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!addAUserLoading"><i class="bi bi-check-circle-fill"></i> Confirm </span>
+            <span v-if="!addAUserLoading"><i class="bi bi-check-circle-fill"></i> Add </span>
             <span v-if="addAUserLoading"> Loading... </span>
           </button>
         </div>
@@ -785,7 +831,7 @@ function clearAndDismissModifyAUserModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteAUserLoading"><i class="bi bi-check-circle-fill"></i> Confirm </span>
+            <span v-if="!deleteAUserLoading"><i class="bi bi-check-circle-fill"></i> Delete </span>
             <span v-if="deleteAUserLoading"> Loading... </span>
           </button>
         </div>

@@ -133,6 +133,8 @@ export const patchUser = [
       'first_name',
       'last_name',
       'birth_date',
+      'deleted',
+      'verified',
       'weight',
       'profile_picture_url',
       'user_id',
@@ -177,6 +179,32 @@ export const patchUser = [
 
       return ok;
     }),
+  body('deleted')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('deleted must not be empty!')
+    .bail()
+    .isBoolean()
+    .withMessage('The deleted must be an boolean!')
+    .bail()
+    .toBoolean(),
+  body('verified')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('verified must not be empty!')
+    .bail()
+    .isBoolean()
+    .withMessage('the verified must be an boolean!')
+    .bail()
+    .toBoolean()
+    .custom(async (verified, { req }) => {
+      if (req.user.role !== 'admin') throw new Error('Unauthorized access!');
+      return true;
+    })
+    .bail()
+    .toBoolean(),
   body('password')
     .optional()
     .trim()
