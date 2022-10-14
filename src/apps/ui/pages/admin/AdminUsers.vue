@@ -281,9 +281,15 @@ function clearAndDismissModifyAUserModal() {
         <!-- right -->
         <div class="d-flex gap-2 align-items-center">
           <!-- search -->
-          <div class="input-group input-group-sm">
+          <div @keydown.enter="fetchUsers({})" class="input-group input-group-sm">
             <input v-model="searchInput" type="search" class="form-control" for="search" />
-            <button @click="fetchUsers({})" class="btn btn-dark" type="button" id="search" :disabled="!searchInput.length">
+            <button
+              @click="fetchUsers({})"
+              class="btn btn-dark"
+              type="button"
+              id="search"
+              :disabled="!searchInput.length"
+            >
               <i class="bi bi-search"></i>
             </button>
           </div>
