@@ -203,7 +203,7 @@ function clearAndDismissModifyAUserModal() {
         <div class="d-flex gap-2 align-items-center">
           <!-- search -->
           <div class="input-group input-group-sm">
-            <input v-model="searchInput" type="text" class="form-control" for="search" />
+            <input v-model="searchInput" type="search" class="form-control" for="search" />
             <button class="btn btn-dark" type="button" id="search" :disabled="!searchInput.length">
               <i class="bi bi-search"></i>
             </button>
@@ -441,7 +441,17 @@ function clearAndDismissModifyAUserModal() {
                 <div class="d-flex gap-2">
                   <span
                     @click="
-                      Object.assign(selectedModifyAUser, ...users.filter((x) => x.id === u.id))
+                      () => {
+                        Object.assign(selectedModifyAUser, ...users.filter((x) => x.id === u.id));
+
+                        selectedModifyAUser.birth_date = dayjs(
+                          selectedModifyAUser.birth_date,
+                        ).format('YYYY-MM-DD');
+
+                        selectedModifyAUser.created_at = dayjs(
+                          selectedModifyAUser.created_at,
+                        ).format('YYYY-MM-DD');
+                      }
                     "
                     data-bs-toggle="modal"
                     data-bs-target="#modify-a-user"
@@ -505,7 +515,14 @@ function clearAndDismissModifyAUserModal() {
         <div class="modal-body">
           <!-- image -->
           <div class="row mb-3">
-            <img :src="selectedModifyAUser.profile_picture_url" width="100" height="100" />
+            <!-- image -->
+            <div v-if="selectedModifyAUser.profile_picture_url" class="row text-center mb-3">
+              <img
+                :src="selectedModifyAUser.profile_picture_url"
+                class="img-thumbnail mx-auto d-block"
+                style="max-width: 50%; height: auto"
+              />
+            </div>
           </div>
 
           <!-- name -->
@@ -600,6 +617,7 @@ function clearAndDismissModifyAUserModal() {
                 type="date"
                 class="form-control"
                 id="date_of_birth"
+                v-model="selectedModifyAUser.birth_date"
                 :disabled="modifyAUserLoading"
               />
             </div>
@@ -607,7 +625,13 @@ function clearAndDismissModifyAUserModal() {
             <!-- date created -->
             <div class="col-6">
               <label for="created" class="form-label">Date created</label>
-              <input type="date" class="form-control" id="created" :disabled="modifyAUserLoading" />
+              <input
+                v-model="selectedModifyAUser.created_at"
+                type="date"
+                class="form-control"
+                id="created"
+                :disabled="modifyAUserLoading"
+              />
             </div>
           </div>
         </div>
