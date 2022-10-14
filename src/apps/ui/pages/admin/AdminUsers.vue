@@ -118,6 +118,11 @@ async function modifyUser() {
   if (diff.birth_date) diff.birth_date = dayjs(diff.birth_date).toISOString();
   // ------------ refactor this above ---------------------
 
+  if (Object.keys(diff).length === 0) {
+    clearAndDismissModifyAUserModal();
+    return;
+  }
+
   try {
     modifyAUserLoading.value = true;
 

@@ -80,16 +80,14 @@ export function findUserByParam(param) {
  * @returns The updated user object
  */
 export async function updateUserById(id, body) {
-  const userFields = ['username', 'email', 'password'];
-
-  const u = pick(body, ...userFields);
+  const u = pick(body, ['username', 'email', 'password', 'deleted']);
 
   await db
     .update({ ...u, updated_at: new Date() })
     .from('users')
     .where({ id });
 
-  const ud = omit(body, ...userFields);
+  const ud = omit(body, ['username', 'email', 'password']);
 
   await db
     .update({ ...ud, updated_at: new Date() })
