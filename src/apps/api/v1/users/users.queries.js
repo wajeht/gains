@@ -8,20 +8,32 @@ import dayjs from 'dayjs';
  * Get all users from the database.
  * @returns An array of objects
  */
-export function getAllUsers({ email, pagination = { perPage: null, currentPage: null } }) {
-  const query = db
+export function getAllUsers({ search, pagination = { perPage: null, currentPage: null } }) {
+  let s = '';
+
+  if (search.length === 0) {
+    s = '';
+  } else {
+    s = search;
+  }
+
+  let query = db
     .select('*', 'u.deleted as deleted')
     .from('users as u')
     .leftJoin('user_details as ud', 'u.id', 'ud.user_id')
+    .whereRaw(
+      `
+      ud.first_name like '%${s}%'
+      or ud.last_name like '%${s}%'
+      or u.username like '%${s}%'
+      or u.email like '%${s}%'
+      `,
+    )
     .orderBy('u.id', 'desc')
     .paginate({
       ...pagination,
       isLengthAware: true,
     });
-
-  if (email) {
-    query.where({ 'users.email': email });
-  }
 
   return query;
 }

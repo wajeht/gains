@@ -21,6 +21,7 @@ users.get('/check-authentication', UsersController.getCheckAuthentication);
  * @param {cache} cache.query.required - the cache - application/x-www-form-urlencoded
  * @param {number} perPage.query.required - the perPage id  - application/x-www-form-urlencoded
  * @param {number} currentPage.query.required - the currentPage id  - application/x-www-form-urlencoded
+ * @param {string} search.query.required - the search id  - application/x-www-form-urlencoded
  */
 users.get('/', validator(UsersValidation.getUsers), catchAsyncErrors(UsersController.getUsers));
 

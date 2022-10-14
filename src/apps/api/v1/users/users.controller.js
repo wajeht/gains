@@ -45,7 +45,11 @@ export async function postUser(req, res) {
  * @param res - The response object.
  */
 export async function getUsers(req, res) {
-  const { email } = req.query;
+  let search = '';
+
+  if (req.query.search) {
+    search = req.query.search;
+  }
 
   const { perPage, currentPage, cache } = req.query;
 
@@ -58,11 +62,7 @@ export async function getUsers(req, res) {
 
   // /api/v1/users?cache=false
   if (cache === false) {
-    if (email) {
-      users = await UsersQueries.getAllUsers({ email, pagination });
-    } else {
-      users = await UsersQueries.getAllUsers({ pagination });
-    }
+    users = await UsersQueries.getAllUsers({ pagination, search });
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -79,11 +79,7 @@ export async function getUsers(req, res) {
   if (pagination.currentPage > 1) {
     await redis.del(`user-id-${req.user.user_id}-users`);
 
-    if (email) {
-      users = await UsersQueries.getAllUsers({ email, pagination });
-    } else {
-      users = await UsersQueries.getAllUsers({ pagination });
-    }
+    users = await UsersQueries.getAllUsers({ pagination, search });
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -98,11 +94,7 @@ export async function getUsers(req, res) {
   users = JSON.parse(await redis.get(`user-id-${req.user.user_id}-users`));
 
   if (users === null) {
-    if (email) {
-      users = await UsersQueries.getAllUsers({ email, pagination });
-    } else {
-      users = await UsersQueries.getAllUsers({ pagination });
-    }
+    users = await UsersQueries.getAllUsers({ pagination, search });
 
     await redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
   }

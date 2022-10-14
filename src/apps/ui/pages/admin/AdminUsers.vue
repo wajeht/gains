@@ -195,7 +195,7 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
     loading.value = true;
 
     const res = await api.get(
-      `/api/v1/users?cache=false&perPage=${perPage}&currentPage=${currentPage}`,
+      `/api/v1/users?cache=false&perPage=${perPage}&currentPage=${currentPage}&search=${searchInput.value}`,
     );
     const json = await res.json();
 
@@ -283,7 +283,7 @@ function clearAndDismissModifyAUserModal() {
           <!-- search -->
           <div class="input-group input-group-sm">
             <input v-model="searchInput" type="search" class="form-control" for="search" />
-            <button class="btn btn-dark" type="button" id="search" :disabled="!searchInput.length">
+            <button @click="fetchUsers({})" class="btn btn-dark" type="button" id="search" :disabled="!searchInput.length">
               <i class="bi bi-search"></i>
             </button>
           </div>
