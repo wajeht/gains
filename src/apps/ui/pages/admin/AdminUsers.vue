@@ -23,6 +23,7 @@ const modifyAUserLoading = ref(false);
 const selectedModifyAUserOG = reactive({});
 const selectedModifyAUser = reactive({});
 const selectedModifyAUserIndex = ref(-1);
+const sendPasswordResetLinkLoading = ref(false);
 
 const alert = reactive({ type: '', msg: '' });
 
@@ -48,6 +49,35 @@ watch(checkAll, (value) => {
 
 async function addUser() {
   clearAndDismissAddAUserModal();
+}
+
+async function sendPasswordResetLink(email) {
+  try {
+    sendPasswordResetLinkLoading.value = true;
+
+    const res = await api.post(` /api/auth/forget-password`, { email });
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    sendPasswordResetLinkLoading.value = false;
+  } catch (e) {
+    sendPasswordResetLinkLoading.value = false;
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 
 async function deleteUser() {
@@ -613,7 +643,7 @@ function clearAndDismissModifyAUserModal() {
                 type="text"
                 class="form-control"
                 id="username"
-                :disabled="modifyAUserLoading"
+                disabled
               />
             </div>
 
@@ -689,6 +719,28 @@ function clearAndDismissModifyAUserModal() {
 
         <!-- footer -->
         <div class="modal-footer">
+          <!-- send reset password link -->
+          <button
+            type="button"
+            @click="sendPasswordResetLink(selectedModifyAUser.email)"
+            class="btn btn-success"
+            :disabled="sendPasswordResetLinkLoading"
+          >
+            <div
+              v-if="sendPasswordResetLinkLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!sendPasswordResetLinkLoading"
+              ><i class="bi bi-check-circle-fill"></i> Send reset password email
+            </span>
+
+            <span v-if="sendPasswordResetLinkLoading"> Loading... </span>
+          </button>
+
           <!-- cancel -->
           <button
             @click="clearAndDismissModifyAUserModal()"
