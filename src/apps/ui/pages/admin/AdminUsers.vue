@@ -699,7 +699,7 @@ function clearAndDismissModifyAUserModal() {
                 class="form-control"
                 id="date_of_birth"
                 v-model="selectedModifyAUser.birth_date"
-                :disabled="modifyAUserLoading"
+                disabled
               />
             </div>
 
@@ -711,7 +711,7 @@ function clearAndDismissModifyAUserModal() {
                 type="date"
                 class="form-control"
                 id="created"
-                :disabled="modifyAUserLoading"
+                disabled
               />
             </div>
           </div>
