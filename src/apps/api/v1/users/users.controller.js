@@ -143,6 +143,8 @@ export async function patchUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.updateUserById(id, req.body);
 
+  await redis.del(`user-id-${req.user.user_id}-users`);
+
   logger.info(`User id ${id} has updated user details to ${JSON.stringify(req.body)}!`);
 
   res.status(StatusCodes.OK).json({
