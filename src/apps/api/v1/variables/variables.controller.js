@@ -106,35 +106,17 @@ export async function getCalories(req, res) {
 export async function getOpenPowerliftingResult(req, res) {
   const q = req.query.q;
 
-  const index = await axios
-    .get(`https://www.openpowerlifting.org/api/search/rankings?q=${q}&start=0`)
-    .then((result) => result.data.next_index)
-    .then((err) => err);
-
-  if (index === null) {
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      data: [],
-    });
-  }
-
-  const data = await axios
-    .get(
-      `https://www.openpowerlifting.org/api/rankings?start=${index}&end=${
-        index + 100
-      }&lang=en&units=lbs`,
-    )
-    .then((result) => result.data.rows)
-    .then((err) => err);
-
-  return res.status(StatusCodes.OK).json({
-    status: 'success',
-    request_url: req.originalUrl,
-    message: 'The resource was returned successfully!',
-    data,
+  const api = axios.create({
+    baseURL: process.env.CLOSE_POWERLIFTING_API_URI,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': process.env.CLOSE_POWERLIFTING_API_KEY,
+    },
   });
+
+  const data = await (await api.get(`/api/users?search=${q}`)).data;
+
+  return res.status(StatusCodes.OK).json(data);
 }
 
 /**
