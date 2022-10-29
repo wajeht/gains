@@ -108,50 +108,13 @@ async function getSearch() {
               <table class="table table-striped table-hover table-sm">
                 <thead>
                   <tr>
-                    <!-- <th class="text-center">#</th> -->
-                    <th class="text-center">Rank</th>
-                    <th class="text-center">Lifter</th>
-                    <!-- <th class="text-center">Instagram</th> -->
-                    <!-- <th class="text-center"></th> -->
-                    <!-- <th class="text-center"></th> -->
-                    <!-- <th class="text-center"></th> -->
-                    <!-- <th class="text-center">Country</th> -->
-                    <!-- <th class="text-center">Country State</th>
-                    <th class="text-center">Fed</th> -->
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Country</th>
-                    <th class="text-center">State</th>
-                    <!-- <th class="text-center">Meet Code</th> -->
-                    <th class="text-center">Sex</th>
-                    <th class="text-center">Equip</th>
-                    <th class="text-center">Age</th>
-                    <th class="text-center">Division</th>
-                    <th class="text-center">Weight</th>
-                    <th class="text-center">Class</th>
-                    <th class="text-center">Squat</th>
-                    <th class="text-center">Bench</th>
-                    <th class="text-center">Deadlift</th>
-                    <th class="text-center">Total</th>
-                    <th class="text-center">Dots</th>
+                    <th v-for="h in Object.keys(lifters[0])" class="text-center">{{ h }}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="lifter in lifters">
-                    <template v-for="(data, j) in lifter">
-                      <td
-                        v-if="
-                          j != 0 && // number
-                          j != 3 && // instagram
-                          j != 4 &&
-                          j != 5 &&
-                          j != 6 &&
-                          j != 7 &&
-                          j != 8 &&
-                          j != 9 &&
-                          j != 13 // meet code
-                        "
-                        class="align-middle text-center"
-                      >
+                    <template v-for="data in lifter">
+                      <td class="align-middle text-center">
                         {{ data }}
                       </td>
                     </template>
