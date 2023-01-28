@@ -3,7 +3,7 @@
     <div class="container d-flex justify-content-between">
       <!-- copyright -->
       <div class="text-muted d-flex gap-2">
-        <span> Copyright © 2022 allkindsofgains.app. </span>
+        <span> Copyright © 2022 gains.jaw.dev. </span>
         <span id="love"> Made with ❤️ by group of strength athletes! </span>
       </div>
 
