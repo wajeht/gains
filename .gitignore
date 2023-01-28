@@ -109,3 +109,4 @@ src/public/uploads/*
 src/templates/tempCodeRunnerFile.js
 *.csv
 .DS_Store
+.env.prod.old

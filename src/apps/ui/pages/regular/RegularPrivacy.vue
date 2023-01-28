@@ -5,10 +5,10 @@
 </template>
 
 <script>
-  import Privacy from '../../components/shared/Privacy.vue';
-  export default {
-    components: {
-      Privacy,
-    },
-  };
+import Privacy from '../../components/shared/Privacy.vue';
+export default {
+  components: {
+    Privacy,
+  },
+};
 </script>

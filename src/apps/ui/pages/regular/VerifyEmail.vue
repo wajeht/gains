@@ -1,15 +1,6 @@
 <template>
   <div
-    class="
-      px-4
-      col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4
-      mx-auto
-      animate__animated animate__fadeIn
-      text-center
-      d-flex
-      flex-column
-      gap-3
-    "
+    class="px-4 col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto animate__animated animate__fadeIn text-center d-flex flex-column gap-3"
   >
     <!-- icon -->
     <div>
@@ -39,45 +30,45 @@
 </template>
 
 <script>
-  import { sleep } from '../../../../utils/helpers.js';
+import { sleep } from '../../../../utils/helpers.js';
 
-  export default {
-    props: ['uid'],
-    data() {
-      return {
-        alert: {
-          type: '',
-          msg: '',
-        },
-        verifying: true,
-        token: this.$route.query.token,
-      };
-    },
-    mounted() {
-      this.verifyEmail();
-    },
-    methods: {
-      async verifyEmail() {
-        try {
-          const res = await fetch(`/api/auth/verify-email/${this.uid}?token=${this.token}`);
-          const json = await res.json();
-
-          await sleep(3000);
-
-          if (!res.ok) {
-            this.verifying = false;
-            throw json.errors;
-          }
-
-          this.alert.type = 'success';
-          this.alert.msg = 'Thank you for your support, we have successfully verified your email address, You can now proceed to login to Gains!.'; // prettier-ignore
-          this.verifying = false;
-        } catch (e) {
-          this.verifying = false;
-          this.alert.type = 'danger';
-          this.alert.msg = e.map((cur) => cur.msg).join(' ');
-        }
+export default {
+  props: ['uid'],
+  data() {
+    return {
+      alert: {
+        type: '',
+        msg: '',
       },
+      verifying: true,
+      token: this.$route.query.token,
+    };
+  },
+  mounted() {
+    this.verifyEmail();
+  },
+  methods: {
+    async verifyEmail() {
+      try {
+        const res = await fetch(`/api/auth/verify-email/${this.uid}?token=${this.token}`);
+        const json = await res.json();
+
+        await sleep(3000);
+
+        if (!res.ok) {
+          this.verifying = false;
+          throw json.errors;
+        }
+
+        this.alert.type = 'success';
+        this.alert.msg = 'Thank you for your support, we have successfully verified your email address, You can now proceed to login to Gains!.'; // prettier-ignore
+        this.verifying = false;
+      } catch (e) {
+        this.verifying = false;
+        this.alert.type = 'danger';
+        this.alert.msg = e.map((cur) => cur.msg).join(' ');
+      }
     },
-  };
+  },
+};
 </script>
