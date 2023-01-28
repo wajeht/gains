@@ -75,6 +75,7 @@ jobs:
         run: npm run test
 
   deploy:
+    needs: [test]
     name: Deploy to caprover
     runs-on: ubuntu-latest
 
