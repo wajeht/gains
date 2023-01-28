@@ -7,6 +7,7 @@
 <div align="center">
 
 [![Node.js CI](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/allkindsofgains/gains/actions/workflows/deploy.yml) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/allkindsofgains/gains)
+
 </div>
 
 <p align="center">All in one tools to help strength athletes load the right amount of training dosage!</p>
@@ -33,7 +34,6 @@
 - **Caprover with Docker** for for zero config deployment
 - **[AutoAnimate](https://auto-animate.formkit.com/)** for drop-in animation
 - **Redis** to cache some of the large queries
-
 
 # 👨‍💻 Getting started
 
