@@ -9,12 +9,12 @@
 </template>
 
 <script>
-  import RegularHeader from '../components/regular/RegularHeader.vue';
-  import RegularFooter from '../components/regular/RegularFooter.vue';
-  export default {
-    components: {
-      RegularHeader,
-      RegularFooter,
-    },
-  };
+import RegularHeader from '../components/regular/RegularHeader.vue';
+import RegularFooter from '../components/regular/RegularFooter.vue';
+export default {
+  components: {
+    RegularHeader,
+    RegularFooter,
+  },
+};
 </script>

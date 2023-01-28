@@ -5,10 +5,10 @@
 </template>
 
 <script>
-  import Terms from '../../components/shared/Terms.vue';
-  export default {
-    components: {
-      Terms,
-    },
-  };
+import Terms from '../../components/shared/Terms.vue';
+export default {
+  components: {
+    Terms,
+  },
+};
 </script>

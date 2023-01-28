@@ -3,10 +3,10 @@ export default {
   info: {
     title: 'Gains',
     description: 'The best way to track your workouts',
-    termsOfService: 'http://allkindsofgains.app/terms/',
+    termsOfService: 'http://gains.jaw.dev/terms/',
     contact: {
       name: 'API Support',
-      url: 'https://allkindsofgains.app/contact',
+      url: 'https://gains.jaw.dev/contact',
     },
     license: {
       name: 'GPL-V3.0',
