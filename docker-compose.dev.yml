@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:alpine
     container_name: postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_HOST: ${DB_HOST}
       POSTGRES_DB: ${DB_DATABASE}
@@ -19,7 +19,7 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
-    restart: always
+    restart: unless-stopped
     environment:
       REDIS_URL: ${REDIS_URL}
     ports:
@@ -29,13 +29,36 @@ services:
     volumes:
       - redis-data:/data/redis
 
+  redis-commander:
+    container_name: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: unless-stopped
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOSTS=redis
+    ports:
+      - '8084:8084'
+    networks:
+      - gains-network
+
+  mailhog:
+    container_name: mailhot
+    restart: unless-stopped
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    networks:
+      - gains-network
+
   gains:
     image: gains
     container_name: gains
+    restart: unless-stopped
     build:
       context: ./
       dockerfile: ./Dockerfile.dev
-    restart: always
     stdin_open: true
     ports:
       - ${PORT}:${PORT}
@@ -46,6 +69,8 @@ services:
       - gains-network
     depends_on:
       - postgres
+      - mailhog
+      - redis-commander
       - redis
 
 networks:
