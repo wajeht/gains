@@ -3,7 +3,7 @@ name: CI
 env:
   CONTEXT_DIR: './'
   IMAGE_NAME: ${{ github.repository }}
-  DOCKERFILE: Dockerfile.staging
+  DOCKERFILE: Dockerfile.prod
   CAPROVER_APP: ${{ secrets.APP_NAME }}
   DOCKER_REGISTRY: ghcr.io
 
