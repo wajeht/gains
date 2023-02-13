@@ -1,5 +1,12 @@
 name: CI
 
+env:
+  CONTEXT_DIR: './'
+  IMAGE_NAME: ${{ github.repository }}
+  DOCKERFILE: Dockerfile.staging
+  CAPROVER_APP: ${{ secrets.APP_NAME }}
+  DOCKER_REGISTRY: ghcr.io
+
 on:
   push:
     branches: [main]
@@ -79,28 +86,25 @@ jobs:
     name: Deploy to caprover
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [19.x]
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v1
+      - run: |
+          echo "IMAGE_NAME_WITH_REGISTRY=$DOCKER_REGISTRY/$IMAGE_NAME" >> $GITHUB_ENV
+          export IMAGE_NAME_WITH_REGISTRY=$DOCKER_REGISTRY/$IMAGE_NAME
+          echo "FULL_IMAGE_NAME=$IMAGE_NAME_WITH_REGISTRY:$GITHUB_SHA-gitsha" >> $GITHUB_ENV
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - uses: a7ul/tar-action@v1.1.2
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Release to DockerHub
+        shell: bash
+        run: ./build_and_push.sh
+      - name: Deploy to CapRover
+        uses: caprover/deploy-from-github@d76580d79952f6841c453bb3ed37ef452b19752c
         with:
-          command: c
-          cwd: './'
-          files: ./
-          outPath: deploy.tar
-
-      - name: Deploy App to CapRover
-        uses: caprover/deploy-from-github@v1.1.2
-        with:
-          server: '${{ secrets.CAPROVER_SERVER }}'
-          app: '${{ secrets.APP_NAME }}'
-          token: '${{ secrets.APP_TOKEN }}'
+          server: ${{ secrets.CAPROVER_HOST }}
+          app: ${{ env.CAPROVER_APP }}
+          token: '${{ secrets.CAPROVER_APP_TOKEN }}'
+          image: '${{ env.FULL_IMAGE_NAME }}'
