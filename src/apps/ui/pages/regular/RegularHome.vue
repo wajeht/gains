@@ -51,7 +51,7 @@
       </div>
 
       <!-- image -->
-      <div class="row px-5 text-center">
+      <div class="row px-5 text-center animate__animated animate__fadeIn w-100 h-100">
         <img
           src="../../assets/images/hero-new-half.png"
           class="mx-auto"
