@@ -111,7 +111,7 @@ function clearAndDismissPreviewVideoModal() {
       <!-- button -->
       <div class="d-flex justify-content-center gap-2">
         <!-- contribute -->
-        <a class="btn btn-success" href="https://github.com/allkindsofgains/gains" target="_blank">
+        <a class="btn btn-success" href="https://github.com/wajeht/gains" target="_blank">
           <i class="bi bi-github me-1"></i>
           Contribute
         </a>
@@ -119,7 +119,7 @@ function clearAndDismissPreviewVideoModal() {
         <!-- request feature -->
         <a
           class="btn btn-primary"
-          href="https://github.com/allkindsofgains/gains/issues/new/choose"
+          href="https://github.com/wajeht/gains/issues/new/choose"
           target="_blank"
         >
           <i class="bi bi-plus-circle-fill me-1"></i>

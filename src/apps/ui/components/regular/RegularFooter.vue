@@ -10,7 +10,7 @@
       <!-- social links -->
       <div class="d-flex gap-2">
         <!-- github -->
-        <a class="link-secondary" href="https://github.com/allkindsofgains" target="_blank"
+        <a class="link-secondary" href="https://github.com/wajeht/gains" target="_blank"
           ><i class="bi bi-github"></i
         ></a>
 

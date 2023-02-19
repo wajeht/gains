@@ -39,9 +39,9 @@
 
 Here below are some guides and docs to help set up your local development environment. Let us know if you have any questions!
 
-- [Development guide](https://github.com/allkindsofgains/gains/blob/main/docs/GETTING_STARTED.md)
-- [Contribution guide](https://github.com/allkindsofgains/gains/blob/main/docs/CONTRIBUTION.md)
-- [Code of Conduct](https://github.com/allkindsofgains/gains/blob/main/docs/CODE_OF_CONDUCT.md)
+- [Development guide](https://github.com/wajeht/gains/blob/main/docs/GETTING_STARTED.md)
+- [Contribution guide](https://github.com/wajeht/gains/blob/main/docs/CONTRIBUTION.md)
+- [Code of Conduct](https://github.com/wajeht/gains/blob/main/docs/CODE_OF_CONDUCT.md)
 
 # 📐 Structure
 

@@ -82,9 +82,7 @@
           <h2 class="text-center">Open source</h2>
           <p class="text-center">
             This project is open sourced. You can go check it out via
-            <a href="https://github.com/allkindsofgains/gains" class="link-dark" target="_blank"
-              >Github!</a
-            >
+            <a href="https://github.com/wajeht/gains" class="link-dark" target="_blank">Github!</a>
           </p>
         </div>
 

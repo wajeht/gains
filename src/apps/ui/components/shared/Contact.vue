@@ -76,7 +76,7 @@
     <a
       :class="{ disabled: loading === true }"
       class="btn text-white btn-success w-100"
-      href="https://github.com/allkindsofgains/gains/issues"
+      href="https://github.com/wajeht/gains/issues"
       target="_blank"
       ><i class="bi bi-github me-1"></i> New issue</a
     >

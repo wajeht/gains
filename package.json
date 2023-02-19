@@ -38,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allkindsofgains/gains.git"
+    "url": "git+https://github.com/wajeht/gains.git"
   },
   "keywords": [
     "gains",
@@ -57,9 +57,9 @@
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/allkindsofgains/gains/issues"
+    "url": "https://github.com/wajeht/gains/issues"
   },
-  "homepage": "https://github.com/allkindsofgains/gains#readme",
+  "homepage": "https://github.com/wajeht/gains#readme",
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
