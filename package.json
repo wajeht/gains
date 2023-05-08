@@ -113,7 +113,7 @@
     "read-pkg": "^7.1.0",
     "request-ip": "^3.3.0",
     "sass": "^1.55.0",
-    "socket.io": "^4.5.2",
+    "socket.io": "^4.6.1",
     "socket.io-client": "^4.5.2",
     "supertest": "^6.3.0",
     "typed.js": "^2.0.12",
