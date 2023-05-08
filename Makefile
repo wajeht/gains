@@ -1,18 +1,18 @@
-run-dev-build-d:
+up-d:
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env down -v --rmi all
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env up -d --build
 
-run-dev-build:
+build:
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env down -v --rmi all
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env up --build
 
-run-dev:
+up:
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env up
 
-stop-dev:
+down:
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env down
 
-clean-dev:
+clean:
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env down -v --rmi all
 
 shell-dev-gains:
