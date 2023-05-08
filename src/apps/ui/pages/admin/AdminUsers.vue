@@ -721,6 +721,21 @@ function clearAndDismissModifyAUserModal() {
               />
             </div>
           </div>
+
+          <!-- email-->
+          <div class="row mb-3">
+            <!-- email -->
+            <div class="col-12">
+              <label for="email" class="form-label">Email</label>
+              <input
+                v-model="selectedModifyAUser.email"
+                type="email"
+                class="form-control"
+                id="email"
+                disabled
+              />
+            </div>
+          </div>
         </div>
 
         <!-- footer -->
