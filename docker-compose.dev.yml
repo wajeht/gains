@@ -38,7 +38,7 @@ services:
     environment:
       - REDIS_HOSTS=redis
     ports:
-      - '8084:8084'
+      - '8081:8081'
     networks:
       - gains-network
 
