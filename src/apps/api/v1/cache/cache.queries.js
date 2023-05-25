@@ -21,8 +21,12 @@ export async function deleteAllCachesOfAUser(user_id) {
 
     keys.forEach((key) => {
       if (key.includes(`user-id-${user_id}`)) {
-        logger.info(`Deleted redis cache ${key}!`);
-        redis.del(key);
+        if (key === `user-id-${user_id}-request-download-user-data`) {
+          logger.info(`Skipping ${key} count!`);
+        } else {
+          redis.del(key);
+          logger.info(`Deleted redis cache ${key}!`);
+        }
       }
     });
   });
