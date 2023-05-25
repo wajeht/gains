@@ -382,7 +382,6 @@ export default async function users({ ...args }) {
 
       default:
         throw new Error(`Action commands should be any of ${ACTIONS.join(', ')}!`);
-        break;
     }
 
     // success code

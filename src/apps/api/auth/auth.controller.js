@@ -222,6 +222,7 @@ export async function getReverify(req, res) {
     const [user_details] = await UsersQueries.findUserById(user[0]?.id);
     [user] = user;
 
+    // eslint-disable-next-line no-constant-condition
     if (true) {
       user = user_details;
 

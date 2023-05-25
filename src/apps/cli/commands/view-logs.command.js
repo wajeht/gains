@@ -116,7 +116,6 @@ export default async function viewLogs({ ...args }) {
 
       default:
         throw new Error(`Action commands should be any of ${ACTIONS.join(', ')}!`);
-        break;
     }
 
     // success code

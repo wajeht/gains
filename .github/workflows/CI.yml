@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm i
@@ -44,7 +44,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm i
@@ -66,7 +66,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm i
@@ -89,18 +89,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - uses: a7ul/tar-action@v1.1.3
         with:
           command: c
-          cwd: "./"
+          cwd: './'
           files: ./
           outPath: deploy.tar
 
       - name: Deploy App to CapRover
         uses: caprover/deploy-from-github@v1.1.2
         with:
-          server: "${{ secrets.CAPROVER_SERVER }}"
-          app: "${{ secrets.APP_NAME }}"
-          token: "${{ secrets.APP_TOKEN }}"
+          server: '${{ secrets.CAPROVER_SERVER }}'
+          app: '${{ secrets.APP_NAME }}'
+          token: '${{ secrets.APP_TOKEN }}'
