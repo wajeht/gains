@@ -82,10 +82,10 @@ async function fetchIssues() {
                 <!-- label -->
                 <div class="d-flex flex-row gap-2">
                   <small
-                    v-for="l in i?.labels"
-                    :key="`issue-label-key-${i.labels.id}`"
+                    v-for="(l, idx) in i?.labels"
+                    :key="`issue-label-key-${idx}`"
                     :style="{ 'background-color': `#${l.color} !important` }"
-                    style="padding-bottom: 1px"
+                    style="padding-bottom: 1px; height: fit-content"
                     class="rounded px-1"
                   >
                     {{ l.name }}
