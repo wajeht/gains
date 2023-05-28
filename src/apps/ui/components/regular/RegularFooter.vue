@@ -2,7 +2,7 @@
   <footer class="py-4 border-top bg-white mt-4">
     <div class="container d-flex justify-content-between">
       <!-- copyright -->
-      <div class="text-muted d-flex gap-2">
+      <div class="text-muted d-flex gap-2 text-sm-start">
         <span> Copyright © 2022 gains.jaw.dev. </span>
         <span id="love"> Made with ❤️ by group of strength athletes! </span>
       </div>
