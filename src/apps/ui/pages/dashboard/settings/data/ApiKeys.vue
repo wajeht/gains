@@ -18,6 +18,7 @@ const requestApiKeyLoading = ref(false);
 const deleteApiKeySelectedIndex = ref(false);
 const apiKeys = ref([]);
 const showApiKey = ref(false);
+const showApiKeyCurrentIndex = ref();
 
 onMounted(async () => {
   appStore.loading = true;
@@ -25,6 +26,11 @@ onMounted(async () => {
   apiKeys.value = x;
   appStore.loading = false;
 });
+
+function toggleShowApiKey(index) {
+  showApiKeyCurrentIndex.value = index;
+  showApiKey.value = !showApiKey.value;
+}
 
 async function getApiKeys() {
   try {
@@ -173,7 +179,7 @@ function clearAndDismissDeleteApiKeyModal() {
               <span v-if="apiKeys.length" v-auto-animate>
                 <div v-for="(key, index) in apiKeys" :key="key.id" class="input-group mb-3">
                   <input
-                    :type="showApiKey ? 'text' : 'password'"
+                    :type="showApiKey && showApiKeyCurrentIndex === index ? 'text' : 'password'"
                     class="form-control"
                     :value="key.key"
                     :id="key.key"
@@ -182,12 +188,15 @@ function clearAndDismissDeleteApiKeyModal() {
 
                   <!-- eye -->
                   <button
-                    @click="showApiKey = !showApiKey"
+                    @click="toggleShowApiKey(index)"
                     class="btn btn-outline-secondary"
                     type="button"
                   >
-                    <i v-if="showApiKey" class="bi bi-eye-slash"></i>
-                    <i v-else="" class="bi bi-eye"></i>
+                    <i
+                      v-if="showApiKey && showApiKeyCurrentIndex === index"
+                      class="bi bi-eye-slash"
+                    ></i>
+                    <i v-else class="bi bi-eye"></i>
                   </button>
 
                   <!-- copy -->
