@@ -15,7 +15,7 @@ if (appStore.darkMode) {
 </script>
 
 <template>
-  <div id="admin" class="d-flex flex-column min-vh-100 border-2 bg-black">
+  <div id="admin-dashboard" class="d-flex flex-column min-vh-100 border-2 bg-black">
     <!-- <DashboardHeader /> -->
     <main
       id="admin-router-wrapper"
