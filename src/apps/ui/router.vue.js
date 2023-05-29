@@ -27,6 +27,7 @@ import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import Community from './pages/dashboard/Community.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import DashboardUnauthorized from './pages/dashboard/DashboardUnauthorized.vue';
+import DashboardError from './pages/dashboard/DashboardError.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
 
@@ -517,6 +518,7 @@ const routes = [
     meta: {
       layout: 'SingleDashboardLayout',
       requiredAuth: true,
+      warn: true,
     },
   },
   {
@@ -540,6 +542,15 @@ const routes = [
     }),
     meta: {
       layout: 'SingleDashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/error',
+    name: 'DashboardError',
+    component: DashboardError,
+    meta: {
+      layout: 'DashboardLayout',
       requiredAuth: true,
     },
   },
@@ -584,6 +595,16 @@ router.beforeEach(async (to, from, next) => {
   document.title = to.name;
   const userStore = useUserStore();
   const appStore = useAppStore();
+
+  // this is for un-implemented pages
+  // meta: {
+  //     layout: 'SingleDashboardLayout',
+  //     requiredAuth: true,
+  //     warn: true,
+  // },
+  if (to.matched.some((page) => page.meta?.warn)) {
+    return next('/dashboard/error');
+  }
 
   // TODO: refactor this code below!
   // if we hit required routes
