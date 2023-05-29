@@ -27,6 +27,8 @@ export default defineConfig({
       '/api': {
         target: `http://localhost:${process.env.PORT}`,
         changeOrigin: true,
+        secure: false,
+        ws: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     },

@@ -1,7 +1,7 @@
 <script>
 import Or from './Or.vue';
 import useUserStore from '../../store/user.store.js';
-import userAppStore from '../../store/app.store.js';
+// import userAppStore from '../../store/app.store.js';
 import { isMobile } from '../../../../utils/helpers.js';
 import useAppStore from '../../store/app.store.js';
 
