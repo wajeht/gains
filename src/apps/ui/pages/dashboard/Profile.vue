@@ -250,7 +250,7 @@ const { lineChartProps } = useLineChart({
 
             <!-- sleep -->
             <div class="d-flex flex-column align-items-center">
-              <small> ~ {{ averageSleep }} hrs</small>
+              <small> {{ isNaN(averageSleep) ? '?' : `~ ${averageSleep}` }} hrs</small>
               <small class="text-muted">Sleep</small>
             </div>
 

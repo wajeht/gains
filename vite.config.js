@@ -21,11 +21,12 @@ if (process.env.ENV === 'dev' || process.env.ENV === 'development') {
 
 export default defineConfig({
   server: {
+    host: '0.0.0.0',
     port: process.env.VUE_PORT,
     proxy: {
       '/api': {
         target: `http://localhost:${process.env.PORT}`,
-        changeOrigin: false,
+        changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     },
