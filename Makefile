@@ -23,3 +23,6 @@ shell-dev-db:
 
 shell-dev-redis:
 	docker compose --file ./docker-compose.dev.yml exec redis sh
+
+wipe:
+	docker system prune -a --volumes
