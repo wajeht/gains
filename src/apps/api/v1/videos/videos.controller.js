@@ -18,44 +18,61 @@ export async function getVideo(req, res) {
 
 export async function getStreamVideo(req, res) {
   const id = req.params.id;
-  if (!req.headers.range) throw new CustomError.BadRequestError('Requires range header!');
-
-  const [video] = await VideosQueries.findVideoById(id);
-
-  const path = video.video_path;
-  const stat = fs.statSync(path);
-  const fileSize = stat.size;
-  const range = req.headers.range;
-
-  // if (range) {
-  const parts = range.replace(/bytes=/, '').split('-');
-  const start = parseInt(parts[0], 10);
-  const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-
-  if (start >= fileSize) {
-    res.status(416).send('Requested range not satisfiable\n' + start + ' >= ' + fileSize);
+  if (!req.headers.range) {
+    res.status(400);
+    res.send('Requires range header!');
     return;
   }
 
-  const chunksize = end - start + 1;
-  const file = fs.createReadStream(path, { start, end });
-  const head = {
-    'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-    'Accept-Ranges': 'bytes',
-    'Content-Length': chunksize,
-    'Content-Type': 'video/mp4',
-  };
+  const [video] = await VideosQueries.findVideoById(id);
+  const path = video.video_path;
 
-  res.writeHead(206, head);
-  file.pipe(res);
-  // } else {
-  //   const head = {
-  //     'Content-Length': fileSize,
-  //     'Content-Type': 'video/mp4',
-  //   };
-  //   res.writeHead(200, head);
-  //   fs.createReadStream(path).pipe(res);
-  // }
+  fs.stat(path, async function (err, stat) {
+    if (err) {
+      if (err.code === 'ENOENT') {
+        res.status(404);
+        res.send('Not Found');
+        return;
+      }
+      console.error(err);
+      res.status(500);
+      res.send('Internal Server Error');
+      return;
+    }
+
+    const fileSize = stat.size;
+    const range = req.headers.range;
+
+    const parts = range.replace(/bytes=/, '').split('-');
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+    if (start >= fileSize) {
+      res.status(416);
+      res.send('Requested range not satisfiable');
+      return;
+    }
+
+    const chunksize = end - start + 1;
+    const file = fs.createReadStream(path, { start, end });
+    const head = {
+      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': chunksize,
+      'Content-Type': 'video/mp4',
+    };
+
+    res.writeHead(206, head);
+
+    file.on('error', function (err) {
+      console.error(err);
+      res.status(500);
+      res.send('Internal Server Error');
+      return;
+    });
+
+    file.pipe(res);
+  });
 }
 
 /**
