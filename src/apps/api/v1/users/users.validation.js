@@ -274,6 +274,13 @@ export const patchUpdatePersonalInformation = [
     .withMessage('birth_date must not be empty')
     .isDate()
     .withMessage('Birth date must be a date format!'),
+  body('bio')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Bio name must be be empty')
+    .isLength({ min: 1, max: 128 })
+    .withMessage('Bio name must be at least 1 character long or less than 128 characters long'),
 ];
 
 /* A validation for the user input. */

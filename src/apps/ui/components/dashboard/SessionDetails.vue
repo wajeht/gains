@@ -1184,7 +1184,8 @@ function downloadVideo(url) {
                     <!-- tags -->
                     <small v-if="log.tags" class="d-flex gap-2 text-muted">
                       <small
-                        v-for="t in log?.tags"
+                        v-for="(t, i) in log?.tags"
+                        :key="i"
                         class="fw-light rounded d-flex px-2 tag"
                         style="background-color: #ededed"
                       >
@@ -1690,7 +1691,8 @@ function downloadVideo(url) {
           >
             <div
               class="badge bg-secondary text-white"
-              v-for="ex in addAExerciseAllExercisesChecked"
+              v-for="(ex, i) in addAExerciseAllExercisesChecked"
+              :key="i"
             >
               {{ ex.name }}
             </div>

@@ -17,6 +17,7 @@ const first_name = ref('');
 const last_name = ref('');
 const birth_date = ref('');
 const weight = ref('');
+const bio = ref('');
 
 const email = ref('');
 const username = ref('');
@@ -36,6 +37,7 @@ onMounted(async () => {
   const [data] = json.data;
   first_name.value = data.first_name;
   last_name.value = data.last_name;
+  bio.value = data.bio;
   profile_picture_url.value = data.profile_picture_url;
   birth_date.value =
     dayjs(data.birth_date).format('YYYY-MM-DD') === 'Invalid Date'
@@ -96,6 +98,7 @@ async function updatePersonalInformation() {
     const user = {
       first_name: first_name.value,
       last_name: last_name.value,
+      bio: bio.value,
       birth_date: birth_date.value != null ? dayjs(birth_date.value).format('YYYY-MM-DD') : null,
       weight: weight.value,
     };
@@ -282,6 +285,21 @@ async function updateAccountInfo() {
                   class="form-control form-control-sm"
                   id="personal-information-weight"
                 />
+              </div>
+            </div>
+
+            <!-- bio -->
+            <div class="row mb-2">
+              <label for="personal-information-weight" class="col-4 col-form-label">Bio</label>
+              <div class="col-8">
+                <textarea
+                  v-model="bio"
+                  :disabled="edit_personal_info"
+                  class="form-control form-control-sm"
+                  name="bio"
+                  id="personal-information-bio"
+                  rows="5"
+                ></textarea>
               </div>
             </div>
 

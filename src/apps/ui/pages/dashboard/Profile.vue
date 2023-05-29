@@ -221,10 +221,22 @@ const { lineChartProps } = useLineChart({
               </div>
               <!-- style="height: 100%; width: 100%; object-fit: cover; object-position: center 50%" -->
               <div class="col-8">
-                <!-- name -->
-                <h5 class="card-title">
-                  {{ userStore.user.first_name }} {{ userStore.user.last_name }}
-                </h5>
+                <div style="display: flex; justify-content: space-between">
+                  <!-- name -->
+                  <h5 class="card-title">
+                    {{ userStore.user.first_name }} {{ userStore.user.last_name }}
+                  </h5>
+
+                  <!-- edit -->
+                  <button
+                    style="height: fit-content ip !important; width: fit-content !important"
+                    type="button"
+                    class="btn btn-sm p-0 m-0"
+                    @click="router.push('/dashboard/settings/account/user-details')"
+                  >
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                </div>
 
                 <!-- username and birth date -->
                 <small class="card-subtitle mb-0 text-muted d-flex gap-2">
@@ -233,9 +245,9 @@ const { lineChartProps } = useLineChart({
                 </small>
 
                 <!-- description -->
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <p v-if="userStore.user.bio" class="card-text">{{ userStore.user.bio }}</p>
 
-                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
               </div>
             </div>
           </div>
