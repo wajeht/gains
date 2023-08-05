@@ -42,7 +42,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(jwt_secret));
 app.use(
   express.static(path.resolve(path.join(process.cwd(), 'src', 'public')), {
-    maxage: '24h',
+    // 30 days in miliseconds
+    maxage: 2592000000,
   }),
 );
 
@@ -89,7 +90,6 @@ app.use((req, res, next) => {
   // matching /api/v[number]/
   const isApiPrefix = req.url.match(/\/api\/v\d\//g);
 
-  // console.log(req.url);
   if (isApiPrefix) {
     throw new CustomError.BadRequestError('The resource does not exist!');
   }
