@@ -39,7 +39,7 @@ jobs:
         with:
           commit_message: 'style: format codes'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
 
   lint:
