@@ -72,9 +72,9 @@ userStore.checkAuthentication();
 app.use(routes);
 app.mount('#app');
 
-const SOCKET_URL = process.env.ENV === 'production' ? '/' : `http://localhost:${process.env.PORT}`;
-
-const socket = io(SOCKET_URL);
+// this dont work use iport meta
+// const SOCKET_URL = process.env.ENV === 'production' ? '/' : `http://localhost:${process.env.PORT}`;
+const socket = io('/');
 
 window.socket = socket;
 
