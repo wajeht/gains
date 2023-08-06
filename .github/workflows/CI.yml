@@ -12,6 +12,9 @@ jobs:
     name: Prettier format
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     strategy:
       matrix:
         node-version: [19.x]
