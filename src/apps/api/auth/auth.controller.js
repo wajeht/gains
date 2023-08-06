@@ -68,22 +68,6 @@ export async function postLogin(req, res) {
 
   logger.info(`User id ${user.id} has logged-in!`);
 
-  const agent = useragent.parse(req.headers['user-agent']).toString();
-
-  let onlineUsers = await redis.get('online-users');
-
-  if (onlineUsers === null) {
-    await redis.set('online-users', JSON.stringify([]));
-    onlineUsers = await redis.get('online-users');
-  }
-
-  onlineUsers = JSON.parse(onlineUsers);
-  onlineUsers.push({ ...user, agent });
-  await redis.set('online-users', JSON.stringify(onlineUsers));
-
-  // req.io.sockets.emit('online-user', onlineUsers);
-  req.io.emit('online-user', onlineUsers);
-
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,

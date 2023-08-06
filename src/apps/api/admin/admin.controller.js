@@ -115,12 +115,7 @@ export async function getIssues(req, res) {
  * @param res - The response object.
  */
 export async function getOnlineUsers(req, res) {
-  let users = (await redis.get('online-users')) || [];
-
-  if (users) {
-    users = JSON.parse(users);
-  }
-
+  let users = JSON.parse(await redis.get('onlineUsers')) || [];
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,

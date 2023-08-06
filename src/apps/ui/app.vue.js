@@ -2,6 +2,7 @@ import { createApp, markRaw } from 'vue';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import App from './App.vue';
+import { io } from 'socket.io-client';
 
 import useUserStore from './store/user.store.js';
 import routes from './router.vue.js';
@@ -70,3 +71,17 @@ userStore.checkAuthentication();
 
 app.use(routes);
 app.mount('#app');
+
+const SOCKET_URL = process.env.ENV === 'production' ? '/' : `http://localhost:${process.env.PORT}`;
+
+const socket = io(SOCKET_URL);
+
+window.socket = socket;
+
+window.socket.on('connect', (socket) => {
+  console.log('socket connected!');
+});
+
+window.socket.on('disconnect', () => {
+  console.log('socket disconnected!');
+});

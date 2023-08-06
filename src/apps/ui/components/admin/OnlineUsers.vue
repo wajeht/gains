@@ -1,19 +1,27 @@
 <script setup>
+import { ref, onUnmounted, onMounted } from 'vue';
 import api from '../../../../utils/fetch-with-style.js';
 import useAppStore from '../../store/app.store.js';
-import { onMounted, ref } from 'vue';
-import { io } from 'socket.io-client';
 
 const appStore = useAppStore();
-const socket = io('/');
 const users = ref([]);
+
+window.socket.on('onlineUser', (onlineUsers) => {
+  console.log('Online Users', onlineUsers);
+  users.value = onlineUsers;
+});
+
+window.socket.on('userDisconnected', (disconnectedSocketId) => {
+  users.value = users.value.filter((user) => user.socket_id !== disconnectedSocketId);
+});
 
 onMounted(async () => {
   users.value = (await fetchLatestOnlineUsers()) || [];
 });
 
-socket.on('online-user', (data) => {
-  users.value = data;
+onUnmounted(() => {
+  window.socket.off('onlineUser');
+  window.socket.off('userDisconnected');
 });
 
 async function fetchLatestOnlineUsers() {
@@ -32,7 +40,6 @@ async function fetchLatestOnlineUsers() {
     return json.data;
   } catch (e) {
     appStore.loading = false;
-    alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
       return;
@@ -51,7 +58,17 @@ async function fetchLatestOnlineUsers() {
       class="d-flex align-items-center gap-2 list-group-item list-group-item-action list-group-item-hover"
     >
       <div style="position: relative">
-        <img class="rounded" :src="u.profile_picture_url" width="35" height="35" />
+        <img
+          v-if="u.profile_picture_url"
+          class="rounded"
+          :src="u.profile_picture_url"
+          width="35"
+          height="35"
+        />
+        <div
+          v-else
+          style="background-color: lightgrey; width: 35px; height: 35px; border-radius: 10%"
+        />
         <div
           style="
             background-color: green;
