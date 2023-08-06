@@ -6,39 +6,6 @@ on:
   pull_request:
 
 jobs:
-  format:
-    name: Prettier format
-    runs-on: ubuntu-latest
-    needs: [lint, test]
-
-    permissions:
-      contents: write
-
-    strategy:
-      matrix:
-        node-version: [19.x]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm i
-
-      - name: Format codes
-        run: npm run format
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: 'style: format codes'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
 
   lint:
     name: ESLint
@@ -84,8 +51,41 @@ jobs:
       - name: Test codes
         run: npm run test
 
+  format:
+    name: Prettier format
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        node-version: [19.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Format codes
+        run: npm run format
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'style: format codes'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
   deploy:
-    needs: [format, test]
+    needs: [format]
     name: Deploy to caprover
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
