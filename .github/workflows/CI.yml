@@ -11,6 +11,7 @@ jobs:
   format:
     name: Prettier format
     runs-on: ubuntu-latest
+    needs: [lint, test]
 
     permissions:
       contents: write
@@ -27,6 +28,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
+      - name: Install dependencies
+        run: npm i
+
       - name: Format codes
         run: npm run format
 
@@ -36,6 +40,7 @@ jobs:
           commit_message: 'style: format codes'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
   lint:
     name: ESLint
