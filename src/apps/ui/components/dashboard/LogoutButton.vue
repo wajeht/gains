@@ -5,9 +5,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { sleep, isMobile } from '../../../../utils/helpers.js';
 import api from '../../../../utils/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
-import { io } from 'socket.io-client';
 
-const socket = io('/');
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -30,8 +28,6 @@ async function logout() {
       }
     }
 
-    socket.emit('logout-user', userStore.user.id);
-
     userStore.isLoggedIn = false;
     userStore.clearUserInfo();
 
@@ -39,6 +35,8 @@ async function logout() {
     if (isMobile()) {
       logoutLink = '/dashboard/login';
     }
+
+    window.socket.emit('userDisconnected', window.socket.id);
 
     router.push({ path: logoutLink });
   } catch (e) {

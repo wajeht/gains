@@ -20,7 +20,11 @@ import { red } from '../utils/rainbow-log.js';
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
 app.use((req, res, next) => {
   res.setHeader('X-Powered-By', 'Caddy, Express, Apache, Nginx, Nuxt, IIS');
@@ -53,17 +57,37 @@ expressJSDocSwagger(app)(expressJsdocOptions);
 io.on('connection', function (socket) {
   logger.info(`socket.io connection was made!, ${socket.id}`);
 
-  // TODO: refactor this!!
-  socket.on('logout-user', async (user_id) => {
-    let users = await redis.get('online-users');
-    users = JSON.parse(users);
-    users = users.filter((u) => u.id != user_id);
-    await redis.set('online-users', JSON.stringify(users));
-    io.emit('online-user', users);
+  socket.on('onlineUser', async (userData) => {
+    logger.info(`onlineUser event was fired!, ${socket.id}`);
+
+    let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
+
+    const userExist = onlineUsers.some(
+      (user) => user.id === userData.id && socket.id === user.socket_id,
+    );
+
+    if (!userExist) {
+      onlineUsers.push({
+        ...userData,
+        socket_id: socket.id,
+      });
+
+      await redis.set('onlineUsers', JSON.stringify(onlineUsers));
+      socket.broadcast.emit('onlineUser', onlineUsers);
+    }
   });
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
     logger.info(`socket.io connection was dropped!, ${socket.id}`);
+
+    let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
+
+    onlineUsers = onlineUsers.filter((user) => user.socket_id !== socket.id);
+
+    await redis.set('onlineUsers', JSON.stringify(onlineUsers));
+
+    // Broadcast the disconnected user's ID to all clients
+    socket.broadcast.emit('userDisconnected', socket.id);
   });
 });
 

@@ -95,6 +95,14 @@ export default {
           return;
         }
 
+        const socketUserInfo = {
+          ...user,
+          agent: navigator.userAgent,
+          socket_id: window.socket.id,
+        };
+
+        window.socket.emit('onlineUser', socketUserInfo);
+
         if (user?.role === 'admin') {
           this.$router.push({ path: '/admin' });
         } else {
