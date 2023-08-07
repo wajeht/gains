@@ -24,7 +24,8 @@ export async function clearACache(req, res) {
 
 export async function clearAllCache(req, res) {
   const user_id = req.params.user_id;
-  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+
+  await CacheQueries.deleteAllCachesOfAUser(user_id);
 
   logger.info(`User id ${user_id} has cleared all of their cached data!`);
 
