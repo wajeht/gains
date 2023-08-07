@@ -114,11 +114,12 @@ export async function postSignup(req, res) {
   const { verify } = req.query;
   if (verify === true) {
     const date = new Date();
-    const [verifiedUser] = await AuthQueries.verifyUser(user.id, date);
+
+    await AuthQueries.verifyUser(user.id, date);
 
     logger.info(`User id ${user.id} was auto verified because of verify query!`);
 
-    const gde = await generateDefaultExercises(user.id);
+    generateDefaultExercises(user.id);
 
     logger.info(`Generated default exercises for User id ${user.id}!`);
 
