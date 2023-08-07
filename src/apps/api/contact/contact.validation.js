@@ -13,7 +13,14 @@ export const postContact = [
     .withMessage('The value must not be empty!')
     .trim()
     .isLength({ min: 1, max: 200 })
-    .withMessage('The value must be at least 1 character long or less than 200 character long'),
+    .withMessage('The value must be at least 1 character long or less than 200 character long')
+    .custom(async (subject) => {
+      const options = ['GENERAL', 'BUG', 'FEATURE', 'OTHER'];
+      if (!options.includes(subject.toUpperCase())) {
+        throw new Error(`The value must be one of these options: ${options.join(', ')}`);
+      }
+      return true;
+    }),
   body('message')
     .notEmpty()
     .withMessage('The value must not be empty!')
