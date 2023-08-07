@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/wajeht/gains/compare/v0.0.7-alpha.0...v0.0.7) (2023-08-07)
+
+
+### Features
+
+* make forgot password and reset password btn full width ([fdd14ca](https://github.com/wajeht/gains/commit/fdd14ca183c1d7a51b6eef0e6efce1d1bd5fd6ff))
+* more tweaks to not block io ([1d6a8a7](https://github.com/wajeht/gains/commit/1d6a8a70950f70e8077c0dcb043799e18717b5ff))
+* remove online users on disconnect ([eb44cdb](https://github.com/wajeht/gains/commit/eb44cdbe87a0745d3f79393cfa28d7998acdb627))
+
+
+### Bug Fixes
+
+* current user was dropping on mount ([d749c2a](https://github.com/wajeht/gains/commit/d749c2a05919a5051887674d7ebea007ac55cff9))
+* email tweaks to not block io ([98c1dd6](https://github.com/wajeht/gains/commit/98c1dd6cdec9a869fb1cb2476d30180778240a17))
+* email tweaks to not block io ([561c139](https://github.com/wajeht/gains/commit/561c13946fe661940bf4b1a8df897d3364593b3b))
+* emit back online users on connect ([9602291](https://github.com/wajeht/gains/commit/9602291054bb2a3ca9e2c0bc9195609413f93369))
+* graceful shutdown ([136b2de](https://github.com/wajeht/gains/commit/136b2de7e8551b546811cf53c749075583ff7e23))
+* socket io connection ([f8f567c](https://github.com/wajeht/gains/commit/f8f567c54043c35b82fc084a5cbcefd96c36a025))
+
 ### [0.0.7-alpha.0](https://github.com/wajeht/gains/compare/v0.0.6...v0.0.7-alpha.0) (2023-08-05)
 
 ### Features

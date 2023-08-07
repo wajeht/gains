@@ -1,6 +1,6 @@
 {
   "name": "gains",
-  "version": "0.0.7-alpha.0",
+  "version": "0.0.7",
   "description": "All in one tools to help strength athletes load the right amount of training dosage!",
   "main": "server.js",
   "type": "module",
