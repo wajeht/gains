@@ -74,11 +74,20 @@ app.mount('#app');
 
 // this dont work use iport meta
 // const SOCKET_URL = process.env.ENV === 'production' ? '/' : `http://localhost:${process.env.PORT}`;
+// const socket = io(SOCKET_URL);
 const socket = io('/');
 
 window.socket = socket;
 
 window.socket.on('connect', (socket) => {
+  if (userStore.isLoggedIn) {
+    const userWithAgent = {
+      ...userStore.user,
+      agent: window.navigator.userAgent,
+    };
+    window.socket.emit('onlineUser', userWithAgent);
+  }
+
   console.log('socket connected!');
 });
 
