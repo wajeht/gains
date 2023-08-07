@@ -54,13 +54,16 @@ app.use(
 app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, next, true));
 expressJSDocSwagger(app)(expressJsdocOptions);
 
-io.on('connection', function (socket) {
+io.on('connection', async function (socket) {
   logger.info(`socket.io connection was made!, ${socket.id}`);
 
-  socket.on('onlineUser', async (userData) => {
-    logger.info(`onlineUser event was fired!, ${socket.id}`);
+  let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
 
-    let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
+  socket.emit('onlineUser', onlineUsers);
+
+  socket.on('onlineUser', async (userData) => {
+
+    logger.info(`onlineUser event was fired!, ${socket.id}`);
 
     const userExist = onlineUsers.some(
       (user) => user.id === userData.id && socket.id === user.socket_id,
