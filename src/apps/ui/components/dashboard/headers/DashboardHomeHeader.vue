@@ -15,8 +15,6 @@ async function logout() {
   try {
     loading.value = true;
 
-    await sleep(800);
-
     const res = await api.get('/api/auth/logout');
     const json = await res.json();
 
