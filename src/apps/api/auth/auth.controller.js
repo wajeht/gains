@@ -143,7 +143,7 @@ export async function postSignup(req, res) {
   }
 
   // send verification email
-  await EmailService.send({
+  EmailService.send({
     to: newUser.email,
     subject: 'Verify Email',
     template: 'verify-email',
@@ -178,7 +178,7 @@ export async function getVerifyEmail(req, res) {
 
   logger.info(`User id ${uid} was successfully verified!`);
 
-  const gde = await generateDefaultExercises(uid);
+  generateDefaultExercises(uid);
 
   logger.info(`Generated default exercises for User id ${uid}!`);
 
@@ -223,7 +223,7 @@ export async function getReverify(req, res) {
       }
 
       // re send verification email
-      await EmailService.send({
+      EmailService.send({
         to: user.email,
         subject: 'Verify Email',
         template: 'verify-email',
@@ -290,7 +290,7 @@ export async function postForgetPassword(req, res) {
       throw new CustomError.BadRequestError(msg);
     }
 
-    const sent = await EmailService.send({
+    EmailService.send({
       to: user.email,
       subject: 'Password Reset',
       template: 'forget-password',
@@ -301,8 +301,6 @@ export async function postForgetPassword(req, res) {
     });
 
     logger.info(`Password reset link was send to ${email}`);
-
-    if (!sent) throw new CustomError.BadRequestError(`Something went went wrong while sending password reset to ${user.email}!`); // prettier-ignore
   }
 
   // but we send this regardless

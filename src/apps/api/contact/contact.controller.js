@@ -10,7 +10,8 @@ import { email as envEmail } from '../../../config/env.js';
  */
 export async function postContact(req, res) {
   const { email, subject } = req.body;
-  await EmailService.send({
+
+  EmailService.send({
     to: envEmail.auth_email,
     subject,
     template: 'contact',
