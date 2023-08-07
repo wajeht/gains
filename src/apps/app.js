@@ -62,7 +62,6 @@ io.on('connection', async function (socket) {
   socket.emit('onlineUser', onlineUsers);
 
   socket.on('onlineUser', async (userData) => {
-
     logger.info(`onlineUser event was fired!, ${socket.id}`);
 
     const userExist = onlineUsers.some(
@@ -78,6 +77,19 @@ io.on('connection', async function (socket) {
       await redis.set('onlineUsers', JSON.stringify(onlineUsers));
       socket.broadcast.emit('onlineUser', onlineUsers);
     }
+  });
+
+  socket.on('userDisconnected', async (userData) => {
+    logger.info(`userDisconnected event was fired!, ${socket.id}`);
+    let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
+
+    onlineUsers = onlineUsers.filter(
+      (user) => user.id !== userData.id && user.socket_id !== socket.id,
+    );
+
+    await redis.set('onlineUsers', JSON.stringify(onlineUsers));
+
+    socket.broadcast.emit('userDisconnected', userData.id);
   });
 
   socket.on('disconnect', async () => {
