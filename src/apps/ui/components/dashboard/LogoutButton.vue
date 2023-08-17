@@ -56,7 +56,7 @@ async function logout() {
 </script>
 
 <template>
-  <button @click="logout()" class="btn btn-sm btn-danger" :disabled="loading">
+  <button @click="logout()" class="btn btn-danger" :disabled="loading">
     <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
