@@ -1146,7 +1146,7 @@ function downloadVideo(url) {
                 <small v-if="currentSessionDetails?.logs?.some((l) => l?.videos?.length) == true">
                   <router-link
                     class="link-secondary text-decoration-none"
-                    :to="`/dashboard/videos/${currentSessionDetails.id}`"
+                    :to="`/dashboard/videos/${currentSessionDetails.session_id}`"
                   >
                     <i class="bi bi-play-circle me-1"></i>Video view
                   </router-link>
