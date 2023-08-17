@@ -6,7 +6,17 @@ import AdminMenuBar from '../components/admin/AdminMenuBar.vue';
 import LogoutButton from '../components/dashboard/LogoutButton.vue';
 import useAppStore from '../store/app.store.js';
 import OnlineUsers from '../components/admin/OnlineUsers.vue';
+import api from '../../../utils/fetch-with-style.js';
+
 const appStore = useAppStore();
+
+async function clearAllCache() {
+  try {
+    await api.get('/api/admin/clear-all-cache');
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 
 <template>
@@ -22,6 +32,11 @@ const appStore = useAppStore();
 
           <!-- online -->
           <OnlineUsers />
+
+          <!-- clear all cache -->
+          <button class="btn btn-dark" style="min-height: 43px !important" @click="clearAllCache">
+            Clear All Cache
+          </button>
 
           <!-- logout -->
           <LogoutButton style="min-height: 43px !important" />
