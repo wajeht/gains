@@ -319,11 +319,6 @@ function clearAndDismissModifyAUserModal() {
           >
             <i class="bi bi-trash"></i>
           </button>
-
-          <!-- settings -->
-          <button class="btn btn-sm btn-dark" type="button">
-            <i class="bi bi-funnel"></i>
-          </button>
         </div>
       </div>
 
