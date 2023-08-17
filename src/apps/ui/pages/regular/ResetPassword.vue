@@ -71,7 +71,7 @@
       <!-- button -->
       <button
         type="submit"
-        class="btn btn-dark"
+        class="btn btn-dark w-100"
         :disabled="loading || !newConfirmedPassword || !newPassword"
       >
         <div v-if="loading" class="spinner-border spinner-border-sm" role="status">

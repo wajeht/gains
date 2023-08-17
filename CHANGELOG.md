@@ -2,6 +2,80 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/wajeht/gains/compare/v0.0.7...v0.0.8) (2023-08-17)
+
+
+### Features
+
+* change some active colors ([04222e9](https://github.com/wajeht/gains/commit/04222e9e9f40bbaba7921410f91070628bb6d5cd))
+* clear all cache ([848af08](https://github.com/wajeht/gains/commit/848af08bd00ce54e0e504f612a5e5dac9f4fc28b))
+* clear all cache ([d5d0fb9](https://github.com/wajeht/gains/commit/d5d0fb9594e74a878880fc0e09c07928c06d2dd4))
+* clear all cache via admin panel ([76b88fd](https://github.com/wajeht/gains/commit/76b88fd360c0c16e5258099690a593251284bde8))
+* github issue via contact form ([#258](https://github.com/wajeht/gains/issues/258)) ([ec80dd4](https://github.com/wajeht/gains/commit/ec80dd4b056f10692acbd84ae04512c5fa54dabd))
+* open contribution link on new tab ([4937d9f](https://github.com/wajeht/gains/commit/4937d9fa2748867aed797c7f642208535c2db724))
+* remove filter button ([044fe8f](https://github.com/wajeht/gains/commit/044fe8f960e4cfe2602f77c866547a7a37d459db))
+* remove gear out of exercise vue ([36d5cda](https://github.com/wajeht/gains/commit/36d5cda6b94e1d72a21afb28748b95d5c760e2a1))
+
+
+### Bug Fixes
+
+* stream html instead of sending it ([889e426](https://github.com/wajeht/gains/commit/889e4266947563987745635ac926fc18120715b5))
+* video id was invalid on session details when clicking on it ([e75f628](https://github.com/wajeht/gains/commit/e75f628b14c03688f3de7822343d853ccdc56053))
+
+### [0.0.7](https://github.com/wajeht/gains/compare/v0.0.7-alpha.0...v0.0.7) (2023-08-07)
+
+### Features
+
+- make forgot password and reset password btn full width ([fdd14ca](https://github.com/wajeht/gains/commit/fdd14ca183c1d7a51b6eef0e6efce1d1bd5fd6ff))
+- more tweaks to not block io ([1d6a8a7](https://github.com/wajeht/gains/commit/1d6a8a70950f70e8077c0dcb043799e18717b5ff))
+- remove online users on disconnect ([eb44cdb](https://github.com/wajeht/gains/commit/eb44cdbe87a0745d3f79393cfa28d7998acdb627))
+
+### Bug Fixes
+
+- current user was dropping on mount ([d749c2a](https://github.com/wajeht/gains/commit/d749c2a05919a5051887674d7ebea007ac55cff9))
+- email tweaks to not block io ([98c1dd6](https://github.com/wajeht/gains/commit/98c1dd6cdec9a869fb1cb2476d30180778240a17))
+- email tweaks to not block io ([561c139](https://github.com/wajeht/gains/commit/561c13946fe661940bf4b1a8df897d3364593b3b))
+- emit back online users on connect ([9602291](https://github.com/wajeht/gains/commit/9602291054bb2a3ca9e2c0bc9195609413f93369))
+- graceful shutdown ([136b2de](https://github.com/wajeht/gains/commit/136b2de7e8551b546811cf53c749075583ff7e23))
+- socket io connection ([f8f567c](https://github.com/wajeht/gains/commit/f8f567c54043c35b82fc084a5cbcefd96c36a025))
+
+### [0.0.7-alpha.0](https://github.com/wajeht/gains/compare/v0.0.6...v0.0.7-alpha.0) (2023-08-05)
+
+### Features
+
+- add plausible ([d01bf83](https://github.com/wajeht/gains/commit/d01bf83e8a289f4b76d54ffa75483e50e588b4cc))
+- added email block on admin dashboard ([c6bea01](https://github.com/wajeht/gains/commit/c6bea010a40226a870ff34e02e63e4921690bdec))
+- added mailhog and redis-commander for local dev ([c65fcea](https://github.com/wajeht/gains/commit/c65fcea9bdb0e75c630a9330f3989cc57f900ef4))
+- added make wipe command ([d663cbb](https://github.com/wajeht/gains/commit/d663cbb6c203053f37c96ec6f3289bb69c68e2cc))
+- build on ci ([8b8375a](https://github.com/wajeht/gains/commit/8b8375a0cef6695201c5858462e3dc4a96090a34))
+- build on ci ([3bc81c0](https://github.com/wajeht/gains/commit/3bc81c0a6d092fcb522d3551b19148f4c54e634e))
+- build on ci ([37724c8](https://github.com/wajeht/gains/commit/37724c8b1d0d5d96772db2cdf638e3caf6a298ae))
+- build on ci ([e747c88](https://github.com/wajeht/gains/commit/e747c880c2de4df3156ad185911e28836be6565e))
+- cache assets for 30 days ([5d6dc51](https://github.com/wajeht/gains/commit/5d6dc510f86897bb672573937675dbfdffb5147d))
+- dark mode for all layout ([5234da9](https://github.com/wajeht/gains/commit/5234da9ab2fea761636d10fcdddc07bb35c561c0))
+- disable husky temporaryly ([aab38c5](https://github.com/wajeht/gains/commit/aab38c5fd4a2de8227221bdc12d40f6caa28b75f))
+- footer font small ([0ab6034](https://github.com/wajeht/gains/commit/0ab60344d4514f0f49dc9e104737c8d453e3378e))
+- handle graceful shutdown ([b0b0365](https://github.com/wajeht/gains/commit/b0b0365feade832384e50b0f53aa1783d16c3b42))
+- ignore old .env file ([e828698](https://github.com/wajeht/gains/commit/e8286985bc1680638f4264d5d73476353a740a7e))
+- rename to gains.jaw.dev ([d691730](https://github.com/wajeht/gains/commit/d6917300380f7cf44813d371a87eb4d10c3141ff))
+- setup ling and prettier ([20eb0f9](https://github.com/wajeht/gains/commit/20eb0f9b0207d00e110ecddf0902299a59686e17))
+- the ability to update bio ([a034cce](https://github.com/wajeht/gains/commit/a034ccebdb1fe69710cbddf30eb704da88cd085c))
+- updated CI ([325db35](https://github.com/wajeht/gains/commit/325db3567721cd2d99b9855a6d2642d607b524fe))
+
+### Bug Fixes
+
+- add warning pages for unimplemented pages ([34d30dc](https://github.com/wajeht/gains/commit/34d30dc2205db9955eac76d86215bb70b6eca156))
+- clearing cache was clearinng download request data count ([627500c](https://github.com/wajeht/gains/commit/627500c22ad256c48c97641f84b2e58430c46616))
+- format and ci ([5fef4b4](https://github.com/wajeht/gains/commit/5fef4b40040ed4bcca74f790a2eaed0824748d36))
+- lint and format ([f64f004](https://github.com/wajeht/gains/commit/f64f004662083dce9862a7be01df1fa7aee5ea7a))
+- nan as avg hours sleep on profile page ([1f1dc51](https://github.com/wajeht/gains/commit/1f1dc5186367e66387d15b88c6b5fa8fa0ab9a3d))
+- redis commander ([5e685a8](https://github.com/wajeht/gains/commit/5e685a862ee46a9d614b461cd076e32838d9fd64))
+- reduce image size ([ed26257](https://github.com/wajeht/gains/commit/ed2625773f67e644c0bae355e5b6cdaea9d3c712))
+- refacotr video streaming logic ([6150d5e](https://github.com/wajeht/gains/commit/6150d5e2cb45183022cab79f26ba58687c21f638))
+- show api key was not working ([0ce5035](https://github.com/wajeht/gains/commit/0ce5035cc0fa53a5fb73dc47311e04171a8416f8))
+- stuff ([06f461a](https://github.com/wajeht/gains/commit/06f461a458515b6630e2ee2f6abb7204257de54d))
+- styling on gh issues page ([d89a136](https://github.com/wajeht/gains/commit/d89a136033f86ebbd921b428b08dfe83cf6b6707))
+
 ### [0.0.6](https://github.com/allkindsofgains/gains/compare/v0.0.5...v0.0.6) (2022-10-29)
 
 ### Features

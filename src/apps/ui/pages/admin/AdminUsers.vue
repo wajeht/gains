@@ -319,11 +319,6 @@ function clearAndDismissModifyAUserModal() {
           >
             <i class="bi bi-trash"></i>
           </button>
-
-          <!-- settings -->
-          <button class="btn btn-sm btn-dark" type="button">
-            <i class="bi bi-funnel"></i>
-          </button>
         </div>
       </div>
 
@@ -499,8 +494,8 @@ function clearAndDismissModifyAUserModal() {
                     <!-- verified -->
                     <small
                       :class="{
-                        'bg-black text-white px-1 rounded': u.verified,
-                        'bg-secondary text-white px-1 rounded': !u.verified,
+                        'bg-success text-white px-1 rounded': u.verified,
+                        'bg-warning text-white px-1 rounded': !u.verified,
                       }"
                     >
                       <span v-if="!u.verified">not verified</span>
@@ -510,8 +505,8 @@ function clearAndDismissModifyAUserModal() {
                     <!-- deleted -->
                     <small
                       :class="{
-                        'bg-black text-white px-1 rounded': !u.deleted,
-                        'bg-secondary text-white px-1 rounded': u.deleted,
+                        'bg-success text-white px-1 rounded': !u.deleted,
+                        'bg-danger text-white px-1 rounded': u.deleted,
                       }"
                     >
                       <span v-if="!u.deleted">active</span>

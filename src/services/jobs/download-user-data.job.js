@@ -184,7 +184,7 @@ async function downloadUserDataProcess(user_id) {
 
     const [user] = await UsersQueries.findUserById(user_id);
 
-    await EmailService.send({
+    EmailService.send({
       to: user.email,
       subject: 'Your Gains data is ready to download',
       template: 'download-user-data',

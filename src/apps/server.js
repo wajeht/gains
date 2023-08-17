@@ -11,12 +11,41 @@ import pkg from '../utils/pkg.js';
 import EmailService from '../services/email.service.js';
 import latestChangelog from '../utils/latest-changelog.js';
 import CronsServices from '../services/cron.services.js';
+import redis from '../utils/redis.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);
   logger.info(`Server is running on http://localhost:${port}!`);
   if (process.env.HMR === 'true') logger.warn(`But use http://localhost:${vue_port} for hmr!`);
 });
+
+async function gracefulShutdown() {
+  logger.info('**** Received kill signal, shutting down gracefully. ****');
+
+  try {
+    await new Promise((resolve, reject) => {
+      server.close((err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+    });
+
+    await redis.disconnect();
+    await db.destroy();
+
+    logger.info('**** Closed out remaining connections. ****');
+    process.exit(0);
+  } catch (err) {
+    logger.error('**** Error during shutdown ****', err);
+    process.exit(1);
+  }
+}
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
 
 // ------------------------------ auto migrate db on start (production only) ------------------------------
 (async () => {

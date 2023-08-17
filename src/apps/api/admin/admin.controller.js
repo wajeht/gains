@@ -95,17 +95,22 @@ export async function postSeedMockTrainingData(req, res) {
  * @param res - The response object.
  */
 export async function getIssues(req, res) {
-  const issues = await axios.get(GITHUB.issue_url, {
-    headers: {
-      Authorization: `Bearer ${GITHUB.api_key}`,
-    },
-  });
+  let issues = JSON.parse(await redis.get('issues'));
+
+  if (issues === null) {
+    issues = await axios.get(GITHUB.issue_url, {
+      headers: {
+        Authorization: `Bearer ${GITHUB.api_key}`,
+      },
+    });
+    await redis.set('issues', JSON.stringify(issues.data), 'EX', 24 * 60 * 60);
+  }
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: issues.data,
+    data: issues,
   });
 }
 
@@ -115,16 +120,22 @@ export async function getIssues(req, res) {
  * @param res - The response object.
  */
 export async function getOnlineUsers(req, res) {
-  let users = (await redis.get('online-users')) || [];
-
-  if (users) {
-    users = JSON.parse(users);
-  }
-
+  let users = JSON.parse(await redis.get('onlineUsers')) || [];
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: users,
+  });
+}
+
+export async function clearAllCache(req, res) {
+  await redis.flushall();
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [],
   });
 }

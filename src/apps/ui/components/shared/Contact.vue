@@ -13,19 +13,6 @@
       <span>{{ alert.msg }}</span>
     </div>
 
-    <!-- subject -->
-    <div class="mb-3">
-      <label for="subject" class="form-label">Subject</label>
-      <input
-        v-model="subject"
-        type="subject"
-        class="form-control"
-        id="subject"
-        :disabled="loading"
-        required
-      />
-    </div>
-
     <!-- email -->
     <div class="mb-3">
       <label for="Email" class="form-label">Email</label>
@@ -37,6 +24,16 @@
         :disabled="loading"
         required
       />
+    </div>
+
+    <!-- Subject -->
+    <div class="mb-3">
+      <label for="Options" class="form-label">Subject</label>
+      <select class="form-select" :disabled="loading" v-model="subject">
+        <option v-for="option in subjectOptions" :key="option.value" :value="option.value">
+          {{ option.label }}
+        </option>
+      </select>
     </div>
 
     <!-- message -->
@@ -98,7 +95,7 @@ export default {
   },
   data() {
     return {
-      subject: '',
+      subject: 'GENERAL',
       email: '',
       message: '',
       alert: {
@@ -107,6 +104,16 @@ export default {
       },
       loading: false,
     };
+  },
+  computed: {
+    subjectOptions() {
+      return [
+        { value: 'FEATURE', label: 'Feature Request' },
+        { value: 'BUG', label: 'Bugs Report' },
+        { value: 'GENERAL', label: 'General' },
+        { value: 'OTHER', label: 'OTHER' },
+      ];
+    },
   },
   methods: {
     async handleSubmit() {

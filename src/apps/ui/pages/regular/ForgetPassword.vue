@@ -30,7 +30,7 @@
       </div>
 
       <!-- button -->
-      <button type="submit" class="btn btn-dark" :disabled="loading || !email">
+      <button type="submit" class="btn btn-dark w-100" :disabled="loading || !email">
         <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>

@@ -26,9 +26,11 @@ export function getHealthCheck(req, res) {
  */
 export function vueHandler(req, res, next) {
   try {
-    return res.sendFile(path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'))); // prettier-ignore
-  } catch (error) {
-    next(error);
+    const vue = path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'));
+    res.setHeader('Content-Type', 'text/html');
+    return res.status(StatusCodes.OK).sendFile(vue);
+  } catch (e) {
+    next(e);
   }
 }
 

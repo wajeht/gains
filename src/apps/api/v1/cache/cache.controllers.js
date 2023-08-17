@@ -9,7 +9,8 @@ import * as CacheQueries from './cache.queries.js';
 export async function clearACache(req, res) {
   const key = req.params.cache_key;
   const user_id = req.user.user_id;
-  const cleared = await redis.del(key);
+
+  await redis.del(key);
 
   logger.info(`User id ${user_id} has cleared  cache: ${key}!`);
 
@@ -23,7 +24,8 @@ export async function clearACache(req, res) {
 
 export async function clearAllCache(req, res) {
   const user_id = req.params.user_id;
-  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+
+  await CacheQueries.deleteAllCachesOfAUser(user_id);
 
   logger.info(`User id ${user_id} has cleared all of their cached data!`);
 

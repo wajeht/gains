@@ -15,8 +15,6 @@ async function logout() {
   try {
     loading.value = true;
 
-    await sleep(800);
-
     const res = await api.get('/api/auth/logout');
     const json = await res.json();
 
@@ -66,7 +64,7 @@ async function logout() {
     </router-link>
 
     <!-- logout -->
-    <button @click="logout()" class="btn btn-sm btn-danger" :disabled="loading">
+    <button @click="logout()" class="btn btn-danger" :disabled="loading">
       <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>

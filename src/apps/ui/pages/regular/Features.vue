@@ -68,6 +68,7 @@ function clearAndDismissPreviewVideoModal() {
     <section
       v-for="(f, index) in features"
       class="pb-5 border-bottom"
+      :key="f.id"
       :class="{ 'pt-5': index != 0 }"
       v-once
     >

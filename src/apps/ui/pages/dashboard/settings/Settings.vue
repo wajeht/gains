@@ -483,7 +483,7 @@ async function clearAllCache() {
             >
             and other
             <a
-              href="https://www.github.com/wajeht"
+              href="https://www.github.com/wajeht/gains"
               class="link-secondary text-decoration-none"
               target="_blank"
               >contributors</a

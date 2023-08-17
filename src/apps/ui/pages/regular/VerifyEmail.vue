@@ -53,8 +53,6 @@ export default {
         const res = await fetch(`/api/auth/verify-email/${this.uid}?token=${this.token}`);
         const json = await res.json();
 
-        await sleep(3000);
-
         if (!res.ok) {
           this.verifying = false;
           throw json.errors;
