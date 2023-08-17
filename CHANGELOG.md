@@ -4,23 +4,21 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.0.8](https://github.com/wajeht/gains/compare/v0.0.7...v0.0.8) (2023-08-17)
 
-
 ### Features
 
-* change some active colors ([04222e9](https://github.com/wajeht/gains/commit/04222e9e9f40bbaba7921410f91070628bb6d5cd))
-* clear all cache ([848af08](https://github.com/wajeht/gains/commit/848af08bd00ce54e0e504f612a5e5dac9f4fc28b))
-* clear all cache ([d5d0fb9](https://github.com/wajeht/gains/commit/d5d0fb9594e74a878880fc0e09c07928c06d2dd4))
-* clear all cache via admin panel ([76b88fd](https://github.com/wajeht/gains/commit/76b88fd360c0c16e5258099690a593251284bde8))
-* github issue via contact form ([#258](https://github.com/wajeht/gains/issues/258)) ([ec80dd4](https://github.com/wajeht/gains/commit/ec80dd4b056f10692acbd84ae04512c5fa54dabd))
-* open contribution link on new tab ([4937d9f](https://github.com/wajeht/gains/commit/4937d9fa2748867aed797c7f642208535c2db724))
-* remove filter button ([044fe8f](https://github.com/wajeht/gains/commit/044fe8f960e4cfe2602f77c866547a7a37d459db))
-* remove gear out of exercise vue ([36d5cda](https://github.com/wajeht/gains/commit/36d5cda6b94e1d72a21afb28748b95d5c760e2a1))
-
+- change some active colors ([04222e9](https://github.com/wajeht/gains/commit/04222e9e9f40bbaba7921410f91070628bb6d5cd))
+- clear all cache ([848af08](https://github.com/wajeht/gains/commit/848af08bd00ce54e0e504f612a5e5dac9f4fc28b))
+- clear all cache ([d5d0fb9](https://github.com/wajeht/gains/commit/d5d0fb9594e74a878880fc0e09c07928c06d2dd4))
+- clear all cache via admin panel ([76b88fd](https://github.com/wajeht/gains/commit/76b88fd360c0c16e5258099690a593251284bde8))
+- github issue via contact form ([#258](https://github.com/wajeht/gains/issues/258)) ([ec80dd4](https://github.com/wajeht/gains/commit/ec80dd4b056f10692acbd84ae04512c5fa54dabd))
+- open contribution link on new tab ([4937d9f](https://github.com/wajeht/gains/commit/4937d9fa2748867aed797c7f642208535c2db724))
+- remove filter button ([044fe8f](https://github.com/wajeht/gains/commit/044fe8f960e4cfe2602f77c866547a7a37d459db))
+- remove gear out of exercise vue ([36d5cda](https://github.com/wajeht/gains/commit/36d5cda6b94e1d72a21afb28748b95d5c760e2a1))
 
 ### Bug Fixes
 
-* stream html instead of sending it ([889e426](https://github.com/wajeht/gains/commit/889e4266947563987745635ac926fc18120715b5))
-* video id was invalid on session details when clicking on it ([e75f628](https://github.com/wajeht/gains/commit/e75f628b14c03688f3de7822343d853ccdc56053))
+- stream html instead of sending it ([889e426](https://github.com/wajeht/gains/commit/889e4266947563987745635ac926fc18120715b5))
+- video id was invalid on session details when clicking on it ([e75f628](https://github.com/wajeht/gains/commit/e75f628b14c03688f3de7822343d853ccdc56053))
 
 ### [0.0.7](https://github.com/wajeht/gains/compare/v0.0.7-alpha.0...v0.0.7) (2023-08-07)
 

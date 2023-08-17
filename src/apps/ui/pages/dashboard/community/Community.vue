@@ -1,12 +1,12 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue';
 import dayjs from 'dayjs';
-import DashboardHomeHeader from '../../components/dashboard/headers/DashboardHomeHeader.vue';
-import api from '../../../../utils/fetch-with-style.js';
+import DashboardHomeHeader from '../../../components/dashboard/headers/DashboardHomeHeader.vue';
+import api from '../../../../../utils/fetch-with-style.js';
 import { useRouter, useRoute } from 'vue-router';
 
-import useUserStore from '../../store/user.store.js';
-import useAppStore from '../../store/app.store.js';
+import useUserStore from '../../../store/user.store.js';
+import useAppStore from '../../../store/app.store.js';
 
 const userStore = useUserStore();
 const appStore = useAppStore();
