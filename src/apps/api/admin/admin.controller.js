@@ -128,3 +128,14 @@ export async function getOnlineUsers(req, res) {
     data: users,
   });
 }
+
+export async function clearAllCache(req, res) {
+  await redis.flushall();
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [],
+  });
+}

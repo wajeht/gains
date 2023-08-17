@@ -8,6 +8,8 @@ const admin = express.Router();
 
 admin.get('/issues', catchAsyncErrors(AdminController.getIssues));
 
+admin.get('/clear-all-cache', catchAsyncErrors(AdminController.clearAllCache));
+
 admin.get(
   '/view-logs',
   validator(AdminValidation.getViewLogs),
