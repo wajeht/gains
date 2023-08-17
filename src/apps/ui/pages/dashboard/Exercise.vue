@@ -73,7 +73,13 @@ onMounted(async () => {
     appStore.loading = false;
   } catch (e) {
     appStore.loading = false;
-    alert.type = 'danger';
+
+    if (notAvailableYet.value === true) {
+      alert.type = 'warning';
+    } else {
+      alert.type = 'danger';
+    }
+
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
       return;
@@ -276,11 +282,6 @@ function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
                     </li>
                   </ul>
                 </div>
-
-                <!-- setting -->
-                <button class="btn btn-sm btn-outline-dark">
-                  <i class="bi bi-gear-fill"></i>
-                </button>
               </span>
             </span>
           </div>
