@@ -13,13 +13,13 @@ export async function up(knex) {
       .onUpdate('CASCADE')
       .notNullable();
     table
-      .integer('followed_id')
+      .integer('following_id')
       .references('id')
       .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
       .notNullable();
-    table.unique(['follower_id', 'followed_id']);
+    table.unique(['following_id', 'follower_id']);
     table.timestamps(true, true);
   });
 }

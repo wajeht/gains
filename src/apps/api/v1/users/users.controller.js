@@ -359,7 +359,7 @@ export async function postFollowUser(req, res) {
   const data = await db
     .insert({
       follower_id: req.body.follower_id,
-      followed_id: req.body.followed_id,
+      following_id: req.params.following_id,
     })
     .into('follows')
     .returning('*');
@@ -368,6 +368,21 @@ export async function postFollowUser(req, res) {
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was created successfully!',
+    data,
+  });
+}
+
+export async function getUserFollowers(req, res) {
+  const data = await db
+    .select('*')
+    .from('users')
+    .leftJoin('follows', 'users.id', 'follows.following_id')
+    .where({ 'users.id': req.params.user_id });
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
     data,
   });
 }

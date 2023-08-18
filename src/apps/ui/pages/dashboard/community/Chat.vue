@@ -8,6 +8,7 @@ const userStore = useUserStore();
 
 const states = reactive({
   users: [],
+  myFollowers: [],
 });
 
 async function getUsers() {
@@ -16,11 +17,16 @@ async function getUsers() {
   states.users = json.data;
 }
 
-async function followUser(followed_id) {
-  await api.post('/api/v1/users/follow', {
+async function followUser(following_id) {
+  await api.post(`/api/v1/users/${following_id}/follow`, {
     follower_id: userStore.user.id,
-    followed_id,
   });
+}
+
+async function getMyFollowers() {
+  const res = await api.get(`/api/v1/users/${userStore.user.id}/followers`);
+  const json = await res.json();
+  states.myFollowers = json.data;
 }
 </script>
 
@@ -36,14 +42,27 @@ async function followUser(followed_id) {
           <p class="card-text">Comming soon!</p>
 
           <div class="d-flex flex-column gap-2">
-            <button @click="getUsers">Get Users</button>
-            <div
-              v-for="user in states.users"
-              :key="user.id"
-              class="d-flex align-items-center gap-2"
-            >
-              {{ user.username }}
-              <button class="btn btn-sm btn-dark" @click="followUser(user.id)">Follow</button>
+            <div class="d-flex flex-column gap-2">
+              <button @click="getMyFollowers">Get My Followers</button>
+              <div
+                v-for="user in states.myFollowers"
+                :key="user.id"
+                class="d-flex align-items-center gap-2"
+              >
+                {{ user.username }} {{ user.id }}
+              </div>
+            </div>
+
+            <div class="d-flex flex-column gap-2">
+              <button @click="getUsers">Get Users</button>
+              <div
+                v-for="user in states.users"
+                :key="user.id"
+                class="d-flex align-items-center gap-2"
+              >
+                {{ user.username }} {{ user.id }}
+                <button class="btn btn-sm btn-dark" @click="followUser(user.id)">Follow</button>
+              </div>
             </div>
           </div>
         </div>

@@ -403,6 +403,7 @@ export const postDeleteUserData = [
     .custom(async (value) => {
       const user = await UserQueries.findUserById(value);
       if (user.length === 0) throw new Error('User does not exist!');
+      return true;
     })
     .toInt(),
 ];
@@ -420,6 +421,7 @@ export const postRestoreUserData = [
     .custom(async (value) => {
       const user = await UserQueries.findUserById(value);
       if (user.length === 0) throw new Error('User does not exist!');
+      return true;
     })
     .toInt(),
 ];
@@ -437,6 +439,7 @@ export const postRestoreUser = [
     .custom(async (value) => {
       const user = await UserQueries.findUserById(value);
       if (user.length === 0) throw new Error('User does not exist!');
+      return true;
     })
     .toInt(),
 ];
@@ -451,6 +454,7 @@ export const getDownloadUserData = [
     .custom(async (user_id) => {
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
+      return true;
     }),
 ];
 
@@ -458,18 +462,35 @@ export const postFollowUser = [
   body('follower_id')
     .trim()
     .notEmpty()
-    .withMessage('The user_id must not be empty!')
+    .withMessage('The follower_id must not be empty!')
     .isInt()
-    .withMessage('The user_id must be an ID!')
-    .custom(async (user_id, { req }) => {
-      if (user_id == req.user.user_id) {
+    .withMessage('The follower_id must be an ID!')
+    .custom(async (follower_id) => {
+      const user = await UserQueries.findUserById(follower_id);
+      if (user.length === 0) throw new Error('User does not exist!');
+      return true;
+    })
+    .toInt(),
+  param('following_id')
+    .trim()
+    .notEmpty()
+    .withMessage('The following_id must not be empty!')
+    .isInt()
+    .withMessage('The following_id must be an ID!')
+    .toInt()
+    .custom(async (following_id, { req }) => {
+      if (following_id === req.user.user_id) {
         throw new Error('you cannot follow yourself');
       }
-
-      const user = await UserQueries.findUserById(user_id);
+      const user = await UserQueries.findUserById(following_id);
       if (user.length === 0) throw new Error('User does not exist!');
-    }),
-  body('followed_id')
+      return true;
+    })
+    .toInt(),
+];
+
+export const getUserFollowers = [
+  param('user_id')
     .trim()
     .notEmpty()
     .withMessage('The user_id must not be empty!')
@@ -478,5 +499,7 @@ export const postFollowUser = [
     .custom(async (user_id) => {
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
-    }),
+      return true;
+    })
+    .toInt(),
 ];

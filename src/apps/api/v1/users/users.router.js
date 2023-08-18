@@ -170,16 +170,28 @@ users.post(
 );
 
 /**
- * POST /api/v1/users/follow
+ * POST /api/v1/users/{following_id}/follow
  * @tags users
  * @summary follow a user
- * @param {string} follower_id.form.required - the user_id - application/x-www-form-urlencoded
- * @param {string} followed_id.form.required - the user_id - application/x-www-form-urlencoded
+ * @param {number} following_id.path.required - the following_id id
+ * @param {number} follower_id.form.required - the follower_id - application/x-www-form-urlencoded
  */
 users.post(
-  '/follow',
+  '/:following_id/follow',
   validator(UsersValidation.postFollowUser),
   catchAsyncErrors(UsersController.postFollowUser),
+);
+
+/**
+ * GET /api/v1/users/{user_id}/followers
+ * @tags users
+ * @summary get user's followers
+ * @param {number} user_id.form.required - the user_id - application/x-www-form-urlencoded
+ */
+users.get(
+  '/:user_id/followers',
+  validator(UsersValidation.getUserFollowers),
+  catchAsyncErrors(UsersController.getUserFollowers),
 );
 
 export default users;
