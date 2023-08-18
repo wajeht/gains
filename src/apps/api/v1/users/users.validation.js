@@ -453,3 +453,26 @@ export const getDownloadUserData = [
       if (user.length === 0) throw new Error('User does not exist!');
     }),
 ];
+
+export const postFollowUser = [
+  param('follower_id')
+    .trim()
+    .notEmpty()
+    .withMessage('The user_id must not be empty!')
+    .isInt()
+    .withMessage('The user_id must be an ID!')
+    .custom(async (user_id) => {
+      const user = await UserQueries.findUserById(user_id);
+      if (user.length === 0) throw new Error('User does not exist!');
+    }),
+  body('followed_id')
+    .trim()
+    .notEmpty()
+    .withMessage('The user_id must not be empty!')
+    .isInt()
+    .withMessage('The user_id must be an ID!')
+    .custom(async (user_id) => {
+      const user = await UserQueries.findUserById(user_id);
+      if (user.length === 0) throw new Error('User does not exist!');
+    }),
+];

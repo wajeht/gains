@@ -6,6 +6,7 @@ import { omit, without } from 'lodash-es';
 import * as CacheQueries from '../cache/cache.queries.js';
 import * as JobsServices from '../../../../services/job.services.js';
 import redis from '../../../../utils/redis.js';
+import db from '../../../../database/db.js';
 
 /**
  * check to see if a current users authentication is still valid
@@ -351,5 +352,22 @@ export async function getDownloadUserData(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: [],
+  });
+}
+
+export async function postFollowUser(req, res) {
+  const data = await db
+    .insert({
+      follower_id: req.body.follower_id,
+      followed_id: req.body.followed_id,
+    })
+    .into('follows')
+    .returning('*');
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was created successfully!',
+    data,
   });
 }

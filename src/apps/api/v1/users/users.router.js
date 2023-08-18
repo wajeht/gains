@@ -169,4 +169,17 @@ users.post(
   catchAsyncErrors(UsersController.postUpdateProfilePicture),
 );
 
+/**
+ * POST /api/v1/users/follow
+ * @tags users
+ * @summary follow a user
+ * @param {string} follower_id.form.required - the user_id - application/x-www-form-urlencoded
+ * @param {string} followed_id.form.required - the user_id - application/x-www-form-urlencoded
+ */
+users.post(
+  '/follow',
+  validator(UsersValidation.postFollowUser),
+  catchAsyncErrors(UsersController.postFollowUser),
+);
+
 export default users;
