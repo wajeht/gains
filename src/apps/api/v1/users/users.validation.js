@@ -455,13 +455,17 @@ export const getDownloadUserData = [
 ];
 
 export const postFollowUser = [
-  param('follower_id')
+  body('follower_id')
     .trim()
     .notEmpty()
     .withMessage('The user_id must not be empty!')
     .isInt()
     .withMessage('The user_id must be an ID!')
-    .custom(async (user_id) => {
+    .custom(async (user_id, { req }) => {
+      if (user_id == req.user.user_id) {
+        throw new Error('you cannot follow yourself');
+      }
+
       const user = await UserQueries.findUserById(user_id);
       if (user.length === 0) throw new Error('User does not exist!');
     }),
