@@ -1,14 +1,21 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, onMounted } from 'vue';
 import Backheader from '../../../components/dashboard/headers/Backheader.vue';
 import api from '../../../../../utils/fetch-with-style';
 import useUserStore from '../../../store/user.store';
+import router from '../../../router.vue';
 
 const userStore = useUserStore();
 
 const states = reactive({
   users: [],
   myFollowers: [],
+});
+
+onMounted(() => {
+  if (userStore.user.role !== 'admin') {
+    router.push('/404');
+  }
 });
 
 async function getUsers() {
