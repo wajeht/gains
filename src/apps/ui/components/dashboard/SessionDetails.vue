@@ -132,23 +132,11 @@ onMounted(async () => {
     router.push(`/dashboard/unauthorized?back=${beforeUnauthorized}`);
   }
 
-  // only load if we are in current
-  if (!s.end_date) {
-    // initialized categories on load
-    const uec = await getUserExerciseCategories();
-    chooseCategories.value = uec || [];
-  }
 
   // collapsed/expend all session state
   const isDone = currentSessionDetails.logs.every((log) => log.collapsed == false);
   if (isDone === true) hideOrCollapsedAllLogsState.value = false;
   else hideOrCollapsedAllLogsState.value = true;
-
-  // only load if we are in current
-  if (!s.end_date) {
-    // initialize exercises
-    getAllUserExercises();
-  }
 
   appStore.loading = false;
 });
@@ -374,6 +362,13 @@ async function copyPreviousSet(currentLogIndex) {
       alert.msg = e;
     }
   }
+}
+
+async function getExercisesReady() {
+  const uec = await getUserExerciseCategories();
+  chooseCategories.value = uec || [];
+
+  await getAllUserExercises();
 }
 
 async function getAllUserExercises() {
@@ -1588,6 +1583,7 @@ function downloadVideo(url) {
         <div v-if="!currentSessionDetails.end_date" class="border">
           <!-- model button -->
           <button
+            @click="getExercisesReady"
             type="button"
             class="btn btn-dark w-100"
             data-bs-toggle="modal"
