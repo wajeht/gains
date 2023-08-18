@@ -112,6 +112,6 @@ html {
 }
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-  background: #ff0000;
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
 </style>
