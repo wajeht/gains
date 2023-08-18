@@ -3,26 +3,23 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // variables
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS variables (
-      id                        SERIAL PRIMARY KEY,
-      body_weight               INT DEFAULT NULL,
-      caffeine_intake           INT DEFAULT NULL,
-      calories_prior_session    INT DEFAULT NULL,
-      total_calories            INT DEFAULT NULL,
-      water_prior_session       INT DEFAULT NULL,
-      total_water               INT DEFAULT NULL,
-      hours_of_sleep            INT DEFAULT NULL,
-      stress_level              INT DEFAULT NULL,
-      json                      JSONB DEFAULT NULL,
-      session_id                INT REFERENCES sessions on DELETE CASCADE,
-      user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
-      deleted                   BOOLEAN DEFAULT FALSE,
-      created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at                TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('variables', (table) => {
+    table.increments('id').primary();
+    table.integer('body_weight').defaultTo(null);
+    table.integer('caffeine_intake').defaultTo(null);
+    table.integer('calories_prior_session').defaultTo(null);
+    table.integer('total_calories').defaultTo(null);
+    table.integer('water_prior_session').defaultTo(null);
+    table.integer('total_water').defaultTo(null);
+    table.integer('hours_of_sleep').defaultTo(null);
+    table.integer('stress_level').defaultTo(null);
+    table.jsonb('json').defaultTo(null);
+    table.integer('session_id').references('id').inTable('sessions').onDelete('CASCADE');
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -30,5 +27,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS variables;`);
+  await knex.schema.dropTableIfExists('variables');
 }

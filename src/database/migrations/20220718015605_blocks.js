@@ -3,20 +3,17 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // blocks
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS blocks (
-      id                    SERIAL PRIMARY KEY,
-      name                  VARCHAR(250) NOT NULL,
-      description           VARCHAR(1000) DEFAULT NULL,
-      start_date            TIMESTAMP NOT NULL DEFAULT NOW(),
-      end_date              TIMESTAMP NOT NULL DEFAULT NULL,
-      deleted               BOOLEAN DEFAULT FALSE,
-      user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
-      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('blocks', (table) => {
+    table.increments('id').primary();
+    table.string('name', 250).notNullable();
+    table.string('description', 1000).defaultTo(null);
+    table.timestamp('start_date').defaultTo(knex.fn.now());
+    table.timestamp('end_date').defaultTo(null);
+    table.boolean('deleted').defaultTo(false);
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -24,5 +21,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS blocks;`);
+  await knex.schema.dropTableIfExists('blocks');
 }

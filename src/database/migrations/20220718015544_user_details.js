@@ -3,28 +3,25 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // user details
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS user_details (
-      id                                SERIAL PRIMARY KEY,
-      first_name                        VARCHAR(250),
-      last_name                         VARCHAR(250),
-      role                              VARCHAR(250) NOT NULL DEFAULT 'user',
-      birth_date                        DATE,
-      weight                            INT,
-      profile_picture_url               VARCHAR(1000),
-      profile_picture_path              VARCHAR(1000),
-      verified                          BOOLEAN DEFAULT FALSE,
-      verification_token                VARCHAR(500) NOT NULL,
-      verified_at                       TIMESTAMP DEFAULT NULL,
-      password_reset_token              VARCHAR(500) DEFAULT NULL,
-      password_reset_token_expiration   TIMESTAMP DEFAULT NULL,
-      user_id                           INT REFERENCES users on DELETE CASCADE NOT NULL,
-      deleted                           BOOLEAN DEFAULT FALSE,
-      created_at                        TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at                        TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('user_details', (table) => {
+    table.increments('id').primary();
+    table.string('first_name', 250);
+    table.string('last_name', 250);
+    table.string('role', 250).notNullable().defaultTo('user');
+    table.date('birth_date');
+    table.integer('weight');
+    table.string('profile_picture_url', 1000);
+    table.string('profile_picture_path', 1000);
+    table.boolean('verified').defaultTo(false);
+    table.string('verification_token', 500).notNullable();
+    table.timestamp('verified_at').defaultTo(null);
+    table.string('password_reset_token', 500).defaultTo(null);
+    table.timestamp('password_reset_token_expiration').defaultTo(null);
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -32,5 +29,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS user_details;`);
+  await knex.schema.dropTableIfExists('user_details');
 }

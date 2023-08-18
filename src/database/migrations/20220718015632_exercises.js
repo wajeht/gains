@@ -3,18 +3,20 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // exercise
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS exercises (
-      id                        SERIAL PRIMARY KEY,
-      name                      VARCHAR(250) NOT NULL,
-      deleted                   BOOLEAN DEFAULT FALSE,
-      exercise_category_id      INT REFERENCES exercise_categories on DELETE CASCADE NOT NULL,
-      user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
-      created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at                TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('exercises', (table) => {
+    table.increments('id').primary();
+    table.string('name', 250).notNullable();
+    table.boolean('deleted').defaultTo(false);
+    table
+      .integer('exercise_category_id')
+      .references('id')
+      .inTable('exercise_categories')
+      .onDelete('CASCADE')
+      .notNullable();
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -22,5 +24,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS exercises;`);
+  await knex.schema.dropTableIfExists('exercises');
 }
