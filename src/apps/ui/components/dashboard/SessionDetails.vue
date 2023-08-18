@@ -132,17 +132,23 @@ onMounted(async () => {
     router.push(`/dashboard/unauthorized?back=${beforeUnauthorized}`);
   }
 
-  // initialized categories on load
-  const uec = await getUserExerciseCategories();
-  chooseCategories.value = uec || [];
+  // only load if we are in current
+  if (!s.end_date) {
+    // initialized categories on load
+    const uec = await getUserExerciseCategories();
+    chooseCategories.value = uec || [];
+  }
 
   // collapsed/expend all session state
   const isDone = currentSessionDetails.logs.every((log) => log.collapsed == false);
   if (isDone === true) hideOrCollapsedAllLogsState.value = false;
   else hideOrCollapsedAllLogsState.value = true;
 
-  // initialize exercises
-  getAllUserExercises();
+  // only load if we are in current
+  if (!s.end_date) {
+    // initialize exercises
+    getAllUserExercises();
+  }
 
   appStore.loading = false;
 });

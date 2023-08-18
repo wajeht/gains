@@ -37,15 +37,16 @@ const alert = reactive({
   msg: '',
 });
 
-onMounted(async () => {
-  const data = await getUserBlocks();
-  blocks.items = data || [];
-});
 
 // this code below required for back drop problem fixed when adding a new session header model
 onMounted(() => document.body.appendChild(document.getElementById(`add-a-session`)));
 onUnmounted(() => document.body.removeChild(document.getElementById(`add-a-session`)));
 // this code above required for back drop problem fixed when adding a new session header model
+
+async function gerUserBlocksReady() {
+  const data = await getUserBlocks();
+  blocks.items = data || [];
+}
 
 async function getUserBlocks() {
   try {
@@ -176,7 +177,7 @@ async function addASession() {
     <span>
       <!-- add button -->
       <span
-        @click="clearDataAndDismissModal()"
+        @click="gerUserBlocksReady()"
         class="link-secondary"
         role="button"
         data-bs-toggle="modal"
