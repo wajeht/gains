@@ -107,11 +107,10 @@ html {
   overflow-x: hidden;
 }
 ::-webkit-scrollbar {
-  width: 0; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
+  width: 0;
+  background: transparent;
 }
-/* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-  background: transparent; /* Optional: just make scrollbar invisible */
+  background: transparent;
 }
 </style>

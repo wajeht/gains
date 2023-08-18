@@ -132,7 +132,6 @@ onMounted(async () => {
     router.push(`/dashboard/unauthorized?back=${beforeUnauthorized}`);
   }
 
-
   // collapsed/expend all session state
   const isDone = currentSessionDetails.logs.every((log) => log.collapsed == false);
   if (isDone === true) hideOrCollapsedAllLogsState.value = false;

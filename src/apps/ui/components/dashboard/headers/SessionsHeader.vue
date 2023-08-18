@@ -37,7 +37,6 @@ const alert = reactive({
   msg: '',
 });
 
-
 // this code below required for back drop problem fixed when adding a new session header model
 onMounted(() => document.body.appendChild(document.getElementById(`add-a-session`)));
 onUnmounted(() => document.body.removeChild(document.getElementById(`add-a-session`)));
