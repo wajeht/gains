@@ -58,6 +58,7 @@
           style="height: auto; width: 80%"
           alt="gains app screenshot"
           rel="preload"
+          fetchpriority="high"
         />
       </div>
     </div>
