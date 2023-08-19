@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import api from '../../../../../../utils/fetch-with-style.js';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 import useUserStore from '../../../../store/user.store.js';
@@ -9,6 +9,13 @@ const userStore = useUserStore();
 const alert = reactive({ type: '', msg: '' }); // prettier-ignore
 const deleteAccountLoading = ref(false);
 const iAmSure = ref(false);
+
+onMounted(()=> {
+  if (!alert.msg && !alert.type) {
+    alert.msg = 'This will permanently delete your account and all of its data. You will not be able to reactivate this account.';
+    alert.type = 'warning';
+  }
+});
 
 async function deleteAccount() {
   try {
@@ -65,12 +72,6 @@ function clearAndDismissDeleteAccountModal() {
         <div class="list-group">
           <div class="card">
             <div class="card-body">
-              <!-- <h5 class="card-title">Delete account</h5> -->
-              <!-- alert -->
-              <p class="card-text alert alert-warning">
-                This will permanently delete your account and all of its data. You will not be able
-                to reactivate this account.
-              </p>
 
               <!-- reason -->
               <div class="mb-3">
