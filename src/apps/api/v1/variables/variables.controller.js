@@ -199,7 +199,7 @@ export async function getChangelogs(req, res) {
         };
       });
 
-      await redis.set('changelogs', JSON.stringify(changeLogsInHTMLFormat));
+      redis.set('changelogs', JSON.stringify(changeLogsInHTMLFormat));
     } catch (e) {
       return res.status(StatusCodes.OK).json({
         status: 'success',
@@ -266,12 +266,7 @@ export async function getWeeklyWeightIn(req, res) {
 
     result = mapped;
 
-    await redis.set(
-      `user-id-${user_id}-weekly-weight-in`,
-      JSON.stringify(result),
-      'EX',
-      24 * 60 * 60,
-    );
+    redis.set(`user-id-${user_id}-weekly-weight-in`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({
@@ -308,7 +303,7 @@ export async function getRecentPrs(req, res) {
 
     result = mapped;
 
-    await redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
+    redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({

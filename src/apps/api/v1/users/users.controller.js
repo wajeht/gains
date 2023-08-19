@@ -78,7 +78,7 @@ export async function getUsers(req, res) {
   // only cache page 1
   // don't cache any results after page 1
   if (pagination.currentPage > 1) {
-    await redis.del(`user-id-${req.user.user_id}-users`);
+    redis.del(`user-id-${req.user.user_id}-users`);
 
     users = await UsersQueries.getAllUsers({ pagination, search });
 
@@ -97,7 +97,7 @@ export async function getUsers(req, res) {
   if (users === null) {
     users = await UsersQueries.getAllUsers({ pagination, search });
 
-    await redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
+    redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
   }
 
   return res.status(StatusCodes.OK).json({
@@ -136,7 +136,7 @@ export async function patchUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.updateUserById(id, req.body);
 
-  await redis.del(`user-id-${req.user.user_id}-users`);
+  redis.del(`user-id-${req.user.user_id}-users`);
 
   logger.info(`User id ${id} has updated user details to ${JSON.stringify(req.body)}!`);
 

@@ -74,7 +74,7 @@ export async function getViewLogs(req, res) {
 export async function postSeedMockTrainingData(req, res) {
   const { email } = req.body;
 
-  const mock = await seedMockTrainingData(email);
+  seedMockTrainingData(email);
 
   const [{ id: user_id }] = await UsersQueries.findUserByParam({ email });
 

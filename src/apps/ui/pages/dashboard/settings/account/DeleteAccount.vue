@@ -10,9 +10,10 @@ const alert = reactive({ type: '', msg: '' }); // prettier-ignore
 const deleteAccountLoading = ref(false);
 const iAmSure = ref(false);
 
-onMounted(()=> {
+onMounted(() => {
   if (!alert.msg && !alert.type) {
-    alert.msg = 'This will permanently delete your account and all of its data. You will not be able to reactivate this account.';
+    alert.msg =
+      'This will permanently delete your account and all of its data. You will not be able to reactivate this account.';
     alert.type = 'warning';
   }
 });
@@ -72,7 +73,6 @@ function clearAndDismissDeleteAccountModal() {
         <div class="list-group">
           <div class="card">
             <div class="card-body">
-
               <!-- reason -->
               <div class="mb-3">
                 <label class="form-label" for="reasons"
