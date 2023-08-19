@@ -392,6 +392,7 @@ async function addASession() {
             </div>
             <div class="modal-footer">
               <button
+                @click="clearDataAndDismissModal()"
                 v-if="!loading"
                 ref="addASessionDismissButton"
                 type="reset"
