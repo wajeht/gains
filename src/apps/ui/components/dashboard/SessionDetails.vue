@@ -816,6 +816,10 @@ function previewVideoUpload() {
 
 async function uploadAVideo() {
   try {
+    if (video.value.files.length === 0) {
+      throw new Error('Please choose a video to upload!');
+    }
+
     uploadAVideoLoading.value = true;
     const file = video.value.files[0];
 
