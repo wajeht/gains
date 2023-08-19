@@ -12,6 +12,7 @@ RUN apk add ffmpeg
 
 COPY ./ .
 
+RUN npm run minify:html
 RUN npm run build:ui
 
 EXPOSE 8080
