@@ -373,16 +373,36 @@ export async function postFollowUser(req, res) {
 }
 
 export async function getUserFollowers(req, res) {
-  const data = await db
+  const [user] = await db
     .select('*')
     .from('users')
-    .leftJoin('follows', 'users.id', 'follows.following_id')
-    .where({ 'users.id': req.params.user_id });
+    .rightJoin('user_details', 'users.id', '=', 'user_details.user_id')
+    .where({'users.id': req.params.user_id });
+
+  const followings = await db('follows')
+    .join('users', 'follows.following_id', '=', 'users.id')
+    .join('user_details', 'users.id', '=', 'user_details.user_id')
+    .select('users.*', 'user_details.*')
+    .where('follows.follower_id', req.params.user_id);
+
+  const followers = await db('follows')
+    .join('users', 'follows.follower_id', '=', 'users.id')
+    .join('user_details', 'users.id', '=', 'user_details.user_id')
+    .select('users.*', 'user_details.*')
+    .where('follows.following_id', req.params.user_id);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data,
+    data: [
+      {
+        user: {
+          ...user,
+          followers,
+          followings
+        }
+      },
+    ],
   });
 }
