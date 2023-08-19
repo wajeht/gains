@@ -1,16 +1,4 @@
-<script setup>
-import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-
-import { isMobile, sleep } from '../../../../../utils/helpers.js';
-import useUserStore from '../../../store/user.store.js';
-import api from '../../../../../utils/fetch-with-style.js';
-
-const router = useRouter();
-const userStore = useUserStore();
-
-const loading = ref(false);
-</script>
+<script setup></script>
 
 <template>
   <div

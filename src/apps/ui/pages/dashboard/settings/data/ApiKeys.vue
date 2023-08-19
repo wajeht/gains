@@ -62,7 +62,7 @@ async function requestApiKey() {
   try {
     requestApiKeyLoading.value = true;
 
-    const wait = await sleep(1000); // wait a while before generating new keys because of db error
+    await sleep(1000); // wait a while before generating new keys because of db error
 
     const res = await api.post(`/api/v1/api-keys/`, { user_id: userStore.user.id });
     const json = await res.json();

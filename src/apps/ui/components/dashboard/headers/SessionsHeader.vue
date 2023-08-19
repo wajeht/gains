@@ -29,7 +29,6 @@ const block_id = ref('');
 const body_weight = ref('');
 const hours_of_sleep = ref('');
 const notes = ref('');
-const random_uuid = ref(uuidv4());
 const loading = ref(false);
 
 const alert = reactive({

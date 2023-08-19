@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import { sleep } from '../../../../utils/helpers.js';
-
 export default {
   props: ['uid'],
   data() {
