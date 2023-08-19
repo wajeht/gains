@@ -14,7 +14,4 @@ COPY ./ .
 
 EXPOSE 8080
 
-RUN npm run migrate:latest
-RUN npm run seed:run
-
 CMD ["npm", "run", "dev:hmr"]
