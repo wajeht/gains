@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/wajeht/gains/compare/v0.0.8...v0.0.9) (2023-08-19)
+
+
+### Features
+
+* add follows table ([e664535](https://github.com/wajeht/gains/commit/e664535d79e5987ce2dc90334a1c8ceb9217cb96))
+* add html minify script ([64bd734](https://github.com/wajeht/gains/commit/64bd7349bc751833fd6768c26456f997273254dc))
+* add html minify script ([baa1ab2](https://github.com/wajeht/gains/commit/baa1ab24a39d3555693ece7d7be0550ccbeb980c))
+* add html minify script ([21dbdd6](https://github.com/wajeht/gains/commit/21dbdd60475f412c34cfe771f77cb5ff663b92bc))
+* add html minify script ([c9f11e3](https://github.com/wajeht/gains/commit/c9f11e34342c4bb03ac4665654ca018c7e4432a0))
+* add messae table ([daa7305](https://github.com/wajeht/gains/commit/daa7305a95317fc101e3894f6bb32f966efcdb19))
+* add seed on dev ([e04f96f](https://github.com/wajeht/gains/commit/e04f96f7b8632320d6e4555b5e24b712385a2667))
+* change home page screenshot ([a04ef8d](https://github.com/wajeht/gains/commit/a04ef8dba763d99ab822b3c694e55708b8f9f324))
+* count all users ([75838e1](https://github.com/wajeht/gains/commit/75838e10f5dd8a89902ec120df9ec897ed622484))
+* display empty state when there is no data in tracker ([84b1d70](https://github.com/wajeht/gains/commit/84b1d701f2030b9f04d8cf8e107788520aee792c))
+* enable chat route ([053a0f6](https://github.com/wajeht/gains/commit/053a0f6d9e2aee427f05cbd4ff1e5436610d59a0))
+* follow route ([adc2775](https://github.com/wajeht/gains/commit/adc27752c947513e0b2e8bf4a169fff4630c2bba))
+* follow routes ([eb8be20](https://github.com/wajeht/gains/commit/eb8be2023494c6e6ef63f923e39995b7df34c955))
+* hide all scrollbar ([bf79a70](https://github.com/wajeht/gains/commit/bf79a702b85c378c93987bfa8dd9d46b2e987318))
+* make taking screenshot faster ([57d6a74](https://github.com/wajeht/gains/commit/57d6a74186df94842f5f0caafd680138ade67345))
+* register chat page ([7e7f170](https://github.com/wajeht/gains/commit/7e7f17068f981ae34b49c4bada86517b61d827bf))
+* regular sql to knex syntax ([c7c332c](https://github.com/wajeht/gains/commit/c7c332c2c45ff9e14cf0c822890db472ff99c75e))
+* scaffolded follows and messages routers ([8c8592a](https://github.com/wajeht/gains/commit/8c8592af1371955fd6c19a3663a1aa33720ec83a))
+* scaffolded follows stuff ([6bde8c7](https://github.com/wajeht/gains/commit/6bde8c7033144ce9863cbdee66d9bf628460a0fd))
+* script defer ([d57166f](https://github.com/wajeht/gains/commit/d57166fe87a56a96b34031a45ff7c8a966207398))
+* script defer ([df24009](https://github.com/wajeht/gains/commit/df240093494e3c8c0690f7c149fe4494e13b2d12))
+* show smart display pop up when no apikey or yes ([17a3cd4](https://github.com/wajeht/gains/commit/17a3cd40036759b153513d655a10f9959da8e1f1))
+* some error handleing ([543f98c](https://github.com/wajeht/gains/commit/543f98c11059335f5376073b4c23c2f446f82f81))
+* temporary guard chat route ([2612eab](https://github.com/wajeht/gains/commit/2612eab4ad329728fa989a2cca7323f5fdd2d02d))
+* temporary guard chat route ([5df4f30](https://github.com/wajeht/gains/commit/5df4f30844a3d1d3fd9a416d8f2b9955a717b279))
+* upgrade bootstrap icons ([bff723f](https://github.com/wajeht/gains/commit/bff723f3cb7d5464bd32a4ac084e1db9fe34f81c))
+* users registration this week ([3ad34bb](https://github.com/wajeht/gains/commit/3ad34bbef53d864c831cb1fac31b6ec78bc57d43))
+
+
+### Bug Fixes
+
+* **changelog:** was hitting fs all the time ([81d43ee](https://github.com/wajeht/gains/commit/81d43eef98f5bbf1d2e36a47ebe04a45aee157a6))
+* disable video size it no video was picked ([63fa08c](https://github.com/wajeht/gains/commit/63fa08c959fddb3d0eead78f4d8b6760e0aed827))
+* remove red scrollbar ([265fb4c](https://github.com/wajeht/gains/commit/265fb4c812a6c7caf27ddb1159f46f948e816707))
+* start date was null on add exercise load ([fb076bd](https://github.com/wajeht/gains/commit/fb076bd84b26eff6ac01ecc44787bcd3852cd3f4))
+* start date was null on add exercise load ([89c3827](https://github.com/wajeht/gains/commit/89c3827a0fb8cb60562132ead19d9f017b420b75))
+* video was able to submit wihtout choosing file ([e621cbd](https://github.com/wajeht/gains/commit/e621cbd6724b113c5b8df6e220c6e3f7f7cda019))
+
 ### [0.0.8](https://github.com/wajeht/gains/compare/v0.0.7...v0.0.8) (2023-08-17)
 
 ### Features
