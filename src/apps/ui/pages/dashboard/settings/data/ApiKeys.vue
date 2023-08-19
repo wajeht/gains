@@ -25,6 +25,11 @@ onMounted(async () => {
   const x = await getApiKeys();
   apiKeys.value = x;
   appStore.loading = false;
+
+  if (apiKeys.value.length === 0) {
+    alert.msg = `You currently do not have any api keys. Request for a key!`;
+    alert.type = 'warning';
+  }
 });
 
 function toggleShowApiKey(index) {
@@ -226,11 +231,6 @@ function clearAndDismissDeleteApiKeyModal() {
                   </button>
                 </div>
               </span>
-
-              <!-- empty -->
-              <p v-else class="card-text alert alert-warning">
-                You currently do not have any api keys. Request for a key!
-              </p>
 
               <!-- button -->
               <button
