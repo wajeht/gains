@@ -144,9 +144,9 @@ export async function getStats(req, res) {
   const today = dayjs().endOf('day').toISOString();
   const sevenDaysAgo = dayjs().subtract(7, 'day').startOf('day').toISOString();
 
-  const users = await db('users')
-      .select('*')
-      .leftJoin('user_details', 'users.id', 'user_details.user_id')
+  const users = await db
+      .select('id')
+      .from('users')
       .whereBetween('users.created_at', [sevenDaysAgo, today]);
 
   res.status(StatusCodes.OK).json({
