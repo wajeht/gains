@@ -42,7 +42,6 @@ async function clearAllCache() {
   } finally {
     states.loading = false;
   }
-
 }
 </script>
 
@@ -61,8 +60,12 @@ async function clearAllCache() {
           <OnlineUsers />
 
           <!-- clear all cache -->
-          <button class="btn btn-primary" :disabled="states.loading" style="min-height: 43px !important"
-            @click="clearAllCache">
+          <button
+            class="btn btn-primary"
+            :disabled="states.loading"
+            style="min-height: 43px !important"
+            @click="clearAllCache"
+          >
             <div v-if="states.loading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
@@ -77,9 +80,13 @@ async function clearAllCache() {
 
         <!-- card -->
         <div class="col d-flex flex-column gap-4">
-
           <!-- alert -->
-          <div v-if="states.alert.type" :class="`alert-${states.alert.type}`" class="alert" style="margin-bottom: -10px;">
+          <div
+            v-if="states.alert.type"
+            :class="`alert-${states.alert.type}`"
+            class="alert"
+            style="margin-bottom: -10px"
+          >
             <span>{{ states.alert.msg }}</span>
           </div>
 

@@ -33,7 +33,7 @@ onMounted(async () => {
   }
 });
 
-onUpdated(()=> {
+onUpdated(() => {
   if (apiKeys.value.length) {
     alert.msg = ``;
     alert.type = '';

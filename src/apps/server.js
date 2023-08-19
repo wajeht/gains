@@ -113,6 +113,8 @@ process.on('SIGTERM', gracefulShutdown);
       .where({ 's.deleted': false })
       .andWhere({ 's.object': 'changelog' });
 
+    await redis.del('changelogs');
+
     for (const user of changelogSubscriptions) {
       // not triple equals ==== because of string type
       if (pkg.version > user.subscribed_version) {

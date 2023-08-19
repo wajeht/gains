@@ -16,7 +16,6 @@ import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
 import logger from '../utils/logger.js';
 import redis from '../utils/redis.js';
-import { red } from '../utils/rainbow-log.js';
 
 const app = express();
 const server = http.createServer(app);

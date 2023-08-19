@@ -145,16 +145,18 @@ export async function getStats(req, res) {
   const sevenDaysAgo = dayjs().subtract(7, 'day').startOf('day').toISOString();
 
   const users = await db
-      .select('id')
-      .from('users')
-      .whereBetween('users.created_at', [sevenDaysAgo, today]);
+    .select('id')
+    .from('users')
+    .whereBetween('users.created_at', [sevenDaysAgo, today]);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: [{
-      users,
-    }],
+    data: [
+      {
+        users,
+      },
+    ],
   });
 }

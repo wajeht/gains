@@ -3,7 +3,7 @@ import { reactive, onMounted } from 'vue';
 import api from '../../../../utils/fetch-with-style';
 
 const states = reactive({
-  users: 0
+  users: 0,
 });
 
 async function getStats() {
@@ -23,7 +23,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="card text-dark mb-3" style="max-width: 18rem;">
+  <div class="card text-dark mb-3" style="max-width: 18rem">
     <div class="card-header">Users</div>
     <div class="card-body">
       <h5 class="card-title">{{ states.users }}</h5>
@@ -31,7 +31,7 @@ onMounted(async () => {
     </div>
     <div class="card-footer text-center">
       <router-link to="/admin/users">
-        <small class="text-muted ">More info ➡</small>
+        <small class="text-muted">More info ➡</small>
       </router-link>
     </div>
   </div>

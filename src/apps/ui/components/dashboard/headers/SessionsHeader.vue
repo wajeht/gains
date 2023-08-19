@@ -138,7 +138,6 @@ async function addASession() {
     }
   }
 }
-
 </script>
 
 <template>
