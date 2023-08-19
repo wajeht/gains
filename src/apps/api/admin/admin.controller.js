@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import * as UsersQueries from '../v1/users/users.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import CustomError from '../api.errors.js';
 import seedMockTrainingData from '../../../utils/seed-mock-training-data.js';
 import dayjs from 'dayjs';
 import fsp from 'fs/promises';
@@ -10,6 +9,7 @@ import path from 'path';
 import axios from 'axios';
 import { GITHUB } from '../../../config/env.js';
 import redis from '../../../utils/redis.js';
+import db from '../../../database/db.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
 
@@ -137,5 +137,24 @@ export async function clearAllCache(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: [],
+  });
+}
+
+export async function getStats(req, res) {
+  const today = dayjs().endOf('day').toISOString();
+  const sevenDaysAgo = dayjs().subtract(7, 'day').startOf('day').toISOString();
+
+  const users = await db('users')
+      .select('*')
+      .leftJoin('user_details', 'users.id', 'user_details.user_id')
+      .whereBetween('users.created_at', [sevenDaysAgo, today]);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [{
+      users,
+    }],
   });
 }
