@@ -2839,7 +2839,7 @@ function downloadVideo(url) {
             <button
               type="submit"
               class="btn btn-success"
-              :disabled="uploadAVideoLoading || videoFileSize > 10000000"
+              :disabled="uploadAVideoLoading || videoFileSize > 10000000 || !videoFileSize"
             >
               <div
                 v-if="uploadAVideoLoading"
