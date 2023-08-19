@@ -1,19 +1,18 @@
 import ffmpeg from 'fluent-ffmpeg';
-import db from '../database/db.js';
 import logger from './logger.js';
 
 export function capture(video_path) {
   const folderPath = video_path.slice(0, video_path.lastIndexOf('/'));
-  const screenshotName = 'thumbnail-' + video_path.slice(video_path.lastIndexOf('/') + 1).split('.')[0] + '.jpeg'; // prettier-ignore
+  const videoFileName = video_path.split('/').pop().split('.')[0];
+  const screenshotName = `thumbnail-${videoFileName}.webp`;
   return new Promise((resolve, reject) => {
     ffmpeg(video_path)
       .noAudio()
       .noVideo()
       .screenshot({
-        timestamps: ['00:00:00.000'], // hh:mm:ss.xxx
+        timestamps: ['00:00:00.000'],
         folder: folderPath,
         filename: screenshotName,
-        // filename: 'thumbnail-%f.jpeg',
       })
       .on('error', (err) => {
         logger.info(`An error occurred while generating screenshot! ${err.message}`);
@@ -21,9 +20,10 @@ export function capture(video_path) {
       })
       .on('end', () => {
         logger.info(`Screenshot generation finished!!`);
+        const screenshotPath = `${folderPath}/${screenshotName}`;
         resolve({
-          screenshot_url: (folderPath + '/' + screenshotName).split('public')[1],
-          screenshot_path: folderPath + '/' + screenshotName,
+          screenshot_url: screenshotPath.split('public')[1],
+          screenshot_path: screenshotPath,
         });
       });
   });
