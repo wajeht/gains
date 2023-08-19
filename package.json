@@ -32,7 +32,7 @@
     "format": "prettier --write .",
     "lint:check": "eslint .",
     "lint": "eslint --fix .",
-    "minify:html": "html-minifier --input-dir ./src --output-dir ./src --collapse-whitespace --file-ext html"
+    "minify:html": "html-minifier --input-dir ./src --output-dir ./src --collapse-whitespace --minify-js --minify-css --remove-comments --file-ext html"
   },
   "bin": {
     "gains": "./src/apps/cli/cli.js"
