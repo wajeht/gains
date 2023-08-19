@@ -41,8 +41,11 @@ onUnmounted(() => document.body.removeChild(document.getElementById(`add-a-sessi
 // this code above required for back drop problem fixed when adding a new session header model
 
 async function gerUserBlocksReady() {
-  const data = await getUserBlocks();
-  blocks.items = data || [];
+  if (!blocks.items.length) {
+    const data = await getUserBlocks();
+    blocks.items = data || [];
+  }
+  start_date.value = dayjs().format('YYYY-MM-DDTHH:mm');
 }
 
 async function getUserBlocks() {
@@ -72,14 +75,10 @@ async function getUserBlocks() {
 }
 
 async function clearDataAndDismissModal() {
-  if (!blocks.items.length) {
-    await gerUserBlocksReady();
-  }
-
   alert.type = '';
   alert.msg = '';
   name.value = '';
-  start_date.value = dayjs().format('YYYY-MM-DDTHH:mm');
+  start_date.value = '';
   user_id.value = userStore.user.id;
   block_id.value = '';
   body_weight.value = '';
@@ -140,32 +139,6 @@ async function addASession() {
   }
 }
 
-// async function clearUsersSessionsCache() {
-//   try {
-//     const user_id = userStore.user.id;
-
-//     const res = await api.post(`/api/v1/cache/user-id-${user_id}-sessions/clear`);
-//     const json = await res.json();
-
-//     if (!res.ok) {
-//       if (json.errors) {
-//         throw json.errors;
-//       } else {
-//         throw json.message;
-//       }
-//     }
-
-//     router.go();
-//   } catch (e) {
-//     alert.type = 'danger';
-//     if (Array.isArray(e)) {
-//       alert.msg = e.map((cur) => cur.msg).join(' ');
-//       return;
-//     } else {
-//       alert.msg = e;
-//     }
-//   }
-// }
 </script>
 
 <template>
@@ -178,7 +151,7 @@ async function addASession() {
     <span>
       <!-- add button -->
       <span
-        @click="clearDataAndDismissModal()"
+        @click="gerUserBlocksReady"
         class="link-secondary"
         role="button"
         data-bs-toggle="modal"
