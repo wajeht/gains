@@ -149,6 +149,11 @@ export async function getStats(req, res) {
     .from('users')
     .whereBetween('users.created_at', [sevenDaysAgo, today]);
 
+  const videos = await db
+    .select('id')
+    .from('videos')
+    .whereBetween('videos.created_at', [sevenDaysAgo, today]);
+
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
@@ -156,6 +161,7 @@ export async function getStats(req, res) {
     data: [
       {
         users,
+        videos,
       },
     ],
   });
