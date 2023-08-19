@@ -3,7 +3,6 @@ import api from '../../../../../utils/fetch-with-style.js';
 
 import { ref, onMounted, reactive, onUnmounted } from 'vue';
 import { pickBy } from 'lodash-es';
-import { v4 as uuidv4 } from 'uuid';
 
 import dayjs from 'dayjs';
 
@@ -72,7 +71,11 @@ async function getUserBlocks() {
   }
 }
 
-function clearDataAndDismissModal() {
+async function clearDataAndDismissModal() {
+  if (!blocks.items.length) {
+    await gerUserBlocksReady();
+  }
+
   alert.type = '';
   alert.msg = '';
   name.value = '';
@@ -175,7 +178,7 @@ async function addASession() {
     <span>
       <!-- add button -->
       <span
-        @click="gerUserBlocksReady()"
+        @click="clearDataAndDismissModal()"
         class="link-secondary"
         role="button"
         data-bs-toggle="modal"
@@ -298,7 +301,7 @@ async function addASession() {
                     :disabled="loading || blocks.items.length === 0"
                   >
                     <option selected value="" disabled>Select a block!</option>
-                    <option v-for="block in blocks.items" :value="block.id">
+                    <option v-for="block in blocks.items" :value="block.id" :key="block.id">
                       {{ block.name }}
                     </option>
                   </select>
