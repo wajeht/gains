@@ -21,7 +21,6 @@ import AdminVideos from './pages/admin/AdminVideos.vue';
 import AdminSessions from './pages/admin/AdminSessions.vue';
 
 // -------------------- dashboard ---------------------------
-import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import Community from './pages/dashboard/community/Community.vue';
@@ -31,6 +30,10 @@ import DashboardUnauthorized from './pages/dashboard/DashboardUnauthorized.vue';
 import DashboardError from './pages/dashboard/DashboardError.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
+
+// profile
+import Profile from './pages/dashboard/profile/Profile.vue';
+import Following from './pages/dashboard/profile/Following.vue';
 
 // --- sessions ---
 import Sessions from './pages/dashboard/sessions/Sessions.vue';
@@ -307,10 +310,20 @@ const routes = [
       requiredAuth: true,
     },
   },
+  // profile
   {
     path: '/dashboard/profile',
     name: 'Profile',
     component: Profile,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/profile/Following',
+    name: 'Following',
+    component: Following,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,

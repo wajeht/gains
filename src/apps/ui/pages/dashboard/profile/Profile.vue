@@ -1,15 +1,15 @@
 <script setup>
-import VideosAndProfileHeader from '../../components/dashboard/headers/VideosAndProfileHeader.vue';
+import VideosAndProfileHeader from '../../../components/dashboard/headers/VideosAndProfileHeader.vue';
 
 import { LineChart, useLineChart } from 'vue-chart-3';
 import { onMounted, reactive, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import api from '../../../../utils/fetch-with-style.js';
-import useUserStore from '../../store/user.store.js';
+import api from '../../../../../utils/fetch-with-style.js';
+import useUserStore from '../../../store/user.store.js';
 import dayjs from 'dayjs';
 import { omit, meanBy } from 'lodash-es';
 
-import useAppStore from '../../store/app.store.js';
+import useAppStore from '../../../store/app.store.js';
 const appStore = useAppStore();
 
 const userStore = useUserStore();
@@ -296,7 +296,7 @@ const { lineChartProps } = useLineChart({
             </router-link>
 
             <!-- followers -->
-            <router-link to="/dashboard/profile/followers">
+            <router-link to="/dashboard/profile/following">
               <div class="d-flex flex-column align-items-center">
                 <small>{{ followStats[0]?.user?.followers?.length }}</small>
                 <small class="text-muted">Followers</small>
@@ -304,7 +304,7 @@ const { lineChartProps } = useLineChart({
             </router-link>
 
             <!-- following -->
-            <router-link to="/dashboard/profile/followers">
+            <router-link to="/dashboard/profile/following">
               <div class="d-flex flex-column align-items-center">
                 <small>{{ followStats[0]?.user?.followings?.length }}</small>
                 <small class="text-muted">Following</small>
