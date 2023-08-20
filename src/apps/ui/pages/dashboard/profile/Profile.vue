@@ -280,9 +280,7 @@ const { lineChartProps } = useLineChart({
                 </small>
 
                 <!-- description -->
-                <p v-if="userStore.user.bio" class="card-text">{{ userStore.user.bio }}</p>
-
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <p v-if="userStore.user.bio" class="card-text"><small>{{ userStore.user.bio }}</small></p>
               </div>
             </div>
           </div>
