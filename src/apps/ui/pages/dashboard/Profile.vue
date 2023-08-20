@@ -16,6 +16,7 @@ const userStore = useUserStore();
 const router = useRouter();
 const today = ref(null);
 const loading = ref(false);
+const followStats = ref([]);
 const alert = reactive({
   type: '',
   msg: '',
@@ -26,6 +27,33 @@ const recovery = ref([]);
 const weeklyWeightIn = reactive({});
 
 const recentPrs = reactive({});
+
+async function getMyFollowStats() {
+  try {
+    const res = await api.get(`/api/v1/users/${userStore.user.id}/followers`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    return json.data;
+  } catch (e) {
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+      return;
+    }
+  }
+}
 
 onMounted(async () => {
   try {
@@ -51,13 +79,20 @@ onMounted(async () => {
     // const r = await getRecovery();
     // recovery.value = r || [];
 
-    const [wwi, rpr, r] = await Promise.all([getWeeklyWeightIn(), getRecentPrs(), getRecovery()]);
+    const [wwi, rpr, r, fs] = await Promise.all([
+      getWeeklyWeightIn(),
+      getRecentPrs(),
+      getRecovery(),
+      getMyFollowStats(),
+    ]);
     Object.assign(weeklyWeightIn, wwi);
 
     rpr.map((cur) => (cur.showRecentPrDetails = false));
     Object.assign(recentPrs, rpr);
 
     recovery.value = r || [];
+
+    followStats.value = fs || [];
 
     appStore.loading = false;
   } catch (e) {
@@ -239,9 +274,9 @@ const { lineChartProps } = useLineChart({
                 </div>
 
                 <!-- username and birth date -->
-                <small class="card-subtitle mb-0 text-muted d-flex gap-2">
+                <small class="card-subtitle mb-0 text-muted d-flex gap-2 mb-2">
                   <span> @{{ userStore.user.username }} </span>
-                  <span>{{ userStore.user.birth_date }}</span>
+                  <!-- <span>{{ userStore.user.birth_date }}</span> -->
                 </small>
 
                 <!-- description -->
@@ -252,32 +287,39 @@ const { lineChartProps } = useLineChart({
             </div>
           </div>
           <div class="card-footer d-flex justify-content-between">
-            <!-- bodyweight -->
-            <div class="d-flex flex-column align-items-center">
-              <small>{{
-                userStore.user.weight === null ? '?' : userStore.user.weight + ' lbs.'
-              }}</small>
-              <small class="text-muted">Bodyweight</small>
-            </div>
-
             <!-- sleep -->
-            <div class="d-flex flex-column align-items-center">
-              <small> {{ isNaN(averageSleep) ? '?' : `~ ${averageSleep}` }} hrs</small>
-              <small class="text-muted">Sleep</small>
-            </div>
+            <router-link to="/dashboard/tools/others/recovery">
+              <div class="d-flex flex-column align-items-center">
+                <small> {{ isNaN(averageSleep) ? '?' : `~ ${averageSleep}` }} hrs</small>
+                <small class="text-muted">Sleep</small>
+              </div>
+            </router-link>
 
-            <!-- rpe -->
-            <div class="d-flex flex-column align-items-center">
-              <small>~ 7 RPE</small>
-              <small class="text-muted">Recovery</small>
-            </div>
+            <!-- followers -->
+            <router-link to="/dashboard/profile/followers">
+              <div class="d-flex flex-column align-items-center">
+                <small>{{ followStats[0]?.user?.followers?.length }}</small>
+                <small class="text-muted">Followers</small>
+              </div>
+            </router-link>
+
+            <!-- following -->
+            <router-link to="/dashboard/profile/followers">
+              <div class="d-flex flex-column align-items-center">
+                <small>{{ followStats[0]?.user?.followings?.length }}</small>
+                <small class="text-muted">Following</small>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
 
       <!-- recovery chart -->
       <div>
-        <h5><i class="bi bi-activity"></i> Recovery</h5>
+        <h5 class="d-flex justify-content-between align-items-center">
+          <span> <i class="bi bi-activity"></i> Recovery </span>
+          <small class="text-muted">~ 7 RPE</small>
+        </h5>
         <div class="card" style="height: 100%">
           <div class="card-body">
             <LineChart
@@ -349,7 +391,12 @@ const { lineChartProps } = useLineChart({
 
       <!-- bodyweight -->
       <div>
-        <h5><i class="bi bi-table"></i> Bodyweight</h5>
+        <h5 class="d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-table"></i> Bodyweight</span>
+          <small class="text-muted">{{
+            userStore.user.weight === null ? '?' : userStore.user.weight + ' lbs./w'
+          }}</small>
+        </h5>
         <div class="card">
           <div class="card-body">
             <small class="p-0 m-0">
@@ -394,6 +441,15 @@ const { lineChartProps } = useLineChart({
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: grey;
+}
+
+a:hover {
+  color: #191919;
+}
+
 .image-wrapper {
   aspect-ratio: 1/1;
   width: auto;

@@ -377,7 +377,7 @@ export async function getUserFollowers(req, res) {
     .select('*')
     .from('users')
     .rightJoin('user_details', 'users.id', '=', 'user_details.user_id')
-    .where({'users.id': req.params.user_id });
+    .where({ 'users.id': req.params.user_id });
 
   const followings = await db('follows')
     .join('users', 'follows.following_id', '=', 'users.id')
@@ -400,8 +400,8 @@ export async function getUserFollowers(req, res) {
         user: {
           ...user,
           followers,
-          followings
-        }
+          followings,
+        },
       },
     ],
   });
