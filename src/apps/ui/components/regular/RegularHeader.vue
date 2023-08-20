@@ -75,7 +75,7 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
 
           <!-- app -->
           <li v-if="userStore.isLoggedIn" class="nav-item">
-            <router-link to="/dashboard/profile" class="nav-link link-dark">App</router-link>
+            <router-link :to="`/dashboard/profile/${userStore.user.username}`" class="nav-link link-dark">App</router-link>
           </li>
 
           <!-- login -->
