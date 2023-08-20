@@ -3,19 +3,16 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // tags
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS tags (
-      id                    SERIAL PRIMARY KEY,
-      name                  VARCHAR(250) NOT NULL,
-      log_id                INT REFERENCES logs on DELETE CASCADE NOT NULL,
-      user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
-      json                  jsonb DEFAULT NULL,
-      deleted               BOOLEAN DEFAULT FALSE,
-      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('tags', (table) => {
+    table.increments('id').primary();
+    table.string('name', 250).notNullable();
+    table.integer('log_id').references('id').inTable('logs').onDelete('CASCADE').notNullable();
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table.jsonb('json').defaultTo(null);
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -23,5 +20,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS tags;`);
+  await knex.schema.dropTableIfExists('tags');
 }

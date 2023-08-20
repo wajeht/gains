@@ -6,6 +6,7 @@ import { omit, without } from 'lodash-es';
 import * as CacheQueries from '../cache/cache.queries.js';
 import * as JobsServices from '../../../../services/job.services.js';
 import redis from '../../../../utils/redis.js';
+import db from '../../../../database/db.js';
 
 /**
  * check to see if a current users authentication is still valid
@@ -77,7 +78,7 @@ export async function getUsers(req, res) {
   // only cache page 1
   // don't cache any results after page 1
   if (pagination.currentPage > 1) {
-    await redis.del(`user-id-${req.user.user_id}-users`);
+    redis.del(`user-id-${req.user.user_id}-users`);
 
     users = await UsersQueries.getAllUsers({ pagination, search });
 
@@ -96,7 +97,7 @@ export async function getUsers(req, res) {
   if (users === null) {
     users = await UsersQueries.getAllUsers({ pagination, search });
 
-    await redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
+    redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
   }
 
   return res.status(StatusCodes.OK).json({
@@ -135,7 +136,7 @@ export async function patchUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.updateUserById(id, req.body);
 
-  await redis.del(`user-id-${req.user.user_id}-users`);
+  redis.del(`user-id-${req.user.user_id}-users`);
 
   logger.info(`User id ${id} has updated user details to ${JSON.stringify(req.body)}!`);
 
@@ -351,5 +352,57 @@ export async function getDownloadUserData(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: [],
+  });
+}
+
+export async function postFollowUser(req, res) {
+  const data = await db
+    .insert({
+      follower_id: req.body.follower_id,
+      following_id: req.params.following_id,
+    })
+    .into('follows')
+    .returning('*');
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was created successfully!',
+    data,
+  });
+}
+
+export async function getUserFollowers(req, res) {
+  const [user] = await db
+    .select('*')
+    .from('users')
+    .rightJoin('user_details', 'users.id', '=', 'user_details.user_id')
+    .where({ 'users.id': req.params.user_id });
+
+  const followings = await db('follows')
+    .join('users', 'follows.following_id', '=', 'users.id')
+    .join('user_details', 'users.id', '=', 'user_details.user_id')
+    .select('users.*', 'user_details.*')
+    .where('follows.follower_id', req.params.user_id);
+
+  const followers = await db('follows')
+    .join('users', 'follows.follower_id', '=', 'users.id')
+    .join('user_details', 'users.id', '=', 'user_details.user_id')
+    .select('users.*', 'user_details.*')
+    .where('follows.following_id', req.params.user_id);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [
+      {
+        user: {
+          ...user,
+          followers,
+          followings,
+        },
+      },
+    ],
   });
 }

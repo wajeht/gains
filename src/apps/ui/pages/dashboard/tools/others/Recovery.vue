@@ -273,7 +273,7 @@ const { lineChartProps } = useLineChart({
         <!-- table -->
         <div>
           <h5><i class="bi bi-table"></i> Recovery Tracker</h5>
-          <div class="card">
+          <div v-if="recovery.length" class="card">
             <!-- header -->
             <div class="card-header">
               <span class="d-flex justify-content-between align-items-center gap-2">
@@ -485,6 +485,15 @@ const { lineChartProps } = useLineChart({
                   </li>
                 </ul>
               </nav>
+            </div>
+          </div>
+
+          <!-- no recovery -->
+          <div v-else class="card">
+            <div class="card-body">
+              <div class="text-muted text-center fw-light">
+                <small> No relevant data available yet! </small>
+              </div>
             </div>
           </div>
         </div>

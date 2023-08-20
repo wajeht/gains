@@ -3,24 +3,31 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // logs
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS logs (
-      id                    SERIAL PRIMARY KEY,
-      name                  VARCHAR(500) NOT NULL,
-      notes                 VARCHAR(1000),
-      collapsed             BOOLEAN DEFAULT FALSE,
-      private               BOOLEAN DEFAULT TRUE,
-      sets_notes_visibility BOOLEAN DEFAULT FALSE,
-      user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
-      session_id            INT REFERENCES sessions on DELETE CASCADE NOT NULL,
-      exercise_id           INT REFERENCES exercises on DELETE CASCADE NOT NULL,
-      json                  jsonb DEFAULT NULL,
-      deleted               BOOLEAN DEFAULT FALSE,
-      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('logs', (table) => {
+    table.increments('id').primary();
+    table.string('name', 500).notNullable();
+    table.string('notes', 1000);
+    table.boolean('collapsed').defaultTo(false);
+    table.boolean('private').defaultTo(true);
+    table.boolean('sets_notes_visibility').defaultTo(false);
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table
+      .integer('session_id')
+      .references('id')
+      .inTable('sessions')
+      .onDelete('CASCADE')
+      .notNullable();
+    table
+      .integer('exercise_id')
+      .references('id')
+      .inTable('exercises')
+      .onDelete('CASCADE')
+      .notNullable();
+    table.jsonb('json').defaultTo(null);
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -28,5 +35,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS logs;`);
+  await knex.schema.dropTableIfExists('logs');
 }

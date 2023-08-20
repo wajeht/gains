@@ -3,23 +3,20 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // videos
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS videos (
-      id                    SERIAL PRIMARY KEY,
-      video_url             VARCHAR(1000) DEFAULT NULL,
-      video_path            VARCHAR(1000) DEFAULT NULL,
-      screenshot_url        VARCHAR(1000) DEFAULT NULL,
-      screenshot_path       VARCHAR(1000) DEFAULT NULL,
-      user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
-      log_id                INT REFERENCES logs on DELETE CASCADE NOT NULL,
-      session_id            INT REFERENCES sessions on DELETE CASCADE,
-      json                  jsonb DEFAULT NULL,
-      deleted               BOOLEAN DEFAULT FALSE,
-      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('videos', (table) => {
+    table.increments('id').primary();
+    table.string('video_url', 1000).defaultTo(null);
+    table.string('video_path', 1000).defaultTo(null);
+    table.string('screenshot_url', 1000).defaultTo(null);
+    table.string('screenshot_path', 1000).defaultTo(null);
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table.integer('log_id').references('id').inTable('logs').onDelete('CASCADE').notNullable();
+    table.integer('session_id').references('id').inTable('sessions').onDelete('CASCADE');
+    table.jsonb('json').defaultTo(null);
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -27,5 +24,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS videos;`);
+  await knex.schema.dropTableIfExists('videos');
 }

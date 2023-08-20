@@ -21,15 +21,19 @@ import AdminVideos from './pages/admin/AdminVideos.vue';
 import AdminSessions from './pages/admin/AdminSessions.vue';
 
 // -------------------- dashboard ---------------------------
-import Profile from './pages/dashboard/Profile.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
-import Community from './pages/dashboard/Community.vue';
+import Community from './pages/dashboard/community/Community.vue';
+import Chat from './pages/dashboard/community/Chat.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import DashboardUnauthorized from './pages/dashboard/DashboardUnauthorized.vue';
 import DashboardError from './pages/dashboard/DashboardError.vue';
 import Videos from './pages/dashboard/Videos.vue';
 import VideoDetails from './components/dashboard/VideoDetails.vue';
+
+// profile
+import Profile from './pages/dashboard/profile/Profile.vue';
+import Following from './pages/dashboard/profile/Following.vue';
 
 // --- sessions ---
 import Sessions from './pages/dashboard/sessions/Sessions.vue';
@@ -242,6 +246,15 @@ const routes = [
       requiredAuth: true,
     },
   },
+  {
+    path: '/dashboard/community/chat',
+    name: 'Chat',
+    component: Chat,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
   // settings -> others
   {
     path: '/dashboard/settings/others/send-feedback',
@@ -297,10 +310,22 @@ const routes = [
       requiredAuth: true,
     },
   },
+  // profile
   {
-    path: '/dashboard/profile',
+    path: '/dashboard/profile/:username',
     name: 'Profile',
     component: Profile,
+    props: true,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/profile/:username/following',
+    name: 'Following',
+    component: Following,
+    props: true,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,
@@ -651,7 +676,7 @@ router.beforeEach(async (to, from, next) => {
 
       // if they are already login, redirect to dashboard
       if (to.path.match(/(login)|(signup)/)?.length) {
-        return next('/dashboard/profile');
+        return next(`/dashboard/profile/${userStore.user.username}`);
       }
     }
 

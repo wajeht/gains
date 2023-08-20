@@ -53,11 +53,12 @@
       <!-- image -->
       <div class="row px-5 text-center animate__animated animate__fadeIn w-100 h-100">
         <img
-          src="../../assets/images/hero-new-half.png"
+          src="../../assets/images/hero-new-half.webp"
           class="mx-auto"
           style="height: auto; width: 80%"
           alt="gains app screenshot"
           rel="preload"
+          fetchpriority="high"
         />
       </div>
     </div>

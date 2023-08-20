@@ -1,7 +1,6 @@
 <script>
 import Or from './Or.vue';
 import useUserStore from '../../store/user.store.js';
-// import userAppStore from '../../store/app.store.js';
 import { isMobile } from '../../../../utils/helpers.js';
 import useAppStore from '../../store/app.store.js';
 
@@ -106,7 +105,7 @@ export default {
         if (user?.role === 'admin') {
           this.$router.push({ path: '/admin' });
         } else {
-          this.$router.push({ path: '/dashboard/profile' });
+          this.$router.push({ path: `/dashboard/profile/${userStore.user.username}` });
         }
       } catch (e) {
         this.loading = false;

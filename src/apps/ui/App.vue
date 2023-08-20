@@ -101,4 +101,16 @@ export default {
   cursor: -moz-not-allowed !important;
   cursor: -webkit-not-allowed !important;
 }
+
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
 </style>

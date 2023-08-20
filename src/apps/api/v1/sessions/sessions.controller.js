@@ -17,7 +17,7 @@ export async function postCreateSession(req, res) {
   const created = await SessionQueries.createASession(body);
 
   if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a session for for  User ID: ${body.user_id}!`); // prettier-ignore
-  const deletedCacheSessions = await redis.del(`user-id-${user_id}-sessions`);
+  redis.del(`user-id-${user_id}-sessions`);
 
   logger.info(`UserID: ${body.user_id} has created a SessionID: ${created[0].id}`);
 
@@ -54,7 +54,7 @@ export async function patchSession(req, res) {
     .andWhere({ user_id: uid });
 
   // delete cache so if they fetch again, they will get new cache query
-  const deletedCacheSessions = await redis.del(`user-id-${body.user_id}-sessions`);
+  redis.del(`user-id-${body.user_id}-sessions`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -98,7 +98,7 @@ export async function getUserSessions(req, res) {
   };
 
   if (pagination.currentPage > 1) {
-    const deleted = await redis.del(`user-id-${user_id}-sessions`);
+    redis.del(`user-id-${user_id}-sessions`);
     const sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -113,7 +113,7 @@ export async function getUserSessions(req, res) {
 
   if (sessions === null) {
     sessions = await SessionQueries.getSessionsByUserId(user_id, pagination);
-    const setSessions = await redis.set(`user-id-${user_id}-sessions`, JSON.stringify(sessions));
+    redis.set(`user-id-${user_id}-sessions`, JSON.stringify(sessions));
   }
 
   // if (!sessions.data.length) throw new CustomError.BadRequestError(`There are no sessions available for user id ${user_id}!`); // prettier-ignore
@@ -139,8 +139,8 @@ export async function deleteSession(req, res) {
 
   if (!session.length) throw new CustomError.BadRequestError(`Something went wrong while deleting session id ${sid}!`); // prettier-ignore
 
-  const deletedCacheSessions = await redis.del(`user-id-${uid}-sessions`);
-  const deletedCacheCommunitySessions = await redis.del(`user-id-${uid}-community-sessions`);
+  redis.del(`user-id-${uid}-sessions`);
+  redis.del(`user-id-${uid}-community-sessions`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -197,7 +197,7 @@ export async function getAllSessions(req, res) {
   }
 
   if (pagination.currentPage > 1) {
-    const deleted = await redis.del(`user-id-${user_id}-community-sessions`);
+    redis.del(`user-id-${user_id}-community-sessions`);
     const sessions = await SessionQueries.getAllSessions(pagination);
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -212,10 +212,7 @@ export async function getAllSessions(req, res) {
 
   if (sessions === null) {
     sessions = await SessionQueries.getAllSessions(pagination);
-    const setSessions = await redis.set(
-      `user-id-${user_id}-community-sessions`,
-      JSON.stringify(sessions),
-    );
+    redis.set(`user-id-${user_id}-community-sessions`, JSON.stringify(sessions));
   }
 
   res.status(StatusCodes.OK).json({

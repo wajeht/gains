@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-import { sleep, isMobile } from '../../../../utils/helpers.js';
+import { isMobile } from '../../../../utils/helpers.js';
 import api from '../../../../utils/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 

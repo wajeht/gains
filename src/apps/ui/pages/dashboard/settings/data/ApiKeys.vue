@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref, onMounted, onUpdated } from 'vue';
 import api from '../../../../../../utils/fetch-with-style.js';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 import useAppStore from '../../../../store/app.store';
 import useUserStore from '../../../../store/user.store.js';
 import { sleep } from '../../../../../../utils/helpers.js';
+import { update } from 'lodash-es';
 
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -25,6 +26,23 @@ onMounted(async () => {
   const x = await getApiKeys();
   apiKeys.value = x;
   appStore.loading = false;
+
+  if (!apiKeys.value.length) {
+    alert.msg = `You currently do not have any api keys. Request for a key!`;
+    alert.type = 'warning';
+  }
+});
+
+onUpdated(() => {
+  if (apiKeys.value.length) {
+    alert.msg = ``;
+    alert.type = '';
+  }
+
+  if (!apiKeys.value.length) {
+    alert.msg = `You currently do not have any api keys. Request for a key!`;
+    alert.type = 'warning';
+  }
 });
 
 function toggleShowApiKey(index) {
@@ -62,7 +80,7 @@ async function requestApiKey() {
   try {
     requestApiKeyLoading.value = true;
 
-    const wait = await sleep(1000); // wait a while before generating new keys because of db error
+    await sleep(1000); // wait a while before generating new keys because of db error
 
     const res = await api.post(`/api/v1/api-keys/`, { user_id: userStore.user.id });
     const json = await res.json();
@@ -226,11 +244,6 @@ function clearAndDismissDeleteApiKeyModal() {
                   </button>
                 </div>
               </span>
-
-              <!-- empty -->
-              <p v-else class="card-text alert alert-warning">
-                You currently do not have any api keys. Request for a key!
-              </p>
 
               <!-- button -->
               <button

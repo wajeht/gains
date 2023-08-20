@@ -43,8 +43,6 @@
 </template>
 
 <script>
-import { sleep } from '../../../../utils/helpers.js';
-
 export default {
   data() {
     return {

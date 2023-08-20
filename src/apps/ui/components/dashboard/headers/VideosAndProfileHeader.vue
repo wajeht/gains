@@ -1,7 +1,9 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import useUserStore from '../../../store/user.store';
 
+const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 
@@ -41,7 +43,7 @@ const number = ref(props.numberOfSessionsPerWeek);
     <!-- videos view -->
     <router-link
       v-if="route.path === '/dashboard/videos'"
-      to="/dashboard/profile"
+      :to="`/dashboard/profile/${userStore.user.username}`"
       class="link-secondary"
       role="button"
     >
@@ -66,7 +68,7 @@ const number = ref(props.numberOfSessionsPerWeek);
 
     <!-- profile view -->
     <router-link
-      v-if="route.path === '/dashboard/profile'"
+      v-if="route.path === `/dashboard/profile/${userStore.user.username}`"
       to="/dashboard/videos"
       class="link-secondary"
       role="button"

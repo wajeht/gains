@@ -3,18 +3,15 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // users
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS users (
-      id                    SERIAL PRIMARY KEY,
-      email                 VARCHAR(250) NOT NULL UNIQUE,
-      username              VARCHAR(250) NOT NULL UNIQUE,
-      password              VARCHAR(500) NOT NULL,
-      deleted               BOOLEAN DEFAULT FALSE,
-      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('users', (table) => {
+    table.increments('id').primary();
+    table.string('email', 250).notNullable().unique();
+    table.string('username', 250).notNullable().unique();
+    table.string('password', 500).notNullable();
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -22,5 +19,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS users;`);
+  await knex.schema.dropTableIfExists('users');
 }

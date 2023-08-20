@@ -14,28 +14,16 @@ export function getAllExerciseCategories() {
  * @returns An array of objects.
  */
 export async function getExerciseCategoriesByUserId(uid) {
-  // return db.select('*').from('exercise_categories').where({ user_id: uid }).orderBy('id', 'desc');
-  // only return categories which have exercises, an hide the rest
-  const { rows } = await db.raw(
-    `
-    SELECT
-	    ec.*
-    FROM
-	    exercise_categories ec
-	  INNER JOIN exercises e
-      ON e.exercise_category_id = ec.id
-    WHERE (
-      ec.deleted = false
-      and e.deleted = false
-      and ec.user_id = ?
-    )
-    GROUP BY ec.id
-    ORDER BY ec.id DESC
-  `,
-    [uid],
-  );
-
-  return rows;
+  return await db('exercise_categories as ec')
+    .select('ec.*')
+    .join('exercises as e', 'e.exercise_category_id', 'ec.id')
+    .where({
+      'ec.deleted': false,
+      'e.deleted': false,
+      'ec.user_id': uid,
+    })
+    .groupBy('ec.id')
+    .orderBy('ec.id', 'desc');
 }
 
 /**
@@ -44,30 +32,14 @@ export async function getExerciseCategoriesByUserId(uid) {
  * @returns An array of objects.
  */
 export async function getAllExerciseCategoriesByUserId(uid) {
-  // return db.select('*').from('exercise_categories').where({ user_id: uid }).orderBy('id', 'desc');
-  // only return categories which have exercises, an hide the rest
-  const { rows } = await db.raw(
-    `
-    select
-      ec.*,
-      count(e.id) as exercises_counts
-    from
-      exercise_categories ec
-      full join exercises e on e.exercise_category_id = ec.id
-    where (
-      ec.deleted = false
-      -- and e.deleted = false
-      and ec.user_id = ?
-    )
-    group by
-      ec.id
-    order by
-      ec.id desc
-  `,
-    [uid],
-  );
-
-  return rows;
+  return await db('exercise_categories as ec')
+    .select('ec.*')
+    .count('e.id as exercises_counts')
+    .fullOuterJoin('exercises as e', 'e.exercise_category_id', 'ec.id')
+    .where('ec.deleted', false)
+    .andWhere('ec.user_id', uid)
+    .groupBy('ec.id')
+    .orderBy('ec.id', 'desc');
 }
 
 /**

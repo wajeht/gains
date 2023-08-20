@@ -115,7 +115,7 @@ export async function postSignup(req, res) {
   if (verify === true) {
     const date = new Date();
 
-    await AuthQueries.verifyUser(user.id, date);
+    AuthQueries.verifyUser(user.id, date);
 
     logger.info(`User id ${user.id} was auto verified because of verify query!`);
 

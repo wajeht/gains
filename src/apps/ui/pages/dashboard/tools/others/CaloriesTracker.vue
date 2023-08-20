@@ -47,7 +47,7 @@ watch(checkCaloriesCheckbox, (prev, cur) => {
 
 async function downloadTable({
   title,
-  currentPage = pagination.currentPage,
+  currentPage = pagination.value.currentPage,
   perPage = 999999999999999,
 } = {}) {
   const json = await getAllCaloriesOfAUser({
@@ -261,7 +261,9 @@ const { lineChartProps } = useLineChart({
         <!-- table -->
         <div>
           <h5><i class="bi bi-table"></i> Calories Tracker</h5>
-          <div class="card">
+
+          <!-- calories -->
+          <div v-if="calories.length" class="card">
             <!-- header -->
             <div class="card-header">
               <span class="d-flex justify-content-between align-items-center gap-2">
@@ -459,6 +461,15 @@ const { lineChartProps } = useLineChart({
                   </li>
                 </ul>
               </nav>
+            </div>
+          </div>
+
+          <!-- no calories -->
+          <div v-else class="card">
+            <div class="card-body">
+              <div class="text-muted text-center fw-light">
+                <small> No relevant data available yet! </small>
+              </div>
             </div>
           </div>
         </div>

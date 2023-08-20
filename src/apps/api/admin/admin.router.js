@@ -24,4 +24,6 @@ admin.post(
 
 admin.get('/online-users', catchAsyncErrors(AdminController.getOnlineUsers));
 
+admin.get('/stats', catchAsyncErrors(AdminController.getStats));
+
 export default admin;

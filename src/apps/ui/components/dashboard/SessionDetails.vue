@@ -132,17 +132,10 @@ onMounted(async () => {
     router.push(`/dashboard/unauthorized?back=${beforeUnauthorized}`);
   }
 
-  // initialized categories on load
-  const uec = await getUserExerciseCategories();
-  chooseCategories.value = uec || [];
-
   // collapsed/expend all session state
   const isDone = currentSessionDetails.logs.every((log) => log.collapsed == false);
   if (isDone === true) hideOrCollapsedAllLogsState.value = false;
   else hideOrCollapsedAllLogsState.value = true;
-
-  // initialize exercises
-  getAllUserExercises();
 
   appStore.loading = false;
 });
@@ -368,6 +361,13 @@ async function copyPreviousSet(currentLogIndex) {
       alert.msg = e;
     }
   }
+}
+
+async function getExercisesReady() {
+  const uec = await getUserExerciseCategories();
+  chooseCategories.value = uec || [];
+
+  await getAllUserExercises();
 }
 
 async function getAllUserExercises() {
@@ -816,6 +816,10 @@ function previewVideoUpload() {
 
 async function uploadAVideo() {
   try {
+    if (video.value.files.length === 0) {
+      throw new Error('Please choose a video to upload!');
+    }
+
     uploadAVideoLoading.value = true;
     const file = video.value.files[0];
 
@@ -1582,6 +1586,7 @@ function downloadVideo(url) {
         <div v-if="!currentSessionDetails.end_date" class="border">
           <!-- model button -->
           <button
+            @click="getExercisesReady"
             type="button"
             class="btn btn-dark w-100"
             data-bs-toggle="modal"
@@ -2834,7 +2839,7 @@ function downloadVideo(url) {
             <button
               type="submit"
               class="btn btn-success"
-              :disabled="uploadAVideoLoading || videoFileSize > 10000000"
+              :disabled="uploadAVideoLoading || videoFileSize > 10000000 || !videoFileSize"
             >
               <div
                 v-if="uploadAVideoLoading"

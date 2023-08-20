@@ -3,7 +3,6 @@ import api from '../../../../../utils/fetch-with-style.js';
 
 import { ref, onMounted, reactive, onUnmounted } from 'vue';
 import { pickBy } from 'lodash-es';
-import { v4 as uuidv4 } from 'uuid';
 
 import dayjs from 'dayjs';
 
@@ -29,7 +28,6 @@ const block_id = ref('');
 const body_weight = ref('');
 const hours_of_sleep = ref('');
 const notes = ref('');
-const random_uuid = ref(uuidv4());
 const loading = ref(false);
 
 const alert = reactive({
@@ -37,15 +35,18 @@ const alert = reactive({
   msg: '',
 });
 
-onMounted(async () => {
-  const data = await getUserBlocks();
-  blocks.items = data || [];
-});
-
 // this code below required for back drop problem fixed when adding a new session header model
 onMounted(() => document.body.appendChild(document.getElementById(`add-a-session`)));
 onUnmounted(() => document.body.removeChild(document.getElementById(`add-a-session`)));
 // this code above required for back drop problem fixed when adding a new session header model
+
+async function gerUserBlocksReady() {
+  if (!blocks.items.length) {
+    const data = await getUserBlocks();
+    blocks.items = data || [];
+  }
+  start_date.value = dayjs().format('YYYY-MM-DDTHH:mm');
+}
 
 async function getUserBlocks() {
   try {
@@ -73,11 +74,11 @@ async function getUserBlocks() {
   }
 }
 
-function clearDataAndDismissModal() {
+async function clearDataAndDismissModal() {
   alert.type = '';
   alert.msg = '';
   name.value = '';
-  start_date.value = dayjs().format('YYYY-MM-DDTHH:mm');
+  start_date.value = '';
   user_id.value = userStore.user.id;
   block_id.value = '';
   body_weight.value = '';
@@ -137,33 +138,6 @@ async function addASession() {
     }
   }
 }
-
-// async function clearUsersSessionsCache() {
-//   try {
-//     const user_id = userStore.user.id;
-
-//     const res = await api.post(`/api/v1/cache/user-id-${user_id}-sessions/clear`);
-//     const json = await res.json();
-
-//     if (!res.ok) {
-//       if (json.errors) {
-//         throw json.errors;
-//       } else {
-//         throw json.message;
-//       }
-//     }
-
-//     router.go();
-//   } catch (e) {
-//     alert.type = 'danger';
-//     if (Array.isArray(e)) {
-//       alert.msg = e.map((cur) => cur.msg).join(' ');
-//       return;
-//     } else {
-//       alert.msg = e;
-//     }
-//   }
-// }
 </script>
 
 <template>
@@ -176,7 +150,7 @@ async function addASession() {
     <span>
       <!-- add button -->
       <span
-        @click="clearDataAndDismissModal()"
+        @click="gerUserBlocksReady"
         class="link-secondary"
         role="button"
         data-bs-toggle="modal"
@@ -299,7 +273,7 @@ async function addASession() {
                     :disabled="loading || blocks.items.length === 0"
                   >
                     <option selected value="" disabled>Select a block!</option>
-                    <option v-for="block in blocks.items" :value="block.id">
+                    <option v-for="block in blocks.items" :value="block.id" :key="block.id">
                       {{ block.name }}
                     </option>
                   </select>
@@ -390,6 +364,7 @@ async function addASession() {
             </div>
             <div class="modal-footer">
               <button
+                @click="clearDataAndDismissModal()"
                 v-if="!loading"
                 ref="addASessionDismissButton"
                 type="reset"

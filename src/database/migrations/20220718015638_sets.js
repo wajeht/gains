@@ -3,23 +3,30 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // sets
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS sets (
-      id                        SERIAL PRIMARY KEY,
-      exercise_id               INT REFERENCES exercises on DELETE CASCADE NOT NULL,
-      reps                      INT DEFAULT NULL,
-      rpe                       INT DEFAULT NULL,
-      weight                    INT DEFAULT NULL,
-      user_id                   INT REFERENCES users on DELETE CASCADE NOT NULL,
-      session_id                INT REFERENCES sessions on DELETE CASCADE NOT NULL,
-      log_id                    INT REFERENCES logs on DELETE CASCADE NOT NULL,
-      notes                     VARCHAR(1000) DEFAULT NULL,
-      deleted                   BOOLEAN DEFAULT FALSE,
-      created_at                TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at                TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('sets', (table) => {
+    table.increments('id').primary();
+    table
+      .integer('exercise_id')
+      .references('id')
+      .inTable('exercises')
+      .onDelete('CASCADE')
+      .notNullable();
+    table.integer('reps').defaultTo(null);
+    table.integer('rpe').defaultTo(null);
+    table.integer('weight').defaultTo(null);
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table
+      .integer('session_id')
+      .references('id')
+      .inTable('sessions')
+      .onDelete('CASCADE')
+      .notNullable();
+    table.integer('log_id').references('id').inTable('logs').onDelete('CASCADE').notNullable();
+    table.string('notes', 1000).defaultTo(null);
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -27,5 +34,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS sets;`);
+  await knex.schema.dropTableIfExists('sets');
 }

@@ -44,7 +44,7 @@ export async function patchSet(req, res) {
   );
 
   if (body.end_date) {
-    const deletedCommunitySession = await redis.del(`user-id-${body.user_id}-community-sessions`);
+    redis.del(`user-id-${body.user_id}-community-sessions`);
   }
 
   res.status(StatusCodes.OK).json({

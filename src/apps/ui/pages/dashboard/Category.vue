@@ -39,7 +39,8 @@ async function getUserExerciseByCategoryId() {
     }
 
     if (json.data.length === 0) {
-      throw new Error('There are no exercises available for this category!');
+      alert.msg = 'There are no exercises available for this category!';
+      alert.type = 'warning';
     }
 
     return json.data;

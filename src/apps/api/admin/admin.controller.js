@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import * as UsersQueries from '../v1/users/users.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import CustomError from '../api.errors.js';
 import seedMockTrainingData from '../../../utils/seed-mock-training-data.js';
 import dayjs from 'dayjs';
 import fsp from 'fs/promises';
@@ -10,6 +9,7 @@ import path from 'path';
 import axios from 'axios';
 import { GITHUB } from '../../../config/env.js';
 import redis from '../../../utils/redis.js';
+import db from '../../../database/db.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
 
@@ -74,7 +74,7 @@ export async function getViewLogs(req, res) {
 export async function postSeedMockTrainingData(req, res) {
   const { email } = req.body;
 
-  const mock = await seedMockTrainingData(email);
+  seedMockTrainingData(email);
 
   const [{ id: user_id }] = await UsersQueries.findUserByParam({ email });
 
@@ -137,5 +137,32 @@ export async function clearAllCache(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: [],
+  });
+}
+
+export async function getStats(req, res) {
+  const today = dayjs().endOf('day').toISOString();
+  const sevenDaysAgo = dayjs().subtract(7, 'day').startOf('day').toISOString();
+
+  const users = await db
+    .select('id')
+    .from('users')
+    .whereBetween('users.created_at', [sevenDaysAgo, today]);
+
+  const videos = await db
+    .select('id')
+    .from('videos')
+    .whereBetween('videos.created_at', [sevenDaysAgo, today]);
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [
+      {
+        users,
+        videos,
+      },
+    ],
   });
 }

@@ -175,52 +175,39 @@ export async function getRecovery(req, res) {
  * @returns The changelogs in HTML format.
  */
 export async function getChangelogs(req, res) {
-  let changelogs = null;
-  try {
-    changelogs = await fs.readFile(path.resolve(path.join(process.cwd(), 'CHANGELOG.md')), 'utf-8');
-  } catch (e) {
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      changelogs: null,
-    });
-  }
+  let changeLogsInHTMLFormat = JSON.parse(await redis.get('changelogs'));
 
-  const user_id = req.user.user_id;
-  let changeLogsInHTMLFormat = JSON.parse(await redis.get(`user-id-${user_id}-changelogs`));
+  if (!changeLogsInHTMLFormat) {
+    try {
+      const changelogs = await fs.readFile(
+        path.resolve(path.join(process.cwd(), 'CHANGELOG.md')),
+        'utf-8',
+      );
 
-  if (changeLogsInHTMLFormat === null) {
-    changeLogsInHTMLFormat = marked.parse(changelogs);
+      const versions = changelogs.match(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g);
+      const parsedChangelogs = changelogs
+        .split(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g)
+        .slice(1);
 
-    // grab pattern indexes
-    const versions = changelogs.match(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g);
-
-    // split by pattern
-    changeLogsInHTMLFormat = changelogs
-      .split(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g)
-      .slice(1);
-
-    const result = [];
-    changeLogsInHTMLFormat.forEach((cl, idx) => {
-      let ver = versions[idx];
-      ver = ver.slice(0, 3) + ' Versions' + ver.slice(3);
-      ver = marked.parse(ver);
-      result.push({
-        version: ver,
-        current: idx === 0,
-        changelog: marked.parse(cl),
+      changeLogsInHTMLFormat = parsedChangelogs.map((cl, idx) => {
+        let ver = versions[idx];
+        ver = ver.slice(0, 3) + ' Versions' + ver.slice(3);
+        return {
+          version: marked.parse(ver),
+          current: idx === 0,
+          changelog: marked.parse(cl),
+        };
       });
-    });
 
-    changeLogsInHTMLFormat = result;
-
-    const cache = await redis.set(
-      `user-id-${user_id}-changelogs`,
-      JSON.stringify(changeLogsInHTMLFormat),
-      'EX',
-      24 * 60 * 60,
-    );
+      redis.set('changelogs', JSON.stringify(changeLogsInHTMLFormat));
+    } catch (e) {
+      return res.status(StatusCodes.OK).json({
+        status: 'success',
+        request_url: req.originalUrl,
+        message: 'The resource was returned successfully!',
+        changelogs: null,
+      });
+    }
   }
 
   return res.status(StatusCodes.OK).json({
@@ -279,12 +266,7 @@ export async function getWeeklyWeightIn(req, res) {
 
     result = mapped;
 
-    await redis.set(
-      `user-id-${user_id}-weekly-weight-in`,
-      JSON.stringify(result),
-      'EX',
-      24 * 60 * 60,
-    );
+    redis.set(`user-id-${user_id}-weekly-weight-in`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({
@@ -321,7 +303,7 @@ export async function getRecentPrs(req, res) {
 
     result = mapped;
 
-    await redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
+    redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({

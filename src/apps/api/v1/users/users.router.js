@@ -169,4 +169,29 @@ users.post(
   catchAsyncErrors(UsersController.postUpdateProfilePicture),
 );
 
+/**
+ * POST /api/v1/users/{following_id}/follow
+ * @tags users
+ * @summary follow a user
+ * @param {number} following_id.path.required - the following_id id
+ * @param {number} follower_id.form.required - the follower_id - application/x-www-form-urlencoded
+ */
+users.post(
+  '/:following_id/follow',
+  validator(UsersValidation.postFollowUser),
+  catchAsyncErrors(UsersController.postFollowUser),
+);
+
+/**
+ * GET /api/v1/users/{user_id}/followers
+ * @tags users
+ * @summary get user's followers
+ * @param {number} user_id.form.required - the user_id - application/x-www-form-urlencoded
+ */
+users.get(
+  '/:user_id/followers',
+  validator(UsersValidation.getUserFollowers),
+  catchAsyncErrors(UsersController.getUserFollowers),
+);
+
 export default users;

@@ -14,6 +14,8 @@ COPY ./ .
 
 RUN npm run build:ui
 
+RUN npm run minify:html
+
 EXPOSE 8080
 
 CMD ["npm", "run", "start"]

@@ -3,20 +3,17 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  // gains-meta
-  await knex.schema.raw(`
-    CREATE TABLE IF NOT EXISTS gains_meta (
-      id                    SERIAL PRIMARY KEY,
-      object                VARCHAR(250) NOT NULL,
-      object_id             INT NOT NULL,
-      description           VARCHAR(1000),
-      json                  jsonb,
-      user_id               INT REFERENCES users on DELETE CASCADE NOT NULL,
-      deleted               BOOLEAN DEFAULT FALSE,
-      created_at            TIMESTAMP NOT NULL DEFAULT NOW(),
-      updated_at            TIMESTAMP NOT NULL DEFAULT NOW()
-    );
-  `);
+  await knex.schema.createTable('gains_meta', (table) => {
+    table.increments('id').primary();
+    table.string('object', 250).notNullable();
+    table.integer('object_id').notNullable();
+    table.string('description', 1000);
+    table.jsonb('json');
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
+    table.boolean('deleted').defaultTo(false);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
+  });
 }
 
 /**
@@ -24,5 +21,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  await knex.schema.raw(`DROP TABLE IF EXISTS gains_meta;`);
+  await knex.schema.dropTableIfExists('gains_meta');
 }
