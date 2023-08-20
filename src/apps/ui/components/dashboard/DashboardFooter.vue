@@ -1,9 +1,10 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import useAppStore from '../../store/app.store.js';
+import useUserStore from '../../store/user.store';
 
+const userStore = useUserStore();
 const appStore = useAppStore();
-const router = useRouter();
 const route = useRoute();
 </script>
 <template>
@@ -55,7 +56,7 @@ const route = useRoute();
         <router-link
           :class="{ active: $route.name === 'Profile' }"
           class="d-flex flex-column justify-content-center align-items-center py-3 gap-1 min-heigh-on-mobile"
-          to="/dashboard/profile"
+          :to="`/dashboard/profile/${userStore.user.username}`"
         >
           <font-awesome-icon icon="user" class="big-font-size-on-mobile" />
           <span class="hide-on-mobile">Profile</span>

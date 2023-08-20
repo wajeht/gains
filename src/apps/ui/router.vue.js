@@ -312,18 +312,20 @@ const routes = [
   },
   // profile
   {
-    path: '/dashboard/profile',
+    path: '/dashboard/profile/:username',
     name: 'Profile',
     component: Profile,
+    props: true,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,
     },
   },
   {
-    path: '/dashboard/profile/Following',
+    path: '/dashboard/profile/:username/following',
     name: 'Following',
     component: Following,
+    props: true,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,
@@ -674,7 +676,7 @@ router.beforeEach(async (to, from, next) => {
 
       // if they are already login, redirect to dashboard
       if (to.path.match(/(login)|(signup)/)?.length) {
-        return next('/dashboard/profile');
+        return next(`/dashboard/profile/${userStore.user.username}`);
       }
     }
 

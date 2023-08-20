@@ -105,7 +105,7 @@ export default {
         if (user?.role === 'admin') {
           this.$router.push({ path: '/admin' });
         } else {
-          this.$router.push({ path: '/dashboard/profile' });
+          this.$router.push({ path: `/dashboard/profile/${userStore.user.username}` });
         }
       } catch (e) {
         this.loading = false;
