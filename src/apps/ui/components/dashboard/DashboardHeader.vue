@@ -13,7 +13,10 @@ const computedProfileImage = computed(() => {
     class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3"
   >
     <!-- profile image -->
-    <router-link :class="{ active: $route.name === 'Profile' }" :to="`/dashboard/profile/${userStore.user.username}`">
+    <router-link
+      :class="{ active: $route.name === 'Profile' }"
+      :to="`/dashboard/profile/${userStore.user.username}`"
+    >
       <img
         class="rounded-circle"
         width="30"

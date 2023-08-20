@@ -10,7 +10,11 @@ const userStore = useUserStore();
     class="container sticky-top d-flex justify-content-between align-items-center bg-white border-bottom py-3 gap-3"
   >
     <!-- profile view -->
-    <router-link :to="`/dashboard/profile/${userStore.user.username}`" class="link-secondary" role="button">
+    <router-link
+      :to="`/dashboard/profile/${userStore.user.username}`"
+      class="link-secondary"
+      role="button"
+    >
       <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
         <font-awesome-icon icon="user" />
         <span>My profile</span>

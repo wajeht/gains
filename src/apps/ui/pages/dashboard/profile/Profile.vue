@@ -24,7 +24,7 @@ const alert = reactive({
 
 const props = defineProps({
   username: String,
-})
+});
 
 const recovery = ref([]);
 
@@ -284,7 +284,9 @@ const { lineChartProps } = useLineChart({
                 </small>
 
                 <!-- description -->
-                <p v-if="userStore.user.bio" class="card-text"><small>{{ userStore.user.bio }}</small></p>
+                <p v-if="userStore.user.bio" class="card-text">
+                  <small>{{ userStore.user.bio }}</small>
+                </p>
               </div>
             </div>
           </div>
@@ -298,7 +300,9 @@ const { lineChartProps } = useLineChart({
             </router-link>
 
             <!-- followers -->
-            <router-link :to="`/dashboard/profile/${userStore.user.username}/following?tab=Followers`">
+            <router-link
+              :to="`/dashboard/profile/${userStore.user.username}/following?tab=Followers`"
+            >
               <div class="d-flex flex-column align-items-center">
                 <small>{{ followStats[0]?.user?.followers?.length }}</small>
                 <small class="text-muted">Followers</small>
@@ -306,7 +310,9 @@ const { lineChartProps } = useLineChart({
             </router-link>
 
             <!-- following -->
-            <router-link :to="`/dashboard/profile/${userStore.user.username}/following?tab=Following`">
+            <router-link
+              :to="`/dashboard/profile/${userStore.user.username}/following?tab=Following`"
+            >
               <div class="d-flex flex-column align-items-center">
                 <small>{{ followStats[0]?.user?.followings?.length }}</small>
                 <small class="text-muted">Following</small>
