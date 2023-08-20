@@ -15,9 +15,9 @@ const computedProfileImage = computed(() => {
     <!-- profile image -->
     <router-link :class="{ active: $route.name === 'Profile' }" :to="`/dashboard/profile/${userStore.user.username}`">
       <img
-        class="rounded"
-        width="25"
-        height="25"
+        class="rounded-circle"
+        width="30"
+        height="30"
         :src="computedProfileImage"
         alt="profile-image"
       />
