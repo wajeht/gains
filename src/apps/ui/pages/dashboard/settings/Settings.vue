@@ -531,7 +531,7 @@ async function clearAllCache() {
             @click="clearAndDismissModal('delete-all-data-of-a-user')"
             v-if="!deleteAllDataOfAUserLoading"
             type="reset"
-            class="btn btn-danger"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -539,7 +539,7 @@ async function clearAllCache() {
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-success" :disabled="deleteAllDataOfAUserLoading">
+          <button type="submit" class="btn btn-primary" :disabled="deleteAllDataOfAUserLoading">
             <div
               v-if="deleteAllDataOfAUserLoading"
               class="spinner-border spinner-border-sm"

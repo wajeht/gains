@@ -291,7 +291,7 @@ async function getSessions() {
           v-if="pagination.details?.currentPage !== pagination.lastPage && sessions.length"
           @click="getSessions()"
           type="button"
-          class="btn btn-dark"
+          class="btn btn-success"
           :disabled="loading"
         >
           <div v-if="loading" class="spinner-border spinner-border-sm" role="status">

@@ -197,7 +197,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
               @click="clearAndDismissUpdateCurrentSessionModal()"
               v-if="!updateCurrentSessionLoading"
               type="reset"
-              class="btn btn-danger"
+              class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
               <i class="bi bi-x-circle"></i>
@@ -205,7 +205,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
             </button>
 
             <!-- add -->
-            <button type="submit" class="btn btn-success" :disabled="updateCurrentSessionLoading">
+            <button type="submit" class="btn btn-primary" :disabled="updateCurrentSessionLoading">
               <div
                 v-if="updateCurrentSessionLoading"
                 class="spinner-border spinner-border-sm"

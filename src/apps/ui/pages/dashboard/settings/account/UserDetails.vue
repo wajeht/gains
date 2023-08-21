@@ -233,7 +233,7 @@ async function updateAccountInfo() {
         <form @submit.prevent="updatePersonalInformation()" class="card">
           <div class="card-body">
             <!-- first name -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label class="col-4 col-form-label" for="personal-information-first-name"
                 >First name</label
               >
@@ -242,14 +242,14 @@ async function updateAccountInfo() {
                   :disabled="edit_personal_info"
                   v-model="first_name"
                   type="text"
-                  class="form-control form-control-sm"
+                  class="form-control"
                   id="personal-information-first-name"
                 />
               </div>
             </div>
 
             <!-- last name -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label for="personal-information-last-name" class="col-4 col-form-label"
                 >Last name</label
               >
@@ -258,14 +258,14 @@ async function updateAccountInfo() {
                   :disabled="edit_personal_info"
                   v-model="last_name"
                   type="text"
-                  class="form-control form-control-sm"
+                  class="form-control"
                   id="personal-information-last-name"
                 />
               </div>
             </div>
 
             <!-- birth date -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label for="personal-information-birth-date" class="col-4 col-form-label"
                 >Birth date</label
               >
@@ -274,34 +274,34 @@ async function updateAccountInfo() {
                   :disabled="edit_personal_info"
                   v-model="birth_date"
                   type="date"
-                  class="form-control form-control-sm"
+                  class="form-control"
                   id="personal-information-birth-date"
                 />
               </div>
             </div>
 
             <!-- weight -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label for="personal-information-weight" class="col-4 col-form-label">Weight</label>
               <div class="col-8">
                 <input
                   v-model="weight"
                   :disabled="edit_personal_info"
                   type="number"
-                  class="form-control form-control-sm"
+                  class="form-control"
                   id="personal-information-weight"
                 />
               </div>
             </div>
 
             <!-- bio -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label for="personal-information-weight" class="col-4 col-form-label">Bio</label>
               <div class="col-8">
                 <textarea
                   v-model="bio"
                   :disabled="edit_personal_info"
-                  class="form-control form-control-sm"
+                  class="form-control"
                   name="bio"
                   id="personal-information-bio"
                   rows="5"
@@ -313,7 +313,7 @@ async function updateAccountInfo() {
             <div class="d-flex gap-2">
               <button
                 @click="edit_personal_info = !edit_personal_info"
-                class="btn btn-outline-secondary w-50"
+                class="btn btn-outline-dark w-50"
                 type="button"
               >
                 <span v-if="edit_personal_info">Edit</span>
@@ -333,13 +333,13 @@ async function updateAccountInfo() {
         <form @submit.prevent="updateAccountInfo()" class="card">
           <div class="card-body">
             <!-- email -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label class="col-4 col-form-label" for="account-information-email">Email</label>
               <div class="col-8">
                 <input
                   v-model="email"
                   type="email"
-                  class="form-control form-control-sm"
+                  class="form-control"
                   id="account-information-email"
                   :disabled="edit_account_info"
                 />
@@ -347,7 +347,7 @@ async function updateAccountInfo() {
             </div>
 
             <!-- username -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label for="account-information-username" class="col-4 col-form-label"
                 >Username</label
               >
@@ -355,7 +355,7 @@ async function updateAccountInfo() {
                 <input
                   v-model="username"
                   type="text"
-                  class="form-control form-control-sm"
+                  class="form-control"
                   id="account-information-username"
                   :disabled="edit_account_info"
                 />
@@ -363,7 +363,7 @@ async function updateAccountInfo() {
             </div>
 
             <!-- password -->
-            <div class="row mb-2">
+            <div class="row mb-3">
               <label for="account-information-password" class="col-4 col-form-label"
                 >Password</label
               >
@@ -371,7 +371,7 @@ async function updateAccountInfo() {
                 <input
                   v-model="password"
                   type="password"
-                  class="form-control form-control-sm"
+                  class="form-control "
                   id="account-information-password"
                   :disabled="edit_account_info"
                   autocomplete="false"
@@ -383,7 +383,7 @@ async function updateAccountInfo() {
             <div class="d-flex gap-2">
               <button
                 @click="edit_account_info = !edit_account_info"
-                class="btn btn-outline-secondary w-50"
+                class="btn btn-outline-dark w-50"
                 type="button"
               >
                 <span v-if="edit_account_info">Edit</span>

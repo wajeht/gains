@@ -1604,10 +1604,13 @@ function downloadVideo(url) {
           <button
             :disabled="loading"
             type="button"
-            class="btn btn-secondary"
+            :class="[
+              'btn',
+              currentSessionDetails.end_date ? 'btn-danger' : 'btn-secondary',
+              currentSessionDetails.end_date != null ? 'rounded' : '',
+            ]"
             data-bs-toggle="modal"
             data-bs-target="#delete-current-session"
-            :class="{ rounded: currentSessionDetails.end_date != null }"
           >
             <span v-if="currentSessionDetails.end_date">
               <i class="bi bi-trash"></i>

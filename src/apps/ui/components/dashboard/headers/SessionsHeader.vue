@@ -368,17 +368,18 @@ async function addASession() {
                 v-if="!loading"
                 ref="addASessionDismissButton"
                 type="reset"
-                class="btn btn-outline-danger"
+                class="btn btn-outline-secondary"
                 data-bs-dismiss="modal"
               >
+                <i class="bi bi-x-circle-fill"></i>
                 Cancel
               </button>
-              <button type="submit" class="btn btn-success" :disabled="loading">
+              <button type="submit" class="btn btn-primary" :disabled="loading">
                 <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
 
-                <span v-if="!loading"> Submit </span>
+                <span v-if="!loading"><i class="bi bi-check-circle-fill"></i> Submit </span>
                 <span v-if="loading"> Loading... </span>
               </button>
             </div>
