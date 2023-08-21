@@ -109,6 +109,8 @@ async function clearAllCache() {
 
     alert.type = 'success';
     alert.msg = 'Cache has been cleared!';
+
+    window.scrollTo(0, 0);
   } catch (e) {
     appStore.loading = false;
     clearAllCacheLoading.value = false;
