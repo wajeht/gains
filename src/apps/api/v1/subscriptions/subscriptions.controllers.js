@@ -40,6 +40,17 @@ export async function postUnsubscribeChangelog(req, res) {
 
   const subscription = await SubscriptionsQueries.UnsubscribeChangelog(body);
 
+  const [user] = await UserQueries.findUserByParam({ email: body.email });
+
+  EmailService.send({
+    to: body.email,
+    subject: 'Changelog release subscription',
+    template: 'unsubscribed-to-changelog',
+    data: {
+      username: user.username,
+    },
+  });
+
   logger.info(`User id: ${body.user_id} has updated a subscription id: ${subscription[0].id}`);
 
   res.status(StatusCodes.OK).json({

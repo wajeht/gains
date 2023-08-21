@@ -38,6 +38,15 @@ export default class Template {
         },
       ],
     },
+    'unsubscribed-to-changelog': {
+      path: path.resolve(path.join('src', 'services', 'emails', 'unsubscribed-to-changelog')),
+      data: [
+        {
+          name: 'username',
+          type: 'string',
+        },
+      ],
+    },
     contact: {
       path: path.resolve(path.join('src', 'services', 'emails', 'contact.html')),
       data: [
