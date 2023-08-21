@@ -1469,7 +1469,7 @@ function downloadVideo(url) {
                           (set.exercise_name = log.name)
                       "
                       type="button"
-                      class="btn btn-sm btn-outline-dark"
+                      class="btn btn-sm btn-outline-secondary"
                       data-bs-toggle="modal"
                       data-bs-target="#add-a-set"
                       :disabled="currentSessionDetails.end_date"
@@ -1483,7 +1483,7 @@ function downloadVideo(url) {
                     <button
                       @click="(log.duplicateSetLoading = true), copyPreviousSet(index)"
                       type="button"
-                      class="btn btn-sm btn-outline-dark"
+                      class="btn btn-sm btn-outline-secondary"
                       :disabled="
                         log.sets?.length === 0 ||
                         currentSessionDetails.end_date ||
@@ -1510,7 +1510,7 @@ function downloadVideo(url) {
                           (set.notes = log.notes)
                       "
                       type="button"
-                      class="btn btn-sm btn-outline-dark"
+                      class="btn btn-sm btn-outline-secondary"
                       data-bs-toggle="modal"
                       data-bs-target="#add-a-note"
                       :disabled="currentSessionDetails.end_date"
@@ -1528,7 +1528,7 @@ function downloadVideo(url) {
                           (uploadAVideoLogIndex = index)
                       "
                       type="button"
-                      class="btn btn-sm btn-outline-dark"
+                      class="btn btn-sm btn-outline-secondary"
                       data-bs-toggle="modal"
                       data-bs-target="#upload-a-video"
                       :disabled="log.videos?.length || currentSessionDetails.end_date"
@@ -1546,7 +1546,7 @@ function downloadVideo(url) {
                           (addATagLogIndex = index)
                       "
                       type="button"
-                      class="btn btn-sm btn-outline-dark"
+                      class="btn btn-sm btn-outline-secondary"
                       data-bs-toggle="modal"
                       data-bs-target="#add-a-tag"
                       :disabled="currentSessionDetails.end_date"
@@ -1561,7 +1561,7 @@ function downloadVideo(url) {
                   <!-- download video -->
                   <button
                     @click="downloadVideo(`/api/v1/videos/${log?.videos[0]?.id}/download`)"
-                    class="btn btn-sm btn-outline-dark"
+                    class="btn btn-sm btn-outline-secondary"
                     type="button"
                     :class="{ disabled: !log?.videos?.length }"
                   >
@@ -1571,7 +1571,7 @@ function downloadVideo(url) {
                   <!-- history -->
                   <button
                     @click="router.push(`/dashboard/exercises/${log.exercise_id}`)"
-                    class="btn btn-sm btn-outline-dark"
+                    class="btn btn-sm btn-outline-secondary"
                     type="button"
                   >
                     <i class="bi bi-graph-up-arrow"></i>
@@ -1604,7 +1604,7 @@ function downloadVideo(url) {
           <button
             :disabled="loading"
             type="button"
-            class="btn btn-danger"
+            class="btn btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#delete-current-session"
             :class="{ rounded: currentSessionDetails.end_date != null }"
@@ -1626,7 +1626,7 @@ function downloadVideo(url) {
             data-bs-toggle="modal"
             data-bs-target="#complete-current-session"
             type="button"
-            class="btn btn-primary"
+            class="btn btn-success"
             :class="{ rounded: currentSessionDetails.end_date === null }"
             :disabled="
               loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
@@ -1874,7 +1874,7 @@ function downloadVideo(url) {
             v-if="!addAExerciseShowAllExercises || addAExerciseLoading"
             @click="addAExerciseAllExercisesChecked = []"
             type="reset"
-            class="btn btn-outline-dark"
+            class="btn btn-outline-secondary"
           >
             <font-awesome-icon icon="broom" />
             Clear
@@ -1885,7 +1885,7 @@ function downloadVideo(url) {
             @click="clearDataAndDismissAddAExerciseModal()"
             type="button"
             v-if="!addAExerciseLoading"
-            class="btn btn-outline-dark"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -1962,7 +1962,7 @@ function downloadVideo(url) {
             @click="clearAndDismissDeleteALogModal()"
             v-if="!deleteALogLoading"
             type="reset"
-            class="btn btn-outline-dark"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -2092,7 +2092,7 @@ function downloadVideo(url) {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addAExerciseNoteLoading" type="reset" class="btn btn-outline-danger">
+          <button v-if="!addAExerciseNoteLoading" type="reset" class="btn btn-outline-secondary">
             <font-awesome-icon icon="broom" />
             Clear
           </button>
@@ -2171,36 +2171,34 @@ function downloadVideo(url) {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addATagLoading" type="reset" class="btn btn-outline-danger">
+          <button v-if="!addATagLoading" type="reset" class="btn btn-outline-secondary">
             <font-awesome-icon icon="broom" />
             Clear
           </button>
 
-          <div class="btn-group" role="group">
-            <!-- cancel -->
-            <button
-              @click="clearDataAndDismissAddATagModal()"
-              v-if="!addATagLoading"
-              type="reset"
-              class="btn btn-danger"
-              data-bs-dismiss="modal"
-            >
-              <i class="bi bi-x-circle"></i>
-              Cancel
-            </button>
+          <!-- cancel -->
+          <button
+            @click="clearDataAndDismissAddATagModal()"
+            v-if="!addATagLoading"
+            type="reset"
+            class="btn btn-outline-secondary"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle"></i>
+            Cancel
+          </button>
 
-            <!-- add -->
-            <button type="submit" class="btn btn-success" :disabled="addATagLoading">
-              <div v-if="addATagLoading" class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <span v-if="!addATagLoading">
-                <i class="bi bi-check-circle-fill"></i>
-                Submit
-              </span>
-              <span v-if="addATagLoading"> Loading... </span>
-            </button>
-          </div>
+          <!-- add -->
+          <button type="submit" class="btn btn-primary" :disabled="addATagLoading">
+            <div v-if="addATagLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <span v-if="!addATagLoading">
+              <i class="bi bi-check-circle-fill"></i>
+              Submit
+            </span>
+            <span v-if="addATagLoading"> Loading... </span>
+          </button>
         </div>
       </div>
     </div>
@@ -2376,7 +2374,7 @@ function downloadVideo(url) {
             @click="clearDataAndDismissCompleteCurrentSessionModal()"
             v-if="!completeCurrentSessionLoading"
             type="reset"
-            class="btn btn-outline-dark"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -2386,7 +2384,7 @@ function downloadVideo(url) {
           <!-- submit -->
           <button
             type="submit"
-            class="btn btn-success"
+            class="btn btn-primary"
             :disabled="
               completeCurrentSessionLoading ||
               currentSessionDetails.session_rpe === null ||
@@ -2524,7 +2522,7 @@ function downloadVideo(url) {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addASetLoading" type="reset" class="btn btn-outline-danger">
+          <button v-if="!addASetLoading" type="reset" class="btn btn-outline-secondary">
             <font-awesome-icon icon="broom" />
             Clear
           </button>
@@ -2536,7 +2534,7 @@ function downloadVideo(url) {
               @click="clearDataAndDismissAddASetModal()"
               v-if="!addASetLoading"
               type="reset"
-              class="btn btn-danger"
+              class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
               <i class="bi bi-x-circle-fill"></i>
@@ -2546,7 +2544,7 @@ function downloadVideo(url) {
             <!-- add -->
             <button
               type="submit"
-              class="btn btn-success"
+              class="btn btn-primary"
               :disabled="addASetLoading || !set.reps || !set.weight"
             >
               <div v-if="addASetLoading" class="spinner-border spinner-border-sm" role="status">
@@ -2675,7 +2673,7 @@ function downloadVideo(url) {
             v-if="!modifyASetLoading"
             @click="deleteASet()"
             type="button"
-            class="btn btn-sm btn-danger"
+            class="btn btn-outline-secondary"
             :disabled="deleteASetLoading"
           >
             <div v-if="deleteASetLoading" class="spinner-border spinner-border-sm" role="status">
@@ -2686,12 +2684,12 @@ function downloadVideo(url) {
           </button>
 
           <!-- btn -->
-          <div class="btn-group btn-group-sm" role="group">
+          <div class="btn-group" role="group">
             <!-- clear -->
             <button
               v-if="!modifyASetLoading && !deleteASetLoading"
               type="reset"
-              class="btn btn-outline-danger"
+              class="btn btn-outline-secondary"
             >
               <font-awesome-icon icon="broom" />
               Clear
@@ -2702,7 +2700,7 @@ function downloadVideo(url) {
               v-if="!modifyASetLoading && !deleteASetLoading"
               @click="clearDataAndDismissModifyASetModal()"
               type="reset"
-              class="btn btn-danger"
+              class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
               <i class="bi bi-x-circle"></i>
@@ -2828,7 +2826,7 @@ function downloadVideo(url) {
               @click="clearDataAndDismissUploadAVideoModal()"
               v-if="!uploadAVideoLoading"
               type="reset"
-              class="btn btn-danger"
+              class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
               <i class="bi bi-x-circle-fill"></i>
@@ -2838,7 +2836,7 @@ function downloadVideo(url) {
             <!-- confirm -->
             <button
               type="submit"
-              class="btn btn-success"
+              class="btn btn-primary"
               :disabled="uploadAVideoLoading || videoFileSize > 10000000 || !videoFileSize"
             >
               <div
@@ -2899,5 +2897,17 @@ video::-webkit-media-controls-enclosure {
 .tag:hover {
   background-color: #dadada !important;
   cursor: pointer !important;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #5a6268;
+  border-color: #545b62;
 }
 </style>
