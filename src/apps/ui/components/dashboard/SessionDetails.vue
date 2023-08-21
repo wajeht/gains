@@ -1618,7 +1618,7 @@ function downloadVideo(url) {
             data-bs-toggle="modal"
             data-bs-target="#complete-current-session"
             type="button"
-            class="btn btn-dark"
+            class="btn btn-success"
             :class="{ rounded: currentSessionDetails.end_date === null }"
             :disabled="
               loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
