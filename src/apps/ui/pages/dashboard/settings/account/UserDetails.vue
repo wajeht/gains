@@ -2,18 +2,21 @@
 import dayjs from 'dayjs';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 import api from '../../../../../../utils/fetch-with-style.js';
-import { reactive, onMounted, ref } from 'vue';
+import { reactive, onMounted, ref, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
 import useUserStore from '../../../../store/user.store.js';
 import useAppStore from '../../../../store/app.store.js';
 import { pickBy } from 'lodash-es';
 
 const userStore = useUserStore();
 const appStore = useAppStore();
+const route = useRoute();
 
 const edit_personal_info = ref(true);
 const edit_account_info = ref(true);
 
 const first_name = ref('');
+const first_name_ref = ref(null);
 const last_name = ref('');
 const birth_date = ref('');
 const weight = ref('');
@@ -47,6 +50,13 @@ onMounted(async () => {
   email.value = data.email;
   username.value = data.username;
   appStore.loading = false;
+
+  if (route.query.edit_personal_info === 'true') {
+    edit_personal_info.value = false;
+    nextTick(() => {
+      first_name_ref.value.focus();
+    });
+  }
 });
 
 async function updateProfilePicture() {
@@ -239,6 +249,7 @@ async function updateAccountInfo() {
               >
               <div class="col-8">
                 <input
+                  ref="first_name_ref"
                   :disabled="edit_personal_info"
                   v-model="first_name"
                   type="text"

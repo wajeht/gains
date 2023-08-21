@@ -271,7 +271,11 @@ const { lineChartProps } = useLineChart({
                     style="height: fit-content ip !important; width: fit-content !important"
                     type="button"
                     class="btn btn-sm p-0 m-0"
-                    @click="router.push('/dashboard/settings/account/user-details')"
+                    @click="
+                      router.push(
+                        '/dashboard/settings/account/user-details?edit_personal_info=true',
+                      )
+                    "
                   >
                     <i class="bi bi-pencil-square"></i>
                   </button>
