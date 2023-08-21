@@ -1588,7 +1588,7 @@ function downloadVideo(url) {
           <button
             @click="getExercisesReady"
             type="button"
-            class="btn btn-dark w-100"
+            class="btn btn-primary w-100"
             data-bs-toggle="modal"
             data-bs-target="#add-a-exercise"
             :disabled="loading || currentSessionDetails.end_date"
@@ -1626,7 +1626,7 @@ function downloadVideo(url) {
             data-bs-toggle="modal"
             data-bs-target="#complete-current-session"
             type="button"
-            class="btn btn-success"
+            class="btn btn-primary"
             :class="{ rounded: currentSessionDetails.end_date === null }"
             :disabled="
               loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
@@ -1895,7 +1895,7 @@ function downloadVideo(url) {
           <!-- add -->
           <button
             type="submit"
-            class="btn btn-success"
+            class="btn btn-primary"
             :disabled="
               addAExerciseLoading ||
               (addAExerciseShowAllExercises &&
@@ -1970,7 +1970,7 @@ function downloadVideo(url) {
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-danger" :disabled="deleteALogLoading">
+          <button type="submit" class="btn btn-primary" :disabled="deleteALogLoading">
             <div v-if="deleteALogLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
@@ -2025,7 +2025,7 @@ function downloadVideo(url) {
             @click="clearDataAndDismissDeleteSessionModal()"
             v-if="!deleteCurrentSessionLoading"
             type="reset"
-            class="btn btn-outline-dark"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
             <i class="bi bi-x-circle-fill"></i>
@@ -2033,7 +2033,7 @@ function downloadVideo(url) {
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-danger" :disabled="deleteCurrentSessionLoading">
+          <button type="submit" class="btn btn-primary" :disabled="deleteCurrentSessionLoading">
             <div
               v-if="deleteCurrentSessionLoading"
               class="spinner-border spinner-border-sm"
@@ -2103,7 +2103,7 @@ function downloadVideo(url) {
               @click="clearDataAndDismissAddAExerciseNoteModal()"
               v-if="!addAExerciseNoteLoading"
               type="reset"
-              class="btn btn-danger"
+              class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
               <i class="bi bi-x-circle"></i>
@@ -2111,7 +2111,7 @@ function downloadVideo(url) {
             </button>
 
             <!-- add -->
-            <button type="submit" class="btn btn-success" :disabled="addAExerciseNoteLoading">
+            <button type="submit" class="btn btn-primary" :disabled="addAExerciseNoteLoading">
               <div
                 v-if="addAExerciseNoteLoading"
                 class="spinner-border spinner-border-sm"
