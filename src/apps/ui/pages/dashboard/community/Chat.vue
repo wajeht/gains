@@ -15,7 +15,43 @@ const states = reactive({
     msg: '',
   },
   chats: [],
+  followers: [],
+  followings: [],
 });
+
+onMounted(async () => {
+  appStore.loading = true;
+  await getMyFollowers();
+  appStore.loading = false;
+})
+
+async function getMyFollowers() {
+  try {
+    appStore.loading = true;
+
+    const res = await api.get(`/api/v1/users/${userStore.user.id}/followers`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+    states.followers = json.data[0].user.followers;
+    states.followings = json.data[0].user.followings;
+  } catch (e) {
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 </script>
 
 <template>
@@ -33,8 +69,7 @@ const states = reactive({
       <!-- card -->
       <div class="list-group">
         <span v-if="states.chats?.length">
-          <div v-for="chat in chats"
-            class="list-group-item d-flex gap-3 align-items-center justify-content-between py-3">
+          <div v-for="chat in chats" class="list-group-item d-flex gap-3 align-items-center justify-content-between py-3">
             <!-- name and image -->
             <router-link :to="`/dashboard/profile/${chat.username}`">
               <div class="d-flex gap-3 align-items-center">
