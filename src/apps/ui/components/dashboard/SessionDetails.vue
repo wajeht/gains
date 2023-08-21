@@ -2,6 +2,7 @@
 // components
 import SessionDetailsHeader from '../../components/dashboard/headers/SessionDetailsHeader.vue';
 import Loading from '../../components/dashboard/Loading.vue';
+import InsideLoading from '../shared/InsideLoading.vue';
 
 // helpers
 import api from '../../../../utils/fetch-with-style.js';
@@ -47,6 +48,8 @@ const loading = ref(false);
 const today = dayjs().format('YYYY/MM/DD');
 const sid = ref(null);
 const currentSessionDetails = reactive({});
+
+const getExercisesReadyLoading = ref(false);
 
 const chooseExercises = ref([]);
 const chooseCategories = ref([]);
@@ -364,10 +367,12 @@ async function copyPreviousSet(currentLogIndex) {
 }
 
 async function getExercisesReady() {
+  getExercisesReadyLoading.value = true;
   const uec = await getUserExerciseCategories();
   chooseCategories.value = uec || [];
 
   await getAllUserExercises();
+  getExercisesReadyLoading.value = false;
 }
 
 async function getAllUserExercises() {
@@ -1663,8 +1668,12 @@ function downloadVideo(url) {
           ></button>
         </div>
 
+        <div v-if="getExercisesReadyLoading" class="d-flex justify-content-center align-items-center modal-body" style="height: 100px">
+            <InsideLoading />
+        </div>
+
         <!-- body -->
-        <div class="modal-body">
+        <div v-if="!getExercisesReadyLoading" class="modal-body">
           <!-- alert -->
           <div v-if="!chooseCategories.length" class="mb-3">
             <div class="alert alert-warning p-2">
@@ -1858,6 +1867,8 @@ function downloadVideo(url) {
             </div>
           </span>
         </div>
+
+
 
         <!-- footer -->
         <div class="modal-footer">
