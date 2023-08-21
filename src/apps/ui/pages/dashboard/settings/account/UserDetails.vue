@@ -82,6 +82,8 @@ async function updateProfilePicture() {
 
     alert.type = 'success';
     alert.msg = 'Your profile picture has been updated!';
+
+    window.scrollTo(0, 0);
   } catch (e) {
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -127,6 +129,8 @@ async function updatePersonalInformation() {
     alert.msg = `Updated personal information!`; // prettier-ignore
 
     edit_personal_info.value = true;
+
+    window.scrollTo(0, 0);
   } catch (e) {
     alert.type = 'danger';
     if (Array.isArray(e)) {
@@ -166,6 +170,8 @@ async function updateAccountInfo() {
     alert.msg = `Updated account information!`; // prettier-ignore
 
     edit_account_info.value = true;
+
+    window.scrollTo(0, 0);
   } catch (e) {
     alert.type = 'danger';
     if (Array.isArray(e)) {
