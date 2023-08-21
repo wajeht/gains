@@ -126,7 +126,7 @@ async function getSessions() {
                 <span
                   v-if="userStore.user.id == s.user_id"
                   role="button"
-                  @click="router.push('/dashboard/profile')"
+                  @click="router.push(`/dashboard/profile/${userStore.user.username}`)"
                   >{{ s.username }}</span
                 >
                 <span v-else>{{ s.username }}</span>

@@ -371,7 +371,7 @@ async function updateAccountInfo() {
                 <input
                   v-model="password"
                   type="password"
-                  class="form-control "
+                  class="form-control"
                   id="account-information-password"
                   :disabled="edit_account_info"
                   autocomplete="false"

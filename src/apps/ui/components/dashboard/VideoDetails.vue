@@ -192,7 +192,10 @@ async function postAComment() {
           <!-- title -->
           <div class="d-flex justify-content-between card-header text-truncate">
             <!-- left -->
-            <div>
+            <div
+              role="button"
+              @click="router.push(`/dashboard/profile/${userStore.user.username}`)"
+            >
               <img
                 :src="
                   currentSessionDetails.profile_picture_url ??

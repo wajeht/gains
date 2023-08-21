@@ -61,7 +61,7 @@ async function clearAllCache() {
 
           <!-- clear all cache -->
           <button
-            class="btn btn-primary"
+            class="btn btn-dark"
             :disabled="states.loading"
             style="min-height: 43px !important"
             @click="clearAllCache"
