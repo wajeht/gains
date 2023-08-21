@@ -30,7 +30,7 @@ export default class Template {
       ],
     },
     'subscribed-to-changelog': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'subscribed-to-changelog')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'subscribed-to-changelog.html')),
       data: [
         {
           name: 'username',
@@ -39,7 +39,7 @@ export default class Template {
       ],
     },
     'unsubscribed-to-changelog': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'unsubscribed-to-changelog')),
+      path: path.resolve(path.join('src', 'services', 'emails', 'unsubscribed-to-changelog.html')),
       data: [
         {
           name: 'username',
