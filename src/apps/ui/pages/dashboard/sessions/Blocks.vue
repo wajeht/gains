@@ -283,14 +283,14 @@ function clearDataAndDismissModal() {
                   @click="clearDataAndDismissModal()"
                   v-if="!loading"
                   type="reset"
-                  class="btn btn-danger"
+                  class="btn btn-outline-dark"
                   data-bs-dismiss="modal"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  class="btn btn-success"
+                  class="btn btn-dark"
                   :disabled="loading || end_date.length === 0"
                 >
                   <div v-if="loading" class="spinner-border spinner-border-sm" role="status">

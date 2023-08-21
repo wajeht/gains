@@ -52,7 +52,7 @@
     <!-- button -->
     <button
       type="submit"
-      class="btn btn-primary w-100"
+      class="btn btn-dark w-100"
       :disabled="loading || !email || !message || !subject"
     >
       <div v-if="loading" class="spinner-border spinner-border-sm" role="status">

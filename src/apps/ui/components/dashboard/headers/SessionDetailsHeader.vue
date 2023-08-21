@@ -205,7 +205,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
             </button>
 
             <!-- add -->
-            <button type="submit" class="btn btn-primary" :disabled="updateCurrentSessionLoading">
+            <button type="submit" class="btn btn-dark" :disabled="updateCurrentSessionLoading">
               <div
                 v-if="updateCurrentSessionLoading"
                 class="spinner-border spinner-border-sm"

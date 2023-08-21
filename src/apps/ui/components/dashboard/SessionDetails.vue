@@ -2100,35 +2100,33 @@ function downloadVideo(url) {
             Clear
           </button>
 
+          <!-- cancel -->
+          <button
+            @click="clearDataAndDismissAddAExerciseNoteModal()"
+            v-if="!addAExerciseNoteLoading"
+            type="reset"
+            class="btn btn-outline-dark"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle"></i>
+            Cancel
+          </button>
 
-            <!-- cancel -->
-            <button
-              @click="clearDataAndDismissAddAExerciseNoteModal()"
-              v-if="!addAExerciseNoteLoading"
-              type="reset"
-              class="btn btn-outline-dark"
-              data-bs-dismiss="modal"
+          <!-- add -->
+          <button type="submit" class="btn btn-dark" :disabled="addAExerciseNoteLoading">
+            <div
+              v-if="addAExerciseNoteLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
             >
-              <i class="bi bi-x-circle"></i>
-              Cancel
-            </button>
-
-            <!-- add -->
-            <button type="submit" class="btn btn-dark" :disabled="addAExerciseNoteLoading">
-              <div
-                v-if="addAExerciseNoteLoading"
-                class="spinner-border spinner-border-sm"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <span v-if="!addAExerciseNoteLoading">
-                <i class="bi bi-check-circle-fill"></i>
-                Submit
-              </span>
-              <span v-if="addAExerciseNoteLoading"> Loading... </span>
-            </button>
-
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <span v-if="!addAExerciseNoteLoading">
+              <i class="bi bi-check-circle-fill"></i>
+              Submit
+            </span>
+            <span v-if="addAExerciseNoteLoading"> Loading... </span>
+          </button>
         </div>
       </div>
     </div>
@@ -2532,31 +2530,30 @@ function downloadVideo(url) {
 
           <!-- btn -->
 
-            <!-- cancel -->
-            <button
-              @click="clearDataAndDismissAddASetModal()"
-              v-if="!addASetLoading"
-              type="reset"
-              class="btn btn-outline-dark"
-              data-bs-dismiss="modal"
-            >
-              <i class="bi bi-x-circle-fill"></i>
-              Cancel
-            </button>
+          <!-- cancel -->
+          <button
+            @click="clearDataAndDismissAddASetModal()"
+            v-if="!addASetLoading"
+            type="reset"
+            class="btn btn-outline-dark"
+            data-bs-dismiss="modal"
+          >
+            <i class="bi bi-x-circle-fill"></i>
+            Cancel
+          </button>
 
-            <!-- add -->
-            <button
-              type="submit"
-              class="btn btn-dark"
-              :disabled="addASetLoading || !set.reps || !set.weight"
-            >
-              <div v-if="addASetLoading" class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <span v-if="!addASetLoading"> <i class="bi bi-check-circle-fill"></i> Submit </span>
-              <span v-if="addASetLoading"> Loading... </span>
-            </button>
-
+          <!-- add -->
+          <button
+            type="submit"
+            class="btn btn-dark"
+            :disabled="addASetLoading || !set.reps || !set.weight"
+          >
+            <div v-if="addASetLoading" class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <span v-if="!addASetLoading"> <i class="bi bi-check-circle-fill"></i> Submit </span>
+            <span v-if="addASetLoading"> Loading... </span>
+          </button>
         </div>
       </div>
     </div>

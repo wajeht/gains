@@ -119,7 +119,7 @@ function clearAndDismissPreviewVideoModal() {
 
         <!-- request feature -->
         <a
-          class="btn btn-primary"
+          class="btn btn-dark"
           href="https://github.com/wajeht/gains/issues/new/choose"
           target="_blank"
         >

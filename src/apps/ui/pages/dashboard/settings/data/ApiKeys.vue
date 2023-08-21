@@ -249,7 +249,7 @@ function clearAndDismissDeleteApiKeyModal() {
               <button
                 @click="requestApiKey()"
                 type="button"
-                class="btn btn-primary"
+                class="btn btn-dark"
                 :disabled="requestApiKeyLoading"
               >
                 <div

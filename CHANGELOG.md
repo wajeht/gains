@@ -4,24 +4,22 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.0.11](https://github.com/wajeht/gains/compare/v0.0.10...v0.0.11) (2023-08-21)
 
-
 ### Features
 
-* change a ton of button colors ([b1dcd29](https://github.com/wajeht/gains/commit/b1dcd29cb0cd3a32feef5e421fcba420dba198c6))
-* change icons back to black ([8dc077b](https://github.com/wajeht/gains/commit/8dc077b4d2cd4a736754201d5c788d8b33d8b73f))
-* change some button colors ([ba94262](https://github.com/wajeht/gains/commit/ba9426277efccecb29c321aadf4a6fdcc0ca3f68))
-* fix app url was not redirecting to user profile page ([8ad6156](https://github.com/wajeht/gains/commit/8ad615671fdc8f99333a70278e1d59d8341594e7))
-* handel error if grabbing following failed ([07c2b2c](https://github.com/wajeht/gains/commit/07c2b2c98791a237490a54298660aa4ad24534d0))
-* make profile circular ([a5ce25d](https://github.com/wajeht/gains/commit/a5ce25d6fa6a2ace3bd6f07eb70a0f7a2e9cf0de))
-* scroll to top after clearning all cache ([2819fdc](https://github.com/wajeht/gains/commit/2819fdc6bcae5f3a177da899f078d3ccaaf2888c))
-* scroll to top after most api success call ([ead66b5](https://github.com/wajeht/gains/commit/ead66b53ca2b990bfebf573c628fb2c591980a7b))
-* scroll to top after most api success call ([8d3a32b](https://github.com/wajeht/gains/commit/8d3a32bd785c6d9a2961cc90155c4092899201d5))
-* use real profile image for regular search stuff ([e469c05](https://github.com/wajeht/gains/commit/e469c05c3af852ae000d71b7e8d8b5d68c7f841a))
-
+- change a ton of button colors ([b1dcd29](https://github.com/wajeht/gains/commit/b1dcd29cb0cd3a32feef5e421fcba420dba198c6))
+- change icons back to black ([8dc077b](https://github.com/wajeht/gains/commit/8dc077b4d2cd4a736754201d5c788d8b33d8b73f))
+- change some button colors ([ba94262](https://github.com/wajeht/gains/commit/ba9426277efccecb29c321aadf4a6fdcc0ca3f68))
+- fix app url was not redirecting to user profile page ([8ad6156](https://github.com/wajeht/gains/commit/8ad615671fdc8f99333a70278e1d59d8341594e7))
+- handel error if grabbing following failed ([07c2b2c](https://github.com/wajeht/gains/commit/07c2b2c98791a237490a54298660aa4ad24534d0))
+- make profile circular ([a5ce25d](https://github.com/wajeht/gains/commit/a5ce25d6fa6a2ace3bd6f07eb70a0f7a2e9cf0de))
+- scroll to top after clearning all cache ([2819fdc](https://github.com/wajeht/gains/commit/2819fdc6bcae5f3a177da899f078d3ccaaf2888c))
+- scroll to top after most api success call ([ead66b5](https://github.com/wajeht/gains/commit/ead66b53ca2b990bfebf573c628fb2c591980a7b))
+- scroll to top after most api success call ([8d3a32b](https://github.com/wajeht/gains/commit/8d3a32bd785c6d9a2961cc90155c4092899201d5))
+- use real profile image for regular search stuff ([e469c05](https://github.com/wajeht/gains/commit/e469c05c3af852ae000d71b7e8d8b5d68c7f841a))
 
 ### Bug Fixes
 
-* missing username profile url ([3d396c9](https://github.com/wajeht/gains/commit/3d396c93195361bbc5a4c22e4493de330451815e))
+- missing username profile url ([3d396c9](https://github.com/wajeht/gains/commit/3d396c93195361bbc5a4c22e4493de330451815e))
 
 ### [0.0.10](https://github.com/wajeht/gains/compare/v0.0.8...v0.0.10) (2023-08-20)
 

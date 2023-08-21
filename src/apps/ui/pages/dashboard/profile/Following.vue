@@ -144,10 +144,10 @@ function setActive(link) {
 
               <!-- follow -->
               <div>
-                <button v-if="states.currentLink === 'Followings'" class="btn btn-sm btn-primary">
+                <button v-if="states.currentLink === 'Followings'" class="btn btn-sm btn-dark">
                   Following
                 </button>
-                <button v-if="states.currentLink === 'Followers'" class="btn btn-sm btn-primary">
+                <button v-if="states.currentLink === 'Followers'" class="btn btn-sm btn-dark">
                   Remove
                 </button>
               </div>

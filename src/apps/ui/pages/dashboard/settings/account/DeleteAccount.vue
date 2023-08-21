@@ -74,7 +74,7 @@ function clearAndDismissDeleteAccountModal() {
           <div class="card">
             <div class="card-body">
               <!-- reason -->
-              <div class="mb-3">
+              <div class="mb-4">
                 <label class="form-label" for="reasons"
                   >What is the main reason you are deleting your account?
                   <small class="text-muted fst-italic">(optional)</small></label
@@ -88,7 +88,7 @@ function clearAndDismissDeleteAccountModal() {
               </div>
 
               <!-- text area -->
-              <div class="mb-3">
+              <div class="mb-4">
                 <label class="form-label" for="feedback"
                   >We are sorry to see you go. Please explain why you are leaving to help us improve
                   <small class="text-muted fst-italic">(optional)</small></label
@@ -97,7 +97,7 @@ function clearAndDismissDeleteAccountModal() {
               </div>
 
               <!-- checkbox -->
-              <div class="form-check mb-3">
+              <div class="form-check mb-4">
                 <input class="form-check-input" type="checkbox" id="sure" v-model="iAmSure" />
                 <label class="form-check-label" for="sure"
                   >Yes, I want to permanently delete this account and all its data.</label
@@ -112,7 +112,7 @@ function clearAndDismissDeleteAccountModal() {
                 class="btn btn-danger"
                 :disabled="!iAmSure"
               >
-                Submit
+                Delete my account
               </button>
             </div>
           </div>
