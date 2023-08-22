@@ -109,7 +109,7 @@
     "papaparse": "^5.3.2",
     "pg": "^8.8.0",
     "pinia": "^2.0.23",
-    "pinia-plugin-persistedstate": "^1.6.3",
+    "pinia-plugin-persistedstate": "^3.0.0",
     "pino": "^8.6.1",
     "pino-pretty": "^8.1.0",
     "read-pkg": "^7.1.0",
