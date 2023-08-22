@@ -1668,8 +1668,12 @@ function downloadVideo(url) {
           ></button>
         </div>
 
-        <div v-if="getExercisesReadyLoading" class="d-flex justify-content-center align-items-center modal-body" style="height: 100px">
-            <InsideLoading />
+        <div
+          v-if="getExercisesReadyLoading"
+          class="d-flex justify-content-center align-items-center modal-body"
+          style="height: 100px"
+        >
+          <InsideLoading />
         </div>
 
         <!-- body -->
@@ -1867,8 +1871,6 @@ function downloadVideo(url) {
             </div>
           </span>
         </div>
-
-
 
         <!-- footer -->
         <div class="modal-footer">
