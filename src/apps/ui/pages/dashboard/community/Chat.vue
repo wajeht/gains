@@ -2,38 +2,55 @@
 import { reactive, onMounted } from 'vue';
 import Backheader from '../../../components/dashboard/headers/Backheader.vue';
 import api from '../../../../../utils/fetch-with-style';
+
 import useUserStore from '../../../store/user.store';
-import router from '../../../router.vue';
+import useAppStore from '../../../store/app.store';
 
 const userStore = useUserStore();
+const appStore = useAppStore();
 
 const states = reactive({
-  users: [],
-  myFollowers: [],
+  alert: {
+    type: '',
+    msg: '',
+  },
+  chats: [],
+  followers: [],
+  followings: [],
 });
 
-onMounted(() => {
-  if (userStore.user.role !== 'admin') {
-    router.push('/404');
-  }
-});
-
-async function getUsers() {
-  const res = await api.get('/api/v1/users');
-  const json = await res.json();
-  states.users = json.data;
-}
-
-async function followUser(following_id) {
-  await api.post(`/api/v1/users/${following_id}/follow`, {
-    follower_id: userStore.user.id,
-  });
-}
+onMounted(async () => {
+  appStore.loading = true;
+  await getMyFollowers();
+  appStore.loading = false;
+})
 
 async function getMyFollowers() {
-  const res = await api.get(`/api/v1/users/${userStore.user.id}/followers`);
-  const json = await res.json();
-  states.myFollowers = json.data;
+  try {
+    appStore.loading = true;
+
+    const res = await api.get(`/api/v1/users/${userStore.user.id}/followers`);
+    const json = await res.json();
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+    states.followers = json.data[0].user.followers;
+    states.followings = json.data[0].user.followings;
+  } catch (e) {
+    appStore.loading = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
 }
 </script>
 
@@ -43,35 +60,46 @@ async function getMyFollowers() {
 
   <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="my-3 d-flex flex-column gap-3">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Chat</h4>
-          <p class="card-text">Comming soon!</p>
 
-          <div class="d-flex flex-column gap-2">
-            <div class="d-flex flex-column gap-2">
-              <button @click="getMyFollowers">Get My Followers</button>
-              <div
-                v-for="user in states.myFollowers"
-                :key="user.id"
-                class="d-flex align-items-center gap-2"
-              >
-                {{ user.username }} {{ user.id }}
-              </div>
-            </div>
+      <!-- alert -->
+      <div v-if="states.alert.type" :class="`alert-${states.alert.type}`" class="mb-0 alert">
+        <span>{{ states.alert.msg }}</span>
+      </div>
 
-            <div class="d-flex flex-column gap-2">
-              <button @click="getUsers">Get Users</button>
-              <div
-                v-for="user in states.users"
-                :key="user.id"
-                class="d-flex align-items-center gap-2"
-              >
-                {{ user.username }} {{ user.id }}
-                <button class="btn btn-sm btn-dark" @click="followUser(user.id)">Follow</button>
+      <!-- card -->
+      <div class="list-group">
+        <span v-if="states.chats?.length">
+          <div v-for="chat in chats" class="list-group-item d-flex gap-3 align-items-center justify-content-between py-3">
+            <!-- name and image -->
+            <router-link :to="`/dashboard/profile/${chat.username}`">
+              <div class="d-flex gap-3 align-items-center">
+                <!-- image -->
+                <div>
+                  <img src="https://dummyimage.com/200x200/bdbdbd/000000.jpg" class="rounded-circle image"
+                    style="max-width: 50px" />
+                </div>
+                <!-- name -->
+                <div>
+                  <h6 class="m-0 p-0">{{ chat.username }}</h6>
+                  <p class="text-muted m-0 p-0">{{ chat.first_name }} {{ chat.last_name }}</p>
+                </div>
               </div>
+            </router-link>
+
+            <!-- follow -->
+            <div>
+              <button class="btn btn-sm btn-danger">
+                Delete
+              </button>
             </div>
           </div>
+        </span>
+
+        <!-- empty -->
+        <div v-else class="list-group-item">
+          <small class="text-muted fw-light d-flex justify-content-center py-3">
+            No relevant data available yet!
+          </small>
         </div>
       </div>
     </div>

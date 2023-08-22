@@ -29,6 +29,24 @@ export default class Template {
         },
       ],
     },
+    'subscribed-to-changelog': {
+      path: path.resolve(path.join('src', 'services', 'emails', 'subscribed-to-changelog.html')),
+      data: [
+        {
+          name: 'username',
+          type: 'string',
+        },
+      ],
+    },
+    'unsubscribed-to-changelog': {
+      path: path.resolve(path.join('src', 'services', 'emails', 'unsubscribed-to-changelog.html')),
+      data: [
+        {
+          name: 'username',
+          type: 'string',
+        },
+      ],
+    },
     contact: {
       path: path.resolve(path.join('src', 'services', 'emails', 'contact.html')),
       data: [
