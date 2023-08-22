@@ -23,7 +23,7 @@ onMounted(async () => {
   appStore.loading = true;
   await getMyFollowers();
   appStore.loading = false;
-})
+});
 
 async function getMyFollowers() {
   try {
@@ -60,7 +60,6 @@ async function getMyFollowers() {
 
   <div class="container px-3 animate__animated animate__fadeIn animate__faster">
     <div class="my-3 d-flex flex-column gap-3">
-
       <!-- alert -->
       <div v-if="states.alert.type" :class="`alert-${states.alert.type}`" class="mb-0 alert">
         <span>{{ states.alert.msg }}</span>
@@ -69,14 +68,20 @@ async function getMyFollowers() {
       <!-- card -->
       <div class="list-group">
         <span v-if="states.chats?.length">
-          <div v-for="chat in chats" class="list-group-item d-flex gap-3 align-items-center justify-content-between py-3">
+          <div
+            v-for="chat in chats"
+            class="list-group-item d-flex gap-3 align-items-center justify-content-between py-3"
+          >
             <!-- name and image -->
             <router-link :to="`/dashboard/profile/${chat.username}`">
               <div class="d-flex gap-3 align-items-center">
                 <!-- image -->
                 <div>
-                  <img src="https://dummyimage.com/200x200/bdbdbd/000000.jpg" class="rounded-circle image"
-                    style="max-width: 50px" />
+                  <img
+                    src="https://dummyimage.com/200x200/bdbdbd/000000.jpg"
+                    class="rounded-circle image"
+                    style="max-width: 50px"
+                  />
                 </div>
                 <!-- name -->
                 <div>
@@ -88,9 +93,7 @@ async function getMyFollowers() {
 
             <!-- follow -->
             <div>
-              <button class="btn btn-sm btn-danger">
-                Delete
-              </button>
+              <button class="btn btn-sm btn-danger">Delete</button>
             </div>
           </div>
         </span>
