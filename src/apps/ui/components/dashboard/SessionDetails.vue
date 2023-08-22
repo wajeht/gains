@@ -14,7 +14,7 @@ import {
 
 // nodejs
 import dayjs from 'dayjs';
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 import { pickBy, pick, omit } from 'lodash-es';
 
 import relativeTime from 'dayjs/plugin/relativeTime';
