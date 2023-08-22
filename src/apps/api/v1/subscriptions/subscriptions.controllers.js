@@ -2,7 +2,7 @@ import * as SubscriptionsQueries from './subscriptions.queries.js';
 import EmailService from '../../../../services/email.service.js';
 import logger from '../../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
-import * as UserQueries from '../users/users.queries.js'
+import * as UserQueries from '../users/users.queries.js';
 
 /**
  * It takes a request body, and then creates a subscription in the database
