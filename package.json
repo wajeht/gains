@@ -152,7 +152,7 @@
     "nodemon": "^2.0.20",
     "open-cli": "^7.1.0",
     "postcss": "^8.4.17",
-    "prettier": "^2.8.3",
+    "prettier": "^3.0.0",
     "sleep-ms": "^2.0.1",
     "standard-version": "^9.5.0",
     "vitest": "^0.15.2"
