@@ -65,12 +65,6 @@ export async function getViewLogs(req, res) {
   });
 }
 
-/**
- * It takes in a user's email address, generates mock training data for that user, and returns a
- * success message
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postSeedMockTrainingData(req, res) {
   const { email } = req.body;
 
@@ -88,12 +82,6 @@ export async function postSeedMockTrainingData(req, res) {
   });
 }
 
-/**
- * It makes a request to the GitHub API to get all the issues for the gains repository, and then
- * returns the response to the client
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getIssues(req, res) {
   let issues = JSON.parse(await redis.get('issues'));
 
@@ -114,11 +102,6 @@ export async function getIssues(req, res) {
   });
 }
 
-/**
- * It gets the number of online users from Redis and returns it to the client
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getOnlineUsers(req, res) {
   let users = JSON.parse(await redis.get('onlineUsers')) || [];
   res.status(StatusCodes.OK).json({

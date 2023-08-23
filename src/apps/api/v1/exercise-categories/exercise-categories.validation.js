@@ -3,7 +3,6 @@ import * as UserQueries from '../users/users.queries.js';
 import * as ExerciseCategoriesQueries from './exercise-categories.queries.js';
 import { isNumber } from 'lodash-es';
 
-/* Checking the user_id to make sure it is an integer and that it exists. */
 export const getExerciseCategories = [
   query('user_id')
     .optional()
@@ -22,7 +21,6 @@ export const getExerciseCategories = [
     .toInt(),
 ];
 
-/* Checking the body of the request to make sure it has the required fields. */
 export const postExerciseCategory = [
   body().custom((body) => {
     const requiredFields = ['name', 'user_id'];

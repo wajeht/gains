@@ -18,6 +18,10 @@ clean:
 shell-dev-gains:
 	docker compose --file ./docker-compose.dev.yml exec gains sh
 
+refresh-db:
+	docker compose --file ./docker-compose.dev.yml exec gains sh -c 'npm run migrate:latest'
+	docker compose --file ./docker-compose.dev.yml exec gains sh -c 'npm run seed:run'
+
 shell-dev-db:
 	docker compose --file ./docker-compose.dev.yml exec postgres sh
 

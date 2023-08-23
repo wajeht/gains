@@ -1635,7 +1635,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -1869,7 +1869,6 @@ function downloadVideo(url) {
             type="reset"
             class="btn btn-outline-dark"
           >
-            <font-awesome-icon icon="broom" />
             Clear
           </button>
 
@@ -1881,7 +1880,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -1900,10 +1898,7 @@ function downloadVideo(url) {
             <div v-if="addAExerciseLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!addAExerciseLoading">
-              <i class="bi bi-check-circle-fill"></i>
-              Submit
-            </span>
+            <span v-if="!addAExerciseLoading"> Submit </span>
             <span v-if="addAExerciseLoading"> Loading... </span>
           </button>
         </div>
@@ -1920,7 +1915,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <!-- content -->
       <div class="modal-content">
         <!-- header -->
@@ -1958,7 +1953,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -1968,7 +1962,7 @@ function downloadVideo(url) {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteALogLoading"><i class="bi bi-check-circle-fill"></i> Confirm </span>
+            <span v-if="!deleteALogLoading"> Confirm </span>
             <span v-if="deleteALogLoading"> Loading... </span>
           </button>
         </div>
@@ -1985,7 +1979,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -2021,7 +2015,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -2035,9 +2028,7 @@ function downloadVideo(url) {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteCurrentSessionLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
-            </span>
+            <span v-if="!deleteCurrentSessionLoading"> Confirm </span>
             <span v-if="deleteCurrentSessionLoading"> Loading... </span>
           </button>
         </div>
@@ -2054,7 +2045,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -2086,7 +2077,6 @@ function downloadVideo(url) {
         <div class="modal-footer">
           <!-- clear -->
           <button v-if="!addAExerciseNoteLoading" type="reset" class="btn btn-outline-dark">
-            <font-awesome-icon icon="broom" />
             Clear
           </button>
 
@@ -2098,7 +2088,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle"></i>
             Cancel
           </button>
 
@@ -2111,10 +2100,7 @@ function downloadVideo(url) {
             >
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!addAExerciseNoteLoading">
-              <i class="bi bi-check-circle-fill"></i>
-              Submit
-            </span>
+            <span v-if="!addAExerciseNoteLoading"> Submit </span>
             <span v-if="addAExerciseNoteLoading"> Loading... </span>
           </button>
         </div>
@@ -2131,7 +2117,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -2162,10 +2148,7 @@ function downloadVideo(url) {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addATagLoading" type="reset" class="btn btn-outline-dark">
-            <font-awesome-icon icon="broom" />
-            Clear
-          </button>
+          <button v-if="!addATagLoading" type="reset" class="btn btn-outline-dark">Clear</button>
 
           <!-- cancel -->
           <button
@@ -2175,7 +2158,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle"></i>
             Cancel
           </button>
 
@@ -2184,10 +2166,7 @@ function downloadVideo(url) {
             <div v-if="addATagLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!addATagLoading">
-              <i class="bi bi-check-circle-fill"></i>
-              Submit
-            </span>
+            <span v-if="!addATagLoading"> Submit </span>
             <span v-if="addATagLoading"> Loading... </span>
           </button>
         </div>
@@ -2204,7 +2183,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -2368,7 +2347,6 @@ function downloadVideo(url) {
             class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -2390,9 +2368,7 @@ function downloadVideo(url) {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!completeCurrentSessionLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
-            </span>
+            <span v-if="!completeCurrentSessionLoading"> Confirm </span>
             <span v-if="completeCurrentSessionLoading"> Loading... </span>
           </button>
         </div>
@@ -2409,7 +2385,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -2513,10 +2489,7 @@ function downloadVideo(url) {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addASetLoading" type="reset" class="btn btn-outline-dark">
-            <font-awesome-icon icon="broom" />
-            Clear
-          </button>
+          <button v-if="!addASetLoading" type="reset" class="btn btn-outline-dark">Clear</button>
 
           <!-- btn -->
 
@@ -2528,7 +2501,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -2541,7 +2513,7 @@ function downloadVideo(url) {
             <div v-if="addASetLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!addASetLoading"> <i class="bi bi-check-circle-fill"></i> Submit </span>
+            <span v-if="!addASetLoading"> Submit </span>
             <span v-if="addASetLoading"> Loading... </span>
           </button>
         </div>
@@ -2558,7 +2530,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -2669,7 +2641,7 @@ function downloadVideo(url) {
             <div v-if="deleteASetLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Deleting...</span>
             </div>
-            <span v-if="!deleteASetLoading"> <i class="bi bi-trash"></i> Delete </span>
+            <span v-if="!deleteASetLoading"> Delete </span>
             <span v-if="deleteASetLoading"> Deleting... </span>
           </button>
 
@@ -2681,7 +2653,6 @@ function downloadVideo(url) {
               type="reset"
               class="btn btn-outline-dark"
             >
-              <font-awesome-icon icon="broom" />
               Clear
             </button>
 
@@ -2693,7 +2664,6 @@ function downloadVideo(url) {
               class="btn btn-outline-dark"
               data-bs-dismiss="modal"
             >
-              <i class="bi bi-x-circle"></i>
               Cancel
             </button>
 
@@ -2707,9 +2677,7 @@ function downloadVideo(url) {
               <div v-if="modifyASetLoading" class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden"> Updating...</span>
               </div>
-              <span v-if="!modifyASetLoading">
-                <i class="bi bi-check-circle-fill"></i> Update
-              </span>
+              <span v-if="!modifyASetLoading"> Update </span>
               <span v-if="modifyASetLoading"> Updating... </span>
             </button>
           </div>
@@ -2727,7 +2695,7 @@ function downloadVideo(url) {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -2819,7 +2787,6 @@ function downloadVideo(url) {
               class="btn btn-outline-dark"
               data-bs-dismiss="modal"
             >
-              <i class="bi bi-x-circle-fill"></i>
               Cancel
             </button>
 
@@ -2837,9 +2804,7 @@ function downloadVideo(url) {
                 <span class="visually-hidden">Loading...</span>
               </div>
 
-              <span v-if="!uploadAVideoLoading"
-                ><i class="bi bi-check-circle-fill"></i> Confirm
-              </span>
+              <span v-if="!uploadAVideoLoading"> Confirm </span>
               <span v-if="uploadAVideoLoading"> Loading... </span>
             </button>
           </span>

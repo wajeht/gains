@@ -1,6 +1,5 @@
 import { body } from 'express-validator';
 
-/* A validation for the contact form. */
 export const postContact = [
   body('email')
     .notEmpty()

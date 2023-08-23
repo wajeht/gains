@@ -486,7 +486,7 @@ const { lineChartProps } = useLineChart({
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -552,7 +552,6 @@ const { lineChartProps } = useLineChart({
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -561,9 +560,7 @@ const { lineChartProps } = useLineChart({
             <div v-if="logACaloriesLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!logACaloriesLoading">
-              <i class="bi bi-check-circle-fill"></i> Submit
-            </span>
+            <span v-if="!logACaloriesLoading"> Submit </span>
             <span v-if="logACaloriesLoading"> Loading... </span>
           </button>
         </div>
@@ -580,7 +577,7 @@ const { lineChartProps } = useLineChart({
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -621,7 +618,6 @@ const { lineChartProps } = useLineChart({
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -634,9 +630,7 @@ const { lineChartProps } = useLineChart({
             >
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!deleteACaloriesLoading">
-              <i class="bi bi-check-circle-fill"></i> Submit
-            </span>
+            <span v-if="!deleteACaloriesLoading"> Submit </span>
             <span v-if="deleteACaloriesLoading"> Loading... </span>
           </button>
         </div>

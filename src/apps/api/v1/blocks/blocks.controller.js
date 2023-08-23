@@ -3,16 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import * as BlocksQueries from './blocks.queries.js';
 import logger from '../../../../utils/logger.js';
 
-/**
- * It fetches all blocks or blocks for a specific user
- * @param req - The request object.
- * @param res - The response object.
- * @returns a JSON object with the following properties:
- *   - status: 'success'
- *   - request_url: the url that was requested
- *   - message: 'The resource was returned successfully!'
- *   - data: the data that was requested
- */
 export async function getBlocks(req, res) {
   const uid = req.query.user_id;
 
@@ -43,11 +33,6 @@ export async function getBlocks(req, res) {
   });
 }
 
-/**
- * It fetches a block by its block id
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getBlock(req, res) {
   const bid = req.params.bid;
   const block = await BlocksQueries.getBlockByBlockId(bid);
@@ -62,11 +47,6 @@ export async function getBlock(req, res) {
   });
 }
 
-/**
- * It creates a block for a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postBlock(req, res) {
   const body = req.body;
   const block = await BlocksQueries.createBlock(body);

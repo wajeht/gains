@@ -1,7 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
 import * as VideosQueries from './videos.queries.js';
-import CustomError from '../../api.errors.js';
-import logger from '../../../../utils/logger.js';
 import fs from 'fs';
 
 export async function getVideo(req, res) {
@@ -75,11 +73,6 @@ export async function getStreamVideo(req, res) {
   });
 }
 
-/**
- * It gets the video path from the database, and then sends the video to the user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getDownloadVideo(req, res) {
   const { id } = req.params;
 

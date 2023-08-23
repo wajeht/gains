@@ -1,8 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../utils/logger.js';
-import { omit } from 'lodash-es';
-import CustomError from '../../api.errors.js';
-import db from '../../../../database/db.js';
 import redis from '../../../../utils/redis.js';
 import * as CacheQueries from './cache.queries.js';
 

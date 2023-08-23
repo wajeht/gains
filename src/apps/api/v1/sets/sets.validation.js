@@ -7,7 +7,6 @@ import * as UsersQueries from '../users/users.queries.js';
 import * as ExercisesQueries from '../exercises/exercises.queries.js';
 import * as LogsQueries from '../logs/logs.queries.js';
 
-/* A validation for the user input. */
 export const postSet = [
   body().custom((body) => {
     const requiredFields = [

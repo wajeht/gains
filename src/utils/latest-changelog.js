@@ -18,8 +18,6 @@ export default async function buildLatestChangelog() {
       .replace(/### /g, '')
       .replace(/\(.*\)/g, '');
 
-    // fs.writeFile('test.txt', changelogs);
-    // changelogs = marked.parse(changelogs.toString().trim());
     return changelogs;
   } catch (e) {
     logger.error(e);

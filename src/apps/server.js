@@ -2,7 +2,6 @@
 
 import app from '../apps/app.js';
 import { port, env, vue_port } from '../config/env.js';
-import { green, red } from '../utils/rainbow-log.js';
 import logger from '../utils/logger.js';
 import path from 'path';
 import db from '../database/db.js';
@@ -24,7 +23,8 @@ async function gracefulShutdown() {
 
   try {
     await new Promise((resolve, reject) => {
-      server.close((err) => {
+      server.close(async (err) => {
+        await redis.del('onlineUsers');
         if (err) {
           reject(err);
           return;
@@ -33,6 +33,7 @@ async function gracefulShutdown() {
       });
     });
 
+    await redis.del('onlineUsers');
     await redis.disconnect();
     await db.destroy();
 

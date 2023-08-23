@@ -5,11 +5,6 @@ import { email as envEmail } from '../../../config/env.js';
 import axios from 'axios';
 import { GITHUB } from '../../../config/env.js';
 
-/**
- * It sends an email to the user with the data they submitted
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postContact(req, res) {
   const { email, subject } = req.body;
 

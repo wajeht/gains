@@ -2,8 +2,7 @@ import CustomError from '../../api.errors.js';
 import * as CacheQueries from './cache.queries.js';
 import * as UsersQueries from '../users/users.queries.js';
 
-import { check, param, body, query } from 'express-validator';
-import { isEqual } from 'lodash-es';
+import { param } from 'express-validator';
 
 export const clearACache = [
   param('cache_key')

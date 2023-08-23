@@ -28,11 +28,6 @@ const EXERCISES = {
   ],
 };
 
-/**
- * It takes a user_id, and inserts the default exercises into the database
- * @param user_id - the user_id of the user you want to generate the default exercises for
- * @returns An array of objects
- */
 export default async function generateDefaultExercises(user_id) {
   try {
     // const delete_exercises_categories = await db('exercise_categories').del(); // for testing

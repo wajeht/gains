@@ -3,7 +3,6 @@ import { blue, custom, green, red, yellow } from '../../../../utils/rainbow-log.
 import * as UserQueries from './users.queries.js';
 import { isEqual } from 'lodash-es';
 
-/* A validation for the user input. */
 export const postUser = [
   body().custom((body) => {
     const requiredFields = ['username', 'password', 'email'];
@@ -85,7 +84,6 @@ export const getUsers = [
     .toInt(),
 ];
 
-/* Validating the user input. */
 export const getUser = [
   param('id')
     .trim()
@@ -99,7 +97,6 @@ export const getUser = [
     }),
 ];
 
-/* Validating the user input. */
 export const deleteUser = [
   param('id')
     .trim()
@@ -113,7 +110,6 @@ export const deleteUser = [
     }),
 ];
 
-/* Validating the user input. */
 export const patchUser = [
   param('id')
     .trim()
@@ -224,7 +220,6 @@ export const patchUser = [
     .withMessage('The value must include a number character!'),
 ];
 
-/* A validation for the user input. */
 export const patchUpdatePersonalInformation = [
   param('id')
     .trim()
@@ -283,7 +278,6 @@ export const patchUpdatePersonalInformation = [
     .withMessage('Bio name must be at least 1 character long or less than 128 characters long'),
 ];
 
-/* A validation for the user input. */
 export const patchUpdateAccountInformation = [
   param('id')
     .trim()
@@ -368,7 +362,6 @@ export const patchUpdateAccountInformation = [
     }),
 ];
 
-/* Validating the user input. */
 export const postUpdateProfilePicture = [
   param('user_id')
     .trim()
@@ -390,7 +383,6 @@ export const postUpdateProfilePicture = [
     }),
 ];
 
-/* Validating the user input. */
 export const postDeleteUserData = [
   param('user_id')
     .trim()
@@ -408,7 +400,6 @@ export const postDeleteUserData = [
     .toInt(),
 ];
 
-/* A validation for the user input. */
 export const postRestoreUserData = [
   param('user_id')
     .trim()
@@ -426,7 +417,6 @@ export const postRestoreUserData = [
     .toInt(),
 ];
 
-/* A validation for the user input. */
 export const postRestoreUser = [
   param('user_id')
     .trim()

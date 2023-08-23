@@ -4,19 +4,14 @@ import fs from 'fs';
 import { root } from '../utils/directory.js';
 import logger from '../utils/logger.js';
 
-/* Checking if the .env file exists. If it doesn't, it will throw an error. */
 fs.access(path.join(root, '.env'), (err) => {
   if (err) {
     logger.error('No .env file found!');
-    // process.exit(1); // this causes test to failed on github action
   }
-  // logger.info('Found .env file!');
 });
 
-/* Loading the .env file. */
 dotenv.config({ path: path.join(root, '.env') });
 
-/* Exporting the database object. */
 export const database = {
   client: process.env.DB_CLIENT,
   host: process.env.DB_HOST,
@@ -27,31 +22,23 @@ export const database = {
   url: process.env.DB_URL,
 };
 
-/* This is the cookie object that will be used to set the cookie. */
 export const cookie = {
   secret: process.env.COOKIE_SECRET,
   expiration: process.env.COOKIE_EXPIRATION,
 };
 
-/* Exporting the port number from the .env file. */
 export const port = process.env.PORT;
 
-/* This is the port that the Vue.js application will be running on. */
 export const vue_port = process.env.VUE_PORT;
 
-/* Exporting the environment variable `ENV` from the .env file. */
 export const env = process.env.ENV;
 
-/* This is the domain that will be used to set the cookie. */
 export const domain = process.env.DOMAIN;
 
-/* This is the secret that will be used to sign the JWT. */
 export const jwt_secret = process.env.JWT_SECRET;
 
-/* This is the salt that will be used to hash the password. */
 export const salt = parseInt(process.env.PASSWORD_SALT);
 
-/* This is the object that will be used to send emails. */
 export const email = {
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
@@ -60,21 +47,18 @@ export const email = {
   auth_pass: process.env.EMAIL_AUTH_PASS,
 };
 
-/* Exporting the discord id and token from the .env file. */
 export const discord = {
   id: process.env.DISCORD_ID,
   token: process.env.DISCORD_TOKEN,
   url: process.env.DISCORD_URL,
 };
 
-/* This is the admin object that will be used to create the admin user. */
 export const admin = {
   email: process.env.ADMIN_EMAIL,
   username: process.env.ADMIN_USERNAME,
   password: process.env.ADMIN_PASSWORD,
 };
 
-/* Exporting the redis object. */
 export const REDIS = {
   port: process.env.REDIS_PORT,
   host: process.env.REDIS_HOST,
@@ -84,7 +68,6 @@ export const REDIS = {
   url: process.env.REDIS_URL,
 };
 
-/* This is used to create an issue on github. */
 export const GITHUB = {
   api_key: process.env.GITHUB_API_KEY,
   issue_url: process.env.GITHUB_ISSUE_URL,

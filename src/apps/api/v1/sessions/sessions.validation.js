@@ -6,12 +6,6 @@ import { check, param, body, query } from 'express-validator';
 import { isEqual } from 'lodash-es';
 
 export const postCreateSession = [
-  // check('user_id').custom((user_id, { req }) => {
-  //   const currentUserId = parseInt(req.user.user_id);
-  //   const gotUserId = parseInt(user_id);
-  //   if (currentUserId !== gotUserId || req.user.role !== 'admin') throw new CustomError.UnauthorizedError('Invalid authentication!'); // prettier-ignore
-  //   return true;
-  // }),
   body().custom((data) => {
     const availableFields = [
       'user_id',
@@ -104,12 +98,6 @@ export const postCreateSession = [
 ];
 
 export const getUserSessions = [
-  // check('user_id').custom((user_id, { req }) => {
-  //   const currentUserId = parseInt(req.user.user_id);
-  //   const gotUserId = parseInt(user_id);
-  //   if (currentUserId !== gotUserId || req.user.role !== 'admin') throw new CustomError.UnauthorizedError('Invalid authentication!'); // prettier-ignore
-  //   return true;
-  // }),
   query('perPage')
     .optional()
     .trim()
