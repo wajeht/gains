@@ -240,11 +240,6 @@ export async function postRestoreUserData(req, res) {
   });
 }
 
-/**
- * It restores a user's account and clears all of their cached data.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postRestoreUser(req, res) {
   const { user_id } = req.params;
 
@@ -264,11 +259,6 @@ export async function postRestoreUser(req, res) {
   });
 }
 
-/**
- * It downloads user data and sends it to the user's email
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getDownloadUserData(req, res) {
   const { user_id } = req.params;
 
