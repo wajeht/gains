@@ -200,7 +200,6 @@ function clearAndDismissUpdateCurrentSessionModal() {
               class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
-              <i class="bi bi-x-circle"></i>
               Cancel
             </button>
 

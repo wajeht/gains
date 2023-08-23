@@ -1869,7 +1869,6 @@ function downloadVideo(url) {
             type="reset"
             class="btn btn-outline-dark"
           >
-            <font-awesome-icon icon="broom" />
             Clear
           </button>
 
@@ -2078,7 +2077,6 @@ function downloadVideo(url) {
         <div class="modal-footer">
           <!-- clear -->
           <button v-if="!addAExerciseNoteLoading" type="reset" class="btn btn-outline-dark">
-            <font-awesome-icon icon="broom" />
             Clear
           </button>
 
@@ -2090,7 +2088,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle"></i>
             Cancel
           </button>
 
@@ -2151,10 +2148,7 @@ function downloadVideo(url) {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addATagLoading" type="reset" class="btn btn-outline-dark">
-            <font-awesome-icon icon="broom" />
-            Clear
-          </button>
+          <button v-if="!addATagLoading" type="reset" class="btn btn-outline-dark">Clear</button>
 
           <!-- cancel -->
           <button
@@ -2164,7 +2158,6 @@ function downloadVideo(url) {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle"></i>
             Cancel
           </button>
 
@@ -2496,10 +2489,7 @@ function downloadVideo(url) {
         <!-- footer -->
         <div class="modal-footer">
           <!-- clear -->
-          <button v-if="!addASetLoading" type="reset" class="btn btn-outline-dark">
-            <font-awesome-icon icon="broom" />
-            Clear
-          </button>
+          <button v-if="!addASetLoading" type="reset" class="btn btn-outline-dark">Clear</button>
 
           <!-- btn -->
 
@@ -2663,7 +2653,6 @@ function downloadVideo(url) {
               type="reset"
               class="btn btn-outline-dark"
             >
-              <font-awesome-icon icon="broom" />
               Clear
             </button>
 
@@ -2675,7 +2664,6 @@ function downloadVideo(url) {
               class="btn btn-outline-dark"
               data-bs-dismiss="modal"
             >
-              <i class="bi bi-x-circle"></i>
               Cancel
             </button>
 
