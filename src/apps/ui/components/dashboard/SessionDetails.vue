@@ -1587,7 +1587,6 @@ function downloadVideo(url) {
             data-bs-target="#add-a-exercise"
             :disabled="loading || currentSessionDetails.end_date"
           >
-            <i class="bi bi-plus-circle-fill"></i>
             Add a exercise
           </button>
         </div>
@@ -1598,22 +1597,12 @@ function downloadVideo(url) {
           <button
             :disabled="loading"
             type="button"
-            :class="[
-              'btn',
-              currentSessionDetails.end_date ? 'btn-danger' : 'btn-secondary',
-              currentSessionDetails.end_date != null ? 'rounded' : '',
-            ]"
+            class="btn btn-danger"
             data-bs-toggle="modal"
             data-bs-target="#delete-current-session"
           >
-            <span v-if="currentSessionDetails.end_date">
-              <i class="bi bi-trash"></i>
-              Delete
-            </span>
-            <span v-if="!currentSessionDetails.end_date">
-              <i class="bi bi-x-circle-fill"></i>
-              Cancel
-            </span>
+            <span v-if="currentSessionDetails.end_date">Delete</span>
+            <span v-if="!currentSessionDetails.end_date">Cancel</span>
           </button>
 
           <!-- complete current session button -->
@@ -1624,12 +1613,11 @@ function downloadVideo(url) {
             data-bs-target="#complete-current-session"
             type="button"
             class="btn btn-success"
-            :class="{ rounded: currentSessionDetails.end_date === null }"
             :disabled="
               loading || (!currentSessionDetails.logs?.length && addASetExerciseId == null)
             "
           >
-            <span v-if="!loading"> <i class="bi bi-check-circle-fill"></i> Complete </span>
+            <span v-if="!loading">Complete </span>
           </button>
         </div>
       </div>

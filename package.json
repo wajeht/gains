@@ -62,7 +62,7 @@
   },
   "homepage": "https://github.com/wajeht/gains#readme",
   "dependencies": {
-    "@formkit/auto-animate": "^1.0.0-beta.1",
+    "@formkit/auto-animate": "^0.7.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
@@ -114,7 +114,6 @@
     "pino-pretty": "^10.0.0",
     "read-pkg": "^8.0.0",
     "request-ip": "^3.3.0",
-    "sass": "^1.55.0",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.5.2",
     "supertest": "^6.3.0",
@@ -154,6 +153,7 @@
     "open-cli": "^7.1.0",
     "postcss": "^8.4.17",
     "prettier": "^3.0.0",
+    "sass": "^1.66.1",
     "sleep-ms": "^2.0.1",
     "standard-version": "^9.5.0",
     "vitest": "^0.34.2"

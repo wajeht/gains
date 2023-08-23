@@ -176,11 +176,13 @@ function logDetails(sid) {
             <!-- middle -->
             <div class="flex-grow-1">
               <h5 class="card-title">{{ session.name }}</h5>
-              <div class="card-text">
+              <div class="card-text" style="margin-left: 15px">
                 <small>
-                  <ul class="list-unstyled mb-0 pb-0 list-group-numbered">
-                    <li v-for="log in session.json" :key="`key-${log.id}`">{{ log.name }}</li>
-                  </ul>
+                  <ol class="list-numbered m-0 p-0">
+                    <li class="list-item" v-for="log in session.json" :key="`key-${log.id}`">
+                      {{ log.name }}
+                    </li>
+                  </ol>
                 </small>
               </div>
             </div>

@@ -534,7 +534,6 @@ async function clearAllCache() {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -548,9 +547,7 @@ async function clearAllCache() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteAllDataOfAUserLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
-            </span>
+            <span v-if="!deleteAllDataOfAUserLoading"> Confirm </span>
             <span v-if="deleteAllDataOfAUserLoading"> Loading... </span>
           </button>
         </div>

@@ -61,14 +61,14 @@ async function getSearch() {
         <span>{{ alert.msg }}</span>
       </div>
 
+      <!-- info -->
+      <div v-if="initialPage" class="alert alert-info mb-0">
+        Search lifters information inside open powerlifting database
+      </div>
+
       <!-- card -->
       <div class="card">
         <div class="card-body" v-auto-animate>
-          <!-- info -->
-          <div v-if="initialPage" class="alert alert-info mt-4" :class="{ 'mb-4': initialPage }">
-            Search lifters information inside open powerlifting database
-          </div>
-
           <form @submit.prevent="getSearch()" :class="{ 'mb-4': initialPage }">
             <div class="input-group">
               <input
@@ -108,12 +108,14 @@ async function getSearch() {
               <table class="table table-striped table-hover table-sm">
                 <thead>
                   <tr>
-                    <th v-for="h in Object.keys(lifters[0])" class="text-center">{{ h }}</th>
+                    <th v-for="(h, i) in Object.keys(lifters[0])" :key="i" class="text-center">
+                      {{ h }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="lifter in lifters">
-                    <template v-for="data in lifter">
+                  <tr v-for="(lifter, i) in lifters" :key="i">
+                    <template v-for="(data, j) in lifter" :key="j">
                       <td class="align-middle text-center">
                         {{ data }}
                       </td>

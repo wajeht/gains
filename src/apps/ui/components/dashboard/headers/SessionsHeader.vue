@@ -371,7 +371,6 @@ async function addASession() {
                 class="btn btn-outline-dark"
                 data-bs-dismiss="modal"
               >
-                <i class="bi bi-x-circle-fill"></i>
                 Cancel
               </button>
               <button type="submit" class="btn btn-dark" :disabled="loading">
@@ -379,8 +378,8 @@ async function addASession() {
                   <span class="visually-hidden">Loading...</span>
                 </div>
 
-                <span v-if="!loading"><i class="bi bi-check-circle-fill"></i> Submit </span>
-                <span v-if="loading"> Loading... </span>
+                <span v-if="!loading">Submit</span>
+                <span v-if="loading">Loading...</span>
               </button>
             </div>
           </div>
@@ -458,6 +457,7 @@ a:hover {
 
 .nav-link {
   color: #212529;
+  padding: 0.25rem 1rem;
 }
 
 .nav-pills .nav-link.active,
