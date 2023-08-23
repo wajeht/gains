@@ -100,7 +100,6 @@ io.on('connection', async function (socket) {
 
     await redis.set('onlineUsers', JSON.stringify(onlineUsers));
 
-    // Broadcast the disconnected user's ID to all clients
     socket.broadcast.emit('userDisconnected', socket.id);
   });
 });

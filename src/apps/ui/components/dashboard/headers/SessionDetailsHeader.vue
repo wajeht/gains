@@ -150,7 +150,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
       data-bs-keyboard="false"
       tabindex="-1"
     >
-      <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <!-- header -->
           <div class="modal-header">
@@ -200,7 +200,6 @@ function clearAndDismissUpdateCurrentSessionModal() {
               class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
-              <i class="bi bi-x-circle"></i>
               Cancel
             </button>
 
@@ -213,10 +212,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
               >
                 <span class="visually-hidden">Loading...</span>
               </div>
-              <span v-if="!updateCurrentSessionLoading">
-                <i class="bi bi-check-circle-fill"></i>
-                Submit
-              </span>
+              <span v-if="!updateCurrentSessionLoading"> Submit </span>
               <span v-if="updateCurrentSessionLoading"> Loading... </span>
             </button>
           </div>

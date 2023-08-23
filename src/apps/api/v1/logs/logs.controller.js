@@ -6,11 +6,6 @@ import logger from '../../../../utils/logger.js';
 import { capture } from '../../../../utils/screenshot.js';
 import redis from '../../../../utils/redis.js';
 
-/**
- * It creates a log for a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function createLogs(req, res) {
   const body = req.body;
   const created = await LogsQueries.createLog(body);
@@ -28,11 +23,6 @@ export async function createLogs(req, res) {
   });
 }
 
-/**
- * It uploads a video to the server and inserts the video's path and url into the database
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function uploadAVideo(req, res) {
   const { path: video_path } = req.file;
   const video_url = req.file.path.split('public')[1];
@@ -60,12 +50,6 @@ export async function uploadAVideo(req, res) {
   });
 }
 
-/**
- * It updates the private state of a log.
- * @param req - The request object.
- * @param res - The response object.
- * @returns The updated log
- */
 export async function updatePrivateState(req, res) {
   const { log_id } = req.params;
   const value = req.body.private;
@@ -85,11 +69,6 @@ export async function updatePrivateState(req, res) {
   });
 }
 
-/**
- * It takes in an array of logs and creates them in the database
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postMultipleLogs(req, res) {
   const logs = req.body.logs;
   const user_id = req.body.user_id;

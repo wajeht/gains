@@ -175,6 +175,7 @@ function clearDataAndDismissModal() {
         <!-- add btn -->
         <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
           <font-awesome-icon icon="plus" class="p-0 m-0" />
+          <span>Add a category</span>
         </h5>
 
         <!-- modal -->
@@ -186,7 +187,7 @@ function clearDataAndDismissModal() {
           data-bs-keyboard="false"
           tabindex="-1"
         >
-          <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Add a exercise category</h5>
@@ -328,6 +329,11 @@ function clearDataAndDismissModal() {
 <style scoped>
 .dropdown-item {
   padding: 0.25rem 1rem;
+}
+
+.dropdown-item:hover {
+  background: #6c757d;
+  color: white !important;
 }
 .dropdown-item.active,
 .dropdown-item:active {

@@ -3,11 +3,6 @@ import logger from '../../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
 import redis from '../../../../utils/redis.js';
 
-/**
- * It creates a set for a user.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postSet(req, res) {
   const body = req.body;
   const created = await SetsQueries.createSet(body);
@@ -24,12 +19,6 @@ export async function postSet(req, res) {
   });
 }
 
-/**
- * It takes in a request object, and a response object, and returns a response object with a status
- * code of 200 and a message that says "The resource was updated successfully!"
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function patchSet(req, res) {
   const id = req.params.id;
   const body = req.body;
@@ -55,11 +44,6 @@ export async function patchSet(req, res) {
   });
 }
 
-/**
- * It deletes a set by id and returns the deleted set
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function deleteSet(req, res) {
   const id = req.params.id;
   const body = req.body;

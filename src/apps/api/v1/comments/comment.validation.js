@@ -1,5 +1,4 @@
-import { check, checkSchema, param, body } from 'express-validator';
-import { blue, custom, green, red, yellow } from '../../../../utils/rainbow-log.js';
+import { param, body } from 'express-validator';
 import * as UserQueries from '../users/users.queries.js';
 import * as SessionsQueries from '../sessions/sessions.queries.js';
 import * as CommentsQueries from './comments.queries.js';

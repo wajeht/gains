@@ -7,7 +7,6 @@ import logger from '../../../utils/logger.js';
 import requestIp from 'request-ip';
 import { env } from './.././../../config/env.js';
 
-/* A validation for the user input. */
 export const getReverify = [
   // check for email
   query('email')
@@ -18,7 +17,6 @@ export const getReverify = [
     .withMessage('Email must be an email!'),
 ];
 
-/* A validation for the user input. */
 export const postLogin = [
   // only certain fields are allow
   body().custom((body) => {
@@ -68,7 +66,6 @@ export const postLogin = [
   body('remember_me').optional().trim().toBoolean(),
 ];
 
-/* A validation for the user input. */
 export const postSignup = [
   body().custom((body) => {
     const requiredFields = ['username', 'password', 'email'];
@@ -129,7 +126,6 @@ export const postSignup = [
     }),
 ];
 
-/* A validation for the user input. */
 export const getVerifyEmail = [
   param('uid')
     .trim()
@@ -168,7 +164,6 @@ export const getVerifyEmail = [
     }),
 ];
 
-/* A validation for the user input. */
 export const postForgetPassword = [
   body('email')
     .trim()
@@ -190,7 +185,6 @@ export const postForgetPassword = [
     }),
 ];
 
-/* A validation for the user input. */
 export const postResetPassword = [
   body('uid')
     .trim()

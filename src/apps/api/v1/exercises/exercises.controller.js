@@ -6,14 +6,7 @@ import { calculateE1RM } from '../../../../utils/helpers.js';
 
 import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';
-import { omit } from 'lodash-es';
 
-/**
- * It gets the exercise history for a given exercise id
- * @param req - The request object.
- * @param res - The response object.
- * @returns The exercise history for a specific exercise.
- */
 export async function getExerciseHistory(req, res) {
   const exercise_id = req.params.exercise_id;
   const { perPage, currentPage } = req.query;
@@ -43,12 +36,6 @@ export async function getExerciseHistory(req, res) {
   });
 }
 
-/**
- * It gets an exercise by its id
- * @param req - The request object.
- * @param res - The response object.
- * @returns The exercise with the given id.
- */
 export async function getExercise(req, res) {
   const eid = req.params.eid;
 
@@ -64,12 +51,6 @@ export async function getExercise(req, res) {
   });
 }
 
-/**
- * It returns all exercises, exercises by user id, or exercises by exercise category id
- * @param req - The request object.
- * @param res - The response object.
- * @returns the exercises for a specific user or exercise category.
- */
 export async function getExercises(req, res) {
   const uid = req.query.user_id;
   const ecid = req.query.exercise_category_id;
@@ -147,11 +128,6 @@ export async function getExercises(req, res) {
   });
 }
 
-/**
- * It creates a new exercise for a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postExercise(req, res) {
   const body = req.body;
 
@@ -180,12 +156,6 @@ export async function postExercise(req, res) {
   });
 }
 
-/**
- * It updates a note for a specific exercise.
- * @param req - The request object.
- * @param res - The response object.
- * @returns The updated note.
- */
 export async function patchExerciseNote(req, res) {
   const body = req.body;
   const note = await ExercisesQueries.updateExerciseNote(body);
@@ -195,7 +165,7 @@ export async function patchExerciseNote(req, res) {
       `Something went wrong while updating a note for gmid: ${body.lid}!`,
     );
 
-  logger.info(`User id: ${body.user_id} has updated gains meta to ${JSON.stringify(body)}!`);
+  logger.info(`User id: ${body.user_id} has updated exercise note to ${JSON.stringify(body)}!`);
 
   return res.status(StatusCodes.CREATED).json({
     status: 'success',

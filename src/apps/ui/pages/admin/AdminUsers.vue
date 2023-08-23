@@ -576,7 +576,7 @@ function clearAndDismissModifyAUserModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <!-- content -->
       <div class="modal-content">
         <!-- header -->
@@ -749,9 +749,7 @@ function clearAndDismissModifyAUserModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!sendPasswordResetLinkLoading"
-              ><i class="bi bi-check-circle-fill"></i> Send reset password email
-            </span>
+            <span v-if="!sendPasswordResetLinkLoading"> Send reset password email </span>
 
             <span v-if="sendPasswordResetLinkLoading"> Loading... </span>
           </button>
@@ -764,7 +762,6 @@ function clearAndDismissModifyAUserModal() {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -774,7 +771,7 @@ function clearAndDismissModifyAUserModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!modifyAUserLoading"><i class="bi bi-check-circle-fill"></i> Update </span>
+            <span v-if="!modifyAUserLoading"> Update </span>
             <span v-if="modifyAUserLoading"> Loading... </span>
           </button>
         </div>
@@ -791,7 +788,7 @@ function clearAndDismissModifyAUserModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <!-- content -->
       <div class="modal-content">
         <!-- header -->
@@ -822,7 +819,6 @@ function clearAndDismissModifyAUserModal() {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -832,7 +828,7 @@ function clearAndDismissModifyAUserModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!addAUserLoading"><i class="bi bi-check-circle-fill"></i> Add </span>
+            <span v-if="!addAUserLoading"> Add </span>
             <span v-if="addAUserLoading"> Loading... </span>
           </button>
         </div>
@@ -849,7 +845,7 @@ function clearAndDismissModifyAUserModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <!-- content -->
       <div class="modal-content">
         <!-- header -->
@@ -893,7 +889,6 @@ function clearAndDismissModifyAUserModal() {
             class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -903,7 +898,7 @@ function clearAndDismissModifyAUserModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteAUserLoading"><i class="bi bi-check-circle-fill"></i> Delete </span>
+            <span v-if="!deleteAUserLoading"> Delete </span>
             <span v-if="deleteAUserLoading"> Loading... </span>
           </button>
         </div>

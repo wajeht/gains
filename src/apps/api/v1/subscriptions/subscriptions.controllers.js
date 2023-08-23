@@ -4,11 +4,6 @@ import logger from '../../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
 import * as UserQueries from '../users/users.queries.js';
 
-/**
- * It takes a request body, and then creates a subscription in the database
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postSubscribeChangelog(req, res) {
   const body = req.body;
 

@@ -1,4 +1,5 @@
 import path from 'path';
+
 export default {
   info: {
     title: 'Gains',

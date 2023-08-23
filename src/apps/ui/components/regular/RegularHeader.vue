@@ -175,6 +175,10 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
   text-decoration: none;
 }
 
+.dropdown-item {
+  padding: 0.25rem 1rem;
+}
+
 #mobile-menu {
   display: none;
 }
@@ -193,7 +197,7 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
   .dropdown-item.active,
   .dropdown-item:active {
     background: #212529;
-    color: white;
+    color: white !important;
   }
 }
 </style>

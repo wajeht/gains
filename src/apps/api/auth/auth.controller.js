@@ -14,11 +14,6 @@ import useragent from 'useragent';
 
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 
-/**
- * It takes in a request and a response object, and returns a JSON object with a token
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postLogin(req, res) {
   const { email, remember_me } = req.body;
   let [user] = await UsersQueries.findUserByParam({ email });
@@ -89,12 +84,6 @@ export async function postLogin(req, res) {
   });
 }
 
-/**
- * It takes the user's password, hashes it, creates a new user object, and then creates a new user in
- * the database
- * @param req - the request object
- * @param res - the response object
- */
 export async function postSignup(req, res) {
   const verificationToken = crypto.randomBytes(64).toString('hex');
   const hashedPassword = await Password.hash(req.body.password);
@@ -164,12 +153,6 @@ export async function postSignup(req, res) {
   });
 }
 
-/**
- * It takes the user ID from the URL, and then it verifies the user by updating the user's verified
- * column to true
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getVerifyEmail(req, res) {
   const { uid } = req.params;
   const date = new Date();
@@ -190,11 +173,6 @@ export async function getVerifyEmail(req, res) {
   });
 }
 
-/**
- * It sends a re-verification email to the user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getReverify(req, res) {
   const { email } = req.query;
   let user = await UsersQueries.findUserByParam({ email });
@@ -247,12 +225,6 @@ export async function getReverify(req, res) {
   });
 }
 
-/**
- * We are generating a password reset token, saving it to the database, and sending it to the user's
- * email
- * @param req - The request object.
- * @param res - the response object
- */
 export async function postForgetPassword(req, res) {
   const { email } = req.body;
 
@@ -313,11 +285,6 @@ export async function postForgetPassword(req, res) {
   });
 }
 
-/**
- * It updates the user's password and removes the password reset token and expiration date
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postResetPassword(req, res) {
   const { newPassword, uid } = req.body;
   const newHashedPassword = await Password.hash(newPassword);
@@ -344,11 +311,6 @@ export async function postResetPassword(req, res) {
   });
 }
 
-/**
- * It sets the accessToken cookie to expire immediately, and returns a success response
- * @param req - The request object.
- * @param res - The response object.
- */
 export function getLogout(req, res) {
   res.cookie('token', '', {
     httpOnly: true,

@@ -6,11 +6,6 @@ import logger from '../../../../utils/logger.js';
 import jwt from 'jsonwebtoken';
 import { jwt_secret } from '../../../../config/env.js';
 
-/**
- * It gets the api keys of a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getApiKeysOfAUser(req, res) {
   const user_id = req.params.user_id;
   const apiKeys = await ApiKeysQueries.getApiKey(user_id);
@@ -23,11 +18,6 @@ export async function getApiKeysOfAUser(req, res) {
   });
 }
 
-/**
- * It creates a new api key for a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postGenerateApiKey(req, res) {
   const user_id = req.body.user_id;
 
@@ -75,11 +65,6 @@ export async function postGenerateApiKey(req, res) {
   });
 }
 
-/**
- * It deletes an api key from the database
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function deleteApiKey(req, res) {
   const user_id = req.user.user_id;
   const api_key_id = req.params.api_key_id;

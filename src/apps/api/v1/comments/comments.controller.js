@@ -1,16 +1,8 @@
 import logger from '../../../../utils/logger.js';
-import * as UsersQueries from '../users//users.queries.js';
 import * as CommentsQueries from '../comments//comments.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import CustomError from '../../api.errors.js';
-import { omit, without } from 'lodash-es';
 import redis from '../../../../utils/redis.js';
 
-/**
- * It creates a comment in the database and returns the created comment.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postAComment(req, res) {
   const body = req.body;
 
@@ -33,11 +25,6 @@ export async function postAComment(req, res) {
   });
 }
 
-/**
- * It gets all the comments for a given session
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getCommentsOfASession(req, res) {
   const session_id = req.params.session_id;
 
@@ -51,11 +38,6 @@ export async function getCommentsOfASession(req, res) {
   });
 }
 
-/**
- * It deletes a comment from the database and returns the deleted comment
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function deleteAComment(req, res) {
   const { comment_id } = req.params;
 

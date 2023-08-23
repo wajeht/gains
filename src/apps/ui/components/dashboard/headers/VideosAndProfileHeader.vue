@@ -100,7 +100,7 @@ const number = ref(props.numberOfSessionsPerWeek);
       data-bs-keyboard="false"
       tabindex="-1"
     >
-      <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <!-- header -->
           <div class="modal-header">
@@ -141,7 +141,6 @@ const number = ref(props.numberOfSessionsPerWeek);
               class="btn btn-danger"
               data-bs-dismiss="modal"
             >
-              <i class="bi bi-x-circle-fill"></i>
               Cancel
             </button>
 
@@ -160,10 +159,7 @@ const number = ref(props.numberOfSessionsPerWeek);
               >
                 <span class="visually-hidden">Loading...</span>
               </div>
-              <span v-if="!updateVideosSettingsLoading">
-                <i class="bi bi-check-circle-fill"></i>
-                Submit
-              </span>
+              <span v-if="!updateVideosSettingsLoading"> Submit </span>
               <span v-if="updateVideosSettingsLoading"> Loading... </span>
             </button>
           </div>

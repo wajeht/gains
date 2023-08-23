@@ -139,7 +139,7 @@ function clearAndDismissPreviewVideoModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -166,10 +166,9 @@ function clearAndDismissPreviewVideoModal() {
           <button
             @click="clearAndDismissPreviewVideoModal()"
             type="reset"
-            class="btn btn-danger"
+            class="btn btn-dark w-100"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Close
           </button>
         </div>

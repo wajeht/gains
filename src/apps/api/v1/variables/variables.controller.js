@@ -8,12 +8,6 @@ import redis from '../../../../utils/redis.js';
 import axios from 'axios';
 import logger from '../../../../utils/logger.js';
 
-/**
- * It deletes a variable from the database
- * @param req - The request object.
- * @param res - The response object.
- * @returns a status code of 200 and a json object with a status, request_url, message, and data.
- */
 export async function deleteAVariable(req, res) {
   const { user_id } = req.query;
   const { variable_id } = req.params;
@@ -30,12 +24,6 @@ export async function deleteAVariable(req, res) {
   });
 }
 
-/**
- * It creates a variable and returns the created variable
- * @param req - The request object.
- * @param res - The response object.
- * @returns a response with a status code of 201 and a message.
- */
 export async function postAVariable(req, res) {
   const body = req.body;
 
@@ -51,12 +39,6 @@ export async function postAVariable(req, res) {
   });
 }
 
-/**
- * It gets all the bodyweight of a user
- * @param req - The request object.
- * @param res - The response object.
- * @returns The bodyweight of a user.
- */
 export async function getBodyweight(req, res) {
   const { user_id } = req.params;
 
@@ -97,12 +79,6 @@ export async function getCalories(req, res) {
   });
 }
 
-/**
- * It takes a query parameter, q, and returns the first 100 results from the OpenPowerlifting API
- * @param req - The request object.
- * @param res - The response object.
- * @returns The data is being returned as an array of objects.
- */
 export async function getOpenPowerliftingResult(req, res) {
   const q = req.query.q;
 
@@ -119,12 +95,6 @@ export async function getOpenPowerliftingResult(req, res) {
   return res.status(StatusCodes.OK).json(data);
 }
 
-/**
- * It gets the recovery data for a user
- * @param req - The request object.
- * @param res - The response object.
- * @returns The recovery data for a user.
- */
 export async function getRecovery(req, res) {
   const { user_id } = req.params;
   const { perPage, currentPage, cache } = req.query;
@@ -168,12 +138,6 @@ export async function getRecovery(req, res) {
   });
 }
 
-/**
- * It reads the `CHANGELOG.md` file and returns the content in HTML format
- * @param req - The request object.
- * @param res - The response object.
- * @returns The changelogs in HTML format.
- */
 export async function getChangelogs(req, res) {
   let changeLogsInHTMLFormat = JSON.parse(await redis.get('changelogs'));
 
@@ -218,13 +182,6 @@ export async function getChangelogs(req, res) {
   });
 }
 
-/**
- * We're getting the weekly body weight in for a user and then mapping the data to include a trend
- * value
- * @param req - The request object.
- * @param res - The response object.
- * @returns The weekly weight in for a user.
- */
 export async function getWeeklyWeightIn(req, res) {
   const { user_id } = req.params;
 
@@ -277,12 +234,6 @@ export async function getWeeklyWeightIn(req, res) {
   });
 }
 
-/**
- * It returns the most recent pull requests for a given user
- * @param req - The request object.
- * @param res - The response object.
- * @returns The recent pull requests for a user.
- */
 export async function getRecentPrs(req, res) {
   const { user_id } = req.params;
 

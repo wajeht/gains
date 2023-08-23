@@ -34,15 +34,20 @@ onMounted(async () => {
 });
 
 onUpdated(() => {
-  if (apiKeys.value.length) {
-    alert.msg = ``;
-    alert.type = '';
-  }
-
   if (!apiKeys.value.length) {
     alert.msg = `You currently do not have any api keys. Request for a key!`;
     alert.type = 'warning';
+    return;
   }
+
+  if (apiKeys.value.length === 5) {
+    alert.msg = `You've reached maximum api keys request!`;
+    alert.type = 'danger';
+    return;
+  }
+
+  alert.msg = '';
+  alert.type = '';
 });
 
 function toggleShowApiKey(index) {
@@ -80,7 +85,7 @@ async function requestApiKey() {
   try {
     requestApiKeyLoading.value = true;
 
-    await sleep(1000); // wait a while before generating new keys because of db error
+    await sleep(500); // wait a while before generating new keys because of db error
 
     const res = await api.post(`/api/v1/api-keys/`, { user_id: userStore.user.id });
     const json = await res.json();
@@ -96,8 +101,8 @@ async function requestApiKey() {
     requestApiKeyLoading.value = false;
     apiKeys.value.push(json.data[0]);
   } catch (e) {
-    requestApiKeyLoading.value = false;
     alert.type = 'danger';
+    requestApiKeyLoading.value = false;
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
       return;
@@ -244,28 +249,24 @@ function clearAndDismissDeleteApiKeyModal() {
                   </button>
                 </div>
               </span>
-
-              <!-- button -->
-              <button
-                @click="requestApiKey()"
-                type="button"
-                class="btn btn-dark"
-                :disabled="requestApiKeyLoading"
-              >
-                <div
-                  v-if="requestApiKeyLoading"
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                >
-                  <span class="visually-hidden">Requesting...</span>
-                </div>
-
-                <span v-if="!requestApiKeyLoading"> Request </span>
-                <span v-if="requestApiKeyLoading"> Requesting... </span>
-              </button>
             </div>
           </div>
         </div>
+
+        <!-- button -->
+        <button
+          @click="requestApiKey()"
+          type="button"
+          class="btn btn-dark w-100 mt-3"
+          :disabled="requestApiKeyLoading || apiKeys.length === 5"
+        >
+          <div v-if="requestApiKeyLoading" class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Requesting...</span>
+          </div>
+
+          <span v-if="!requestApiKeyLoading"> Request </span>
+          <span v-if="requestApiKeyLoading"> Loading... </span>
+        </button>
       </div>
     </div>
   </div>
@@ -279,7 +280,7 @@ function clearAndDismissDeleteApiKeyModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -314,7 +315,6 @@ function clearAndDismissDeleteApiKeyModal() {
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -324,9 +324,7 @@ function clearAndDismissDeleteApiKeyModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteApiKeyLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
-            </span>
+            <span v-if="!deleteApiKeyLoading"> Confirm </span>
             <span v-if="deleteApiKeyLoading"> Loading... </span>
           </button>
         </div>

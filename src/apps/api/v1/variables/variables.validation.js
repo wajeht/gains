@@ -153,7 +153,6 @@ export const postAVariable = [
     .toInt(),
 ];
 
-/* Validating the user_id. */
 export const getOpenPowerliftingResult = [
   query('q')
     .trim()
@@ -165,7 +164,6 @@ export const getOpenPowerliftingResult = [
     .bail(),
 ];
 
-/* Validating the user_id. */
 export const getBodyweight = [
   query('perPage')
     .optional()
@@ -205,7 +203,6 @@ export const getBodyweight = [
     .toInt(),
 ];
 
-/* Validating the user_id. */
 export const getWeeklyWeightIn = [
   param('user_id')
     .trim()
@@ -225,7 +222,6 @@ export const getWeeklyWeightIn = [
     .toInt(),
 ];
 
-/* Validating the user_id. */
 export const getRecentPrs = [
   param('user_id')
     .trim()
@@ -294,7 +290,6 @@ export const getRecovery = [
     .toInt(),
 ];
 
-/* Validating the user_id. */
 export const getCalories = [
   query('perPage')
     .optional()

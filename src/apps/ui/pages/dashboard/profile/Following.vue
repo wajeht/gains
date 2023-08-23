@@ -80,7 +80,7 @@ async function getMyFollowers() {
 }
 
 const computedCurrentLinkClass = (link) => {
-  return states.currentLink === link.label ? 'bg-white' : 'text-muted';
+  return states.currentLink === link.label ? 'bg-white border' : 'text-muted';
 };
 
 function setActive(link) {
@@ -106,21 +106,33 @@ function setActive(link) {
         <!-- tab -->
         <div class="d-flex justify-content-evenly rounded">
           <h6
+            id="follow"
             v-for="link in states.links"
+            :key="link.id"
             role="button"
             @click="setActive(link)"
             :class="['w-100 m-0 text-center rounded', computedCurrentLinkClass(link)]"
-            style="padding-top: 12px; padding-bottom: 12px"
+            style="
+              padding-top: 12px;
+              padding-bottom: 12px;
+              border-bottom: 0px !important;
+              border-bottom-left-radius: 0px !important;
+              border-bottom-right-radius: 0px !important;
+            "
           >
             {{ link.label }}
           </h6>
         </div>
 
         <!-- card -->
-        <div class="list-group">
+        <div
+          class="list-group"
+          style="border-top-left-radius: 0px !important; border-top-right-radius: 0px !important"
+        >
           <span v-if="computedList?.length">
             <div
               v-for="user in computedList"
+              :key="user.id"
               class="list-group-item d-flex gap-3 align-items-center justify-content-between py-3"
             >
               <!-- name and image -->
@@ -156,7 +168,7 @@ function setActive(link) {
 
           <!-- empty -->
           <div v-else class="list-group-item">
-            <small class="text-muted fw-light d-flex justify-content-center py-2">
+            <small class="text-muted fw-light d-flex justify-content-center py-3">
               No relevant data available yet!
             </small>
           </div>
@@ -174,5 +186,9 @@ a {
 
 a:hover {
   color: #191919;
+}
+
+#follow:hover {
+  color: #191919 !important;
 }
 </style>
