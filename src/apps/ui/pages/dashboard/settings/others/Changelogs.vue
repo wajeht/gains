@@ -208,9 +208,7 @@ function clearDataAndDismissSubscribeChangelogRelease() {
               >
                 <span class="visually-hidden">Loading...</span>
               </div>
-              <span v-if="!UnsubscribeChangelogReleaseLoading">
-                <i class="bi bi-x-circle-fill"></i> Unsubscribe
-              </span>
+              <span v-if="!UnsubscribeChangelogReleaseLoading"> Unsubscribe </span>
               <span v-if="UnsubscribeChangelogReleaseLoading"> Loading... </span>
             </button>
           </span>
@@ -297,7 +295,6 @@ function clearDataAndDismissSubscribeChangelogRelease() {
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -314,9 +311,7 @@ function clearDataAndDismissSubscribeChangelogRelease() {
             >
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!subscribeChangelogReleaseLoading">
-              <i class="bi bi-check-circle-fill"></i> Submit
-            </span>
+            <span v-if="!subscribeChangelogReleaseLoading"> Submit </span>
             <span v-if="subscribeChangelogReleaseLoading"> Loading... </span>
           </button>
         </div>

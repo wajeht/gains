@@ -213,10 +213,7 @@ function clearAndDismissUpdateCurrentSessionModal() {
               >
                 <span class="visually-hidden">Loading...</span>
               </div>
-              <span v-if="!updateCurrentSessionLoading">
-                <i class="bi bi-check-circle-fill"></i>
-                Submit
-              </span>
+              <span v-if="!updateCurrentSessionLoading"> Submit </span>
               <span v-if="updateCurrentSessionLoading"> Loading... </span>
             </button>
           </div>

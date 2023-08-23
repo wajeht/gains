@@ -492,7 +492,6 @@ async function postAComment() {
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -506,9 +505,7 @@ async function postAComment() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteACommentLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
-            </span>
+            <span v-if="!deleteACommentLoading"> Confirm </span>
             <span v-if="deleteACommentLoading"> Loading... </span>
           </button>
         </div>

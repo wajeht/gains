@@ -315,7 +315,6 @@ function clearAndDismissDeleteApiKeyModal() {
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -325,9 +324,7 @@ function clearAndDismissDeleteApiKeyModal() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteApiKeyLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
-            </span>
+            <span v-if="!deleteApiKeyLoading"> Confirm </span>
             <span v-if="deleteApiKeyLoading"> Loading... </span>
           </button>
         </div>

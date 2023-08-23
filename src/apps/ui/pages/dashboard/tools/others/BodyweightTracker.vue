@@ -507,7 +507,6 @@ const { lineChartProps } = useLineChart({
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -520,9 +519,7 @@ const { lineChartProps } = useLineChart({
             >
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!logABodyWeightLoading">
-              <i class="bi bi-check-circle-fill"></i> Submit
-            </span>
+            <span v-if="!logABodyWeightLoading"> Submit </span>
             <span v-if="logABodyWeightLoading"> Loading... </span>
           </button>
         </div>
@@ -580,7 +577,6 @@ const { lineChartProps } = useLineChart({
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
@@ -593,9 +589,7 @@ const { lineChartProps } = useLineChart({
             >
               <span class="visually-hidden">Loading...</span>
             </div>
-            <span v-if="!deleteABodyWeightLoading">
-              <i class="bi bi-check-circle-fill"></i> Submit
-            </span>
+            <span v-if="!deleteABodyWeightLoading"> Submit </span>
             <span v-if="deleteABodyWeightLoading"> Loading... </span>
           </button>
         </div>

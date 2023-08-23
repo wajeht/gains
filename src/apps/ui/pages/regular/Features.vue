@@ -169,7 +169,6 @@ function clearAndDismissPreviewVideoModal() {
             class="btn btn-danger"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Close
           </button>
         </div>
