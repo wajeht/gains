@@ -61,14 +61,14 @@ async function getSearch() {
         <span>{{ alert.msg }}</span>
       </div>
 
+      <!-- info -->
+      <div v-if="initialPage" class="alert alert-info mb-0">
+        Search lifters information inside open powerlifting database
+      </div>
+
       <!-- card -->
       <div class="card">
         <div class="card-body" v-auto-animate>
-          <!-- info -->
-          <div v-if="initialPage" class="alert alert-info mt-4" :class="{ 'mb-4': initialPage }">
-            Search lifters information inside open powerlifting database
-          </div>
-
           <form @submit.prevent="getSearch()" :class="{ 'mb-4': initialPage }">
             <div class="input-group">
               <input
