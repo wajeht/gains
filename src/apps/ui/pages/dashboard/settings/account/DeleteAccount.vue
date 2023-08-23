@@ -156,22 +156,19 @@ function clearAndDismissDeleteAccountModal() {
             @click="clearAndDismissDeleteAccountModal()"
             v-if="!deleteAccountLoading"
             type="reset"
-            class="btn btn-danger"
+            class="btn btn-light"
             data-bs-dismiss="modal"
           >
-            <i class="bi bi-x-circle-fill"></i>
             Cancel
           </button>
 
           <!-- confirm -->
-          <button type="submit" class="btn btn-success" :disabled="deleteAccountLoading">
+          <button type="submit" class="btn btn-danger" :disabled="deleteAccountLoading">
             <div v-if="deleteAccountLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!deleteAccountLoading"
-              ><i class="bi bi-check-circle-fill"></i> Confirm
-            </span>
+            <span v-if="!deleteAccountLoading">Delete my account</span>
             <span v-if="deleteAccountLoading"> Loading... </span>
           </button>
         </div>
