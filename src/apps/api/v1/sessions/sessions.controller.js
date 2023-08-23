@@ -6,11 +6,6 @@ import CustomError from '../../api.errors.js';
 import db from '../../../../database/db.js';
 import redis from '../../../../utils/redis.js';
 
-/**
- * It creates a session for a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postCreateSession(req, res) {
   const body = req.body;
   const { user_id } = req.body;
@@ -29,11 +24,6 @@ export async function postCreateSession(req, res) {
   });
 }
 
-/**
- * It updates a session with the given session id
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function patchSession(req, res) {
   const body = req.body;
   const sid = req.params.sid;
@@ -64,11 +54,6 @@ export async function patchSession(req, res) {
   });
 }
 
-/**
- * It fetches a session by its session id
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getSession(req, res) {
   const sid = req.params.sid;
   const session = await SessionQueries.getSessionBySessionId(sid);
@@ -83,11 +68,6 @@ export async function getSession(req, res) {
   });
 }
 
-/**
- * It fetches all sessions for a given user ID
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getUserSessions(req, res) {
   const user_id = req.query.user_id;
   const { perPage, currentPage } = req.query;
@@ -127,11 +107,6 @@ export async function getUserSessions(req, res) {
   });
 }
 
-/**
- * It deletes a session by soft deleting it from the database
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function deleteSession(req, res) {
   const sid = req.params.sid;
   const uid = req.body.user_id;
@@ -150,11 +125,6 @@ export async function deleteSession(req, res) {
   });
 }
 
-/**
- * It returns all sessions with videos for a given user id
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getSessionsWithVideos(req, res) {
   const user_id = req.params.user_id;
   const sessions = await SessionQueries.sessionsWithVideosByUserId(user_id);
@@ -169,11 +139,6 @@ export async function getSessionsWithVideos(req, res) {
   });
 }
 
-/**
- * It gets all the sessions from the database and returns them in the response
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getAllSessions(req, res) {
   const user_id = req.user.user_id;
 
