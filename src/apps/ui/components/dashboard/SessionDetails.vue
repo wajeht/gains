@@ -2641,7 +2641,7 @@ function downloadVideo(url) {
             <div v-if="deleteASetLoading" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Deleting...</span>
             </div>
-            <span v-if="!deleteASetLoading"> <i class="bi bi-trash"></i> Delete </span>
+            <span v-if="!deleteASetLoading"> Delete </span>
             <span v-if="deleteASetLoading"> Deleting... </span>
           </button>
 
