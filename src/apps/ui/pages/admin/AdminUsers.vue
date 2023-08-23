@@ -576,7 +576,7 @@ function clearAndDismissModifyAUserModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <!-- content -->
       <div class="modal-content">
         <!-- header -->
@@ -791,7 +791,7 @@ function clearAndDismissModifyAUserModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <!-- content -->
       <div class="modal-content">
         <!-- header -->
@@ -849,7 +849,7 @@ function clearAndDismissModifyAUserModal() {
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <!-- content -->
       <div class="modal-content">
         <!-- header -->

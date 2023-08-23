@@ -510,7 +510,7 @@ const { lineChartProps } = useLineChart({
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
@@ -602,7 +602,7 @@ const { lineChartProps } = useLineChart({
     data-bs-keyboard="false"
     tabindex="-1"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <!-- header -->
         <div class="modal-header">
