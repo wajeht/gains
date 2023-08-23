@@ -3,12 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
 
-/**
- * It fetches all exercise categories from the database and returns them to the client
- * @param req - The request object.
- * @param res - The response object.
- * @returns The exercise categories for a user or all exercise categories.
- */
 export async function getExerciseCategories(req, res) {
   const uid = req.query.user_id;
   const all = req.query.all;
@@ -46,11 +40,6 @@ export async function getExerciseCategories(req, res) {
   });
 }
 
-/**
- * It creates a new exercise category for a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postExerciseCategory(req, res) {
   const body = req.body;
   const ec = req.body.name;

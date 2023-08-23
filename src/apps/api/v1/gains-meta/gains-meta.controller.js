@@ -3,21 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
 
-/**
- * It creates a new gains meta info record in the database.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postMeta(req, res) {
   const body = req.body;
-
-  // const json = JSON.stringify({
-  //   exercise_id: 3,
-  //   session_id: 1,
-  //   collapsed: true,
-  //   notes: 'this is some notes',
-  // });
-  // body.json = json;
 
   const created = await GainsMetaQueries.createGainsMeta(body);
 

@@ -1,18 +1,9 @@
 import db from '../../../../database/db.js';
 
-/**
- * Get all exercise categories from the database, ordered by id in descending order.
- * @returns An array of objects.
- */
 export function getAllExerciseCategories() {
   return db.select('*').from('exercise_categories').orderBy('id', 'desc');
 }
 
-/**
- * Get all exercise categories for a user.
- * @param uid - the user id
- * @returns An array of objects.
- */
 export async function getExerciseCategoriesByUserId(uid) {
   return await db('exercise_categories as ec')
     .select('ec.*')
@@ -26,11 +17,6 @@ export async function getExerciseCategoriesByUserId(uid) {
     .orderBy('ec.id', 'desc');
 }
 
-/**
- * Get all exercise categories for a user.
- * @param uid - the user id
- * @returns An array of objects.
- */
 export async function getAllExerciseCategoriesByUserId(uid) {
   return await db('exercise_categories as ec')
     .select('ec.*')
@@ -42,11 +28,6 @@ export async function getAllExerciseCategoriesByUserId(uid) {
     .orderBy('ec.id', 'desc');
 }
 
-/**
- * This function returns all exercise categories that have not been deleted.
- * @param ecid - The id of the exercise category you want to get.
- * @returns An array of objects
- */
 export function getExerciseCategoriesById(ecid) {
   return db
     .select('*')
@@ -55,11 +36,6 @@ export function getExerciseCategoriesById(ecid) {
     .andWhere({ deleted: false });
 }
 
-/**
- * Get all exercises that belong to a specific exercise category.
- * @param ecid - exercise category id
- * @returns An array of objects containing the exercises and exercise categories.
- */
 export function getExercisesByExerciseCategoryId(ecid) {
   return db
     .select(
@@ -73,12 +49,6 @@ export function getExercisesByExerciseCategoryId(ecid) {
     .where({ 'exercise_categories.id': ecid });
 }
 
-/**
- * Search for an exercise category name in the database.
- * @param name - the name of the exercise category
- * @param uid - the user id of the user who created the exercise category
- * @returns An array of objects
- */
 export function searchExerciseCategoryName(name, uid) {
   return db
     .select('*')
@@ -87,20 +57,6 @@ export function searchExerciseCategoryName(name, uid) {
     .andWhereLike('name', `%${name}%`);
 }
 
-/**
- * It inserts a new exercise category into the database and returns the newly created exercise category
- * @param [body] - The body of the request.
- * @returns The exercise category that was created.
- */
-// export function createExerciseCategory(body = { name, user_id }) {
-//   return db.insert(body).into('exercise_categories').returning('*');
-// }
-
-/**
- * It takes in an object, inserts it into the database, and returns the object
- * @param data - an object containing the data to be inserted into the database
- * @returns The data that was inserted into the exercise_categories table.
- */
 export function createExerciseCategory(data) {
   return db.insert(data).into('exercise_categories').returning('*');
 }

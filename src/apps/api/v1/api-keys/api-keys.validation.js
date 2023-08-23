@@ -2,7 +2,6 @@ import { check, checkSchema, param, body } from 'express-validator';
 import * as ApiKeysQueries from './api-keys.queries.js';
 import * as UsersQueries from '../users/users.queries.js';
 
-/* Validating the user_id. */
 export const getApiKeysOfAUser = [
   param('user_id')
     .trim()
@@ -20,7 +19,6 @@ export const getApiKeysOfAUser = [
     .toInt(),
 ];
 
-/* Validating the user_id. */
 export const postGenerateApiKey = [
   body('user_id')
     .trim()
@@ -38,7 +36,6 @@ export const postGenerateApiKey = [
     .toInt(),
 ];
 
-/* Validating the api_key_id. */
 export const deleteApiKey = [
   param('api_key_id')
     .trim()

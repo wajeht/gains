@@ -4,7 +4,6 @@ import { isEqual } from 'lodash-es';
 import * as BlocksQueries from './blocks.queries.js';
 import * as UserQueries from '../users/users.queries.js';
 
-/* Checking the block id in the query string. */
 export const getBlock = [
   param('bid')
     .trim()
@@ -21,7 +20,6 @@ export const getBlock = [
     }),
 ];
 
-/* Checking the user_id in the query string. */
 export const getBlocks = [
   check('user_id')
     .optional()
@@ -37,7 +35,6 @@ export const getBlocks = [
     }),
 ];
 
-/* Checking the body of the request to make sure that it has the required fields. */
 export const postBlock = [
   body().custom((body) => {
     const requiredFields = ['name', 'description (required)', 'start_date', 'end_date', 'user_id'];

@@ -8,11 +8,6 @@ import * as JobsServices from '../../../../services/job.services.js';
 import redis from '../../../../utils/redis.js';
 import db from '../../../../database/db.js';
 
-/**
- * check to see if a current users authentication is still valid
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getCheckAuthentication(req, res) {
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -22,11 +17,6 @@ export async function getCheckAuthentication(req, res) {
   });
 }
 
-/**
- * It creates a user and returns the user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postUser(req, res) {
   const user = await UsersQueries.createUser(req.body);
 
@@ -40,11 +30,6 @@ export async function postUser(req, res) {
   });
 }
 
-/**
- * It's an async function that gets all users from the database and returns them as a JSON object
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getUsers(req, res) {
   let search = '';
 
@@ -110,11 +95,6 @@ export async function getUsers(req, res) {
   });
 }
 
-/**
- * This function gets a user by id and returns it as JSON.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function getUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.findUserById(id);
@@ -127,11 +107,6 @@ export async function getUser(req, res) {
   });
 }
 
-/**
- * This function will update a user by id, and return the updated user.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function patchUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.updateUserById(id, req.body);
@@ -148,21 +123,13 @@ export async function patchUser(req, res) {
   });
 }
 
-/**
- * It takes the id from the request parameters, calls the deleteUser function from the UsersQueries,
- * and returns the result as a JSON response
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function deleteUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.deleteUser(id);
 
   logger.info(`UserID: ${id} has disabled their account!`);
 
-  // if request was from currently logged in user, log them out
   if (user.id === req.user.user_id) {
-    // clear jwt token
     res.cookie('token', '', {
       httpOnly: true,
       expires: new Date(Date.now()),
@@ -181,11 +148,6 @@ export async function deleteUser(req, res) {
   });
 }
 
-/**
- * It updates the personal information of a user
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function patchUpdatePersonalInformation(req, res) {
   const { id } = req.params;
   const body = req.body;
@@ -203,11 +165,6 @@ export async function patchUpdatePersonalInformation(req, res) {
   });
 }
 
-/**
- * It takes in a user's ID and a body of data, and updates the user's account information
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function patchUpdateAccountInformation(req, res) {
   const { id } = req.params;
   const body = req.body;
@@ -223,12 +180,6 @@ export async function patchUpdateAccountInformation(req, res) {
   });
 }
 
-/**
- * It updates the profile picture of a user
- * @param req - The request object.
- * @param res - The response object.
- * @param next - The next middleware function in the stack.
- */
 export async function postUpdateProfilePicture(req, res, next) {
   const { path: profile_picture_path } = req.file;
   const profile_picture_url = req.file.path.split('public')[1];
@@ -250,11 +201,6 @@ export async function postUpdateProfilePicture(req, res, next) {
   });
 }
 
-/**
- * It deletes all of the user's data from the database.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postDeleteUserData(req, res) {
   const { user_id } = req.params;
   const deleted = await UsersQueries.deleteUserData(user_id);
@@ -275,11 +221,6 @@ export async function postDeleteUserData(req, res) {
   });
 }
 
-/**
- * It restores all of the user's data.
- * @param req - The request object.
- * @param res - The response object.
- */
 export async function postRestoreUserData(req, res) {
   const { user_id } = req.params;
 

@@ -1,24 +1,9 @@
 import db from '../../../../database/db.js';
 
-/**
- * "Get a variable from the database."
- *
- * The first line of the function is a comment. It's a good idea to include a comment at the top of
- * each function that describes what the function does
- * @param variable_id - The id of the variable you want to get.
- * @returns An array of objects
- */
 export function getAVariable(variable_id) {
   return db.select('*').from('variables').where({ id: variable_id }).andWhere({ deleted: false });
 }
 
-/**
- * It updates the deleted column of the variables table to true where the id is equal to the
- * variable_id and the user_id is equal to the user_id
- * @param variable_id - the id of the variable you want to delete
- * @param user_id - the id of the user who is deleting the variable
- * @returns The updated variable
- */
 export function deleteAVariable(variable_id, user_id) {
   return db
     .update({ deleted: true })
@@ -28,20 +13,10 @@ export function deleteAVariable(variable_id, user_id) {
     .returning('*');
 }
 
-/**
- * It creates a variable in the database
- * @param options - an object with the following properties:
- * @returns The variable object
- */
 export function createAVariable(options) {
   return db.insert(options).into('variables').returning('*');
 }
 
-/**
- * Get all bodyweight of a user.
- * @param user_id - the id of the user
- * @returns An array of objects with the body_weight property
- */
 export function getAllBodyweightOfAUser(
   user_id,
   pagination = { perPage: null, currentPage: null },
@@ -78,12 +53,6 @@ export function getAllCaloriesOfAUser(user_id, pagination = { perPage: null, cur
   );
 }
 
-/**
- * This function returns the last 8 body weights for a given user
- * @param user_id - the user's id
- * @returns An array of objects with the following properties:
- * id, body_weight, date, user_id
- */
 export function weeklyWeightInByUserId(user_id) {
   return db
     .select('id', 'body_weight', ' created_at as date', 'user_id')
@@ -95,15 +64,6 @@ export function weeklyWeightInByUserId(user_id) {
     .limit(8);
 }
 
-/**
- * "Get the most recent sets for a user where the reps are between 1 and 3 and the RPE is between 7 and
- * 10."
- *
- * The first thing to notice is that this is a raw query. I'm using the knex.js library to run raw SQL
- * queries. I'm not using the query builder
- * @param user_id - the user's id
- * @returns An array of objects.
- */
 export async function recentPrsByUserId(user_id) {
   const { rows } = await db.raw(
     `
@@ -136,12 +96,6 @@ export async function recentPrsByUserId(user_id) {
   return rows;
 }
 
-/**
- * Get all the variables for a user, and join them with the session they belong to
- * @param user_id - the user id of the user you want to get the recovery data for
- * @param [pagination] - { perPage: null, currentPage: null }
- * @returns An array of objects.
- */
 export async function getRecovery(user_id, pagination = { perPage: null, currentPage: null }) {
   return db
     .select(

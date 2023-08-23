@@ -1,11 +1,6 @@
 import db from '../../../../database/db.js';
 import { omit, pick, update } from 'lodash-es';
 
-/**
- * It takes a body object, inserts it into the sessions table, and returns the newly created session
- * @param body - an object containing the following properties:
- * @returns The session that was created
- */
 export async function createASession(body) {
   const wout = [
     'body_weight',
@@ -53,25 +48,7 @@ export async function createASession(body) {
   ];
 }
 
-/**
- * Get all sessions for a given user.
- * @param user_id - The user_id of the user whose sessions you want to retrieve.
- * @returns An array of objects
- */
 export function getSessionsByUserId(user_id, pagination = { perPage: null, currentPage: null }) {
-  // const result = db.raw(
-  //   `
-  //   select
-  //     ss.*,
-  //     (select json_agg(l.*)) as "json"
-  //   from
-  //     sessions ss
-  //     full join logs l on l.session_id = ss.id
-  //   group by
-  //     ss.id
-  // `,
-  // );
-
   return db
     .select(
       'sessions.*',
@@ -90,47 +67,9 @@ export function getSessionsByUserId(user_id, pagination = { perPage: null, curre
     });
 }
 
-/**
- * ! TODO: instead of multiple db calls, use postgres json_agg func
- * It gets a session by its session id
- * @param sid - The session id
- * @returns An array of objects
- */
 export async function getSessionBySessionId(sid) {
   let result = null;
 
-  // // session sets info
-  // const { rows: sets } = await db.raw(
-  //   `
-  //   select
-  //     e.name as name,
-  //     gm.id as "gains_meta_id",
-  //     gm.json->'sets_notes_visibility' as "sets_notes_visibility",
-  //     gm.json->'session_id' as "session_id",
-  //     gm.json->'exercise_id' as "exercise_id",
-  //     gm.json->'collapsed' as "collapsed",
-  //     gm.json->'notes' as "notes",
-  //     (select json_agg(s.* order by s.id)) as sets
-  //   from
-  //     sets s
-  //     inner join exercises e on e.id = s.exercise_id
-  //     inner join gains_meta gm on (gm.json->'exercise_id')::int = e.id
-  //     inner join sessions ss on ss.id = s.session_id
-  //   where (
-  //       ss.deleted = false
-  //       and (s.session_id = ? and (gm.json->'session_id')::int = ?)
-  //       and s.deleted = false
-  //     )
-  //   group by
-  //     s.session_id,
-  //     e.id,
-  //     gm.id
-  //   order by e.id desc
-  // `,
-  //   [sid, sid],
-  // );
-
-  // session sets info
   const { rows: sets } = await db.raw(
     `
     select
@@ -170,61 +109,6 @@ export async function getSessionBySessionId(sid) {
     }
   }
 
-  // const { rows: videos } = await db.raw(
-  //   `
-  //   select
-  //     (select coalesce(jsonb_agg(v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos
-  //   from
-  //     videos v
-  //     inner join logs l on l.id = v.log_id
-  //   where
-  //     v.session_id = ?
-  //   group by
-  //     l.id
-  // `,
-  //   [sid],
-  // );
-
-  // // TODO: this is not good for performance
-  // // TODO: find a way to merge two queries together
-  // sets.forEach((set, idx) => {
-  //   // console.log(set);
-  //   set.videos = videos[idx]?.videos;
-  // });
-
-  // // session with block info
-  // const joined = await db
-  //   .select(
-  //     '*',
-  //     'sessions.id as session_id',
-  //     'sessions.name as name',
-  //     'blocks.name as block_name',
-  //     'sessions.end_date as end_date',
-  //     'sessions.json as json',
-  //   )
-  //   .from('sessions')
-  //   .innerJoin('blocks', { 'blocks.id': 'sessions.block_id' })
-  //   .innerJoin('variables', { 'variables.session_id': 'sessions.id' })
-  //   .where({ 'sessions.id': sid })
-  //   .andWhere({ 'sessions.deleted': false });
-
-  // // session without block info
-  // const { rows: notJoined } = await db.raw(
-  //   `
-  //   select *,
-  //         ss.end_date as end_date,
-  //         ss.id as session_id,
-  //         ss.json as json
-  //   from sessions ss
-  //   inner join variables v on v.session_id = ss.id
-  //   where (
-  //     ss.id = ?
-  //     and ss.deleted = false
-  //   );
-  // `,
-  //   [sid],
-  // );
-
   const { rows: comments } = await db.raw(
     `
     select count(*) as comments
@@ -236,22 +120,6 @@ export async function getSessionBySessionId(sid) {
   `,
     [sid],
   );
-
-  // if (!joined.length) {
-  //   result = [
-  //     {
-  //       ...notJoined[0],
-  //       logs: sets,
-  //     },
-  //   ];
-  // } else {
-  //   result = [
-  //     {
-  //       ...joined[0],
-  //       logs: sets,
-  //     },
-  //   ];
-  // }
 
   const { rows: both } = await db.raw(
     `
@@ -293,13 +161,6 @@ export async function getSessionBySessionId(sid) {
   return result;
 }
 
-/**
- * Update a session in the database
- * @param sid - session id
- * @param uid - user id
- * @param body - {
- * @returns The updated session
- */
 export async function updateSession(sid, uid, body) {
   const only = [
     'body_weight',
@@ -350,15 +211,6 @@ export async function updateSession(sid, uid, body) {
   ];
 }
 
-/**
- * "Get all sessions for a user, and include all videos for each session."
- *
- * The first thing to notice is that we're using the `db.raw` method. This is a method that allows us
- * to write raw SQL queries. We're using it here because we need to use the `jsonb_agg` function, which
- * is a Postgres function that allows us to aggregate a column into a JSON array
- * @param user_id - The user_id of the user whose sessions we want to retrieve.
- * @returns An array of objects. Each object has a session and an array of videos.
- */
 export async function sessionsWithVideosByUserId(user_id) {
   const { rows } = await db.raw(
     `
@@ -384,10 +236,6 @@ export async function sessionsWithVideosByUserId(user_id) {
   return rows;
 }
 
-/**
- * Get all sessions, and for each session, get all videos that are not deleted, and order them by id.
- * @returns An array of objects.
- */
 export async function getAllSessions(pagination = { perPage: null, currentPage: null }) {
   // session sets info
   const { rows: logs } = await db.raw(
@@ -429,70 +277,6 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
       s.tags.push(current);
     }
   }
-
-  // const logs = await db
-  //   .select(
-  //     'l.*',
-  //     db.raw(
-  //       `(select coalesce(jsonb_agg(s.* order by s.id asc) filter (where s.id is not null and s.deleted = false), '[]')) as sets`,
-  //     ),
-  //     db.raw(
-  //       `(select coalesce(jsonb_agg(distinct v.*) filter (where v.id is not null and v.deleted = false), '[]')) as videos`,
-  //     ),
-  //   )
-  //   .from('sets as s')
-  //   .join('logs as l', 'l.id', 's.log_id')
-  //   .join('videos as v', 'v.log_id', 'l.id')
-  //   .join('sessions as ss', 'ss.id', 's.session_id')
-  //   .whereRaw(
-  //     `
-  //       l.deleted = false
-  //       and t.deleted = false
-  //       and l.private = false
-  //       and ss.end_date is not null
-  //       and v.deleted = false
-  //   `,
-  //   )
-  //   .groupBy('l.id')
-  //   .orderBy('l.id', 'asc');
-  // .paginate({
-  //   ...pagination,
-  // });
-
-  // const { rows: sessions } = await db.raw(
-  //   `
-  //   select
-  //     ss.*,
-  //     b.*,
-  //     v.*,
-  //     u.username,
-  //     ud.profile_picture_url,
-  //     ss.id as "session_id",
-  //     ss.name as "name",
-  //     ss.start_date as "start_date",
-  //     b.name as "block_name",
-  //     ss.end_date as "end_date",
-  //     (select count(c.*) filter (where c.deleted = false)) as counts_of_comments,
-  //     ss.json as "json"
-  //   from
-  //     sessions ss
-  //     full join blocks b on b.id = ss.block_id
-  //     inner join variables v on v.session_id = ss.id
-  //     full join comments c on c.session_id = ss.id
-  //     inner join users u on u.id = ss.user_id
-  //     inner join user_details ud on ud.user_id = u.id
-  //   where (
-  //     ss.deleted = false
-  //     and ss.end_date is not null
-  //   )
-  //   group by
-  //     ss.id,
-  //     b.id,
-  //     v.id,
-  //     u.id,
-  //     ud.id
-  // `,
-  // );
 
   const sessions = await db
     .select(
@@ -563,12 +347,6 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
   };
 }
 
-/**
- * Update the session with the given sid and uid to be deleted.
- * @param sid - The session ID
- * @param uid - user id
- * @returns The updated session
- */
 export async function softDeleteSession(sid, uid) {
   await db.update({ deleted: true }).from('sets').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
   await db.update({ deleted: true }).from('variables').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
@@ -581,11 +359,6 @@ export async function softDeleteSession(sid, uid) {
   return db.update({ deleted: true }).from('sessions').where({ id: sid }).andWhere({ user_id: uid }).returning('*'); // prettier-ignore
 }
 
-/**
- * It undoes the soft delete of a session by setting the deleted flag to false for all the tables that
- * are associated with a session
- * @returns The session that was undeleted.
- */
 export async function undoSoftDeleteSession({ user_id, session_id }) {
   await db.update({ deleted: false }).from('sets').where({ session_id }).andWhere({ user_id}); // prettier-ignore
   await db.update({ deleted: false }).from('variables').where({ session_id }).andWhere({ user_id}); // prettier-ignore
