@@ -166,7 +166,7 @@ function clearAndDismissPreviewVideoModal() {
           <button
             @click="clearAndDismissPreviewVideoModal()"
             type="reset"
-            class="btn btn-danger"
+            class="btn btn-dark w-100"
             data-bs-dismiss="modal"
           >
             Close
