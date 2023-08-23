@@ -80,7 +80,8 @@ async function getUserExerciseByCategoryId() {
         </h5>
         <div class="list-group">
           <router-link
-            v-for="(category, i) in categories"
+            v-for="category in categories"
+            :key="category.id"
             :to="`/dashboard/exercises/${category.id}`"
             class="list-group-item list-group-item-action d-flex justify-content-between py-3"
           >

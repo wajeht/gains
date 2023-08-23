@@ -395,9 +395,12 @@ function clearDataAndDismissModal() {
 </template>
 
 <style scoped>
+.dropdown-item {
+  padding: 0.25rem 1rem;
+}
 .dropdown-item.active,
 .dropdown-item:active {
   background: #212529;
-  color: white;
+  color: white !important;
 }
 </style>

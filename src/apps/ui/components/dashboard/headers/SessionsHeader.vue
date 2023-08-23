@@ -458,6 +458,7 @@ a:hover {
 
 .nav-link {
   color: #212529;
+  padding: 0.25rem 1rem;
 }
 
 .nav-pills .nav-link.active,
