@@ -24,7 +24,8 @@ async function gracefulShutdown() {
 
   try {
     await new Promise((resolve, reject) => {
-      server.close((err) => {
+      server.close(async (err) => {
+        await redis.del('onlineUsers');
         if (err) {
           reject(err);
           return;
@@ -33,6 +34,7 @@ async function gracefulShutdown() {
       });
     });
 
+    await redis.del('onlineUsers');
     await redis.disconnect();
     await db.destroy();
 
