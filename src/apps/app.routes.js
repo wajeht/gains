@@ -5,11 +5,6 @@ import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import requestIp from 'request-ip';
 
-/**
- * It returns a 200 status code with a JSON object containing a message
- * @param req - The request object.
- * @param res - The response object.
- */
 export function getHealthCheck(req, res) {
   const ip = requestIp.getClientIp(req);
   Chad.flex(`someone hit a health check from ${ip}`);
@@ -18,12 +13,6 @@ export function getHealthCheck(req, res) {
   });
 }
 
-/**
- * It sends the index.html file to the browser
- * @param req - The request object.
- * @param res - The response object.
- * @returns The index.html file from the public folder.
- */
 export function vueHandler(req, res, next) {
   try {
     const vue = path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'));
@@ -34,14 +23,6 @@ export function vueHandler(req, res, next) {
   }
 }
 
-/**
- *
- * If the requested resource does not exist, send a 404 status code and a JSON response with a status
- * of 'fail' and a message of 'The resource does not exist!'
- * @param req - The request object.
- * @param res - The response object.
- * @param next - This is a callback function that will be called when the middleware is complete.
- */
 export function notFoundHandler(req, res, next) {
   res.status(StatusCodes.NOT_FOUND).json({
     status: 'fail',
@@ -51,13 +32,6 @@ export function notFoundHandler(req, res, next) {
   });
 }
 
-/**
- * If an error occurs, log it, send a 500 status code, and send a message to the client
- * @param err - The error object
- * @param req - The request object.
- * @param res - The response object.
- * @param next - This is a function that will be called when the middleware is done.
- */
 export function errorHandler(err, req, res, next) {
   // api errors
   if (err.name === 'CustomAPIError') {
@@ -71,16 +45,17 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
-  // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const ip = requestIp.getClientIp(req);
+
   const errWithIP = {
     ...err,
     ip,
   };
+
   logger.error(errWithIP);
+
   Chad.flex(`${ip}:${err.msg}`, err.stack);
 
-  // other errors
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'fail',
     request_url: req.originalUrl,

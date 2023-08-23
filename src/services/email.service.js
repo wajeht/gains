@@ -9,7 +9,6 @@ import { env } from '../config/env.js';
 // use https://ethereal.email/ for testing purposes
 const transporter = nodemailer.createTransport(emailConfig);
 
-/* Verifying the email service. */
 transporter.verify((error, success) => {
   if (error) {
     logger.error(error);
@@ -20,11 +19,6 @@ transporter.verify((error, success) => {
 });
 
 export default class EmailService {
-  /**
-   * It sends an email to a user
-   * @returns The sent email
-   * @params files {Object}
-   */
   static async send({ to, subject, template = 'verify-email', data, files }) {
     try {
       // mail options
@@ -39,7 +33,6 @@ export default class EmailService {
         mail.attachments = files;
       }
 
-      // mail action
       const sent = await transporter.sendMail(mail);
 
       if (!sent) throw new Error('Something went wrong while sending email!');
@@ -53,14 +46,3 @@ export default class EmailService {
     }
   }
 }
-
-// // for testing purpose
-// await EmailService.send({
-//   to: 'chad@flex.forlife',
-//   subject: 'testing',
-//   template: 'verify-email',
-//   data: {
-//     username: 'chad',
-//     verificationLink: 'https:/localhost:8080/',
-//   },
-// });

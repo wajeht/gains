@@ -49,4 +49,5 @@ const videoMulter = multer({
 });
 
 export const uploadPicture = imageMulter.single('picture');
+
 export const uploadVideo = videoMulter.single('video');

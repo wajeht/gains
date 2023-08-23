@@ -2,7 +2,6 @@
 
 import app from '../apps/app.js';
 import { port, env, vue_port } from '../config/env.js';
-import { green, red } from '../utils/rainbow-log.js';
 import logger from '../utils/logger.js';
 import path from 'path';
 import db from '../database/db.js';
