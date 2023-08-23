@@ -194,6 +194,7 @@ function clearDataAndDismissModal() {
         <!-- add btn -->
         <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
           <font-awesome-icon icon="plus" class="p-0 m-0" />
+          <span>Add a block</span>
         </h5>
 
         <!-- modal -->

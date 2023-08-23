@@ -103,20 +103,20 @@ function clearAndDismissDeleteAccountModal() {
                   >Yes, I want to permanently delete this account and all its data.</label
                 >
               </div>
-
-              <!-- button -->
-              <button
-                data-bs-toggle="modal"
-                data-bs-target="#delete-account"
-                type="button"
-                class="btn btn-danger"
-                :disabled="!iAmSure"
-              >
-                Delete my account
-              </button>
             </div>
           </div>
         </div>
+
+        <!-- button -->
+        <button
+          data-bs-toggle="modal"
+          data-bs-target="#delete-account"
+          type="button"
+          class="btn btn-danger w-100 mt-3"
+          :disabled="!iAmSure"
+        >
+          Delete my account
+        </button>
       </div>
     </div>
   </div>
