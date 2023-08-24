@@ -11,4 +11,4 @@ export default function SymlinkPublicFolder() {
   } else {
     console.log('Symlink already exists');
   }
-};
+}
