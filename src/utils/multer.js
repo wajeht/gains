@@ -29,7 +29,7 @@ const videoLimits = {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.resolve(path.join(process.cwd(), 'src', 'public', 'uploads')));
+    cb(null, path.resolve(path.join(process.cwd(), 'src', 'storage', 'uploads')));
   },
   filename: (req, file, cb) => {
     const fileExtension = file.originalname.split('.')[1];

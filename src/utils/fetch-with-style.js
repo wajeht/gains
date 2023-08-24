@@ -1,4 +1,4 @@
-import useUserStore from '../apps/ui/store/user.store.js';
+import useUserStore from '../app/ui/store/user.store.js';
 
 export default class Api {
   static buildOptions(body, method) {

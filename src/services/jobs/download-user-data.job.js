@@ -15,14 +15,14 @@ import Papa from 'papaparse';
 import dayjs from 'dayjs';
 import AdmZip from 'adm-zip';
 
-import * as UsersQueries from '../../apps/api/v1/users/users.queries.js';
-import * as SessionsQueries from '../../apps/api/v1/sessions/sessions.queries.js';
-import * as ExercisesQueries from '../../apps/api/v1/exercises/exercises.queries.js';
-import * as ExerciseCategoriesQueries from '../../apps/api/v1/exercise-categories/exercise-categories.queries.js';
-import * as BlocksQueries from '../../apps/api/v1/blocks/blocks.queries.js';
-import * as VariablesQUeries from '../../apps/api/v1/variables/variables.queries.js';
-import * as SetsQueries from '../../apps/api/v1/sets/sets.queries.js';
-import * as LogsQueries from '../../apps/api/v1/logs/logs.queries.js';
+import * as UsersQueries from '../../app/api/v1/users/users.queries.js';
+import * as SessionsQueries from '../../app/api/v1/sessions/sessions.queries.js';
+import * as ExercisesQueries from '../../app/api/v1/exercises/exercises.queries.js';
+import * as ExerciseCategoriesQueries from '../../app/api/v1/exercise-categories/exercise-categories.queries.js';
+import * as BlocksQueries from '../../app/api/v1/blocks/blocks.queries.js';
+import * as VariablesQUeries from '../../app/api/v1/variables/variables.queries.js';
+import * as SetsQueries from '../../app/api/v1/sets/sets.queries.js';
+import * as LogsQueries from '../../app/api/v1/logs/logs.queries.js';
 import EmailService from '../email.service.js';
 
 const writeFile = util.promisify(fs.writeFile);
@@ -30,7 +30,7 @@ const mkdir = util.promisify(fs.mkdir);
 const rm = util.promisify(fs.rm);
 
 const DATE_TIME = dayjs().format('YYYY-MM-DD-HH-mm-ss-A');
-const TEMP_FOLDER = path.resolve(path.join(process.cwd(), 'src', 'temp'));
+const TEMP_FOLDER = path.resolve(path.join(process.cwd(), 'src', 'storage', 'temp'));
 
 /**
  * It returns an object with a bunch of properties that are all related to the user's folder
@@ -52,7 +52,7 @@ function useUserFolder(user_id) {
 
   return {
     tempFolder: TEMP_FOLDER,
-    rootFolderPath: path.resolve(path.join(process.cwd(), 'src', 'temp')),
+    rootFolderPath: path.resolve(path.join(process.cwd(), 'src', 'storage', 'temp')),
     userFolderName,
     userFolderPath,
     filePathWithJSONExtension,

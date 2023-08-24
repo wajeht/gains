@@ -5,7 +5,7 @@ import Password from '../../../utils/password.js';
 import { red } from '../../../utils/rainbow-log.js';
 import logger from '../../../utils/logger.js';
 import requestIp from 'request-ip';
-import { env } from './.././../../config/env.js';
+import { env } from '../../../config/env.js';
 
 export const getReverify = [
   // check for email

@@ -1,5 +1,5 @@
 import Logger from '../../utils/logger.js';
-import * as CachesQueries from '../../apps/api/v1/cache/cache.queries.js';
+import * as CachesQueries from '../../app/api/v1/cache/cache.queries.js';
 
 export default async function resetDownloadUserDataRequestCron() {
   try {

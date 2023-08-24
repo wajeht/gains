@@ -40,10 +40,10 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': './src/apps/ui',
+      '@': './src/app/ui',
     },
   },
-  root: './src/apps/ui',
+  root: './src/app/ui',
   build: {
     outDir: '../../public',
     reportCompressedSize: true,
@@ -65,7 +65,7 @@ export default defineConfig({
     postcss: {
       plugins: [
         purgecss({
-          content: [`./src/public/**/*.html`, `./src/apps/ui/**/*.vue`],
+          content: [`./src/public/**/*.html`, `./src/app/ui/**/*.vue`],
           safelist: [/tooltip/, /placeholder-/, /tooltip-inner/, /modal/, /alert/, /alert-(\w+)/], // purgecss remove modal backdrop, this fixed it
         }),
         {
