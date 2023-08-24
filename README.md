@@ -1,5 +1,5 @@
 <p align="center">
-<img width="70%" src="https://raw.githubusercontent.com/wajeht/gains/main/src/apps/ui/assets/images/hero-new-half.png" />
+<img width="70%" src="https://raw.githubusercontent.com/wajeht/gains/main/src/app/ui/assets/images/hero-new-half.png" />
 </p>
 
 # <p align="center">💪 Gains</p>
@@ -57,7 +57,7 @@ app.use("/api/v1", v1);
 // vue app
 app.get("*", (req, res) => {
   // index.html will be generated from vite as vue dist
-  res.sendFile('src/apps/public/index.html);
+  res.sendFile('src/app/public/index.html);
 })
 ```
 
@@ -69,7 +69,7 @@ Take a look at the following tree structure for better understanding.
 docs/
 logs/
 src/
-├── apps/
+├── app/
 │   ├── api/      # main entry point for api end-points
 │   │   ├── middlewares/
 │   │   └── v1/

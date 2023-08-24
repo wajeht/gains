@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import app from '../apps/app.js';
+import app from '../app/app.js';
 import { port, env, vue_port } from '../config/env.js';
 import logger from '../utils/logger.js';
 import path from 'path';

@@ -17,7 +17,9 @@ export async function getViewLogs(req, res) {
   const { download, latest } = req.query;
 
   const todaysLogName = `${TODAY}.log`;
-  const todaysLogPath = path.resolve(path.join(process.cwd(), 'storage', 'logs', todaysLogName));
+  const todaysLogPath = path.resolve(
+    path.join(process.cwd(), 'src', 'storage', 'logs', todaysLogName),
+  );
 
   let log = null;
 

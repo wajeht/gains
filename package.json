@@ -5,15 +5,15 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/apps/server.js",
-    "build:start": "npm run build && node ./src/apps/server.js",
+    "start": "node ./src/app/server.js",
+    "build:start": "npm run build && node ./src/app/server.js",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "kill:port": "./src/bin/kill-used-port.sh",
-    "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"nodemon ./src/apps/server.js\" \"vite build --watch --mode development\"",
+    "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"nodemon ./src/app/server.js\" \"vite build --watch --mode development\"",
     "dev:ui": "vite",
-    "dev:api": "nodemon ./src/apps/server.js",
-    "dev:hmr": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"HMR='true' nodemon ./src/apps/server.js\" \"open-cli http://localhost:3000/ && vite\"",
+    "dev:api": "nodemon ./src/app/server.js",
+    "dev:hmr": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"HMR='true' nodemon ./src/app/server.js\" \"open-cli http://localhost:3000/ && vite\"",
     "build": "npm run build:ui && npm run build:api && npm run minify:html",
     "build:ui": "vite build",
     "build:api": "echo api does not need to build!",
@@ -35,7 +35,7 @@
     "minify:html": "html-minifier --input-dir ./src --output-dir ./src --collapse-whitespace --minify-js --minify-css --remove-comments --file-ext html"
   },
   "bin": {
-    "gains": "./src/apps/cli/cli.js"
+    "gains": "./src/app/cli/cli.js"
   },
   "repository": {
     "type": "git",

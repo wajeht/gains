@@ -7,8 +7,8 @@ import logger from '../../utils/logger.js';
 import { admin, env } from '../../config/env.js';
 import { red } from '../../utils/rainbow-log.js';
 
-import * as UsersQueries from '../../apps/api/v1/users/users.queries.js';
-import * as AuthQueries from '../../apps/api/auth/auth.queries.js';
+import * as UsersQueries from '../../app/api/v1/users/users.queries.js';
+import * as AuthQueries from '../../app/api/auth/auth.queries.js';
 
 if (env === 'production') {
   logger.warn('Skipping local admin account creation for production environment!');

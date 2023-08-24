@@ -1,7 +1,7 @@
 import Logger from '../../utils/logger.js';
 
 import EmailServices from '../../services/email.service.js';
-import * as UsersServices from '../../apps/api/v1/users/users.queries.js';
+import * as UsersServices from '../../app/api/v1/users/users.queries.js';
 
 export default async function sendHappyBirthdayEmailCron() {
   try {
