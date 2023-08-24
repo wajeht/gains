@@ -6,6 +6,7 @@ export async function up(knex) {
   await knex.schema.createTable('user_details', (table) => {
     table.increments('id').primary();
     table.string('first_name', 250);
+    table.string('bio', 128);
     table.string('last_name', 250);
     table.string('role', 250).notNullable().defaultTo('user');
     table.date('birth_date');
