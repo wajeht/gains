@@ -2,7 +2,7 @@ import { check, param, body } from 'express-validator';
 import * as UserQueries from '../users/users.queries.js';
 import * as SessionsQueries from '../sessions/sessions.queries.js';
 import * as ExercisesQueries from '../exercises/exercises.queries.js';
-import * as LogsQueries from '../logs/logs.queries.js';
+import * as LogsQueries from './logs.queries.js';
 
 export const createLogs = [
   body().custom((data) => {

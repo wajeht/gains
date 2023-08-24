@@ -15,14 +15,14 @@ import Papa from 'papaparse';
 import dayjs from 'dayjs';
 import AdmZip from 'adm-zip';
 
-import * as UsersQueries from '../../apps/api/v1/users/users.queries.js';
-import * as SessionsQueries from '../../apps/api/v1/sessions/sessions.queries.js';
-import * as ExercisesQueries from '../../apps/api/v1/exercises/exercises.queries.js';
-import * as ExerciseCategoriesQueries from '../../apps/api/v1/exercise-categories/exercise-categories.queries.js';
-import * as BlocksQueries from '../../apps/api/v1/blocks/blocks.queries.js';
-import * as VariablesQUeries from '../../apps/api/v1/variables/variables.queries.js';
-import * as SetsQueries from '../../apps/api/v1/sets/sets.queries.js';
-import * as LogsQueries from '../../apps/api/v1/logs/logs.queries.js';
+import * as UsersQueries from '../../app/api/v1/users/users.queries.js';
+import * as SessionsQueries from '../../app/api/v1/sessions/sessions.queries.js';
+import * as ExercisesQueries from '../../app/api/v1/exercises/exercises.queries.js';
+import * as ExerciseCategoriesQueries from '../../app/api/v1/exercise-categories/exercise-categories.queries.js';
+import * as BlocksQueries from '../../app/api/v1/blocks/blocks.queries.js';
+import * as VariablesQUeries from '../../app/api/v1/variables/variables.queries.js';
+import * as SetsQueries from '../../app/api/v1/sets/sets.queries.js';
+import * as LogsQueries from '../../app/api/v1/logs/logs.queries.js';
 import EmailService from '../email.service.js';
 
 const writeFile = util.promisify(fs.writeFile);

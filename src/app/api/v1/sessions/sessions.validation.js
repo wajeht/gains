@@ -1,5 +1,5 @@
 import * as UserQueries from '../users/users.queries.js';
-import * as SessionsQueries from '../sessions/sessions.queries.js';
+import * as SessionsQueries from './sessions.queries.js';
 import CustomError from '../../api.errors.js';
 
 import { check, param, body, query } from 'express-validator';

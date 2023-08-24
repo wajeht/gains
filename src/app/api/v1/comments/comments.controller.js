@@ -1,5 +1,5 @@
 import logger from '../../../../utils/logger.js';
-import * as CommentsQueries from '../comments//comments.queries.js';
+import * as CommentsQueries from './comments.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import redis from '../../../../utils/redis.js';
 
