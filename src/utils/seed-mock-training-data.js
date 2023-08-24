@@ -1,12 +1,8 @@
 import logger from './logger.js';
-import Chad from './chad.js';
 import redis from './redis.js';
-import { sleep } from './helpers.js';
 import { faker } from '@faker-js/faker';
-import chalk from 'chalk';
 import copyMockVideos from './copy-mock-videos.js';
 import * as SessionsQueries from '../app/api/v1/sessions/sessions.queries.js';
-import * as CacheQueries from '../app/api/v1/cache/cache.queries.js';
 import * as UsersQueries from '../app/api/v1/users/users.queries.js';
 import * as VideosQueries from '../app/api/v1/videos/videos.queries.js';
 import * as LogsQueries from '../app/api/v1/logs/logs.queries.js';
