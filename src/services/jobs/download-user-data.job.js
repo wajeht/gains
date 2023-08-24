@@ -30,7 +30,7 @@ const mkdir = util.promisify(fs.mkdir);
 const rm = util.promisify(fs.rm);
 
 const DATE_TIME = dayjs().format('YYYY-MM-DD-HH-mm-ss-A');
-const TEMP_FOLDER = path.resolve(path.join(process.cwd(), 'src', 'temp'));
+const TEMP_FOLDER = path.resolve(path.join(process.cwd(), 'src', 'storage', 'temp'));
 
 /**
  * It returns an object with a bunch of properties that are all related to the user's folder
@@ -52,7 +52,7 @@ function useUserFolder(user_id) {
 
   return {
     tempFolder: TEMP_FOLDER,
-    rootFolderPath: path.resolve(path.join(process.cwd(), 'src', 'temp')),
+    rootFolderPath: path.resolve(path.join(process.cwd(), 'src', 'storage', 'temp')),
     userFolderName,
     userFolderPath,
     filePathWithJSONExtension,
