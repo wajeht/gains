@@ -17,7 +17,7 @@ const levels = {
 };
 
 const streams = [
-  { stream: pino.destination(`${root}/logs/${today}.log`) },
+  { stream: pino.destination(`${root}/storage/logs/${today}.log`) },
   // // this will print to the console
   {
     stream: pretty({
