@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import SymlinkPublicFolder from '../utils/storage-link.js';
 import app from '../app/app.js';
 import { port, env, vue_port } from '../config/env.js';
 import logger from '../utils/logger.js';
@@ -145,3 +146,5 @@ process.on('SIGTERM', gracefulShutdown);
 
 // ------------------------------ crons ------------------------------
 CronsServices.start();
+
+SymlinkPublicFolder();

@@ -1,7 +1,4 @@
-import { check, param, body } from 'express-validator';
-import { blue, custom, green, red, yellow } from '../../../../utils/rainbow-log.js';
-import { isEqual } from 'lodash-es';
-
+import { param, body } from 'express-validator';
 import * as SetsQueries from './sets.queries.js';
 import * as UsersQueries from '../users/users.queries.js';
 import * as ExercisesQueries from '../exercises/exercises.queries.js';
