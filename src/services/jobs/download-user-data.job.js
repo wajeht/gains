@@ -184,12 +184,7 @@ async function downloadUserDataProcess(user_id) {
 
 // -------------------- que --------------------
 
-const downloadUserDataQue = new Bull('download-user-data', REDIS.url, {
-  redis: {
-    tls: false,
-    enableTLSForSentinelMode: false,
-  },
-});
+const downloadUserDataQue = new Bull('download-user-data', REDIS.url);
 
 downloadUserDataQue.process(async (job) => {
   return await downloadUserDataProcess(job.data.user_id);

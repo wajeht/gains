@@ -262,21 +262,21 @@ export async function postRestoreUser(req, res) {
 export async function getDownloadUserData(req, res) {
   const { user_id } = req.params;
 
-  let countOfRequests = JSON.parse(
-    await redis.get(`user-id-${user_id}-request-download-user-data`),
-  );
+  // let countOfRequests = JSON.parse(
+  //   await redis.get(`user-id-${user_id}-request-download-user-data`),
+  // );
 
-  if (countOfRequests === null) {
-    redis.set(`user-id-${user_id}-request-download-user-data`, 1);
-  } else {
-    redis.set(`user-id-${user_id}-request-download-user-data`, (countOfRequests += 1));
-  }
+  // if (countOfRequests === null) {
+  //   redis.set(`user-id-${user_id}-request-download-user-data`, 1);
+  // } else {
+  //   redis.set(`user-id-${user_id}-request-download-user-data`, (countOfRequests += 1));
+  // }
 
-  if (countOfRequests > 5) {
-    throw new CustomError.BadRequestError('You have read the maximum limit of 5 requests per day!');
-  }
+  // if (countOfRequests > 5) {
+  //   throw new CustomError.BadRequestError('You have read the maximum limit of 5 requests per day!');
+  // }
 
-  await JobsServices.downloadUserData(user_id);
+  JobsServices.downloadUserData(user_id);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
