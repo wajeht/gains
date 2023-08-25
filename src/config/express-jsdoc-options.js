@@ -15,7 +15,7 @@ export default {
     },
     version: '1.0.0',
   },
-  baseDir: path.resolve(path.join(process.cwd(), 'src', 'apps')),
+  baseDir: path.resolve(path.join(process.cwd(), 'src', 'app')),
   filesPattern: ['./**/*.router.js', '*.js', './**/*.routes.js', 'app.js'],
   swaggerUIPath: '/docs/api',
   exposeSwaggerUI: true,
