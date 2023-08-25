@@ -14,7 +14,7 @@
     "dev:ui": "vite",
     "dev:api": "nodemon ./src/app/server.js",
     "dev:hmr": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"HMR='true' nodemon ./src/app/server.js\" \"open-cli http://localhost:3000/ && vite\"",
-    "build": "npm run build:ui && npm run build:api",
+    "build": "npm run build:ui && npm run build:api && npm run minify:html",
     "build:ui": "vite build",
     "build:api": "echo api does not need to build!",
     "migrate:make": "knex migrate:make --knexfile=./src/config/knexfile.js",
