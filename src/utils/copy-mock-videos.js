@@ -4,7 +4,7 @@ import path from 'path';
 import logger from './logger.js';
 
 const buildAbsolutePath = (name) => path.resolve(path.join(process.cwd(), 'src', 'database', 'seeds', 'mock-data', name)); // prettier-ignore
-const UPLOAD_FOLDER_PATH = path.resolve(path.join(process.cwd(), 'src', 'storage', 'uploads'));
+const UPLOAD_FOLDER_PATH = path.resolve(path.join(process.cwd(), 'src', 'public', 'uploads'));
 
 const tempVideos = {
   squat: {
