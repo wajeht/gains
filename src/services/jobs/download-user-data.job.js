@@ -1,7 +1,3 @@
-// import Queue from 'bull';
-// let maxJobsPerWorker = 50;
-// const q = new Queue('download-user-data');
-
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
@@ -32,16 +28,6 @@ const rm = util.promisify(fs.rm);
 const DATE_TIME = dayjs().format('YYYY-MM-DD-HH-mm-ss-A');
 const TEMP_FOLDER = path.resolve(path.join(process.cwd(), 'src', 'storage', 'temp'));
 
-/**
- * It returns an object with a bunch of properties that are all related to the user's folder
- * @param user_id - The user id of the user who is currently logged in.
- * @returns An object with the following properties:
- *   tempFolder: The path to the temp folder
- *   rootFolderPath: The path to the root folder
- *   userFolderName: The name of the user folder
- *   userFolderPath: The path to the user folder
- *   filePathWithJSONExtension: A function that returns the path to a file with a .csv extension
- */
 function useUserFolder(user_id) {
   const userFolderName = `${DATE_TIME}-user-id-${user_id}`;
   const userFolderPath = `${TEMP_FOLDER}/${userFolderName}`;
@@ -59,13 +45,6 @@ function useUserFolder(user_id) {
   };
 }
 
-/**
- * It takes in a userId, tableName, and data, and then creates a folder with the userId as the name,
- * and then creates a csv file with the tableName as the name, and then writes the data to the csv file
- * @param userId - The user's id
- * @param tableName - The name of the table you want to export.
- * @param data - The data to be written to the file.
- */
 async function writeToFile(userId, tableName, data) {
   try {
     const { filePathWithJSONExtension, userFolderPath, userFolderName } = useUserFolder(userId);
@@ -84,10 +63,6 @@ async function writeToFile(userId, tableName, data) {
   }
 }
 
-/**
- * It gets all the data from the database for a user, and then writes it to a CSV file
- * @param user_id - the user's id
- */
 async function generateCSVFiles(user_id) {
   try {
     Logger.info(`Generating CSV process started!`);
@@ -164,11 +139,6 @@ async function zipFiles({ userFolderPath, filePaths }) {
   }
 }
 
-/**
- * It generates CSV files for the user's data, zips them, sends an email to the user with the zipped
- * files, and then deletes the zipped files
- * @param user_id - The user id of the user you want to download the data for.
- */
 async function downloadUserDataProcess(user_id) {
   try {
     const { filePaths, userFolderPath } = await generateCSVFiles(user_id);
