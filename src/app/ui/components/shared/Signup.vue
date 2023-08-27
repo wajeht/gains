@@ -80,22 +80,20 @@
       <!-- terms and privacy -->
       <div id="agree-text" class="form-text">
         Signing up signifies that you have read and agree to the
-        <a
-          href="#"
-          class="btn btn-sm p-0 m-0"
+        <router-link
+          class="p-0 m-0 link-dark"
           style="text-decoration: underline"
           :class="{ disabled: loading === true }"
-          @click="$router.push('/terms')"
-          >Terms of Service</a
+          to="/terms"
+          >Terms of Service</router-link
         >
         and our
-        <a
-          href="#"
-          class="btn btn-xs p-0 m-0"
+        <router-link
+          class="link-dark p-0 m-0"
           style="text-decoration: underline"
           :class="{ disabled: loading === true }"
-          @click="$router.push('/privacy')"
-          >Privacy Policy</a
+          to="/privacy"
+          >Privacy Policy</router-link
         >.
       </div>
     </div>

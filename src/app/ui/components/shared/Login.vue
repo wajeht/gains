@@ -214,14 +214,13 @@ export default {
         <label class="form-check-label" for="remember-me">Remember me</label>
 
         <!-- forget-password -->
-        <a
-          href="#"
+        <router-link
           :class="{ disabled: loading === true }"
-          class="btn p-0 m-0 text-dark"
-          @click="$router.push('/forget-password')"
+          class="p-0 m-0 link-dark"
+          to="/forget-password"
         >
           Forget password?
-        </a>
+        </router-link>
       </div>
     </div>
 
