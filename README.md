@@ -21,12 +21,8 @@
 - **Pinia** for **Vue** state management
 - **JWT** for stateless authentication
 - **Bootstrap 5** for basic styling
-- **Vitest** and **Cypress** for testing
+- **Vitest** for unit testing
 - **Chart.js** for beautiful charts
-- ~~**[Hover.css](https://ianlunn.github.io/Hover/)** for button hover animation~~
-- **[Type.js](https://github.com/mattboldt/typed.js/)** for text typewriter animation
-- ~~**[AOS.js](https://github.com/michalsnik/aos)** for animate on scroll animation~~
-- ~~**[AnimXYZ](https://animxyz.com/)** for specialized animation~~
 - **[Animate.css](https://animate.style/)** for ready-made animation
 - **Font-awesome** and **Bootstrap-icon** for icons
 - **Command And Conquer (CAC)** for CLI
@@ -51,7 +47,7 @@ for example:
 
 ```js
 // api end-points
-import v1 from '/app/api/v1/api.v1.ts';
+import v1 from '/app/api/v1/api.v1.js';
 app.use("/api/v1", v1);
 
 // vue app
@@ -76,15 +72,15 @@ src/
 │   │       ├── user/             # mvc structure with component specific
 │   │       │   ├── templates/    # email templates
 │   │       │   │   └── happy-birthday.html
-│   │       │   ├── user.controller.ts
-│   │       │   ├── user.model.ts
-│   │       │   ├── user.service.ts
-│   │       │   ├── user.router.ts
-│   │       │   └── user.test.ts
+│   │       │   ├── user.controller.js
+│   │       │   ├── user.model.js
+│   │       │   ├── user.service.js
+│   │       │   ├── user.router.js
+│   │       │   └── user.test.js
 │   │       ├── comment/
 │   │       ├── auth/
 │   │       ├── video/
-│   │       └── api.v1.ts
+│   │       └── api.v1.js
 │   ├── ui/       # main entry point for vue app
 │   │   ├── assets/
 │   │   ├── components/
@@ -96,7 +92,7 @@ src/
 │   │   ├── index.html
 │   │   └── vue.js
 │   ├── cli/   # cli app with admin commands
-│   └── app.ts
+│   └── app.js
 ├── bin/
 ├── config/
 ├── public/   # serving vue app from express backend
@@ -105,7 +101,6 @@ src/
 ├── utils/
 ├── package.json
 ├── vite.config.js
-└── tsconfig.json
 ```
 
 # © License

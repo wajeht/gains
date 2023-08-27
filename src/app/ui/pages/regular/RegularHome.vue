@@ -103,8 +103,6 @@
 </template>
 
 <script>
-import Typed from 'typed.js';
-
 export default {
   data() {
     return {
