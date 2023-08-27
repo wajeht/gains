@@ -330,6 +330,7 @@ async function addATag() {
 }
 
 function clearDataAndDismissAddATagModal() {
+  tagName.value = '';
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-tag`));
   modal.hide();
 }
