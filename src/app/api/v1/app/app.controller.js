@@ -7,12 +7,14 @@ export async function getIssues(req, res) {
   let issues = JSON.parse(await redis.get('issues'));
 
   if (issues === null) {
-    issues = await axios.get(GITHUB.issue_url, {
-      headers: {
-        Authorization: `Bearer ${GITHUB.api_key}`,
-      },
-    });
-    await redis.set('issues', JSON.stringify(issues.data), 'EX', 24 * 60 * 60);
+    issues = await (
+      await axios.get(GITHUB.issue_url, {
+        headers: {
+          Authorization: `Bearer ${GITHUB.api_key}`,
+        },
+      })
+    ).data;
+    await redis.set('issues', JSON.stringify(issues), 'EX', 24 * 60 * 60);
   }
 
   res.status(StatusCodes.OK).json({
