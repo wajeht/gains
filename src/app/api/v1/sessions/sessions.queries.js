@@ -1,8 +1,8 @@
 import db from '../../../../database/db.js';
-import { omit, pick } from 'lodash-es';
+import { pick } from 'lodash-es';
 
 export async function createASession(body) {
-  const wout = [
+  const excludedSessionColumns = [
     'body_weight',
     'caffeine_intake',
     'calories_prior_session',
@@ -13,13 +13,14 @@ export async function createASession(body) {
     'stress_level',
   ];
 
-  const cleanSession = omit(body, ...wout);
-  const [insertedSession] = await db
-    .insert({ ...cleanSession })
-    .into('sessions')
-    .returning('*');
+  const sessionData = { ...body };
+  const sessionInsertData = Object.fromEntries(
+    Object.entries(sessionData).filter(([key]) => !excludedSessionColumns.includes(key)),
+  );
 
-  const without = [
+  const [insertedSession] = await db('sessions').insert(sessionInsertData).returning('*');
+
+  const excludedVariableColumns = [
     'created_at',
     'updated_at',
     'name',
@@ -31,14 +32,18 @@ export async function createASession(body) {
     'block_id',
     'deleted',
   ];
-  const cleanVariables = omit({ ...insertedSession, ...body }, ...without);
-  cleanVariables.session_id = cleanVariables.id;
-  delete cleanVariables.id;
 
-  await db
-    .insert({ ...cleanVariables })
-    .into('variables')
-    .returning('*');
+  const variableData = { ...insertedSession, ...body };
+
+  const variableInsertData = Object.fromEntries(
+    Object.entries(variableData).filter(([key]) => !excludedVariableColumns.includes(key)),
+  );
+
+  variableInsertData.session_id = variableInsertData.id;
+
+  delete variableInsertData.id;
+
+  await db('variables').insert(variableInsertData).returning('*');
 
   return [
     {
@@ -50,21 +55,24 @@ export async function createASession(body) {
 
 export function getSessionsByUserId(user_id, pagination = { perPage: null, currentPage: null }) {
   return db
+    .select('sessions.*')
     .select(
-      'sessions.*',
-      db.raw(
-        `  (select coalesce(jsonb_agg(logs.* order by logs.id) filter (where logs.id is not null and logs.deleted = false), '[]') ) as json`,
-      ),
+      db.raw(`
+      coalesce(
+        jsonb_agg(
+          logs.* ORDER BY logs.id
+        ) FILTER (WHERE logs.id IS NOT NULL AND logs.deleted = false),
+        '[]'
+      ) AS json
+    `),
     )
     .from('sessions')
-    .fullOuterJoin('logs', { 'logs.session_id': 'sessions.id' })
-    .where({ 'sessions.user_id': user_id })
-    .andWhere({ 'sessions.deleted': false })
+    .fullOuterJoin('logs', 'logs.session_id', 'sessions.id')
+    .where('sessions.user_id', user_id)
+    .andWhere('sessions.deleted', false)
     .orderBy('sessions.id', 'desc')
     .groupBy('sessions.id')
-    .paginate({
-      ...pagination,
-    });
+    .paginate(pagination);
 }
 
 export async function getSessionBySessionId(sid) {
@@ -162,7 +170,7 @@ export async function getSessionBySessionId(sid) {
 }
 
 export async function updateSession(sid, uid, body) {
-  const only = [
+  const variableColumns = [
     'body_weight',
     'caffeine_intake',
     'calories_prior_session',
@@ -173,18 +181,7 @@ export async function updateSession(sid, uid, body) {
     'stress_level',
   ];
 
-  const validVariables = pick(body, only);
-
-  if (Object.keys(validVariables).length) {
-    await db
-      .update(validVariables)
-      .from('variables')
-      .where({ 'variables.session_id': sid })
-      .andWhere({ user_id: uid })
-      .returning('*');
-  }
-
-  const onlySessionColumn = [
+  const sessionColumns = [
     'name',
     'block_id',
     'start_date',
@@ -195,45 +192,42 @@ export async function updateSession(sid, uid, body) {
     'user_id',
   ];
 
-  const validOnlySessionColumn = pick(body, onlySessionColumn);
-  const [updatedSession] = await db
-    .update(validOnlySessionColumn)
-    .from('sessions')
-    .where({ id: sid })
-    .andWhere({ user_id: uid })
-    .returning('*');
+  const validVariableUpdates = pick(body, variableColumns);
+  const validSessionUpdates = pick(body, sessionColumns);
 
-  return [
-    {
-      ...updatedSession,
-      ...validVariables,
-    },
-  ];
+  const updatedData = {};
+
+  if (Object.keys(validVariableUpdates).length) {
+    await db('variables')
+      .update(validVariableUpdates)
+      .where({ session_id: sid, user_id: uid })
+      .returning('*');
+    Object.assign(updatedData, validVariableUpdates);
+  }
+
+  if (Object.keys(validSessionUpdates).length) {
+    await db('sessions')
+      .update(validSessionUpdates)
+      .where({ id: sid, user_id: uid })
+      .returning('*');
+    Object.assign(updatedData, validSessionUpdates, { user_id: uid });
+  }
+
+  return [updatedData];
 }
 
 export async function sessionsWithVideosByUserId(user_id) {
-  const { rows } = await db.raw(
-    `
-    select
-	    ss.*,
-	    (select (jsonb_agg(v.* order by v.id))) as videos
-    from
-	    sessions ss
-	    inner join videos v on v.session_id = ss.id
-    where (
-	    ss.user_id = ?
-	    and v.deleted = false
-      and ss.deleted = false
-    )
-    group by
-	    ss.id
-    order by
-	    ss.id desc
-    `,
-    [user_id],
-  );
+  const result = await db('sessions as ss')
+    .select('ss.*')
+    .select(db.raw(`jsonb_agg(v.* order by v.id) as videos`))
+    .innerJoin('videos as v', 'v.session_id', 'ss.id')
+    .where('ss.user_id', user_id)
+    .andWhere('v.deleted', false)
+    .andWhere('ss.deleted', false)
+    .groupBy('ss.id')
+    .orderBy('ss.id', 'desc');
 
-  return rows;
+  return result;
 }
 
 export async function getAllSessions(pagination = { perPage: null, currentPage: null }) {
