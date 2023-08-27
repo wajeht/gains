@@ -52,6 +52,7 @@
           :disabled="loading"
         />
         <button
+          v-if="password.length"
           @click="showPassword = !showPassword"
           class="btn btn-outline-dark"
           type="button"
