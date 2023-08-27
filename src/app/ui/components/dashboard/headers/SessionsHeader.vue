@@ -387,7 +387,7 @@ async function addASession() {
                 </div>
 
                 <span v-if="!loading">Submit</span>
-                <span v-if="loading">Loading...</span>
+                <span v-if="loading"> Loading...</span>
               </button>
             </div>
           </div>
