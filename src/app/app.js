@@ -25,19 +25,17 @@ const io = new Server(server, {
   },
 });
 
-app.use((req, res, next) => {
-  res.setHeader('X-Powered-By', 'Caddy, Express, Apache, Nginx, Nuxt, IIS');
-  next();
-});
-
-// TODO!: configure this helmet for production
 app.use(
   helmet({
-    contentSecurityPolicy: false,
-    crossOriginEmbedderPolicy: false,
-    hidePoweredBy: false,
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        'default-src': ["'self'", 'plausible.jaw.dev'],
+      },
+    },
   }),
 );
+
 app.use(cors());
 app.use(compression());
 app.use(express.json());
