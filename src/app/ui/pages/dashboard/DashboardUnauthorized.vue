@@ -1,5 +1,4 @@
 <script setup>
-import { onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import Backheader from '../../components/dashboard/headers/Backheader.vue';
 

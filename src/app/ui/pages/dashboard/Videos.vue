@@ -2,7 +2,6 @@
 import { onMounted, reactive, ref } from 'vue';
 import useAppStore from '../../store/app.store.js';
 import useUserStore from '../../store/user.store.js';
-import DashboardHeader from '../../components/dashboard/DashboardHeader.vue';
 import api from '../../../../utils/fetch-with-style.js';
 import VideosAndProfileHeader from '../../components/dashboard/headers/VideosAndProfileHeader.vue';
 
@@ -14,6 +13,7 @@ const alert = reactive({
 });
 
 const sessions = ref(null);
+// eslint-disable-next-line no-unused-vars
 const sessionsPerWeek = ref(4);
 
 onMounted(async () => {

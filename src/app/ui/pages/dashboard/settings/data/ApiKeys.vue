@@ -5,7 +5,6 @@ import Backheader from '../../../../components/dashboard/headers/Backheader.vue'
 import useAppStore from '../../../../store/app.store';
 import useUserStore from '../../../../store/user.store.js';
 import { sleep } from '../../../../../../utils/helpers.js';
-import { update } from 'lodash-es';
 
 const appStore = useAppStore();
 const userStore = useUserStore();

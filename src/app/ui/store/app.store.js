@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { watchEffect, toRef } from 'vue';
 
 const useAppStore = defineStore({
   id: 'app',

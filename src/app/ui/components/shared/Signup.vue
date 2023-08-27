@@ -124,7 +124,6 @@
       class="btn w-100 text-light"
       href="#"
       style="background: #7289da"
-      v-tooltip
       title="Not supported yet!"
       ><i class="bi bi-discord me-1"></i>Login with Discord</a
     >
@@ -134,7 +133,6 @@
       class="btn btn-success w-100"
       style="border: 1px solid #ced4da"
       href="#"
-      v-tooltip
       title="Not supported yet!"
       ><i class="bi bi-github me-1"></i>Login with Github</a
     > -->

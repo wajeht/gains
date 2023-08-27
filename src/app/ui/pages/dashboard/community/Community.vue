@@ -3,7 +3,7 @@ import { onMounted, ref, reactive } from 'vue';
 import dayjs from 'dayjs';
 import DashboardHomeHeader from '../../../components/dashboard/headers/DashboardHomeHeader.vue';
 import api from '../../../../../utils/fetch-with-style.js';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 import useUserStore from '../../../store/user.store.js';
 import useAppStore from '../../../store/app.store.js';
@@ -11,7 +11,6 @@ import useAppStore from '../../../store/app.store.js';
 const userStore = useUserStore();
 const appStore = useAppStore();
 const router = useRouter();
-const route = useRoute();
 const loading = ref(false);
 
 const sessions = ref([]);
@@ -209,7 +208,8 @@ async function getSessions() {
                   <!-- tags -->
                   <small v-if="log.tags" class="d-flex gap-2 mb-2">
                     <small
-                      v-for="t in log?.tags"
+                      :key="i"
+                      v-for="(t, i) in log?.tags"
                       class="fw-light text-muted rounded px-2 d-block"
                       style="background-color: #ededed"
                       >{{ t.name }}</small

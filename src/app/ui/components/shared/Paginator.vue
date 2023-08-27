@@ -1,4 +1,5 @@
 <script setup>
+// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   pagination: {
     total: 0,
@@ -36,6 +37,7 @@ function handleToPage(currentPage) {
       </li>
 
       <li
+        :key="index"
         v-for="(p, index) in pagination.lastPage"
         class="page-item"
         :class="{ active: p === pagination.currentPage }"

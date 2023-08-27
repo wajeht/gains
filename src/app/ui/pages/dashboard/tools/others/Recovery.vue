@@ -26,11 +26,11 @@ const logARecoveryLoading = ref(false);
 const deleteARecoveryLoading = ref(false);
 
 onMounted(async () => {
-  const bw = await getRecoveryOfAUser();
+  await getRecoveryOfAUser();
 });
 
 // checkbox
-watch(checkRecoveryCheckbox, (prev, cur) => {
+watch(checkRecoveryCheckbox, (prev, _cur) => {
   if (prev === true) {
     recovery.value.forEach((bw) => {
       recoveryCheckbox.value.push(bw.id);
@@ -637,7 +637,7 @@ const { lineChartProps } = useLineChart({
             v-if="recoveryCheckbox.length"
             class="d-flex justify-content-center flex-wrap gap-1 mb-3"
           >
-            <div class="badge bg-secondary text-white" v-for="bw in recoveryCheckbox">
+            <div class="badge bg-secondary text-white" v-for="(bw, i) in recoveryCheckbox" :key="i">
               {{ bw }}
             </div>
           </div>

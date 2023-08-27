@@ -11,8 +11,17 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['vue'],
+  ignorePatterns: ['*.d.ts'],
   rules: {
-    'no-unused-vars': 'off',
+    'vue/multi-word-component-names': 'off',
     'no-undef': 'off',
+    'no-unused-vars': [
+      'error', // Set the rule to 'error' to enable it
+      {
+        argsIgnorePattern: '^_', // Ignore function arguments starting with _
+        varsIgnorePattern: '^_', // Ignore variables starting with _
+        caughtErrorsIgnorePattern: '^_', // Ignore caught errors variables starting with _
+      },
+    ],
   },
 };

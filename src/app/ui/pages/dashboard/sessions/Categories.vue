@@ -3,7 +3,6 @@ import { capitalizeAWord } from '../../../../../utils/helpers.js';
 import api from '../../../../../utils/fetch-with-style.js';
 import ExercisesCategoriesBlocksNav from '../../../components/shared/ExercisesCategoriesBlocksNav.vue';
 
-import { v4 as uuidv4 } from 'uuid';
 import { ref, reactive, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -14,8 +13,6 @@ const userStore = useUserStore();
 const appStore = useAppStore();
 const route = useRoute();
 const router = useRouter();
-
-const random_uuid = ref(uuidv4());
 
 const categories = ref([]);
 

@@ -142,7 +142,7 @@
     "commitizen": "^4.2.5",
     "concurrently": "^8.0.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.32.0",
+    "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.9.0",
@@ -154,6 +154,7 @@
     "sass": "^1.66.1",
     "sleep-ms": "^2.0.1",
     "standard-version": "^9.5.0",
+    "vite-plugin-eslint": "^1.8.1",
     "vitest": "^0.34.2"
   },
   "lint-staged": {

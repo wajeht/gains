@@ -6,11 +6,7 @@ import InsideLoading from '../shared/InsideLoading.vue';
 
 // helpers
 import api from '../../../../utils/fetch-with-style.js';
-import {
-  gainsDateDisplay,
-  calculateE1RM,
-  gainsCurrentDateTime,
-} from '../../../../utils/helpers.js';
+import { calculateE1RM, gainsCurrentDateTime } from '../../../../utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';
@@ -35,6 +31,7 @@ const userStore = useUserStore();
 const appStore = useAppStore();
 
 // props
+// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   sid: Number,
 });
@@ -46,6 +43,7 @@ const alert = reactive({
 });
 const loading = ref(false);
 const today = dayjs().format('YYYY/MM/DD');
+// eslint-disable-next-line vue/no-dupe-keys
 const sid = ref(null);
 const currentSessionDetails = reactive({});
 
@@ -80,7 +78,6 @@ const addASetLoading = ref(false);
 const addASetExerciseId = ref(null);
 const addASetExerciseIndex = ref(null);
 const addASetLogId = ref(null);
-const addASetDismissButton = ref(null);
 const addASetEnableDisableOtherFields = ref(false);
 
 const modifyASetEnableDisableOtherFields = ref(false);
@@ -111,7 +108,7 @@ const deleteALogLogIndex = ref(null);
 
 // watches
 //  update exercise db as changes in categories
-watch(chooseExerciseCategoryId, async (currentValue, oldValue) => {
+watch(chooseExerciseCategoryId, async (currentValue, _oldValue) => {
   const uec = await getUserExerciseByCategoryId(currentValue);
   chooseExercises.value = uec || [];
 });
@@ -369,7 +366,7 @@ async function copyPreviousSet(currentLogIndex) {
   try {
     const length = currentSessionDetails.logs[currentLogIndex].sets.length - 1;
     const previousSet = currentSessionDetails.logs[currentLogIndex].sets[length];
-    const validSetData = pickBy(previousSet, (value, key) => value !== null);
+    const validSetData = pickBy(previousSet, (value, _key) => value !== null);
     const discard = ['created_at', 'updated_at', 'deleted', 'id'];
     const data = omit(validSetData, ...discard);
 
@@ -548,7 +545,7 @@ async function handleAddASet() {
       notes: set.notes,
     };
 
-    const validSetData = pickBy(setData, (value, key) => value !== null);
+    const validSetData = pickBy(setData, (value, _key) => value !== null);
 
     const res = await api.post(`/api/v1/sets`, validSetData);
     const json = await res.json();
@@ -614,7 +611,7 @@ async function modifyASet() {
       log_id: set.log_id,
     };
 
-    const validModifyData = pickBy(modifyData, (value, key) => value !== null);
+    const validModifyData = pickBy(modifyData, (value, _key) => value !== null);
 
     const res = await api.patch(`/api/v1/sets/${modifyData.id}`, validModifyData);
     const json = await res.json();
@@ -663,7 +660,7 @@ async function deleteASet() {
       session_id: set.session_id,
     };
 
-    const validSetData = pickBy(setData, (value, key) => !value.id);
+    const validSetData = pickBy(setData, (value, _key) => !value.id);
 
     const res = await api.delete(`/api/v1/sets/${setData.id}`, validSetData);
     const json = await res.json();
@@ -733,7 +730,7 @@ async function handleCompleteCurrentSession() {
     ]);
 
     // only sent back non empty data
-    const nonEmpty = pickBy(validData, (value, key) => value !== null);
+    const nonEmpty = pickBy(validData, (value, _key) => value !== null);
 
     const res = await api.patch(`/api/v1/sessions/${sid.value}`, nonEmpty);
     const json = await res.json();
@@ -817,10 +814,6 @@ async function handleAddAExerciseNote() {
 function clearDataAndDismissAddAExerciseNoteModal() {
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById(`add-a-note`));
   modal.hide();
-}
-
-function buildClassName(name, index) {
-  return name.split(' ').join('-') + `-${index}`;
 }
 
 async function handleDeleteSession() {
@@ -1008,7 +1001,7 @@ async function deleteALog() {
     deleteALogLoading.value = false;
 
     currentSessionDetails.logs = currentSessionDetails.logs.filter(
-      (log, index) => log.id != deleteALogLogObject.value.id,
+      (log, _index) => log.id != deleteALogLogObject.value.id,
     );
 
     alert.type = 'success';

@@ -2,7 +2,6 @@
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 import { calculateE1RM } from '../../../../../../utils/helpers.js';
 import useAppStore from '../../../../store/app.store.js';
-import { callWithErrorHandling } from 'vue';
 
 const appStore = useAppStore();
 

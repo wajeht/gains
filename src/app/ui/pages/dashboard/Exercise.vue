@@ -35,6 +35,7 @@ const pagination = reactive({
 
 const setsHistory = ref(null);
 let exerciseDetails = reactive({});
+// eslint-disable-next-line no-unused-vars
 const getExerciseDetailsLoading = ref(null);
 const notAvailableYet = ref(false);
 const searchText = ref('');
@@ -311,7 +312,7 @@ function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(s, index) in setsHistory" :key="s.id">
+                    <tr v-for="s in setsHistory" :key="s.id">
                       <!-- checkbox -->
                       <!-- <th class="align-middle text-center" scope="row">
                         <input class="form-check-input" type="checkbox" :value="s.id" />

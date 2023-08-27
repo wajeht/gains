@@ -73,7 +73,8 @@ async function getMyFollowers() {
       <div class="list-group">
         <span v-if="states.chats?.length">
           <div
-            v-for="chat in chats"
+            v-for="(chat, i) in chats"
+            :key="i"
             class="list-group-item d-flex gap-3 align-items-center justify-content-between py-3"
           >
             <!-- name and image -->

@@ -16,7 +16,6 @@ import 'animate.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
-import tooltip from './tool-tip.vue.js';
 import FontAwesomeIcon from './font-awesome.vue.js';
 import { Chart, registerables } from 'chart.js';
 import useAppStore from './store/app.store.js';
@@ -36,7 +35,6 @@ app.config.devtools = true;
 
 app.use(VueQueryPlugin);
 app.use(autoAnimatePlugin);
-app.directive('tooltip', tooltip);
 app.component('font-awesome-icon', FontAwesomeIcon);
 
 // --- change theme
@@ -79,7 +77,7 @@ const socket = io('/');
 
 window.socket = socket;
 
-window.socket.on('connect', (socket) => {
+window.socket.on('connect', (_socket) => {
   if (userStore.isLoggedIn) {
     const userWithAgent = {
       ...userStore.user,

@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import dotenv from 'dotenv';
+import eslint from 'vite-plugin-eslint';
 
 dotenv.config({ path: path.join(process.cwd(), '.env') });
 
@@ -33,11 +34,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [
-    vue({
-      // reactivityTransform: true, // to use .value on reactive values
-    }),
-  ],
+  plugins: [eslint(), vue()],
   resolve: {
     alias: {
       '@': './src/app/ui',

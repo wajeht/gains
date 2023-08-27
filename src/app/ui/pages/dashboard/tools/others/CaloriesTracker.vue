@@ -25,11 +25,11 @@ const logACaloriesLoading = ref(false);
 const deleteACaloriesLoading = ref(false);
 
 onMounted(async () => {
-  const bw = await getAllCaloriesOfAUser();
+  await getAllCaloriesOfAUser();
 });
 
 // checkbox
-watch(checkCaloriesCheckbox, (prev, cur) => {
+watch(checkCaloriesCheckbox, (prev, _cur) => {
   if (prev === true) {
     calories.value.forEach((bw) => {
       caloriesCheckbox.value.push(bw.id);
@@ -615,7 +615,7 @@ const { lineChartProps } = useLineChart({
             v-if="caloriesCheckbox.length"
             class="d-flex justify-content-center flex-wrap gap-1 mb-3"
           >
-            <div class="badge bg-secondary text-white" v-for="bw in caloriesCheckbox">
+            <div class="badge bg-secondary text-white" v-for="(bw, i) in caloriesCheckbox" :key="i">
               {{ bw }}
             </div>
           </div>

@@ -14,14 +14,13 @@ const appStore = useAppStore();
 
 const userStore = useUserStore();
 const router = useRouter();
-const today = ref(null);
-const loading = ref(false);
 const followStats = ref([]);
 const alert = reactive({
   type: '',
   msg: '',
 });
 
+// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   username: String,
 });

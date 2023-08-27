@@ -299,7 +299,8 @@ async function postAComment() {
                   <!-- tags -->
                   <small v-if="log.tags" class="d-flex gap-2 mb-2">
                     <small
-                      v-for="t in log?.tags"
+                      v-for="(t, i) in log?.tags"
+                      :key="i"
                       class="fw-light text-muted rounded px-2 d-block"
                       style="background-color: #ededed"
                       >{{ t.name }}</small

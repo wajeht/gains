@@ -120,7 +120,7 @@ async function updatePersonalInformation() {
     };
 
     // only grab values which are not empty
-    const validUser = pickBy(user, (value, key) => value !== null);
+    const validUser = pickBy(user, (value, _key) => value !== null);
 
     // prettier-ignore
     const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-personal-information`, validUser);

@@ -2,7 +2,7 @@
 import SessionsHeader from '../../../components/dashboard/headers/SessionsHeader.vue';
 
 import dayjs from 'dayjs';
-import { onMounted, ref, reactive, onUpdated } from 'vue';
+import { onMounted, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 import api from '../../../../../utils/fetch-with-style.js';
@@ -92,14 +92,6 @@ async function getUserSessions() {
       alert.msg = e;
     }
   }
-}
-
-function calculateTotal(start, end) {
-  if (!start || !end) return 0;
-  const start_date = dayjs(start);
-  const end_date = dayjs(end);
-  const total = end_date.diff(start_date, 'minute');
-  return total;
 }
 
 function logDetails(sid) {

@@ -24,11 +24,11 @@ const logABodyWeightLoading = ref(false);
 const deleteABodyWeightLoading = ref(false);
 
 onMounted(async () => {
-  const bw = await getAllBodyWeightOfAUser();
+  await getAllBodyWeightOfAUser();
 });
 
 // checkbox
-watch(checkBodyweightCheckbox, (prev, cur) => {
+watch(checkBodyweightCheckbox, (prev, _cur) => {
   if (prev === true) {
     bodyweight.value.forEach((bw) => {
       bodyweightCheckbox.value.push(bw.id);
@@ -574,7 +574,11 @@ const { lineChartProps } = useLineChart({
             v-if="bodyweightCheckbox.length"
             class="d-flex justify-content-center flex-wrap gap-1 mb-3"
           >
-            <div class="badge bg-secondary text-white" v-for="bw in bodyweightCheckbox">
+            <div
+              class="badge bg-secondary text-white"
+              v-for="(bw, i) in bodyweightCheckbox"
+              :key="i"
+            >
               {{ bw }}
             </div>
           </div>

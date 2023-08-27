@@ -109,7 +109,7 @@ async function addASession() {
     };
 
     // only grab values which are not empty
-    const validSession = pickBy(session, (value, key) => value !== '');
+    const validSession = pickBy(session, (value, _key) => value !== '');
 
     loading.value = true;
 

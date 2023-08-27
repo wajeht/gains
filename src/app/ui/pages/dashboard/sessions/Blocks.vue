@@ -5,7 +5,6 @@ import ExercisesCategoriesBlocksNav from '../../../components/shared/ExercisesCa
 
 import dayjs from 'dayjs';
 
-import { v4 as uuidv4 } from 'uuid';
 import { ref, reactive, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -63,7 +62,7 @@ onMounted(() => {
 
 watch(
   [start_date, end_date],
-  ([current_start_date, current_end_date], [previous_start_date, previous_end_date]) => {
+  ([current_start_date, current_end_date], [_previous_start_date, _previous_end_date]) => {
     const start = dayjs(current_start_date);
     const end = dayjs(current_end_date);
     total_weeks_and_days.value = end.diff(start, 'day');

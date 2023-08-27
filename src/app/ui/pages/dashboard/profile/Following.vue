@@ -6,6 +6,7 @@ import useUserStore from '../../../store/user.store';
 import useAppStore from '../../../store/app.store';
 import { useRoute } from 'vue-router';
 
+// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   username: String,
 });

@@ -111,7 +111,6 @@ async function refetch() {
 
       <!-- table -->
       <div
-        v-else
         v-if="collapsed"
         style="overflow-y: scroll !important"
         :style="{ 'max-height': `${30 * activities.length}px !important` }"

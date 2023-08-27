@@ -22,7 +22,7 @@ const props = defineProps({
     role="alert"
   >
     <div class="d-flex">
-      <div class="toast-body">{{ message }}</div>
+      <div class="toast-body">{{ props.message }}</div>
       <button
         @click="appStore.clearToast()"
         type="button"
