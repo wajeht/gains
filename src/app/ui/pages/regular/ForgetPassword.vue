@@ -2,19 +2,19 @@
   <div
     class="px-4 col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto animate__animated animate__fadeIn"
   >
+    <!-- alert -->
+    <div
+      v-if="alert.type"
+      :class="`alert-${alert.type}`"
+      class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+    >
+      <span>{{ alert.msg }}</span>
+    </div>
+
     <!-- form -->
     <form @submit.prevent="handleSubmit">
       <!-- title -->
       <h1 class="mb-3">Forget Password</h1>
-
-      <!-- alert -->
-      <div
-        v-if="alert.type"
-        :class="`alert-${alert.type}`"
-        class="mb-3 alert animate__animated animate__zoomIn animate__faster"
-      >
-        <span>{{ alert.msg }}</span>
-      </div>
 
       <!-- email -->
       <div class="mb-3">

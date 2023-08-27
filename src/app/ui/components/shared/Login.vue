@@ -147,26 +147,26 @@ export default {
 </script>
 
 <template>
+  <!-- alert -->
+  <div
+    v-if="alert.type"
+    :class="`alert-${alert.type}`"
+    class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+  >
+    <span>{{ alert.msg }}</span>
+    <span v-if="reVerifyMessage">
+      If you have lost the reverification email,
+      <a class="link-danger" style="cursor: pointer" @click="reSendVerificationEmail()"
+        >click here</a
+      >
+      to get a new reverification email!
+    </span>
+  </div>
+
   <!-- form -->
   <form @submit.prevent="handleSubmit" autocomplete="on">
     <!-- title -->
     <h1 class="mb-3">Login</h1>
-
-    <!-- alert -->
-    <div
-      v-if="alert.type"
-      :class="`alert-${alert.type}`"
-      class="mb-3 alert animate__animated animate__zoomIn animate__faster"
-    >
-      <span>{{ alert.msg }}</span>
-      <span v-if="reVerifyMessage">
-        If you have lost the reverification email,
-        <a class="link-danger" style="cursor: pointer" @click="reSendVerificationEmail()"
-          >click here</a
-        >
-        to get a new reverification email!
-      </span>
-    </div>
 
     <!-- email -->
     <div class="mb-3">

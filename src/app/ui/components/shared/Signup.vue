@@ -1,16 +1,16 @@
 <template>
+  <!-- alert -->
+  <div
+    v-if="alert.type"
+    :class="`alert-${alert.type}`"
+    class="mb-3 alert animate__animated animate__zoomIn animate__faster"
+  >
+    <span>{{ alert.msg }}</span>
+  </div>
+
   <form @submit.prevent="handleSubmit">
     <!-- title -->
     <h1 class="mb-3">Signup</h1>
-
-    <!-- alert -->
-    <div
-      v-if="alert.type"
-      :class="`alert-${alert.type}`"
-      class="mb-3 alert animate__animated animate__zoomIn animate__faster"
-    >
-      <span>{{ alert.msg }}</span>
-    </div>
 
     <!-- username -->
     <div class="mb-3">
