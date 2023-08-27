@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import RegularHeader from '../components/regular/RegularHeader.vue';
 import RegularFooter from '../components/regular/RegularFooter.vue';
 import ActivityLog from '../components/admin/ActivityLog.vue';
@@ -11,6 +11,8 @@ import api from '../../../utils/fetch-with-style.js';
 
 const appStore = useAppStore();
 
+const refreshDatabaseIndexesLoading = ref(false);
+
 const states = reactive({
   alert: {
     msg: '',
@@ -18,6 +20,45 @@ const states = reactive({
   },
   loading: false,
 });
+
+async function refreshDatabaseIndexes() {
+  try {
+    refreshDatabaseIndexesLoading.value = true;
+    const res = await api.get(`/api/admin/refresh-index`);
+    const json = await res.json();
+
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    refreshDatabaseIndexesLoading.value = false;
+
+    alert.type = 'success';
+    alert.msg = 'All indexes have been refreshed';
+
+    window.scrollTo(0, 0);
+  } catch (e) {
+    appStore.loading = false;
+    refreshDatabaseIndexesLoading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
 
 async function clearAllCache() {
   try {
@@ -72,6 +113,25 @@ async function clearAllCache() {
 
             <span v-if="!states.loading"> Clear All Cache </span>
             <span v-if="states.loading"> Loading... </span>
+          </button>
+
+          <!-- clear index -->
+          <button
+            class="btn btn-dark"
+            :disabled="refreshDatabaseIndexesLoading"
+            style="min-height: 43px !important"
+            @click="refreshDatabaseIndexes"
+          >
+            <div
+              v-if="refreshDatabaseIndexesLoading"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+
+            <span v-if="!refreshDatabaseIndexesLoading"> Clear All indexes </span>
+            <span v-if="refreshDatabaseIndexesLoading"> Loading... </span>
           </button>
 
           <!-- logout -->

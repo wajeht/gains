@@ -26,4 +26,6 @@ admin.get('/online-users', catchAsyncErrors(AdminController.getOnlineUsers));
 
 admin.get('/stats', catchAsyncErrors(AdminController.getStats));
 
+admin.get('/refresh-index', catchAsyncErrors(AdminController.getRefreshIndex));
+
 export default admin;
