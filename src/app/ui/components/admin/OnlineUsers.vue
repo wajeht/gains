@@ -7,7 +7,7 @@ const appStore = useAppStore();
 const users = ref([]);
 
 window.socket.on('onlineUser', (onlineUsers) => {
-  console.log('Online Users', onlineUsers);
+  // console.log('Online Users', onlineUsers);
   users.value = onlineUsers;
 });
 
