@@ -18,6 +18,7 @@ Knex(options)
   });
 
 const db = Knex(options);
+
 attachPaginate();
 
 export default db;
