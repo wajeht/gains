@@ -68,7 +68,11 @@ async function getUserExercise() {
       alert.msg = json.message + ' Please add a exercise via click the plus icon!';
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -101,7 +105,11 @@ async function getUserExerciseCategories() {
       alert.msg = json.message;
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -136,7 +144,11 @@ async function addAExercise() {
 
     const res = await api.post(`/api/v1/exercises`, exercise);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       loading.value = false;
       clearDataAndDismissModal();

@@ -34,7 +34,11 @@ async function checkChangelogSubscription() {
       `/api/v1/subscriptions/changelog-subscription?email=${userStore.user.email}`,
     );
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -59,7 +63,11 @@ async function getChangelogs() {
   try {
     const res = await api.get(`/api/v1/variables/changelogs`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -91,7 +99,11 @@ async function UnsubscribeChangelogRelease() {
 
     const res = await api.post(`/api/v1/subscriptions/unsubscribe-changelog`, body);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -126,7 +138,11 @@ async function subscribeChangelogRelease() {
 
     const res = await api.post(`/api/v1/subscriptions/subscribe-changelog`, body);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

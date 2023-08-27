@@ -53,7 +53,11 @@ async function updateCurrentSession() {
     const json = await res.json();
 
     emit('updateSessionName', newSessionName);
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -239,5 +243,19 @@ a:hover {
 .active {
   text-decoration: none;
   color: #191919;
+}
+
+.dropdown-item {
+  padding: 0.25rem 1rem;
+}
+
+.dropdown-item:hover {
+  background: #6c757d;
+  color: white !important;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background: #212529;
+  color: white !important;
 }
 </style>

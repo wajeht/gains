@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="animate__animated animate__fadeIn">
     <h1>Terms of Service</h1>
 
     <h4>OVERVIEW</h4>

@@ -59,7 +59,11 @@ async function getApiKeys() {
   try {
     const res = await api.get(`/api/v1/api-keys/user/${userStore.user.id}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -89,7 +93,11 @@ async function requestApiKey() {
 
     const res = await api.post(`/api/v1/api-keys/`, { user_id: userStore.user.id });
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -137,7 +145,11 @@ async function deleteApiKey() {
 
     const res = await api.delete(`/api/v1/api-keys/${deleteApiKeySelectedId.value}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

@@ -49,7 +49,11 @@ async function getSessions() {
         'There are no community session with videos available available at this time! Please add a session via click the plus icon!';
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -291,7 +295,7 @@ async function getSessions() {
           v-if="pagination.details?.currentPage !== pagination.lastPage && sessions.length"
           @click="getSessions()"
           type="button"
-          class="btn btn-success"
+          class="btn btn-dark"
           :disabled="loading"
         >
           <div v-if="loading" class="spinner-border spinner-border-sm" role="status">

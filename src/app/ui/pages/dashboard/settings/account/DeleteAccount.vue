@@ -24,7 +24,11 @@ async function deleteAccount() {
 
     const res = await api.delete(`/api/v1/users/${userStore.user.id}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

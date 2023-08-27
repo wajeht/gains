@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="animate__animated animate__fadeIn">
     <h1>Privacy Policy for Gains</h1>
 
     <p>
@@ -18,7 +18,7 @@
       website with regards to the information that they shared and/or collect in AllKindsOfGains.
       This policy is not applicable to any information collected offline or via channels other than
       this website. Our Privacy Policy was created with the help of the
-      <a href="https://www.termsfeed.com/privacy-policy-generator/"
+      <a href="https://www.termsfeed.com/privacy-policy-generator/" target="_blank"
         >TermsFeed Free Privacy Policy Generator</a
       >.
     </p>

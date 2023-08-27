@@ -78,7 +78,11 @@ async function updateProfilePicture() {
       userStore.logOut();
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -126,7 +130,11 @@ async function updatePersonalInformation() {
     for (const u in validUser) {
       userStore.user[u] = validUser[u];
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -167,7 +175,11 @@ async function updateAccountInfo() {
     // prettier-ignore
     const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-account-information`, account);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

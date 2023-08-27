@@ -75,7 +75,11 @@ async function getAllBodyWeightOfAUser({ perPage = 25, currentPage = 1, download
     const url = `/api/v1/variables/bodyweight/${userStore.user.id}?perPage=${perPage}&currentPage=${currentPage}`;
     const res = await api.get(url);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -118,6 +122,11 @@ async function deleteABodyWeight() {
     const jsons = await Promise.all(ress.map((data) => data.json()));
 
     ress.forEach((res) => {
+      if (res.status >= 500) {
+        throw new Error(
+          'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+        );
+      }
       if (!res.ok) {
         jsons.forEach((json) => {
           if (json.errors) {
@@ -165,7 +174,11 @@ async function logABodyWeight() {
 
     const res = await api.post(`/api/v1/variables`, body);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

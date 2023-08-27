@@ -35,7 +35,11 @@ export default {
 
         const res = await fetch(`/api/auth/reverify?email=${this.email}`);
         const json = await res.json();
-
+        if (res.status >= 500) {
+          throw new Error(
+            'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+          );
+        }
         if (!res.ok) {
           this.loading = false;
           throw json.errors;
@@ -71,7 +75,11 @@ export default {
         });
 
         const json = await res.json();
-
+        if (res.status >= 500) {
+          throw new Error(
+            'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+          );
+        }
         if (!res.ok) {
           this.loading = false;
           if (json.errors) {
@@ -188,6 +196,7 @@ export default {
           :disabled="loading"
         />
         <button
+          v-if="password.length"
           @click="showPassword = !showPassword"
           class="btn btn-outline-dark"
           type="button"
@@ -214,14 +223,13 @@ export default {
         <label class="form-check-label" for="remember-me">Remember me</label>
 
         <!-- forget-password -->
-        <a
-          href="#"
+        <router-link
           :class="{ disabled: loading === true }"
-          class="btn p-0 m-0 text-dark"
-          @click="$router.push('/forget-password')"
+          class="p-0 m-0 link-dark"
+          to="/forget-password"
         >
           Forget password?
-        </a>
+        </router-link>
       </div>
     </div>
 
