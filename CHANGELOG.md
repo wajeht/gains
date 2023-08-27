@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/wajeht/gains/compare/v0.0.12...v0.0.13) (2023-08-27)
+
+
+### Features
+
+* add fade in classes to terms and privcy page ([0d90a4b](https://github.com/wajeht/gains/commit/0d90a4bcd2af9a73ccfb376401dfbd27d344da4e))
+* add next page arrow ([17f570d](https://github.com/wajeht/gains/commit/17f570dd7e7379309596eb326a9a539725173557))
+* change load more to black background ([1bce9d7](https://github.com/wajeht/gains/commit/1bce9d7374367fc2cb2204a1bd4b669a2e4ce79a))
+* clean up comments ([4ad93d5](https://github.com/wajeht/gains/commit/4ad93d555929e1f9823526cc81f17e7c45b767b6))
+* create storage symlink ([95001a2](https://github.com/wajeht/gains/commit/95001a26f3211b44638e4aa9a458d37dbe0bb78a))
+* create storage symlink ([544ef58](https://github.com/wajeht/gains/commit/544ef58a294f536e3576123a74def97ba717caa4))
+* fix api doc url was not working ([1addb71](https://github.com/wajeht/gains/commit/1addb716855313e3563cc97b4f5171c1ef341ffd))
+* format on save ([6c439ea](https://github.com/wajeht/gains/commit/6c439ea913285668d7f98567759a8652e5bab85f))
+* handle internel server error on ui ([0d33cb4](https://github.com/wajeht/gains/commit/0d33cb4b619f6031d990b9dea323fda7d10faaf3))
+* hanel when user disconnected form socketio ([e34e4c4](https://github.com/wajeht/gains/commit/e34e4c44a4c67200e6411f89f8093eafefa5f927))
+* hanle 500 error for profile page ([26ad10c](https://github.com/wajeht/gains/commit/26ad10cffc3bb4ef778359a0859b3f89519b8f25))
+* keep most of the folder on git ([2e14db5](https://github.com/wajeht/gains/commit/2e14db52768ff125457040fe414f09f3a90eb5b1))
+* minify html on build ([3228260](https://github.com/wajeht/gains/commit/32282606a18ecb683aaf7307cf7b8ee1e88cb294))
+* move alert to top of the form ([cb99a0d](https://github.com/wajeht/gains/commit/cb99a0d80efdf6301263b1e7b3c717d12f798a76))
+* now we cna see issues ([0c12a5e](https://github.com/wajeht/gains/commit/0c12a5e0bc14d4cfbcafa13b44e5489953566d02))
+* only enabl show/hide icon pasword when password is avaialble ([af78864](https://github.com/wajeht/gains/commit/af78864a1fda6b50eea497c8982f30b0e005536b))
+* only enabl show/hide icon pasword when password is avaialble ([203a26b](https://github.com/wajeht/gains/commit/203a26b1a3fffdce55897e21dd46103b9886b6d7))
+* refactor folder structure ([94ce8ba](https://github.com/wajeht/gains/commit/94ce8bae477ffab6c117948ebc08155755a1cc9d))
+* remove unused pkcg ([c23a364](https://github.com/wajeht/gains/commit/c23a36432b921189f64f5f4cf8bade0d9cb99487))
+* remove unused pkg ([c1698d5](https://github.com/wajeht/gains/commit/c1698d58d4da2f9ddebe3b1bb7bbd9fc961a410d))
+* update node version ([cfdc7e7](https://github.com/wajeht/gains/commit/cfdc7e7895236d6029e97e4c46a0c51f22aac240))
+
+
+### Bug Fixes
+
+* all the dropdown item styles ([4b92e82](https://github.com/wajeht/gains/commit/4b92e820da8d7cb99f9902bcd23acf8b07f88843))
+* clear tag name after adding a tag ([99be381](https://github.com/wajeht/gains/commit/99be38142ad54b7deb36966a590a052f9d70a053))
+* **deps:** update dependency axios to v1.5.0 ([1350475](https://github.com/wajeht/gains/commit/1350475caaa48613ea52d9be55123a4078b363eb))
+* **deps:** update dependency chart.js to v4 ([28c47a7](https://github.com/wajeht/gains/commit/28c47a79012cdb1edbd4389aba686591ac79d2d9))
+* **deps:** update dependency marked to v7.0.5 ([5a44a55](https://github.com/wajeht/gains/commit/5a44a55432586d21aeb0d204b807cedef287d532))
+* folder path ([695d2c3](https://github.com/wajeht/gains/commit/695d2c305c5d81e23ddf7cf0d61a102cb395b995))
+* handle server 500+ error ([471c832](https://github.com/wajeht/gains/commit/471c832c08eaf25798103898698dcc8a0d4b3a0a))
+* log path ([d632349](https://github.com/wajeht/gains/commit/d63234976223af34c3eaa9a1b73e8b3bfc64c527))
+* log path ([ee45180](https://github.com/wajeht/gains/commit/ee4518065e637f633270a057a18c89eaac964793))
+* logs folder path ([5fcb163](https://github.com/wajeht/gains/commit/5fcb1636633e469466495e0749f254ae6253b5ce))
+* minify html ([09cf490](https://github.com/wajeht/gains/commit/09cf490e9b4560622ed8c0f7c7a365fb370a84ce))
+* minify html ([db273bd](https://github.com/wajeht/gains/commit/db273bd9a4cd3a9c1b673762cef1de5e683834d6))
+* public storage location ([29e5fbb](https://github.com/wajeht/gains/commit/29e5fbb8474eb1b07f8d581b930892e33aa68eba))
+* remove some schema ([74eb8ab](https://github.com/wajeht/gains/commit/74eb8ab3aa6375626abf25025c82d0ccc0d1c516))
+* revert back to old chart js 3 ([b9120d6](https://github.com/wajeht/gains/commit/b9120d6b2cc464cb76c9257e553cd5b8a21d0ab5))
+* show/hide button toggle was not toggling ([b93ec95](https://github.com/wajeht/gains/commit/b93ec95969379f471f4be8ef692b383b27b772da))
+* stuff ([789d946](https://github.com/wajeht/gains/commit/789d946b3185bc12565c8588a870b4a9ebafd6eb))
+
 ### [0.0.12](https://github.com/wajeht/gains/compare/v0.0.11...v0.0.12) (2023-08-23)
 
 ### Features
