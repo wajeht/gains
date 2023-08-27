@@ -2646,8 +2646,8 @@ function downloadVideo(url) {
           </button>
 
           <!-- btn -->
-          <div class="btn-group" role="group">
-            <!-- clear -->
+          <!-- clear -->
+          <div class="d-flex gap-2">
             <button
               v-if="!modifyASetLoading && !deleteASetLoading"
               type="reset"
@@ -2815,6 +2815,19 @@ function downloadVideo(url) {
 </template>
 
 <style scoped>
+.dropdown-item {
+  padding: 0.25rem 1rem;
+}
+.dropdown-item:hover {
+  background: #6c757d;
+  color: white !important;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background: #212529;
+  color: white !important;
+}
+
 .strike {
   text-decoration: line-through;
 }

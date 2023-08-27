@@ -240,4 +240,18 @@ a:hover {
   text-decoration: none;
   color: #191919;
 }
+
+.dropdown-item {
+  padding: 0.25rem 1rem;
+}
+
+.dropdown-item:hover {
+  background: #6c757d;
+  color: white !important;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background: #212529;
+  color: white !important;
+}
 </style>
