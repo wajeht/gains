@@ -30,7 +30,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        'default-src': ["'self'", 'plausible.jaw.dev '],
+        'default-src': ["'self'", 'plausible.jaw.dev'],
         'script-src': [
           "'self'",
           "'unsafe-inline'",
@@ -38,6 +38,7 @@ app.use(
           'localhost',
           'plausible.jaw.dev',
         ],
+        'manifest-src': ["'self'", 'data:'],
       },
     },
   }),
@@ -56,6 +57,7 @@ app.use(
 );
 
 app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, next, true));
+
 expressJSDocSwagger(app)(expressJsdocOptions);
 
 io.on('connection', async function (socket) {
@@ -109,11 +111,6 @@ io.on('connection', async function (socket) {
   });
 });
 
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
-
 /**
  * GET /api
  * @tag app
@@ -130,15 +127,17 @@ app.use('/health', AppRoutes.getHealthCheck);
 
 app.use((req, res, next) => {
   // matching /api/v[number]/
-  const isApiPrefix = req.url.match(/\/api\/v\d\//g);
-
-  if (isApiPrefix) {
+  if (req.url.match(/\/api\/v\d\//g)) {
     throw new CustomError.BadRequestError('The resource does not exist!');
   }
-
   next();
 });
 
+/**
+ * GET /
+ * @tag app
+ * @summary gains home page
+ */
 app.use('*', regularLimiter, AppRoutes.vueHandler);
 
 app.use(AppRoutes.notFoundHandler);
