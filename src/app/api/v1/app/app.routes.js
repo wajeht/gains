@@ -1,3 +1,4 @@
+import { catchAsyncErrors } from '../../api.middlewares.js';
 import * as AppController from './app.controller.js';
 
 import express from 'express';

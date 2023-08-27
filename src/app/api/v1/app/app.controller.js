@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import axios from 'axios';
-import { GITHUB } from '../../../config/env.js';
-import redis from '../../../utils/redis.js';
+import { GITHUB } from '../../../../config/env.js';
+import redis from '../../../../utils/redis.js';
 
 export async function getIssues(req, res) {
   let issues = JSON.parse(await redis.get('issues'));
