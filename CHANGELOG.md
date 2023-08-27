@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.14](https://github.com/wajeht/gains/compare/v0.0.13...v0.0.14) (2023-08-27)
+
+
+### Features
+
+* make new link icon smaller ([79df72b](https://github.com/wajeht/gains/commit/79df72b66adcf8ce2e86707b0c3e45abb0a5493d))
+
+
+### Bug Fixes
+
+* cannot pull from github ssue at first ([2a6b88b](https://github.com/wajeht/gains/commit/2a6b88b1e6d887c0e8f27a96e0f9f175143f0a06))
+
 ### [0.0.13](https://github.com/wajeht/gains/compare/v0.0.12...v0.0.13) (2023-08-27)
 
 
