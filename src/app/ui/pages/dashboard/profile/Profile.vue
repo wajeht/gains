@@ -87,7 +87,7 @@ onMounted(async () => {
     // const r = await getRecovery();
     // recovery.value = r || [];
 
-    const [wwi, rpr, r, fs] = await Promise.all([
+    const [wwi, rpr, r, fs] = await Promise.allSettled([
       getWeeklyWeightIn(),
       getRecentPrs(),
       getRecovery(),
