@@ -2238,11 +2238,11 @@ function downloadVideo(url) {
               class="form-check-input"
               type="checkbox"
               role="switch"
-              id="complete-current-session-show-hide-button"
+              id="complete-current-session-show-hide-button-toggle"
               v-model="completeCurrentSessionShowHideOtherFields"
               :disabled="completeCurrentSessionLoading"
             />
-            <label class="form-check-label" for="complete-current-session-show-hide-button">
+            <label class="form-check-label" for="complete-current-session-show-hide-button-toggle">
               <span v-if="completeCurrentSessionShowHideOtherFields">Hide</span>
               <span v-else>Show</span>
               <span> other fields</span>
