@@ -167,6 +167,8 @@ async function clearAllCache() {
                   <h6 class="mb-0">User details</h6>
                   <p class="mb-0 opacity-75">Change user account details.</p>
                 </div>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
 
@@ -185,6 +187,8 @@ async function clearAllCache() {
                   </h6>
                   <p class="mb-0 opacity-75">This action cannot be revert back to normal state!</p>
                 </div>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
           </div>
@@ -247,6 +251,8 @@ async function clearAllCache() {
                   <h6 class="mb-0">Request API Key</h6>
                   <p class="mb-0 opacity-75">Want to consume your data via api? That's great!</p>
                 </div>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
           </div>
@@ -393,6 +399,11 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Admin Panel</h6>
+                <font-awesome-icon
+                  icon="arrow-up-right-from-square"
+                  class="p-0 m-0"
+                  style="color: #3e3f3f"
+                />
               </div>
             </router-link>
 
@@ -404,6 +415,11 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">API Docs</h6>
+                <font-awesome-icon
+                  icon="arrow-up-right-from-square"
+                  class="p-0 m-0"
+                  style="color: #3e3f3f"
+                />
               </div>
             </a>
 
@@ -414,6 +430,8 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Help and Support</h6>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
 
@@ -424,6 +442,8 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Send Feedback</h6>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
 
@@ -434,6 +454,8 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Changelogs</h6>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
 
@@ -444,6 +466,8 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Terms of Service</h6>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
 
@@ -454,6 +478,8 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Privacy Policy</h6>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
 
@@ -464,6 +490,8 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <h6 class="mb-0">Issues and Pull requests</h6>
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
               </div>
             </router-link>
           </div>

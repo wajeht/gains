@@ -59,7 +59,7 @@
                   Calculator your one rep max of a lift and tell your friends!
                 </p>
               </div>
-              <small class="opacity-50 text-nowrap">v1</small>
+              <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
             </div>
           </router-link>
 
@@ -138,6 +138,8 @@
                 <h6 class="mb-0">Blocks review</h6>
                 <p class="mb-0 opacity-75">View volume dosage and lifts data of blocks</p>
               </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
             </div>
           </router-link>
 
@@ -151,6 +153,8 @@
                 <h6 class="mb-0">Open Powerlifting Database</h6>
                 <p class="mb-0 opacity-75">Search lifters inside open powerlifting database</p>
               </div>
+              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
             </div>
           </router-link>
         </div>
@@ -173,6 +177,7 @@
                 </p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
             </div>
           </router-link>
 
@@ -187,6 +192,7 @@
                 <p class="mb-0 opacity-75">Track your sleep, mood, and energy.</p>
               </div>
               <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
             </div>
           </router-link>
 
@@ -216,7 +222,7 @@
                   Track your bodyweight without logging another session.
                 </p>
               </div>
-              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+              <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
             </div>
           </router-link>
         </div>
