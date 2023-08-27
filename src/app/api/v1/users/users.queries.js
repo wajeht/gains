@@ -79,7 +79,6 @@ export async function updateUserById(id, body) {
 }
 
 export function deleteUser(id) {
-  // return db.delete('*').from('users').where({ id }).returning('*');
   return db.update({ deleted: true }).from('users').where({ id }).returning('*');
 }
 

@@ -9,55 +9,37 @@ import CustomError from '../api.errors.js';
 import { env, domain, jwt_secret } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../../utils/pkg.js';
+import db from '../../../database/db.js';
 
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 
 export async function postLogin(req, res) {
   const { email, remember_me } = req.body;
-  let [user] = await UsersQueries.findUserByParam({ email });
-  [user] = await UsersQueries.findUserById(user.id);
 
-  let token = null;
+  const [user] = await db
+    .select('*')
+    .from('users')
+    .leftJoin('user_details', 'users.id', 'user_details.user_id')
+    .where({ 'users.email': email });
 
-  if (remember_me) {
-    token = jwt.sign(
-      {
-        user_id: user.id,
-        role: user.role,
-      },
-      jwt_secret,
-      {
-        issuer: 'AllKindsOfGains',
-        expiresIn: '1d',
-      },
-    );
+  const tokenPayload = {
+    user_id: user.id,
+    role: user.role,
+  };
 
-    res.cookie('token', token, {
-      expiresIn: '1d',
-      httpOnly: true,
-      secure: env === 'production',
-      signed: true,
-    });
-  } else {
-    token = jwt.sign(
-      {
-        user_id: user.id,
-        role: user.role,
-      },
-      jwt_secret,
-      {
-        issuer: 'AllKindsOfGains',
-        expiresIn: '1h',
-      },
-    );
+  const tokenOptions = {
+    issuer: 'AllKindsOfGains',
+    expiresIn: remember_me ? '1d' : '1h',
+  };
 
-    res.cookie('token', token, {
-      expiresIn: '1h',
-      httpOnly: true,
-      secure: env === 'production',
-      signed: true,
-    });
-  }
+  const token = jwt.sign(tokenPayload, jwt_secret, tokenOptions);
+
+  res.cookie('token', token, {
+    expiresIn: tokenOptions.expiresIn,
+    httpOnly: true,
+    secure: env === 'production',
+    signed: true,
+  });
 
   logger.info(`User id ${user.id} has logged-in!`);
 
@@ -75,7 +57,6 @@ export async function postLogin(req, res) {
         last_name: user.last_name,
         weight: user.weight,
         profile_picture_url: user.profile_picture_url,
-        // token,
       },
     ],
     appVersion: pkg.version,

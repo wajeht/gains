@@ -38,37 +38,6 @@ export async function getExerciseHistoryByExerciseId(
       ...pagination,
       isLengthAware: true,
     });
-
-  // const { rows } = await db.raw(
-  //   `
-  //   select
-  //     s.reps,
-  //     s.weight,
-  //     s.rpe as "rpe",
-  //     s.notes as "notes",
-  //     s.created_at as "created_at",
-  //     e."name" as "exercise_name",
-  //     ec."name" as "category_name",
-  //     e.id as "exercise_id",
-  //     ec.id as "category_id",
-  //     s.id as "set_id",
-  //     s.session_id as "session_id",
-  //     s.log_id as "log_id",
-  //     e.user_id as "user_id"
-  //   from
-  //     exercises e
-  //     inner join sets s on s.exercise_id = e.id
-  //     inner join exercise_categories ec on ec.id = e.exercise_category_id
-  //   where
-  //     e.deleted = false
-  //     and e.id = ?
-  //   order by
-  //     s.created_at desc
-  // `,
-  //   [id],
-  // );
-
-  // return rows;
 }
 
 export function getExerciseByUserId(uid, options = { orderBy: 'id', direction: 'desc' }) {
