@@ -149,6 +149,12 @@ async function getCurrentSessionDetails() {
     const res = await api.get(`/api/v1/sessions/${sid.value}`);
     const json = await res.json();
 
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -177,6 +183,12 @@ async function getUserExerciseCategories() {
     const res = await api.get(`/api/v1/exercise-categories?user_id=${userStore.user.id}`);
     const json = await res.json();
 
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -204,6 +216,12 @@ async function getUserExerciseByCategoryId(ecid) {
     const res = await api.get(`/api/v1/exercises?exercise_category_id=${ecid}`);
     const json = await res.json();
 
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -229,6 +247,12 @@ async function getUserExerciseDetails(eid) {
   try {
     const res = await api.get(`/api/v1/exercises/${eid}`);
     const json = await res.json();
+
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
 
     if (!res.ok) {
       if (json.errors) {
@@ -298,6 +322,12 @@ async function addATag() {
     });
     const json = await res.json();
 
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -346,6 +376,12 @@ async function copyPreviousSet(currentLogIndex) {
     const res = await api.post(`/api/v1/sets`, data);
     const json = await res.json();
 
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -380,7 +416,11 @@ async function getAllUserExercises() {
   try {
     const res = await api.get(`/api/v1/exercises?user_id=${userStore.user.id}&order_by=name`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -512,7 +552,11 @@ async function handleAddASet() {
 
     const res = await api.post(`/api/v1/sets`, validSetData);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -574,7 +618,11 @@ async function modifyASet() {
 
     const res = await api.patch(`/api/v1/sets/${modifyData.id}`, validModifyData);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -619,7 +667,11 @@ async function deleteASet() {
 
     const res = await api.delete(`/api/v1/sets/${setData.id}`, validSetData);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -685,7 +737,11 @@ async function handleCompleteCurrentSession() {
 
     const res = await api.patch(`/api/v1/sessions/${sid.value}`, nonEmpty);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -728,7 +784,11 @@ async function handleAddAExerciseNote() {
       data,
     );
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -771,7 +831,11 @@ async function handleDeleteSession() {
       user_id: userStore.user.id,
     });
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -846,7 +910,11 @@ async function uploadAVideo() {
       userStore.logOut();
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       videoPreviewFileExist.value = false;
       if (json.errors) {
@@ -892,7 +960,11 @@ async function updateLogVisibility(log_id, state) {
     });
 
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -919,7 +991,11 @@ async function deleteALog() {
 
     const res = await api.delete(`/api/v1/logs/${deleteALogLogObject.value.id}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

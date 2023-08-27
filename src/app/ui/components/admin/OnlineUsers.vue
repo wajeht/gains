@@ -29,6 +29,12 @@ async function fetchLatestOnlineUsers() {
     const res = await api.get(`/api/admin/online-users`);
     const json = await res.json();
 
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

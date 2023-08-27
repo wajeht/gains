@@ -64,7 +64,11 @@ async function getUserExerciseCategories() {
       alert.msg = json.message + ' Please add a category via click the plus icon!';
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       loading.value = false;
       if (json.errors) {
@@ -99,7 +103,11 @@ async function addAExerciseCategory() {
 
     const res = await api.post(`/api/v1/exercise-categories`, category);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       loading.value = false;
       clearDataAndDismissModal();

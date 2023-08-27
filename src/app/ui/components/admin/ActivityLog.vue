@@ -23,6 +23,12 @@ async function fetchActivities() {
     const res = await api.get(`/api/admin/view-logs?latest=-${AMOUNT.value}`);
     const json = await res.json();
 
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

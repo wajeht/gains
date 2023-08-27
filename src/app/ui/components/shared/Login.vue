@@ -35,7 +35,11 @@ export default {
 
         const res = await fetch(`/api/auth/reverify?email=${this.email}`);
         const json = await res.json();
-
+        if (res.status >= 500) {
+          throw new Error(
+            'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+          );
+        }
         if (!res.ok) {
           this.loading = false;
           throw json.errors;
@@ -71,7 +75,11 @@ export default {
         });
 
         const json = await res.json();
-
+        if (res.status >= 500) {
+          throw new Error(
+            'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+          );
+        }
         if (!res.ok) {
           this.loading = false;
           if (json.errors) {

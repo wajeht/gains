@@ -663,6 +663,7 @@ router.beforeEach(async (to, from, next) => {
     if (userStore.isLoggedIn) {
       // check to see if token is still valid
       const res = await window.fetch(`/api/v1/users/${userStore.user.id}`);
+
       if (!res.ok) {
         userStore.isLoggedIn = false;
         userStore.clearUserInfo();

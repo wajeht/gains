@@ -48,7 +48,7 @@ watch(checkRecoveryCheckbox, (prev, cur) => {
 
 async function downloadTable({
   title,
-  currentPage = pagination.currentPage,
+  currentPage = pagination.value.currentPage,
   perPage = 999999999999999,
 } = {}) {
   const json = await getRecoveryOfAUser({
@@ -77,7 +77,11 @@ async function getRecoveryOfAUser({ perPage = 25, currentPage = 1, download = fa
     const url = `/api/v1/variables/recovery/${userStore.user.id}?cache=false&perPage=${perPage}&currentPage=${currentPage}`;
     const res = await api.get(url);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -120,6 +124,11 @@ async function deleteARecovery() {
     const jsons = await Promise.all(ress.map((data) => data.json()));
 
     ress.forEach((res) => {
+      if (res.status >= 500) {
+        throw new Error(
+          'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+        );
+      }
       if (!res.ok) {
         jsons.forEach((json) => {
           if (json.errors) {
@@ -168,7 +177,11 @@ async function logARecovery() {
 
     const res = await api.post(`/api/v1/variables`, body);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

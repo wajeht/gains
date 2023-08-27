@@ -55,7 +55,11 @@ async function getUserSessions() {
         'There are no session with videos available available at this time! Please add a session via click the plus icon!';
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       appStore.loading = false;
       if (json.errors) {

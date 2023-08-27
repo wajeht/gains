@@ -88,7 +88,11 @@ async function getUserBlocks() {
       alert.msg = json.message + ' Please add a block via click the plus icon!';
       return;
     }
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -124,7 +128,11 @@ async function addABlock() {
 
     const res = await api.post(`/api/v1/blocks`, block);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       loading.value = false;
       clearDataAndDismissModal();

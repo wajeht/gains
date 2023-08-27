@@ -26,7 +26,11 @@ async function deleteAllDataOfAUser() {
 
     const res = await api.delete(`/api/v1/users/${userStore.user.id}/data`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -60,7 +64,11 @@ async function downloadUserData() {
 
     const res = await api.get(`/api/v1/users/${userStore.user.id}/download-user-data`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -96,7 +104,11 @@ async function clearAllCache() {
     clearAllCacheLoading.value = true;
     const res = await api.post(`/api/v1/cache/user/${userStore.user.id}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

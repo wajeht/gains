@@ -56,7 +56,11 @@ async function sendPasswordResetLink(email) {
 
     const res = await api.post(` /api/auth/forget-password`, { email });
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -157,7 +161,11 @@ async function modifyUser() {
 
     const res = await api.patch(`/api/v1/users/${selectedModifyAUserOG.id}`, diff);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -197,7 +205,11 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
       `/api/v1/users?cache=false&perPage=${perPage}&currentPage=${currentPage}&search=${searchInput.value}`,
     );
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;

@@ -47,7 +47,11 @@ async function getCurrentSessionDetails() {
   try {
     const res = await api.get(`/api/v1/sessions/${props.id}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -76,7 +80,11 @@ async function deleteAComment() {
 
     const res = await api.delete(`/api/v1/comments/${deleteACommentSelectedId.value}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -114,7 +122,11 @@ async function fetchComments() {
   try {
     const res = await api.get(`/api/v1/comments/sessions/${currentSessionDetails.session_id}`);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
@@ -147,7 +159,11 @@ async function postAComment() {
 
     const res = await api.post(`/api/v1/comments`, body);
     const json = await res.json();
-
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
     if (!res.ok) {
       if (json.errors) {
         throw json.errors;
