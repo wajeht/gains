@@ -35,7 +35,7 @@ view-logs:
   --oldest --list-of=<number>
 `;
 
-export default function help(args) {
+export default function help(_args) {
   try {
     console.log(HELP);
     process.exit(0);

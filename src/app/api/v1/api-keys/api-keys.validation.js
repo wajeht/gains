@@ -1,4 +1,4 @@
-import { check, checkSchema, param, body } from 'express-validator';
+import { param, body } from 'express-validator';
 import * as ApiKeysQueries from './api-keys.queries.js';
 import * as UsersQueries from '../users/users.queries.js';
 

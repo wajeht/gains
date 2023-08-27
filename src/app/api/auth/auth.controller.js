@@ -9,8 +9,6 @@ import CustomError from '../api.errors.js';
 import { env, domain, jwt_secret } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../../utils/pkg.js';
-import redis from '../../../utils/redis.js';
-import useragent from 'useragent';
 
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 

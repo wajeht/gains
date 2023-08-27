@@ -6,7 +6,7 @@ export const regularLimiter = rateLimit({
   statusCode: 429,
   message: {
     status: 'fail',
-    request_url: async (request, response) => request.originalUr,
+    request_url: async (request, _response) => request.originalUr,
     message: 'Too many requests, please try again later.',
   },
   standardHeaders: true,
@@ -19,7 +19,7 @@ export const apiLimiter = rateLimit({
   statusCode: 429,
   message: {
     status: 'fail',
-    request_url: async (request, response) => request.originalUr,
+    request_url: async (request, _response) => request.originalUr,
     message: 'Too many requests, please try again later.',
   },
   standardHeaders: true,

@@ -26,7 +26,7 @@ export async function postContact(req, res) {
 
     axios
       .post(GITHUB.issue_url, data, config)
-      .then((response) => {})
+      .then((_response) => {})
       .catch((error) => {
         logger.error(`Something went wrong while sending the issue to GitHub: ${error}`);
       });

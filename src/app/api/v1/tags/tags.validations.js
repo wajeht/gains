@@ -1,9 +1,7 @@
-import { check, param, body } from 'express-validator';
-import { isEqual } from 'lodash-es';
+import { body } from 'express-validator';
 
 import * as UsersQueries from '../users/users.queries.js';
 import * as LogsQueries from '../logs/logs.queries.js';
-import * as TagsQueries from './tags.queries.js';
 
 export const postTag = [
   body('log_id')

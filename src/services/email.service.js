@@ -4,12 +4,11 @@ import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import Template from './emails/template.js';
 import emailConfig from '../config/mail.config.js';
-import { env } from '../config/env.js';
 
 // use https://ethereal.email/ for testing purposes
 const transporter = nodemailer.createTransport(emailConfig);
 
-transporter.verify((error, success) => {
+transporter.verify((error, _success) => {
   if (error) {
     logger.error(error);
     Chad.flex(error.message, error);

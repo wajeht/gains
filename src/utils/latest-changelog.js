@@ -1,6 +1,5 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { marked } from 'marked';
 import logger from './logger.js';
 import Chad from './chad.js';
 

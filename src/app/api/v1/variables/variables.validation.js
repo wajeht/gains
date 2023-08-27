@@ -1,4 +1,4 @@
-import { check, param, body, query } from 'express-validator';
+import { param, body, query } from 'express-validator';
 import * as UsersQueries from '../users/users.queries.js';
 import * as VariablesQueries from './variables.queries.js';
 

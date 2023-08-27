@@ -23,7 +23,7 @@ export function vueHandler(req, res, next) {
   }
 }
 
-export function notFoundHandler(req, res, next) {
+export function notFoundHandler(req, res, _next) {
   res.status(StatusCodes.NOT_FOUND).json({
     status: 'fail',
     request_url: req.originalUrl,
@@ -32,7 +32,7 @@ export function notFoundHandler(req, res, next) {
   });
 }
 
-export function errorHandler(err, req, res, next) {
+export function errorHandler(err, req, res, _next) {
   // api errors
   if (err.name === 'CustomAPIError') {
     return res.status(err.statusCode).json({

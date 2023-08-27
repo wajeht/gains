@@ -1,7 +1,6 @@
-import { check, query, param, body } from 'express-validator';
+import { query, body } from 'express-validator';
 import * as UserQueries from '../users/users.queries.js';
 import * as ExerciseCategoriesQueries from './exercise-categories.queries.js';
-import { isNumber } from 'lodash-es';
 
 export const getExerciseCategories = [
   query('user_id')
