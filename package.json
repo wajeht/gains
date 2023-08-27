@@ -2,7 +2,7 @@
   "name": "gains",
   "version": "0.0.14",
   "description": "All in one tools to help strength athletes load the right amount of training dosage!",
-  "main": "server.js",
+  "main": "./src/app/server.js",
   "type": "module",
   "scripts": {
     "start": "node ./src/app/server.js",
