@@ -92,5 +92,11 @@ window.socket.on('connect', (socket) => {
 });
 
 window.socket.on('disconnect', () => {
+  const userWithSocketId = {
+    ...userStore.user,
+    socket_id: window.socket.id,
+  };
+
+  window.socket.emit('userDisconnected', userWithSocketId);
   console.log('socket disconnected!');
 });
