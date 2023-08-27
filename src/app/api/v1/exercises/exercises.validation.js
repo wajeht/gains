@@ -1,4 +1,4 @@
-import { body, check, param, query } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import * as UsersQueries from '../users/users.queries.js';
 import * as ExercisesQueries from './exercises.queries.js';
 import * as LogsQueries from '../logs/logs.queries.js';

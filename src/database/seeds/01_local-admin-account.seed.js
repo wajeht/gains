@@ -1,11 +1,9 @@
 import crypto from 'crypto';
 
-import EmailService from '../../services/email.service.js';
 import RandomPasswordGenerator from '../../utils/random-password-generator.js';
 import Password from '../../utils/password.js';
 import logger from '../../utils/logger.js';
 import { admin, env } from '../../config/env.js';
-import { red } from '../../utils/rainbow-log.js';
 
 import * as UsersQueries from '../../app/api/v1/users/users.queries.js';
 import * as AuthQueries from '../../app/api/auth/auth.queries.js';
@@ -33,23 +31,9 @@ export async function seed(knex) {
     const [user] = await UsersQueries.createUser(newUser, verificationToken);
 
     const date = new Date();
-    const verified = await AuthQueries.verifyUser(user.id, date);
+    await AuthQueries.verifyUser(user.id, date);
 
     await knex('user_details').update({ role: 'admin' });
-
-    // TODO!: this emailing code below does not work currently
-    // TODO!: knex changes path so, path of template keep changing
-    // send verification email
-    // await EmailService.send({
-    //   to: newUser.email,
-    //   subject: 'Admin account',
-    //   template: 'admin-account',
-    //   data: {
-    //     username: newUser.username,
-    //     email: newUser.email,
-    //     password: newUser.password,
-    //   },
-    // });
 
     logger.info(`Admin account was created for user id: ${user.id}`);
 

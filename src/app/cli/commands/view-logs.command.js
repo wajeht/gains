@@ -1,4 +1,3 @@
-import pkg from '../../../utils/pkg.js';
 import Logger from '../../../utils/logger.js';
 import dayjs from 'dayjs';
 import axios from '../../../utils/axios.cli.js';
@@ -97,8 +96,8 @@ export default async function viewLogs({ ...args }) {
     if (!isValidActions) throw new Error(`Action commands should be any of ${ACTIONS.join(', ')}!`);
 
     const listOf = args['list-of'];
-    const oldest = args.oldest;
-    const latest = args.latest;
+    // const oldest = args.oldest;
+    // const latest = args.latest;
     const prod = args.prod;
 
     if (prod) Logger.warn('--prod was given, Running for production database!');

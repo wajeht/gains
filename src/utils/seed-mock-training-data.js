@@ -80,7 +80,7 @@ export default async function seedMockTrainingData(email) {
         const randomVideo = copiedVideos[Object.keys(copiedVideos)[randomNumberForVideo]];
         const splitAtUpload = (path) => `/uploads${path.split('uploads')[1]}`;
 
-        const insertedVideo = await VideosQueries.insertVideo({
+        await VideosQueries.insertVideo({
           video_path: randomVideo.video,
           video_url: splitAtUpload(randomVideo.video),
           screenshot_path: randomVideo.screenshot,
@@ -119,7 +119,7 @@ export default async function seedMockTrainingData(email) {
 
       // complete the session
       if (randomBoolean()) {
-        const completeSession = await SessionsQueries.updateSession(session.id, session.user_id, {
+        await SessionsQueries.updateSession(session.id, session.user_id, {
           end_date: faker.date.soon(),
         });
         logger.info(`session ${session.id} set to completed!`);

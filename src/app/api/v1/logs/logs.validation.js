@@ -1,4 +1,4 @@
-import { check, param, body } from 'express-validator';
+import {  param, body } from 'express-validator';
 import * as UserQueries from '../users/users.queries.js';
 import * as SessionsQueries from '../sessions/sessions.queries.js';
 import * as ExercisesQueries from '../exercises/exercises.queries.js';
@@ -130,7 +130,7 @@ export const uploadAVideo = [
     .withMessage('User id must not be empty!')
     .isInt()
     .withMessage('User id must be an number!')
-    .custom(async (user_id, { req }) => {
+    .custom(async (user_id, { _req }) => {
       if (user_id) {
         const user = await UserQueries.findUserById(user_id);
         if (user.length === 0) throw new Error('User does not exist!');
@@ -198,7 +198,7 @@ export const postMultipleLogs = [
     .withMessage('User id must not be empty!')
     .isInt()
     .withMessage('User id must be an number!')
-    .custom(async (user_id, { req }) => {
+    .custom(async (user_id, { _req }) => {
       if (user_id) {
         const user = await UserQueries.findUserById(user_id);
         if (user.length === 0) throw new Error('User does not exist!');

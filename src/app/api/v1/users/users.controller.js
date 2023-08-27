@@ -2,7 +2,7 @@ import logger from '../../../../utils/logger.js';
 import * as UsersQueries from './users.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
-import { omit, without } from 'lodash-es';
+import { omit } from 'lodash-es';
 import * as CacheQueries from '../cache/cache.queries.js';
 import * as JobsServices from '../../../../services/job.services.js';
 import redis from '../../../../utils/redis.js';
@@ -180,7 +180,7 @@ export async function patchUpdateAccountInformation(req, res) {
   });
 }
 
-export async function postUpdateProfilePicture(req, res, next) {
+export async function postUpdateProfilePicture(req, res, _next) {
   const { path: profile_picture_path } = req.file;
   const profile_picture_url = req.file.path.split('public')[1];
   const { user_id } = req.body;
@@ -209,7 +209,7 @@ export async function postDeleteUserData(req, res) {
     `User id ${user_id} has deleted all of comments, videos, variables, sets, logs, sessions and blocks`,
   );
 
-  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+  await CacheQueries.deleteAllCachesOfAUser(user_id);
 
   logger.info(`User id ${user_id} has cleared all of their cached data!`);
 
@@ -224,11 +224,11 @@ export async function postDeleteUserData(req, res) {
 export async function postRestoreUserData(req, res) {
   const { user_id } = req.params;
 
-  const restore = await UsersQueries.restoreUserData(user_id);
+  await UsersQueries.restoreUserData(user_id);
 
   logger.info(`User id ${user_id} has restore all of their data!`);
 
-  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+  await CacheQueries.deleteAllCachesOfAUser(user_id);
 
   logger.info(`User id ${user_id} has cleared all of their cached data!`);
 
@@ -247,7 +247,7 @@ export async function postRestoreUser(req, res) {
 
   logger.info(`User id ${user_id} has been restored!`);
 
-  const cleared = await CacheQueries.deleteAllCachesOfAUser(user_id);
+  await CacheQueries.deleteAllCachesOfAUser(user_id);
 
   logger.info(`User id ${user_id} has cleared all of their cached data!`);
 

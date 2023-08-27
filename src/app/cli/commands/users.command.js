@@ -1,12 +1,10 @@
 import * as UsersQueries from '../../api/v1/users/users.queries.js';
-import * as CacheQueries from '../../api/v1/cache/cache.queries.js';
 import * as AuthQueries from '../../api/auth/auth.queries.js';
 import Logger from '../../../utils/logger.js';
 import axios from '../../../utils/axios.cli.js';
 import { faker } from '@faker-js/faker';
 import Password from '../../../utils/password.js';
 import crypto from 'crypto';
-import { red } from '../../../utils/rainbow-log.js';
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 import seedMockTrainingData from '../../../utils/seed-mock-training-data.js';
 
@@ -20,13 +18,15 @@ async function restoreData({ user_id, prod = false }) {
     // Logger.info(`restoreData(), user_id: ${user_id}, prod: ${prod}`);
 
     if (prod) {
-      const data = await (await axios.post(`/api/v1/users/${user_id}/restore-data`)).data;
+      await (
+        await axios.post(`/api/v1/users/${user_id}/restore-data`)
+      ).data;
       // console.log(data.data);
       Logger.info(`All training data of User ID: ${user_id} has been restore!`);
       process.exit(0);
     }
 
-    const data = await UsersQueries.restoreUserData(user_id);
+    await UsersQueries.restoreUserData(user_id);
     Logger.info(`All training data of User ID: ${user_id} has been restore!`);
 
     process.exit(0);
@@ -40,13 +40,15 @@ async function clearCache({ user_id, prod = false }) {
   try {
     // Logger.info(`clearCache(), user_id: ${user_id}, prod: ${prod}`);
     if (prod) {
-      const cache = await (await axios.post(`/api/v1/cache//user/${user_id}`)).data;
+      await (
+        await axios.post(`/api/v1/cache//user/${user_id}`)
+      ).data;
       // console.log(cache.data);
       Logger.info(`All cache data of User ID: ${user_id} was cleared!`);
       process.exit(0);
     }
 
-    const cache = await UsersQueries.restoreUserData(user_id);
+    await UsersQueries.restoreUserData(user_id);
     Logger.info(`All cache data of User ID: ${user_id} was cleared!`);
 
     process.exit(0);
@@ -60,13 +62,15 @@ async function enable({ user_id, prod = false }) {
   try {
     // Logger.info(`enable(), user_id: ${user_id}, prod: ${prod}`);
     if (prod) {
-      const user = await (await axios.post(`/api/v1/users/${user_id}/restore-user`)).data;
+      await (
+        await axios.post(`/api/v1/users/${user_id}/restore-user`)
+      ).data;
       // console.log(user.data);
       Logger.info(`User ID: ${user_id}, user has been restore!`);
       process.exit(0);
     }
 
-    const user = await UsersQueries.postRestoreUser(user_id);
+    await UsersQueries.postRestoreUser(user_id);
     Logger.info(`User ID: ${user_id}, user has been restore!`);
 
     process.exit(0);
@@ -80,13 +84,15 @@ async function disable({ user_id, prod = false }) {
   try {
     // Logger.info(`enable(), user_id: ${user_id}, prod: ${prod}`);
     if (prod) {
-      const user = await (await axios.delete(`/api/v1/users/${user_id}`)).data;
+      await (
+        await axios.delete(`/api/v1/users/${user_id}`)
+      ).data;
       // console.log(user.data);
       Logger.info(`User ID: ${user_id}, user has been deleted!`);
       process.exit(0);
     }
 
-    const user = await UsersQueries.deleteUser(user_id);
+    await UsersQueries.deleteUser(user_id);
     Logger.info(`User ID: ${user_id}, user has been deleted!`);
 
     process.exit(0);
@@ -182,10 +188,11 @@ async function add({ email, prod = false, verify = false, demo = false, data = f
       const date = new Date();
       const [verified] = await AuthQueries.verifyUser(user.id, date);
 
+      // eslint-disable-next-line no-unused-vars
       const { email, username, password, ...rest } = newUser;
       const [updated] = await UsersQueries.updateUserById(verified.id, rest);
 
-      const gde = await generateDefaultExercises(updated.id);
+      await generateDefaultExercises(updated.id);
 
       Logger.info(`Generated default exercises for User id ${updated.id}!`);
 
@@ -209,6 +216,7 @@ async function add({ email, prod = false, verify = false, demo = false, data = f
       const date = new Date();
       const [verified] = await AuthQueries.verifyUser(user.id, date);
 
+      // eslint-disable-next-line no-unused-vars
       const { email, username, password, ...rest } = newUser;
       const [updated] = await UsersQueries.updateUserById(verified.id, rest);
 
@@ -244,7 +252,7 @@ async function mockData({ email, user_id, prod = false }) {
 
     // gains users --mock-data --email=test@domain.com --prod
     if (email && prod && !user_id) {
-      const data = await axios.post('/api/admin/seed-mock-training-data', { email });
+      await axios.post('/api/admin/seed-mock-training-data', { email });
       Logger.info(`Mock training data was generated for email: ${email}!\n`);
       // process.exit(0);
       return;
@@ -253,14 +261,14 @@ async function mockData({ email, user_id, prod = false }) {
     // gains users --mock-data --user_id=1
     if (user_id && !prod && !email) {
       const [{ email }] = await UsersQueries.findUserById(user_id);
-      const mock = await seedMockTrainingData(email);
+      await seedMockTrainingData(email);
       Logger.info(`User ID: ${user_id} has generated mock training data!`);
       return;
     }
 
     // gains users --mock-data --email=test@domain.com
     if (email && !prod && !user_id) {
-      const mock = await seedMockTrainingData(email);
+      await seedMockTrainingData(email);
       Logger.info(`User ID: ${user_id} has generated mock training data!`);
       return;
     }

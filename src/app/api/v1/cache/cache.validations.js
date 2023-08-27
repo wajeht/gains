@@ -1,4 +1,3 @@
-import CustomError from '../../api.errors.js';
 import * as CacheQueries from './cache.queries.js';
 import * as UsersQueries from '../users/users.queries.js';
 

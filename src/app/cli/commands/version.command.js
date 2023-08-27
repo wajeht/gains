@@ -1,7 +1,7 @@
 import pkg from '../../../utils/pkg.js';
 import Logger from '../../../utils/logger.js';
 
-export default function version(args) {
+export default function version(_args) {
   try {
     console.log(`\n Gains v${pkg.version} \n`);
     process.exit(0);

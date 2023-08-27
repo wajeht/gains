@@ -1,4 +1,4 @@
-import { check, checkSchema, param, body } from 'express-validator';
+import { param } from 'express-validator';
 import * as VideosQueries from './videos.queries.js';
 
 export const getVideo = [

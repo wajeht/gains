@@ -1,6 +1,6 @@
 import { param, body, query } from 'express-validator';
 import * as UserQueries from '../v1/users/users.queries.js';
-import { isEqual, kebabCase } from 'lodash-es';
+import { isEqual } from 'lodash-es';
 import Password from '../../../utils/password.js';
 import { red } from '../../../utils/rainbow-log.js';
 import logger from '../../../utils/logger.js';

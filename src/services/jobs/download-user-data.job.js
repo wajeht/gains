@@ -6,7 +6,7 @@ import Logger from '../../utils/logger.js';
 import { sleep } from '../../utils/helpers.js';
 import { REDIS } from '../../config/env.js';
 
-import Bull, { Job } from 'bull';
+import Bull from 'bull';
 import Papa from 'papaparse';
 import dayjs from 'dayjs';
 import AdmZip from 'adm-zip';
@@ -49,10 +49,10 @@ async function writeToFile(userId, tableName, data) {
   try {
     const { filePathWithJSONExtension, userFolderPath, userFolderName } = useUserFolder(userId);
 
-    const createFolder = await mkdir(userFolderPath, { recursive: true });
+    await mkdir(userFolderPath, { recursive: true });
     Logger.info(`Generated '${userFolderName}' folder user id: ${userId}!`);
 
-    const file = await writeFile(filePathWithJSONExtension(tableName), Papa.unparse(data));
+    await writeFile(filePathWithJSONExtension(tableName), Papa.unparse(data));
     const temp = filePathWithJSONExtension(tableName).split('/').splice(-1).toString();
     Logger.info(`Generated csv from user's '${tableName}' data to '${temp}'!`);
 

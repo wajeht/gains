@@ -1,5 +1,4 @@
-import { query, check, checkSchema, param, body } from 'express-validator';
-import { blue, custom, green, red, yellow } from '../../../../utils/rainbow-log.js';
+import { query, param, body } from 'express-validator';
 import * as UserQueries from './users.queries.js';
 import { isEqual } from 'lodash-es';
 
@@ -377,7 +376,7 @@ export const postUpdateProfilePicture = [
       return true;
     })
     .toInt()
-    .custom((value, { req }) => {
+    .custom((_value, { _req }) => {
       // console.log(req.file)
       return true;
     }),

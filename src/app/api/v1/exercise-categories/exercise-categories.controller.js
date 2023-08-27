@@ -5,6 +5,7 @@ import CustomError from '../../api.errors.js';
 
 export async function getExerciseCategories(req, res) {
   const uid = req.query.user_id;
+  // eslint-disable-next-line no-unused-vars
   const all = req.query.all;
   let result = null;
 

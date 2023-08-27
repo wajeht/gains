@@ -120,12 +120,7 @@ export async function getRecovery(req, res) {
 
   if (recovery === null) {
     recovery = await VariablesQueries.getRecovery(user_id, pagination);
-    const setRecovery = await redis.set(
-      `user-id-${user_id}-recovery`,
-      JSON.stringify(recovery),
-      'EX',
-      24 * 60 * 60,
-    );
+    await redis.set(`user-id-${user_id}-recovery`, JSON.stringify(recovery), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({

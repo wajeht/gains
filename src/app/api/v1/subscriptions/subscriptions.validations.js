@@ -1,4 +1,4 @@
-import { check, param, body, query } from 'express-validator';
+import { body, query } from 'express-validator';
 import * as UsersQueries from '../users/users.queries.js';
 
 export const postUnsubscribeChangelog = [

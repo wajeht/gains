@@ -31,7 +31,7 @@ export async function seed(knex) {
 
     // exercises
     await knex('exercises').del();
-    const e = await knex('exercises')
+    await knex('exercises')
       .insert([
         // squat
         {
@@ -71,7 +71,7 @@ export async function seed(knex) {
 
     // blocks
     await knex('blocks').del();
-    const b = await knex('blocks')
+    await knex('blocks')
       .insert([
         {
           name: 'Introduction block',

@@ -1,5 +1,5 @@
 import db from '../../../../database/db.js';
-import { omit, pick, update } from 'lodash-es';
+import { omit, pick } from 'lodash-es';
 
 export async function createASession(body) {
   const wout = [
@@ -35,7 +35,7 @@ export async function createASession(body) {
   cleanVariables.session_id = cleanVariables.id;
   delete cleanVariables.id;
 
-  const insertedVariables = await db
+  await db
     .insert({ ...cleanVariables })
     .into('variables')
     .returning('*');
@@ -174,9 +174,9 @@ export async function updateSession(sid, uid, body) {
   ];
 
   const validVariables = pick(body, only);
-  let updatedVariables = null;
+
   if (Object.keys(validVariables).length) {
-    updatedVariables = await db
+    await db
       .update(validVariables)
       .from('variables')
       .where({ 'variables.session_id': sid })
@@ -319,14 +319,14 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
   const maps = {};
 
   if (sessions.data.length) {
-    sessions.data.forEach((session, index) => {
+    sessions.data.forEach((session, _index) => {
       maps[session.session_id] = session;
       maps[`${session.session_id}`]['logs'] = [];
     });
   }
 
   if (logs.length) {
-    logs.forEach((log, index) => {
+    logs.forEach((log, _index) => {
       // if (!maps[`${log.session_id}`]['logs']) {
       //   maps[`${log.session_id}`]['logs'] = [];
       if (maps[`${log.session_id}`]) {

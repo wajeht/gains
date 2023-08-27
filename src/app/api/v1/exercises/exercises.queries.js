@@ -95,6 +95,7 @@ export function createExercise(data) {
   return db.insert(data).into('exercises').returning('*');
 }
 
+// eslint-disable-next-line no-unused-vars
 export async function updateExerciseNote({ notes, lid, user_id, session_id, exercise_id }) {
   return db
     .update({ notes: notes })

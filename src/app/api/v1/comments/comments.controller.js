@@ -13,9 +13,7 @@ export async function postAComment(req, res) {
       created[0],
     )}!`,
   );
-  const deletedCacheCommunitySessions = await redis.del(
-    `user-id-${body.user_id}-community-sessions`,
-  );
+  await redis.del(`user-id-${body.user_id}-community-sessions`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',

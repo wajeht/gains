@@ -1,6 +1,4 @@
 import db from '../../../../database/db.js';
-import logger from '../../../../utils/logger.js';
-import { red } from '../../../../utils/rainbow-log.js';
 import { pick, omit } from 'lodash-es';
 import dayjs from 'dayjs';
 
@@ -41,9 +39,7 @@ export async function createUser(body, verificationToken) {
     .returning('*')
     .then(async ([user]) => {
       const { id } = user;
-      const userDetails = await db
-        .insert({ user_id: id, verification_token: verificationToken })
-        .into('user_details');
+      await db.insert({ user_id: id, verification_token: verificationToken }).into('user_details');
       return db
         .select()
         .from('users')
