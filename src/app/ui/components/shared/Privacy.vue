@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="animate__animated animate__fadeIn">
     <h1>Privacy Policy for Gains</h1>
 
     <p>
