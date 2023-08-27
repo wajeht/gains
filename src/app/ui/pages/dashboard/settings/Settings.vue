@@ -402,7 +402,7 @@ async function clearAllCache() {
                 <font-awesome-icon
                   icon="arrow-up-right-from-square"
                   class="p-0 m-0"
-                  style="color: #3e3f3f"
+                  style="color: #3e3f3f; font-size: small"
                 />
               </div>
             </router-link>
@@ -418,7 +418,7 @@ async function clearAllCache() {
                 <font-awesome-icon
                   icon="arrow-up-right-from-square"
                   class="p-0 m-0"
-                  style="color: #3e3f3f"
+                  style="color: #3e3f3f; font-size: small"
                 />
               </div>
             </a>

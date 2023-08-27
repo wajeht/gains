@@ -102,6 +102,12 @@ async function fetchIssues() {
                 {{ i.user.login }}
               </small>
             </div>
+
+            <font-awesome-icon
+              icon="arrow-up-right-from-square"
+              class="p-0 m-0"
+              style="color: #3e3f3f; font-size: small"
+            />
           </div>
         </a>
       </div>
