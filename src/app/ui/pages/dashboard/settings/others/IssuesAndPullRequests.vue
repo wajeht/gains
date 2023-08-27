@@ -25,7 +25,7 @@ async function fetchIssues() {
   try {
     appStore.loading = true;
 
-    const res = await api.get(`/api/admin/issues`);
+    const res = await api.get(`/api/v1/app/issues`);
     const json = await res.json();
     if (res.status >= 500) {
       throw new Error(
