@@ -20,6 +20,13 @@ export default class Api {
 
   static async fetchAndHandleUnauthorized(url, options) {
     const res = await window.fetch(url, options);
+
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
     if (res.status === 403 || res.status === 401) {
       this.logout();
     }
