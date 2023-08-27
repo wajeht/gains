@@ -81,5 +81,8 @@
   "dotenv.enableAutocloaking": false,
   "editor.quickSuggestions": {
     "strings": "on"
-  }
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+  },
 }
