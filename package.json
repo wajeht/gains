@@ -62,7 +62,7 @@
   },
   "homepage": "https://github.com/wajeht/gains#readme",
   "dependencies": {
-    "@formkit/auto-animate": "^0.7.0",
+    "@formkit/auto-animate": "^0.8.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
