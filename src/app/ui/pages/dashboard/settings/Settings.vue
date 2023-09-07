@@ -9,6 +9,7 @@ import { ref, reactive } from 'vue';
 
 const clearAllCacheLoading = ref(false);
 const downloadUserDataLoading = ref(false);
+const refreshDatabaseIndexesLoading = ref(false);
 
 const alert = reactive({
   type: '',
@@ -126,6 +127,45 @@ async function clearAllCache() {
   } catch (e) {
     appStore.loading = false;
     clearAllCacheLoading.value = false;
+    alert.type = 'danger';
+    if (Array.isArray(e)) {
+      alert.msg = e.map((cur) => cur.msg).join(' ');
+      return;
+    } else {
+      alert.msg = e;
+    }
+  }
+}
+
+async function refreshDatabaseIndexes() {
+  try {
+    refreshDatabaseIndexesLoading.value = true;
+    const res = await api.get(`/api/admin/refresh-index`);
+    const json = await res.json();
+
+    if (res.status >= 500) {
+      throw new Error(
+        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
+      );
+    }
+
+    if (!res.ok) {
+      if (json.errors) {
+        throw json.errors;
+      } else {
+        throw json.message;
+      }
+    }
+
+    refreshDatabaseIndexesLoading.value = false;
+
+    alert.type = 'success';
+    alert.msg = 'All indexes have been refreshed';
+
+    window.scrollTo(0, 0);
+  } catch (e) {
+    appStore.loading = false;
+    refreshDatabaseIndexesLoading.value = false;
     alert.type = 'danger';
     if (Array.isArray(e)) {
       alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -276,7 +316,7 @@ async function clearAllCache() {
             >
               <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                  <h6 class="mb-0">Clear all cache</h6>
+                  <h6 class="mb-0">Clear application cache</h6>
                   <p class="mb-0">Latest application data without cache</p>
                 </div>
 
@@ -285,6 +325,36 @@ async function clearAllCache() {
                 <!-- loading -->
                 <div
                   v-if="clearAllCacheLoading"
+                  class="spinner-border spinner-border-sm text-muted"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </span>
+
+            <!-- refresh index-->
+            <span
+              v-if="userStore.user.role === 'admin'"
+              @click="refreshDatabaseIndexes()"
+              :style="{
+                background: refreshDatabaseIndexesLoading ? '#f1f1f1' : '',
+                cursor: !refreshDatabaseIndexesLoading ? 'pointer' : '',
+              }"
+              class="list-group-item list-group-item-action d-flex gap-3 py-3"
+              :class="{ disabled: clearAllCacheLoading }"
+            >
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h6 class="mb-0">Refresh indexes</h6>
+                  <p class="mb-0">Reindex databse indexes to speed up</p>
+                </div>
+
+                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
+
+                <!-- loading -->
+                <div
+                  v-if="refreshDatabaseIndexesLoading"
                   class="spinner-border spinner-border-sm text-muted"
                   role="status"
                 >

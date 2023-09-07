@@ -151,3 +151,50 @@ export async function getStats(req, res) {
     ],
   });
 }
+
+export async function getRefreshIndex(req, res) {
+  await db.transaction(async (trx) => {
+    // Fetch index names from pg_indexes
+    const indexInfo = await db.select('indexname').from('pg_indexes').whereNot('tablename', 'pg%');
+
+    // Drop all the fetched indexes in parallel
+    const dropIndexPromises = indexInfo.map(({ indexname }) => {
+      return db.raw(`DROP INDEX ${indexname}`).transacting(trx);
+    });
+
+    await Promise.allSettled(dropIndexPromises);
+
+    // Drop existing indexes
+    const dropPromises = [
+      db.schema.raw('DROP INDEX IF EXISTS sessions_id_user_id_deleted_end_date_idx'),
+      db.schema.raw('DROP INDEX IF EXISTS videos_id_user_id_log_id_session_id_deleted_idx'),
+      db.schema.raw(
+        'DROP INDEX IF EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx',
+      ),
+      db.schema.raw('DROP INDEX IF EXISTS sets_id_user_id_session_id_exercise_id_deleted_idx'),
+      db.schema.raw('DROP INDEX IF EXISTS variables_id_user_id_session_id_idx'),
+    ];
+
+    await Promise.allSettled(dropPromises);
+
+    // Create new indexes
+    const createPromises = [
+      db.schema.raw('CREATE INDEX ON sessions (id, user_id, deleted, end_date)'),
+      db.schema.raw('CREATE INDEX ON videos (id, user_id, log_id, session_id, deleted)'),
+      db.schema.raw(
+        'CREATE INDEX ON logs (id, user_id, session_id, exercise_id, deleted, private)',
+      ),
+      db.schema.raw('CREATE INDEX ON sets (id, user_id, session_id, exercise_id, deleted)'),
+      db.schema.raw('CREATE INDEX ON variables (id, user_id, session_id)'),
+    ];
+
+    await Promise.allSettled(createPromises);
+  });
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    message: 'The resource was returned successfully!',
+    data: [],
+  });
+}

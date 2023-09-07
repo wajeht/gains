@@ -86,7 +86,7 @@ window.socket.on('connect', (_socket) => {
     window.socket.emit('onlineUser', userWithAgent);
   }
 
-  console.log('socket connected!');
+  // console.log('socket connected!');
 });
 
 window.socket.on('disconnect', () => {
@@ -96,5 +96,5 @@ window.socket.on('disconnect', () => {
   };
 
   window.socket.emit('userDisconnected', userWithSocketId);
-  console.log('socket disconnected!');
+  // console.log('socket disconnected!');
 });
