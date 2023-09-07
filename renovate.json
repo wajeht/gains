@@ -2,5 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>wajeht/renovate-config",
+    "local>clevyr/renovate-config:nonMajorAutomerge"
   ]
 }
