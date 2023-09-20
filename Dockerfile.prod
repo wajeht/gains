@@ -13,10 +13,13 @@ RUN apk add curl
 
 COPY ./ .
 
-RUN npm run build:ui
+RUN npm install \
+    && npm run build:ui
 
 EXPOSE 8087
 
 HEALTHCHECK CMD curl -f http://localhost:8087/health || exit 1
 
 CMD ["npm", "run", "start"]
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD wget -q -O- http://localhost:8080 || exit 1
