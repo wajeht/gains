@@ -20,7 +20,7 @@ EXPOSE 8087
 
 HEALTHCHECK CMD curl -f http://localhost:8087/health || exit 1
 
-CMD ["npm", "run", "start"]
+HEALTHCHECK --interval=12s --timeout=12s --start-period=30s \
+    CMD node healthcheck.js
 
-HEALTHCHECK --interval=120s --timeout=60s --retries=3 CMD wget -q -O- http://localhost:8080 || exit 1
-# HEALTHCHECK --interval=120s --timeout=60s CMD curl -s http://localhost:8080 || exit 1
+CMD ["npm", "run", "start"]
