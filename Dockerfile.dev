@@ -15,6 +15,6 @@ COPY ./ .
 
 EXPOSE 8087
 
-HEALTHCHECK CMD curl -f http://localhost:8087/health-check || exit 1
+HEALTHCHECK CMD curl -f http://localhost:8087/health || exit 1
 
 CMD ["npm", "run", "dev:hmr"]
