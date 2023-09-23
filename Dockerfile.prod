@@ -9,13 +9,14 @@ RUN npm install
 RUN apk update
 RUN apk add
 RUN apk add ffmpeg
+RUN apk add curl
 
 COPY ./ .
 
 RUN npm run build:ui
 
-EXPOSE 8080
+EXPOSE 8087
 
-HEALTHCHECK --interval=240s --timeout=120s --retries=5 CMD curl -s http://localhost:8080 || exit 1
+HEALTHCHECK --interval=240s --timeout=120s --retries=5 CMD curl -s http://localhost:8087 || exit 1
 
 CMD ["npm", "run", "start"]

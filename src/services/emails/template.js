@@ -175,6 +175,6 @@ export default class Template {
 // const data = {
 //   username: 'jaw',
 //   // username: 9,
-//   verificationLink: 'https://localhost:8080/',
+//   verificationLink: 'https://localhost:8087/',
 // };
 // Template.generate('verify-email', data);

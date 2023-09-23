@@ -9,11 +9,12 @@ RUN npm install
 RUN apk update
 RUN apk add
 RUN apk add ffmpeg
+RUN apk --no-cache add curl
 
 COPY ./ .
 
-EXPOSE 8080
+EXPOSE 8087
 
-HEALTHCHECK --interval=120s --timeout=60s CMD curl -s http://localhost:8080 || exit 1
+HEALTHCHECK CMD curl -f http://localhost:8087/health-check || exit 1
 
 CMD ["npm", "run", "dev:hmr"]
