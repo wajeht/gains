@@ -159,19 +159,6 @@ function clearAndDismissPreviewVideoModal() {
             <source :src="currentFeature.video" type="video/mp4" />
           </video>
         </div>
-
-        <!-- footer -->
-        <div class="modal-footer">
-          <!-- cancel -->
-          <button
-            @click="clearAndDismissPreviewVideoModal()"
-            type="reset"
-            class="btn btn-dark w-100"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-        </div>
       </div>
     </div>
   </div>
