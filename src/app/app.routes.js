@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import path from 'path';
-import { env } from '../config/env.js';
+import { env, MY_IP } from '../config/env.js';
 import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import requestIp from 'request-ip';
