@@ -12,7 +12,7 @@ var request = http.request(options, (res) => {
     process.exit(1);
   }
 });
-request.on('error', function (err) {
+request.on('error', function (_err) {
   console.log('ERROR');
   process.exit(1);
 });
