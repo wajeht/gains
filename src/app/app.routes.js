@@ -12,7 +12,9 @@ export function skipOnMyIp(req, _res) {
 
 export function getHealthCheck(req, res) {
   const ip = requestIp.getClientIp(req);
-  Chad.flex(`someone hit a health check from ${ip}`);
+  if (ip != MY_IP) {
+    Chad.flex(`someone hit a health check from ${ip}`);
+  }
   res.status(200).json({
     msg: 'ok',
   });
