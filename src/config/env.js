@@ -72,3 +72,5 @@ export const GITHUB = {
   api_key: process.env.GITHUB_API_KEY,
   issue_url: process.env.GITHUB_ISSUE_URL,
 };
+
+export const MY_IP = process.env.MY_IP;

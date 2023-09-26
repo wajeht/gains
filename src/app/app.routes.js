@@ -5,6 +5,11 @@ import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import requestIp from 'request-ip';
 
+export function skipOnMyIp(req, _res) {
+  console.log(`my ip was connected: ${req.ip}`);
+  return req.ip === MY_IP && env === 'production';
+}
+
 export function getHealthCheck(req, res) {
   const ip = requestIp.getClientIp(req);
   Chad.flex(`someone hit a health check from ${ip}`);
