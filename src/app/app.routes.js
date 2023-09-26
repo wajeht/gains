@@ -6,15 +6,15 @@ import logger from '../utils/logger.js';
 import requestIp from 'request-ip';
 
 export function skipOnMyIp(req, _res) {
-  console.log(`my ip was connected: ${req.ip}`);
+  // console.log(`my ip was connected: ${req.ip}`);
   return req.ip === MY_IP && env === 'production';
 }
 
 export function getHealthCheck(req, res) {
-  const ip = requestIp.getClientIp(req);
-  if (ip !== MY_IP || ip !== '::ffff:127.0.0.1') {
-    Chad.flex(`someone hit a health check from ${ip}`);
-  }
+  // const ip = requestIp.getClientIp(req);
+  // if (ip !== MY_IP || ip !== '::ffff:127.0.0.1') {
+  //   Chad.flex(`someone hit a health check from ${ip}`);
+  // }
   res.status(200).json({
     msg: 'ok',
   });
