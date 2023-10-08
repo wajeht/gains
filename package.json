@@ -149,7 +149,7 @@
     "husky": "^8.0.1",
     "nodemon": "^3.0.0",
     "open-cli": "^7.1.0",
-    "postcss": "^8.4.17",
+    "postcss": "^8.4.31",
     "prettier": "^3.0.0",
     "sass": "^1.66.1",
     "sleep-ms": "^2.0.1",
