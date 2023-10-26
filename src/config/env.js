@@ -74,3 +74,5 @@ export const GITHUB = {
 };
 
 export const MY_IP = process.env.MY_IP;
+
+export const SENTRY_URL = process.env.SENTRY_URL;

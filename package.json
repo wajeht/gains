@@ -69,6 +69,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@popperjs/core": "^2.11.8",
+    "@sentry/node": "^7.75.1",
     "@vitejs/plugin-vue": "^4.4.0",
     "adm-zip": "^0.5.10",
     "animate.css": "^4.1.1",
