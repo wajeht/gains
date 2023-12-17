@@ -13,8 +13,7 @@ RUN apk add curl
 
 COPY ./ .
 
-RUN npm install \
-    && npm run build:ui
+RUN npm run build:ui
 
 EXPOSE 8087
 
