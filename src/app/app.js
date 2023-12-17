@@ -26,8 +26,18 @@ const io = new Server(server, {
   },
 });
 
-Sentry.init({ dsn: SENTRY_URL });
+Sentry.init({
+  dsn: SENTRY_URL,
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Sentry.Integrations.Express({
+      app,
+    }),
+  ],
+  tracesSampleRate: 1.0,
+});
 app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 
 app.use(
   helmet({
@@ -55,7 +65,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(jwt_secret));
 app.use(
   express.static(path.resolve(path.join(process.cwd(), 'src', 'public')), {
-    // 30 days in miliseconds
+    // 30 days in milliseconds
     maxage: 2592000000,
   }),
 );
