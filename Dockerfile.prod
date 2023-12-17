@@ -5,15 +5,15 @@ WORKDIR /usr/src/app
 COPY ./package.json ./
 COPY ./package-lock.json ./
 
-RUN npm install
 RUN apk update
 RUN apk add
 RUN apk add ffmpeg
 RUN apk add curl
+RUN npm install
 
 COPY ./ .
 
-RUN npm run build:ui
+RUN npm run build
 
 EXPOSE 8087
 
