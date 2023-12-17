@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.15](https://github.com/wajeht/gains/compare/v0.0.14...v0.0.15) (2023-12-17)
+
+
+### Features
+
+* add health-check routes ([ec5a607](https://github.com/wajeht/gains/commit/ec5a60766183b943b0423e9465fa09ef89203d4e))
+* add health-check routes ([fe89623](https://github.com/wajeht/gains/commit/fe89623b5858c897ad516fd87086fd4a58961b58))
+* Add Sentry integrations and tracing handlers ([e6deb61](https://github.com/wajeht/gains/commit/e6deb610159b55bcf70b65a51a9af4acb61846f4))
+* add sentry url ([1e7993f](https://github.com/wajeht/gains/commit/1e7993fc192cf392d09eed0bf69f9b12e908f122))
+* another try ([5d7a482](https://github.com/wajeht/gains/commit/5d7a482ebead085e504713eef618a0b7dbbfeb7b))
+* another try ([74f7ffb](https://github.com/wajeht/gains/commit/74f7ffb872e177edb2fb1b84ca15695821e244f0))
+* another try ([5de7310](https://github.com/wajeht/gains/commit/5de7310bd1c6c7c64625f09a1b54787cd75c2e77))
+* clear and flush db indexes ([599d2c0](https://github.com/wajeht/gains/commit/599d2c0133d8ce2bacd677d16b12bfada4660838))
+* container health check ([757f214](https://github.com/wajeht/gains/commit/757f214b539b97ab22cd7bdf3270b7dead527303))
+* desc timeout ([c70dd1c](https://github.com/wajeht/gains/commit/c70dd1c8c6a5e546cc729467bf5a68ed77785ad8))
+* inc timeout to 50s ([6913cb1](https://github.com/wajeht/gains/commit/6913cb193bf8406bf4ad57490b490985df4c279c))
+* inc timeout to 60s ([c857a95](https://github.com/wajeht/gains/commit/c857a9521f362bdb7e566fdaaa36c2ce0cf146a9))
+* remove closed button modal from features video page ([9b320da](https://github.com/wajeht/gains/commit/9b320da79e8bb4a3c26446cc82cca2e77734f2ff))
+* remove container healthcheck ([a79acdb](https://github.com/wajeht/gains/commit/a79acdb28a254f77d7b67e3b176c3da143aa18f9))
+* remove container healthcheck ([064fbb0](https://github.com/wajeht/gains/commit/064fbb01f37be3691a95bfc1d8a8a8f53c9c1db1))
+* renovate ([868fd4a](https://github.com/wajeht/gains/commit/868fd4a7b3db02d3fa9c63e3f7659558b987b545))
+* renovate ([6f391ed](https://github.com/wajeht/gains/commit/6f391ed289f7310f89bf5eefc943bf3fd38961a1))
+* renovate ([8c6035b](https://github.com/wajeht/gains/commit/8c6035b5ef1671352fde862ccae093c1060209e0))
+* skip chad send on my ip ([d2ad2f5](https://github.com/wajeht/gains/commit/d2ad2f57ba47e541db1cc6bf17c2a54c71aa63aa))
+* skip ip log ([a95083b](https://github.com/wajeht/gains/commit/a95083b4e4ebd1518ad225035fdab86603b5c4da))
+* skip rate limit on my ip ([44adf1d](https://github.com/wajeht/gains/commit/44adf1d039aa3aebc29fd76a63f02d63f012ebd7))
+
+
+### Bug Fixes
+
+* dark-mode link color ([a181fd8](https://github.com/wajeht/gains/commit/a181fd8bbbd63da233a2dc10480293f5221faf88))
+* **deps:** update dependency @formkit/auto-animate to ^0.8.0 ([4cd2bea](https://github.com/wajeht/gains/commit/4cd2beabf39c23d07c798d8ea9e81d0619820cf8))
+* **deps:** update dependency @vitejs/plugin-vue to v4.3.4 ([ad764f0](https://github.com/wajeht/gains/commit/ad764f01d6436a4017912e5f5329ddcef23d6f76))
+* **deps:** update dependency express-rate-limit to v6.10.0 ([0b8120e](https://github.com/wajeht/gains/commit/0b8120ef09f76d91e9d68b4c3be09e5145d100e6))
+* **deps:** update dependency express-rate-limit to v6.11.0 ([b868575](https://github.com/wajeht/gains/commit/b868575554c7cfa7bd8e327a5c65c54f8a1be493))
+* **deps:** update dependency jsonwebtoken to v9.0.2 ([99532a9](https://github.com/wajeht/gains/commit/99532a9fca4c87a6862b9091454d7c70f88a7030))
+* **deps:** update dependency marked to v8 ([2605bfe](https://github.com/wajeht/gains/commit/2605bfe620c3f13621db17ec66da7530b405b4f1))
+* **deps:** update dependency nodemailer to v6.9.5 ([53c3cc3](https://github.com/wajeht/gains/commit/53c3cc3e8eeeb15d177d38576b75dd5e7cc239a3))
+* eslint errors ([2dc516a](https://github.com/wajeht/gains/commit/2dc516a4ae9a75428abb3ae748904ed00f744190))
+* extension error ([dfe3ed4](https://github.com/wajeht/gains/commit/dfe3ed47e3f28e3ad7507cf408676c22178388d9))
+* helmet ([d8d741e](https://github.com/wajeht/gains/commit/d8d741ed4918d2dcbeb6826ac5971c7559117533))
+* helmet ([c0ad255](https://github.com/wajeht/gains/commit/c0ad255eacfe947fa9331465b3abfba6c5eea58a))
+* helmet ([b4cbbaa](https://github.com/wajeht/gains/commit/b4cbbaa4020b97c8bdf7bad59c65a62b60b4d4f8))
+* most of the eslint errors ([d74127d](https://github.com/wajeht/gains/commit/d74127d2270427fb19f3c6129158dcdd0dd09952))
+* most of the eslint errors ([af3b855](https://github.com/wajeht/gains/commit/af3b855d96a91fe78420259d3fbd8168692f0819))
+* my ip was not available duing build time ([1a438cb](https://github.com/wajeht/gains/commit/1a438cbad5efbacb4c7a84474843fc99654cc496))
+* nav link was not bright enough on dark mode ([a30b600](https://github.com/wajeht/gains/commit/a30b600e36aa60c0f8ca9f3b06d23a6659709e58))
+* optomize some queries ([1f6cb5c](https://github.com/wajeht/gains/commit/1f6cb5cbdf78b0846d93475706e0eb96b2cccbbd))
+* optomize some queries ([6829b75](https://github.com/wajeht/gains/commit/6829b75ac08038166cd2f60c5c374bd028d48409))
+* stuff ([65c1e7c](https://github.com/wajeht/gains/commit/65c1e7c753e45c40873893bd1187b2d4851b45d4))
+
 ### [0.0.14](https://github.com/wajeht/gains/compare/v0.0.13...v0.0.14) (2023-08-27)
 
 ### Features
