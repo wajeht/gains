@@ -158,6 +158,9 @@
     "vite-plugin-eslint": "^1.8.1",
     "vitest": "^0.34.6"
   },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

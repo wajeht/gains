@@ -126,9 +126,9 @@ function logDetails(sid) {
             session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') === today
               ? '5px solid var(--bs-warning) !important'
               : // yesterday
-              session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today
-              ? '5px solid var(--bs-danger) !important'
-              : '',
+                session.end_date === null && dayjs(session.start_date).format('YYYY/MM/DD') < today
+                ? '5px solid var(--bs-danger) !important'
+                : '',
         }"
         id="log"
         v-auto-animate
