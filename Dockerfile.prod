@@ -15,8 +15,8 @@ COPY ./ .
 
 RUN npm run build
 
-EXPOSE 8087
+EXPOSE 80
 
-HEALTHCHECK CMD curl -f http://localhost:8087/health || exit 1
+HEALTHCHECK CMD curl -f http://localhost:80/health || exit 1
 
 CMD ["npm", "run", "start"]
