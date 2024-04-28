@@ -7,7 +7,7 @@ const app = express.Router();
 /**
  * GET /api/v1/app/issues
  * @tags app
- * @summary get all the githubn issues
+ * @summary get all the github issues
  */
 app.get('/issues', catchAsyncErrors(AppController.getIssues));
 
