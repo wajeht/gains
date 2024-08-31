@@ -25,6 +25,7 @@ export default class Chad {
       } else {
         logger.warn('Skipping Chad message in dev environment!');
       }
+
     } catch (e) {
       logger.error(e.message);
 
