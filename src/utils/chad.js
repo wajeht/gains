@@ -4,7 +4,6 @@ import { env, notify } from '../config/env.js';
 export default class Chad {
   static async flex(msg, object = null) {
     try {
-
       if (env !== 'production') {
         const res = await fetch(notify.url, {
           method: 'POST',
@@ -18,20 +17,15 @@ export default class Chad {
           }),
         });
 
-        console.log(await res.json());
-
         if (res.ok) {
           logger.info(`Chad sent ${msg}`);
         } else {
           logger.error(`Failed to send Chad message: ${res.statusText}`);
         }
-
       } else {
         logger.warn('Skipping Chad message in dev environment!');
       }
-
     } catch (e) {
-
       logger.error(e.message);
 
       await fetch(notify.url, {
@@ -45,7 +39,6 @@ export default class Chad {
           details: e.stack,
         }),
       });
-
     }
   }
 }
