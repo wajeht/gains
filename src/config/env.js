@@ -47,12 +47,6 @@ export const email = {
   auth_pass: process.env.EMAIL_AUTH_PASS,
 };
 
-export const discord = {
-  id: process.env.DISCORD_ID,
-  token: process.env.DISCORD_TOKEN,
-  url: process.env.DISCORD_URL,
-};
-
 export const admin = {
   email: process.env.ADMIN_EMAIL,
   username: process.env.ADMIN_USERNAME,
@@ -76,3 +70,8 @@ export const GITHUB = {
 export const MY_IP = process.env.MY_IP;
 
 export const SENTRY_URL = process.env.SENTRY_URL;
+
+export const notify = {
+  url: process.env.NOTIFY_URL,
+  xApiKey: process.env.NOTIFY_X_API_KEY
+}

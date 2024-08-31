@@ -1,14 +1,10 @@
 import logger from './logger.js';
-import { discord, env } from '../config/env.js';
+import { env } from '../config/env.js';
 
-import axios from 'axios';
-
-/* It sends a message to a Discord channel */
-// https://gist.github.com/Birdie0/78ee79402a4301b1faf412ab5f1cdcf9
 export default class Chad {
   static async flex(msg, object = null) {
     try {
-      let params = null;
+      let params;
 
       // use different format to send if we have object passed in
       if (object == null) {
@@ -26,18 +22,42 @@ export default class Chad {
         };
       }
 
-      let res = null;
-
-      // only send chad message to discord in production environment
-      // prettier-ignore
       if (env === 'production') {
-        res = await axios({ method: 'POST', headers: { 'Content-Type': 'application/json', }, data: JSON.stringify(params), url: discord.url });
-        if (res?.status === 204) logger.info(`Chad sent ${msg}`);
-      } else  {
-        logger.warn(`Skipping Chad message in dev environment!`)
+        const res = await fetch(notify.url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': notify.xApiKey,
+          },
+          body: JSON.stringify(params),
+        });
+
+        if (res.ok) {
+          logger.info(`Chad sent ${msg}`);
+        } else {
+          logger.error(`Failed to send Chad message: ${res.statusText}`);
+        }
+
+      } else {
+        logger.warn('Skipping Chad message in dev environment!');
       }
+
     } catch (e) {
-      logger.error(e);
+
+      logger.error(e.message);
+
+      await fetch(notify.url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': notify.xApiKey,
+        },
+        body: JSON.stringify({
+          message: e.message,
+          details: e.stack,
+        }),
+      });
+
     }
   }
 }
