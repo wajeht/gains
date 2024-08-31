@@ -69,9 +69,7 @@ export const GITHUB = {
 
 export const MY_IP = process.env.MY_IP;
 
-export const SENTRY_URL = process.env.SENTRY_URL;
-
 export const notify = {
   url: process.env.NOTIFY_URL,
-  xApiKey: process.env.NOTIFY_X_API_KEY
-}
+  xApiKey: process.env.NOTIFY_X_API_KEY,
+};

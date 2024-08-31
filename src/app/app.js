@@ -11,12 +11,11 @@ import expressJSDocSwagger from 'express-jsdoc-swagger';
 import expressJsdocOptions from '../config/express-jsdoc-options.js';
 import * as AppRoutes from './app.routes.js';
 import { regularLimiter, apiLimiter } from '../config/rate-limiter.config.js';
-import { jwt_secret, SENTRY_URL } from '../config/env.js';
+import { jwt_secret } from '../config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
 import logger from '../utils/logger.js';
 import redis from '../utils/redis.js';
-import Sentry from '@sentry/node';
 
 const app = express();
 const server = http.createServer(app);
@@ -25,19 +24,6 @@ const io = new Server(server, {
     origin: '*',
   },
 });
-
-Sentry.init({
-  dsn: SENTRY_URL,
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-    new Sentry.Integrations.Express({
-      app,
-    }),
-  ],
-  tracesSampleRate: 1.0,
-});
-app.use(Sentry.Handlers.requestHandler());
-app.use(Sentry.Handlers.tracingHandler());
 
 app.use(
   helmet({
@@ -69,10 +55,6 @@ app.use(
     maxage: 2592000000,
   }),
 );
-
-// app.get('/debug-sentry', (req, res) => {
-//   throw new Error('My first Sentry error!');
-// });
 
 app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, next, true));
 
@@ -158,7 +140,6 @@ app.use((req, res, next) => {
  */
 app.use('*', regularLimiter, AppRoutes.vueHandler);
 
-app.use(Sentry.Handlers.errorHandler());
 app.use(AppRoutes.notFoundHandler);
 app.use(AppRoutes.errorHandler);
 
