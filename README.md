@@ -105,4 +105,5 @@ src/
 
 # © License
 
-Distributed under the GNU GPL V3 License © wajeht. See LICENSE for more information.
+Distributed under the MIT License © wajeht. See [LICENSE](./LICENSE) for more information.
+
