@@ -2,8 +2,7 @@
 <img width="70%" src="https://raw.githubusercontent.com/wajeht/gains/main/src/app/ui/assets/images/hero-new-half.png" />
 </p>
 
-> [!WARNING]
-> **This codebase is no longer actively maintained.** The package will continue working, but support and changes are no longer provided.
+> [!WARNING] > **This codebase is no longer actively maintained.** The package will continue working, but support and changes are no longer provided.
 
 # <p align="center">💪 Gains</p>
 
