@@ -2,8 +2,6 @@
 <img width="70%" src="https://raw.githubusercontent.com/wajeht/gains/main/src/app/ui/assets/images/hero-new-half.png" />
 </p>
 
-> [!WARNING] > **This codebase is no longer actively maintained.** The package will continue working, but support and changes are no longer provided.
-
 # <p align="center">💪 Gains</p>
 
 <div align="center">
@@ -13,6 +11,10 @@
 </div>
 
 <p align="center">All in one tools to help strength athletes load the right amount of training dosage!</p>
+
+> [!WARNING]
+> **This codebase is no longer actively maintained.** The package will continue working, but support and changes are no longer provided.
+
 
 # 📚 Technologies
 
@@ -108,4 +110,3 @@ src/
 # © License
 
 Distributed under the MIT License © wajeht. See [LICENSE](./LICENSE) for more information.
-
