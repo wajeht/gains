@@ -12,9 +12,7 @@
 
 <p align="center">All in one tools to help strength athletes load the right amount of training dosage!</p>
 
-> [!WARNING]
-> **This codebase is no longer actively maintained.** The package will continue working, but support and changes are no longer provided.
-
+> [!WARNING] > **This codebase is no longer actively maintained.** The package will continue working, but support and changes are no longer provided.
 
 # 📚 Technologies
 
