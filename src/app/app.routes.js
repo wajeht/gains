@@ -1,20 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
 import path from 'path';
+import fs from 'fs';
 import { env, MY_IP } from '../config/env.js';
 import Chad from '../utils/chad.js';
 import logger from '../utils/logger.js';
 import requestIp from 'request-ip';
 
 export function skipOnMyIp(req, _res) {
-  // console.log(`my ip was connected: ${req.ip}`);
   return req.ip === MY_IP && env === 'production';
 }
 
 export function getHealthCheck(req, res) {
-  // const ip = requestIp.getClientIp(req);
-  // if (ip !== MY_IP || ip !== '::ffff:127.0.0.1') {
-  //   Chad.flex(`someone hit a health check from ${ip}`);
-  // }
   res.status(200).json({
     msg: 'ok',
   });
@@ -23,6 +19,14 @@ export function getHealthCheck(req, res) {
 export function vueHandler(req, res, next) {
   try {
     const vue = path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'));
+
+    if (!fs.existsSync(vue)) {
+      if (env === 'development' || env === 'dev') {
+        return res.redirect(`http://localhost:3000${req.originalUrl}`);
+      }
+      throw new Error('index.html not found');
+    }
+
     res.setHeader('Content-Type', 'text/html');
     return res.status(StatusCodes.OK).sendFile(vue);
   } catch (e) {
@@ -40,7 +44,6 @@ export function notFoundHandler(req, res, _next) {
 }
 
 export function errorHandler(err, req, res, _next) {
-  // api errors
   if (err.name === 'CustomAPIError') {
     return res.status(err.statusCode).json({
       status: 'fail',
