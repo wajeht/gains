@@ -13,7 +13,6 @@ const appStore = useAppStore();
 const route = useRoute();
 
 const edit_personal_info = ref(true);
-const edit_account_info = ref(true);
 
 const first_name = ref('');
 const first_name_ref = ref(null);
@@ -24,7 +23,6 @@ const bio = ref('');
 
 const email = ref('');
 const username = ref('');
-const password = ref('');
 const profile_picture_url = ref(null);
 const profilePicture = ref(null);
 
@@ -147,51 +145,6 @@ async function updatePersonalInformation() {
     alert.msg = `Updated personal information!`; // prettier-ignore
 
     edit_personal_info.value = true;
-
-    window.scrollTo(0, 0);
-  } catch (e) {
-    alert.type = 'danger';
-    if (Array.isArray(e)) {
-      alert.msg = e.map((cur) => cur.msg).join(' ');
-      return;
-    } else {
-      alert.msg = e;
-    }
-  }
-}
-
-async function updateAccountInfo() {
-  try {
-    const account = {
-      email: email.value,
-      username: username.value,
-      password: password.value,
-    };
-
-    if (password.value.length === 0) {
-      delete account.password;
-    }
-
-    // prettier-ignore
-    const res = await api.patch(`/api/v1/users/${userStore.user.id}/update-account-information`, account);
-    const json = await res.json();
-    if (res.status >= 500) {
-      throw new Error(
-        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
-      );
-    }
-    if (!res.ok) {
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
-    }
-
-    alert.type = 'success';
-    alert.msg = `Updated account information!`; // prettier-ignore
-
-    edit_account_info.value = true;
 
     window.scrollTo(0, 0);
   } catch (e) {
@@ -350,10 +303,10 @@ async function updateAccountInfo() {
         </form>
       </div>
 
-      <!-- account info -->
+      <!-- account info (read-only) -->
       <div>
         <h5><i class="bi bi-lock-fill"></i> Account info</h5>
-        <form @submit.prevent="updateAccountInfo()" class="card">
+        <div class="card">
           <div class="card-body">
             <!-- email -->
             <div class="row mb-3">
@@ -364,7 +317,7 @@ async function updateAccountInfo() {
                   type="email"
                   class="form-control"
                   id="account-information-email"
-                  :disabled="edit_account_info"
+                  disabled
                 />
               </div>
             </div>
@@ -380,44 +333,16 @@ async function updateAccountInfo() {
                   type="text"
                   class="form-control"
                   id="account-information-username"
-                  :disabled="edit_account_info"
+                  disabled
                 />
               </div>
             </div>
 
-            <!-- password -->
-            <div class="row mb-3">
-              <label for="account-information-password" class="col-4 col-form-label"
-                >Password</label
-              >
-              <div class="col-8">
-                <input
-                  v-model="password"
-                  type="password"
-                  class="form-control"
-                  id="account-information-password"
-                  :disabled="edit_account_info"
-                  autocomplete="false"
-                />
-              </div>
-            </div>
-
-            <!-- edit or cancel -->
-            <div class="d-flex gap-2">
-              <button
-                @click="edit_account_info = !edit_account_info"
-                class="btn btn-outline-dark w-50"
-                type="button"
-              >
-                <span v-if="edit_account_info">Edit</span>
-                <span v-if="!edit_account_info">Cancel</span>
-              </button>
-              <button class="btn btn-dark w-50" type="submit" :disabled="edit_account_info">
-                Update
-              </button>
-            </div>
+            <small class="text-muted">
+              Account info is managed through Google. Sign out and sign in with a different Google account to change.
+            </small>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
