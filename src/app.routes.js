@@ -1,13 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import path from 'path';
 import fs from 'fs';
-import { env, MY_IP } from './config/env.js';
+import { env } from './config/env.js';
 import logger from './utils/logger.js';
 import requestIp from 'request-ip';
-
-export function skipOnMyIp(req, _res) {
-  return req.ip === MY_IP && env === 'production';
-}
 
 export function getHealthCheck(req, res) {
   res.status(200).json({
