@@ -197,7 +197,7 @@ function logDetails(sid) {
 
       <!-- load more -->
       <button
-        v-if="pagination.details?.currentPage !== pagination.lastPage && sessions.length"
+        v-if="pagination.details?.currentPage < pagination.details?.lastPage && sessions.length"
         @click="getUserSessions()"
         type="button"
         class="btn btn-dark"
