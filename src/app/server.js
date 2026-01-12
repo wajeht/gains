@@ -10,7 +10,7 @@ import pkg from '../utils/pkg.js';
 import EmailService from '../services/email.service.js';
 import latestChangelog from '../utils/latest-changelog.js';
 import CronsServices from '../services/cron.services.js';
-import redis from '../utils/redis.js';
+import cache from '../utils/cache.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);
@@ -24,7 +24,7 @@ async function gracefulShutdown() {
   try {
     await new Promise((resolve, reject) => {
       server.close(async (err) => {
-        await redis.del('onlineUsers');
+        await cache.del('onlineUsers');
         if (err) {
           reject(err);
           return;
@@ -33,8 +33,7 @@ async function gracefulShutdown() {
       });
     });
 
-    await redis.del('onlineUsers');
-    await redis.disconnect();
+    await cache.del('onlineUsers');
     await db.destroy();
 
     logger.info('**** Closed out remaining connections. ****');
@@ -114,7 +113,7 @@ process.on('SIGTERM', gracefulShutdown);
       .where({ 's.deleted': false })
       .andWhere({ 's.object': 'changelog' });
 
-    await redis.del('changelogs');
+    await cache.del('changelogs');
 
     for (const user of changelogSubscriptions) {
       // not triple equals ==== because of string type

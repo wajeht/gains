@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
-import redis from '../../../../utils/redis.js';
+import cache from '../../../../utils/cache.js';
 import axios from 'axios';
 import logger from '../../../../utils/logger.js';
 
@@ -116,11 +116,11 @@ export async function getRecovery(req, res) {
     });
   }
 
-  let recovery = JSON.parse(await redis.get(`user-id-${user_id}-recovery`));
+  let recovery = JSON.parse(await cache.get(`user-id-${user_id}-recovery`));
 
   if (recovery === null) {
     recovery = await VariablesQueries.getRecovery(user_id, pagination);
-    await redis.set(`user-id-${user_id}-recovery`, JSON.stringify(recovery), 'EX', 24 * 60 * 60);
+    await cache.set(`user-id-${user_id}-recovery`, JSON.stringify(recovery), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({
@@ -134,7 +134,7 @@ export async function getRecovery(req, res) {
 }
 
 export async function getChangelogs(req, res) {
-  let changeLogsInHTMLFormat = JSON.parse(await redis.get('changelogs'));
+  let changeLogsInHTMLFormat = JSON.parse(await cache.get('changelogs'));
 
   if (!changeLogsInHTMLFormat) {
     try {
@@ -158,7 +158,7 @@ export async function getChangelogs(req, res) {
         };
       });
 
-      redis.set('changelogs', JSON.stringify(changeLogsInHTMLFormat));
+      cache.set('changelogs', JSON.stringify(changeLogsInHTMLFormat));
     } catch (e) {
       return res.status(StatusCodes.OK).json({
         status: 'success',
@@ -180,7 +180,7 @@ export async function getChangelogs(req, res) {
 export async function getWeeklyWeightIn(req, res) {
   const { user_id } = req.params;
 
-  let result = JSON.parse(await redis.get(`user-id-${user_id}-weekly-weight-in`));
+  let result = JSON.parse(await cache.get(`user-id-${user_id}-weekly-weight-in`));
 
   if (result === null) {
     const bodyWeight = await VariablesQueries.weeklyWeightInByUserId(user_id);
@@ -218,7 +218,7 @@ export async function getWeeklyWeightIn(req, res) {
 
     result = mapped;
 
-    redis.set(`user-id-${user_id}-weekly-weight-in`, JSON.stringify(result), 'EX', 24 * 60 * 60);
+    cache.set(`user-id-${user_id}-weekly-weight-in`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({
@@ -233,7 +233,7 @@ export async function getRecentPrs(req, res) {
   const { user_id } = req.params;
 
   // check inside cache
-  let result = JSON.parse(await redis.get(`user-id-${user_id}-recent-prs`));
+  let result = JSON.parse(await cache.get(`user-id-${user_id}-recent-prs`));
 
   if (result === null) {
     result = await VariablesQueries.recentPrsByUserId(user_id);
@@ -249,7 +249,7 @@ export async function getRecentPrs(req, res) {
 
     result = mapped;
 
-    redis.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
+    cache.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
 
   return res.status(StatusCodes.OK).json({

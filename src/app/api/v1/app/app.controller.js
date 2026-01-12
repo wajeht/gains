@@ -1,10 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 import axios from 'axios';
 import { GITHUB } from '../../../../config/env.js';
-import redis from '../../../../utils/redis.js';
+import cache from '../../../../utils/cache.js';
 
 export async function getIssues(req, res) {
-  let issues = JSON.parse(await redis.get('issues'));
+  let issues = JSON.parse(await cache.get('issues'));
 
   if (issues === null) {
     issues = await (
@@ -14,7 +14,7 @@ export async function getIssues(req, res) {
         },
       })
     ).data;
-    await redis.set('issues', JSON.stringify(issues), 'EX', 24 * 60 * 60);
+    await cache.set('issues', JSON.stringify(issues), 'EX', 24 * 60 * 60);
   }
 
   res.status(StatusCodes.OK).json({

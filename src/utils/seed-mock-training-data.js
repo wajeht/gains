@@ -1,5 +1,5 @@
 import logger from './logger.js';
-import redis from './redis.js';
+import cache from './cache.js';
 import { faker } from '@faker-js/faker';
 import copyMockVideos from './copy-mock-videos.js';
 import * as SessionsQueries from '../app/api/v1/sessions/sessions.queries.js';
@@ -128,7 +128,7 @@ export default async function seedMockTrainingData(email) {
     }
 
     // clear all the cache
-    await redis.flushall();
+    await cache.clear();
   } catch (e) {
     logger.error(e);
     throw new Error(e);

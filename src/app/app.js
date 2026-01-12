@@ -15,7 +15,7 @@ import { jwt_secret } from '../config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
 import logger from '../utils/logger.js';
-import redis from '../utils/redis.js';
+import cache from '../utils/cache.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -63,7 +63,7 @@ expressJSDocSwagger(app)(expressJsdocOptions);
 io.on('connection', async function (socket) {
   logger.info(`socket.io connection was made!, ${socket.id}`);
 
-  let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
+  let onlineUsers = JSON.parse(await cache.get('onlineUsers')) || [];
 
   socket.emit('onlineUser', onlineUsers);
 
@@ -80,20 +80,20 @@ io.on('connection', async function (socket) {
         socket_id: socket.id,
       });
 
-      await redis.set('onlineUsers', JSON.stringify(onlineUsers));
+      await cache.set('onlineUsers', JSON.stringify(onlineUsers));
       socket.broadcast.emit('onlineUser', onlineUsers);
     }
   });
 
   socket.on('userDisconnected', async (userData) => {
     logger.info(`userDisconnected event was fired!, ${socket.id}`);
-    let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
+    let onlineUsers = JSON.parse(await cache.get('onlineUsers')) || [];
 
     onlineUsers = onlineUsers.filter(
       (user) => user.id !== userData.id && user.socket_id !== socket.id,
     );
 
-    await redis.set('onlineUsers', JSON.stringify(onlineUsers));
+    await cache.set('onlineUsers', JSON.stringify(onlineUsers));
 
     socket.broadcast.emit('userDisconnected', userData.id);
   });
@@ -101,11 +101,11 @@ io.on('connection', async function (socket) {
   socket.on('disconnect', async () => {
     logger.info(`socket.io connection was dropped!, ${socket.id}`);
 
-    let onlineUsers = JSON.parse(await redis.get('onlineUsers')) || [];
+    let onlineUsers = JSON.parse(await cache.get('onlineUsers')) || [];
 
     onlineUsers = onlineUsers.filter((user) => user.socket_id !== socket.id);
 
-    await redis.set('onlineUsers', JSON.stringify(onlineUsers));
+    await cache.set('onlineUsers', JSON.stringify(onlineUsers));
 
     socket.broadcast.emit('userDisconnected', socket.id);
   });

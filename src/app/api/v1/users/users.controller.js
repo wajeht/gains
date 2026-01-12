@@ -5,7 +5,7 @@ import CustomError from '../../api.errors.js';
 import { omit } from 'lodash-es';
 import * as CacheQueries from '../cache/cache.queries.js';
 import * as JobsServices from '../../../../services/job.services.js';
-import redis from '../../../../utils/redis.js';
+import cache from '../../../../utils/cache.js';
 import db from '../../../../database/db.js';
 
 export async function getCheckAuthentication(req, res) {
@@ -63,7 +63,7 @@ export async function getUsers(req, res) {
   // only cache page 1
   // don't cache any results after page 1
   if (pagination.currentPage > 1) {
-    redis.del(`user-id-${req.user.user_id}-users`);
+    cache.del(`user-id-${req.user.user_id}-users`);
 
     users = await UsersQueries.getAllUsers({ pagination, search });
 
@@ -77,12 +77,12 @@ export async function getUsers(req, res) {
     });
   }
 
-  users = JSON.parse(await redis.get(`user-id-${req.user.user_id}-users`));
+  users = JSON.parse(await cache.get(`user-id-${req.user.user_id}-users`));
 
   if (users === null) {
     users = await UsersQueries.getAllUsers({ pagination, search });
 
-    redis.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
+    cache.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
   }
 
   return res.status(StatusCodes.OK).json({
@@ -111,7 +111,7 @@ export async function patchUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.updateUserById(id, req.body);
 
-  redis.del(`user-id-${req.user.user_id}-users`);
+  cache.del(`user-id-${req.user.user_id}-users`);
 
   logger.info(`User id ${id} has updated user details to ${JSON.stringify(req.body)}!`);
 
@@ -136,7 +136,7 @@ export async function deleteUser(req, res) {
     });
   }
 
-  await redis.del(`user-id-${req.user.user_id}-users`);
+  await cache.del(`user-id-${req.user.user_id}-users`);
 
   const withoutPassword = omit(user[0], ['password', 'deleted']);
 
@@ -263,13 +263,13 @@ export async function getDownloadUserData(req, res) {
   const { user_id } = req.params;
 
   // let countOfRequests = JSON.parse(
-  //   await redis.get(`user-id-${user_id}-request-download-user-data`),
+  //   await cache.get(`user-id-${user_id}-request-download-user-data`),
   // );
 
   // if (countOfRequests === null) {
-  //   redis.set(`user-id-${user_id}-request-download-user-data`, 1);
+  //   cache.set(`user-id-${user_id}-request-download-user-data`, 1);
   // } else {
-  //   redis.set(`user-id-${user_id}-request-download-user-data`, (countOfRequests += 1));
+  //   cache.set(`user-id-${user_id}-request-download-user-data`, (countOfRequests += 1));
   // }
 
   // if (countOfRequests > 5) {

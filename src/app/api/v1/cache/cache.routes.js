@@ -9,7 +9,7 @@ const cache = express.Router();
 /**
  * GET /api/v1/cache/{cache_key}
  * @tags cache
- * @summary clear a cache from redis
+ * @summary clear a cache from cache
  * @param {number} cache_key.path.required - the cache id
  */
 cache.post(
@@ -21,7 +21,7 @@ cache.post(
 /**
  * GET /api/v1/cache/user/{user_id}
  * @tags cache
- * @summary clear all cache of a user from redis
+ * @summary clear all cache of a user from cache
  * @param {number} user_id.path.required - the user id
  */
 cache.post(
