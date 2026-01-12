@@ -16,17 +16,26 @@ export async function getExerciseCategories(req, res) {
   switch (true) {
     case is('user_id') && is('all'):
       result = await ExerciseCategoriesQueries.getAllExerciseCategoriesByUserId(uid); // prettier-ignore
-      if (!result.length) throw new CustomError.BadRequestError(`There are no all exercise categories for user id ${uid}!`); // prettier-ignore
+      if (!result.length)
+        throw new CustomError.BadRequestError(
+          `There are no all exercise categories for user id ${uid}!`,
+        ); // prettier-ignore
       break;
 
     case is('user_id'):
       result = await ExerciseCategoriesQueries.getExerciseCategoriesByUserId(uid); // prettier-ignore
-      if (!result.length) throw new CustomError.BadRequestError(`There are no exercise categories for user id ${uid}!`); // prettier-ignore
+      if (!result.length)
+        throw new CustomError.BadRequestError(
+          `There are no exercise categories for user id ${uid}!`,
+        ); // prettier-ignore
       break;
 
     default:
       result = await ExerciseCategoriesQueries.getAllExerciseCategories();
-      if (!result.length) throw new CustomError.BadRequestError(`There are no exercise categories available currently!`); // prettier-ignore
+      if (!result.length)
+        throw new CustomError.BadRequestError(
+          `There are no exercise categories available currently!`,
+        ); // prettier-ignore
       break;
   }
 
@@ -55,7 +64,10 @@ export async function postExerciseCategory(req, res) {
 
   const created = await ExerciseCategoriesQueries.createExerciseCategory(data);
 
-  if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a exercise categories for  User ID: ${body.user_id}!`); // prettier-ignore
+  if (!created.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while creating a exercise categories for  User ID: ${body.user_id}!`,
+    ); // prettier-ignore
 
   logger.info(`user id: ${body.user_id} has created a exercise category id: ${created[0].id}`);
 

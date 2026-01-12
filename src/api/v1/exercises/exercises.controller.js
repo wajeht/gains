@@ -96,7 +96,8 @@ export async function getExercises(req, res) {
       userExercises = await ExercisesQueries.getExerciseByUserId(uid);
     }
 
-    if (!userExercises.length) throw new CustomError.BadRequestError(`There are no exercises available for user id ${uid}!`); // prettier-ignore
+    if (!userExercises.length)
+      throw new CustomError.BadRequestError(`There are no exercises available for user id ${uid}!`); // prettier-ignore
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -108,7 +109,8 @@ export async function getExercises(req, res) {
 
   const exercises = await ExercisesQueries.getAllExercises();
 
-  if (!exercises.length) throw new CustomError.BadRequestError(`There are no exercises available currently!`); // prettier-ignore
+  if (!exercises.length)
+    throw new CustomError.BadRequestError(`There are no exercises available currently!`); // prettier-ignore
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
@@ -134,7 +136,10 @@ export async function postExercise(req, res) {
 
   const created = await ExercisesQueries.createExercise(e);
 
-  if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a exercise for  User ID: ${body.user_id}!`); // prettier-ignore
+  if (!created.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while creating a exercise for  User ID: ${body.user_id}!`,
+    ); // prettier-ignore
 
   logger.info(`User id: ${body.user_id} has created a exercise id: ${created[0].id}`);
 

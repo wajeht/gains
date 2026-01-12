@@ -6,7 +6,10 @@ export async function postTag(req, res) {
   const body = req.body;
   const created = await TagsQueries.createATag(body);
 
-  if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a set for  User ID: ${body.user_id}!`); // prettier-ignore
+  if (!created.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while creating a set for  User ID: ${body.user_id}!`,
+    ); // prettier-ignore
 
   logger.info(`User id: ${body.user_id} has created a tag id: ${created[0].id}`);
 

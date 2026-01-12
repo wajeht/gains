@@ -2,8 +2,32 @@
   "name": "gains",
   "version": "0.0.15",
   "description": "All in one tools to help strength athletes load the right amount of training dosage!",
-  "main": "./src/server.js",
+  "keywords": [
+    "bench",
+    "bodybuilding",
+    "deadlift",
+    "fitness",
+    "gains",
+    "powerlifting",
+    "press",
+    "squat",
+    "workout"
+  ],
+  "homepage": "https://github.com/wajeht/gains#readme",
+  "bugs": {
+    "url": "https://github.com/wajeht/gains/issues"
+  },
+  "license": "GPL-3.0",
+  "author": {
+    "name": "wajeht",
+    "url": "https://jaw.dev/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wajeht/gains.git"
+  },
   "type": "module",
+  "main": "./src/server.js",
   "scripts": {
     "start": "node ./src/server.js",
     "build:start": "npm run build && node ./src/server.js",
@@ -25,34 +49,10 @@
     "seed:run": "knex seed:run --knexfile=./src/config/knexfile.js",
     "reset:db": "npm run migrate:rollback && npm run migrate:latest",
     "rmds": "find . -name '.DS_Store' -delete",
-    "format:check": "prettier --check .",
-    "format": "prettier --write .",
+    "format:check": "oxfmt --check .",
+    "format": "oxfmt --write . > /dev/null",
     "minify:html": "html-minifier-terser --input-dir ./src --output-dir ./src --collapse-whitespace --minify-js --minify-css --remove-comments --file-ext html"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wajeht/gains.git"
-  },
-  "keywords": [
-    "gains",
-    "workout",
-    "powerlifting",
-    "fitness",
-    "bodybuilding",
-    "squat",
-    "bench",
-    "deadlift",
-    "press"
-  ],
-  "author": {
-    "name": "wajeht",
-    "url": "https://jaw.dev/"
-  },
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/wajeht/gains/issues"
-  },
-  "homepage": "https://github.com/wajeht/gains#readme",
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
@@ -100,8 +100,8 @@
     "@vitest/coverage-v8": "^4.0.16",
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.0",
+    "oxfmt": "^0.23.0",
     "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
     "sass": "^1.75.0",
     "vitest": "^4.0.16"
   }

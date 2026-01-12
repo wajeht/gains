@@ -301,14 +301,47 @@ export async function getAllSessions(pagination = { perPage: null, currentPage: 
 }
 
 export async function softDeleteSession(sid, uid) {
-  await db.update({ deleted: true }).from('sets').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  await db.update({ deleted: true }).from('variables').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  await db.update({ deleted: true }).from('logs').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  await db.update({ deleted: true }).from('videos').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  await db.update({ deleted: true }).from('comments').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  await db.update({ deleted: true }).from('sets').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  await db.update({ deleted: true }).from('variables').where({ user_id: uid }).andWhere({ session_id: sid }); // prettier-ignore
-  return db.update({ deleted: true }).from('sessions').where({ id: sid }).andWhere({ user_id: uid }).returning('*'); // prettier-ignore
+  await db
+    .update({ deleted: true })
+    .from('sets')
+    .where({ user_id: uid })
+    .andWhere({ session_id: sid }); // prettier-ignore
+  await db
+    .update({ deleted: true })
+    .from('variables')
+    .where({ user_id: uid })
+    .andWhere({ session_id: sid }); // prettier-ignore
+  await db
+    .update({ deleted: true })
+    .from('logs')
+    .where({ user_id: uid })
+    .andWhere({ session_id: sid }); // prettier-ignore
+  await db
+    .update({ deleted: true })
+    .from('videos')
+    .where({ user_id: uid })
+    .andWhere({ session_id: sid }); // prettier-ignore
+  await db
+    .update({ deleted: true })
+    .from('comments')
+    .where({ user_id: uid })
+    .andWhere({ session_id: sid }); // prettier-ignore
+  await db
+    .update({ deleted: true })
+    .from('sets')
+    .where({ user_id: uid })
+    .andWhere({ session_id: sid }); // prettier-ignore
+  await db
+    .update({ deleted: true })
+    .from('variables')
+    .where({ user_id: uid })
+    .andWhere({ session_id: sid }); // prettier-ignore
+  return db
+    .update({ deleted: true })
+    .from('sessions')
+    .where({ id: sid })
+    .andWhere({ user_id: uid })
+    .returning('*'); // prettier-ignore
 }
 
 export async function undoSoftDeleteSession({ user_id, session_id }) {
@@ -319,5 +352,10 @@ export async function undoSoftDeleteSession({ user_id, session_id }) {
   await db.update({ deleted: false }).from('comments').where({ session_id }).andWhere({ user_id }); // prettier-ignore
   await db.update({ deleted: false }).from('sets').where({ session_id }).andWhere({ user_id }); // prettier-ignore
   await db.update({ deleted: false }).from('variables').where({ session_id }).andWhere({ user_id }); // prettier-ignore
-  return db.update({ deleted: false }).from('sessions').where({ id: session_id }).andWhere({ user_id }).returning('*'); // prettier-ignore
+  return db
+    .update({ deleted: false })
+    .from('sessions')
+    .where({ id: session_id })
+    .andWhere({ user_id })
+    .returning('*'); // prettier-ignore
 }
