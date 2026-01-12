@@ -3,8 +3,6 @@ import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import express from 'express';
-import http from 'http';
-import { Server } from 'socket.io';
 import cookieParser from 'cookie-parser';
 import apiRoutes from './api/api.routes.js';
 import expressJSDocSwagger from 'express-jsdoc-swagger';
@@ -14,18 +12,8 @@ import { regularLimiter, apiLimiter } from './config/rate-limiter.config.js';
 import { jwt_secret } from './config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
-import logger from './utils/logger.js';
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-  },
-});
-
-// In-memory online users (no Redis needed)
-let onlineUsers = [];
 
 app.use(
   helmet({
@@ -61,47 +49,6 @@ app.use('/docs/*', (req, res, next) => Middlewares.authenticateUser(req, res, ne
 
 expressJSDocSwagger(app)(expressJsdocOptions);
 
-io.on('connection', async function (socket) {
-  logger.info(`socket.io connection was made!, ${socket.id}`);
-
-  socket.emit('onlineUser', onlineUsers);
-
-  socket.on('onlineUser', async (userData) => {
-    logger.info(`onlineUser event was fired!, ${socket.id}`);
-
-    const userExist = onlineUsers.some(
-      (user) => user.id === userData.id && socket.id === user.socket_id,
-    );
-
-    if (!userExist) {
-      onlineUsers.push({
-        ...userData,
-        socket_id: socket.id,
-      });
-
-      socket.broadcast.emit('onlineUser', onlineUsers);
-    }
-  });
-
-  socket.on('userDisconnected', async (userData) => {
-    logger.info(`userDisconnected event was fired!, ${socket.id}`);
-
-    onlineUsers = onlineUsers.filter(
-      (user) => user.id !== userData.id && user.socket_id !== socket.id,
-    );
-
-    socket.broadcast.emit('userDisconnected', userData.id);
-  });
-
-  socket.on('disconnect', async () => {
-    logger.info(`socket.io connection was dropped!, ${socket.id}`);
-
-    onlineUsers = onlineUsers.filter((user) => user.socket_id !== socket.id);
-
-    socket.broadcast.emit('userDisconnected', socket.id);
-  });
-});
-
 /**
  * GET /api
  * @tag app
@@ -133,4 +80,4 @@ app.use('*', regularLimiter, AppRoutes.vueHandler);
 app.use(AppRoutes.notFoundHandler);
 app.use(AppRoutes.errorHandler);
 
-export default server;
+export default app;
