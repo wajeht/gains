@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted, ref, computed } from 'vue';
+import { reactive, onMounted, onUnmounted, ref, computed } from 'vue';
 import Backheader from '../../../components/dashboard/headers/Backheader.vue';
 import api from '@utils/fetch-with-style';
 import useUserStore from '../../../store/user.store';
@@ -13,6 +13,20 @@ const props = defineProps({
 const userStore = useUserStore();
 const appStore = useAppStore();
 const router = useRouter();
+
+const layoutNumber = ref(appStore.numberOfSessionsPerWeek);
+
+function updateLayout(num) {
+  appStore.numberOfSessionsPerWeek = num;
+}
+
+// modal backdrop fix
+onUnmounted(() => {
+  const modal = document.getElementById('layout-settings-modal');
+  if (modal && document.body.contains(modal)) {
+    document.body.removeChild(modal);
+  }
+});
 
 const alert = reactive({ type: '', msg: '' });
 const profileUser = ref(null);
@@ -198,20 +212,39 @@ async function getUserVideos() {
         </div>
       </div>
 
+      <!-- videos header -->
+      <div v-if="sessions.length" class="d-flex justify-content-between align-items-center">
+        <small class="text-muted">Videos</small>
+        <span
+          data-bs-toggle="modal"
+          data-bs-target="#layout-settings-modal"
+          class="text-muted"
+          role="button"
+        >
+          <i class="bi bi-grid-3x3-gap"></i>
+        </span>
+      </div>
+
       <!-- videos grid -->
-      <div v-if="sessions.length" class="row g-1">
-        <div v-for="session in sessions" :key="`video-${session.id}`" class="col-4 p-0">
-          <div class="card border m-1">
-            <span class="video-wrapper">
-              <img
-                class="card-img-top video-thumb"
-                :src="
-                  session.videos[0]?.youtube_thumbnail ||
-                  'https://dummyimage.com/200x200/bdbdbd/000000.jpg'
-                "
-                :alt="session.name"
-              />
-            </span>
+      <div v-if="sessions.length" class="d-flex flex-wrap gap-1">
+        <div
+          v-for="session in sessions"
+          :key="`video-${session.id}`"
+          :style="{ width: `calc(${100 / appStore.numberOfSessionsPerWeek}% - 4px)` }"
+        >
+          <div class="d-flex flex-column">
+            <div class="card border">
+              <span class="video-wrapper">
+                <img
+                  class="card-img-top video-thumb"
+                  :src="
+                    session.videos[0]?.youtube_thumbnail ||
+                    'https://dummyimage.com/200x200/bdbdbd/000000.jpg'
+                  "
+                  :alt="session.name"
+                />
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -219,6 +252,52 @@ async function getUserVideos() {
       <!-- no videos -->
       <div v-else class="text-center text-muted py-3">
         <small>No videos yet</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- layout settings modal -->
+  <div
+    class="modal fade px-2 py-5"
+    id="layout-settings-modal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Layout settings</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="mb-4">
+            <h1>{{ layoutNumber }}</h1>
+          </div>
+          <div class="mb-3">
+            <label for="layout-range" class="form-label">Videos per row</label>
+            <input
+              v-model="layoutNumber"
+              type="range"
+              class="form-range w-100"
+              min="1"
+              max="7"
+              step="1"
+              id="layout-range"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button
+            @click="updateLayout(layoutNumber)"
+            type="button"
+            data-bs-dismiss="modal"
+            class="btn btn-success"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   </div>
