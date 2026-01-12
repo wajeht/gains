@@ -1,149 +1,35 @@
-<script>
-import Or from './Or.vue';
-import useUserStore from '../../store/user.store.js';
-import { isMobile } from '../../../../utils/helpers.js';
-import useAppStore from '../../store/app.store.js';
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
-export default {
-  components: {
-    Or,
-  },
-  data() {
-    return {
-      email: '',
-      password: '',
-      showPassword: false,
-      remember_me: false,
-      loading: false,
-      reVerifyMessage: false,
-      signupLink: '/signup',
-      alert: {
-        type: '',
-        msg: '',
-      },
-    };
-  },
-  mounted() {
-    if (isMobile()) this.signupLink = '/dashboard/signup';
-  },
-  methods: {
-    async reSendVerificationEmail() {
-      try {
-        this.alert.type = '';
-        this.alert.type = '';
-        this.loading = true;
+const route = useRoute();
+const loading = ref(false);
+const alert = ref({ type: '', msg: '' });
 
-        const res = await fetch(`/api/auth/reverify?email=${this.email}`);
-        const json = await res.json();
-        if (res.status >= 500) {
-          throw new Error(
-            'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
-          );
-        }
-        if (!res.ok) {
-          this.loading = false;
-          throw json.errors;
-        }
+onMounted(() => {
+  const error = route.query.error;
+  if (error) {
+    alert.value.type = 'danger';
+    switch (error) {
+      case 'invalid_state':
+        alert.value.msg = 'Authentication failed. Please try again.';
+        break;
+      case 'unverified_email':
+        alert.value.msg = 'Your Google email is not verified. Please verify your email with Google first.';
+        break;
+      case 'oauth_failed':
+        alert.value.msg = 'Google authentication failed. Please try again.';
+        break;
+      default:
+        alert.value.msg = 'An error occurred. Please try again.';
+    }
+  }
+});
 
-        this.reVerifyMessage = false;
-        this.loading = false;
-        this.alert.type = 'success';
-        this.alert.msg = 'We have sent a new re-verification link to your email!';
-        this.email = '';
-        this.password = '';
-      } catch (e) {
-        this.alert.type = 'danger';
-        this.alert.msg = e.map((cur) => cur.msg).join(' ');
-      }
-    },
-    async handleSubmit() {
-      try {
-        this.loading = true;
-        const userStore = useUserStore();
-        const appStore = useAppStore();
-
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password,
-            remember_me: this.remember_me,
-          }),
-        });
-
-        const json = await res.json();
-        if (res.status >= 500) {
-          throw new Error(
-            'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
-          );
-        }
-        if (!res.ok) {
-          this.loading = false;
-          if (json.errors) {
-            throw json.errors;
-          } else {
-            throw json.message;
-          }
-        }
-
-        const [user] = json.data;
-
-        appStore.appVersion = json.appVersion;
-        userStore.isLoggedIn = true;
-        userStore.setUserInfo({
-          ...user,
-        });
-
-        if (appStore.redirect_url) {
-          this.$router.push({ path: appStore.redirect_url });
-          return;
-        }
-
-        const socketUserInfo = {
-          ...user,
-          agent: navigator.userAgent,
-          socket_id: window.socket.id,
-        };
-
-        window.socket.emit('onlineUser', socketUserInfo);
-
-        if (user?.role === 'admin') {
-          this.$router.push({ path: '/admin' });
-        } else {
-          this.$router.push({ path: `/dashboard/profile/${userStore.user.username}` });
-        }
-      } catch (e) {
-        this.loading = false;
-        this.alert.type = 'danger';
-
-        if (Array.isArray(e)) {
-          this.alert.msg = e.map((cur) => cur.msg).join(' ');
-          return;
-        }
-
-        this.alert.msg = e;
-
-        const connectionErrorString =
-          `select * from "users" where "email" = $1 - Connection terminated unexpectedly select * from "users" where "email" = $1 Connection terminated unexpectedly`.split(
-            ' ',
-          );
-        if (this.alert.msg.includes(...connectionErrorString)) {
-          this.alert.msg = 'Woops! I just woke the database up. Please Login again!';
-          return;
-        }
-
-        // resent verification email
-        if (this.alert.msg.includes('verification')) {
-          this.reVerifyMessage = true;
-          this.password = '';
-        }
-      }
-    },
-  },
-};
+function loginWithGoogle() {
+  loading.value = true;
+  window.location.href = '/api/auth/google';
+}
 </script>
 
 <template>
@@ -154,126 +40,42 @@ export default {
     class="mb-3 alert animate__animated animate__zoomIn animate__faster"
   >
     <span>{{ alert.msg }}</span>
-    <span v-if="reVerifyMessage">
-      If you have lost the reverification email,
-      <a class="link-danger" style="cursor: pointer" @click="reSendVerificationEmail()"
-        >click here</a
-      >
-      to get a new reverification email!
-    </span>
   </div>
 
-  <!-- form -->
-  <form @submit.prevent="handleSubmit" autocomplete="on">
-    <!-- title -->
-    <h1 class="mb-3">Login</h1>
+  <!-- login card -->
+  <div class="text-center">
+    <h1 class="mb-4">Login</h1>
 
-    <!-- email -->
-    <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
-      <input
-        v-model="email"
-        type="email"
-        class="form-control"
-        id="email"
-        autocomplete="on"
-        required
-        :disabled="loading"
-      />
-    </div>
+    <p class="text-muted mb-4">Sign in to continue to Gains</p>
 
-    <!-- password -->
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <div class="input-group">
-        <input
-          v-model="password"
-          :type="showPassword ? 'text' : 'password'"
-          class="form-control"
-          id="password"
-          autocomplete="on"
-          required
-          :disabled="loading"
-        />
-        <button
-          v-if="password.length"
-          @click="showPassword = !showPassword"
-          class="btn btn-outline-dark"
-          type="button"
-          id="show-hide-password-button"
-          :disabled="loading || !password"
-        >
-          <i v-if="showPassword" class="bi bi-eye-slash"></i>
-          <i v-else class="bi bi-eye"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- checkbox -->
-    <div class="mb-3 form-check">
-      <input
-        v-model="remember_me"
-        type="checkbox"
-        class="form-check-input"
-        id="remember-me"
-        :disabled="loading"
-      />
-      <div class="d-flex justify-content-between">
-        <!-- checkbox -->
-        <label class="form-check-label" for="remember-me">Remember me</label>
-
-        <!-- forget-password -->
-        <router-link
-          :class="{ disabled: loading === true }"
-          class="p-0 m-0 link-dark"
-          to="/forget-password"
-        >
-          Forget password?
-        </router-link>
-      </div>
-    </div>
-
-    <!-- button -->
-    <button type="submit" class="btn btn-dark w-100" :disabled="loading || !email || !password">
+    <!-- Google login button -->
+    <button
+      @click="loginWithGoogle"
+      :disabled="loading"
+      class="btn btn-light w-100 d-flex align-items-center justify-content-center gap-2"
+      style="border: 1px solid #ced4da; padding: 12px"
+    >
       <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
 
-      <span v-if="!loading"> Submit </span>
-      <span v-if="loading"> Loading... </span>
+      <template v-if="!loading">
+        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </template>
+      <span v-if="loading">Redirecting...</span>
     </button>
-  </form>
 
-  <!-- or -->
-  <Or />
-
-  <!-- o-auth -->
-  <div class="d-flex flex-column gap-2 mb-3">
-    <!-- <a
-      :class="{ disabled: loading === true }"
-      class="btn w-100 text-light"
-      href="#"
-      style="background: #7289da"
-      title="Not supported yet!"
-      ><i class="bi bi-discord me-1"></i>Login with Discord</a
-    >
-
-    <a
-      :class="{ disabled: loading === true }"
-      class="btn btn-success w-100"
-      style="border: 1px solid #ced4da"
-      href="#"
-      title="Not supported yet!"
-      ><i class="bi bi-github me-1"></i>Login with Github</a
-    > -->
-
-    <!-- email -->
-    <router-link
-      :to="signupLink"
-      :class="{ disabled: loading === true }"
-      class="btn btn-light w-100"
-      style="border: 1px solid #ced4da"
-      ><i class="bi bi-envelope me-1"></i>Signup with Email</router-link
-    >
+    <p class="text-muted mt-4 small">
+      By continuing, you agree to our
+      <router-link to="/terms" class="link-secondary">Terms of Service</router-link>
+      and
+      <router-link to="/privacy" class="link-secondary">Privacy Policy</router-link>
+    </p>
   </div>
 </template>

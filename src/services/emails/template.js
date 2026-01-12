@@ -33,54 +33,11 @@ export default class Template {
         },
       ],
     },
-    'verify-email': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'verify-email.html')),
-      data: [
-        {
-          name: 'username',
-          type: 'string',
-        },
-        {
-          name: 'verificationLink',
-          type: 'string',
-        },
-      ],
-    },
-    'forget-password': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'forget-password.html')),
-      data: [
-        {
-          name: 'username',
-          type: 'string',
-        },
-        {
-          name: 'passwordResetLink',
-          type: 'string',
-        },
-      ],
-    },
     'happy-birthday': {
       path: path.resolve(path.join('src', 'services', 'emails', 'happy-birthday.html')),
       data: [
         {
           name: 'username',
-          type: 'string',
-        },
-      ],
-    },
-    'admin-account': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'admin-account.html')),
-      data: [
-        {
-          name: 'username',
-          type: 'string',
-        },
-        {
-          name: 'email',
-          type: 'string',
-        },
-        {
-          name: 'password',
           type: 'string',
         },
       ],
@@ -140,10 +97,3 @@ export default class Template {
     }
   }
 }
-
-// const data = {
-//   username: 'jaw',
-//   // username: 9,
-//   verificationLink: 'https://localhost:80/',
-// };
-// Template.generate('verify-email', data);

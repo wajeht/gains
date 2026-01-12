@@ -27,8 +27,6 @@ export const domain = process.env.DOMAIN;
 
 export const jwt_secret = process.env.JWT_SECRET;
 
-export const salt = parseInt(process.env.PASSWORD_SALT);
-
 export const email = {
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
@@ -40,7 +38,6 @@ export const email = {
 export const admin = {
   email: process.env.ADMIN_EMAIL,
   username: process.env.ADMIN_USERNAME,
-  password: process.env.ADMIN_PASSWORD,
 };
 
 export const GITHUB = {

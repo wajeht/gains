@@ -3,16 +3,13 @@ import useUserStore from './store/user.store.js';
 
 // -------------------- regular ---------------------------
 import Features from './pages/regular/Features.vue';
-import ForgetPassword from './pages/regular/ForgetPassword.vue';
-import ResetPassword from './pages/regular/ResetPassword.vue';
 import RegularTerms from './pages/regular/RegularTerms.vue';
 import RegularPrivacy from './pages/regular/RegularPrivacy.vue';
 import RegularContact from './pages/regular/RegularContact.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
 import RegularLogin from './pages/regular/RegularLogin.vue';
-import RegularSignup from './pages/regular/RegularSignup.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
-import VerifyEmail from './pages/regular/VerifyEmail.vue';
+import OAuthCallback from './pages/regular/OAuthCallback.vue';
 
 // -------------------- admin ---------------------------
 import AdminHome from './pages/admin/AdminHome.vue';
@@ -22,7 +19,6 @@ import AdminSessions from './pages/admin/AdminSessions.vue';
 
 // -------------------- dashboard ---------------------------
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
-import DashboardSignup from './pages/dashboard/DashboardSignup.vue';
 import Community from './pages/dashboard/community/Community.vue';
 import Chat from './pages/dashboard/community/Chat.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
@@ -97,38 +93,9 @@ const routes = [
     },
   },
   {
-    path: '/signup',
-    name: 'Signup',
-    component: RegularSignup,
-    meta: {
-      layout: 'RegularLayout',
-      requiredAuth: false,
-    },
-  },
-  {
-    path: '/forget-password',
-    name: 'Forget Password',
-    component: ForgetPassword,
-    meta: {
-      layout: 'RegularLayout',
-      requiredAuth: false,
-    },
-  },
-  {
-    path: '/reset-password/:uid',
-    name: 'Reset Password',
-    component: ResetPassword,
-    props: true,
-    meta: {
-      layout: 'RegularLayout',
-      requiredAuth: false,
-    },
-  },
-  {
-    path: '/verify-email/:uid',
-    name: 'Verify Email',
-    component: VerifyEmail,
-    props: true,
+    path: '/oauth/callback',
+    name: 'OAuthCallback',
+    component: OAuthCallback,
     meta: {
       layout: 'RegularLayout',
       requiredAuth: false,
@@ -222,15 +189,6 @@ const routes = [
     path: '/dashboard/login',
     name: 'DashboardLogin',
     component: DashboardLogin,
-    meta: {
-      layout: 'EmptyDashboardLayout',
-      requiredAuth: false,
-    },
-  },
-  {
-    path: '/dashboard/signup',
-    name: 'DashboardSignup',
-    component: DashboardSignup,
     meta: {
       layout: 'EmptyDashboardLayout',
       requiredAuth: false,
@@ -666,7 +624,7 @@ router.beforeEach(async (to, from, next) => {
       }
 
       // if they are already login, redirect to dashboard
-      if (to.path.match(/(login)|(signup)/)?.length) {
+      if (to.path.match(/(login)/)?.length) {
         return next(`/dashboard/profile/${userStore.user.username}`);
       }
     }
