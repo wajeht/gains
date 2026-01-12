@@ -339,7 +339,8 @@ async function updatePersonalInformation() {
             </div>
 
             <small class="text-muted">
-              Account info is managed through Google. Sign out and sign in with a different Google account to change.
+              Account info is managed through Google. Sign out and sign in with a different Google
+              account to change.
             </small>
           </div>
         </div>

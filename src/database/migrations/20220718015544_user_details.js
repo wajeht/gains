@@ -13,11 +13,8 @@ export async function up(knex) {
     table.integer('weight');
     table.string('profile_picture_url', 1000);
     table.string('profile_picture_path', 1000);
-    table.boolean('verified').defaultTo(false);
-    table.string('verification_token', 500).notNullable();
+    table.boolean('verified').defaultTo(true);
     table.timestamp('verified_at').defaultTo(null);
-    table.string('password_reset_token', 500).defaultTo(null);
-    table.timestamp('password_reset_token_expiration').defaultTo(null);
     table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
     table.boolean('deleted').defaultTo(false);
     table.timestamp('created_at').defaultTo(knex.fn.now());

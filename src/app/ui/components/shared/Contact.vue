@@ -64,8 +64,12 @@
     </button>
   </form>
 
-  <!-- or -->
-  <Or />
+  <!-- divider -->
+  <div class="d-flex align-items-center my-4">
+    <hr class="flex-grow-1" />
+    <span class="px-3 text-muted">or</span>
+    <hr class="flex-grow-1" />
+  </div>
 
   <!-- github issue -->
   <div class="text-center">
@@ -87,12 +91,8 @@
 
 <script>
 import { sleep } from '../../../../utils/helpers.js';
-import Or from './Or.vue';
 
 export default {
-  components: {
-    Or,
-  },
   data() {
     return {
       subject: 'GENERAL',
