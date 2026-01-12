@@ -76,8 +76,11 @@ async function generateCSVFiles(user_id) {
     result.filePaths.push(await writeToFile(user_id, 'sessions', usersSessions.data));
 
     // user's exercise categories
-    const userExerciseCategories = await ExerciseCategoriesQueries.getAllExerciseCategoriesByUserId(user_id); // prettier-ignore
-    result.filePaths.push(await writeToFile(user_id, 'exercise-categories', userExerciseCategories)) // prettier-ignore
+    const userExerciseCategories =
+      await ExerciseCategoriesQueries.getAllExerciseCategoriesByUserId(user_id); // prettier-ignore
+    result.filePaths.push(
+      await writeToFile(user_id, 'exercise-categories', userExerciseCategories),
+    ); // prettier-ignore
 
     // user's exercises
     const userExercises = await ExercisesQueries.getExerciseByUserId(user_id);

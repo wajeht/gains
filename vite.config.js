@@ -60,6 +60,9 @@ export default defineConfig({
         `,
         silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
       },
+      scss: {
+        silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
+      },
     },
     postcss: {
       plugins: [

@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "tabWidth": 2,
+  "semi": true,
+  "useTabs": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "printWidth": 100,
+  "ignorePatterns": [
+    "node_modules",
+    "coverage",
+    "logs",
+    "package-lock.json",
+    "src/db/sqlite",
+    "public/js/vue.esm-browser.prod.js"
+  ]
+}

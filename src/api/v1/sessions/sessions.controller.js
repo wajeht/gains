@@ -9,7 +9,10 @@ export async function postCreateSession(req, res) {
   const body = req.body;
   const created = await SessionQueries.createASession(body);
 
-  if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a session for for  User ID: ${body.user_id}!`); // prettier-ignore
+  if (!created.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while creating a session for for  User ID: ${body.user_id}!`,
+    ); // prettier-ignore
 
   logger.info(`UserID: ${body.user_id} has created a SessionID: ${created[0].id}`);
 
@@ -51,7 +54,8 @@ export async function getSession(req, res) {
   const sid = req.params.sid;
   const session = await SessionQueries.getSessionBySessionId(sid);
 
-  if (!session.length) throw new CustomError.BadRequestError(`There are no session available for session id ${sid}!`); // prettier-ignore
+  if (!session.length)
+    throw new CustomError.BadRequestError(`There are no session available for session id ${sid}!`); // prettier-ignore
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -86,7 +90,8 @@ export async function deleteSession(req, res) {
   const uid = req.body.user_id;
   const session = await SessionQueries.softDeleteSession(sid, uid);
 
-  if (!session.length) throw new CustomError.BadRequestError(`Something went wrong while deleting session id ${sid}!`); // prettier-ignore
+  if (!session.length)
+    throw new CustomError.BadRequestError(`Something went wrong while deleting session id ${sid}!`); // prettier-ignore
 
   res.status(StatusCodes.OK).json({
     status: 'success',

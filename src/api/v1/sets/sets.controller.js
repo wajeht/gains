@@ -6,7 +6,10 @@ export async function postSet(req, res) {
   const body = req.body;
   const created = await SetsQueries.createSet(body);
 
-  if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a set for  User ID: ${body.user_id}!`); // prettier-ignore
+  if (!created.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while creating a set for  User ID: ${body.user_id}!`,
+    ); // prettier-ignore
 
   logger.info(`User id: ${body.user_id} has created a set id: ${created[0].id}`);
 
@@ -23,7 +26,10 @@ export async function patchSet(req, res) {
   const body = req.body;
   const updated = await SetsQueries.updateSetById(body, id);
 
-  if (!updated.length) throw new CustomError.BadRequestError(`Something went wrong while updating a set for user id ${body.user_id} and set id ${body.id}!`); // prettier-ignore
+  if (!updated.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while updating a set for user id ${body.user_id} and set id ${body.id}!`,
+    ); // prettier-ignore
 
   logger.info(
     `User id: ${body.user_id} has updated a set id: ${updated[0].id} to ${JSON.stringify(updated[0])}`,
@@ -42,7 +48,10 @@ export async function deleteSet(req, res) {
   const body = req.body;
   const deleted = await SetsQueries.deleteSetById(id, body);
 
-  if (!deleted.length) throw new CustomError.BadRequestError(`Something went wrong while deleting a  set id ${body.id} for user id ${body.user_id} !`); // prettier-ignore
+  if (!deleted.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while deleting a  set id ${body.id} for user id ${body.user_id} !`,
+    ); // prettier-ignore
 
   logger.info(`User id: ${body.user_id} has deleted a set id: ${deleted[0].id})}`);
 

@@ -107,7 +107,10 @@ export async function patchUpdatePersonalInformation(req, res) {
   const body = req.body;
   const updated = await UsersQueries.updatePersonalInformation(id, body);
 
-  if (!updated.length) throw new CustomError.BadRequestError(`Something went wrong while updating personal info for  User ID: ${id}!`); // prettier-ignore
+  if (!updated.length)
+    throw new CustomError.BadRequestError(
+      `Something went wrong while updating personal info for  User ID: ${id}!`,
+    ); // prettier-ignore
 
   logger.info(`User id ${id} has updated personal information to ${JSON.stringify(body)}!`);
 

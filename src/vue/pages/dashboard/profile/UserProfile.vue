@@ -19,6 +19,7 @@ const profileUser = ref(null);
 const isFollowing = ref(false);
 const followLoading = ref(false);
 const stats = ref({ followers: 0, followings: 0 });
+const sessions = ref([]);
 
 // Redirect to own profile if viewing self
 const isOwnProfile = computed(() => {
@@ -54,11 +55,8 @@ async function loadProfile() {
       return;
     }
 
-    // Check if following
-    await checkFollowing();
-
-    // Get follower stats
-    await getFollowStats();
+    // Check if following and get stats in parallel
+    await Promise.all([checkFollowing(), getFollowStats(), getUserVideos()]);
   } catch (e) {
     alert.type = 'danger';
     alert.msg = Array.isArray(e) ? e.map((cur) => cur.msg).join(' ') : e;
@@ -109,6 +107,18 @@ async function toggleFollow() {
     alert.msg = Array.isArray(e) ? e.map((cur) => cur.msg).join(' ') : e;
   } finally {
     followLoading.value = false;
+  }
+}
+
+async function getUserVideos() {
+  try {
+    const res = await api.get(`/api/v1/sessions/sessions-with-videos/${profileUser.value.id}`);
+    const json = await res.json();
+    if (res.ok) {
+      sessions.value = json.data || [];
+    }
+  } catch (e) {
+    console.error('Error getting user videos', e);
   }
 }
 </script>
@@ -187,6 +197,29 @@ async function toggleFollow() {
           </div>
         </div>
       </div>
+
+      <!-- videos grid -->
+      <div v-if="sessions.length" class="row g-1">
+        <div v-for="session in sessions" :key="`video-${session.id}`" class="col-4 p-0">
+          <div class="card border m-1">
+            <span class="video-wrapper">
+              <img
+                class="card-img-top video-thumb"
+                :src="
+                  session.videos[0]?.youtube_thumbnail ||
+                  'https://dummyimage.com/200x200/bdbdbd/000000.jpg'
+                "
+                :alt="session.name"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- no videos -->
+      <div v-else class="text-center text-muted py-3">
+        <small>No videos yet</small>
+      </div>
     </div>
   </div>
 </template>
@@ -200,6 +233,19 @@ async function toggleFollow() {
 }
 
 .image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.video-wrapper {
+  aspect-ratio: 1/1;
+  width: 100%;
+  overflow: hidden;
+  display: block;
+}
+
+.video-thumb {
   height: 100%;
   width: 100%;
   object-fit: cover;

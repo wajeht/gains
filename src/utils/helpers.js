@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export function capitalizeAWord(word) {
-  if (typeof word != "string") throw new Error("Value must be string data type!"); // prettier-ignore
+  if (typeof word != 'string') throw new Error('Value must be string data type!'); // prettier-ignore
   if (word.length < 1) throw new Error('Value must be more than one character');
 
   const newLowercaseWord = word.toLowerCase();
