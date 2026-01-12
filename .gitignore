@@ -101,12 +101,11 @@ dist
 
 # TernJS port file
 .tern-port
-src/public/assets/*
-src/public/index.html
-src/public/index.html
-src/public/upload/*
-src/public/uploads/*
-!src/public/uploads/.gitkeep
+public/assets/*
+public/index.html
+public/upload/*
+public/uploads/*
+!public/uploads/.gitkeep
 src/storage/public/upload/*
 src/storage/public/uploads/*
 /src/storage/uploads/*

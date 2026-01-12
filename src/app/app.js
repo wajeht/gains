@@ -52,7 +52,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(jwt_secret));
 app.use(
-  express.static(path.resolve(path.join(process.cwd(), 'src', 'public')), {
+  express.static(path.resolve(path.join(process.cwd(), 'public')), {
     maxage: 2592000000,
   }),
 );
