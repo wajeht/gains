@@ -380,8 +380,8 @@ function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
                 >
                   <a
                     @click="
-                      (pagination.currentPage = pagination.currentPage - 1),
-                        getExerciseDetails(pagination.currentPage)
+                      ((pagination.currentPage = pagination.currentPage - 1),
+                      getExerciseDetails(pagination.currentPage))
                     "
                     href="#"
                     class="page-link"
@@ -400,8 +400,8 @@ function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
                     href="#"
                     class="page-link"
                     @click="
-                      (pagination.currentPage = index + 1),
-                        getExerciseDetails(pagination?.currentPage)
+                      ((pagination.currentPage = index + 1),
+                      getExerciseDetails(pagination?.currentPage))
                     "
                   >
                     {{ index + 1 }}
@@ -418,8 +418,8 @@ function calculateRelativeIntensity(weight, e1rm, nullFormat = '0') {
                 >
                   <a
                     @click="
-                      (pagination.currentPage = pagination.currentPage + 1),
-                        getExerciseDetails(pagination.currentPage)
+                      ((pagination.currentPage = pagination.currentPage + 1),
+                      getExerciseDetails(pagination.currentPage))
                     "
                     class="page-link"
                     href="#"

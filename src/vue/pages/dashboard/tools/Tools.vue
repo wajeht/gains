@@ -142,7 +142,6 @@
               <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
             </div>
           </router-link>
-
         </div>
       </div>
 

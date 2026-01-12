@@ -1351,7 +1351,7 @@ function clearAndDismissDeleteALogModal() {
                         <li
                           v-if="appStore.community"
                           @click="
-                            (log.private = !log.private), updateLogVisibility(log.id, log.private)
+                            ((log.private = !log.private), updateLogVisibility(log.id, log.private))
                           "
                         >
                           <button class="dropdown-item btn-sm" type="button">
@@ -1360,7 +1360,7 @@ function clearAndDismissDeleteALogModal() {
                         </li>
                         <li>
                           <button
-                            @click="(deleteALogLogObject = log), (deleteALogLogIndex = index)"
+                            @click="((deleteALogLogObject = log), (deleteALogLogIndex = index))"
                             class="dropdown-item btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#delete-a-log"
@@ -1389,7 +1389,14 @@ function clearAndDismissDeleteALogModal() {
                       v-if="v.youtube_embed_url"
                       :src="v.youtube_embed_url"
                       frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="
+                        accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                      "
                       allowfullscreen
                     ></iframe>
                   </div>
@@ -1480,18 +1487,18 @@ function clearAndDismissDeleteALogModal() {
                             <!-- modify a set button -->
                             <button
                               @click="
-                                (set.id = s.id),
-                                  (set.set_index = idx),
-                                  (set.log_index = index),
-                                  (set.exercise_id = s.exercise_id),
-                                  (set.user_id = s.user_id),
-                                  (set.session_id = s.session_id),
-                                  (set.reps = s.reps),
-                                  (set.weight = s.weight),
-                                  (set.rpe = s.rpe),
-                                  (set.notes = s.notes),
-                                  (set.log_id = log.id),
-                                  (set.exercise_name = log.name)
+                                ((set.id = s.id),
+                                (set.set_index = idx),
+                                (set.log_index = index),
+                                (set.exercise_id = s.exercise_id),
+                                (set.user_id = s.user_id),
+                                (set.session_id = s.session_id),
+                                (set.reps = s.reps),
+                                (set.weight = s.weight),
+                                (set.rpe = s.rpe),
+                                (set.notes = s.notes),
+                                (set.log_id = log.id),
+                                (set.exercise_name = log.name))
                               "
                               type="button"
                               class="btn btn-sm p-0 m-0"
@@ -1522,10 +1529,10 @@ function clearAndDismissDeleteALogModal() {
                   <span>
                     <button
                       @click="
-                        (addASetExerciseId = log.exercise_id),
-                          (addASetExerciseIndex = index),
-                          (addASetLogId = log.id),
-                          (set.exercise_name = log.name)
+                        ((addASetExerciseId = log.exercise_id),
+                        (addASetExerciseIndex = index),
+                        (addASetLogId = log.id),
+                        (set.exercise_name = log.name))
                       "
                       type="button"
                       class="btn btn-sm btn-outline-dark"
@@ -1540,7 +1547,7 @@ function clearAndDismissDeleteALogModal() {
                   <!-- duplicate previous set -->
                   <span>
                     <button
-                      @click="(log.duplicateSetLoading = true), copyPreviousSet(index)"
+                      @click="((log.duplicateSetLoading = true), copyPreviousSet(index))"
                       type="button"
                       class="btn btn-sm btn-outline-dark"
                       :disabled="
@@ -1562,11 +1569,11 @@ function clearAndDismissDeleteALogModal() {
                   <span>
                     <button
                       @click="
-                        (addASetExerciseId = log.exercise_id),
-                          (addASetExerciseIndex = index),
-                          (addAExerciseNoteLogId = log.id),
-                          (set.exercise_name = log.name),
-                          (set.notes = log.notes)
+                        ((addASetExerciseId = log.exercise_id),
+                        (addASetExerciseIndex = index),
+                        (addAExerciseNoteLogId = log.id),
+                        (set.exercise_name = log.name),
+                        (set.notes = log.notes))
                       "
                       type="button"
                       class="btn btn-sm btn-outline-dark"
@@ -1582,9 +1589,9 @@ function clearAndDismissDeleteALogModal() {
                   <span>
                     <button
                       @click="
-                        (uploadAVideoLogId = log.id),
-                          (uploadAVideoExerciseName = log.name),
-                          (uploadAVideoLogIndex = index)
+                        ((uploadAVideoLogId = log.id),
+                        (uploadAVideoExerciseName = log.name),
+                        (uploadAVideoLogIndex = index))
                       "
                       type="button"
                       class="btn btn-sm btn-outline-dark"
@@ -1600,9 +1607,9 @@ function clearAndDismissDeleteALogModal() {
                   <span>
                     <button
                       @click="
-                        (addATagLogId = log.id),
-                          (set.exercise_name = log.name),
-                          (addATagLogIndex = index)
+                        ((addATagLogId = log.id),
+                        (set.exercise_name = log.name),
+                        (addATagLogIndex = index))
                       "
                       type="button"
                       class="btn btn-sm btn-outline-dark"

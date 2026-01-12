@@ -1,6 +1,4 @@
 import { validator, catchAsyncErrors } from '../../api.middlewares.js';
-import { uploadPicture } from '../../../utils/multer.js';
-
 import * as UsersController from './users.controller.js';
 import * as UsersValidation from './users.validation.js';
 
@@ -61,13 +59,6 @@ users.delete(
   '/:id',
   validator(UsersValidation.deleteUser),
   catchAsyncErrors(UsersController.deleteUser),
-);
-
-users.post(
-  '/update-profile-picture/:user_id',
-  uploadPicture,
-  validator(UsersValidation.postUpdateProfilePicture),
-  catchAsyncErrors(UsersController.postUpdateProfilePicture),
 );
 
 users.post(
