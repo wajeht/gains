@@ -16,8 +16,6 @@ export async function seed(knex) {
       .insert({
         email: admin.email,
         username: admin.username,
-        verified: true,
-        verified_at: new Date(),
       })
       .returning('*');
 
@@ -25,6 +23,8 @@ export async function seed(knex) {
     await knex('user_details').insert({
       user_id: user.id,
       role: 'admin',
+      verified: true,
+      verified_at: new Date(),
     });
 
     logger.info(`Admin account was created for user id: ${user.id}`);

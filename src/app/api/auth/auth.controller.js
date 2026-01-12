@@ -65,9 +65,6 @@ export async function getGoogleOAuthRedirect(req, res) {
         .insert({
           email: googleUser.email,
           username: username,
-          verified: true,
-          verified_at: new Date(),
-          profile_picture_url: googleUser.picture || null,
         })
         .returning('*');
 
@@ -78,6 +75,9 @@ export async function getGoogleOAuthRedirect(req, res) {
         user_id: user.id,
         first_name: googleUser.given_name || null,
         last_name: googleUser.family_name || null,
+        profile_picture_url: googleUser.picture || null,
+        verified: true,
+        verified_at: new Date(),
       });
 
       logger.info(`New user created via Google OAuth: ${user.email} (ID: ${user.id})`);
