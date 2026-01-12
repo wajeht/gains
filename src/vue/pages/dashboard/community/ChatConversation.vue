@@ -91,7 +91,7 @@ function scrollToBottom() {
 }
 
 function isMyMessage(msg) {
-  return msg.sender_id === userStore.user.id;
+  return Number(msg.sender_id) === Number(userStore.user.id);
 }
 </script>
 
@@ -135,11 +135,11 @@ function isMyMessage(msg) {
         v-for="msg in states.messages"
         :key="msg.id"
         class="d-flex mb-2"
-        :class="{ 'justify-content-end': isMyMessage(msg) }"
+        :class="isMyMessage(msg) ? 'justify-content-end' : 'justify-content-start'"
       >
         <div
           class="message-bubble px-3 py-2 rounded-3"
-          :class="isMyMessage(msg) ? 'bg-primary text-white' : 'bg-light'"
+          :class="isMyMessage(msg) ? 'bg-dark text-white' : 'border bg-white'"
           style="max-width: 75%"
         >
           <p class="m-0">{{ msg.content }}</p>

@@ -29,6 +29,7 @@ import VideoDetails from './components/dashboard/VideoDetails.vue';
 
 // profile
 import Profile from './pages/dashboard/profile/Profile.vue';
+import UserProfile from './pages/dashboard/profile/UserProfile.vue';
 import Following from './pages/dashboard/profile/Following.vue';
 
 // --- sessions ---
@@ -242,6 +243,16 @@ const routes = [
     path: '/dashboard/profile/:username',
     name: 'Profile',
     component: Profile,
+    props: true,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/user/:username',
+    name: 'UserProfile',
+    component: UserProfile,
     props: true,
     meta: {
       layout: 'DashboardLayout',

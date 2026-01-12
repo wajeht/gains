@@ -1,8 +1,3 @@
-/**
- * Demo data seeder - creates test users, sessions, logs, sets, and videos
- * Run: npx knex seed:run --knexfile src/config/knexfile.js
- */
-
 const RICK_ROLL = {
   youtube_video_id: 'dQw4w9WgXcQ',
   youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
