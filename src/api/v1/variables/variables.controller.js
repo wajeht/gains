@@ -1,7 +1,6 @@
 import * as VariablesQueries from './variables.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import { calculateE1RM } from '../../../utils/helpers.js';
-import axios from 'axios';
 import logger from '../../../utils/logger.js';
 
 export async function deleteAVariable(req, res) {
@@ -73,22 +72,6 @@ export async function getCalories(req, res) {
     data: calories.data,
     pagination: calories.pagination,
   });
-}
-
-export async function getOpenPowerliftingResult(req, res) {
-  const q = req.query.q;
-
-  const api = axios.create({
-    baseURL: process.env.CLOSE_POWERLIFTING_API_URI,
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': process.env.CLOSE_POWERLIFTING_API_KEY,
-    },
-  });
-
-  const data = await (await api.get(`/api/users?search=${q}`)).data;
-
-  return res.status(StatusCodes.OK).json(data);
 }
 
 export async function getRecovery(req, res) {

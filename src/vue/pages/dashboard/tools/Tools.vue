@@ -143,20 +143,6 @@
             </div>
           </router-link>
 
-          <!-- open powerlifting -->
-          <router-link
-            to="/dashboard/tools/reports/open-powerlifting"
-            class="list-group-item list-group-item-action d-flex gap-3 py-3"
-          >
-            <div class="d-flex gap-2 w-100 justify-content-between">
-              <div>
-                <h6 class="mb-0">Open Powerlifting Database</h6>
-                <p class="mb-0 opacity-75">Search lifters inside open powerlifting database</p>
-              </div>
-              <!-- <small class="opacity-50 text-nowrap">v1</small> -->
-              <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
-            </div>
-          </router-link>
         </div>
       </div>
 

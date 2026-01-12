@@ -31,12 +31,6 @@ variables.get(
 );
 
 variables.get(
-  '/open-powerlifting',
-  validator(VariablesValidation.getOpenPowerliftingResult),
-  catchAsyncErrors(VariablesController.getOpenPowerliftingResult),
-);
-
-variables.get(
   '/weekly-weight-in/:user_id',
   validator(VariablesValidation.getWeeklyWeightIn),
   catchAsyncErrors(VariablesController.getWeeklyWeightIn),
