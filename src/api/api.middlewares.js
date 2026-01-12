@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { jwt_secret } from '../../config/env.js';
+import { jwt_secret } from '../config/env.js';
 import { validationResult } from 'express-validator';
 import CustomError from './api.errors.js';
 

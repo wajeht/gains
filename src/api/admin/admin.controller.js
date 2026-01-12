@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import fsp from 'fs/promises';
 import fs from 'fs';
 import path from 'path';
-import db from '../../../db/db.js';
+import db from '../../db/db.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
 
