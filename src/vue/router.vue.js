@@ -38,7 +38,6 @@ import Categories from './pages/dashboard/sessions/Categories.vue';
 import Exercises from './pages/dashboard/sessions/Exercises.vue';
 
 import Exercise from './pages/dashboard/Exercise.vue';
-import Block from './pages/dashboard/Block.vue';
 import Category from './pages/dashboard/Category.vue';
 
 // --- settings ---
@@ -449,19 +448,6 @@ const routes = [
     meta: {
       layout: 'SingleDashboardLayout',
       requiredAuth: true,
-    },
-  },
-  {
-    path: '/dashboard/blocks/:block_id',
-    name: 'Block',
-    component: Block,
-    props: (route) => ({
-      block_id: Number(route.params.block_id),
-    }),
-    meta: {
-      layout: 'SingleDashboardLayout',
-      requiredAuth: true,
-      warn: true,
     },
   },
   {

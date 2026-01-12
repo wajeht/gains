@@ -316,7 +316,6 @@ export const postUpdateProfilePicture = [
     })
     .toInt()
     .custom((_value, { _req }) => {
-      // console.log(req.file)
       return true;
     }),
 ];

@@ -2,7 +2,6 @@ import { StatusCodes } from 'http-status-codes';
 import path from 'path';
 import fs from 'fs';
 import { env, MY_IP } from './config/env.js';
-import Chad from './utils/chad.js';
 import logger from './utils/logger.js';
 import requestIp from 'request-ip';
 
@@ -63,8 +62,6 @@ export function errorHandler(err, req, res, _next) {
   };
 
   logger.error(errWithIP);
-
-  Chad.flex(`${ip}:${err.msg}`, err.stack);
 
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'fail',
