@@ -10,7 +10,6 @@ import pkg from '../utils/pkg.js';
 import EmailService from '../services/email.service.js';
 import latestChangelog from '../utils/latest-changelog.js';
 import CronsServices from '../services/cron.services.js';
-import cache from '../utils/cache.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);
@@ -22,18 +21,6 @@ async function gracefulShutdown() {
   logger.info('**** Received kill signal, shutting down gracefully. ****');
 
   try {
-    await new Promise((resolve, reject) => {
-      server.close(async (err) => {
-        await cache.del('onlineUsers');
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve();
-      });
-    });
-
-    await cache.del('onlineUsers');
     await db.destroy();
 
     logger.info('**** Closed out remaining connections. ****');
@@ -69,7 +56,7 @@ process.on('SIGTERM', gracefulShutdown);
 
     const upgrade = await db.migrate.latest(config);
 
-    if (!upgrade[1].length) logger.warn('Database upgrade not required'); // prettier-ignore
+    if (!upgrade[1].length) logger.warn('Database upgrade not required');
 
     if (upgrade[1].length) {
       const list = upgrade[1].map((cur) => cur.split('_')[1].split('.')[0]).join(', ');
@@ -81,22 +68,6 @@ process.on('SIGTERM', gracefulShutdown);
     Chad.flex(e.message, e.stack);
   }
 })();
-
-// ------------------------------ auto create indexes ------------------------------
-// (async () => {
-//   try {
-//     const { rows } = await db.raw(`
-//       create index on sessions(id, user_id, deleted, end_date);
-//       create index on videos(id, user_id, log_id, session_id, deleted);
-//       create index on logs(id, user_id, session_id, exercise_id, deleted, private);
-//       create index on sets(id, user_id, session_id, exercise_id, deleted);
-//       analyze;
-//     `);
-//   } catch (e) {
-//     logger.error(e);
-//     Chad.flex(e.message, e.stack);
-//   }
-// })();
 
 // ------------------------------ send changelog subscription (production only)  ------------------------------
 (async () => {
@@ -113,10 +84,7 @@ process.on('SIGTERM', gracefulShutdown);
       .where({ 's.deleted': false })
       .andWhere({ 's.object': 'changelog' });
 
-    await cache.del('changelogs');
-
     for (const user of changelogSubscriptions) {
-      // not triple equals ==== because of string type
       if (pkg.version > user.subscribed_version) {
         await EmailService.send({
           to: user.email,

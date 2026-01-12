@@ -3,9 +3,7 @@ import * as UsersQueries from './users.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import { omit } from 'lodash-es';
-import * as CacheQueries from '../cache/cache.queries.js';
 import * as JobsServices from '../../../../services/job.services.js';
-import cache from '../../../../utils/cache.js';
 import db from '../../../../database/db.js';
 
 export async function getCheckAuthentication(req, res) {
@@ -37,59 +35,19 @@ export async function getUsers(req, res) {
     search = req.query.search;
   }
 
-  const { perPage, currentPage, cache } = req.query;
+  const { perPage, currentPage } = req.query;
 
   const pagination = {
     perPage: perPage ?? null,
     currentPage: currentPage ?? null,
   };
 
-  let users;
-
-  // /api/v1/users?cache=false
-  if (cache === false) {
-    users = await UsersQueries.getAllUsers({ pagination, search });
-
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      cache,
-      data: users.data,
-      pagination: users.pagination,
-    });
-  }
-
-  // only cache page 1
-  // don't cache any results after page 1
-  if (pagination.currentPage > 1) {
-    cache.del(`user-id-${req.user.user_id}-users`);
-
-    users = await UsersQueries.getAllUsers({ pagination, search });
-
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      cache,
-      data: users.data,
-      pagination: users.pagination,
-    });
-  }
-
-  users = JSON.parse(await cache.get(`user-id-${req.user.user_id}-users`));
-
-  if (users === null) {
-    users = await UsersQueries.getAllUsers({ pagination, search });
-
-    cache.set(`user-id-${req.user.user_id}-users`, JSON.stringify(users));
-  }
+  const users = await UsersQueries.getAllUsers({ pagination, search });
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    cache,
     data: users.data,
     pagination: users.pagination,
   });
@@ -110,8 +68,6 @@ export async function getUser(req, res) {
 export async function patchUser(req, res) {
   const { id } = req.params;
   const user = await UsersQueries.updateUserById(id, req.body);
-
-  cache.del(`user-id-${req.user.user_id}-users`);
 
   logger.info(`User id ${id} has updated user details to ${JSON.stringify(req.body)}!`);
 
@@ -135,8 +91,6 @@ export async function deleteUser(req, res) {
       expires: new Date(Date.now()),
     });
   }
-
-  await cache.del(`user-id-${req.user.user_id}-users`);
 
   const withoutPassword = omit(user[0], ['password', 'deleted']);
 
@@ -205,13 +159,7 @@ export async function postDeleteUserData(req, res) {
   const { user_id } = req.params;
   const deleted = await UsersQueries.deleteUserData(user_id);
 
-  logger.info(
-    `User id ${user_id} has deleted all of comments, videos, variables, sets, logs, sessions and blocks`,
-  );
-
-  await CacheQueries.deleteAllCachesOfAUser(user_id);
-
-  logger.info(`User id ${user_id} has cleared all of their cached data!`);
+  logger.info(`User id ${user_id} has deleted all of comments, videos, variables, sets, logs, sessions and blocks`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -228,10 +176,6 @@ export async function postRestoreUserData(req, res) {
 
   logger.info(`User id ${user_id} has restore all of their data!`);
 
-  await CacheQueries.deleteAllCachesOfAUser(user_id);
-
-  logger.info(`User id ${user_id} has cleared all of their cached data!`);
-
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
@@ -247,10 +191,6 @@ export async function postRestoreUser(req, res) {
 
   logger.info(`User id ${user_id} has been restored!`);
 
-  await CacheQueries.deleteAllCachesOfAUser(user_id);
-
-  logger.info(`User id ${user_id} has cleared all of their cached data!`);
-
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
@@ -261,20 +201,6 @@ export async function postRestoreUser(req, res) {
 
 export async function getDownloadUserData(req, res) {
   const { user_id } = req.params;
-
-  // let countOfRequests = JSON.parse(
-  //   await cache.get(`user-id-${user_id}-request-download-user-data`),
-  // );
-
-  // if (countOfRequests === null) {
-  //   cache.set(`user-id-${user_id}-request-download-user-data`, 1);
-  // } else {
-  //   cache.set(`user-id-${user_id}-request-download-user-data`, (countOfRequests += 1));
-  // }
-
-  // if (countOfRequests > 5) {
-  //   throw new CustomError.BadRequestError('You have read the maximum limit of 5 requests per day!');
-  // }
 
   JobsServices.downloadUserData(user_id);
 

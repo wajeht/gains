@@ -8,8 +8,6 @@ const admin = express.Router();
 
 admin.get('/issues', catchAsyncErrors(AdminController.getIssues));
 
-admin.get('/clear-all-cache', catchAsyncErrors(AdminController.clearAllCache));
-
 admin.get(
   '/view-logs',
   validator(AdminValidation.getViewLogs),
@@ -21,8 +19,6 @@ admin.post(
   validator(AdminValidation.postSeedMockTrainingDataUser),
   catchAsyncErrors(AdminController.postSeedMockTrainingData),
 );
-
-admin.get('/online-users', catchAsyncErrors(AdminController.getOnlineUsers));
 
 admin.get('/stats', catchAsyncErrors(AdminController.getStats));
 

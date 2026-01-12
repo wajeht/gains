@@ -1,5 +1,4 @@
 import logger from './logger.js';
-import cache from './cache.js';
 import { faker } from '@faker-js/faker';
 import copyMockVideos from './copy-mock-videos.js';
 import * as SessionsQueries from '../app/api/v1/sessions/sessions.queries.js';
@@ -18,13 +17,10 @@ export default async function seedMockTrainingData(email) {
     const copiedVideos = await copyMockVideos();
 
     const blocks = await BlocksQueries.getBlocksByUserId(user_id);
-    // generate a exercise
     const exercises = await ExercisesQueries.getExerciseByUserId(user_id);
 
-    // generate 20 sessions at a time
     for (let k = 0; k < 20; k++) {
       console.log('-'.repeat(process.stdout.columns));
-      // generate a session
 
       const sessionObject = {
         name: faker.lorem.words(5),
@@ -55,7 +51,6 @@ export default async function seedMockTrainingData(email) {
         throw new Error(`User: ${user_id || email} does not have enough exercises to generate!`);
       }
 
-      // generate a log
       for (let i = 0; i < faker.datatype.number({ max: 10 }); i++) {
         const randomNumberExercise = exercises.length - 1;
         const randomNumber = faker.datatype.number({ min: 0, max: randomNumberExercise });
@@ -74,9 +69,8 @@ export default async function seedMockTrainingData(email) {
 
         logger.info(`log ${log.id}: ${randomExercise.name}`);
 
-        // ----------------- video starts ---------------------
         const randomNumberForVideoLength = Object.keys(copiedVideos).length - 1;
-        const randomNumberForVideo = faker.datatype.number({ min: 0, max: randomNumberForVideoLength}); // prettier-ignore
+        const randomNumberForVideo = faker.datatype.number({ min: 0, max: randomNumberForVideoLength });
         const randomVideo = copiedVideos[Object.keys(copiedVideos)[randomNumberForVideo]];
         const splitAtUpload = (path) => `/uploads${path.split('uploads')[1]}`;
 
@@ -89,11 +83,7 @@ export default async function seedMockTrainingData(email) {
           log_id: log.id,
           user_id,
         });
-        // ----------------- video ends ---------------------
 
-        // logger.info(`generating a log for exercise: ${log}`);
-
-        // generate sets for log above
         for (let j = 0; j < faker.datatype.number({ max: 10 }); j++) {
           const [set] = await SetsQueries.createSet({
             log_id: log.id,
@@ -106,18 +96,12 @@ export default async function seedMockTrainingData(email) {
             rpe: faker.datatype.number({ max: 10 }),
           });
 
-          logger.info(
-            ` set ${set.id}: - ${set.reps} x ${set.weight} @${set.rpe} - ${set.notes
-              .split(' ')
-              .slice(0, 3)
-              .join(' ')}...`,
-          );
+          logger.info(` set ${set.id}: - ${set.reps} x ${set.weight} @${set.rpe} - ${set.notes.split(' ').slice(0, 3).join(' ')}...`);
         }
         logger.info(`log ${log.id} set to ${log.private}`);
         console.log();
       }
 
-      // complete the session
       if (randomBoolean()) {
         await SessionsQueries.updateSession(session.id, session.user_id, {
           end_date: faker.date.soon(),
@@ -126,9 +110,6 @@ export default async function seedMockTrainingData(email) {
         console.log();
       }
     }
-
-    // clear all the cache
-    await cache.clear();
   } catch (e) {
     logger.error(e);
     throw new Error(e);
