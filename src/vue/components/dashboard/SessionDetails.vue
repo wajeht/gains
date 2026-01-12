@@ -715,12 +715,11 @@ async function handleCompleteCurrentSession() {
     currentSessionDetails.user_id = userStore.user.id;
     completeCurrentSessionLoading.value = true;
 
-    // filter valid data
+    // filter valid data (don't include start_date - only completing session)
     const validData = pick(currentSessionDetails, [
       'user_id',
       'name',
       'block_id',
-      'start_date',
       'end_date',
       'body_weight',
       'hours_of_sleep',

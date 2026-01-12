@@ -20,7 +20,7 @@ const props = defineProps({
   userId: Number,
 });
 
-const emit = defineEmits('updateSessionName');
+const emit = defineEmits(['updateSessionName']);
 
 const newSessionName = ref('');
 

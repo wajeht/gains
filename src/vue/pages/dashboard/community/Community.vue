@@ -41,13 +41,6 @@ async function getSessions() {
     const res = await api.get(`/api/v1/sessions/community-sessions?perPage=${pagination.perPage}&currentPage=${pagination.currentPage}`); // prettier-ignore
     const json = await res.json();
 
-    if (json.data?.length === 0) {
-      appStore.loading = false;
-      alert.type = 'warning';
-      alert.msg =
-        'There are no community session with videos available available at this time! Please add a session via click the plus icon!';
-      return;
-    }
     if (res.status >= 500) {
       throw new Error(
         'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
@@ -63,23 +56,26 @@ async function getSessions() {
 
     pagination.details = json.pagination;
 
-    if (sessions.value?.length === 0) {
-      sessions.value = json.data.filter((ss) => ss.logs.length);
+    // Filter sessions that have logs with videos
+    const sessionsWithLogs = json.data.filter((ss) => ss.logs.length);
 
+    if (sessionsWithLogs.length === 0 && sessions.value.length === 0) {
+      appStore.loading = false;
+      alert.type = 'warning';
+      alert.msg = 'There are no community sessions with videos available at this time!';
+      return;
+    }
+
+    if (sessions.value?.length === 0) {
+      sessions.value = sessionsWithLogs;
       sessions.value.forEach((ss) => {
-        if (ss.logs.length) {
-          ss.logs['currentLogStep'] = 0;
-        }
+        ss.logs['currentLogStep'] = 0;
       });
     } else {
-      loading.value = true; // loading more button
-      json.data.forEach((ss) => {
-        if (ss.logs.length) {
-          sessions.value.push(ss);
-          ss.logs['currentLogStep'] = 0;
-        }
+      sessionsWithLogs.forEach((ss) => {
+        sessions.value.push(ss);
+        ss.logs['currentLogStep'] = 0;
       });
-      loading.value = false;
     }
 
     loading.value = false; // loading more button
