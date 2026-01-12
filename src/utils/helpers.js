@@ -41,3 +41,13 @@ export function calculateE1RM(weight, rpe, reps) {
     return (Math.ceil(weight * ((10 - (rpe + 1)) + reps) * 0.03 + weight));
   }
 }
+
+export function filesize(bytes) {
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let i = 0;
+  while (bytes >= 1024 && i < units.length - 1) {
+    bytes /= 1024;
+    i++;
+  }
+  return `${bytes.toFixed(1)} ${units[i]}`;
+}
