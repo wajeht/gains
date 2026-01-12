@@ -91,7 +91,8 @@ function scrollToBottom() {
 }
 
 function isMyMessage(msg) {
-  return msg.sender_id == userStore.user.id;
+  // If sender is not the other user, it's my message
+  return msg.sender_id != props.other_user_id;
 }
 </script>
 
@@ -142,8 +143,8 @@ function isMyMessage(msg) {
           :class="isMyMessage(msg) ? 'bg-dark' : ''"
           style="max-width: 75%"
         >
-          <p class="m-0" :style="isMyMessage(msg) ? 'color: white' : ''">{{ msg.content }}</p>
-          <small class="text-muted" style="font-size: 0.7rem">
+          <p class="m-0" :style="isMyMessage(msg) ? 'color: #fff' : 'color: #212529'">{{ msg.content }}</p>
+          <small :style="isMyMessage(msg) ? 'color: #ccc' : 'color: #6c757d'" style="font-size: 0.7rem">
             {{ dayjs(msg.created_at).format('h:mm A') }}
           </small>
         </div>
