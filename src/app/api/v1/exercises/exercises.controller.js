@@ -76,31 +76,31 @@ export async function getExercises(req, res) {
     let userExercises = null;
 
     if (ob === 'name') {
-      const { rows: temp } = await db.raw(
-        `
-        select
-          ec.id as category_id,
-	        ec.name as category_name,
-	        json_agg(e.* order by e."name" asc) as exercises
-        from
-	        exercises e
-	        inner join exercise_categories ec on ec.id = e.exercise_category_id
-        where
-	        e.deleted = false
-	        and e.user_id = ?
-        group by
-	        ec.id
-        order by ec."name"
-      `,
-        [uid],
-      );
+      // Get exercises grouped by category
+      const exercises = await db
+        .select('e.*', 'ec.id as category_id', 'ec.name as category_name')
+        .from('exercises as e')
+        .innerJoin('exercise_categories as ec', 'ec.id', 'e.exercise_category_id')
+        .where('e.deleted', false)
+        .andWhere('e.user_id', uid)
+        .orderBy('ec.name', 'asc')
+        .orderBy('e.name', 'asc');
 
-      userExercises = temp;
+      // Group exercises by category
+      const categoryMap = new Map();
+      for (const exercise of exercises) {
+        const catId = exercise.category_id;
+        if (!categoryMap.has(catId)) {
+          categoryMap.set(catId, {
+            category_id: catId,
+            category_name: exercise.category_name,
+            exercises: [],
+          });
+        }
+        categoryMap.get(catId).exercises.push(exercise);
+      }
 
-      // userExercises = await ExercisesQueries.getExerciseByUserId(uid, {
-      //   orderBy: 'name',
-      //   direction: 'asc',
-      // });
+      userExercises = Array.from(categoryMap.values());
     } else {
       userExercises = await ExercisesQueries.getExerciseByUserId(uid);
     }

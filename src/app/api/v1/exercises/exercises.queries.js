@@ -44,7 +44,7 @@ export function getExerciseByUserId(uid, options = { orderBy: 'id', direction: '
   return db
     .select('e.*', 'ec.name as category_name')
     .from('exercises as e')
-    .fullOuterJoin('exercise_categories as ec', 'ec.id', 'e.exercise_category_id')
+    .leftJoin('exercise_categories as ec', 'ec.id', 'e.exercise_category_id')
     .where({ 'e.user_id': uid })
     .andWhere({ 'e.deleted': false })
     .andWhere({ 'ec.deleted': false })

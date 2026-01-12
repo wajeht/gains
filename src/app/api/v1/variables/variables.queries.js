@@ -65,35 +65,36 @@ export function weeklyWeightInByUserId(user_id) {
 }
 
 export async function recentPrsByUserId(user_id) {
-  const { rows } = await db.raw(
-    `
-    select
-	    json_agg(s.*)->0->'id' as "set_id",
-	    e.name as "name",
-	    json_agg(s.*)->0->'reps' as "reps",
-	    json_agg(s.*)->0->'weight' as "weight",
-	    json_agg(s.*)->0->'rpe' as "rpe",
-	    json_agg(s.*)->0->>'session_id' as "session_id",
-	    json_agg(s.*)->0->>'created_at' as "date"
-    from
-	    sets s
-    inner join exercises e on e.id = s.exercise_id
-    inner join sessions ss on ss.id = s.session_id
-    where (
-	    s.reps between 1 and 3
-	    and s.rpe between 7 and 10
-      and ss.deleted = false
-	    and s.user_id = ?
+  // Get top sets per exercise (1-3 reps, RPE 7-10)
+  const sets = await db
+    .select(
+      's.id as set_id',
+      'e.id as exercise_id',
+      'e.name as name',
+      's.reps',
+      's.weight',
+      's.rpe',
+      's.session_id',
+      's.created_at as date',
     )
-    group by
-	    e.id
-    order by
-	    date desc
-    limit 8
-  `,
-    [user_id],
-  );
-  return rows;
+    .from('sets as s')
+    .innerJoin('exercises as e', 'e.id', 's.exercise_id')
+    .innerJoin('sessions as ss', 'ss.id', 's.session_id')
+    .whereBetween('s.reps', [1, 3])
+    .andWhereBetween('s.rpe', [7, 10])
+    .andWhere('ss.deleted', false)
+    .andWhere('s.user_id', user_id)
+    .orderBy('s.created_at', 'desc');
+
+  // Group by exercise and take first (most recent) set per exercise
+  const exerciseMap = new Map();
+  for (const set of sets) {
+    if (!exerciseMap.has(set.exercise_id)) {
+      exerciseMap.set(set.exercise_id, set);
+    }
+  }
+
+  return Array.from(exerciseMap.values()).slice(0, 8);
 }
 
 export async function getRecovery(user_id, pagination = { perPage: null, currentPage: null }) {
@@ -107,9 +108,9 @@ export async function getRecovery(user_id, pagination = { perPage: null, current
       'v.user_id as user_id',
     )
     .from('variables as v')
-    .fullOuterJoin('sessions as ss', 'ss.id', 'v.session_id')
+    .leftJoin('sessions as ss', 'ss.id', 'v.session_id')
     .where({ 'v.user_id': user_id })
-    .andWhereRaw(`(v.deleted = false or ss.deleted = false)`)
+    .andWhere('v.deleted', false)
     .orderBy('v.created_at', 'desc')
     .paginate({
       ...pagination,
