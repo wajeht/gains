@@ -62,9 +62,12 @@ export async function getGoogleOAuthRedirect(req, res) {
   res.clearCookie('oauth_state');
 
   try {
-    const { id_token, access_token } = await authService.getGoogleOAuthToken({ code });
+    const tokens = await authService.getGoogleOAuthToken({ code });
+    const { id_token, access_token, refresh_token, expires_in } = tokens;
 
     const googleUser = await authService.getGoogleUser({ id_token, access_token });
+
+    const tokenExpiresAt = expires_in ? new Date(Date.now() + expires_in * 1000) : null;
 
     if (!googleUser.verified_email) {
       logger.warn(`Unverified Google email attempted login: ${googleUser.email}`);
@@ -95,6 +98,9 @@ export async function getGoogleOAuthRedirect(req, res) {
         role: isAdmin ? 'admin' : 'user',
         verified: true,
         verified_at: new Date(),
+        google_access_token: access_token,
+        google_refresh_token: refresh_token || null,
+        google_token_expires_at: tokenExpiresAt,
       });
 
       if (isAdmin) {
