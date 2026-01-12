@@ -13,19 +13,19 @@ fs.access(path.join(root, '.env'), (err) => {
 dotenv.config({ path: path.join(root, '.env') });
 
 export const cookie = {
-  secret: process.env.COOKIE_SECRET,
-  expiration: process.env.COOKIE_EXPIRATION,
+  secret: process.env.APP_COOKIE_SECRET,
+  expiration: process.env.APP_COOKIE_EXPIRATION,
 };
 
-export const port = process.env.PORT;
+export const port = process.env.APP_PORT;
 
-export const vue_port = process.env.VUE_PORT;
+export const vue_port = process.env.APP_VUE_PORT;
 
-export const env = process.env.ENV;
+export const env = process.env.APP_ENV;
 
-export const domain = process.env.DOMAIN;
+export const domain = process.env.APP_DOMAIN;
 
-export const jwt_secret = process.env.JWT_SECRET;
+export const jwt_secret = process.env.APP_JWT_SECRET;
 
 export const email = {
   host: process.env.EMAIL_HOST,
@@ -36,7 +36,7 @@ export const email = {
 };
 
 export const admin = {
-  email: process.env.ADMIN_EMAIL,
+  email: process.env.APP_ADMIN_EMAIL,
 };
 
 export const google = {

@@ -8,7 +8,7 @@ dotenv.config({ path: path.join(process.cwd(), '.env') });
 import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
 
 const rollupOptions = {};
-if (process.env.ENV === 'dev' || process.env.ENV === 'development') {
+if (process.env.APP_ENV === 'dev' || process.env.APP_ENV === 'development') {
   rollupOptions.output = {
     entryFileNames: 'assets/[name].js',
     chunkFileNames: 'assets/[name].js',
@@ -19,17 +19,17 @@ if (process.env.ENV === 'dev' || process.env.ENV === 'development') {
 export default defineConfig({
   server: {
     host: '0.0.0.0',
-    port: process.env.VUE_PORT,
+    port: process.env.APP_VUE_PORT,
     proxy: {
       '/api': {
-        target: `http://localhost:${process.env.PORT}`,
+        target: `http://localhost:${process.env.APP_PORT}`,
         changeOrigin: true,
         secure: false,
         ws: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
       '/uploads': {
-        target: `http://localhost:${process.env.PORT}`,
+        target: `http://localhost:${process.env.APP_PORT}`,
         changeOrigin: true,
       },
     },
