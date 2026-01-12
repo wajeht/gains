@@ -7,40 +7,40 @@ const features = ref([
   {
     id: 1,
     name: 'tracking',
-    title: '📈 Data intensive tracking.',
-    subtitle: 'It’ll blow your mind.',
+    title: '📈 Comprehensive tracking.',
+    subtitle: 'Every rep counts.',
     description:
-      'We take every piece of data that you give and formulate insightful and accurate graphics. Consider your sleep, diet, workouts and progress at a glance with our aggregation algorithm.',
+      'Log your workouts with detailed metrics including sets, reps, weight, and RPE. Track your progress over time and make data-driven decisions about your training.',
     poster: new URL('../../assets/images/tracking.png', import.meta.url).href,
     video: new URL('../../assets/videos/tracking.mp4', import.meta.url).href,
   },
   {
     id: 2,
     name: 'instagram',
-    title: '📺 Instagram style video layout.',
-    subtitle: 'See for yourself.',
+    title: '📺 Social video feed.',
+    subtitle: 'Share your lifts.',
     description:
-      "Browse other users' content, view popular content, like photos, and follow other users to add their content to a personal feed.",
+      'Upload training videos, follow other lifters, and build a community around your progress. Get feedback and stay motivated by connecting with like-minded athletes.',
     poster: new URL('../../assets/images/videos.jpg', import.meta.url).href,
     video: new URL('../../assets/videos/instagram-style.mp4', import.meta.url).href,
   },
   {
     id: 3,
     name: 'calculators',
-    title: '🧮 A bunch of calculators.',
-    subtitle: 'It’ll blow your mind.',
+    title: '🧮 Training calculators.',
+    subtitle: 'Dial in your numbers.',
     description:
-      "Anxious to know where you're at? Find one of our many calculators and give it a whirl.",
+      'Estimate your one-rep max, calculate plate loading, and plan your training weights with our collection of strength training calculators.',
     poster: new URL('../../assets/images/calculators.png', import.meta.url).href,
     video: new URL('../../assets/videos/calculators.mp4', import.meta.url).href,
   },
   {
     id: 4,
     name: 'charts',
-    title: '📊 Charts, Graphs, and Reports.',
-    subtitle: 'See for yourself.',
+    title: '📊 Visual progress.',
+    subtitle: 'See your growth.',
     description:
-      'Chart tools are powerful, simple to use, and free. Try out our rich gallery of interactive charts and data tools.',
+      'Visualize your training data with interactive charts and graphs. Identify trends, track PRs, and understand your progress at a glance.',
     poster: new URL('../../assets/images/charts-and-graph.png', import.meta.url).href,
     video: new URL('../../assets/videos/chart.mp4', import.meta.url).href,
   },
@@ -73,8 +73,8 @@ function clearAndDismissPreviewVideoModal() {
       v-once
     >
       <div class="row">
-        <!-- left -->
-        <div class="col-md-5">
+        <!-- image -->
+        <div class="col-md-5" :class="{ 'order-md-2': index % 2 === 0 }">
           <div role="button" @click="previewVideo(index)" class="poster-container">
             <img :src="f.poster" style="width: 100%" class="border border-1" rel="preload" />
             <div class="middle">
@@ -83,8 +83,8 @@ function clearAndDismissPreviewVideoModal() {
           </div>
         </div>
 
-        <!-- right -->
-        <div class="col-md-7">
+        <!-- text -->
+        <div class="col-md-7" :class="{ 'order-md-1': index % 2 === 0 }">
           <h2 class="featurette-heading pt-md-3">
             {{ f.title }} <span class="text-muted">{{ f.subtitle }}</span>
           </h2>
@@ -99,14 +99,13 @@ function clearAndDismissPreviewVideoModal() {
     <section id="github" class="py-5 text-center">
       <!-- title -->
       <h2 class="featurette-heading">
-        👨‍💻 Are you a developer? <span class="text-muted">That's cool..!</span>
+        👨‍💻 Open source. <span class="text-muted">Built by lifters, for lifters.</span>
       </h2>
 
       <!-- description -->
       <p class="lead py-3">
-        Help us bring new ideas to life by contributing to our long term project. Or if you have
-        specific idea that will help many lifters, feel free to get involve with our development
-        process!
+        Gains is free and open source. Contribute code, report bugs, or request features on GitHub.
+        Help us build better tools for the strength community.
       </p>
 
       <!-- button -->
