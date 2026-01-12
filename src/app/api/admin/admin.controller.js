@@ -1,7 +1,5 @@
 import logger from '../../../utils/logger.js';
-import * as UsersQueries from '../v1/users/users.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import seedMockTrainingData from '../../../utils/seed-mock-training-data.js';
 import dayjs from 'dayjs';
 import fsp from 'fs/promises';
 import fs from 'fs';
@@ -57,23 +55,6 @@ export async function getViewLogs(req, res) {
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
     data: log,
-  });
-}
-
-export async function postSeedMockTrainingData(req, res) {
-  const { email } = req.body;
-
-  seedMockTrainingData(email);
-
-  const [{ id: user_id }] = await UsersQueries.findUserByParam({ email });
-
-  logger.info(`User ID: ${user_id} has generated mock training data!`);
-
-  res.status(StatusCodes.OK).json({
-    status: 'success',
-    request_url: req.originalUrl,
-    message: 'The resource was returned successfully!',
-    data: [],
   });
 }
 
