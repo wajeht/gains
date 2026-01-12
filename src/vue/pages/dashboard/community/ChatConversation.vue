@@ -91,7 +91,7 @@ function scrollToBottom() {
 }
 
 function isMyMessage(msg) {
-  return Number(msg.sender_id) === Number(userStore.user.id);
+  return msg.sender_id == userStore.user.id;
 }
 </script>
 
@@ -138,12 +138,12 @@ function isMyMessage(msg) {
         :class="isMyMessage(msg) ? 'justify-content-end' : 'justify-content-start'"
       >
         <div
-          class="message-bubble px-3 py-2 rounded-3"
-          :class="isMyMessage(msg) ? 'bg-dark text-white' : 'border bg-white'"
+          class="card px-3 py-2"
+          :class="isMyMessage(msg) ? 'bg-dark' : ''"
           style="max-width: 75%"
         >
-          <p class="m-0">{{ msg.content }}</p>
-          <small class="opacity-75" style="font-size: 0.7rem">
+          <p class="m-0" :style="isMyMessage(msg) ? 'color: white' : ''">{{ msg.content }}</p>
+          <small class="text-muted" style="font-size: 0.7rem">
             {{ dayjs(msg.created_at).format('h:mm A') }}
           </small>
         </div>
@@ -171,7 +171,7 @@ function isMyMessage(msg) {
 </template>
 
 <style scoped>
-.message-bubble {
+.card {
   word-wrap: break-word;
 }
 </style>
