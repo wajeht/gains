@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import jwt from 'jsonwebtoken';
 import { jwt_secret } from '../../../config/env.js';
 import CustomError from '../../api.errors.js';

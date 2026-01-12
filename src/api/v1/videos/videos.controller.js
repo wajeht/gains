@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import * as VideosQueries from './videos.queries.js';
 
 export async function getVideo(req, res) {

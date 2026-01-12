@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from './config/status-codes.js';
 import path from 'path';
 import fs from 'fs';
 import { env } from './config/env.js';

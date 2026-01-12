@@ -1,5 +1,5 @@
 import * as ExerciseCategoriesQueries from './exercise-categories.queries.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import logger from '../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
 

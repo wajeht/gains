@@ -52,7 +52,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('*', regularLimiter, AppRoutes.vueHandler);
+app.use('/{*splat}', regularLimiter, AppRoutes.vueHandler);
 
 app.use(AppRoutes.notFoundHandler);
 app.use(AppRoutes.errorHandler);
