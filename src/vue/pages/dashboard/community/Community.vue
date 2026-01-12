@@ -119,6 +119,8 @@ async function getSessions() {
                 width="24"
                 height="24"
                 class="rounded-circle me-1"
+                role="button"
+                @click="router.push(userStore.user.id == s.user_id ? `/dashboard/profile/${userStore.user.username}` : `/dashboard/user/${s.username}`)"
               />
               <span class="d-flex justify-content-between align-items-center gap-1">
                 <!-- name -->
@@ -128,7 +130,12 @@ async function getSessions() {
                   @click="router.push(`/dashboard/profile/${userStore.user.username}`)"
                   >{{ s.username }}</span
                 >
-                <span v-else>{{ s.username }}</span>
+                <span
+                  v-else
+                  role="button"
+                  @click="router.push(`/dashboard/user/${s.username}`)"
+                  >{{ s.username }}</span
+                >
                 <!-- checkmark -->
                 <small v-if="userStore.user.id === s.user_id">
                   <i class="bi bi-check-circle-fill text-primary"></i>
