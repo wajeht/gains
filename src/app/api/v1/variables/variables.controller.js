@@ -1,8 +1,5 @@
 import * as VariablesQueries from './variables.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import fs from 'fs/promises';
-import path from 'path';
-import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
 import axios from 'axios';
 import logger from '../../../../utils/logger.js';
@@ -112,44 +109,6 @@ export async function getRecovery(req, res) {
     data: recovery.data,
     pagination: recovery.pagination,
   });
-}
-
-export async function getChangelogs(req, res) {
-  try {
-    const changelogs = await fs.readFile(
-      path.resolve(path.join(process.cwd(), 'CHANGELOG.md')),
-      'utf-8',
-    );
-
-    const versions = changelogs.match(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g);
-    const parsedChangelogs = changelogs
-      .split(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g)
-      .slice(1);
-
-    const changeLogsInHTMLFormat = parsedChangelogs.map((cl, idx) => {
-      let ver = versions[idx];
-      ver = ver.slice(0, 3) + ' Versions' + ver.slice(3);
-      return {
-        version: marked.parse(ver),
-        current: idx === 0,
-        changelog: marked.parse(cl),
-      };
-    });
-
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      changelogs: changeLogsInHTMLFormat,
-    });
-  } catch (e) {
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      changelogs: null,
-    });
-  }
 }
 
 export async function getWeeklyWeightIn(req, res) {

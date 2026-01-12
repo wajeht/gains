@@ -60,7 +60,6 @@ import ApiKeys from './pages/dashboard/settings/data/ApiKeys.vue';
 import SendFeedback from './pages/dashboard/settings/others/SendFeedback.vue';
 import DashboardPrivacy from './pages/dashboard/settings/others/DashboardPrivacy.vue';
 import DashboardTerms from './pages/dashboard/settings/others/DashboardTerms.vue';
-import Changelogs from './pages/dashboard/settings/others/Changelogs.vue';
 import HelpAndSupport from './pages/dashboard/settings/others/HelpAndSupport.vue';
 import IssuesAndPullRequests from './pages/dashboard/settings/others/IssuesAndPullRequests.vue';
 
@@ -269,15 +268,6 @@ const routes = [
     path: '/dashboard/settings/others/issues-and-pull-requests',
     name: 'IssuesAndPullRequests',
     component: IssuesAndPullRequests,
-    meta: {
-      layout: 'SingleDashboardLayout',
-      requiredAuth: true,
-    },
-  },
-  {
-    path: '/dashboard/settings/others/changelogs',
-    name: 'Changelogs',
-    component: Changelogs,
     meta: {
       layout: 'SingleDashboardLayout',
       requiredAuth: true,

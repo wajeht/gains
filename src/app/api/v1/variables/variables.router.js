@@ -119,12 +119,4 @@ variables.get(
   catchAsyncErrors(VariablesController.getRecovery),
 );
 
-/**
- * GET /api/v1/variables/changelogs
- * @tags variables
- * @summary get all the change logs
- * @param {number} user_id.path.required - the user_id - application/x-www-form-urlencoded
- */
-variables.get('/changelogs', catchAsyncErrors(VariablesController.getChangelogs));
-
 export default variables;
