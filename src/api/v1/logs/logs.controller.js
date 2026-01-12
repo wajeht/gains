@@ -42,7 +42,7 @@ export async function uploadAVideo(req, res) {
     });
 
     fs.unlink(video_path, (err) => {
-      if (err) logger.error('Failed to delete temp video file:', err);
+      if (err) logger.error('failed to delete temp video file', { error: err.message });
     });
 
     logger.info(`User id ${user_id} uploaded video to YouTube: ${youtubeData.youtube_video_id}`);

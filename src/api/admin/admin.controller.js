@@ -1,62 +1,6 @@
-import logger from '../../utils/logger.js';
 import { StatusCodes } from '../../config/status-codes.js';
 import dayjs from 'dayjs';
-import fsp from 'fs/promises';
-import fs from 'fs';
-import path from 'path';
 import db from '../../db/db.js';
-
-const TODAY = dayjs().format('YYYY-MM-DD');
-
-export async function getViewLogs(req, res) {
-  const { download, latest } = req.query;
-
-  const todaysLogName = `${TODAY}.log`;
-  const todaysLogPath = path.resolve(
-    path.join(process.cwd(), 'src', 'storage', 'logs', todaysLogName),
-  );
-
-  let log = null;
-
-  if (!fs.existsSync(todaysLogPath)) {
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      data: [],
-    });
-  }
-
-  if (download) {
-    return res.status(StatusCodes.OK).download(todaysLogPath);
-  }
-
-  log = await fsp.readFile(todaysLogPath, 'utf-8');
-  log = log.split('\n');
-
-  if (latest) {
-    if (latest.includes('-')) {
-      const negative = parseInt(latest);
-      log = log.slice(negative);
-    } else {
-      log = log.slice(0, latest);
-    }
-
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      data: log,
-    });
-  }
-
-  return res.status(StatusCodes.OK).json({
-    status: 'success',
-    request_url: req.originalUrl,
-    message: 'The resource was returned successfully!',
-    data: log,
-  });
-}
 
 export async function getStats(req, res) {
   const today = dayjs().endOf('day').toISOString();

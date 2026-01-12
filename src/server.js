@@ -22,7 +22,7 @@ async function gracefulShutdown() {
     logger.info('**** Closed out remaining connections. ****');
     process.exit(0);
   } catch (err) {
-    logger.error('**** Error during shutdown ****', err);
+    logger.error('error during shutdown', { error: err.message });
     process.exit(1);
   }
 }
@@ -48,7 +48,7 @@ process.on('SIGTERM', gracefulShutdown);
       logger.info(`Database migrations applied: ${list}`);
     }
   } catch (e) {
-    logger.error('Database migration failed:', e);
+    logger.error('database migration failed', { error: e.message });
   }
 })();
 

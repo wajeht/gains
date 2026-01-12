@@ -172,7 +172,7 @@ export async function getGoogleOAuthRedirect(req, res) {
     res.clearCookie('oauth_origin');
     res.redirect(getRedirectUrl(`/oauth/callback?user=${userData}&appVersion=${pkg.version}`));
   } catch (error) {
-    logger.error('Google OAuth error:', error);
+    logger.error('google oauth error', { error: error.message });
     res.clearCookie('oauth_origin');
     res.redirect(getRedirectUrl('/login?error=oauth_failed'));
   }

@@ -52,12 +52,7 @@ export function errorHandler(err, req, res, _next) {
 
   const ip = requestIp.getClientIp(req);
 
-  const errWithIP = {
-    ...err,
-    ip,
-  };
-
-  logger.error(errWithIP);
+  logger.error('server error', { error: err.message, ip });
 
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     status: 'fail',

@@ -58,6 +58,6 @@ export default async function generateDefaultExercises(user_id) {
     // const delete_exercises = await db('exercises').del(); // for testing
     return db.insert(built_exercises).into('exercises').returning('*');
   } catch (e) {
-    logger.error(e);
+    logger.error('generate default exercises failed', { error: e.message });
   }
 }
