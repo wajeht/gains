@@ -58,6 +58,7 @@ export default defineConfig({
         additionalData: `
           @import "@/assets/sass/main.scss";
         `,
+        silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
       },
     },
     postcss: {
