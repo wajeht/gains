@@ -8,11 +8,7 @@ import { authenticateUser, authorizePermissions } from './api.middlewares.js';
 
 const api = express.Router();
 
-// for api document as jsdocs comments
-// https://brikev.github.io/express-jsdoc-swagger-docs/#/
-
 api.use('/auth', authRouter);
-
 api.use('/admin', authenticateUser, authorizePermissions('admin', 'api-admin-user'), adminRouter);
 api.use('/v1', authenticateUser, v1);
 
