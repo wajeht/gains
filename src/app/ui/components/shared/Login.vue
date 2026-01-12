@@ -53,13 +53,11 @@ function loginWithGoogle() {
     <button
       @click="loginWithGoogle"
       :disabled="loading"
-      class="btn btn-light w-100 d-flex align-items-center justify-content-center gap-2"
-      style="border: 1px solid #ced4da; padding: 12px"
+      class="btn btn-outline-dark d-inline-flex align-items-center gap-2"
     >
       <div v-if="loading" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
-
       <template v-if="!loading">
         <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <path

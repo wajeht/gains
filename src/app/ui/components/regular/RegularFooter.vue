@@ -3,12 +3,12 @@
     <div class="container d-flex justify-content-between">
       <!-- copyright -->
       <div class="text-muted d-flex gap-2 text-sm-start">
-        <span> Copyright © 2022 gains.jaw.dev. </span>
-        <span id="love"> Made with ❤️ by group of strength athletes! </span>
+        <span> © 2022 gains.jaw.dev. </span>
+        <span id="love"> Made with ❤️ by group of strength athletes</span>
       </div>
 
       <!-- social links -->
-      <div class="d-flex gap-2">
+      <div class="d-flex gap-3">
         <!-- github -->
         <a class="link-secondary" href="https://github.com/wajeht/gains" target="_blank"
           ><i class="bi bi-github"></i
