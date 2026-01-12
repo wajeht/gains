@@ -28,6 +28,10 @@ export default defineConfig({
         ws: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
+      '/uploads': {
+        target: `http://localhost:${process.env.PORT}`,
+        changeOrigin: true,
+      },
     },
   },
   plugins: [vue()],
