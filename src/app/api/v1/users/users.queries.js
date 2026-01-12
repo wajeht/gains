@@ -39,7 +39,9 @@ export async function createUser(body) {
     .returning('*')
     .then(async ([user]) => {
       const { id } = user;
-      await db.insert({ user_id: id, verified: true, verified_at: new Date() }).into('user_details');
+      await db
+        .insert({ user_id: id, verified: true, verified_at: new Date() })
+        .into('user_details');
       return db
         .select()
         .from('users')

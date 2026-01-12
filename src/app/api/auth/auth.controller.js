@@ -1,8 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
-import * as UsersQueries from '../v1/users/users.queries.js';
 import logger from '../../../utils/logger.js';
-import CustomError from '../api.errors.js';
-import { env, domain, jwt_secret, admin } from '../../../config/env.js';
+import { env, jwt_secret, admin } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../../utils/pkg.js';
 import db from '../../../database/db.js';
@@ -10,13 +8,11 @@ import crypto from 'crypto';
 import * as authService from './auth.service.js';
 import generateDefaultExercises from '../../../utils/generate-default-exercises.js';
 
-// Initiate Google OAuth flow
 export function getGoogleOAuth(req, res) {
   const state = authService.generateOAuthState();
   req.session = req.session || {};
   req.session.oauthState = state;
 
-  // Store state in a cookie for stateless verification
   res.cookie('oauth_state', state, {
     httpOnly: true,
     secure: env === 'production',
@@ -24,41 +20,61 @@ export function getGoogleOAuth(req, res) {
     signed: true,
   });
 
+  const origin = req.get('Referer') || req.get('Origin') || '';
+  if (origin) {
+    res.cookie('oauth_origin', origin, {
+      httpOnly: true,
+      secure: env === 'production',
+      maxAge: 10 * 60 * 1000,
+      signed: true,
+    });
+  }
+
   const url = authService.getGoogleOAuthURL(state);
   res.redirect(url);
 }
 
-// Handle Google OAuth callback
 export async function getGoogleOAuthRedirect(req, res) {
   const { code, state } = req.query;
 
-  // Verify state to prevent CSRF
+  const origin = req.signedCookies.oauth_origin || '';
+  const getRedirectUrl = (path) => {
+    if (origin && env !== 'production') {
+      try {
+        const originUrl = new URL(origin);
+        return `${originUrl.protocol}//${originUrl.host}${path}`;
+      } catch (e) {}
+    }
+    return path;
+  };
+
   const storedState = req.signedCookies.oauth_state;
-  if (!state || !storedState || !crypto.timingSafeEqual(Buffer.from(state), Buffer.from(storedState))) {
+  if (
+    !state ||
+    !storedState ||
+    !crypto.timingSafeEqual(Buffer.from(state), Buffer.from(storedState))
+  ) {
     logger.warn('OAuth state mismatch - possible CSRF attempt');
-    return res.redirect('/login?error=invalid_state');
+    res.clearCookie('oauth_origin');
+    return res.redirect(getRedirectUrl('/login?error=invalid_state'));
   }
 
-  // Clear the state cookie
   res.clearCookie('oauth_state');
 
   try {
-    // Exchange code for tokens
     const { id_token, access_token } = await authService.getGoogleOAuthToken({ code });
 
-    // Get user info from Google
     const googleUser = await authService.getGoogleUser({ id_token, access_token });
 
     if (!googleUser.verified_email) {
       logger.warn(`Unverified Google email attempted login: ${googleUser.email}`);
-      return res.redirect('/login?error=unverified_email');
+      res.clearCookie('oauth_origin');
+      return res.redirect(getRedirectUrl('/login?error=unverified_email'));
     }
 
-    // Find or create user
     let [user] = await db.select('*').from('users').where({ email: googleUser.email });
 
     if (!user) {
-      // Create new user
       const username = googleUser.email.split('@')[0] + '_' + crypto.randomBytes(4).toString('hex');
 
       const [newUser] = await db('users')
@@ -70,7 +86,6 @@ export async function getGoogleOAuthRedirect(req, res) {
 
       user = newUser;
 
-      // Create user details - auto-grant admin if email matches ADMIN_EMAIL
       const isAdmin = admin.email && googleUser.email.toLowerCase() === admin.email.toLowerCase();
       await db('user_details').insert({
         user_id: user.id,
@@ -88,11 +103,9 @@ export async function getGoogleOAuthRedirect(req, res) {
 
       logger.info(`New user created via Google OAuth: ${user.email} (ID: ${user.id})`);
 
-      // Generate default exercises for new user
       generateDefaultExercises(user.id);
       logger.info(`Generated default exercises for User id ${user.id}!`);
     } else {
-      // Check if existing user should be upgraded to admin
       const isAdmin = admin.email && googleUser.email.toLowerCase() === admin.email.toLowerCase();
       if (isAdmin) {
         const [userDetails] = await db('user_details').where({ user_id: user.id });
@@ -104,14 +117,12 @@ export async function getGoogleOAuthRedirect(req, res) {
       logger.info(`User logged in via Google OAuth: ${user.email} (ID: ${user.id})`);
     }
 
-    // Get user details
     const [userWithDetails] = await db
       .select('*')
       .from('users')
       .leftJoin('user_details', 'users.id', 'user_details.user_id')
       .where({ 'users.id': user.id });
 
-    // Create JWT token
     const tokenPayload = {
       user_id: user.id,
       role: userWithDetails.role,
@@ -131,23 +142,25 @@ export async function getGoogleOAuthRedirect(req, res) {
       signed: true,
     });
 
-    // Encode user data for frontend
-    const userData = encodeURIComponent(JSON.stringify({
-      id: userWithDetails.id,
-      role: userWithDetails.role,
-      email: userWithDetails.email,
-      username: userWithDetails.username,
-      first_name: userWithDetails.first_name,
-      last_name: userWithDetails.last_name,
-      weight: userWithDetails.weight,
-      profile_picture_url: userWithDetails.profile_picture_url,
-    }));
+    const userData = encodeURIComponent(
+      JSON.stringify({
+        id: userWithDetails.id,
+        role: userWithDetails.role,
+        email: userWithDetails.email,
+        username: userWithDetails.username,
+        first_name: userWithDetails.first_name,
+        last_name: userWithDetails.last_name,
+        weight: userWithDetails.weight,
+        profile_picture_url: userWithDetails.profile_picture_url,
+      }),
+    );
 
-    // Redirect to frontend with user data
-    res.redirect(`/oauth/callback?user=${userData}&appVersion=${pkg.version}`);
+    res.clearCookie('oauth_origin');
+    res.redirect(getRedirectUrl(`/oauth/callback?user=${userData}&appVersion=${pkg.version}`));
   } catch (error) {
     logger.error('Google OAuth error:', error);
-    res.redirect('/login?error=oauth_failed');
+    res.clearCookie('oauth_origin');
+    res.redirect(getRedirectUrl('/login?error=oauth_failed'));
   }
 }
 

@@ -53,7 +53,10 @@ export async function createASession(body) {
   ];
 }
 
-export async function getSessionsByUserId(user_id, pagination = { perPage: null, currentPage: null }) {
+export async function getSessionsByUserId(
+  user_id,
+  pagination = { perPage: null, currentPage: null },
+) {
   // Get sessions first
   const sessions = await db
     .select('sessions.*')
