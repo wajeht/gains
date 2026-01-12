@@ -58,10 +58,9 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@popperjs/core": "^2.11.8",
-    "@vitejs/plugin-vue": "^4.5.2",
+    "@vitejs/plugin-vue": "^6.0.3",
     "adm-zip": "^0.5.12",
     "animate.css": "^4.1.1",
-    "axios": "^1.6.8",
     "better-sqlite3": "^12.6.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
@@ -95,7 +94,7 @@
     "read-pkg": "^9.0.1",
     "request-ip": "^3.3.0",
     "uuid": "^9.0.1",
-    "vite": "^4.5.1",
+    "vite": "^7.3.1",
     "vue": "^3.4.25",
     "vue-chart-3": "^3.1.8",
     "vue-query": "^1.26.0",
@@ -103,12 +102,12 @@
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
-    "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/coverage-v8": "^4.0.16",
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "sass": "^1.75.0",
-    "vitest": "^0.34.6"
+    "vitest": "^4.0.16"
   }
 }
