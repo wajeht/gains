@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as UsersQueries from '../v1/users/users.queries.js';
 import logger from '../../../utils/logger.js';
 import CustomError from '../api.errors.js';
-import { env, domain, jwt_secret } from '../../../config/env.js';
+import { env, domain, jwt_secret, admin } from '../../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../../utils/pkg.js';
 import db from '../../../database/db.js';
@@ -70,15 +70,21 @@ export async function getGoogleOAuthRedirect(req, res) {
 
       user = newUser;
 
-      // Create user details
+      // Create user details - auto-grant admin if email matches ADMIN_EMAIL
+      const isAdmin = admin.email && googleUser.email.toLowerCase() === admin.email.toLowerCase();
       await db('user_details').insert({
         user_id: user.id,
         first_name: googleUser.given_name || null,
         last_name: googleUser.family_name || null,
         profile_picture_url: googleUser.picture || null,
+        role: isAdmin ? 'admin' : 'user',
         verified: true,
         verified_at: new Date(),
       });
+
+      if (isAdmin) {
+        logger.info(`Admin privileges granted to: ${user.email}`);
+      }
 
       logger.info(`New user created via Google OAuth: ${user.email} (ID: ${user.id})`);
 
@@ -86,6 +92,15 @@ export async function getGoogleOAuthRedirect(req, res) {
       generateDefaultExercises(user.id);
       logger.info(`Generated default exercises for User id ${user.id}!`);
     } else {
+      // Check if existing user should be upgraded to admin
+      const isAdmin = admin.email && googleUser.email.toLowerCase() === admin.email.toLowerCase();
+      if (isAdmin) {
+        const [userDetails] = await db('user_details').where({ user_id: user.id });
+        if (userDetails && userDetails.role !== 'admin') {
+          await db('user_details').update({ role: 'admin' }).where({ user_id: user.id });
+          logger.info(`Admin privileges granted to existing user: ${user.email}`);
+        }
+      }
       logger.info(`User logged in via Google OAuth: ${user.email} (ID: ${user.id})`);
     }
 
