@@ -96,7 +96,7 @@ function update(number) {
                 <img
                   class="card-img-top image"
                   :src="
-                    session.videos[0].screenshot_url ??
+                    session.videos[0].youtube_thumbnail ??
                     `https://dummyimage.com/200x200/bdbdbd/000000.jpg`
                   "
                   :alt="session.name"

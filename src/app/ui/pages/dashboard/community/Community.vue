@@ -164,18 +164,17 @@ async function getSessions() {
             <!-- log -->
             <span v-if="s.logs?.currentLogStep === index">
               <!-- video -->
-              <div v-if="log?.videos?.length" class="card card-body p-0 m-0 border-0">
-                <div class="video-wrapper">
-                  <video
-                    class="video"
-                    preload="none"
-                    :poster="log?.videos[0].screenshot_url"
-                    controls
-                    playsinline
-                    muted
-                  >
-                    <source :src="`/api/v1/videos/${log?.videos[0].id}/stream`" type="video/mp4" />
-                  </video>
+              <div
+                v-if="log?.videos?.length && log?.videos[0].youtube_embed_url"
+                class="card card-body p-0 m-0 border-0"
+              >
+                <div class="video-wrapper ratio ratio-16x9">
+                  <iframe
+                    :src="log?.videos[0].youtube_embed_url"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
                 </div>
               </div>
 

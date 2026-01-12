@@ -7,31 +7,7 @@ import express from 'express';
 const videos = express.Router();
 
 /**
- * GET /api/v1/videos/{id}/stream
- * @tags videos
- * @summary steam a video to the client
- * @param {number} id.form.required - the video id - application/x-www-form-urlencoded
- */
-videos.get(
-  '/:id/stream',
-  validator(VideosValidation.getStreamVideo),
-  catchAsyncErrors(VideosController.getStreamVideo),
-);
-
-/**
- * GET /api/v1/videos/{id}/download
- * @tags videos
- * @summary download a video
- * @param {number} id.form.required - the video id - application/x-www-form-urlencoded
- */
-videos.get(
-  '/:id/download',
-  validator(VideosValidation.getDownloadVideo),
-  catchAsyncErrors(VideosController.getDownloadVideo),
-);
-
-/**
- * GET /api/v1/videos/{vid}
+ * GET /api/v1/videos/{id}
  * @tags videos
  * @summary get details of a video
  * @param {number} id.form.required - the video id - application/x-www-form-urlencoded
