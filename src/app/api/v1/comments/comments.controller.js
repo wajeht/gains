@@ -7,7 +7,9 @@ export async function postAComment(req, res) {
 
   const created = await CommentsQueries.createComment(body);
 
-  logger.info(`User id: ${body.user_id} has created comment id: ${created[0].id}, ${JSON.stringify(created[0])}!`);
+  logger.info(
+    `User id: ${body.user_id} has created comment id: ${created[0].id}, ${JSON.stringify(created[0])}!`,
+  );
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',

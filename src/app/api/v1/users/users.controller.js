@@ -159,7 +159,9 @@ export async function postDeleteUserData(req, res) {
   const { user_id } = req.params;
   const deleted = await UsersQueries.deleteUserData(user_id);
 
-  logger.info(`User id ${user_id} has deleted all of comments, videos, variables, sets, logs, sessions and blocks`);
+  logger.info(
+    `User id ${user_id} has deleted all of comments, videos, variables, sets, logs, sessions and blocks`,
+  );
 
   res.status(StatusCodes.OK).json({
     status: 'success',
