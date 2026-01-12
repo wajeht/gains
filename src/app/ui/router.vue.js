@@ -5,7 +5,6 @@ import useUserStore from './store/user.store.js';
 import Features from './pages/regular/Features.vue';
 import RegularTerms from './pages/regular/RegularTerms.vue';
 import RegularPrivacy from './pages/regular/RegularPrivacy.vue';
-import RegularContact from './pages/regular/RegularContact.vue';
 import RegularHome from './pages/regular/RegularHome.vue';
 import RegularLogin from './pages/regular/RegularLogin.vue';
 import RegularNotFound from './pages/regular/RegularNotFound.vue';
@@ -53,7 +52,6 @@ import DeleteAccount from './pages/dashboard/settings/account/DeleteAccount.vue'
 import ApiKeys from './pages/dashboard/settings/data/ApiKeys.vue';
 
 // others
-import SendFeedback from './pages/dashboard/settings/others/SendFeedback.vue';
 import DashboardPrivacy from './pages/dashboard/settings/others/DashboardPrivacy.vue';
 import DashboardTerms from './pages/dashboard/settings/others/DashboardTerms.vue';
 import HelpAndSupport from './pages/dashboard/settings/others/HelpAndSupport.vue';
@@ -104,15 +102,6 @@ const routes = [
     path: '/features',
     name: 'Features',
     component: Features,
-    meta: {
-      layout: 'RegularLayout',
-      requiredAuth: false,
-    },
-  },
-  {
-    path: '/contact',
-    name: 'Contact',
-    component: RegularContact,
     meta: {
       layout: 'RegularLayout',
       requiredAuth: false,
@@ -212,15 +201,6 @@ const routes = [
     },
   },
   // settings -> others
-  {
-    path: '/dashboard/settings/others/send-feedback',
-    name: 'SendFeedback',
-    component: SendFeedback,
-    meta: {
-      layout: 'SingleDashboardLayout',
-      requiredAuth: true,
-    },
-  },
   {
     path: '/dashboard/settings/others/help-and-support',
     name: 'HelpAndSupport',
