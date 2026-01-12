@@ -3,7 +3,7 @@ import logger from '../../utils/logger.js';
 import { env, jwt_secret, admin } from '../../config/env.js';
 import jwt from 'jsonwebtoken';
 import pkg from '../../utils/pkg.js';
-import db from '../../../db/db.js';
+import db from '../../db/db.js';
 import crypto from 'crypto';
 import * as authService from './auth.service.js';
 import generateDefaultExercises from '../../utils/generate-default-exercises.js';

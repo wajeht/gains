@@ -119,11 +119,8 @@ src/templates/tempCodeRunnerFile.js
 .env.prod.old
 
 # SQLite database
-src/database/sqlite/*.sqlite
-src/database/sqlite/*.sqlite-wal
-src/database/sqlite/*.sqlite-shm
-
-# YouTube OAuth token
-youtube-token.json
+src/db/sqlite/*.sqlite
+src/db/sqlite/*.sqlite-wal
+src/db/sqlite/*.sqlite-shm
 .claude
 .vscode
