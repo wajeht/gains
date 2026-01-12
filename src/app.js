@@ -24,6 +24,7 @@ app.use(
           'gains.jaw.dev',
           'localhost',
           'static.cloudflareinsights.com',
+          'www.youtube.com',
         ],
         'img-src': [
           "'self'",
@@ -34,6 +35,13 @@ app.use(
           '*.googleusercontent.com',
         ],
         'frame-src': ["'self'", 'www.youtube.com', 'youtube.com'],
+        'connect-src': [
+          "'self'",
+          'www.youtube.com',
+          'youtube.com',
+          '*.youtube.com',
+          '*.googlevideo.com',
+        ],
         'manifest-src': ["'self'"],
       },
     },
