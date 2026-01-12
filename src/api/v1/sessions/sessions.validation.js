@@ -203,6 +203,7 @@ export const patchSession = [
       'body_weight',
       'hours_of_sleep',
       'caffeine_intake',
+      'calories_prior_session',
       'json',
       'session_rpe',
       'notes',
