@@ -4,9 +4,7 @@ import util from 'util';
 
 import Logger from '../../utils/logger.js';
 import { sleep } from '../../utils/helpers.js';
-import { REDIS } from '../../config/env.js';
 
-import Bull from 'bull';
 import Papa from 'papaparse';
 import dayjs from 'dayjs';
 import AdmZip from 'adm-zip';
@@ -182,16 +180,12 @@ async function downloadUserDataProcess(user_id) {
   }
 }
 
-// -------------------- que --------------------
-
-const downloadUserDataQue = new Bull('download-user-data', REDIS.url);
-
-downloadUserDataQue.process(async (job) => {
-  return await downloadUserDataProcess(job.data.user_id);
-});
-
+// Run the job directly (no Bull queue)
 export default async function InitiateDownloadUserDataJob(user_id) {
-  downloadUserDataQue.add({ user_id });
+  // Run in background without blocking
+  setImmediate(() => {
+    downloadUserDataProcess(user_id).catch((err) => {
+      Logger.error(`Download user data job failed: ${err.message}`);
+    });
+  });
 }
-
-// -------------------- que --------------------

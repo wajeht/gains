@@ -1,49 +1,37 @@
-import logger from '../utils/logger.js';
-import { database, env } from './env.js';
-import { cli } from '../utils/helpers.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-let connection = null;
-
-// use connecting string if not user local
-if (
-  (!database.host || !database.database || !database.username || !database.password) &&
-  env === 'production'
-) {
-  connection = database.url;
-  logger.warn('Using database connection string!');
-} else {
-  connection = {
-    host: database.host,
-    database: database.database,
-    user: database.username,
-    password: database.password,
-  };
-
-  if (!cli()) {
-    logger.warn('Not using database connection string!');
-  }
-}
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default {
-  client: database.client,
-  // debug: env === 'development', // only in dev
-  connection,
-  ping: function (connection, callback) {
-    connection.query({ sql: 'SELECT 1 = 1' }, [], callback);
+  client: 'better-sqlite3',
+  useNullAsDefault: true,
+  connection: {
+    filename: path.resolve(__dirname, '..', 'database', 'sqlite', 'db.sqlite'),
   },
-  pingTimeout: 3 * 1000,
   pool: {
-    min: 0,
-    max: 5,
-    acquireTimeoutMillis: 60000,
+    min: 1,
+    max: 3,
+    acquireTimeoutMillis: 30000,
+    createTimeoutMillis: 30000,
     idleTimeoutMillis: 600000,
+    destroyTimeoutMillis: 5000,
+    reapIntervalMillis: 1000,
+    afterCreate: (conn, done) => {
+      conn.pragma('foreign_keys = ON');
+      conn.pragma('journal_mode = WAL');
+      conn.pragma('synchronous = NORMAL');
+      conn.pragma('cache_size = 10000');
+      conn.pragma('temp_store = MEMORY');
+      conn.pragma('busy_timeout = 5000');
+      done();
+    },
   },
-  acquireConnectionTimeout: 5000,
   migrations: {
     tableName: 'knex_migrations',
-    directory: '../database/migrations',
+    directory: path.resolve(__dirname, '..', 'database', 'migrations'),
   },
   seeds: {
-    directory: '../database/seeds',
+    directory: path.resolve(__dirname, '..', 'database', 'seeds'),
   },
 };

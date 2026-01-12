@@ -1,7 +1,7 @@
 import logger from '../../../../utils/logger.js';
 import * as CommentsQueries from './comments.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import redis from '../../../../utils/redis.js';
+import cache from '../../../../utils/cache.js';
 
 export async function postAComment(req, res) {
   const body = req.body;
@@ -13,7 +13,7 @@ export async function postAComment(req, res) {
       created[0],
     )}!`,
   );
-  await redis.del(`user-id-${body.user_id}-community-sessions`);
+  await cache.del(`user-id-${body.user_id}-community-sessions`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',

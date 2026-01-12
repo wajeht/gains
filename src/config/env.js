@@ -12,16 +12,6 @@ fs.access(path.join(root, '.env'), (err) => {
 
 dotenv.config({ path: path.join(root, '.env') });
 
-export const database = {
-  client: process.env.DB_CLIENT,
-  host: process.env.DB_HOST,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT,
-  url: process.env.DB_URL,
-};
-
 export const cookie = {
   secret: process.env.COOKIE_SECRET,
   expiration: process.env.COOKIE_EXPIRATION,
@@ -51,15 +41,6 @@ export const admin = {
   email: process.env.ADMIN_EMAIL,
   username: process.env.ADMIN_USERNAME,
   password: process.env.ADMIN_PASSWORD,
-};
-
-export const REDIS = {
-  port: process.env.REDIS_PORT,
-  host: process.env.REDIS_HOST,
-  username: process.env.REDIS_USERNAME,
-  password: process.env.REDIS_PASSWORD,
-  db: process.env.REDIS_DB,
-  url: process.env.REDIS_URL,
 };
 
 export const GITHUB = {

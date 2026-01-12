@@ -1,7 +1,7 @@
 import * as SetsQueries from './sets.queries.js';
 import logger from '../../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
-import redis from '../../../../utils/redis.js';
+import cache from '../../../../utils/cache.js';
 
 export async function postSet(req, res) {
   const body = req.body;
@@ -33,7 +33,7 @@ export async function patchSet(req, res) {
   );
 
   if (body.end_date) {
-    redis.del(`user-id-${body.user_id}-community-sessions`);
+    cache.del(`user-id-${body.user_id}-community-sessions`);
   }
 
   res.status(StatusCodes.OK).json({

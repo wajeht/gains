@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import { GITHUB } from '../../../config/env.js';
-import redis from '../../../utils/redis.js';
+import cache from '../../../utils/cache.js';
 import db from '../../../database/db.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
@@ -85,7 +85,7 @@ export async function postSeedMockTrainingData(req, res) {
 }
 
 export async function getIssues(req, res) {
-  let issues = JSON.parse(await redis.get('issues'));
+  let issues = JSON.parse(await cache.get('issues'));
 
   if (issues === null) {
     issues = await axios.get(GITHUB.issue_url, {
@@ -93,7 +93,7 @@ export async function getIssues(req, res) {
         Authorization: `Bearer ${GITHUB.api_key}`,
       },
     });
-    await redis.set('issues', JSON.stringify(issues.data), 'EX', 24 * 60 * 60);
+    await cache.set('issues', JSON.stringify(issues.data), 'EX', 24 * 60 * 60);
   }
 
   res.status(StatusCodes.OK).json({
@@ -105,7 +105,7 @@ export async function getIssues(req, res) {
 }
 
 export async function getOnlineUsers(req, res) {
-  let users = JSON.parse(await redis.get('onlineUsers')) || [];
+  let users = JSON.parse(await cache.get('onlineUsers')) || [];
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
@@ -115,7 +115,7 @@ export async function getOnlineUsers(req, res) {
 }
 
 export async function clearAllCache(req, res) {
-  await redis.flushall();
+  await cache.clear();
 
   res.status(StatusCodes.OK).json({
     status: 'success',
@@ -153,43 +153,27 @@ export async function getStats(req, res) {
 }
 
 export async function getRefreshIndex(req, res) {
-  await db.transaction(async (trx) => {
-    // Fetch index names from pg_indexes
-    const indexInfo = await db.select('indexname').from('pg_indexes').whereNot('tablename', 'pg%');
+  // Drop existing indexes
+  const dropPromises = [
+    db.schema.raw('DROP INDEX IF EXISTS sessions_id_user_id_deleted_end_date_idx'),
+    db.schema.raw('DROP INDEX IF EXISTS videos_id_user_id_log_id_session_id_deleted_idx'),
+    db.schema.raw('DROP INDEX IF EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx'),
+    db.schema.raw('DROP INDEX IF EXISTS sets_id_user_id_session_id_exercise_id_deleted_idx'),
+    db.schema.raw('DROP INDEX IF EXISTS variables_id_user_id_session_id_idx'),
+  ];
 
-    // Drop all the fetched indexes in parallel
-    const dropIndexPromises = indexInfo.map(({ indexname }) => {
-      return db.raw(`DROP INDEX ${indexname}`).transacting(trx);
-    });
+  await Promise.allSettled(dropPromises);
 
-    await Promise.allSettled(dropIndexPromises);
+  // Create new indexes (SQLite syntax)
+  const createPromises = [
+    db.schema.raw('CREATE INDEX IF NOT EXISTS sessions_id_user_id_deleted_end_date_idx ON sessions (id, user_id, deleted, end_date)'),
+    db.schema.raw('CREATE INDEX IF NOT EXISTS videos_id_user_id_log_id_session_id_deleted_idx ON videos (id, user_id, log_id, session_id, deleted)'),
+    db.schema.raw('CREATE INDEX IF NOT EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx ON logs (id, user_id, session_id, exercise_id, deleted, private)'),
+    db.schema.raw('CREATE INDEX IF NOT EXISTS sets_id_user_id_session_id_exercise_id_deleted_idx ON sets (id, user_id, session_id, exercise_id, deleted)'),
+    db.schema.raw('CREATE INDEX IF NOT EXISTS variables_id_user_id_session_id_idx ON variables (id, user_id, session_id)'),
+  ];
 
-    // Drop existing indexes
-    const dropPromises = [
-      db.schema.raw('DROP INDEX IF EXISTS sessions_id_user_id_deleted_end_date_idx'),
-      db.schema.raw('DROP INDEX IF EXISTS videos_id_user_id_log_id_session_id_deleted_idx'),
-      db.schema.raw(
-        'DROP INDEX IF EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx',
-      ),
-      db.schema.raw('DROP INDEX IF EXISTS sets_id_user_id_session_id_exercise_id_deleted_idx'),
-      db.schema.raw('DROP INDEX IF EXISTS variables_id_user_id_session_id_idx'),
-    ];
-
-    await Promise.allSettled(dropPromises);
-
-    // Create new indexes
-    const createPromises = [
-      db.schema.raw('CREATE INDEX ON sessions (id, user_id, deleted, end_date)'),
-      db.schema.raw('CREATE INDEX ON videos (id, user_id, log_id, session_id, deleted)'),
-      db.schema.raw(
-        'CREATE INDEX ON logs (id, user_id, session_id, exercise_id, deleted, private)',
-      ),
-      db.schema.raw('CREATE INDEX ON sets (id, user_id, session_id, exercise_id, deleted)'),
-      db.schema.raw('CREATE INDEX ON variables (id, user_id, session_id)'),
-    ];
-
-    await Promise.allSettled(createPromises);
-  });
+  await Promise.allSettled(createPromises);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
