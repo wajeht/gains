@@ -37,7 +37,6 @@ export const email = {
 
 export const admin = {
   email: process.env.ADMIN_EMAIL,
-  username: process.env.ADMIN_USERNAME,
 };
 
 export const MY_IP = process.env.MY_IP;
