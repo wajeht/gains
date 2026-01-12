@@ -13,7 +13,7 @@ const alert = reactive({
 });
 
 const sessions = ref(null);
-// eslint-disable-next-line no-unused-vars
+
 const sessionsPerWeek = ref(4);
 
 onMounted(async () => {

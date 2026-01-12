@@ -35,7 +35,7 @@ const pagination = reactive({
 
 const setsHistory = ref(null);
 let exerciseDetails = reactive({});
-// eslint-disable-next-line no-unused-vars
+
 const getExerciseDetailsLoading = ref(null);
 const notAvailableYet = ref(false);
 const searchText = ref('');
