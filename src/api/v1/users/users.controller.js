@@ -218,11 +218,9 @@ export async function postFollowUser(req, res) {
   const { follower_id } = req.body;
   const { following_id } = req.params;
 
-  // Check if already following
   const existing = await db('follows').where({ follower_id, following_id }).first();
 
   if (existing) {
-    // Unfollow
     await db('follows').where({ follower_id, following_id }).del();
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -232,7 +230,6 @@ export async function postFollowUser(req, res) {
     });
   }
 
-  // Follow
   const data = await db.insert({ follower_id, following_id }).into('follows').returning('*');
 
   res.status(StatusCodes.OK).json({

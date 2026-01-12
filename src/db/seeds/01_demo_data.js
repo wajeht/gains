@@ -13,13 +13,7 @@ const EXERCISES = [
   { name: 'Barbell Row', category: 'Back' },
 ];
 
-const SESSION_NAMES = [
-  'Upper Body A',
-  'Lower Body A',
-  'Push Day',
-  'Pull Day',
-  'Leg Day',
-];
+const SESSION_NAMES = ['Upper Body A', 'Lower Body A', 'Push Day', 'Pull Day', 'Leg Day'];
 
 /**
  * @param { import("knex").Knex } knex

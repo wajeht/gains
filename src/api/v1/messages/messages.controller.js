@@ -29,7 +29,6 @@ export async function getMessages(req, res) {
     pagination,
   );
 
-  // Mark messages as read
   await MessagesQueries.markConversationAsRead(user_id, other_user_id);
 
   res.status(StatusCodes.OK).json({

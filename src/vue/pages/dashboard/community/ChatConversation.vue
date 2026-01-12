@@ -143,8 +143,8 @@ function isMyMessage(msg) {
           :class="isMyMessage(msg) ? 'bg-dark' : ''"
           style="max-width: 75%"
         >
-          <p class="m-0" :style="isMyMessage(msg) ? 'color: #fff' : 'color: #212529'">{{ msg.content }}</p>
-          <small :style="isMyMessage(msg) ? 'color: #ccc' : 'color: #6c757d'" style="font-size: 0.7rem">
+          <p class="m-0">{{ msg.content }}</p>
+          <small style="font-size: 0.7rem">
             {{ dayjs(msg.created_at).format('h:mm A') }}
           </small>
         </div>
@@ -174,5 +174,21 @@ function isMyMessage(msg) {
 <style scoped>
 .card {
   word-wrap: break-word;
+}
+
+.card p {
+  color: #212529 !important;
+}
+
+.card.bg-dark p {
+  color: #fff !important;
+}
+
+.card small {
+  color: #6c757d !important;
+}
+
+.card.bg-dark small {
+  color: #ccc !important;
 }
 </style>

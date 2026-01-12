@@ -18,7 +18,6 @@ export async function getExerciseHistory(req, res) {
 
   const exercise = await ExercisesQueries.getExerciseHistoryByExerciseId(exercise_id, pagination);
 
-  // calculate e1rm
   exercise.data.map((e) => {
     if (e.reps <= 3 && e.rpe >= 7) {
       e.e1RM = calculateE1RM(e.weight, e.rpe, e.reps);
@@ -41,8 +40,6 @@ export async function getExercise(req, res) {
 
   const exercise = await ExercisesQueries.getExerciseById(eid);
 
-  // if (!exercise.length) throw new CustomError.BadRequestError(`There are no exercise available for exercise id ${eid}!`); // prettier-ignore
-
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
@@ -56,12 +53,9 @@ export async function getExercises(req, res) {
   const ecid = req.query.exercise_category_id;
   const ob = req.query.order_by;
 
-  // when called via /api/v1/exercises?exercise_category_id=1
   if (ecid) {
     const userExercisesByCategory =
       await ExerciseCategoriesQueries.getExercisesByExerciseCategoryId(ecid);
-
-    // if (!userExercisesByCategory.length) throw new CustomError.BadRequestError(`There are no exercises available for category id ${ecid}!`); // prettier-ignore
 
     return res.status(StatusCodes.OK).json({
       status: 'success',
@@ -71,12 +65,10 @@ export async function getExercises(req, res) {
     });
   }
 
-  // when called via /api/v1/exercises?user_id=1
   if (uid) {
     let userExercises = null;
 
     if (ob === 'name') {
-      // Get exercises grouped by category
       const exercises = await db
         .select('e.*', 'ec.id as category_id', 'ec.name as category_name')
         .from('exercises as e')
@@ -86,7 +78,6 @@ export async function getExercises(req, res) {
         .orderBy('ec.name', 'asc')
         .orderBy('e.name', 'asc');
 
-      // Group exercises by category
       const categoryMap = new Map();
       for (const exercise of exercises) {
         const catId = exercise.category_id;
@@ -115,7 +106,6 @@ export async function getExercises(req, res) {
     });
   }
 
-  // when called via /api/v1/exercises
   const exercises = await ExercisesQueries.getAllExercises();
 
   if (!exercises.length) throw new CustomError.BadRequestError(`There are no exercises available currently!`); // prettier-ignore
