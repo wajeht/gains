@@ -7,28 +7,22 @@ export function authenticateUser(req, res, next, ui = false) {
   try {
     let token = null;
 
-    //! -------------------------------- JWT COOKIE TOKEN AUTHENTICATION STARTS -------------------------
     if (req.signedCookies['token']) {
       token = req.signedCookies['token'];
-    }
-    //! -------------------------------- BEARER TOKEN AUTHENTICATION STARTS -----------------------------
-    else if (req.headers.authorization) {
-      if (req.headers.authorization.split(' ').length != 2) throw new CustomError.UnauthorizedError('Must use bearer token authentication!'); // prettier-ignore
-      if (!req.headers.authorization.startsWith('Bearer')) throw new CustomError.UnauthorizedError('Must use bearer token authentication!'); // prettier-ignore
+    } else if (req.headers.authorization) {
+      if (req.headers.authorization.split(' ').length != 2)
+        throw new CustomError.UnauthorizedError('Must use bearer token authentication!');
+      if (!req.headers.authorization.startsWith('Bearer'))
+        throw new CustomError.UnauthorizedError('Must use bearer token authentication!');
       token = req.headers.authorization.split(' ')[1];
-    }
-    //! -------------------------------- API TOKEN AUTHENTICATION STARTS --------------------------------
-    else if (req.headers['x-api-key']) {
+    } else if (req.headers['x-api-key']) {
       token = req.headers['x-api-key'];
-      // TODO: implement api key auth here
     } else {
       throw new CustomError.UnauthorizedError('Invalid authentication!');
     }
 
     try {
       const verified = jwt.verify(token, jwt_secret);
-
-      // attach to request response
       req.user = {
         user_id: verified.user_id,
         role: verified.role,
