@@ -5,6 +5,8 @@ import CustomError from '../../api.errors.js';
 import logger from '../../../../utils/logger.js';
 import { capture } from '../../../../utils/screenshot.js';
 import redis from '../../../../utils/redis.js';
+import { uploadToYouTube } from '../../../../utils/youtube.js';
+import fs from 'fs';
 
 export async function createLogs(req, res) {
   const body = req.body;
@@ -25,29 +27,42 @@ export async function createLogs(req, res) {
 
 export async function uploadAVideo(req, res) {
   const { path: video_path } = req.file;
-  const video_url = req.file.path.split('public')[1];
-  const { user_id, session_id } = req.body;
+  const { user_id, session_id, exercise_name } = req.body;
   const { log_id } = req.params;
-  const { screenshot_url, screenshot_path } = await capture(video_path);
 
-  const inserted = await VideosQueries.insertVideo({
-    video_path,
-    video_url,
-    user_id,
-    log_id,
-    screenshot_path,
-    screenshot_url,
-    session_id,
-  });
+  try {
+    // Upload to YouTube as unlisted
+    const title = exercise_name ? `${exercise_name} - Workout` : 'Workout Video';
+    const youtubeData = await uploadToYouTube(video_path, title);
 
-  logger.info(`User id ${user_id} has inserted video id ${inserted[0].id} !`);
+    const inserted = await VideosQueries.insertVideo({
+      user_id,
+      log_id,
+      session_id,
+      youtube_video_id: youtubeData.youtube_video_id,
+      youtube_url: youtubeData.youtube_url,
+      youtube_embed_url: youtubeData.youtube_embed_url,
+      youtube_thumbnail: youtubeData.youtube_thumbnail,
+    });
 
-  res.status(StatusCodes.CREATED).json({
-    status: 'success',
-    request_url: req.originalUrl,
-    message: 'The resource was created successfully!',
-    data: inserted,
-  });
+    // Delete local file after successful YouTube upload
+    fs.unlink(video_path, (err) => {
+      if (err) logger.error('Failed to delete temp video file:', err);
+    });
+
+    logger.info(`User id ${user_id} uploaded video to YouTube: ${youtubeData.youtube_video_id}`);
+
+    res.status(StatusCodes.CREATED).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was created successfully!',
+      data: inserted,
+    });
+  } catch (err) {
+    // Clean up temp file on error
+    fs.unlink(video_path, () => {});
+    throw err;
+  }
 }
 
 export async function updatePrivateState(req, res) {
