@@ -69,7 +69,6 @@
     "adm-zip": "^0.5.12",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
-    "bcryptjs": "^2.4.3",
     "better-sqlite3": "^12.6.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
