@@ -9,9 +9,9 @@ const transporter = nodemailer.createTransport(emailConfig);
 
 transporter.verify((error, _success) => {
   if (error) {
-    logger.error(error);
+    logger.error('email service failed', { error: error.message });
   } else {
-    logger.info('Email service started!.');
+    logger.info('email service started');
   }
 });
 
@@ -38,7 +38,7 @@ export default class EmailService {
 
       return sent;
     } catch (e) {
-      logger.error(e);
+      logger.error('email send failed', { error: e.message });
     }
   }
 }

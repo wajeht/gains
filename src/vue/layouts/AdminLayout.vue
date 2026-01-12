@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue';
 import RegularHeader from '../components/regular/RegularHeader.vue';
 import RegularFooter from '../components/regular/RegularFooter.vue';
-import ActivityLog from '../components/admin/ActivityLog.vue';
 import AdminMenuBar from '../components/admin/AdminMenuBar.vue';
 import LogoutButton from '../components/dashboard/LogoutButton.vue';
 import useAppStore from '../store/app.store.js';
@@ -113,9 +112,6 @@ async function refreshDatabaseIndexes() {
 
           <!-- admin pages -->
           <router-view> </router-view>
-
-          <!-- log -->
-          <ActivityLog v-if="appStore.showActivity" />
         </div>
       </div>
     </div>

@@ -108,7 +108,6 @@ src/storage/public/upload/*
 src/storage/public/uploads/*
 /src/storage/uploads/*
 !/src/storage/uploads/.gitkeep
-!/src/storage/logs/.gitkeep
 !/src/storage/temp/.gitkeep
 /src/storage/upload/
 src/templates/tempCodeRunnerFile.js

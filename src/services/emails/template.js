@@ -91,7 +91,7 @@ export default class Template {
       });
       return html;
     } catch (e) {
-      logger.error(e);
+      logger.error('template error', { error: e.message });
     }
   }
 }

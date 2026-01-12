@@ -8,10 +8,9 @@ const db = Knex(options);
 // Test connection
 try {
   db.raw('SELECT 1');
-  logger.info('Database connection started!');
+  logger.info('database connection started');
 } catch (error) {
-  logger.error('Database connection failed!');
-  logger.error('Error:', error.message);
+  logger.error('database connection failed', { error: error.message });
   process.exit(1);
 }
 

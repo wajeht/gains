@@ -1,16 +1,9 @@
-import { validator, catchAsyncErrors } from '../api.middlewares.js';
+import { catchAsyncErrors } from '../api.middlewares.js';
 
 import * as AdminController from './admin.controller.js';
-import * as AdminValidation from './admin.validation.js';
 
 import express from 'express';
 const admin = express.Router();
-
-admin.get(
-  '/view-logs',
-  validator(AdminValidation.getViewLogs),
-  catchAsyncErrors(AdminController.getViewLogs),
-);
 
 admin.get('/stats', catchAsyncErrors(AdminController.getStats));
 

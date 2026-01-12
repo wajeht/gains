@@ -1,47 +1,55 @@
-import pino from 'pino';
-import pretty from 'pino-pretty';
-import { root } from '../utils/directory.js';
+import crypto from 'crypto';
+import { styleText } from 'node:util';
+import { AsyncLocalStorage } from 'async_hooks';
 
-const today = new Date().toISOString().split('T')[0];
+const store = new AsyncLocalStorage();
+const levelColors = { debug: 'magenta', info: 'cyan', warn: 'yellow', error: 'red' };
 
-const levels = {
-  // emerg: 80,
-  // alert: 70,
-  // crit: 60,
-  // error: 50,
-  // warn: 40,
-  // notice: 30,
-  // info: 20,
-  // debug: 10,
-  // http: 5,
-};
+export function createLogger(service = 'app') {
+  const ctx = () => store.getStore() || {};
 
-const streams = [
-  { stream: pino.destination(`${root}/src/storage/logs/${today}.log`) },
-  // // this will print to the console
-  {
-    stream: pretty({
-      translateTime: 'yyyy-mm-dd HH:MM:ss TT',
-      colorize: true,
-      sync: true,
-      ignore: 'hostname,pid',
-    }),
-  },
-];
+  const set = (data) => Object.assign(ctx(), data);
 
-const logger = pino(
-  {
-    customLevels: levels,
-    useOnlyCustomProps: true,
-    level: process.env.PINO_LOG_LEVEL || 'info',
-    formatters: {
-      level: (label) => {
-        return { level: label };
-      },
-    },
-    timestamp: pino.stdTimeFunctions.isoTime,
-  },
-  pino.multistream(streams),
-);
+  const withContext = (data, fn) => store.run({ ...ctx(), ...data }, fn);
 
+  const log = (level, msg, data = {}) => {
+    if (process.env?.LOG_LEVEL === 'silent') return;
+    const output = JSON.stringify({
+      ts: new Date().toISOString(),
+      level,
+      service,
+      msg,
+      ...ctx(),
+      ...data,
+    });
+    process.stdout.write(styleText(levelColors[level] || 'white', output) + '\n');
+  };
+
+  const middleware = () => (req, res, next) => {
+    const start = Date.now();
+    const init = {
+      request_id: req.get('x-request-id') || 'req_' + crypto.randomBytes(8).toString('hex'),
+      method: req.method,
+      path: req.path,
+    };
+
+    res.on('finish', () =>
+      log('info', 'request', { status: res.statusCode, ms: Date.now() - start }),
+    );
+
+    store.run(init, next);
+  };
+
+  return {
+    middleware,
+    set,
+    withContext,
+    info: (msg, data) => log('info', msg, data),
+    warn: (msg, data) => log('warn', msg, data),
+    error: (msg, data) => log('error', msg, data),
+    debug: (msg, data) => log('debug', msg, data),
+  };
+}
+
+const logger = createLogger('gains');
 export default logger;
