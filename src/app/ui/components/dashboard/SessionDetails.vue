@@ -447,7 +447,7 @@ async function addAExercise() {
     // multi
     if (addAExerciseAllExercisesChecked.value.length) {
       const logs = {
-        user_id: 1,
+        user_id: userStore.user.id,
         session_id: currentSessionDetails.session_id,
         logs: addAExerciseAllExercisesChecked.value.map((current) => {
           return {
