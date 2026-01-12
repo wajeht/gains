@@ -1,10 +1,9 @@
 import nodemailer from 'nodemailer';
 import { email } from '../config/env.js';
 import logger from '../utils/logger.js';
-import Template from './emails/template.js';
+import { templates } from './emails/templates.js';
 import emailConfig from '../config/mail.config.js';
 
-// use https://ethereal.email/ for testing purposes
 const transporter = nodemailer.createTransport(emailConfig);
 
 transporter.verify((error, _success) => {
@@ -18,12 +17,14 @@ transporter.verify((error, _success) => {
 export default class EmailService {
   static async send({ to, subject, template, data, files }) {
     try {
-      // mail options
+      const templateFn = templates[template];
+      if (!templateFn) throw new Error(`Template "${template}" not found`);
+
       const mail = {
         from: `"Gains" <${email.auth_email}>`,
         to,
         subject,
-        html: Template.generate(template, data),
+        text: templateFn(data),
       };
 
       if (files) {
@@ -34,7 +35,7 @@ export default class EmailService {
 
       if (!sent) throw new Error('Something went wrong while sending email!');
 
-      logger.info(`${template} email was sent to ${to}!`);
+      logger.info(`${template} email sent to ${to}`);
 
       return sent;
     } catch (e) {
