@@ -41,11 +41,6 @@ export const admin = {
 
 export const MY_IP = process.env.MY_IP;
 
-export const notify = {
-  url: process.env.NOTIFY_URL,
-  xApiKey: process.env.NOTIFY_X_API_KEY,
-};
-
 export const google = {
   clientId: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,

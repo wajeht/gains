@@ -12,7 +12,6 @@ export default class CronsServices {
       cron.schedule('0 0 * * *', sendHappyBirthdayEmailCron).start();
     } catch (e) {
       Logger.error(e.message);
-      Chad.flex(e.message, e);
     }
   }
 }
