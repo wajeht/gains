@@ -1,6 +1,5 @@
 import db from '../db/db.js';
 import logger from './logger.js';
-import Chad from './chad.js';
 
 const EXERCISES = {
   squat: [
@@ -60,6 +59,5 @@ export default async function generateDefaultExercises(user_id) {
     return db.insert(built_exercises).into('exercises').returning('*');
   } catch (e) {
     logger.error(e);
-    Chad.flex(e.message, e.stack);
   }
 }

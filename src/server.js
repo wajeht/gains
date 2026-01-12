@@ -5,7 +5,6 @@ import { port, env, vue_port } from './config/env.js';
 import logger from './utils/logger.js';
 import path from 'path';
 import db from './db/db.js';
-import Chad from './utils/chad.js';
 import CronsServices from './services/cron.services.js';
 
 app.listen(port, () => {
@@ -50,7 +49,6 @@ process.on('SIGTERM', gracefulShutdown);
     }
   } catch (e) {
     logger.error('Database migration failed:', e);
-    Chad.flex(e.message, e.stack);
   }
 })();
 

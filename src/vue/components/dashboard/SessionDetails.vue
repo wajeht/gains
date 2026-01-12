@@ -865,8 +865,6 @@ function clearDataAndDismissDeleteSessionModal() {
 function previewVideoUpload() {
   videoPreviewFileExist.value = true;
   const file = video.value.files[0];
-  // let preview = document.getElementById('video-preview');
-  // console.log(videoPreview.value);
 
   videoFileSize.value = file.size;
 
