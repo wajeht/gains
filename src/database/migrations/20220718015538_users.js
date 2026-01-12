@@ -7,7 +7,6 @@ export async function up(knex) {
     table.increments('id').primary();
     table.string('email', 250).notNullable().unique();
     table.string('username', 250).notNullable().unique();
-    table.string('password', 500).notNullable();
     table.boolean('deleted').defaultTo(false);
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());

@@ -18,7 +18,7 @@ transporter.verify((error, _success) => {
 });
 
 export default class EmailService {
-  static async send({ to, subject, template = 'verify-email', data, files }) {
+  static async send({ to, subject, template, data, files }) {
     try {
       // mail options
       const mail = {

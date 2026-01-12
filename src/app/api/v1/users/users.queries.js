@@ -32,14 +32,14 @@ export function getAllUsers({ search, pagination = { perPage: null, currentPage:
   return query;
 }
 
-export async function createUser(body, verificationToken) {
+export async function createUser(body) {
   return db
     .insert({ ...body })
     .into('users')
     .returning('*')
     .then(async ([user]) => {
       const { id } = user;
-      await db.insert({ user_id: id, verification_token: verificationToken }).into('user_details');
+      await db.insert({ user_id: id, verified: true, verified_at: new Date() }).into('user_details');
       return db
         .select()
         .from('users')
