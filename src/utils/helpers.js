@@ -41,7 +41,3 @@ export function calculateE1RM(weight, rpe, reps) {
     return (Math.ceil(weight * ((10 - (rpe + 1)) + reps) * 0.03 + weight));
   }
 }
-
-export function cli() {
-  return process.argv[1].includes('/bin/gains') === true;
-}
