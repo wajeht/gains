@@ -20,6 +20,7 @@ import AdminSessions from './pages/admin/AdminSessions.vue';
 import DashboardLogin from './pages/dashboard/DashboardLogin.vue';
 import Community from './pages/dashboard/community/Community.vue';
 import Chat from './pages/dashboard/community/Chat.vue';
+import ChatConversation from './pages/dashboard/community/ChatConversation.vue';
 import DashboardNotFound from './pages/dashboard/DashboardNotFound.vue';
 import DashboardUnauthorized from './pages/dashboard/DashboardUnauthorized.vue';
 import DashboardError from './pages/dashboard/DashboardError.vue';
@@ -193,6 +194,16 @@ const routes = [
     path: '/dashboard/community/chat',
     name: 'Chat',
     component: Chat,
+    meta: {
+      layout: 'DashboardLayout',
+      requiredAuth: true,
+    },
+  },
+  {
+    path: '/dashboard/chat/:other_user_id',
+    name: 'ChatConversation',
+    component: ChatConversation,
+    props: true,
     meta: {
       layout: 'DashboardLayout',
       requiredAuth: true,

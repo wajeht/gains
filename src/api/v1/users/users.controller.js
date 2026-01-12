@@ -215,19 +215,43 @@ export async function getDownloadUserData(req, res) {
 }
 
 export async function postFollowUser(req, res) {
-  const data = await db
-    .insert({
-      follower_id: req.body.follower_id,
-      following_id: req.params.following_id,
-    })
-    .into('follows')
-    .returning('*');
+  const { follower_id } = req.body;
+  const { following_id } = req.params;
+
+  // Check if already following
+  const existing = await db('follows').where({ follower_id, following_id }).first();
+
+  if (existing) {
+    // Unfollow
+    await db('follows').where({ follower_id, following_id }).del();
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'Unfollowed successfully!',
+      data: { following: false },
+    });
+  }
+
+  // Follow
+  const data = await db.insert({ follower_id, following_id }).into('follows').returning('*');
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
-    message: 'The resource was created successfully!',
-    data,
+    message: 'Followed successfully!',
+    data: { ...data[0], following: true },
+  });
+}
+
+export async function getCheckFollowing(req, res) {
+  const { follower_id, following_id } = req.query;
+
+  const existing = await db('follows').where({ follower_id, following_id }).first();
+
+  res.status(StatusCodes.OK).json({
+    status: 'success',
+    request_url: req.originalUrl,
+    data: { following: !!existing },
   });
 }
 
