@@ -12,7 +12,7 @@
     "kill:port": "./src/bin/kill-used-port.sh",
     "update:deps": " npx npm-check -u",
     "check:deps": "npx depcheck",
-    "dev": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"nodemon ./src/app/server.js\" \"vite build --watch --mode development\"",
+    "dev": "concurrently -n \"VUE,EXPRESS\" -c \"#42b883,#68a063\" \"vite --port 3000\" \"nodemon ./src/app/server.js\"",
     "dev:ui": "vite",
     "dev:api": "nodemon ./src/app/server.js",
     "dev:hmr": "concurrently --kill-others --names \"EXPRESS,VUE\" -c \"bgGreen.black,bgRed.black\" \"HMR='true' nodemon ./src/app/server.js\" \"open-cli http://localhost:3000/ && vite\"",
