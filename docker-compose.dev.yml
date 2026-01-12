@@ -1,5 +1,5 @@
 services:
-  mailhog:
+  mailhot:
     container_name: mailhot
     restart: unless-stopped
     image: mailhog/mailhog
@@ -26,7 +26,7 @@ services:
     networks:
       - gains-network
     depends_on:
-      mailhog:
+      mailhot:
         condition: service_started
 
 networks:
