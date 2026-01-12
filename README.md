@@ -6,6 +6,9 @@
 
 All in one tools to help strength athletes load the right amount of training dosage!
 
+> [!WARNING]
+> **This codebase is no longer actively maintained.** The package will continue working, but support and changes are no longer provided.
+
 ## 📑 Docs
 
 - See [DEVELOPMENT](./docs/GETTING_STARTED.md) for `development` guide.
