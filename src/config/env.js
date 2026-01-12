@@ -54,3 +54,9 @@ export const notify = {
   url: process.env.NOTIFY_URL,
   xApiKey: process.env.NOTIFY_X_API_KEY,
 };
+
+export const google = {
+  clientId: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  redirectUrl: process.env.GOOGLE_OAUTH_REDIRECT_URL,
+};
