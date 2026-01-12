@@ -1026,10 +1026,6 @@ function clearAndDismissDeleteALogModal() {
   const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('delete-a-log'));
   modal.hide();
 }
-
-function downloadVideo(url) {
-  window.location.href = url;
-}
 </script>
 
 <template>
@@ -1386,28 +1382,18 @@ function downloadVideo(url) {
                   v-if="log.videos?.length && log.collapsed"
                   class="card card-body p-0 m-0 pt-2 pb-1 border-0"
                 >
-                  <div class="video-wrapper" v-for="v in log.videos" :key="`video-key-${v.id}`">
-                    <!-- YouTube embed -->
+                  <div
+                    class="video-wrapper ratio ratio-16x9"
+                    v-for="v in log.videos"
+                    :key="`video-key-${v.id}`"
+                  >
                     <iframe
                       v-if="v.youtube_embed_url"
-                      class="video"
                       :src="v.youtube_embed_url"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen
                     ></iframe>
-                    <!-- Legacy local video -->
-                    <video
-                      v-else
-                      class="video"
-                      controls
-                      preload="none"
-                      :poster="v.screenshot_url"
-                      playsinline
-                      muted
-                    >
-                      <source :src="`/api/v1/videos/${v.id}/stream`" type="video/mp4" />
-                    </video>
                   </div>
                 </div>
 
@@ -1633,25 +1619,15 @@ function downloadVideo(url) {
 
                 <!-- right -->
                 <span class="d-flex justify-content-between gap-2">
-                  <!-- open video link (YouTube or download) -->
+                  <!-- open video on YouTube -->
                   <a
                     v-if="log?.videos?.[0]?.youtube_url"
                     :href="log?.videos[0]?.youtube_url"
                     target="_blank"
                     class="btn btn-sm btn-outline-dark"
-                    :class="{ disabled: !log?.videos?.length }"
                   >
                     <i class="bi bi-youtube"></i>
                   </a>
-                  <button
-                    v-else
-                    @click="downloadVideo(`/api/v1/videos/${log?.videos[0]?.id}/download`)"
-                    class="btn btn-sm btn-outline-dark"
-                    type="button"
-                    :class="{ disabled: !log?.videos?.length }"
-                  >
-                    <i class="bi bi-download"></i>
-                  </button>
 
                   <!-- history -->
                   <button

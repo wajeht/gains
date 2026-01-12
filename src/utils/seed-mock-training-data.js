@@ -1,9 +1,7 @@
 import logger from './logger.js';
 import { faker } from '@faker-js/faker';
-import copyMockVideos from './copy-mock-videos.js';
 import * as SessionsQueries from '../app/api/v1/sessions/sessions.queries.js';
 import * as UsersQueries from '../app/api/v1/users/users.queries.js';
-import * as VideosQueries from '../app/api/v1/videos/videos.queries.js';
 import * as LogsQueries from '../app/api/v1/logs/logs.queries.js';
 import * as ExercisesQueries from '../app/api/v1/exercises/exercises.queries.js';
 import * as SetsQueries from '../app/api/v1/sets/sets.queries.js';
@@ -14,7 +12,6 @@ const randomBoolean = () => faker.datatype.number({ min: 0, max: 1 }) === 1;
 export default async function seedMockTrainingData(email) {
   try {
     const [{ id: user_id }] = await UsersQueries.findUserByParam({ email });
-    const copiedVideos = await copyMockVideos();
 
     const blocks = await BlocksQueries.getBlocksByUserId(user_id);
     const exercises = await ExercisesQueries.getExerciseByUserId(user_id);
@@ -68,24 +65,6 @@ export default async function seedMockTrainingData(email) {
         });
 
         logger.info(`log ${log.id}: ${randomExercise.name}`);
-
-        const randomNumberForVideoLength = Object.keys(copiedVideos).length - 1;
-        const randomNumberForVideo = faker.datatype.number({
-          min: 0,
-          max: randomNumberForVideoLength,
-        });
-        const randomVideo = copiedVideos[Object.keys(copiedVideos)[randomNumberForVideo]];
-        const splitAtUpload = (path) => `/uploads${path.split('uploads')[1]}`;
-
-        await VideosQueries.insertVideo({
-          video_path: randomVideo.video,
-          video_url: splitAtUpload(randomVideo.video),
-          screenshot_path: randomVideo.screenshot,
-          screenshot_url: splitAtUpload(randomVideo.screenshot),
-          session_id: session.id,
-          log_id: log.id,
-          user_id,
-        });
 
         for (let j = 0; j < faker.datatype.number({ max: 10 }); j++) {
           const [set] = await SetsQueries.createSet({
