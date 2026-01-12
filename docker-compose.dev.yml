@@ -1,55 +1,6 @@
-version: '3.9'
 services:
-  postgres:
-    image: postgres:alpine
-    container_name: postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_HOST: ${DB_HOST}
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - ${DB_PORT}:${DB_PORT}
-    networks:
-      - gains-network
-    volumes:
-      - postgres-data:/data/postgres
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: unless-stopped
-    environment:
-      REDIS_URL: ${REDIS_URL}
-    ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
-    networks:
-      - gains-network
-    volumes:
-      - redis-data:/data/redis
-
-  redis-commander:
-    container_name: redis-commander
-    image: rediscommander/redis-commander:latest
-    restart: unless-stopped
-    depends_on:
-      - redis
-    environment:
-      - REDIS_HOSTS=redis
-    ports:
-      - '8081:8081'
-    networks:
-      - gains-network
-
   mailhog:
-    container_name: mailhot
+    container_name: mailhog
     restart: unless-stopped
     image: mailhog/mailhog
     ports:
@@ -75,21 +26,9 @@ services:
     networks:
       - gains-network
     depends_on:
-      postgres:
-        condition: service_healthy
       mailhog:
-        condition: service_started
-      redis-commander:
-        condition: service_started
-      redis:
         condition: service_started
 
 networks:
   gains-network:
     driver: bridge
-
-volumes:
-  postgres-data:
-    driver: local
-  redis-data:
-    driver: local
