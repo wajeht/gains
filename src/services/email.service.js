@@ -21,7 +21,7 @@ export default class EmailService {
       if (!templateFn) throw new Error(`Template "${template}" not found`);
 
       const mail = {
-        from: `"Gains" <${email.auth_email}>`,
+        from: `"Gains" <${email.from}>`,
         to,
         subject,
         text: templateFn(data),

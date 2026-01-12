@@ -33,6 +33,7 @@ export const email = {
   secure: process.env.EMAIL_SECURE,
   auth_email: process.env.EMAIL_AUTH_EMAIL,
   auth_pass: process.env.EMAIL_AUTH_PASS,
+  from: process.env.EMAIL_FROM,
 };
 
 export const admin = {
