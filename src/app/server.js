@@ -31,37 +31,26 @@ async function gracefulShutdown() {
 process.on('SIGINT', gracefulShutdown);
 process.on('SIGTERM', gracefulShutdown);
 
-// ------------------------------ auto migrate db on start (production only) ------------------------------
+// ------------------------------ auto migrate db on start ------------------------------
 (async () => {
-  if (env !== 'production') {
-    logger.warn(`Environment is on ${env}!`);
-    logger.warn(`Skipping database auto migration!`);
-    logger.warn(`Please migrate manually!`);
-    return;
-  }
-
   try {
     const config = {
       directory: path.resolve(path.join(process.cwd(), 'src', 'database', 'migrations')),
     };
 
     const version = await db.migrate.currentVersion();
-
-    logger.warn(`Current database version ${version}`);
-
-    logger.warn(`Checking for database upgrades`);
+    logger.info(`Current database version: ${version}`);
 
     const upgrade = await db.migrate.latest(config);
 
-    if (!upgrade[1].length) logger.warn('Database upgrade not required');
-
-    if (upgrade[1].length) {
+    if (!upgrade[1].length) {
+      logger.info('Database is up to date');
+    } else {
       const list = upgrade[1].map((cur) => cur.split('_')[1].split('.')[0]).join(', ');
-
-      logger.warn(`Database upgrades completed for ${list} schema`);
+      logger.info(`Database migrations applied: ${list}`);
     }
   } catch (e) {
-    logger.error(e);
+    logger.error('Database migration failed:', e);
     Chad.flex(e.message, e.stack);
   }
 })();
