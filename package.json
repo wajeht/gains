@@ -22,6 +22,7 @@
     "migrate:make": "knex migrate:make --knexfile=./src/config/knexfile.js",
     "migrate:latest": "knex migrate:latest --knexfile=./src/config/knexfile.js",
     "migrate:rollback": "knex migrate:rollback --knexfile=./src/config/knexfile.js",
+    "seed:run": "knex seed:run --knexfile=./src/config/knexfile.js",
     "reset:db": "npm run migrate:rollback && npm run migrate:latest",
     "rmds": "find . -name '.DS_Store' -delete",
     "format:check": "prettier --check .",
