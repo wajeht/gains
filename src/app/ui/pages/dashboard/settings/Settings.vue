@@ -438,18 +438,6 @@ async function refreshDatabaseIndexes() {
               </div>
             </router-link>
 
-            <!-- send -->
-            <router-link
-              to="/dashboard/settings/others/send-feedback"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3"
-            >
-              <div class="d-flex gap-2 w-100 justify-content-between">
-                <h6 class="mb-0">Send Feedback</h6>
-                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
-                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
-              </div>
-            </router-link>
-
             <!-- terms -->
             <router-link
               to="/dashboard/settings/others/terms"

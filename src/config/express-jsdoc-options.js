@@ -7,7 +7,7 @@ export default {
     termsOfService: 'http://gains.jaw.dev/terms/',
     contact: {
       name: 'API Support',
-      url: 'https://gains.jaw.dev/contact',
+      url: 'https://github.com/wajeht/gains/issues',
     },
     license: {
       name: 'GPL-V3.0',

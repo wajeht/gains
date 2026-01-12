@@ -55,11 +55,11 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
 
           <!-- contact -->
           <li class="nav-item">
-            <router-link
-              to="/contact"
+            <a
+              href="https://github.com/wajeht/gains/issues"
+              target="_blank"
               class="nav-link link-dark"
-              :class="{ active: $route.name === 'Contact' }"
-              >Contact</router-link
+              >Contact</a
             >
           </li>
 
@@ -120,11 +120,11 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
 
             <!-- contact -->
             <li class="nav-item">
-              <router-link
-                to="/contact"
+              <a
+                href="https://github.com/wajeht/gains/issues"
+                target="_blank"
                 class="nav-link link-dark dropdown-item"
-                :class="{ active: $route.name === 'Contact' }"
-                >Contact</router-link
+                >Contact</a
               >
             </li>
 
