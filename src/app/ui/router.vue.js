@@ -57,7 +57,6 @@ import SendFeedback from './pages/dashboard/settings/others/SendFeedback.vue';
 import DashboardPrivacy from './pages/dashboard/settings/others/DashboardPrivacy.vue';
 import DashboardTerms from './pages/dashboard/settings/others/DashboardTerms.vue';
 import HelpAndSupport from './pages/dashboard/settings/others/HelpAndSupport.vue';
-import IssuesAndPullRequests from './pages/dashboard/settings/others/IssuesAndPullRequests.vue';
 
 // tools
 import Tools from './pages/dashboard/tools/Tools.vue';
@@ -217,15 +216,6 @@ const routes = [
     path: '/dashboard/settings/others/send-feedback',
     name: 'SendFeedback',
     component: SendFeedback,
-    meta: {
-      layout: 'SingleDashboardLayout',
-      requiredAuth: true,
-    },
-  },
-  {
-    path: '/dashboard/settings/others/issues-and-pull-requests',
-    name: 'IssuesAndPullRequests',
-    component: IssuesAndPullRequests,
     meta: {
       layout: 'SingleDashboardLayout',
       requiredAuth: true,

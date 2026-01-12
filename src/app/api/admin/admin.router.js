@@ -6,8 +6,6 @@ import * as AdminValidation from './admin.validation.js';
 import express from 'express';
 const admin = express.Router();
 
-admin.get('/issues', catchAsyncErrors(AdminController.getIssues));
-
 admin.get(
   '/view-logs',
   validator(AdminValidation.getViewLogs),
