@@ -26,6 +26,7 @@ const states = reactive({
   ],
   user: {},
   currentLink: 'Followings',
+  loadingUserId: null,
 });
 
 onMounted(async () => {
@@ -59,27 +60,64 @@ async function getMyFollowers() {
     const res = await api.get(`/api/v1/users/${userStore.user.id}/followers`);
     const json = await res.json();
     if (res.status >= 500) {
-      throw new Error(
-        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
-      );
+      throw new Error('Server error. Please try again later!');
     }
     if (!res.ok) {
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
+      throw json.errors || json.message;
     }
     states.user = json.data[0].user;
   } catch (e) {
     appStore.loading = false;
     alert.type = 'danger';
-    if (Array.isArray(e)) {
-      alert.msg = e.map((cur) => cur.msg).join(' ');
-      return;
-    } else {
-      alert.msg = e;
+    alert.msg = Array.isArray(e) ? e.map((cur) => cur.msg).join(' ') : e;
+  }
+}
+
+async function toggleFollow(userId) {
+  try {
+    states.loadingUserId = userId;
+
+    const res = await api.post(`/api/v1/users/${userId}/follow`, {
+      follower_id: userStore.user.id,
+    });
+    const json = await res.json();
+
+    if (!res.ok) {
+      throw json.errors || json.message;
     }
+
+    // Refresh the list
+    await getMyFollowers();
+  } catch (e) {
+    alert.type = 'danger';
+    alert.msg = Array.isArray(e) ? e.map((cur) => cur.msg).join(' ') : e;
+  } finally {
+    states.loadingUserId = null;
+  }
+}
+
+async function removeFollower(userId) {
+  try {
+    states.loadingUserId = userId;
+
+    // To remove a follower, we toggle from their perspective
+    // (they unfollow us)
+    const res = await api.post(`/api/v1/users/${userStore.user.id}/follow`, {
+      follower_id: userId,
+    });
+    const json = await res.json();
+
+    if (!res.ok) {
+      throw json.errors || json.message;
+    }
+
+    // Refresh the list
+    await getMyFollowers();
+  } catch (e) {
+    alert.type = 'danger';
+    alert.msg = Array.isArray(e) ? e.map((cur) => cur.msg).join(' ') : e;
+  } finally {
+    states.loadingUserId = null;
   }
 }
 
@@ -145,9 +183,12 @@ function setActive(link) {
                   <!-- image -->
                   <div>
                     <img
-                      src="https://dummyimage.com/200x200/bdbdbd/000000.jpg"
+                      :src="
+                        user.profile_picture_url ||
+                        'https://dummyimage.com/200x200/bdbdbd/000000.jpg'
+                      "
                       class="rounded-circle image"
-                      style="max-width: 50px"
+                      style="max-width: 50px; height: 50px; object-fit: cover"
                     />
                   </div>
                   <!-- name -->
@@ -158,13 +199,37 @@ function setActive(link) {
                 </div>
               </router-link>
 
-              <!-- follow -->
-              <div>
-                <button v-if="states.currentLink === 'Followings'" class="btn btn-sm btn-dark">
-                  Following
+              <!-- action buttons -->
+              <div class="d-flex gap-2">
+                <!-- message button -->
+                <router-link :to="`/dashboard/chat/${user.id}`" class="btn btn-sm btn-outline-dark">
+                  <i class="bi bi-chat"></i>
+                </router-link>
+
+                <!-- follow/unfollow or remove button -->
+                <button
+                  v-if="states.currentLink === 'Followings'"
+                  @click="toggleFollow(user.id)"
+                  class="btn btn-sm btn-dark"
+                  :disabled="states.loadingUserId === user.id"
+                >
+                  <span
+                    v-if="states.loadingUserId === user.id"
+                    class="spinner-border spinner-border-sm"
+                  ></span>
+                  <span v-else>Unfollow</span>
                 </button>
-                <button v-if="states.currentLink === 'Followers'" class="btn btn-sm btn-dark">
-                  Remove
+                <button
+                  v-if="states.currentLink === 'Followers'"
+                  @click="removeFollower(user.id)"
+                  class="btn btn-sm btn-outline-danger"
+                  :disabled="states.loadingUserId === user.id"
+                >
+                  <span
+                    v-if="states.loadingUserId === user.id"
+                    class="spinner-border spinner-border-sm"
+                  ></span>
+                  <span v-else>Remove</span>
                 </button>
               </div>
             </div>
@@ -173,7 +238,7 @@ function setActive(link) {
           <!-- empty -->
           <div v-else class="list-group-item">
             <small class="text-muted fw-light d-flex justify-content-center py-3">
-              No relevant data available yet!
+              No {{ states.currentLink.toLowerCase() }} yet
             </small>
           </div>
         </div>

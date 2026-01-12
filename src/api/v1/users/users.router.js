@@ -7,6 +7,12 @@ const users = express.Router();
 
 users.get('/check-authentication', UsersController.getCheckAuthentication);
 
+users.get(
+  '/check-following',
+  validator(UsersValidation.getCheckFollowing),
+  catchAsyncErrors(UsersController.getCheckFollowing),
+);
+
 users.get('/', validator(UsersValidation.getUsers), catchAsyncErrors(UsersController.getUsers));
 
 users.post('/', validator(UsersValidation.postUser), catchAsyncErrors(UsersController.postUser));

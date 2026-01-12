@@ -430,3 +430,8 @@ export const getUserFollowers = [
     })
     .toInt(),
 ];
+
+export const getCheckFollowing = [
+  query('follower_id').trim().notEmpty().isInt().toInt(),
+  query('following_id').trim().notEmpty().isInt().toInt(),
+];
