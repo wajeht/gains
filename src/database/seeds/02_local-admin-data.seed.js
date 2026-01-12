@@ -76,8 +76,8 @@ export async function seed(knex) {
         {
           name: 'Introduction block',
           description: 'Block to increase work capacity',
-          start_date: new Date(),
-          end_date: dayjs(new Date()).add(3, 'month'),
+          start_date: dayjs().format('YYYY-MM-DD'),
+          end_date: dayjs().add(3, 'month').format('YYYY-MM-DD'),
           user_id: user.id,
         },
       ])
