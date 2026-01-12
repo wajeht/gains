@@ -53,16 +53,6 @@ const admin = userStore.user.role === 'admin' && userStore.isLoggedIn;
             >
           </li>
 
-          <!-- contact -->
-          <li class="nav-item">
-            <a
-              href="https://github.com/wajeht/gains/issues"
-              target="_blank"
-              class="nav-link link-dark"
-              >Contact</a
-            >
-          </li>
-
           <!-- admin -->
           <li v-if="admin" class="nav-item">
             <router-link
