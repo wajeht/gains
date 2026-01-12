@@ -70,7 +70,10 @@ export default async function seedMockTrainingData(email) {
         logger.info(`log ${log.id}: ${randomExercise.name}`);
 
         const randomNumberForVideoLength = Object.keys(copiedVideos).length - 1;
-        const randomNumberForVideo = faker.datatype.number({ min: 0, max: randomNumberForVideoLength });
+        const randomNumberForVideo = faker.datatype.number({
+          min: 0,
+          max: randomNumberForVideoLength,
+        });
         const randomVideo = copiedVideos[Object.keys(copiedVideos)[randomNumberForVideo]];
         const splitAtUpload = (path) => `/uploads${path.split('uploads')[1]}`;
 
@@ -96,7 +99,9 @@ export default async function seedMockTrainingData(email) {
             rpe: faker.datatype.number({ max: 10 }),
           });
 
-          logger.info(` set ${set.id}: - ${set.reps} x ${set.weight} @${set.rpe} - ${set.notes.split(' ').slice(0, 3).join(' ')}...`);
+          logger.info(
+            ` set ${set.id}: - ${set.reps} x ${set.weight} @${set.rpe} - ${set.notes.split(' ').slice(0, 3).join(' ')}...`,
+          );
         }
         logger.info(`log ${log.id} set to ${log.private}`);
         console.log();

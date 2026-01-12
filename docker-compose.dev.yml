@@ -1,6 +1,6 @@
 services:
   mailhog:
-    container_name: mailhog
+    container_name: mailhot
     restart: unless-stopped
     image: mailhog/mailhog
     ports:

@@ -25,7 +25,9 @@ export async function patchSet(req, res) {
 
   if (!updated.length) throw new CustomError.BadRequestError(`Something went wrong while updating a set for user id ${body.user_id} and set id ${body.id}!`); // prettier-ignore
 
-  logger.info(`User id: ${body.user_id} has updated a set id: ${updated[0].id} to ${JSON.stringify(updated[0])}`);
+  logger.info(
+    `User id: ${body.user_id} has updated a set id: ${updated[0].id} to ${JSON.stringify(updated[0])}`,
+  );
 
   res.status(StatusCodes.OK).json({
     status: 'success',

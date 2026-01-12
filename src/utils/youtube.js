@@ -11,7 +11,7 @@ const TOKEN_PATH = path.join(root, 'youtube-token.json');
 const oauth2Client = new google.auth.OAuth2(
   process.env.YOUTUBE_CLIENT_ID,
   process.env.YOUTUBE_CLIENT_SECRET,
-  process.env.YOUTUBE_REDIRECT_URI
+  process.env.YOUTUBE_REDIRECT_URI,
 );
 
 // Load saved token if exists
@@ -95,7 +95,7 @@ export async function uploadToYouTube(videoPath, title, description = '') {
         const progress = (evt.bytesRead / fileSize) * 100;
         logger.info(`YouTube upload progress: ${Math.round(progress)}%`);
       },
-    }
+    },
   );
 
   logger.info(`YouTube video uploaded: ${res.data.id}`);

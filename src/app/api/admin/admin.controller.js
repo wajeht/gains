@@ -120,7 +120,9 @@ export async function getRefreshIndex(req, res) {
   const dropPromises = [
     db.schema.raw('DROP INDEX IF EXISTS sessions_id_user_id_deleted_end_date_idx'),
     db.schema.raw('DROP INDEX IF EXISTS videos_id_user_id_log_id_session_id_deleted_idx'),
-    db.schema.raw('DROP INDEX IF EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx'),
+    db.schema.raw(
+      'DROP INDEX IF EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx',
+    ),
     db.schema.raw('DROP INDEX IF EXISTS sets_id_user_id_session_id_exercise_id_deleted_idx'),
     db.schema.raw('DROP INDEX IF EXISTS variables_id_user_id_session_id_idx'),
   ];
@@ -128,11 +130,21 @@ export async function getRefreshIndex(req, res) {
   await Promise.allSettled(dropPromises);
 
   const createPromises = [
-    db.schema.raw('CREATE INDEX IF NOT EXISTS sessions_id_user_id_deleted_end_date_idx ON sessions (id, user_id, deleted, end_date)'),
-    db.schema.raw('CREATE INDEX IF NOT EXISTS videos_id_user_id_log_id_session_id_deleted_idx ON videos (id, user_id, log_id, session_id, deleted)'),
-    db.schema.raw('CREATE INDEX IF NOT EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx ON logs (id, user_id, session_id, exercise_id, deleted, private)'),
-    db.schema.raw('CREATE INDEX IF NOT EXISTS sets_id_user_id_session_id_exercise_id_deleted_idx ON sets (id, user_id, session_id, exercise_id, deleted)'),
-    db.schema.raw('CREATE INDEX IF NOT EXISTS variables_id_user_id_session_id_idx ON variables (id, user_id, session_id)'),
+    db.schema.raw(
+      'CREATE INDEX IF NOT EXISTS sessions_id_user_id_deleted_end_date_idx ON sessions (id, user_id, deleted, end_date)',
+    ),
+    db.schema.raw(
+      'CREATE INDEX IF NOT EXISTS videos_id_user_id_log_id_session_id_deleted_idx ON videos (id, user_id, log_id, session_id, deleted)',
+    ),
+    db.schema.raw(
+      'CREATE INDEX IF NOT EXISTS logs_id_user_id_session_id_exercise_id_deleted_private_idx ON logs (id, user_id, session_id, exercise_id, deleted, private)',
+    ),
+    db.schema.raw(
+      'CREATE INDEX IF NOT EXISTS sets_id_user_id_session_id_exercise_id_deleted_idx ON sets (id, user_id, session_id, exercise_id, deleted)',
+    ),
+    db.schema.raw(
+      'CREATE INDEX IF NOT EXISTS variables_id_user_id_session_id_idx ON variables (id, user_id, session_id)',
+    ),
   ];
 
   await Promise.allSettled(createPromises);
