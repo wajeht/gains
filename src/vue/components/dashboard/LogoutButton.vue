@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { isMobile } from '../../../../utils/helpers.js';
-import api from '../../../../utils/fetch-with-style.js';
+import { isMobile } from '@utils/helpers.js';
+import api from '@utils/fetch-with-style.js';
 import useUserStore from '../../store/user.store.js';
 
 const router = useRouter();

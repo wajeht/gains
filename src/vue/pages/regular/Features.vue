@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { sleep } from '../../../../utils/helpers.js';
+import { sleep } from '@utils/helpers.js';
 
 const currentFeature = ref(null);
 const features = ref([

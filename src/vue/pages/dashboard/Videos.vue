@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import useAppStore from '../../store/app.store.js';
 import useUserStore from '../../store/user.store.js';
-import api from '../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import VideosAndProfileHeader from '../../components/dashboard/headers/VideosAndProfileHeader.vue';
 
 const appStore = useAppStore();

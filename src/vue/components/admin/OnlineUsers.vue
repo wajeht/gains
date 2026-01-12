@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onUnmounted, onMounted } from 'vue';
-import api from '../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import useAppStore from '../../store/app.store.js';
 
 const appStore = useAppStore();

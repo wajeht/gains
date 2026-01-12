@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, reactive, watch, onUnmounted } from 'vue';
 import useAppStore from '../../store/app.store.js';
-import api from '../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import dayjs from 'dayjs';
 import Paginator from '../../components/shared/Paginator.vue';
 import { pickBy, isEqual } from 'lodash-es';

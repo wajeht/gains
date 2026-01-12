@@ -33,7 +33,8 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': './src/vue',
+      '@': path.resolve(process.cwd(), 'src/vue'),
+      '@utils': path.resolve(process.cwd(), 'src/utils'),
     },
   },
   root: './src/vue',

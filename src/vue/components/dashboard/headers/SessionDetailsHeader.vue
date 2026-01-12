@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, onUnmounted, ref, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { capitalizeAWord } from '../../../../../utils/helpers.js';
-import api from '.././../../../../utils/fetch-with-style';
+import { capitalizeAWord } from '@utils/helpers.js';
+import api from '@utils/fetch-with-style';
 
 const router = useRouter();
 const route = useRoute();

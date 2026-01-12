@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { capitalizeAWord } from '../../../../../utils/helpers.js';
+import { capitalizeAWord } from '@utils/helpers.js';
 
 export default {
   data() {

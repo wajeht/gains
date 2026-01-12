@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, onMounted, computed } from 'vue';
 import Backheader from '../../../components/dashboard/headers/Backheader.vue';
-import api from '../../../../../utils/fetch-with-style';
+import api from '@utils/fetch-with-style';
 import useUserStore from '../../../store/user.store';
 import useAppStore from '../../../store/app.store';
 import { useRoute } from 'vue-router';

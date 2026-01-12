@@ -1,5 +1,5 @@
 <script setup>
-import api from '../../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 
 import { ref, onMounted, reactive, onUnmounted } from 'vue';
 import { pickBy } from 'lodash-es';

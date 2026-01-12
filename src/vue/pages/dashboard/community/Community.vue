@@ -2,7 +2,7 @@
 import { onMounted, ref, reactive } from 'vue';
 import dayjs from 'dayjs';
 import DashboardHomeHeader from '../../../components/dashboard/headers/DashboardHomeHeader.vue';
-import api from '../../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import { useRouter } from 'vue-router';
 
 import useUserStore from '../../../store/user.store.js';

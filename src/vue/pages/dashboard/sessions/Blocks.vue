@@ -1,6 +1,6 @@
 <script setup>
-import { capitalizeAWord } from '../../../../../utils/helpers.js';
-import api from '../../../../../utils/fetch-with-style.js';
+import { capitalizeAWord } from '@utils/helpers.js';
+import api from '@utils/fetch-with-style.js';
 import ExercisesCategoriesBlocksNav from '../../../components/shared/ExercisesCategoriesBlocksNav.vue';
 
 import dayjs from 'dayjs';
