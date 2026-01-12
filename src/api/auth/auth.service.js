@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { google } from '../../../config/env.js';
+import { google } from '../../config/env.js';
 
 export function generateOAuthState() {
   return crypto.randomUUID();

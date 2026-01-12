@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export function getApiKey(user_id) {
   return db.select('*').from('api_keys').where({ user_id }).andWhere({ deleted: false });

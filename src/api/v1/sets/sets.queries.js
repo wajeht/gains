@@ -1,5 +1,5 @@
 import { omit } from 'lodash-es';
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export function createSet(
   body = { user_id, exercise_id, session_id, description, notes, reps, rpe },

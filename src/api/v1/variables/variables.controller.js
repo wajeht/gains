@@ -1,8 +1,8 @@
 import * as VariablesQueries from './variables.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import { calculateE1RM } from '../../../../utils/helpers.js';
+import { calculateE1RM } from '../../../utils/helpers.js';
 import axios from 'axios';
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 
 export async function deleteAVariable(req, res) {
   const { user_id } = req.query;

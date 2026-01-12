@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export function getAVariable(variable_id) {
   return db.select('*').from('variables').where({ id: variable_id }).andWhere({ deleted: false });

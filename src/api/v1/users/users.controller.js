@@ -1,10 +1,10 @@
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import * as UsersQueries from './users.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import { omit } from 'lodash-es';
-import * as JobsServices from '../../../../services/job.services.js';
-import db from '../../../../database/db.js';
+import * as JobsServices from '../../../services/job.services.js';
+import db from '../../../db/db.js';
 
 export async function getCheckAuthentication(req, res) {
   res.status(StatusCodes.OK).json({

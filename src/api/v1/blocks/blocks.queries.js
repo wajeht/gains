@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export function createBlock(body = { name, description, start_date, end_date, user_id }) {
   return db.insert(body).into('blocks').returning('*');

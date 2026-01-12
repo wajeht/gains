@@ -1,8 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
-import db from '../../../../database/db.js';
-import { calculateE1RM } from '../../../../utils/helpers.js';
+import db from '../../../db/db.js';
+import { calculateE1RM } from '../../../utils/helpers.js';
 
 import * as ExercisesQueries from './exercises.queries.js';
 import * as ExerciseCategoriesQueries from '../exercise-categories/exercise-categories.queries.js';

@@ -1,9 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import path from 'path';
 import fs from 'fs';
-import { env, MY_IP } from '../config/env.js';
-import Chad from '../utils/chad.js';
-import logger from '../utils/logger.js';
+import { env, MY_IP } from './config/env.js';
+import Chad from './utils/chad.js';
+import logger from './utils/logger.js';
 import requestIp from 'request-ip';
 
 export function skipOnMyIp(req, _res) {
@@ -18,7 +18,7 @@ export function getHealthCheck(req, res) {
 
 export function vueHandler(req, res, next) {
   try {
-    const vue = path.resolve(path.join(process.cwd(), 'src', 'public', 'index.html'));
+    const vue = path.resolve(path.join(process.cwd(), 'public', 'index.html'));
 
     if (!fs.existsSync(vue)) {
       if (env === 'development' || env === 'dev') {

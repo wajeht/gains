@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 import { pick } from 'lodash-es';
 
 export async function createASession(body) {

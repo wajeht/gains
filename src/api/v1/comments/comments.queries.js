@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export function createComment(body) {
   return db.insert(body).into('comments').returning('*');

@@ -1,4 +1,4 @@
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import * as CommentsQueries from './comments.queries.js';
 import { StatusCodes } from 'http-status-codes';
 

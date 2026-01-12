@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 import { pick, omit } from 'lodash-es';
 import dayjs from 'dayjs';
 

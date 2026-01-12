@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export function insertVideo(details) {
   return db.insert(details).into('videos').returning('*');
