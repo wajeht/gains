@@ -235,7 +235,7 @@ function clearAndDismissDeleteApiKeyModal() {
 
                   <!-- copy -->
                   <button
-                    @click="(copyApiKeySelectedIndex = index), copyApiKey(index)"
+                    @click="((copyApiKeySelectedIndex = index), copyApiKey(index))"
                     class="btn btn-outline-secondary"
                     type="button"
                   >
@@ -250,7 +250,9 @@ function clearAndDismissDeleteApiKeyModal() {
 
                   <!-- delete -->
                   <button
-                    @click="(deleteApiKeySelectedId = key.id), (deleteApiKeySelectedIndex = index)"
+                    @click="
+                      ((deleteApiKeySelectedId = key.id), (deleteApiKeySelectedIndex = index))
+                    "
                     data-bs-toggle="modal"
                     data-bs-target="#delete-api-key-modal"
                     class="btn btn-outline-danger"

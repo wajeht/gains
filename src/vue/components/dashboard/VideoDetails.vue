@@ -260,7 +260,14 @@ async function postAComment() {
                   <iframe
                     :src="log?.videos[0].youtube_embed_url"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                    "
                     allowfullscreen
                   ></iframe>
                 </div>
@@ -409,7 +416,8 @@ async function postAComment() {
                   <span
                     v-if="userStore.user.id === comment.user_id"
                     @click="
-                      (deleteACommentSelectedId = comment.id), (deleteACommentSelectedIndex = index)
+                      ((deleteACommentSelectedId = comment.id),
+                      (deleteACommentSelectedIndex = index))
                     "
                     role="button"
                     data-bs-toggle="modal"

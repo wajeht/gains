@@ -172,7 +172,14 @@ async function getSessions() {
                   <iframe
                     :src="log?.videos[0].youtube_embed_url"
                     frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                    "
                     allowfullscreen
                   ></iframe>
                 </div>
