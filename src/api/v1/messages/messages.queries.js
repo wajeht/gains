@@ -1,7 +1,6 @@
 import db from '../../../db/db.js';
 
 export async function getConversations(userId) {
-  // Get distinct conversations with latest message
   const conversations = await db.raw(
     `
     SELECT
@@ -18,7 +17,6 @@ export async function getConversations(userId) {
     [userId, userId, userId],
   );
 
-  // Get user details and last message for each conversation
   const results = [];
   for (const conv of conversations) {
     const [user] = await db('users')

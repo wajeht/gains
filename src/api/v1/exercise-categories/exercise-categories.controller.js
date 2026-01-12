@@ -14,19 +14,16 @@ export async function getExerciseCategories(req, res) {
   };
 
   switch (true) {
-    // when called via /api/v1/exercise-categories?user_id=1&all=true
     case is('user_id') && is('all'):
       result = await ExerciseCategoriesQueries.getAllExerciseCategoriesByUserId(uid); // prettier-ignore
       if (!result.length) throw new CustomError.BadRequestError(`There are no all exercise categories for user id ${uid}!`); // prettier-ignore
       break;
 
-    // when called via /api/v1/exercise-categories?user_id=1
     case is('user_id'):
       result = await ExerciseCategoriesQueries.getExerciseCategoriesByUserId(uid); // prettier-ignore
       if (!result.length) throw new CustomError.BadRequestError(`There are no exercise categories for user id ${uid}!`); // prettier-ignore
       break;
 
-    // when called via /api/v1/exercise-categories
     default:
       result = await ExerciseCategoriesQueries.getAllExerciseCategories();
       if (!result.length) throw new CustomError.BadRequestError(`There are no exercise categories available currently!`); // prettier-ignore
