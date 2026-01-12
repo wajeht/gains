@@ -45,7 +45,6 @@ export function errorHandler(err, req, res, _next) {
       request_url: req.originalUrl,
       errors: err?.errors,
       message: env === 'development' ? err.stack : err.message,
-      cache: req.query.cache,
       data: [],
     });
   }
@@ -62,7 +61,6 @@ export function errorHandler(err, req, res, _next) {
       env === 'development'
         ? err.stack
         : 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
-    cache: req.query.cache,
     data: [],
   });
 }

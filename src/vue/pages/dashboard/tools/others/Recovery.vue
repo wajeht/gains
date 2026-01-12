@@ -74,7 +74,7 @@ async function getRecoveryOfAUser({ perPage = 25, currentPage = 1, download = fa
   try {
     appStore.loading = true;
 
-    const url = `/api/v1/variables/recovery/${userStore.user.id}?cache=false&perPage=${perPage}&currentPage=${currentPage}`;
+    const url = `/api/v1/variables/recovery/${userStore.user.id}?perPage=${perPage}&currentPage=${currentPage}`;
     const res = await api.get(url);
     const json = await res.json();
     if (res.status >= 500) {

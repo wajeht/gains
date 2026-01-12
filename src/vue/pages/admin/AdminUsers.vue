@@ -166,7 +166,7 @@ async function fetchUsers({ perPage = DEFAULT_PER_PAGE, currentPage = 1 }) {
     loading.value = true;
 
     const res = await api.get(
-      `/api/v1/users?cache=false&perPage=${perPage}&currentPage=${currentPage}&search=${searchInput.value}`,
+      `/api/v1/users?perPage=${perPage}&currentPage=${currentPage}&search=${searchInput.value}`,
     );
     const json = await res.json();
     if (res.status >= 500) {

@@ -395,13 +395,6 @@ async function addASession() {
       </form>
     </span>
 
-    <!-- middle -->
-    <!-- <span @click="clearUsersSessionsCache()" class="link-secondary" role="button">
-      <h5 class="m-0 p-0 d-flex justify-content-center align-items-center gap-2">
-        <i class="bi bi-arrow-repeat"></i>
-        <span>Clear cache</span>
-      </h5>
-    </span> -->
 
     <!-- right -->
     <div class="dropdown">
