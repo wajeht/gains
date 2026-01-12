@@ -9,19 +9,15 @@ import generateDefaultExercises from '../../../utils/generate-default-exercises.
 import seedMockTrainingData from '../../../utils/seed-mock-training-data.js';
 
 // gains users --restore-data --user-id=1 --prod
-// gains users --clear-cache --user-id=1 --prod
 // gains users --disable --user-id=1 --prod
 // gains users --enable --user-id=1 --prod
 
 async function restoreData({ user_id, prod = false }) {
   try {
-    // Logger.info(`restoreData(), user_id: ${user_id}, prod: ${prod}`);
-
     if (prod) {
       await (
         await axios.post(`/api/v1/users/${user_id}/restore-data`)
       ).data;
-      // console.log(data.data);
       Logger.info(`All training data of User ID: ${user_id} has been restore!`);
       process.exit(0);
     }
@@ -36,36 +32,12 @@ async function restoreData({ user_id, prod = false }) {
   }
 }
 
-async function clearCache({ user_id, prod = false }) {
-  try {
-    // Logger.info(`clearCache(), user_id: ${user_id}, prod: ${prod}`);
-    if (prod) {
-      await (
-        await axios.post(`/api/v1/cache//user/${user_id}`)
-      ).data;
-      // console.log(cache.data);
-      Logger.info(`All cache data of User ID: ${user_id} was cleared!`);
-      process.exit(0);
-    }
-
-    await UsersQueries.restoreUserData(user_id);
-    Logger.info(`All cache data of User ID: ${user_id} was cleared!`);
-
-    process.exit(0);
-  } catch (e) {
-    Logger.error(e?.response?.data ?? e.message);
-    process.exit(1);
-  }
-}
-
 async function enable({ user_id, prod = false }) {
   try {
-    // Logger.info(`enable(), user_id: ${user_id}, prod: ${prod}`);
     if (prod) {
       await (
         await axios.post(`/api/v1/users/${user_id}/restore-user`)
       ).data;
-      // console.log(user.data);
       Logger.info(`User ID: ${user_id}, user has been restore!`);
       process.exit(0);
     }
@@ -82,12 +54,10 @@ async function enable({ user_id, prod = false }) {
 
 async function disable({ user_id, prod = false }) {
   try {
-    // Logger.info(`enable(), user_id: ${user_id}, prod: ${prod}`);
     if (prod) {
       await (
         await axios.delete(`/api/v1/users/${user_id}`)
       ).data;
-      // console.log(user.data);
       Logger.info(`User ID: ${user_id}, user has been deleted!`);
       process.exit(0);
     }
@@ -104,8 +74,6 @@ async function disable({ user_id, prod = false }) {
 
 async function add({ email, prod = false, verify = false, demo = false, data = false }) {
   try {
-    // Logger.info(`add(), email: ${email}, prod: ${prod}, verify: ${verify}, demo: ${demo}`);
-
     const plainPassword = faker.internet.password(12, false);
     const hashedPassword = await Password.hash(plainPassword);
     const verificationToken = crypto.randomBytes(64).toString('hex');
@@ -241,8 +209,6 @@ async function add({ email, prod = false, verify = false, demo = false, data = f
 
 async function mockData({ email, user_id, prod = false }) {
   try {
-    // Logger.info(`mockData(), email: ${email}, prod: ${prod}, user_id: ${user_id}`);
-
     if (email && user_id && prod) throw new Error(`You must chose either email or user_id!`);
 
     // gains users --mock-data --user-id=1 --prod
@@ -254,7 +220,6 @@ async function mockData({ email, user_id, prod = false }) {
     if (email && prod && !user_id) {
       await axios.post('/api/admin/seed-mock-training-data', { email });
       Logger.info(`Mock training data was generated for email: ${email}!\n`);
-      // process.exit(0);
       return;
     }
 
@@ -330,15 +295,10 @@ async function validate({ ...args }) {
 
 export default async function users({ ...args }) {
   try {
-    // example commands ===>    gains users --enable
-    // args ===>                { _: [ 'users' ], enable: true }
-    // Object.keys(args) ===>   [ '_', 'enable' ]
-
     const ACTIONS = [
       'restore-data',
       'disable',
       'enable',
-      'clear-cache',
       'add',
       'mock-data',
       'prod',
@@ -371,11 +331,6 @@ export default async function users({ ...args }) {
       case 'restore-data':
         await validate({ user_id, prod });
         await restoreData({ user_id, prod });
-        break;
-
-      case 'clear-cache':
-        await validate({ user_id, prod });
-        await clearCache({ user_id, prod });
         break;
 
       case 'enable':

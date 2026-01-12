@@ -43,36 +43,18 @@ async function refreshDatabaseIndexes() {
 
     refreshDatabaseIndexesLoading.value = false;
 
-    alert.type = 'success';
-    alert.msg = 'All indexes have been refreshed';
-
-    window.scrollTo(0, 0);
-  } catch (e) {
-    appStore.loading = false;
-    refreshDatabaseIndexesLoading.value = false;
-    alert.type = 'danger';
-    if (Array.isArray(e)) {
-      alert.msg = e.map((cur) => cur.msg).join(' ');
-      return;
-    } else {
-      alert.msg = e;
-    }
-  }
-}
-
-async function clearAllCache() {
-  try {
-    states.loading = true;
-    await api.get('/api/admin/clear-all-cache');
     states.alert.type = 'success';
-    states.alert.msg = 'All cache in the systems has been cleared!';
+    states.alert.msg = 'All indexes have been refreshed';
 
     setTimeout(() => {
       states.alert.type = '';
       states.alert.msg = '';
     }, 5000);
+
+    window.scrollTo(0, 0);
   } catch (e) {
-    states.loading = false;
+    appStore.loading = false;
+    refreshDatabaseIndexesLoading.value = false;
     states.alert.type = 'danger';
     if (Array.isArray(e)) {
       states.alert.msg = e.map((cur) => cur.msg).join(' ');
@@ -80,8 +62,6 @@ async function clearAllCache() {
     } else {
       states.alert.msg = e;
     }
-  } finally {
-    states.loading = false;
   }
 }
 </script>
@@ -100,22 +80,7 @@ async function clearAllCache() {
           <!-- online -->
           <OnlineUsers />
 
-          <!-- clear all cache -->
-          <button
-            class="btn btn-dark"
-            :disabled="states.loading"
-            style="min-height: 43px !important"
-            @click="clearAllCache"
-          >
-            <div v-if="states.loading" class="spinner-border spinner-border-sm" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-
-            <span v-if="!states.loading"> Clear All Cache </span>
-            <span v-if="states.loading"> Loading... </span>
-          </button>
-
-          <!-- clear index -->
+          <!-- refresh index -->
           <button
             class="btn btn-dark"
             :disabled="refreshDatabaseIndexesLoading"
@@ -130,7 +95,7 @@ async function clearAllCache() {
               <span class="visually-hidden">Loading...</span>
             </div>
 
-            <span v-if="!refreshDatabaseIndexesLoading"> Clear All indexes </span>
+            <span v-if="!refreshDatabaseIndexesLoading"> Refresh All Indexes </span>
             <span v-if="refreshDatabaseIndexesLoading"> Loading... </span>
           </button>
 

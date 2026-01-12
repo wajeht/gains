@@ -4,7 +4,6 @@ import fs from 'fs/promises';
 import path from 'path';
 import { marked } from 'marked';
 import { calculateE1RM } from '../../../../utils/helpers.js';
-import cache from '../../../../utils/cache.js';
 import axios from 'axios';
 import logger from '../../../../utils/logger.js';
 
@@ -97,165 +96,117 @@ export async function getOpenPowerliftingResult(req, res) {
 
 export async function getRecovery(req, res) {
   const { user_id } = req.params;
-  const { perPage, currentPage, cache } = req.query;
+  const { perPage, currentPage } = req.query;
 
   const pagination = {
     perPage: perPage ?? null,
     currentPage: currentPage ?? null,
   };
 
-  if (cache == false) {
-    const recovery = await VariablesQueries.getRecovery(user_id, pagination);
-    return res.status(StatusCodes.OK).json({
-      status: 'success',
-      request_url: req.originalUrl,
-      message: 'The resource was returned successfully!',
-      cache: cache,
-      data: recovery.data,
-      pagination: recovery.pagination,
-    });
-  }
-
-  let recovery = JSON.parse(await cache.get(`user-id-${user_id}-recovery`));
-
-  if (recovery === null) {
-    recovery = await VariablesQueries.getRecovery(user_id, pagination);
-    await cache.set(`user-id-${user_id}-recovery`, JSON.stringify(recovery), 'EX', 24 * 60 * 60);
-  }
+  const recovery = await VariablesQueries.getRecovery(user_id, pagination);
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    cache: cache,
     data: recovery.data,
     pagination: recovery.pagination,
   });
 }
 
 export async function getChangelogs(req, res) {
-  let changeLogsInHTMLFormat = JSON.parse(await cache.get('changelogs'));
+  try {
+    const changelogs = await fs.readFile(
+      path.resolve(path.join(process.cwd(), 'CHANGELOG.md')),
+      'utf-8',
+    );
 
-  if (!changeLogsInHTMLFormat) {
-    try {
-      const changelogs = await fs.readFile(
-        path.resolve(path.join(process.cwd(), 'CHANGELOG.md')),
-        'utf-8',
-      );
+    const versions = changelogs.match(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g);
+    const parsedChangelogs = changelogs
+      .split(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g)
+      .slice(1);
 
-      const versions = changelogs.match(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g);
-      const parsedChangelogs = changelogs
-        .split(/###.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)\n/g)
-        .slice(1);
+    const changeLogsInHTMLFormat = parsedChangelogs.map((cl, idx) => {
+      let ver = versions[idx];
+      ver = ver.slice(0, 3) + ' Versions' + ver.slice(3);
+      return {
+        version: marked.parse(ver),
+        current: idx === 0,
+        changelog: marked.parse(cl),
+      };
+    });
 
-      changeLogsInHTMLFormat = parsedChangelogs.map((cl, idx) => {
-        let ver = versions[idx];
-        ver = ver.slice(0, 3) + ' Versions' + ver.slice(3);
-        return {
-          version: marked.parse(ver),
-          current: idx === 0,
-          changelog: marked.parse(cl),
-        };
-      });
-
-      cache.set('changelogs', JSON.stringify(changeLogsInHTMLFormat));
-    } catch (e) {
-      return res.status(StatusCodes.OK).json({
-        status: 'success',
-        request_url: req.originalUrl,
-        message: 'The resource was returned successfully!',
-        changelogs: null,
-      });
-    }
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      changelogs: changeLogsInHTMLFormat,
+    });
+  } catch (e) {
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      changelogs: null,
+    });
   }
-
-  return res.status(StatusCodes.OK).json({
-    status: 'success',
-    request_url: req.originalUrl,
-    message: 'The resource was returned successfully!',
-    changelogs: changeLogsInHTMLFormat,
-  });
 }
 
 export async function getWeeklyWeightIn(req, res) {
   const { user_id } = req.params;
 
-  let result = JSON.parse(await cache.get(`user-id-${user_id}-weekly-weight-in`));
+  const bodyWeight = await VariablesQueries.weeklyWeightInByUserId(user_id);
 
-  if (result === null) {
-    const bodyWeight = await VariablesQueries.weeklyWeightInByUserId(user_id);
+  if (!bodyWeight.length) {
+    return res.status(StatusCodes.OK).json({
+      status: 'success',
+      request_url: req.originalUrl,
+      message: 'The resource was returned successfully!',
+      data: bodyWeight,
+    });
+  }
 
-    if (!bodyWeight.length) {
-      return res.status(StatusCodes.OK).json({
-        status: 'success',
-        request_url: req.originalUrl,
-        message: 'The resource was returned successfully!',
-        data: bodyWeight,
+  const mapped = [];
+
+  for (let i = 0; i < bodyWeight.length; i++) {
+    const current = bodyWeight[i];
+    const previous = bodyWeight[i + 1];
+
+    if (previous) {
+      const trend = current.body_weight - previous.body_weight;
+      mapped.push({
+        trend,
+        ...bodyWeight[i],
       });
     }
-
-    const mapped = [];
-
-    // It's iteration through the bodyWeight array and calculating the trend.
-    for (let i = 0; i < bodyWeight.length; i++) {
-      const current = bodyWeight[i];
-      const previous = bodyWeight[i + 1];
-
-      if (previous) {
-        const trend = current.body_weight - previous.body_weight;
-        mapped.push({
-          trend,
-          ...bodyWeight[i],
-        });
-      }
-    }
-
-    // last element was left out so we manually push it back
-    mapped.push({
-      ...bodyWeight[bodyWeight.length - 1],
-      trend: 0,
-    });
-
-    result = mapped;
-
-    cache.set(`user-id-${user_id}-weekly-weight-in`, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }
+
+  mapped.push({
+    ...bodyWeight[bodyWeight.length - 1],
+    trend: 0,
+  });
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: result,
+    data: mapped,
   });
 }
 
 export async function getRecentPrs(req, res) {
   const { user_id } = req.params;
 
-  // check inside cache
-  let result = JSON.parse(await cache.get(`user-id-${user_id}-recent-prs`));
-
-  if (result === null) {
-    result = await VariablesQueries.recentPrsByUserId(user_id);
-    let mapped = [];
-
-    for (let i = 0; i < result.length; i++) {
-      const current = result[i];
-      mapped.push({
-        ...current,
-        e1rm: calculateE1RM(current.weight, current.rpe, current.reps),
-      });
-    }
-
-    result = mapped;
-
-    cache.set(`user-id-${user_id}-recent-prs`, JSON.stringify(result), 'EX', 24 * 60 * 60);
-  }
+  const result = await VariablesQueries.recentPrsByUserId(user_id);
+  const mapped = result.map((current) => ({
+    ...current,
+    e1rm: calculateE1RM(current.weight, current.rpe, current.reps),
+  }));
 
   return res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: result,
+    data: mapped,
   });
 }

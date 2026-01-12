@@ -1,7 +1,6 @@
 import * as SetsQueries from './sets.queries.js';
 import logger from '../../../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
-import cache from '../../../../utils/cache.js';
 
 export async function postSet(req, res) {
   const body = req.body;
@@ -26,15 +25,7 @@ export async function patchSet(req, res) {
 
   if (!updated.length) throw new CustomError.BadRequestError(`Something went wrong while updating a set for user id ${body.user_id} and set id ${body.id}!`); // prettier-ignore
 
-  logger.info(
-    `User id: ${body.user_id} has updated a set id: ${updated[0].id} to ${JSON.stringify(
-      updated[0],
-    )}`,
-  );
-
-  if (body.end_date) {
-    cache.del(`user-id-${body.user_id}-community-sessions`);
-  }
+  logger.info(`User id: ${body.user_id} has updated a set id: ${updated[0].id} to ${JSON.stringify(updated[0])}`);
 
   res.status(StatusCodes.OK).json({
     status: 'success',

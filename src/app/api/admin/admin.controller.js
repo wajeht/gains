@@ -8,7 +8,6 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import { GITHUB } from '../../../config/env.js';
-import cache from '../../../utils/cache.js';
 import db from '../../../database/db.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
@@ -40,14 +39,10 @@ export async function getViewLogs(req, res) {
   log = log.split('\n');
 
   if (latest) {
-    // grabbing the latest from the back
     if (latest.includes('-')) {
       const negative = parseInt(latest);
       log = log.slice(negative);
-    }
-
-    // grabbing the oldest from the beginning
-    else {
+    } else {
       log = log.slice(0, latest);
     }
 
@@ -85,43 +80,17 @@ export async function postSeedMockTrainingData(req, res) {
 }
 
 export async function getIssues(req, res) {
-  let issues = JSON.parse(await cache.get('issues'));
-
-  if (issues === null) {
-    issues = await axios.get(GITHUB.issue_url, {
-      headers: {
-        Authorization: `Bearer ${GITHUB.api_key}`,
-      },
-    });
-    await cache.set('issues', JSON.stringify(issues.data), 'EX', 24 * 60 * 60);
-  }
-
-  res.status(StatusCodes.OK).json({
-    status: 'success',
-    request_url: req.originalUrl,
-    message: 'The resource was returned successfully!',
-    data: issues,
+  const issues = await axios.get(GITHUB.issue_url, {
+    headers: {
+      Authorization: `Bearer ${GITHUB.api_key}`,
+    },
   });
-}
-
-export async function getOnlineUsers(req, res) {
-  let users = JSON.parse(await cache.get('onlineUsers')) || [];
-  res.status(StatusCodes.OK).json({
-    status: 'success',
-    request_url: req.originalUrl,
-    message: 'The resource was returned successfully!',
-    data: users,
-  });
-}
-
-export async function clearAllCache(req, res) {
-  await cache.clear();
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: [],
+    data: issues.data,
   });
 }
 
@@ -143,17 +112,11 @@ export async function getStats(req, res) {
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was returned successfully!',
-    data: [
-      {
-        users,
-        videos,
-      },
-    ],
+    data: [{ users, videos }],
   });
 }
 
 export async function getRefreshIndex(req, res) {
-  // Drop existing indexes
   const dropPromises = [
     db.schema.raw('DROP INDEX IF EXISTS sessions_id_user_id_deleted_end_date_idx'),
     db.schema.raw('DROP INDEX IF EXISTS videos_id_user_id_log_id_session_id_deleted_idx'),
@@ -164,7 +127,6 @@ export async function getRefreshIndex(req, res) {
 
   await Promise.allSettled(dropPromises);
 
-  // Create new indexes (SQLite syntax)
   const createPromises = [
     db.schema.raw('CREATE INDEX IF NOT EXISTS sessions_id_user_id_deleted_end_date_idx ON sessions (id, user_id, deleted, end_date)'),
     db.schema.raw('CREATE INDEX IF NOT EXISTS videos_id_user_id_log_id_session_id_deleted_idx ON videos (id, user_id, log_id, session_id, deleted)'),

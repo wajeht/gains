@@ -1,19 +1,13 @@
 import logger from '../../../../utils/logger.js';
 import * as CommentsQueries from './comments.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import cache from '../../../../utils/cache.js';
 
 export async function postAComment(req, res) {
   const body = req.body;
 
   const created = await CommentsQueries.createComment(body);
 
-  logger.info(
-    `User id: ${body.user_id} has created comment id: ${created[0].id}, ${JSON.stringify(
-      created[0],
-    )}!`,
-  );
-  await cache.del(`user-id-${body.user_id}-community-sessions`);
+  logger.info(`User id: ${body.user_id} has created comment id: ${created[0].id}, ${JSON.stringify(created[0])}!`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',

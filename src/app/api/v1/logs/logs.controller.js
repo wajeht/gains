@@ -3,8 +3,6 @@ import * as VideosQueries from '../videos/videos.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
 import logger from '../../../../utils/logger.js';
-import { capture } from '../../../../utils/screenshot.js';
-import cache from '../../../../utils/cache.js';
 import { uploadToYouTube } from '../../../../utils/youtube.js';
 import fs from 'fs';
 
@@ -15,7 +13,6 @@ export async function createLogs(req, res) {
   if (!created.length) throw new CustomError.BadRequestError(`Something went wrong while creating a log for for log id: ${body.user_id}!`); // prettier-ignore
 
   logger.info(`user id: ${body.user_id} has created a log id: ${created[0].id}`);
-  await cache.del(`user-id-${body.user_id}-sessions`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',
@@ -31,7 +28,6 @@ export async function uploadAVideo(req, res) {
   const { log_id } = req.params;
 
   try {
-    // Upload to YouTube as unlisted
     const title = exercise_name ? `${exercise_name} - Workout` : 'Workout Video';
     const youtubeData = await uploadToYouTube(video_path, title);
 
@@ -45,7 +41,6 @@ export async function uploadAVideo(req, res) {
       youtube_thumbnail: youtubeData.youtube_thumbnail,
     });
 
-    // Delete local file after successful YouTube upload
     fs.unlink(video_path, (err) => {
       if (err) logger.error('Failed to delete temp video file:', err);
     });
@@ -59,7 +54,6 @@ export async function uploadAVideo(req, res) {
       data: inserted,
     });
   } catch (err) {
-    // Clean up temp file on error
     fs.unlink(video_path, () => {});
     throw err;
   }
@@ -71,10 +65,7 @@ export async function updatePrivateState(req, res) {
 
   const updated = await LogsQueries.updatePrivateState(log_id, value);
 
-  logger.info(
-    `User id: ${updated[0].user_id} has updated log id ${log_id} into ${JSON.stringify(req.body)}!`,
-  );
-  await cache.del(`user-id-${updated[0].user_id}-community-sessions`);
+  logger.info(`User id: ${updated[0].user_id} has updated log id ${log_id} into ${JSON.stringify(req.body)}!`);
 
   return res.status(StatusCodes.CREATED).json({
     status: 'success',
@@ -91,7 +82,6 @@ export async function postMultipleLogs(req, res) {
   const created = await LogsQueries.createMultipleLogs(logs);
 
   logger.info(`User id: ${user_id} has created multiple logs to ${JSON.stringify(logs)}!`);
-  await cache.del(`user-id-${user_id}-sessions`);
 
   res.status(StatusCodes.CREATED).json({
     status: 'success',

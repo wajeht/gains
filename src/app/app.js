@@ -15,7 +15,6 @@ import { jwt_secret } from '../config/env.js';
 import * as Middlewares from './api/api.middlewares.js';
 import CustomError from './api/api.errors.js';
 import logger from '../utils/logger.js';
-import cache from '../utils/cache.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -24,6 +23,9 @@ const io = new Server(server, {
     origin: '*',
   },
 });
+
+// In-memory online users (no Redis needed)
+let onlineUsers = [];
 
 app.use(
   helmet({
@@ -51,7 +53,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(jwt_secret));
 app.use(
   express.static(path.resolve(path.join(process.cwd(), 'src', 'public')), {
-    // 30 days in milliseconds
     maxage: 2592000000,
   }),
 );
@@ -62,8 +63,6 @@ expressJSDocSwagger(app)(expressJsdocOptions);
 
 io.on('connection', async function (socket) {
   logger.info(`socket.io connection was made!, ${socket.id}`);
-
-  let onlineUsers = JSON.parse(await cache.get('onlineUsers')) || [];
 
   socket.emit('onlineUser', onlineUsers);
 
@@ -80,20 +79,16 @@ io.on('connection', async function (socket) {
         socket_id: socket.id,
       });
 
-      await cache.set('onlineUsers', JSON.stringify(onlineUsers));
       socket.broadcast.emit('onlineUser', onlineUsers);
     }
   });
 
   socket.on('userDisconnected', async (userData) => {
     logger.info(`userDisconnected event was fired!, ${socket.id}`);
-    let onlineUsers = JSON.parse(await cache.get('onlineUsers')) || [];
 
     onlineUsers = onlineUsers.filter(
       (user) => user.id !== userData.id && user.socket_id !== socket.id,
     );
-
-    await cache.set('onlineUsers', JSON.stringify(onlineUsers));
 
     socket.broadcast.emit('userDisconnected', userData.id);
   });
@@ -101,11 +96,7 @@ io.on('connection', async function (socket) {
   socket.on('disconnect', async () => {
     logger.info(`socket.io connection was dropped!, ${socket.id}`);
 
-    let onlineUsers = JSON.parse(await cache.get('onlineUsers')) || [];
-
     onlineUsers = onlineUsers.filter((user) => user.socket_id !== socket.id);
-
-    await cache.set('onlineUsers', JSON.stringify(onlineUsers));
 
     socket.broadcast.emit('userDisconnected', socket.id);
   });
@@ -126,7 +117,6 @@ app.use('/api', apiLimiter, apiRoutes);
 app.use('/health', AppRoutes.getHealthCheck);
 
 app.use((req, res, next) => {
-  // matching /api/v[number]/
   if (req.url.match(/\/api\/v\d\//g)) {
     throw new CustomError.BadRequestError('The resource does not exist!');
   }

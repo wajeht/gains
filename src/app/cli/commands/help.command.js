@@ -12,7 +12,6 @@ USAGE:
 EXAMPLES:
   gains -v
   gains --help
-  gains users --clear-cache --user-id=1 --prod
   gains users --restore-data --user-id=1
 
 COMMANDS:
@@ -25,7 +24,6 @@ COMMANDS:
 users:
   --enable --user-id=<user id> (optional --prod)
   --disable --user-id=<user id> (optional --prod)
-  --clear-cache --user-id=<user id> (optional --prod)
   --restore-data --user-id=<user id> (optional --prod)
   --add --email=<email address> (optional: --verify, --demo, --prod)
   --mock-data --email=<email address> (optional: --prod)
