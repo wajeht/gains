@@ -31,7 +31,6 @@ users.get('/', validator(UsersValidation.getUsers), catchAsyncErrors(UsersContro
  * @summary create a user
  * @param {string} email.form.required - the email - application/x-www-form-urlencoded
  * @param {string} username.form.required - the username - application/x-www-form-urlencoded
- * @param {string} password.form.required - the password - application/x-www-form-urlencoded
  */
 users.post('/', validator(UsersValidation.postUser), catchAsyncErrors(UsersController.postUser));
 
@@ -61,7 +60,6 @@ users.get(
  * @summary update a specific user details
  * @param {number} uid.path.required - the user id
  * @param {string} username.form - the username - application/x-www-form-urlencoded
- * @param {string} password.form - the password - application/x-www-form-urlencoded
  * @param {string} first_name.form - the first_name - application/x-www-form-urlencoded
  * @param {string} last_name.form - the last_name - application/x-www-form-urlencoded
  * @param {string} birth_date.form - the birth_date - application/x-www-form-urlencoded
@@ -99,7 +97,6 @@ users.patch(
  * @param {number} uid.path.required - the user id
  * @param {string} email.form - the email - application/x-www-form-urlencoded
  * @param {string} username.form - the username - application/x-www-form-urlencoded
- * @param {string} password.form - the password - application/x-www-form-urlencoded
  */
 users.patch(
   '/:id/update-account-information',
