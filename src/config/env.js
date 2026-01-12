@@ -39,8 +39,6 @@ export const admin = {
   email: process.env.ADMIN_EMAIL,
 };
 
-export const MY_IP = process.env.MY_IP;
-
 export const google = {
   clientId: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
