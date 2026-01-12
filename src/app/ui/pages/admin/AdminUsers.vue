@@ -4,7 +4,6 @@ import useAppStore from '../../store/app.store.js';
 import api from '../../../../utils/fetch-with-style.js';
 import dayjs from 'dayjs';
 import Paginator from '../../components/shared/Paginator.vue';
-// import InsideLoading from '../../components/shared/InsideLoading.vue';
 import { pickBy, isEqual } from 'lodash-es';
 
 const appStore = useAppStore();
@@ -22,7 +21,6 @@ const modifyAUserLoading = ref(false);
 const selectedModifyAUserOG = reactive({});
 const selectedModifyAUser = reactive({});
 const selectedModifyAUserIndex = ref(-1);
-const sendPasswordResetLinkLoading = ref(false);
 
 const alert = reactive({ type: '', msg: '' });
 
@@ -50,39 +48,6 @@ async function addUser() {
   clearAndDismissAddAUserModal();
 }
 
-async function sendPasswordResetLink(email) {
-  try {
-    sendPasswordResetLinkLoading.value = true;
-
-    const res = await api.post(` /api/auth/forget-password`, { email });
-    const json = await res.json();
-    if (res.status >= 500) {
-      throw new Error(
-        'The server encountered an internal error or misconfiguration and was unable to complete your request. Please try again later!',
-      );
-    }
-    if (!res.ok) {
-      if (json.errors) {
-        throw json.errors;
-      } else {
-        throw json.message;
-      }
-    }
-
-    sendPasswordResetLinkLoading.value = false;
-  } catch (e) {
-    sendPasswordResetLinkLoading.value = false;
-    appStore.loading = false;
-    alert.type = 'danger';
-    if (Array.isArray(e)) {
-      alert.msg = e.map((cur) => cur.msg).join(' ');
-      return;
-    } else {
-      alert.msg = e;
-    }
-  }
-}
-
 async function deleteUser() {
   try {
     deleteAUserLoading.value = true;
@@ -107,7 +72,6 @@ async function deleteUser() {
     // update the dom
     for (const u in users.value) {
       for (const ck in checkedUsers.value) {
-        // console.log(checkedUsers.value[ck], users.value[u].id);
         if (users.value[u].id == checkedUsers.value[ck]) {
           users.value[u].deleted = true;
         }
@@ -276,9 +240,6 @@ function clearAndDismissModifyAUserModal() {
   </div>
 
   <div style="position: relative">
-    <!-- loading -->
-    <!-- <InsideLoading v-if="loading" /> -->
-
     <!-- card -->
     <div class="card">
       <!-- header -->
@@ -746,26 +707,6 @@ function clearAndDismissModifyAUserModal() {
 
         <!-- footer -->
         <div class="modal-footer">
-          <!-- send reset password link -->
-          <button
-            type="button"
-            @click="sendPasswordResetLink(selectedModifyAUser.email)"
-            class="btn btn-success"
-            :disabled="sendPasswordResetLinkLoading"
-          >
-            <div
-              v-if="sendPasswordResetLinkLoading"
-              class="spinner-border spinner-border-sm"
-              role="status"
-            >
-              <span class="visually-hidden">Loading...</span>
-            </div>
-
-            <span v-if="!sendPasswordResetLinkLoading"> Send reset password email </span>
-
-            <span v-if="sendPasswordResetLinkLoading"> Loading... </span>
-          </button>
-
           <!-- cancel -->
           <button
             @click="clearAndDismissModifyAUserModal()"
@@ -920,7 +861,6 @@ function clearAndDismissModifyAUserModal() {
 </template>
 
 <style scoped>
-/* :class="{ 'grayscale text-muted': !u.verified || u.deleted }" */
 .grayscale {
   filter: grayscale(100);
   text-decoration: line-through;
