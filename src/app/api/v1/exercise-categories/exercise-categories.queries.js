@@ -21,7 +21,9 @@ export async function getAllExerciseCategoriesByUserId(uid) {
   return await db('exercise_categories as ec')
     .select('ec.*')
     .count('e.id as exercises_counts')
-    .fullOuterJoin('exercises as e', 'e.exercise_category_id', 'ec.id')
+    .leftJoin('exercises as e', function () {
+      this.on('e.exercise_category_id', 'ec.id').andOn('e.deleted', db.raw('?', [false]));
+    })
     .where('ec.deleted', false)
     .andWhere('ec.user_id', uid)
     .groupBy('ec.id')
