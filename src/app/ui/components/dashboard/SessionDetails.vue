@@ -31,7 +31,7 @@ const userStore = useUserStore();
 const appStore = useAppStore();
 
 // props
-// eslint-disable-next-line no-unused-vars
+
 const props = defineProps({
   sid: Number,
 });

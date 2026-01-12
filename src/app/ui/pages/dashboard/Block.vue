@@ -1,7 +1,6 @@
 <script setup>
 import Backheader from '../../components/dashboard/headers/Backheader.vue';
 
-// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   block_id: Number,
 });
