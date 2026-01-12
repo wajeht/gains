@@ -7,20 +7,13 @@
         <span id="love"> Made with ❤️ by group of strength athletes</span>
       </div>
 
-      <!-- social links -->
-      <div class="d-flex gap-3">
-        <!-- github -->
-        <a class="link-secondary" href="https://github.com/wajeht/gains" target="_blank"
-          ><i class="bi bi-github"></i
-        ></a>
+      <!-- links -->
+      <div class="d-flex gap-3 align-items-center">
+        <!-- privacy -->
+        <router-link to="/privacy" class="link-secondary text-decoration-none small">Privacy</router-link>
 
-        <!-- discord -->
-        <a
-          class="link-secondary"
-          href="https://discord.com/channels/988167900420534273/989628732895543296"
-          target="_blank"
-          ><i class="bi bi-discord"></i
-        ></a>
+        <!-- terms -->
+        <router-link to="/terms" class="link-secondary text-decoration-none small">Terms</router-link>
       </div>
     </div>
   </footer>
