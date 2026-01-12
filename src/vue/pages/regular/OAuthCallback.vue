@@ -21,16 +21,6 @@ onMounted(() => {
       userStore.isLoggedIn = true;
       userStore.setUserInfo(user);
 
-      const socketUserInfo = {
-        ...user,
-        agent: navigator.userAgent,
-        socket_id: window.socket?.id,
-      };
-
-      if (window.socket) {
-        window.socket.emit('onlineUser', socketUserInfo);
-      }
-
       if (appStore.redirect_url) {
         router.push({ path: appStore.redirect_url });
         appStore.redirect_url = null;

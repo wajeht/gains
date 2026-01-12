@@ -34,13 +34,6 @@ async function logout() {
       logoutLink = '/dashboard/login';
     }
 
-    const userWithSocketId = {
-      ...userStore.user,
-      socket_id: window.socket.id,
-    };
-
-    window.socket.emit('userDisconnected', userWithSocketId);
-
     router.push({ path: logoutLink });
   } catch (e) {
     loading.value = false;

@@ -6,7 +6,6 @@ import ActivityLog from '../components/admin/ActivityLog.vue';
 import AdminMenuBar from '../components/admin/AdminMenuBar.vue';
 import LogoutButton from '../components/dashboard/LogoutButton.vue';
 import useAppStore from '../store/app.store.js';
-import OnlineUsers from '../components/admin/OnlineUsers.vue';
 import api from '@utils/fetch-with-style.js';
 
 const appStore = useAppStore();
@@ -76,9 +75,6 @@ async function refreshDatabaseIndexes() {
         <div class="col-sm-12 col-lg-3 d-flex flex-column gap-3 sticky">
           <!-- menu -->
           <AdminMenuBar />
-
-          <!-- online -->
-          <OnlineUsers />
 
           <!-- refresh index -->
           <button
