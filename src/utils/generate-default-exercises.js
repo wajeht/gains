@@ -1,4 +1,4 @@
-import db from '../database/db.js';
+import db from '../db/db.js';
 import logger from './logger.js';
 import Chad from './chad.js';
 

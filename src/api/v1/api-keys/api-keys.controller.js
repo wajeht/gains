@@ -1,8 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
-import { jwt_secret } from '../../../../config/env.js';
+import { jwt_secret } from '../../../config/env.js';
 import CustomError from '../../api.errors.js';
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import * as ApiKeysQueries from './api-keys.queries.js';
 import * as UsersQueries from '../users/users.queries.js';
 

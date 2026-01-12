@@ -1,4 +1,4 @@
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export function getAllExercises() {
   return db.select('*').from('exercises').where({ deleted: false }).orderBy('id', 'desc');

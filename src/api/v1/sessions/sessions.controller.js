@@ -1,9 +1,9 @@
 import * as SessionQueries from './sessions.queries.js';
 import { StatusCodes } from 'http-status-codes';
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import { omit } from 'lodash-es';
 import CustomError from '../../api.errors.js';
-import db from '../../../../database/db.js';
+import db from '../../../db/db.js';
 
 export async function postCreateSession(req, res) {
   const body = req.body;

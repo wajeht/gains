@@ -7,9 +7,6 @@ dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 import purgecss from '@fullhuman/postcss-purgecss';
 
-// assets will generate styles.XXXXX.css for production
-// and style.css for dev. we have to do this because of cloud flare cache
-// typically we do this via /styles.css?ver=1.2, and incrementing version every time
 const rollupOptions = {};
 if (process.env.ENV === 'dev' || process.env.ENV === 'development') {
   rollupOptions.output = {
@@ -36,12 +33,12 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': './src/app/ui',
+      '@': './src/vue',
     },
   },
-  root: './src/app/ui',
+  root: './src/vue',
   build: {
-    outDir: '../../../public',
+    outDir: '../../public',
     reportCompressedSize: true,
     chunkSizeWarningLimit: 1600,
     emptyOutDir: false,
@@ -61,8 +58,8 @@ export default defineConfig({
     postcss: {
       plugins: [
         purgecss({
-          content: [`./public/**/*.html`, `./src/app/ui/**/*.vue`],
-          safelist: [/tooltip/, /placeholder-/, /tooltip-inner/, /modal/, /alert/, /alert-(\w+)/], // purgecss remove modal backdrop, this fixed it
+          content: [`./public/**/*.html`, `./src/vue/**/*.vue`],
+          safelist: [/tooltip/, /placeholder-/, /tooltip-inner/, /modal/, /alert/, /alert-(\w+)/],
         }),
         {
           postcssPlugin: 'internal:charset-removal',

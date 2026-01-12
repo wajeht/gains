@@ -1,10 +1,10 @@
-import logger from '../../../utils/logger.js';
+import logger from '../../utils/logger.js';
 import { StatusCodes } from 'http-status-codes';
 import dayjs from 'dayjs';
 import fsp from 'fs/promises';
 import fs from 'fs';
 import path from 'path';
-import db from '../../../database/db.js';
+import db from '../../../db/db.js';
 
 const TODAY = dayjs().format('YYYY-MM-DD');
 

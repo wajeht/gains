@@ -1,7 +1,7 @@
 import CustomError from '../../api.errors.js';
 import { StatusCodes } from 'http-status-codes';
 import * as BlocksQueries from './blocks.queries.js';
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 
 export async function getBlocks(req, res) {
   const uid = req.query.user_id;

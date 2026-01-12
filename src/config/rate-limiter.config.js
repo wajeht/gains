@@ -1,5 +1,5 @@
 import rateLimit from 'express-rate-limit';
-import { skipOnMyIp } from '../app/app.routes.js';
+import { skipOnMyIp } from '../app.routes.js';
 
 export const regularLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,

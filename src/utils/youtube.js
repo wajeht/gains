@@ -1,7 +1,7 @@
 import { google } from 'googleapis';
 import fs from 'fs';
 import logger from './logger.js';
-import db from '../database/db.js';
+import db from '../db/db.js';
 
 function createOAuth2Client(tokens) {
   const oauth2Client = new google.auth.OAuth2(

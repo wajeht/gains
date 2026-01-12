@@ -2,8 +2,8 @@ import * as LogsQueries from './logs.queries.js';
 import * as VideosQueries from '../videos/videos.queries.js';
 import { StatusCodes } from 'http-status-codes';
 import CustomError from '../../api.errors.js';
-import logger from '../../../../utils/logger.js';
-import { uploadToYouTube } from '../../../../utils/youtube.js';
+import logger from '../../../utils/logger.js';
+import { uploadToYouTube } from '../../../utils/youtube.js';
 import fs from 'fs';
 
 export async function createLogs(req, res) {

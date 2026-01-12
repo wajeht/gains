@@ -1,5 +1,5 @@
 import { validator, catchAsyncErrors } from '../../api.middlewares.js';
-import { uploadPicture } from '../../../../utils/multer.js';
+import { uploadPicture } from '../../../utils/multer.js';
 
 import * as UsersController from './users.controller.js';
 import * as UsersValidation from './users.validation.js';

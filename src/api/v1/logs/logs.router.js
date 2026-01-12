@@ -1,5 +1,5 @@
 import { validator, catchAsyncErrors } from '../../api.middlewares.js';
-import { uploadVideo } from '../../../../utils/multer.js';
+import { uploadVideo } from '../../../utils/multer.js';
 
 import * as LogsValidation from './logs.validation.js';
 import * as LogsController from './logs.controller.js';

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-import app from '../app/app.js';
-import { port, env, vue_port } from '../config/env.js';
-import logger from '../utils/logger.js';
+import app from './app.js';
+import { port, env, vue_port } from './config/env.js';
+import logger from './utils/logger.js';
 import path from 'path';
-import db from '../database/db.js';
-import Chad from '../utils/chad.js';
-import CronsServices from '../services/cron.services.js';
+import db from './db/db.js';
+import Chad from './utils/chad.js';
+import CronsServices from './services/cron.services.js';
 
 app.listen(port, () => {
   logger.warn(`Server is on ${env} mode!`);
@@ -31,11 +31,10 @@ async function gracefulShutdown() {
 process.on('SIGINT', gracefulShutdown);
 process.on('SIGTERM', gracefulShutdown);
 
-// ------------------------------ auto migrate db on start ------------------------------
 (async () => {
   try {
     const config = {
-      directory: path.resolve(path.join(process.cwd(), 'src', 'database', 'migrations')),
+      directory: path.resolve(path.join(process.cwd(), 'src', 'db', 'migrations')),
     };
 
     const version = await db.migrate.currentVersion();
@@ -55,5 +54,4 @@ process.on('SIGTERM', gracefulShutdown);
   }
 })();
 
-// ------------------------------ crons ------------------------------
 CronsServices.start();

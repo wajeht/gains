@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import * as TagsQueries from './tags.queries.js';
-import logger from '../../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 
 export async function postTag(req, res) {
   const body = req.body;
