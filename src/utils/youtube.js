@@ -1,72 +1,63 @@
 import { google } from 'googleapis';
 import fs from 'fs';
-import path from 'path';
-import { root } from './directory.js';
 import logger from './logger.js';
+import db from '../database/db.js';
 
-const SCOPES = ['https://www.googleapis.com/auth/youtube.upload'];
-const TOKEN_PATH = path.join(root, 'youtube-token.json');
-
-// OAuth2 client
-const oauth2Client = new google.auth.OAuth2(
-  process.env.YOUTUBE_CLIENT_ID,
-  process.env.YOUTUBE_CLIENT_SECRET,
-  process.env.YOUTUBE_REDIRECT_URI,
-);
-
-// Load saved token if exists
-function loadToken() {
-  try {
-    if (fs.existsSync(TOKEN_PATH)) {
-      const token = JSON.parse(fs.readFileSync(TOKEN_PATH, 'utf8'));
-      oauth2Client.setCredentials(token);
-      return true;
-    }
-  } catch (err) {
-    logger.error('Error loading YouTube token:', err);
-  }
-  return false;
-}
-
-// Save token to file
-function saveToken(token) {
-  fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
-  logger.info('YouTube token saved');
-}
-
-// Get auth URL for initial setup
-export function getAuthUrl() {
-  return oauth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
+function createOAuth2Client(tokens) {
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+  );
+  oauth2Client.setCredentials({
+    access_token: tokens.access_token,
+    refresh_token: tokens.refresh_token,
   });
+  return oauth2Client;
 }
 
-// Exchange code for token (called from callback route)
-export async function exchangeCode(code) {
-  const { tokens } = await oauth2Client.getToken(code);
-  oauth2Client.setCredentials(tokens);
-  saveToken(tokens);
-  return tokens;
-}
-
-// Check if authenticated
-export function isAuthenticated() {
-  return loadToken();
-}
-
-// Refresh token if needed
-oauth2Client.on('tokens', (tokens) => {
-  if (tokens.refresh_token) {
-    saveToken(tokens);
+async function refreshTokenIfNeeded(userId, tokens) {
+  const expiresAt = tokens.google_token_expires_at;
+  if (!expiresAt || new Date(expiresAt) > new Date(Date.now() + 5 * 60 * 1000)) {
+    return tokens;
   }
-});
 
-// Upload video to YouTube as unlisted
-export async function uploadToYouTube(videoPath, title, description = '') {
-  if (!loadToken()) {
-    throw new Error('YouTube not authenticated. Visit /api/v1/youtube/auth to authorize.');
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+  );
+  oauth2Client.setCredentials({ refresh_token: tokens.google_refresh_token });
+
+  const { credentials } = await oauth2Client.refreshAccessToken();
+
+  await db('user_details')
+    .update({
+      google_access_token: credentials.access_token,
+      google_token_expires_at: new Date(credentials.expiry_date),
+    })
+    .where({ user_id: userId });
+
+  logger.info(`Refreshed Google token for user ${userId}`);
+
+  return {
+    ...tokens,
+    google_access_token: credentials.access_token,
+    google_token_expires_at: new Date(credentials.expiry_date),
+  };
+}
+
+export async function uploadToYouTube(userId, videoPath, title, description = '') {
+  const [userDetails] = await db('user_details').where({ user_id: userId });
+
+  if (!userDetails?.google_access_token) {
+    throw new Error('User not authenticated with Google. Please re-login.');
   }
+
+  const tokens = await refreshTokenIfNeeded(userId, userDetails);
+
+  const oauth2Client = createOAuth2Client({
+    access_token: tokens.google_access_token,
+    refresh_token: tokens.google_refresh_token,
+  });
 
   const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
 
@@ -79,7 +70,7 @@ export async function uploadToYouTube(videoPath, title, description = '') {
         snippet: {
           title: title || 'Workout Video',
           description: description || 'Uploaded via Gains app',
-          categoryId: '17', // Sports category
+          categoryId: '17',
         },
         status: {
           privacyStatus: 'unlisted',
@@ -108,11 +99,19 @@ export async function uploadToYouTube(videoPath, title, description = '') {
   };
 }
 
-// Delete video from YouTube
-export async function deleteFromYouTube(videoId) {
-  if (!loadToken()) {
-    throw new Error('YouTube not authenticated');
+export async function deleteFromYouTube(userId, videoId) {
+  const [userDetails] = await db('user_details').where({ user_id: userId });
+
+  if (!userDetails?.google_access_token) {
+    throw new Error('User not authenticated with Google');
   }
+
+  const tokens = await refreshTokenIfNeeded(userId, userDetails);
+
+  const oauth2Client = createOAuth2Client({
+    access_token: tokens.google_access_token,
+    refresh_token: tokens.google_refresh_token,
+  });
 
   const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
 

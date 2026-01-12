@@ -113,13 +113,21 @@ export async function getGoogleOAuthRedirect(req, res) {
       logger.info(`Generated default exercises for User id ${user.id}!`);
     } else {
       const isAdmin = admin.email && googleUser.email.toLowerCase() === admin.email.toLowerCase();
+      const updateData = {
+        google_access_token: access_token,
+        google_token_expires_at: tokenExpiresAt,
+      };
+      if (refresh_token) {
+        updateData.google_refresh_token = refresh_token;
+      }
       if (isAdmin) {
         const [userDetails] = await db('user_details').where({ user_id: user.id });
         if (userDetails && userDetails.role !== 'admin') {
-          await db('user_details').update({ role: 'admin' }).where({ user_id: user.id });
+          updateData.role = 'admin';
           logger.info(`Admin privileges granted to existing user: ${user.email}`);
         }
       }
+      await db('user_details').update(updateData).where({ user_id: user.id });
       logger.info(`User logged in via Google OAuth: ${user.email} (ID: ${user.id})`);
     }
 

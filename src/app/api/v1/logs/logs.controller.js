@@ -29,7 +29,7 @@ export async function uploadAVideo(req, res) {
 
   try {
     const title = exercise_name ? `${exercise_name} - Workout` : 'Workout Video';
-    const youtubeData = await uploadToYouTube(video_path, title);
+    const youtubeData = await uploadToYouTube(user_id, video_path, title);
 
     const inserted = await VideosQueries.insertVideo({
       user_id,
