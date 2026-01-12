@@ -6,11 +6,10 @@ import InsideLoading from '../shared/InsideLoading.vue';
 
 // helpers
 import api from '@utils/fetch-with-style.js';
-import { calculateE1RM, gainsCurrentDateTime } from '@utils/helpers.js';
+import { calculateE1RM, gainsCurrentDateTime, filesize } from '@utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';
-import { filesize } from 'filesize';
 import { pickBy, pick, omit } from 'lodash-es';
 
 import relativeTime from 'dayjs/plugin/relativeTime';
