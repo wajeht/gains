@@ -12,12 +12,6 @@ admin.get(
   catchAsyncErrors(AdminController.getViewLogs),
 );
 
-admin.post(
-  '/seed-mock-training-data',
-  validator(AdminValidation.postSeedMockTrainingDataUser),
-  catchAsyncErrors(AdminController.postSeedMockTrainingData),
-);
-
 admin.get('/stats', catchAsyncErrors(AdminController.getStats));
 
 admin.get('/refresh-index', catchAsyncErrors(AdminController.getRefreshIndex));
