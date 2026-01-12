@@ -7,7 +7,7 @@ export default {
   client: 'better-sqlite3',
   useNullAsDefault: true,
   connection: {
-    filename: path.resolve(__dirname, '..', 'database', 'sqlite', 'db.sqlite'),
+    filename: path.resolve(__dirname, '..', 'db', 'sqlite', 'db.sqlite'),
   },
   pool: {
     min: 1,
@@ -29,9 +29,6 @@ export default {
   },
   migrations: {
     tableName: 'knex_migrations',
-    directory: path.resolve(__dirname, '..', 'database', 'migrations'),
-  },
-  seeds: {
-    directory: path.resolve(__dirname, '..', 'database', 'seeds'),
+    directory: path.resolve(__dirname, '..', 'db', 'migrations'),
   },
 };
