@@ -1,5 +1,5 @@
 import * as SessionQueries from './sessions.queries.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import logger from '../../../utils/logger.js';
 import { omit } from 'lodash-es';
 import CustomError from '../../api.errors.js';

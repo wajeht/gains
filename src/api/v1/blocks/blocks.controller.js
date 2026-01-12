@@ -1,5 +1,5 @@
 import CustomError from '../../api.errors.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import * as BlocksQueries from './blocks.queries.js';
 import logger from '../../../utils/logger.js';
 

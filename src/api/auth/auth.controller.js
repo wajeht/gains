@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../config/status-codes.js';
 import logger from '../../utils/logger.js';
 import { env, jwt_secret, admin } from '../../config/env.js';
 import jwt from 'jsonwebtoken';

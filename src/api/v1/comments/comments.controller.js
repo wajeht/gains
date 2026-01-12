@@ -1,6 +1,6 @@
 import logger from '../../../utils/logger.js';
 import * as CommentsQueries from './comments.queries.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 
 export async function postAComment(req, res) {
   const body = req.body;

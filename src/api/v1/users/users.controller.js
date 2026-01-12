@@ -1,6 +1,6 @@
 import logger from '../../../utils/logger.js';
 import * as UsersQueries from './users.queries.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import CustomError from '../../api.errors.js';
 import { omit } from 'lodash-es';
 import * as JobsServices from '../../../services/job.services.js';

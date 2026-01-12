@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../config/status-codes.js';
 
 class CustomAPIError extends Error {
   constructor(message) {

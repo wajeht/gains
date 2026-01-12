@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../config/status-codes.js';
 import dayjs from 'dayjs';
 import fsp from 'fs/promises';
 import fs from 'fs';

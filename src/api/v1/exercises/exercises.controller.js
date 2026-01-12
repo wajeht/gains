@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import logger from '../../../utils/logger.js';
 import CustomError from '../../api.errors.js';
 import db from '../../../db/db.js';

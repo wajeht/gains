@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: path.join(process.cwd(), '.env') });
 
-import purgecss from '@fullhuman/postcss-purgecss';
+import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
 
 const rollupOptions = {};
 if (process.env.ENV === 'dev' || process.env.ENV === 'development') {
@@ -46,7 +46,7 @@ export default defineConfig({
     rollupOptions,
   },
   define: {
-    'process.env': process.env,
+    'process.env.BASE_URL': JSON.stringify('/'),
   },
   css: {
     preprocessorOptions: {
@@ -58,7 +58,7 @@ export default defineConfig({
     },
     postcss: {
       plugins: [
-        purgecss({
+        purgeCSSPlugin({
           content: [`./public/**/*.html`, `./src/vue/**/*.vue`],
           safelist: [/tooltip/, /placeholder-/, /tooltip-inner/, /modal/, /alert/, /alert-(\w+)/],
         }),

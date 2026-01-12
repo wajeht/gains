@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import * as TagsQueries from './tags.queries.js';
 import logger from '../../../utils/logger.js';
 

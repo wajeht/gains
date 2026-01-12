@@ -1,6 +1,6 @@
 import * as LogsQueries from './logs.queries.js';
 import * as VideosQueries from '../videos/videos.queries.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import CustomError from '../../api.errors.js';
 import logger from '../../../utils/logger.js';
 import { uploadToYouTube } from '../../../utils/youtube.js';

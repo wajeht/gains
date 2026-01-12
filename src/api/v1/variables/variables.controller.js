@@ -1,5 +1,5 @@
 import * as VariablesQueries from './variables.queries.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 import { calculateE1RM } from '../../../utils/helpers.js';
 import logger from '../../../utils/logger.js';
 

@@ -1,6 +1,6 @@
 import * as SetsQueries from './sets.queries.js';
 import logger from '../../../utils/logger.js';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '../../../config/status-codes.js';
 
 export async function postSet(req, res) {
   const body = req.body;
