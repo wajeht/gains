@@ -227,9 +227,10 @@ async function getUserVideos() {
 
       <!-- videos grid -->
       <div v-if="sessions.length" class="d-flex flex-wrap gap-1">
-        <div
+        <router-link
           v-for="session in sessions"
           :key="`video-${session.id}`"
+          :to="`/dashboard/videos/${session.id}`"
           :style="{ width: `calc(${100 / appStore.numberOfSessionsPerWeek}% - 4px)` }"
         >
           <div class="d-flex flex-column">
@@ -246,7 +247,7 @@ async function getUserVideos() {
               </span>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
 
       <!-- no videos -->
