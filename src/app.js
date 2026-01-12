@@ -17,14 +17,8 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        'default-src': ["'self'", 'plausible.jaw.dev'],
-        'script-src': [
-          "'self'",
-          "'unsafe-inline'",
-          'gains.jaw.dev',
-          'localhost',
-          'plausible.jaw.dev',
-        ],
+        'default-src': ["'self'"],
+        'script-src': ["'self'", "'unsafe-inline'", 'gains.jaw.dev', 'localhost'],
         'manifest-src': ["'self'", 'data:'],
       },
     },
