@@ -1,6 +1,6 @@
 <script setup>
 import Backheader from '../../components/dashboard/headers/Backheader.vue';
-import api from '../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import useAppStore from '../../store/app.store.js';
 
 import { ref, onMounted, reactive } from 'vue';

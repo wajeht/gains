@@ -1,7 +1,7 @@
 <script setup>
 import dayjs from 'dayjs';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
-import api from '../../../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import { reactive, onMounted, ref, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import useUserStore from '../../../../store/user.store.js';

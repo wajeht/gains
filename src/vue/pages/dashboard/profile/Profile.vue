@@ -4,7 +4,7 @@ import VideosAndProfileHeader from '../../../components/dashboard/headers/Videos
 import { LineChart, useLineChart } from 'vue-chart-3';
 import { onMounted, reactive, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import api from '../../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import useUserStore from '../../../store/user.store.js';
 import dayjs from 'dayjs';
 import { omit, meanBy } from 'lodash-es';

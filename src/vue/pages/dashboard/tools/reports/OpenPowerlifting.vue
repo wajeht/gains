@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
-import api from '../../../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 
 const alert = reactive({
   type: '',

@@ -1,5 +1,5 @@
 <script setup>
-import api from '../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import useAppStore from '../../store/app.store.js';
 import dayjs from 'dayjs';
 

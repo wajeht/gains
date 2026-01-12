@@ -1,6 +1,6 @@
 <script setup>
 import Backheader from '../../components/dashboard/headers/Backheader.vue';
-import api from '../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import dayjs from 'dayjs';
 import { LineChart, useLineChart } from 'vue-chart-3';
 import Papa from 'papaparse';

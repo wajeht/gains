@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { onMounted, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
-import api from '../../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 
 import useAppStore from '../../../store/app.store.js';
 import useUserStore from '../../../store/user.store.js';

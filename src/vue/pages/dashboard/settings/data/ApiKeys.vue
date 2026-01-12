@@ -1,10 +1,10 @@
 <script setup>
 import { reactive, ref, onMounted, onUpdated } from 'vue';
-import api from '../../../../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 import Backheader from '../../../../components/dashboard/headers/Backheader.vue';
 import useAppStore from '../../../../store/app.store';
 import useUserStore from '../../../../store/user.store.js';
-import { sleep } from '../../../../../../utils/helpers.js';
+import { sleep } from '@utils/helpers.js';
 
 const appStore = useAppStore();
 const userStore = useUserStore();

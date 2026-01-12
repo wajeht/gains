@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { isMobile } from '../../../utils/helpers.js';
+import { isMobile } from '@utils/helpers.js';
 
 import useAppStore from './app.store.js';
 

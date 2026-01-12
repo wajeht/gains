@@ -5,8 +5,8 @@ import Loading from '../../components/dashboard/Loading.vue';
 import InsideLoading from '../shared/InsideLoading.vue';
 
 // helpers
-import api from '../../../../utils/fetch-with-style.js';
-import { calculateE1RM, gainsCurrentDateTime } from '../../../../utils/helpers.js';
+import api from '@utils/fetch-with-style.js';
+import { calculateE1RM, gainsCurrentDateTime } from '@utils/helpers.js';
 
 // nodejs
 import dayjs from 'dayjs';

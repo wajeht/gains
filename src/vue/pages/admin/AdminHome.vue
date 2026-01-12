@@ -1,6 +1,6 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
-import api from '../../../../utils/fetch-with-style';
+import api from '@utils/fetch-with-style';
 
 const states = reactive({
   users: 0,

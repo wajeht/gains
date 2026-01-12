@@ -7,7 +7,7 @@ import AdminMenuBar from '../components/admin/AdminMenuBar.vue';
 import LogoutButton from '../components/dashboard/LogoutButton.vue';
 import useAppStore from '../store/app.store.js';
 import OnlineUsers from '../components/admin/OnlineUsers.vue';
-import api from '../../../utils/fetch-with-style.js';
+import api from '@utils/fetch-with-style.js';
 
 const appStore = useAppStore();
 
