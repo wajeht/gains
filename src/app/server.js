@@ -6,9 +6,6 @@ import logger from '../utils/logger.js';
 import path from 'path';
 import db from '../database/db.js';
 import Chad from '../utils/chad.js';
-import pkg from '../utils/pkg.js';
-import EmailService from '../services/email.service.js';
-import latestChangelog from '../utils/latest-changelog.js';
 import CronsServices from '../services/cron.services.js';
 
 app.listen(port, () => {
@@ -63,47 +60,6 @@ process.on('SIGTERM', gracefulShutdown);
 
       logger.warn(`Database upgrades completed for ${list} schema`);
     }
-  } catch (e) {
-    logger.error(e);
-    Chad.flex(e.message, e.stack);
-  }
-})();
-
-// ------------------------------ send changelog subscription (production only)  ------------------------------
-(async () => {
-  try {
-    if (env === 'dev' || env === 'development') {
-      logger.warn(`Skipping auto changelog email service!`);
-      return;
-    }
-
-    const changelogSubscriptions = await db
-      .select('s.email as email', 'u.username as username', 's.object_id as subscribed_version')
-      .from('subscriptions as s')
-      .innerJoin('users as u', 'u.id', 's.user_id')
-      .where({ 's.deleted': false })
-      .andWhere({ 's.object': 'changelog' });
-
-    for (const user of changelogSubscriptions) {
-      if (pkg.version > user.subscribed_version) {
-        await EmailService.send({
-          to: user.email,
-          subject: `Gains v${pkg.version}`,
-          template: 'new-changelog',
-          data: {
-            username: user.email,
-            changelog: await latestChangelog(),
-          },
-        });
-        logger.info(`Changelog email was sent to email: ${user.email}`);
-      }
-    }
-
-    await db
-      .update({ object_id: pkg.version })
-      .from('subscriptions')
-      .where({ deleted: false })
-      .andWhere({ object: 'changelog' });
   } catch (e) {
     logger.error(e);
     Chad.flex(e.message, e.stack);

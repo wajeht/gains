@@ -450,18 +450,6 @@ async function refreshDatabaseIndexes() {
               </div>
             </router-link>
 
-            <!-- changelog -->
-            <router-link
-              to="/dashboard/settings/others/changelogs"
-              class="list-group-item list-group-item-action d-flex gap-3 py-3"
-            >
-              <div class="d-flex gap-2 w-100 justify-content-between">
-                <h6 class="mb-0">Changelogs</h6>
-                <!-- <small class="opacity-50 text-nowrap">v1</small> -->
-                <font-awesome-icon icon="angle-right" class="p-0 m-0" style="color: #3e3f3f" />
-              </div>
-            </router-link>
-
             <!-- terms -->
             <router-link
               to="/dashboard/settings/others/terms"
@@ -507,15 +495,7 @@ async function refreshDatabaseIndexes() {
       <div class="text-center text-muted mt-3">
         <span class="d-flex flex-column justify-content-between">
           <!-- version -->
-          <small>
-            Version:
-            <router-link
-              class="link-secondary text-decoration-none"
-              to="/dashboard/settings/others/changelogs"
-            >
-              {{ appStore.appVersion }}
-            </router-link>
-          </small>
+          <small>Version: {{ appStore.appVersion }}</small>
 
           <!-- copyright -->
           <small>

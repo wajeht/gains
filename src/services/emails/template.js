@@ -7,39 +7,8 @@ import Chad from '../../utils/chad.js';
 export default class Template {
   /* A map of the templates that we have. */
   static _maps = {
-    'new-changelog': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'new-changelog.html')),
-      data: [
-        {
-          name: 'username',
-          type: 'string',
-        },
-        {
-          name: 'changelog',
-          type: 'string',
-        },
-      ],
-    },
     'download-user-data': {
       path: path.resolve(path.join('src', 'services', 'emails', 'download-user-data.html')),
-      data: [
-        {
-          name: 'username',
-          type: 'string',
-        },
-      ],
-    },
-    'subscribed-to-changelog': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'subscribed-to-changelog.html')),
-      data: [
-        {
-          name: 'username',
-          type: 'string',
-        },
-      ],
-    },
-    'unsubscribed-to-changelog': {
-      path: path.resolve(path.join('src', 'services', 'emails', 'unsubscribed-to-changelog.html')),
       data: [
         {
           name: 'username',

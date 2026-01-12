@@ -1,5 +1,4 @@
 import ExerciseCategoriesRouter from './exercise-categories/exercise-categories.router.js';
-import SubscriptionsRoutes from './subscriptions/subscriptions.routes.js';
 import SessionsRouter from './sessions/sessions.router.js';
 import ExercisesRouter from './exercises/exercises.router.js';
 import MessagesRouter from './messages/messages.router.js';
@@ -20,7 +19,6 @@ import express from 'express';
 const v1 = express.Router();
 
 v1.use('/exercise-categories', ExerciseCategoriesRouter);
-v1.use('/subscriptions', SubscriptionsRoutes);
 v1.use('/sessions', SessionsRouter);
 v1.use('/exercises', ExercisesRouter);
 v1.use('/messages', MessagesRouter);
