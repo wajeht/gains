@@ -61,14 +61,14 @@ export function findUserByParam(param) {
 }
 
 export async function updateUserById(id, body) {
-  const u = pick(body, ['username', 'email', 'password', 'deleted']);
+  const u = pick(body, ['username', 'email', 'deleted']);
 
   await db
     .update({ ...u, updated_at: new Date() })
     .from('users')
     .where({ id });
 
-  const ud = omit(body, ['username', 'email', 'password']);
+  const ud = omit(body, ['username', 'email']);
 
   await db
     .update({ ...ud, updated_at: new Date() })

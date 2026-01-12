@@ -4,7 +4,7 @@ import { isEqual } from 'lodash-es';
 
 export const postUser = [
   body().custom((body) => {
-    const requiredFields = ['username', 'password', 'email'];
+    const requiredFields = ['username', 'email'];
     const bodyFields = Object.keys(body);
     const equal = isEqual(requiredFields.sort(), bodyFields.sort());
     if (!equal) throw new Error('Fields must be in required format!');
@@ -30,24 +30,6 @@ export const postUser = [
       const exist = await UserQueries.findUserByParam({ username });
       if (exist.length !== 0) throw new Error('Username or Email already exist!');
     }),
-  body('password')
-    .trim()
-    .notEmpty()
-    .withMessage('The value must not be empty!')
-    .isLength({ min: 10, max: 100 })
-    .withMessage('The value must be at least 8 character long or less than 100 character long')
-    .custom((value) => {
-      if (value.split('').some((i) => i == i.toUpperCase())) return true;
-    })
-    .withMessage('The value must include an uppercase character!')
-    .custom((value) => {
-      if (value.split('').some((i) => i == i.toLocaleLowerCase())) return true;
-    })
-    .withMessage('The value must include a lowercase character!')
-    .custom((value) => {
-      if (/\d/.test(value)) return true;
-    })
-    .withMessage('The value must include a number character!'),
 ];
 
 export const getUsers = [
@@ -124,7 +106,6 @@ export const patchUser = [
     const availableFields = [
       'email',
       'username',
-      'password',
       'first_name',
       'last_name',
       'birth_date',
@@ -200,23 +181,6 @@ export const patchUser = [
     })
     .bail()
     .toBoolean(),
-  body('password')
-    .optional()
-    .trim()
-    .isLength({ min: 10, max: 100 })
-    .withMessage('The value must be at least 8 character long or less than 100 character long')
-    .custom((value) => {
-      if (value.split('').some((i) => i == i.toUpperCase())) return true;
-    })
-    .withMessage('The value must include an uppercase character!')
-    .custom((value) => {
-      if (value.split('').some((i) => i == i.toLocaleLowerCase())) return true;
-    })
-    .withMessage('The value must include a lowercase character!')
-    .custom((value) => {
-      if (/\d/.test(value)) return true;
-    })
-    .withMessage('The value must include a number character!'),
 ];
 
 export const patchUpdatePersonalInformation = [
@@ -293,9 +257,9 @@ export const patchUpdateAccountInformation = [
     })
     .toInt(),
   body().custom((data) => {
-    const availableFields = ['email', 'username', 'password'];
+    const availableFields = ['email', 'username'];
     const fields = Object.keys(data).some((key) => availableFields.indexOf(key) >= 0);
-    if (!fields) throw new Error("Must include 'email', 'username', or 'password' to update!");
+    if (!fields) throw new Error("Must include 'email' or 'username' to update!");
     return true;
   }),
   // allow for re-update same value
@@ -333,31 +297,6 @@ export const patchUpdateAccountInformation = [
       }
 
       return ok;
-    }),
-  body('password')
-    .optional()
-    .trim()
-    .notEmpty()
-    .withMessage('The password must not be empty!')
-    .isLength({ min: 10, max: 100 })
-    .withMessage('The password must be at least 8 character long or less than 100 character long')
-    .custom((value) => {
-      if (!value.split('').some((i) => i == i.toUpperCase())) {
-        throw new Error('The password must include an uppercase character!');
-      }
-      return true;
-    })
-    .custom((value) => {
-      if (!value.split('').some((i) => i == i.toLocaleLowerCase())) {
-        throw new Error('The password must include a lowercase character!');
-      }
-      return true;
-    })
-    .custom((value) => {
-      if (!/\d/.test(value)) {
-        throw new Error('The password must include a number character!');
-      }
-      return true;
     }),
 ];
 

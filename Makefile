@@ -26,3 +26,8 @@ seed:
 
 wipe:
 	docker system prune -a --volumes
+
+fix-git:
+	@git rm -r --cached . -f
+	@git add .
+	@git commit -m "Untrack files in .gitignore"
