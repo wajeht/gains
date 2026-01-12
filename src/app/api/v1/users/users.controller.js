@@ -92,13 +92,13 @@ export async function deleteUser(req, res) {
     });
   }
 
-  const withoutPassword = omit(user[0], ['password', 'deleted']);
+  const withoutDeleted = omit(user[0], ['deleted']);
 
   res.status(StatusCodes.OK).json({
     status: 'success',
     request_url: req.originalUrl,
     message: 'The resource was deleted successfully!',
-    data: [withoutPassword],
+    data: [withoutDeleted],
   });
 }
 
