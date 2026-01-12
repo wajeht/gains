@@ -15,18 +15,14 @@ down:
 clean:
 	docker compose --file ./docker-compose.dev.yml --env-file ./.env down -v --rmi all
 
-shell-dev-gains:
+shell:
 	docker compose --file ./docker-compose.dev.yml exec gains sh
 
-refresh-db:
+migrate:
 	docker compose --file ./docker-compose.dev.yml exec gains sh -c 'npm run migrate:latest'
+
+seed:
 	docker compose --file ./docker-compose.dev.yml exec gains sh -c 'npm run seed:run'
-
-shell-dev-db:
-	docker compose --file ./docker-compose.dev.yml exec postgres sh
-
-shell-dev-redis:
-	docker compose --file ./docker-compose.dev.yml exec redis sh
 
 wipe:
 	docker system prune -a --volumes

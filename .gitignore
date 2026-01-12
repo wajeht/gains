@@ -126,3 +126,5 @@ src/database/sqlite/*.sqlite-shm
 
 # YouTube OAuth token
 youtube-token.json
+.claude
+.vscode
