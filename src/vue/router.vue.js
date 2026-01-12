@@ -57,7 +57,6 @@ import HelpAndSupport from './pages/dashboard/settings/others/HelpAndSupport.vue
 
 // tools
 import Tools from './pages/dashboard/tools/Tools.vue';
-import OpenPowerlifting from './pages/dashboard/tools/reports/OpenPowerlifting.vue';
 import OneRepMaxCalculator from './pages/dashboard/tools/calculators/OneRepMaxCalculator.vue.vue';
 import AttemptSelectionCalculator from './pages/dashboard/tools/calculators/AttemptSelectionCalculator.vue';
 import RPECalculator from './pages/dashboard/tools/calculators/RPECalculator.vue';
@@ -293,16 +292,6 @@ const routes = [
     path: '/dashboard/tools/calculators/attempt-selection-calculator',
     name: 'AttemptSelectionCalculator',
     component: AttemptSelectionCalculator,
-    meta: {
-      layout: 'SingleDashboardLayout',
-      requiredAuth: true,
-    },
-  },
-  // reports
-  {
-    path: '/dashboard/tools/reports/open-powerlifting',
-    name: 'OpenPowerlifting',
-    component: OpenPowerlifting,
     meta: {
       layout: 'SingleDashboardLayout',
       requiredAuth: true,

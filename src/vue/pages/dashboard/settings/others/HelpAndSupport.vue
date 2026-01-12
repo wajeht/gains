@@ -22,12 +22,11 @@ import Backheader from '../../../../components/dashboard/headers/Backheader.vue'
             <h5>1. What's up with asking age and weight when signing up for an account?</h5>
             <p class="fw-light">
               You really don't need to use your real information to create an account. We are
-              storing those data for future features build: a feature to locate yourself with
-              OpenPowerlifting database. In terms of your competition history, meet and etc.
+              storing those data for future features.
             </p>
           </span>
 
-          <!-- 3 -->
+          <!-- 2 -->
           <span>
             <h5>2. How is this different than logging videos at Instagram like other lifters?</h5>
             <p class="fw-light">

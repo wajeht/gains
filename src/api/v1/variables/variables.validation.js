@@ -153,17 +153,6 @@ export const postAVariable = [
     .toInt(),
 ];
 
-export const getOpenPowerliftingResult = [
-  query('q')
-    .trim()
-    .notEmpty()
-    .withMessage('search text must not be empty!')
-    .bail()
-    .isLength({ min: 1, max: 30 })
-    .withMessage('search text must be at least 1 character long or less than 30 character long')
-    .bail(),
-];
-
 export const getBodyweight = [
   query('perPage')
     .optional()
