@@ -60,7 +60,7 @@ app.use(
 );
 
 app.use('/api', apiLimiter, apiRoutes);
-app.use('/health', AppRoutes.getHealthCheck);
+app.use('/healthz', AppRoutes.getHealthCheck);
 
 app.use((req, res, next) => {
   if (req.url.match(/\/api\/v\d\//g)) {
