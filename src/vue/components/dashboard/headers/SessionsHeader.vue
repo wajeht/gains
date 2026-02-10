@@ -395,7 +395,6 @@ async function addASession() {
       </form>
     </span>
 
-
     <!-- right -->
     <div class="dropdown">
       <!-- setting icons -->

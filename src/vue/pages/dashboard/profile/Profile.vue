@@ -181,9 +181,7 @@ async function getWeeklyWeightIn() {
 
 async function getRecovery() {
   try {
-    const res = await api.get(
-      `/api/v1/variables/recovery/${userStore.user.id}?perPage=7`,
-    );
+    const res = await api.get(`/api/v1/variables/recovery/${userStore.user.id}?perPage=7`);
     const json = await res.json();
     if (res.status >= 500) {
       throw new Error(

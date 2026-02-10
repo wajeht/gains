@@ -10,10 +10,14 @@
       <!-- links -->
       <div class="d-flex gap-3 align-items-center">
         <!-- privacy -->
-        <router-link to="/privacy" class="link-secondary text-decoration-none small">Privacy</router-link>
+        <router-link to="/privacy" class="link-secondary text-decoration-none small"
+          >Privacy</router-link
+        >
 
         <!-- terms -->
-        <router-link to="/terms" class="link-secondary text-decoration-none small">Terms</router-link>
+        <router-link to="/terms" class="link-secondary text-decoration-none small"
+          >Terms</router-link
+        >
       </div>
     </div>
   </footer>
