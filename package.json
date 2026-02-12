@@ -93,7 +93,7 @@
     "vue": "^3.4.25",
     "vue-chart-3": "^4.0.1",
     "vue-query": "^1.26.0",
-    "vue-router": "^4.3.2"
+    "vue-router": "^5.0.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^7.0.2",
