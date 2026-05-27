@@ -97,7 +97,7 @@ jobs:
     if: github.event_name == 'push'
     needs: [test, build]
     name: Deploy
-    uses: wajeht/docker-cd-deploy-workflow/.github/workflows/deploy.yaml@v0.0.18
+    uses: wajeht/docker-cd-deploy-workflow/.github/workflows/deploy.yaml@v0.0.23
     with:
       app-path: apps/gains
       tag: ${{ needs.build.outputs.tag }}
