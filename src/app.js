@@ -24,6 +24,7 @@ app.use(
           'gains.jaw.dev',
           'localhost',
           'static.cloudflareinsights.com',
+          'umami.jaw.dev',
           'www.youtube.com',
         ],
         'img-src': [
@@ -37,6 +38,7 @@ app.use(
         'frame-src': ["'self'", 'www.youtube.com', 'youtube.com'],
         'connect-src': [
           "'self'",
+          'umami.jaw.dev',
           'www.youtube.com',
           'youtube.com',
           '*.youtube.com',

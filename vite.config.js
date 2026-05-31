@@ -7,8 +7,10 @@ dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
 
+const isDev = process.env.APP_ENV === 'dev' || process.env.APP_ENV === 'development';
+
 const rollupOptions = {};
-if (process.env.APP_ENV === 'dev' || process.env.APP_ENV === 'development') {
+if (isDev) {
   rollupOptions.output = {
     entryFileNames: 'assets/[name].js',
     chunkFileNames: 'assets/[name].js',
@@ -34,7 +36,24 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    !isDev && {
+      name: 'umami-analytics',
+      apply: 'build',
+      transformIndexHtml: () => [
+        {
+          tag: 'script',
+          injectTo: 'head',
+          attrs: {
+            defer: true,
+            src: 'https://umami.jaw.dev/script.js',
+            'data-website-id': '1cf21b1d-8b59-4fc0-b8fe-c0dab47e7e1e',
+          },
+        },
+      ],
+    },
+  ],
   resolve: {
     alias: {
       '@': path.resolve(process.cwd(), 'src/vue'),
