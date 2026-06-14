@@ -73,7 +73,7 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
     "express-validator": "^7.0.1",
-    "googleapis": "^170.0.0",
+    "googleapis": "^172.0.0",
     "helmet": "^7.1.0",
     "html-minifier-terser": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
