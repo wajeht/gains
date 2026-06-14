@@ -95,7 +95,7 @@
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^7.0.2",
+    "@fullhuman/postcss-purgecss": "^8.0.0",
     "@vitest/coverage-v8": "^4.0.16",
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.0",
