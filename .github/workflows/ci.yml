@@ -82,7 +82,7 @@ jobs:
           echo "IMAGE_URL=$IMAGE_URL" >> $GITHUB_OUTPUT
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
       - name: Build and push Docker Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
         with:
           context: .
           file: ./Dockerfile.prod
