@@ -61,7 +61,7 @@
     "@vitejs/plugin-vue": "^6.0.3",
     "adm-zip": "^0.5.12",
     "animate.css": "^4.1.1",
-    "better-sqlite3": "^12.6.0",
+    "better-sqlite3": "^13.0.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.5.1",
