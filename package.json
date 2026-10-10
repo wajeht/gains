@@ -100,7 +100,7 @@
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.0",
     "oxfmt": "^0.23.0",
-    "postcss": "^8.4.38",
+    "postcss": "^8.5.6",
     "sass": "^1.75.0",
     "vitest": "^4.0.16"
   }
