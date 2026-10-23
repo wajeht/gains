@@ -84,7 +84,7 @@
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.12",
     "papaparse": "^5.4.1",
-    "pinia": "^2.1.7",
+    "pinia": "^3.0.0",
     "pinia-plugin-persistedstate": "^3.2.1",
     "request-ip": "^3.3.0",
     "uuid": "^13.0.0",
