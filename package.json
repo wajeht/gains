@@ -82,7 +82,7 @@
     "lodash-es": "^4.17.21",
     "multer": "^2.0.2",
     "node-cron": "^4.2.1",
-    "nodemailer": "^7.0.12",
+    "nodemailer": "^9.0.0",
     "papaparse": "^5.4.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
