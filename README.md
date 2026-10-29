@@ -15,6 +15,8 @@ All in one tools to help strength athletes load the right amount of training dos
 - See [CONTRIBUTION](./docs/CONTRIBUTION.md) for `contribution` guide.
 - See [CODE OF CONDUCT](./docs/CODE_OF_CONDUCT.md) for `code of conduct`.
 
+For an isolated deployment, set `NODE_USE_ENV_PROXY=1`, `HTTP_PROXY` and `HTTPS_PROXY` for web requests, and `SMTP_PROXY` for email (HTTP CONNECT). The proxy must allow the configured mail server and port. Leave `SMTP_PROXY` unset for direct SMTP.
+
 ## License
 
 Distributed under the MIT License © [wajeht](https://github.com/wajeht). See [LICENSE](./LICENSE) for more information.
