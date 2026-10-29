@@ -97,7 +97,7 @@
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^7.0.2",
     "@vitest/coverage-v8": "^4.0.16",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.0",
     "nodemon": "^3.1.0",
     "oxfmt": "^0.23.0",
     "postcss": "^8.4.38",
