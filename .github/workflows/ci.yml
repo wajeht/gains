@@ -103,7 +103,7 @@ jobs:
     if: github.event_name == 'push'
     needs: [test, build]
     name: Deploy
-    uses: wajeht/docker-cd-deploy-workflow/.github/workflows/deploy.yaml@7fe2da4ade9590a28c71d0aaf628792a06491807 # PR #30 candidate
+    uses: wajeht/docker-cd-deploy-workflow/.github/workflows/deploy.yaml@0bc04980ed44366020f68363a15a923b36307059 # v0.0.29
     with:
       app-path: apps/gains
       service-name: gains
