@@ -69,7 +69,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dayjs": "^1.11.10",
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.0.0",
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
     "express-validator": "^7.0.1",
